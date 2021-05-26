@@ -168,7 +168,6 @@ fi
 
 if [ -e "$HOME/.config/nvim/init.lua" ]; then
 	echo 'lunarvim config already installed'
-    yadm submodule
 else
 	# clone config down
 	cloneconfig
