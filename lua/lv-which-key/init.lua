@@ -22,8 +22,8 @@ require("which-key").setup {
     window = {
         border = "single", -- none, single, double, shadow
         position = "bottom", -- bottom, top
-        margin = {1, 0, 1, 0}, -- extra window margin [top, right, bottom, left]
-        padding = {2, 2, 2, 2} -- extra window padding [top, right, bottom, left]
+        margin = {0, 0, 0, 0}, -- extra window margin [top, right, bottom, left]
+        padding = {0, 0, 0, 0} -- extra window padding [top, right, bottom, left]
     },
     layout = {
         height = {min = 4, max = 25}, -- min and max height of the columns
@@ -48,7 +48,8 @@ vim.api.nvim_set_keymap('n', '<Space>', '<NOP>', {noremap = true, silent = true}
 vim.g.mapleader = ' '
 
 -- no hl
-vim.api.nvim_set_keymap('n', '<Leader>h', ':set hlsearch!<CR>', {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', '<Leader>h', ':set hlsearch!<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader>h', ':noh<CR>', {noremap = true, silent = true})
 
 -- explorer
 vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeToggle<CR>', {noremap = true, silent = true})

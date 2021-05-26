@@ -53,3 +53,6 @@ require('lsp.vim-ls')
 require('lsp.yaml-ls')
 -- require('lsp.elixir-ls')
 
+-- Small plugins
+-- require'quick-scope'.setup()
+-- require'vim-sneak'.setup()

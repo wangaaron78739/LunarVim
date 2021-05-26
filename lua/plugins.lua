@@ -82,6 +82,12 @@ return require("packer").startup(
         use {"glepnir/galaxyline.nvim", opt = true}
         use {"romgrk/barbar.nvim", opt = true}
 
+        -- quick-scope
+        use {"unblevable/quick-scope", opt = true}
+        use {"justinmk/vim-sneak", opt = true}
+
+        require_plugin("quick-scope")
+        require_plugin("vim-sneak")
         require_plugin("nvim-lspconfig")
         require_plugin("lspsaga.nvim")
         require_plugin("nvim-lspinstall")
