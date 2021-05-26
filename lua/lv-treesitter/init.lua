@@ -10,3 +10,4 @@ require'nvim-treesitter.configs'.setup {
     autotag = {enable = true},
 }
 
+vim.api.nvim_command('au! BufRead,BufNewFile *.fish set filetype=fish')
