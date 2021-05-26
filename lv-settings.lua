@@ -67,3 +67,12 @@ O.go.autoformat = true
 
 -- Turn off relative_numbers
 -- O.relative_number = false
+
+-- neovide settings
+-- vim.g.neovide_cursor_vfx_mode = "railgun"
+-- vim.g.neovide_refresh_rate=120
+
+-- My settings
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.o.scrolloff = 10
