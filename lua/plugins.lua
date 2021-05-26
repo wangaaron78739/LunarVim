@@ -82,7 +82,7 @@ return require("packer").startup(
         use {"glepnir/galaxyline.nvim", opt = true}
         use {"romgrk/barbar.nvim", opt = true}
 
-        -- quick-scope
+        -- amedhi plugins
         use {"unblevable/quick-scope", opt = true}
         use {"justinmk/vim-sneak", opt = true}
         use {"wellle/targets.vim", opt = true}

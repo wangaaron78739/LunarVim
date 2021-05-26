@@ -21,7 +21,7 @@ O.document_highlight = true
 
 -- if you don't want all the parsers change this to a table of the ones you want
 O.treesitter.ensure_installed = "all"
-O.treesitter.ignore_install = {"haskell"}
+-- O.treesitter.ignore_install = {"haskell"}
 O.treesitter.highlight.enabled = true
 
 
