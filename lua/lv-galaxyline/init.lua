@@ -106,6 +106,22 @@ gls.left[6] = {
         highlight = {colors.red, colors.bg}
     }
 }
+gls.left[7] = {
+    FileIcon = {
+        provider = 'FileIcon',
+        condition = condition.hide_in_width,
+        icon = '',
+        highlight = {colors.purple, colors.bg}
+    }
+}
+gls.left[8] = {
+    FileName = {
+        provider = 'FileName',
+        condition = condition.hide_in_width,
+        icon = '',
+        highlight = {colors.purple, colors.bg}
+    }
+}
 
 gls.right[1] = {
     DiagnosticError = {provider = 'DiagnosticError', icon = '  ', highlight = {colors.error_red, colors.bg}}
