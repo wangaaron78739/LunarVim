@@ -96,7 +96,7 @@ in lua.
 Make sure you have the newest version of Neovim (0.5).
 
 ``` bash
-bash <(curl -s https://raw.githubusercontent.com/ChristianChiarulli/lunarvim/master/utils/installer/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/IndianBoy42/lunarvim/master/utils/installer/install.sh)
 ```
 
 After installation run `nvim` and then `:PackerInstall`
