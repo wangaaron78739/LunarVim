@@ -56,3 +56,4 @@ require('lsp.yaml-ls')
 -- Small plugins
 -- require'quick-scope'.setup()
 -- require'vim-sneak'.setup()
+vim.api.nvim_set_keymap('n', 'Y', 'yg_', { noremap = true, silent = true })

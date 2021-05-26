@@ -85,6 +85,7 @@ return require("packer").startup(
         -- quick-scope
         use {"unblevable/quick-scope", opt = true}
         use {"justinmk/vim-sneak", opt = true}
+        use {"wellle/targets.vim", opt = true}
 
         require_plugin("quick-scope")
         require_plugin("vim-sneak")
