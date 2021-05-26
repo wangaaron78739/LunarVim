@@ -86,8 +86,10 @@ return require("packer").startup(
         use {"unblevable/quick-scope", opt = true}
         use {"justinmk/vim-sneak", opt = true}
         use {"wellle/targets.vim", opt = true}
+        use {"mg979/vim-visual-multi", opt = true}
 
         require_plugin("quick-scope")
+        require_plugin("vim-visual-multi")
         require_plugin("vim-sneak")
         require_plugin("nvim-lspconfig")
         require_plugin("lspsaga.nvim")
