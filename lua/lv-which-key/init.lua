@@ -118,7 +118,11 @@ local mappings = {
         s = {"<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols"},
         S = {"<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace Symbols"}
     },
-
+    e = {
+        name = "+Errors",
+        n = {"<cmd>LspGotoNext<cr>", "Next"},
+        p = {"<cmd>LspGotoPrev<cr>", "Previous"}
+    },
     s = {
         name = "+Search",
         b = {"<cmd>Telescope git_branches<cr>", "Checkout branch"},

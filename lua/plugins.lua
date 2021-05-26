@@ -89,6 +89,7 @@ return require("packer").startup(
         use {"mg979/vim-visual-multi", opt = true}
         use {"dag/vim-fish", opt = true}
 
+        require_plugin("targets.vim")
         require_plugin("quick-scope")
         require_plugin("vim-fish")
         require_plugin("vim-visual-multi")

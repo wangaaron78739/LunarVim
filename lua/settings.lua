@@ -38,6 +38,6 @@ vim.g.nvim_tree_disable_netrw = O.nvim_tree_disable_netrw
 -- vim.o.guifont = "JetBrainsMono\\ Nerd\\ Font\\ Mono:h18"
 -- vim.o.guifont = "Hack\\ Nerd\\ Font\\ Mono"
 -- vim.o.guifont = "SauceCodePro Nerd Font:h17"
-vim.o.guifont = "FiraCode Nerd Font:h14"
+vim.o.guifont = "FiraCode Nerd Font:h13"
 
 -- vim.o.guifont = "JetBrains\\ Mono\\ Regular\\ Nerd\\ Font\\ Complete"
