@@ -79,7 +79,10 @@ installpacker() {
 
 cloneconfig() {
 	echo "Cloning LunarVim configuration"
-	git clone https://github.com/ChristianChiarulli/lunarvim.git ~/.config/nvim
+	git clone https://github.com/IndianBoy42/lunarvim.git ~/.config/nvim
+    cd ~/.config/nvim/
+	git remote add upstream https://github.com/ChristianChiarulli/lunarvim.git
+
 	# mv $HOME/.config/nvim/init.lua $HOME/.config/nvim/init.lua.tmp
 	# mv $HOME/.config/nvim/utils/init.lua $HOME/.config/nvim/init.lua
 	nvim -u $HOME/.config/nvim/init.lua +PackerInstall
@@ -146,7 +149,7 @@ installextrapackages() {
 echo 'Installing LunarVim'
 
 # move old nvim directory if it exists
-[ -d "$HOME/.config/nvim" ] && moveoldnvim
+# [ -d "$HOME/.config/nvim" ] && moveoldnvim
 
 # install pip
 which pip3 >/dev/null && echo "pip installed, moving on..." || asktoinstallpip
@@ -164,15 +167,14 @@ else
 fi
 
 if [ -e "$HOME/.config/nvim/init.lua" ]; then
-	echo 'nvcode already installed'
+	echo 'lunarvim config already installed'
+    yadm submodule
 else
 	# clone config down
 	cloneconfig
 	# echo 'export PATH=$HOME/.config/nvim/utils/bin:$PATH' >>~/.zshrc
 	# echo 'export PATH=$HOME/.config/nvcode/utils/bin:$PATH' >>~/.bashrc
 fi
-
-echo "I recommend you also install and activate a font from here: https://github.com/ryanoasis/nerd-fonts"
 
 # echo "I also recommend you add 'set preview_images_method ueberzug' to ~/.config/ranger/rc.conf"
 
