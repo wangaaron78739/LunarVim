@@ -89,6 +89,11 @@ return require("packer").startup(
         use {"mg979/vim-visual-multi", opt = true}
         use {"dag/vim-fish", opt = true}
 
+        use {"nvim-lua/lsp_extensions.nvim", opt = true}
+        use {"nvim-lua/completion-nvim", opt = true}
+
+        require_plugin("lsp_extensions.nvim")
+        require_plugin("completion-nvim")
         require_plugin("targets.vim")
         require_plugin("quick-scope")
         require_plugin("vim-fish")
