@@ -116,12 +116,9 @@ local mappings = {
         t = {"<cmd>LspTypeDefinition<cr>", "Type Definition"},
         x = {"<cmd>cclose<cr>", "Close Quickfix"},
         s = {"<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols"},
-        S = {"<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace Symbols"}
-    },
-    e = {
-        name = "+Errors",
+        S = {"<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace Symbols"},
         n = {"<cmd>LspGotoNext<cr>", "Next"},
-        p = {"<cmd>LspGotoPrev<cr>", "Previous"}
+        N = {"<cmd>LspGotoPrev<cr>", "Previous"}
     },
     s = {
         name = "+Search",
