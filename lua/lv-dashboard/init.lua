@@ -32,13 +32,14 @@ vim.g.dashboard_custom_section = {
 
 -- file_browser = {description = {' File Browser'}, command = 'Telescope find_files'},
 
--- vim.g.dashboard_custom_shortcut = {
---     a = 'f',
---     find_word = 'SPC f a',
---     last_session = 'SPC s l',
---     new_file = 'SPC c n',
---     book_marks = 'SPC f b'
--- }
+-- TODO: this doesnt work!?
+vim.g.dashboard_custom_shortcut = {
+    a = 'f',
+    b = 'SPC f a',
+    c = 'SPC s l',
+    d = 'SPC c n',
+    e = 'SPC f b'
+}
 -- find_history = 'SPC f h',
 
 -- vim.g.dashboard_session_directory = CACHE_PATH..'/session'
