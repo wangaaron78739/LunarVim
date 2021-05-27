@@ -67,16 +67,20 @@ vim.api.nvim_set_keymap("v", "<leader>/", ":CommentToggle<CR>", {noremap = true,
 -- close buffer
 vim.api.nvim_set_keymap("n", "<leader>c", ":BufferClose<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("n", "<leader>w", ":write<CR>", {noremap = true, silent = true})
+
 vim.api.nvim_set_keymap("n", "<leader>n", ":tabnew<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>v", ":Vista<CR>", {noremap = true, silent = true})
 
 -- pane controls
 vim.api.nvim_set_keymap("n", "<leader>p", "<c-w>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader><space>", ":Commands<CR>", {noremap = true, silent = true})
 
 -- TODO create entire treesitter section
 
 -- TODO support vim-surround in the which-key menus
 
 local mappings = {
+    [" "] = "Commands",
     ["/"] = "Comment",
     ["c"] = "Close Buffer",
     ["e"] = "Explorer",
@@ -85,6 +89,7 @@ local mappings = {
     ["w"] = "Save",
     ["p"] = "Panes",
     ["n"] = "New file (in tab)",
+    ["v"] = "Vista",
     d = {
         name = "+Debug",
         b = {"<cmd>DebugToggleBreakpoint<cr>", "Toggle Breakpoint"},
@@ -127,7 +132,8 @@ local mappings = {
         s = {"<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols"},
         S = {"<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace Symbols"},
         n = {"<cmd>LspGotoNext<cr>", "Next"},
-        N = {"<cmd>LspGotoPrev<cr>", "Previous"}
+        N = {"<cmd>LspGotoPrev<cr>", "Previous"},
+        v = {"<cmd>Vista nvim_lsp<cr>", "Vista"}
     },
     s = {
         name = "+Search",

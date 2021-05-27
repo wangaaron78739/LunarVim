@@ -89,12 +89,16 @@ return require("packer").startup(
         use {"mg979/vim-visual-multi", opt = true}
         use {"dag/vim-fish", opt = true}
         use {"tpope/vim-surround", opt = true}
+        use {"junegunn/fzf", opt = true}
+        use {"junegunn/fzf.vim", opt = true}
 
         -- lsp extensions
         use {"nvim-lua/lsp_extensions.nvim", opt = true}
         use {"nvim-lua/completion-nvim", opt = true}
         use {"liuchengxu/vista.vim", opt = true}
 
+        require_plugin("fzf")
+        require_plugin("fzf.vim")
         require_plugin("vista.vim")
         require_plugin("vim-surround")
         require_plugin("lsp_extensions.nvim")
