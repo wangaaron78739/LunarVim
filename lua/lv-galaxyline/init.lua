@@ -105,16 +105,16 @@ table.insert(gls.left, {
         icon = '  ',
         highlight = {colors.red, colors.bg}
     }
-}
-gls.left[7] = {
+})
+table.insert(gls.left, {
     FileIcon = {
         provider = 'FileIcon',
         condition = condition.hide_in_width,
         icon = '',
         highlight = {colors.purple, colors.bg}
     }
-}
-gls.left[8] = {
+})
+table.insert(gls.left, {
     FileName = {
         provider = 'FileName',
         condition = condition.hide_in_width,
