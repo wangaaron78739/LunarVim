@@ -93,7 +93,9 @@ return require("packer").startup(
         -- lsp extensions
         use {"nvim-lua/lsp_extensions.nvim", opt = true}
         use {"nvim-lua/completion-nvim", opt = true}
+        use {"liuchengxu/vista.vim", opt = true}
 
+        require_plugin("vista.vim")
         require_plugin("vim-surround")
         require_plugin("lsp_extensions.nvim")
         require_plugin("completion-nvim")
