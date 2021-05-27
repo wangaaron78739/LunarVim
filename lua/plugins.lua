@@ -91,6 +91,10 @@ return require("packer").startup(
         use {"tpope/vim-surround", opt = true}
         use {"junegunn/fzf", opt = true}
         use {"junegunn/fzf.vim", opt = true}
+        use {
+          "folke/trouble.nvim",
+          requires = "kyazdani42/nvim-web-devicons",
+        }
 
         -- lsp extensions
         use {"nvim-lua/lsp_extensions.nvim", opt = true}

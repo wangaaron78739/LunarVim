@@ -53,7 +53,15 @@ require('lsp.vim-ls')
 require('lsp.yaml-ls')
 -- require('lsp.elixir-ls')
 
--- Small plugins
--- require'quick-scope'.setup()
--- require'vim-sneak'.setup()
-vim.api.nvim_set_keymap('n', 'Y', 'yg_', { noremap = true, silent = true })
+require("trouble").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+    position = "right",
+    auto_preview = false,
+    hover = "h"
+}
+
+vim.cmd([[
+autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * TroubleRefresh
+]])

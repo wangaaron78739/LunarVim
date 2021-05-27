@@ -135,6 +135,15 @@ local mappings = {
         N = {"<cmd>LspGotoPrev<cr>", "Previous"},
         v = {"<cmd>Vista nvim_lsp<cr>", "Vista"}
     },
+    t = {
+        name = "+Trouble",
+        t = {"<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Trouble"},
+        w = {"<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace"},
+        r = {"<cmd>TroubleToggle lsp_references<cr>", "References"},
+        d = {"<cmd>TroubleToggle lsp_definitions<cr>", "Definitions"},
+        q = {"<cmd>TroubleToggle quickfix<cr>", "Quick Fixes"},
+        l = {"<cmd>TroubleToggle loclist<cr>", "Location List"},
+    },
     s = {
         name = "+Search",
         b = {"<cmd>Telescope git_branches<cr>", "Checkout branch"},

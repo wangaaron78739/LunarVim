@@ -122,6 +122,14 @@ table.insert(gls.left, {
         highlight = {colors.purple, colors.bg}
     }
 })
+table.insert(gls.left, {
+    VistaPlugin = {
+        provider = 'VistaPlugin',
+        condition = condition.hide_in_width,
+        icon = '',
+        highlight = {colors.cyan, colors.bg}
+    }
+})
 
 table.insert(gls.right, {
     DiagnosticError = {provider = 'DiagnosticError', icon = '  ', highlight = {colors.error_red, colors.bg}}
