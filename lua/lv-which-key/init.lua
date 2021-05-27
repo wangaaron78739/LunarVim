@@ -73,6 +73,8 @@ vim.api.nvim_set_keymap("n", "<leader>p", "<c-w>", {noremap = true, silent = tru
 
 -- TODO create entire treesitter section
 
+-- TODO support vim-surround in the which-key menus
+
 local mappings = {
     ["/"] = "Comment",
     ["c"] = "Close Buffer",
@@ -112,6 +114,7 @@ local mappings = {
         D = {"<cmd>Telescope lsp_workspace_diagnostics<cr>", "Workspace Diagnostics"},
         f = {"<cmd>LspFormatting<cr>", "Format"},
         i = {"<cmd>LspInfo<cr>", "Info"},
+        h = {"<cmd>LspHover<cr>", "Hover"},
         l = {"<cmd>Lspsaga lsp_finder<cr>", "LSP Finder"},
         L = {"<cmd>Lspsaga show_line_diagnostics<cr>", "Line Diagnostics"},
         p = {"<cmd>Lspsaga preview_definition<cr>", "Preview Definition"},
