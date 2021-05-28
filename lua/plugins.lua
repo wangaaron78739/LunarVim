@@ -56,6 +56,7 @@ return require("packer").startup(
 
         -- Treesitter
         use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
+        use {"nvim-treesitter/nvim-treesitter-textobjects", run = ":TSUpdate"}
         use {"windwp/nvim-ts-autotag", opt = true}
 
         -- Explorer
@@ -125,6 +126,7 @@ return require("packer").startup(
         require_plugin("nvim-compe")
         require_plugin("vim-vsnip")
         require_plugin("nvim-treesitter")
+        require_plugin("nvim-treesitter-textobjects")
         require_plugin("nvim-ts-autotag")
         require_plugin("nvim-tree.lua")
         require_plugin("gitsigns.nvim")

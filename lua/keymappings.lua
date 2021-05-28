@@ -1,5 +1,4 @@
 vim.api.nvim_set_keymap('n', '-', ':RnvimrToggle<CR>', {noremap = true, silent = true})
-
 -- better window movement
 vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', {silent = true})
 vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', {silent = true})
@@ -71,3 +70,5 @@ vim.api.nvim_set_keymap('n', 'gx', ":call netrw#BrowseX(expand((exists('g:netrw_
 vim.api.nvim_set_keymap('', '<C-q>', ':call QuickFixToggle()<CR>', {noremap = true, silent = true})
 
 vim.api.nvim_set_keymap('n', 'Y', 'yg_', { noremap = true, silent = true })
+
+-- vim.api.nvim_set_keymap('n', 'vic', '?# %%<cr>VN', { noremap = true, silent = true })
