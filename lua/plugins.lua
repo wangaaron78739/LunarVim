@@ -95,12 +95,14 @@ return require("packer").startup(
           "folke/trouble.nvim",
           requires = "kyazdani42/nvim-web-devicons",
         }
+        use {"lervag/vimtex", opt = true}
 
         -- lsp extensions
         use {"nvim-lua/lsp_extensions.nvim", opt = true}
         use {"nvim-lua/completion-nvim", opt = true}
         use {"liuchengxu/vista.vim", opt = true}
 
+        require_plugin("vimtex")
         require_plugin("fzf")
         require_plugin("fzf.vim")
         require_plugin("vista.vim")
