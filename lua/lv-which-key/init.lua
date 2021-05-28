@@ -104,7 +104,7 @@ local mappings = {
     },
     h = {
         name = "+Config",
-        p = {"<cmd>e ~.config/nvim/<cr>", "Edit Private Config"},
+        p = {"<cmd>e ~/.config/nvim/<cr>", "Edit Private Config"},
     },
     l = {
         name = "+LSP",

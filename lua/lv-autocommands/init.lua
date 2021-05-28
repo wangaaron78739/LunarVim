@@ -71,6 +71,8 @@ utils.define_augroups({
         {'FileType', 'dashboard', 'nnoremap <silent> <buffer> q :q<CR>'},
         {'FileType', 'lspinfo', 'nnoremap <silent> <buffer> q :q<CR>'},
         {'FileType', 'floaterm', 'nnoremap <silent> <buffer> q :q<CR>'},
+        {'FileType', 'rnvimr', 'tnoremap <silent> <buffer> <nowait> - <ESC>:q<CR>'},
+        {'FileType', 'rnvimr', 'inoremap <silent> <buffer> <nowait> - <ESC>:q<CR>'},
     },
     _auto_formatters = auto_formatters
 })
