@@ -79,7 +79,7 @@ installpacker() {
 
 cloneconfig() {
 	echo "Cloning LunarVim configuration"
-	git clone git@github.com:wangaaron78739/LunarVim.git ~/.config/nvim
+	git clone https://github.com/wangaaron78739/LunarVim.git ~/.config/nvim
 	# mv $HOME/.config/nvim/init.lua $HOME/.config/nvim/init.lua.tmp
 	# mv $HOME/.config/nvim/utils/init.lua $HOME/.config/nvim/init.lua
 	nvim -u $HOME/.config/nvim/init.lua +PackerInstall
