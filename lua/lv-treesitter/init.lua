@@ -48,8 +48,6 @@ require'nvim-treesitter.configs'.setup {
             ["ic"] = "@class.inner",
             ["aa"] = "@parameter.outer",
             ["ia"] = "@parameter.inner",
-            ["aa"] = "@parameter.outer",
-            ["ia"] = "@parameter.inner",
             ["ak"] = "@block.outer",
             ["ik"] = "@block.inner",
             ["ac"] = "@conditional.outer",

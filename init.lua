@@ -62,6 +62,8 @@ require("trouble").setup {
     hover = "h"
 }
 
+require('neoscroll').setup()
+
 vim.cmd([[
 autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * TroubleRefresh
 ]])

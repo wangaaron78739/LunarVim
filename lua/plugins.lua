@@ -97,6 +97,7 @@ return require("packer").startup(
           requires = "kyazdani42/nvim-web-devicons",
         }
         use {"lervag/vimtex", opt = true}
+        use 'karb94/neoscroll.nvim'
 
         -- lsp extensions
         use {"nvim-lua/lsp_extensions.nvim", opt = true}
