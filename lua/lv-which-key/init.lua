@@ -122,7 +122,8 @@ local mappings = {
         t = {"<cmd>LspTypeDefinition<cr>", "Type Definition"},
         x = {"<cmd>cclose<cr>", "Close Quickfix"},
         s = {"<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols"},
-        S = {"<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace Symbols"}
+        S = {"<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace Symbols"},
+        v = {"<cmd>Vista nvim_lsp<cr>", "Vista"}
     },
     s = {
         name = "+Search",
@@ -142,10 +143,26 @@ local mappings = {
         t = {"<cmd>FloatermToggle<CR>", "Terminal"},
         T = {"<cmd>FloatermNew --wintype=normal --height=8<CR>", "Terminal Below"},
         r = {"<cmd>FloatermNew python<CR>", "Python"},
+        o = {"<cmd>!open '%:p:h'<CR>", "Open File Explorer"},
         p = {"<cmd>NvimTreeToggle<CR>", "FileTree Toggle"},
     },
-    S = {name = "+Session", s = {"<cmd>SessionSave<cr>", "Save Session"}, l = {"<cmd>SessionLoad<cr>", "Load Session"}}
-
+    S = {name = "+Session", s = {"<cmd>SessionSave<cr>", "Save Session"}, l = {"<cmd>SessionLoad<cr>", "Load Session"}},
+    t = {
+        name = "+Trouble",
+        t = {"<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Trouble"},
+        w = {"<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace"},
+        r = {"<cmd>TroubleToggle lsp_references<cr>", "References"},
+        d = {"<cmd>TroubleToggle lsp_definitions<cr>", "Definitions"},
+        q = {"<cmd>TroubleToggle quickfix<cr>", "Quick Fixes"},
+        l = {"<cmd>TroubleToggle loclist<cr>", "Location List"},
+    },
+    w = {
+        name = "+Window",
+        d = {"<C-W>q", "Delete Window"},
+        v = {"<C-W>v", "Vertical Split"},
+        s = {"<C-W>s", "Horizontal Split"},
+        w = {"<C-W>w", "Switch Window"},
+    },
 }
 
 local wk = require("which-key")
