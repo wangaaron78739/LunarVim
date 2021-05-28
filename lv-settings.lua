@@ -33,7 +33,7 @@ O.clang.diagnostics.underline = false
 -- add things like O.python.formatter.yapf.exec_path
 -- add things like O.python.linter.flake8.exec_path
 -- add things like O.python.formatter.isort.exec_path
-O.python.formatter = 'yapf'
+O.python.formatter = 'black'
 -- O.python.linter = 'flake8'
 O.python.isort = true
 O.python.autoformat = true
@@ -67,3 +67,42 @@ O.go.autoformat = true
 
 -- Turn off relative_numbers
 -- O.relative_number = false
+
+-- Aaron Custom Settings 
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.o.scrolloff = 10
+
+-- vimtex
+vim.g.tex_flavor='latex'
+vim.g.vimtex_view_method='zathura'
+vim.g.vimtex_quickfix_mode=0
+
+-- quick-scope
+vim.g.qs_highlight_on_keys = {'f', 'F', 't', 'T'}
+
+-- sneak
+vim.g["sneak#label"] = 1
+
+-- vm
+vim.g.VM_maps = {
+    ['Find Under'] = '<M-d>',
+    ['Find Subword Under'] = '<M-d>',
+    ['Select Cursor Down'] = '<M-C-Down>',
+    ['Select Cursor Up'] = '<M-C-Up>'
+}
+
+-- Floaterm
+vim.g.floaterm_keymap_toggle = '<F4>'
+-- vim.g.floaterm_keymap_next   = '<F2>'
+-- vim.g.floaterm_keymap_prev   = '<F3>'
+-- vim.g.floaterm_keymap_new    = '<F4>'
+vim.g.floaterm_title=''
+
+vim.g.floaterm_gitcommit='floaterm'
+vim.g.floaterm_shell=O.shell
+vim.g.floaterm_autoinsert=1
+vim.g.floaterm_width=0.8
+vim.g.floaterm_height=0.8
+vim.g.floaterm_wintitle=0
+vim.g.floaterm_autoclose=1

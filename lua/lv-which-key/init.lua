@@ -48,13 +48,13 @@ vim.api.nvim_set_keymap('n', '<Space>', '<NOP>', {noremap = true, silent = true}
 vim.g.mapleader = ' '
 
 -- no hl
-vim.api.nvim_set_keymap('n', '<Leader>h', ':set hlsearch!<CR>', {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', '<Leader>h', ':set hlsearch!<CR>', {noremap = true, silent = true})
 
--- explorer
-vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
+-- -- explorer
+-- vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
 
 -- telescope
-vim.api.nvim_set_keymap('n', '<Leader>f', ':Telescope find_files<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader><Space>', ':Telescope find_files<CR>', {noremap = true, silent = true})
 
 -- dashboard
 vim.api.nvim_set_keymap('n', '<Leader>;', ':Dashboard<CR>', {noremap = true, silent = true})
@@ -66,19 +66,24 @@ vim.api.nvim_set_keymap("v", "<leader>/", ":CommentToggle<CR>", {noremap = true,
 -- close buffer
 vim.api.nvim_set_keymap("n", "<leader>c", ":BufferClose<CR>", {noremap = true, silent = true})
 
--- TODO create entire treesitter section
+
+-- close buffer
+vim.api.nvim_set_keymap("n", "<leader>c", ":BufferClose<CR>", {noremap = true, silent = true})
+
+-- Custom Keymaps
+vim.api.nvim_set_keymap("n", "<M-x>", ":Telescope commands<CR>", {noremap = true, silent = true})
+
 
 local mappings = {
     ["/"] = "Comment",
     ["c"] = "Close Buffer",
-    ["e"] = "Explorer",
-    ["f"] = "Find File",
-    ["h"] = "No Highlight",
+    ["SPC"] = "Find File",
     d = {
-        name = "+Debug",
+        name = "+Debug/Directory",
         b = {"<cmd>DebugToggleBreakpoint<cr>", "Toggle Breakpoint"},
         c = {"<cmd>DebugContinue<cr>", "Continue"},
         i = {"<cmd>DebugStepInto<cr>", "Step Into"},
+        j = {"<cmd>RnvimrToggle<cr>", "Open Rnvimr"},
         o = {"<cmd>DebugStepOver<cr>", "Step Over"},
         r = {"<cmd>DebugToggleRepl<cr>", "Toggle Repl"},
         s = {"<cmd>DebugStart<cr>", "Start"}
@@ -96,6 +101,10 @@ local mappings = {
         b = {"<cmd>Telescope git_branches<cr>", "Checkout branch"},
         c = {"<cmd>Telescope git_commits<cr>", "Checkout commit"},
         C = {"<cmd>Telescope git_bcommits<cr>", "Checkout commit(for current file)"},
+    },
+    h = {
+        name = "+Config",
+        p = {"<cmd>e ~.config/nvim/<cr>", "Edit Private Config"},
     },
     l = {
         name = "+LSP",
@@ -115,7 +124,6 @@ local mappings = {
         s = {"<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols"},
         S = {"<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace Symbols"}
     },
-
     s = {
         name = "+Search",
         b = {"<cmd>Telescope git_branches<cr>", "Checkout branch"},
@@ -129,7 +137,15 @@ local mappings = {
         R = {"<cmd>Telescope registers<cr>", "Registers"},
         t = {"<cmd>Telescope live_grep<cr>", "Text"}
     },
+    o = {
+        name = "+Open",
+        t = {"<cmd>FloatermToggle<CR>", "Terminal"},
+        T = {"<cmd>FloatermNew --wintype=normal --height=8<CR>", "Terminal Below"},
+        r = {"<cmd>FloatermNew python<CR>", "Python"},
+        p = {"<cmd>NvimTreeToggle<CR>", "FileTree Toggle"},
+    },
     S = {name = "+Session", s = {"<cmd>SessionSave<cr>", "Save Session"}, l = {"<cmd>SessionLoad<cr>", "Load Session"}}
+
 }
 
 local wk = require("which-key")

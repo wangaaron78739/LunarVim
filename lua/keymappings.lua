@@ -22,8 +22,8 @@ vim.cmd([[
 
 -- TODO fix this
 -- resize with arrows
-vim.api.nvim_set_keymap('n', '<C-Up>', ':resize -2<CR>', {silent = true})
-vim.api.nvim_set_keymap('n', '<C-Down>', ':resize +2<CR>', {silent = true})
+-- vim.api.nvim_set_keymap('n', '<C-Up>', ':resize -2<CR>', {silent = true})
+-- vim.api.nvim_set_keymap('n', '<C-Down>', ':resize +2<CR>', {silent = true})
 vim.api.nvim_set_keymap('n', '<C-Left>', ':vertical resize -2<CR>', {silent = true})
 vim.api.nvim_set_keymap('n', '<C-Right>', ':vertical resize +2<CR>', {silent = true})
 
@@ -66,3 +66,4 @@ vim.api.nvim_set_keymap('n', 'gx', ":call netrw#BrowseX(expand((exists('g:netrw_
 
 -- Toggle the QuickFix window
 vim.api.nvim_set_keymap('', '<C-q>', ':call QuickFixToggle()<CR>', {noremap = true, silent = true})
+

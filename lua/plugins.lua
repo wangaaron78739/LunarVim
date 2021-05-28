@@ -83,11 +83,11 @@ return require("packer").startup(
         use {"romgrk/barbar.nvim", opt = true}
 
         require_plugin("nvim-lspconfig")
-        require_plugin("lspsaga.nvim")
         require_plugin("nvim-lspinstall")
+        require_plugin("lspsaga.nvim")
         require_plugin("friendly-snippets")
-        require_plugin("popup.nvim")
         require_plugin("plenary.nvim")
+        require_plugin("popup.nvim")
         require_plugin("telescope.nvim")
         require_plugin("nvim-dap")
         require_plugin("nvim-compe")
@@ -105,5 +105,50 @@ return require("packer").startup(
         require_plugin("nvim-web-devicons")
         require_plugin("galaxyline.nvim")
         require_plugin("barbar.nvim")
+
+        ----------
+        -- PLUGINS!
+        use {"unblevable/quick-scope", opt = true}
+        use {"justinmk/vim-sneak", opt = true}
+        use {"wellle/targets.vim", opt = true}
+        use {"mg979/vim-visual-multi", opt = true}
+        use {"dag/vim-fish", opt = true}
+        use {"tpope/vim-surround", opt = true}
+        use {"junegunn/fzf", opt = true}
+        use {"junegunn/fzf.vim", opt = true}
+        use {
+          "folke/trouble.nvim",
+          requires = "kyazdani42/nvim-web-devicons",
+        }
+
+        -- terminal
+        use {'voldikss/vim-floaterm', opt = true}
+
+        -- lsp extensions
+        use {"nvim-lua/lsp_extensions.nvim", opt = true}
+        use {"nvim-lua/completion-nvim", opt = true}
+        use {"liuchengxu/vista.vim", opt = true}
+
+        -- latex
+        use {"lervag/vimtex", opt = true}
+        use {"SirVer/ultisnips", opt = true}
+
+
+        require_plugin("fzf")
+        require_plugin("fzf.vim")
+        require_plugin("vista.vim")
+        require_plugin("vim-surround")
+        require_plugin("lsp_extensions.nvim")
+        require_plugin("completion-nvim")
+        require_plugin("targets.vim")
+        require_plugin("quick-scope")
+        require_plugin("vim-fish")
+        require_plugin("vim-visual-multi")
+        require_plugin("vim-sneak")
+        require_plugin("vimtex")
+        require_plugin("ultisnips")
+        require_plugin("vim-floaterm")
+
+
     end
 )
