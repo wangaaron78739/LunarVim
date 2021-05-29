@@ -191,6 +191,7 @@ local mappings = {
         o = {"<cmd>TodoTelescope<cr>", "TODOs"}
     },
     S = {name = "+Session", s = {"<cmd>SessionSave<cr>", "Save Session"}, l = {"<cmd>SessionLoad<cr>", "Load Session"}},
+    z = {
         name = "+Zen",
         s = {"<cmd>TZBottom<cr>", "toggle status line"},
         t = {"<cmd>TZTop<cr>", "toggle tab bar"},
