@@ -63,7 +63,8 @@ require("trouble").setup {
 }
 
 require('neoscroll').setup()
-require("todo-comments").setup()
+require('todo-comments').setup()
+require('diffview').setup()
 
 vim.cmd([[
 autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * TroubleRefresh

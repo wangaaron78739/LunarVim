@@ -101,6 +101,7 @@ return require("packer").startup(
         use {"Shatur95/neovim-cmake", opt = true}
         use 'karb94/neoscroll.nvim'
         use "folke/todo-comments.nvim"
+        use 'sindrets/diffview.nvim'
 
         -- lsp extensions
         use {"nvim-lua/lsp_extensions.nvim", opt = true}
