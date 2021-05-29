@@ -98,7 +98,7 @@ local mappings = {
         t = {"<cmd>lua require'FTerm'.toggle()<CR>", "Terminal"},
         B = {"<cmd>lua _G.__fterm_broot()<CR>", "Broot"},
         P = {"<cmd>lua _G.__fterm_python()<CR>", "Python"},
-        G = {"<cmd>lua _G.__fterm_gitui()<CR>", "Gitui"},
+        T = {"<cmd>lua _G.__fterm_top()<CR>", "top"},
         -- t = {"<cmd>FloatermToggle<CR>", "Terminal"},
         -- T = {"<cmd>FloatermNew --wintype=normal --height=8<CR>", "Terminal Below"},
         -- P = {"<cmd>FloatermNew python<CR>", "Python"},
