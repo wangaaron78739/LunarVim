@@ -21,6 +21,13 @@ local python = term:new():setup({
         width = 0.9
     }
 })
+local spt = term:new():setup({
+    cmd = "spt",
+    dimensions = {
+        height = 0.9,
+        width = 0.9
+    }
+})
 local top = term:new():setup({
     cmd = "btm",
     dimensions = {
@@ -39,4 +46,7 @@ function _G.__fterm_gitui()
 end
 function _G.__fterm_top()
     top:toggle()
+end
+function _G.__fterm_spt()
+    spt:toggle()
 end
