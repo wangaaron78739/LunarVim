@@ -96,13 +96,17 @@ return require("packer").startup(
           requires = "kyazdani42/nvim-web-devicons",
         }
         use {"lervag/vimtex", opt = true}
+        use {"skywind3000/asyncrun.vim", opt = true}
+        use {"Shatur95/neovim-cmake", opt = true }
 
         -- lsp extensions
         use {"nvim-lua/lsp_extensions.nvim", opt = true}
         use {"nvim-lua/completion-nvim", opt = true}
         use {"liuchengxu/vista.vim", opt = true}
 
+        require_plugin("asyncrun.vim")
         require_plugin("vimtex")
+        require_plugin("neovim-cmake")
         require_plugin("fzf")
         require_plugin("fzf.vim")
         require_plugin("vista.vim")
