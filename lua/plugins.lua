@@ -133,7 +133,6 @@ return require("packer").startup(
         use {"lervag/vimtex", opt = true}
         use {"SirVer/ultisnips", opt = true}
 
-
         require_plugin("fzf")
         require_plugin("fzf.vim")
         require_plugin("vista.vim")
@@ -148,7 +147,6 @@ return require("packer").startup(
         require_plugin("vimtex")
         require_plugin("ultisnips")
         require_plugin("vim-floaterm")
-
 
     end
 )
