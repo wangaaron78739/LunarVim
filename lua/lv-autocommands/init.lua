@@ -87,7 +87,7 @@ utils.define_augroups({
         {'BufNewFile', '*.gmi', 'setlocal filetype=markdown'}
     },
     _latex = {
-        {'BufRead', '*.fish', 'VimtexCompile'},
+        {'BufRead', '*.tex', 'VimtexCompile'},
     },
     _buffer_bindings = {
         {'FileType', 'dashboard', 'nnoremap <silent> <buffer> q :q<CR>'},
