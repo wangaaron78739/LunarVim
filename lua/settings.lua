@@ -18,7 +18,7 @@ vim.o.splitbelow = true -- Horizontal splits will automatically be below
 vim.o.termguicolors = true -- set term gui colors most terminals support this
 vim.o.splitright = true -- Vertical splits will automatically be to the right
 -- vim.o.t_Co = "256" -- Support 256 colors
-vim.o.conceallevel = 0 -- So that I can see `` in markdown files
+-- vim.o.conceallevel = 0 -- So that I can see `` in markdown files
 vim.cmd('set ts=4') -- Insert 2 spaces for a tab
 vim.cmd('set sw=4') -- Change the number of space characters inserted for indentation
 vim.cmd('set expandtab') -- Converts tabs to spaces
@@ -46,6 +46,7 @@ vim.o.guifont = "FiraCode Nerd Font:h13"
 vim.g.tex_flavor='latex'
 vim.g.vimtex_view_method='zathura'
 vim.g.vimtex_quickfix_mode=0
+vim.g.tex_conceal = 'abdmgs'
 
 -- quick-scope
 vim.g.qs_highlight_on_keys = {'f', 'F', 't', 'T'}
@@ -56,10 +57,10 @@ vim.g["sneak#label"] = 1
 -- Can these be moved to a new file?
 -- vm
 vim.g.VM_maps = {
-    ['Find Under'] = '<M-d>',
-    ['Find Subword Under'] = '<M-d>',
-    ['Select Cursor Down'] = '<M-C-Down>',
-    ['Select Cursor Up'] = '<M-C-Up>'
+    -- ['Find Under'] = '<M-d>',
+    -- ['Find Subword Under'] = '<M-d>',
+    ['Select Cursor Down'] = '<C-S-j>',
+    ['Select Cursor Up'] = '<C-S-k>'
 }
 
 -- vim.o.guifont = "JetBrains\\ Mono\\ Regular\\ Nerd\\ Font\\ Complete"
@@ -78,3 +79,5 @@ vim.g.floaterm_width=0.8
 vim.g.floaterm_height=0.8
 vim.g.floaterm_wintitle=0
 vim.g.floaterm_autoclose=1
+
+vim.cmd('set conceallevel=2')
