@@ -56,6 +56,7 @@ return require("packer").startup(
 
         -- Treesitter
         use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
+        use {"nvim-treesitter/nvim-treesitter-textobjects", run = ":TSUpdate"}
         use {"windwp/nvim-ts-autotag", opt = true}
 
         -- Explorer
@@ -98,12 +99,14 @@ return require("packer").startup(
         use {"lervag/vimtex", opt = true}
         use {"skywind3000/asyncrun.vim", opt = true}
         use {"Shatur95/neovim-cmake", opt = true }
+        use { 'karb94/neoscroll.nvim', opt = true }
 
         -- lsp extensions
         use {"nvim-lua/lsp_extensions.nvim", opt = true}
         use {"nvim-lua/completion-nvim", opt = true}
         use {"liuchengxu/vista.vim", opt = true}
 
+        require_plugin("neoscroll.vim")
         require_plugin("asyncrun.vim")
         require_plugin("vimtex")
         require_plugin("neovim-cmake")
@@ -129,6 +132,7 @@ return require("packer").startup(
         require_plugin("nvim-compe")
         require_plugin("vim-vsnip")
         require_plugin("nvim-treesitter")
+        require_plugin("nvim-treesitter-textobjects")
         require_plugin("nvim-ts-autotag")
         require_plugin("nvim-tree.lua")
         require_plugin("gitsigns.nvim")
