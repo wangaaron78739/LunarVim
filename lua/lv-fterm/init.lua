@@ -12,7 +12,6 @@ require('FTerm').setup({
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
--- Closer to the metal
 map('n', '<M-j>', '<CMD>lua require("FTerm").toggle()<CR>', opts)
 map('t', '<M-j>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', opts)
 
@@ -46,3 +45,5 @@ function _G.__fterm_spt()
 end
 map('n', '<M-,>', "<CMD>lua _G.__fterm_spt()<CR>", opts)
 map('t', '<M-,>', "<C-\\><C-n><CMD>lua _G.__fterm_spt()<CR>", opts)
+
+

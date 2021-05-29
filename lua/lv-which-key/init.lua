@@ -54,7 +54,7 @@ vim.g.mapleader = ' '
 -- vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
 
 -- telescope
-vim.api.nvim_set_keymap('n', '<Leader><Space>', ':Telescope find_files<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader><Space>', ':Telescope find_files find_command=rg,--ignore,--hidden,--files<CR>', {noremap = true, silent = true})
 
 -- dashboard
 vim.api.nvim_set_keymap('n', '<Leader>;', ':Dashboard<CR>', {noremap = true, silent = true})
