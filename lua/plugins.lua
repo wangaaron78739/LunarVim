@@ -157,48 +157,48 @@ return require("packer").startup(function(use)
     end
 
     -- amedhi plugins
-        use {"unblevable/quick-scope", opt = true}
-        use {"justinmk/vim-sneak", opt = true}
-        use {"wellle/targets.vim", opt = true}
-        use {"mg979/vim-visual-multi", opt = true}
-        use {"dag/vim-fish", opt = true}
-        use {"tpope/vim-surround", opt = true}
-        -- use {"junegunn/fzf", opt = true} -- Telescope does most of this?
-        -- use {"junegunn/fzf.vim", opt = true}
-        use {
-          "folke/trouble.nvim",
-          requires = "kyazdani42/nvim-web-devicons",
-        }
-        use {"lervag/vimtex", opt = true}
-        use {"skywind3000/asyncrun.vim", opt = true}
-        use {"Shatur95/neovim-cmake", opt = true}
-        use 'karb94/neoscroll.nvim'
-        use "folke/todo-comments.nvim"
-        use 'sindrets/diffview.nvim'
-        use {'voldikss/vim-floaterm', opt = true}
-        use {"SirVer/ultisnips", opt = true}
+    use {"unblevable/quick-scope", opt = true}
+    use {"justinmk/vim-sneak", opt = true}
+    use {"wellle/targets.vim", opt = true}
+    use {"mg979/vim-visual-multi", opt = true}
+    use {"dag/vim-fish", opt = true}
+    use {"tpope/vim-surround", opt = true}
+    -- use {"junegunn/fzf", opt = true} -- Telescope does most of this?
+    -- use {"junegunn/fzf.vim", opt = true}
+    use {
+      "folke/trouble.nvim",
+      requires = "kyazdani42/nvim-web-devicons",
+    }
+    use {"lervag/vimtex", opt = true}
+    use {"skywind3000/asyncrun.vim", opt = true}
+    use {"Shatur95/neovim-cmake", opt = true}
+    use 'karb94/neoscroll.nvim'
+    use "folke/todo-comments.nvim"
+    use 'sindrets/diffview.nvim'
+    use {'voldikss/vim-floaterm', opt = true}
+    use {"SirVer/ultisnips", opt = true}
 
-        -- lsp extensions
-        use {"nvim-lua/lsp_extensions.nvim", opt = true}
-        use {"nvim-lua/completion-nvim", opt = true}
-        use {"liuchengxu/vista.vim", opt = true}
+    -- lsp extensions
+    use {"nvim-lua/lsp_extensions.nvim", opt = true}
+    use {"nvim-lua/completion-nvim", opt = true}
+    use {"liuchengxu/vista.vim", opt = true}
 
-        require_plugin("ultisnips")
-        require_plugin("vim-floaterm")
-        require_plugin("asyncrun.vim")
-        require_plugin("vimtex")
-        require_plugin("neovim-cmake")
-        require_plugin("fzf")
-        require_plugin("fzf.vim")
-        require_plugin("vista.vim")
-        require_plugin("vim-surround")
-        require_plugin("lsp_extensions.nvim")
-        require_plugin("completion-nvim")
-        require_plugin("targets.vim")
-        require_plugin("quick-scope")
-        require_plugin("vim-fish")
-        require_plugin("vim-visual-multi")
-        require_plugin("vim-sneak")
-        require_plugin("nvim-treesitter-textobjects")
+    require_plugin("ultisnips")
+    require_plugin("vim-floaterm")
+    require_plugin("asyncrun.vim")
+    require_plugin("vimtex")
+    require_plugin("neovim-cmake")
+    require_plugin("fzf")
+    require_plugin("fzf.vim")
+    require_plugin("vista.vim")
+    require_plugin("vim-surround")
+    require_plugin("lsp_extensions.nvim")
+    require_plugin("completion-nvim")
+    require_plugin("targets.vim")
+    require_plugin("quick-scope")
+    require_plugin("vim-fish")
+    require_plugin("vim-visual-multi")
+    require_plugin("vim-sneak")
+    require_plugin("nvim-treesitter-textobjects")
 
 end)
