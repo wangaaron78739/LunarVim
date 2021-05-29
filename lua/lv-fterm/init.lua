@@ -26,9 +26,23 @@ local gitui = term:new():setup({
     }
 })
 
- -- Use this to toggle gitui in a floating terminal
 function _G.__fterm_gitui()
     gitui:toggle()
 end
 map('n', '<M-g>', "<CMD>lua _G.__fterm_gitui()<CR>", opts)
 map('t', '<M-g>', "<C-\\><C-n><CMD>lua _G.__fterm_gitui()<CR>", opts)
+
+
+local spt = term:new():setup({
+    cmd = "spt",
+    dimensions = {
+        height = 0.9,
+        width = 0.9
+    }
+})
+
+function _G.__fterm_spt()
+    spt:toggle()
+end
+map('n', '<M-,>', "<CMD>lua _G.__fterm_spt()<CR>", opts)
+map('t', '<M-,>', "<C-\\><C-n><CMD>lua _G.__fterm_spt()<CR>", opts)
