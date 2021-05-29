@@ -30,6 +30,8 @@ vim.api.nvim_set_keymap('n', '<C-Left>', ':vertical resize -2<CR>', {silent = tr
 vim.api.nvim_set_keymap('n', '<C-Right>', ':vertical resize +2<CR>', {silent = true})
 
 -- better indenting
+vim.api.nvim_set_keymap('n', '<', 'v<', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '>', 'v>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('v', '<', '<gv', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('v', '>', '>gv', {noremap = true, silent = true})
 
@@ -53,13 +55,13 @@ vim.cmd('inoremap <expr> <c-k> (\"\\<C-p>\")')
 -- fix to get netrw's gx command to work correctly
 vim.api.nvim_set_keymap('n', 'gx', ":call netrw#BrowseX(expand((exists('g:netrw_gx')? g:netrw_gx : '<cfile>')),netrw#CheckIfRemote())<cr>", {noremap = true, silent = true})
 
-vim.cmd('vnoremap p "0p')
-vim.cmd('vnoremap P "0P')
+-- vim.cmd('vnoremap p "0p')
+-- vim.cmd('vnoremap P "0P')
 -- vim.api.nvim_set_keymap('v', 'p', '"0p', {silent = true})
 -- vim.api.nvim_set_keymap('v', 'P', '"0P', {silent = true})
 
--- vim.cmd('inoremap <expr> <TAB> (\"\\<C-n>\")')
--- vim.cmd('inoremap <expr> <S-TAB> (\"\\<C-p>\")')
+vim.cmd('inoremap <expr> <TAB> (\"\\<C-n>\")')
+vim.cmd('inoremap <expr> <S-TAB> (\"\\<C-p>\")')
 
 -- vim.api.nvim_set_keymap('i', '<C-TAB>', 'compe#complete()', {noremap = true, silent = true, expr = true})
 

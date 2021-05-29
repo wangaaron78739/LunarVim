@@ -49,7 +49,7 @@ vim.g.vimtex_quickfix_mode=0
 vim.g.tex_conceal = 'abdmgs'
 
 -- quick-scope
-vim.g.qs_highlight_on_keys = {'f', 'F', 't', 'T'}
+-- vim.g.qs_highlight_on_keys = {'f', 'F', 't', 'T'}
 
 -- sneak
 vim.g["sneak#label"] = 1
@@ -81,3 +81,5 @@ vim.g.floaterm_wintitle=0
 vim.g.floaterm_autoclose=1
 
 vim.cmd('set conceallevel=2')
+
+vim.g.UltiSnipsExpandTrigger = '<f5>'
