@@ -29,6 +29,7 @@ if O.extras then
     require('lv-numb')
     require('lv-hop')
     require('lv-colorizer')
+    require('lv-fterm')
 end
 
 

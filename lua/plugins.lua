@@ -126,7 +126,7 @@ return require("packer").startup(function(use)
         require_plugin('codi.vim')
         use {'iamcco/markdown-preview.nvim', run = 'cd app && npm install', opt = true}
         require_plugin('markdown-preview.nvim')
-        use {'numToStr/FTerm.nvim', opt = true}
+        use {'numToStr/FTerm.nvim'}
         require_plugin('numToStr/FTerm.nvim')
         use {'monaqa/dial.nvim', opt = true}
         require_plugin('dial.nvim')
@@ -147,14 +147,17 @@ return require("packer").startup(function(use)
         -- simrat39/symbols-outline.nvim
 
         -- Git
-        -- use {'tpope/vim-fugitive', opt = true}
-        -- use {'tpope/vim-rhubarb', opt = true}
+        use {'tpope/vim-fugitive', opt = true}
+        require_plugin('tpope/vim-fugitive')
+        use {'tpope/vim-rhubarb', opt = true}
+        require_plugin('tpope/rhubarb')
         -- pwntester/octo.nvim
 
         -- Easily Create Gists
         -- use {'mattn/vim-gist', opt = true}
         -- use {'mattn/webapi-vim', opt = true}
 
+    end
         ----------
         -- PLUGINS!
         use {"unblevable/quick-scope", opt = true}
@@ -165,9 +168,6 @@ return require("packer").startup(function(use)
         use {"tpope/vim-surround", opt = true}
         use {"junegunn/fzf", opt = true}
         use {"junegunn/fzf.vim", opt = true}
-
-        -- terminal
-        use {'voldikss/vim-floaterm', opt = true}
 
         -- lsp extensions
         use {"nvim-lua/lsp_extensions.nvim", opt = true}
@@ -192,6 +192,4 @@ return require("packer").startup(function(use)
         require_plugin("vimtex")
         require_plugin("ultisnips")
         require_plugin("vim-floaterm")
-    end
-
 end)

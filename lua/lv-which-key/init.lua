@@ -74,7 +74,6 @@ vim.api.nvim_set_keymap('n', '<leader>p', ":lua require'telescope'.extensions.pr
 -- Custom Keymaps
 vim.api.nvim_set_keymap("n", "<M-x>", ":Telescope commands<CR>", {noremap = true, silent = true})
 
-
 local mappings = {
     ["/"] = "Comment",
     ["c"] = "Close Buffer",
@@ -151,11 +150,9 @@ local mappings = {
     },
     o = {
         name = "+Open",
-        t = {"<cmd>FloatermToggle<CR>", "Terminal"},
-        T = {"<cmd>FloatermNew --wintype=normal --height=8<CR>", "Terminal Below"},
-        r = {"<cmd>FloatermNew python<CR>", "Python"},
-        o = {"<cmd>!open '%:p:h'<CR>", "Open File Explorer"},
-        p = {"<cmd>NvimTreeToggle<CR>", "FileTree Toggle"},
+        t = {"<cmd>lua require('FTerm').toggle()<cr>", "Terminal"},
+        o = {"<cmd>!open '%:p:h'<cr>", "Open File Explorer"},
+        p = {"<cmd>NvimTreeToggle<cr>", "FileTree Toggle"},
     },
     S = {name = "+Session", s = {"<cmd>SessionSave<cr>", "Save Session"}, l = {"<cmd>SessionLoad<cr>", "Load Session"}},
     w = {

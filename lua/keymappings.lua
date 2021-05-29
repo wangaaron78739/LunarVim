@@ -56,8 +56,8 @@ vim.cmd('vnoremap P "0P')
 -- vim.api.nvim_set_keymap('v', 'p', '"0p', {silent = true})
 -- vim.api.nvim_set_keymap('v', 'P', '"0P', {silent = true})
 
--- vim.cmd('inoremap <expr> <TAB> (\"\\<C-n>\")')
--- vim.cmd('inoremap <expr> <S-TAB> (\"\\<C-p>\")')
+vim.cmd('inoremap <expr> <TAB> (\"\\<C-n>\")')
+vim.cmd('inoremap <expr> <S-TAB> (\"\\<C-p>\")')
 
 -- vim.api.nvim_set_keymap('i', '<C-TAB>', 'compe#complete()', {noremap = true, silent = true, expr = true})
 
