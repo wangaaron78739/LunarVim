@@ -68,5 +68,3 @@ require'nvim-treesitter.configs'.setup {
         },
     },
 }
-
-vim.api.nvim_command('au! BufRead,BufNewFile *.fish set filetype=fish')

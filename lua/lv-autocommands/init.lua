@@ -28,6 +28,8 @@ if O.ruby.autoformat then table.insert(auto_formatters, ruby_format) end
 local go_format = {'BufWritePre', '*.go', 'lua vim.lsp.buf.formatting_sync(nil,1000)'}
 if O.go.autoformat then table.insert(auto_formatters, go_format) end
 
+vim.api.nvim_command('au! BufRead,BufNewFile *.fish set filetype=fish')
+
 utils.define_augroups({
     _general_settings = {
         {'TextYankPost', '*', 'lua require(\'vim.highlight\').on_yank({higroup = \'Search\', timeout = 200})'},
@@ -71,6 +73,8 @@ utils.define_augroups({
         {'FileType', 'dashboard', 'nnoremap <silent> <buffer> q :q<CR>'},
         {'FileType', 'lspinfo', 'nnoremap <silent> <buffer> q :q<CR>'},
         {'FileType', 'floaterm', 'nnoremap <silent> <buffer> q :q<CR>'},
+        {'FileType', 'rnvimr', 'tnoremap <silent> <buffer> <nowait> - <ESC>:q<CR>'},
+        {'FileType', 'rnvimr', 'inoremap <silent> <buffer> <nowait> - <ESC>:q<CR>'},
     },
     _auto_formatters = auto_formatters
 })

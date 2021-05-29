@@ -42,4 +42,39 @@ vim.cmd('filetype plugin on') -- filetype detection
 -- vim.o.guifont = "SauceCodePro Nerd Font:h17"
 vim.o.guifont = "FiraCode Nerd Font:h13"
 
+--- vimtex
+vim.g.tex_flavor='latex'
+vim.g.vimtex_view_method='zathura'
+vim.g.vimtex_quickfix_mode=0
+
+-- quick-scope
+vim.g.qs_highlight_on_keys = {'f', 'F', 't', 'T'}
+
+-- sneak
+vim.g["sneak#label"] = 1
+
+-- Can these be moved to a new file?
+-- vm
+vim.g.VM_maps = {
+    ['Find Under'] = '<M-d>',
+    ['Find Subword Under'] = '<M-d>',
+    ['Select Cursor Down'] = '<M-C-Down>',
+    ['Select Cursor Up'] = '<M-C-Up>'
+}
+
 -- vim.o.guifont = "JetBrains\\ Mono\\ Regular\\ Nerd\\ Font\\ Complete"
+
+-- Floaterm
+vim.g.floaterm_keymap_toggle = '<F4>'
+-- vim.g.floaterm_keymap_next   = '<F2>'
+-- vim.g.floaterm_keymap_prev   = '<F3>'
+-- vim.g.floaterm_keymap_new    = '<F4>'
+vim.g.floaterm_title=''
+
+vim.g.floaterm_gitcommit='floaterm'
+vim.g.floaterm_shell=O.shell
+vim.g.floaterm_autoinsert=1
+vim.g.floaterm_width=0.8
+vim.g.floaterm_height=0.8
+vim.g.floaterm_wintitle=0
+vim.g.floaterm_autoclose=1

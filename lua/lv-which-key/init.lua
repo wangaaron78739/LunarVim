@@ -52,7 +52,7 @@ vim.g.mapleader = ' '
 vim.api.nvim_set_keymap('n', '<Leader>h', ':noh<CR>', {noremap = true, silent = true})
 
 -- explorer
-vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
 
 -- telescope
 vim.api.nvim_set_keymap('n', '<Leader>f', ':Telescope find_files<CR>', {noremap = true, silent = true})
@@ -83,7 +83,18 @@ local mappings = {
     [" "] = "Commands",
     ["/"] = "Comment",
     ["c"] = "Close Buffer",
-    ["e"] = "Explorer",
+    -- ["e"] = "Explorer",
+    o = {
+        name = "+Open new...",
+        s = {"<cmd>:NvimTreeToggle<cr>", "Sidebar"},
+        r = {"<cmd>:RnvimrToggle<cr>", "Ranger"},
+        p = {"<cmd>e ~/.config/nvim/<cr>", "Edit Private Config"},
+        t = {"<cmd>FloatermToggle<CR>", "Terminal"},
+        T = {"<cmd>FloatermNew --wintype=normal --height=8<CR>", "Terminal Below"},
+        P = {"<cmd>FloatermNew python<CR>", "Python"},
+        b = {"<cmd>FloatermNew broot<CR>", "Broot"},
+        o = {"<cmd>!open '%:p:h'<CR>", "Open File Explorer"},
+    },
     ["f"] = "Find File",
     ["h"] = "No Highlight",
     ["w"] = "Save",
@@ -157,7 +168,7 @@ local mappings = {
         m = {"<cmd>Telescope marks<cr>", "Marks"},
         M = {"<cmd>Telescope man_pages<cr>", "Man Pages"},
         r = {"<cmd>Telescope oldfiles<cr>", "Open Recent File"},
-        R = {"<cmd>Telescope registers<cr>", "Registers"},
+        R = {"<cmd>Telesope registers<cr>", "Registers"},
         t = {"<cmd>Telescope live_grep<cr>", "Text"},
         o = {"<cmd>TodoTelescope<cr>", "TODOs"}
     },

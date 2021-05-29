@@ -90,8 +90,8 @@ return require("packer").startup(
         use {"mg979/vim-visual-multi", opt = true}
         use {"dag/vim-fish", opt = true}
         use {"tpope/vim-surround", opt = true}
-        use {"junegunn/fzf", opt = true}
-        use {"junegunn/fzf.vim", opt = true}
+        -- use {"junegunn/fzf", opt = true} -- Telescope does most of this?
+        -- use {"junegunn/fzf.vim", opt = true}
         use {
           "folke/trouble.nvim",
           requires = "kyazdani42/nvim-web-devicons",
@@ -102,12 +102,16 @@ return require("packer").startup(
         use 'karb94/neoscroll.nvim'
         use "folke/todo-comments.nvim"
         use 'sindrets/diffview.nvim'
+        use {'voldikss/vim-floaterm', opt = true}
+        use {"SirVer/ultisnips", opt = true}
 
         -- lsp extensions
         use {"nvim-lua/lsp_extensions.nvim", opt = true}
         use {"nvim-lua/completion-nvim", opt = true}
         use {"liuchengxu/vista.vim", opt = true}
 
+        require_plugin("ultisnips")
+        require_plugin("vim-floaterm")
         require_plugin("asyncrun.vim")
         require_plugin("vimtex")
         require_plugin("neovim-cmake")
