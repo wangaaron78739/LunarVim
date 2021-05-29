@@ -12,7 +12,8 @@ O = {
     relative_number = true,
     shell = 'fish',
     timeoutlen = 100,
-    nvim_tree_disable_netrw = 0, 
+    nvim_tree_disable_netrw = 0,
+    extras = false,
 
     -- @usage pass a table with your desired languages
     treesitter = {
