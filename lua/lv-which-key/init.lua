@@ -80,6 +80,7 @@ vim.api.nvim_set_keymap("n", "<leader><space>", ":Telescope commands<CR>", {nore
 -- open projects
 vim.api.nvim_set_keymap('n', '<leader>p', ":lua require'telescope'.extensions.project.project{}<CR>",
                         {noremap = true, silent = true})
+
 -- TODO create entire treesitter section
 
 -- TODO support vim-surround in the which-key menus
@@ -94,10 +95,14 @@ local mappings = {
         s = {"<cmd>:NvimTreeToggle<cr>", "Sidebar"},
         r = {"<cmd>:RnvimrToggle<cr>", "Ranger"},
         p = {"<cmd>e ~/.config/nvim/<cr>", "Edit Private Config"},
-        t = {"<cmd>FloatermToggle<CR>", "Terminal"},
-        T = {"<cmd>FloatermNew --wintype=normal --height=8<CR>", "Terminal Below"},
-        P = {"<cmd>FloatermNew python<CR>", "Python"},
-        b = {"<cmd>FloatermNew broot<CR>", "Broot"},
+        t = {"<cmd>lua require'FTerm'.toggle()<CR>", "Terminal"},
+        B = {"<cmd>lua _G.__fterm_broot()<CR>", "Broot"},
+        P = {"<cmd>lua _G.__fterm_python()<CR>", "Python"},
+        G = {"<cmd>lua _G.__fterm_gitui()<CR>", "Gitui"},
+        -- t = {"<cmd>FloatermToggle<CR>", "Terminal"},
+        -- T = {"<cmd>FloatermNew --wintype=normal --height=8<CR>", "Terminal Below"},
+        -- P = {"<cmd>FloatermNew python<CR>", "Python"},
+        -- b = {"<cmd>FloatermNew broot<CR>", "Broot"},
         o = {"<cmd>!open '%:p:h'<CR>", "Open File Explorer"},
     },
     ["f"] = "Find File",
@@ -117,6 +122,8 @@ local mappings = {
     },
     g = {
         name = "+Git",
+        g = {"<cmd>_G.__fterm_gitui()<CR>", "Gitui"},
+        m = {"<cmd>!smerge '%:p:h'<CR>", "Sublime Merge"},
         j = {"<cmd>NextHunk<cr>", "Next Hunk"},
         k = {"<cmd>PrevHunk<cr>", "Prev Hunk"},
         p = {"<cmd>PreviewHunk<cr>", "Preview Hunk"},
@@ -183,8 +190,6 @@ local mappings = {
         o = {"<cmd>TodoTelescope<cr>", "TODOs"}
     },
     S = {name = "+Session", s = {"<cmd>SessionSave<cr>", "Save Session"}, l = {"<cmd>SessionLoad<cr>", "Load Session"}},
-
-    -- extras
     z = {
         name = "+Zen",
         s = {"<cmd>TZBottom<cr>", "toggle status line"},
