@@ -62,6 +62,8 @@ vim.api.nvim_set_keymap('n', '<Leader>;', ':Dashboard<CR>', {noremap = true, sil
 
 -- Global search
 vim.api.nvim_set_keymap("n", "<leader>/", "<cmd>Telescope live_grep<cr>", {noremap = true, silent = true})
+-- Comments
+-- vim.api.nvim_set_keymap("n", "<leader>/", ":CommentToggle<CR>", {noremap = true, silent = true})
 -- vim.api.nvim_set_keymap("v", "<leader>/", ":CommentToggle<CR>", {noremap = true, silent = true})
 
 -- close buffer
@@ -72,9 +74,12 @@ vim.api.nvim_set_keymap("n", "<leader>n", ":tabnew<CR>", {noremap = true, silent
 vim.api.nvim_set_keymap("n", "<leader>v", ":Vista<CR>", {noremap = true, silent = true})
 
 -- pane controls
-vim.api.nvim_set_keymap("n", "<leader>p", "<c-w>", {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap("n", "<leader>p", "<c-w>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("n", "<leader><space>", ":Telescope commands<CR>", {noremap = true, silent = true})
 
+-- open projects
+vim.api.nvim_set_keymap('n', '<leader>p', ":lua require'telescope'.extensions.project.project{}<CR>",
+                        {noremap = true, silent = true})
 -- TODO create entire treesitter section
 
 -- TODO support vim-surround in the which-key menus
@@ -100,6 +105,7 @@ local mappings = {
     ["w"] = "Save",
     ["n"] = "New file (in tab)",
     ["v"] = "Vista",
+    ["p"] = "Projects",
     d = {
         name = "+Debug",
         b = {"<cmd>DebugToggleBreakpoint<cr>", "Toggle Breakpoint"},
@@ -150,10 +156,11 @@ local mappings = {
     },
     t = {
         name = "+Trouble",
-        t = {"<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Trouble"},
+        t = {"<cmd>TroubleToggle<cr>", "Trouble"},
+        d = {"<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Trouble"},
         w = {"<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace"},
         r = {"<cmd>TroubleToggle lsp_references<cr>", "References"},
-        d = {"<cmd>TroubleToggle lsp_definitions<cr>", "Definitions"},
+        D = {"<cmd>TroubleToggle lsp_definitions<cr>", "Definitions"},
         q = {"<cmd>TroubleToggle quickfix<cr>", "Quick Fixes"},
         l = {"<cmd>TroubleToggle loclist<cr>", "Location List"},
         o = {"<cmd>TroubleToggle todo<cr>", "TODOs"},
@@ -174,7 +181,15 @@ local mappings = {
         t = {"<cmd>Telescope live_grep<cr>", "Text"},
         o = {"<cmd>TodoTelescope<cr>", "TODOs"}
     },
-    S = {name = "+Session", s = {"<cmd>SessionSave<cr>", "Save Session"}, l = {"<cmd>SessionLoad<cr>", "Load Session"}}
+    S = {name = "+Session", s = {"<cmd>SessionSave<cr>", "Save Session"}, l = {"<cmd>SessionLoad<cr>", "Load Session"}},
+
+    -- extras
+    z = {
+        name = "+Zen",
+        s = {"<cmd>TZBottom<cr>", "toggle status line"},
+        t = {"<cmd>TZTop<cr>", "toggle tab bar"},
+        z = {"<cmd>TZAtaraxis<cr>", "toggle zen"},
+    }
 }
 
 local wk = require("which-key")
