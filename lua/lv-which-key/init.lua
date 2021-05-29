@@ -143,6 +143,7 @@ local mappings = {
         d = {"<cmd>TroubleToggle lsp_definitions<cr>", "Definitions"},
         q = {"<cmd>TroubleToggle quickfix<cr>", "Quick Fixes"},
         l = {"<cmd>TroubleToggle loclist<cr>", "Location List"},
+        o = {"<cmd>TroubleToggle todo<cr>", "TODOs"},
     },
     s = {
         name = "+Search",
@@ -157,7 +158,8 @@ local mappings = {
         M = {"<cmd>Telescope man_pages<cr>", "Man Pages"},
         r = {"<cmd>Telescope oldfiles<cr>", "Open Recent File"},
         R = {"<cmd>Telescope registers<cr>", "Registers"},
-        t = {"<cmd>Telescope live_grep<cr>", "Text"}
+        t = {"<cmd>Telescope live_grep<cr>", "Text"},
+        o = {"<cmd>TodoTelescope<cr>", "TODOs"}
     },
     S = {name = "+Session", s = {"<cmd>SessionSave<cr>", "Save Session"}, l = {"<cmd>SessionLoad<cr>", "Load Session"}}
 }

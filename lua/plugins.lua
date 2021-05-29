@@ -98,15 +98,15 @@ return require("packer").startup(
         }
         use {"lervag/vimtex", opt = true}
         use {"skywind3000/asyncrun.vim", opt = true}
-        use {"Shatur95/neovim-cmake", opt = true }
-        use { 'karb94/neoscroll.nvim', opt = true }
+        use {"Shatur95/neovim-cmake", opt = true}
+        use 'karb94/neoscroll.nvim'
+        use "folke/todo-comments.nvim"
 
         -- lsp extensions
         use {"nvim-lua/lsp_extensions.nvim", opt = true}
         use {"nvim-lua/completion-nvim", opt = true}
         use {"liuchengxu/vista.vim", opt = true}
 
-        require_plugin("neoscroll.vim")
         require_plugin("asyncrun.vim")
         require_plugin("vimtex")
         require_plugin("neovim-cmake")
