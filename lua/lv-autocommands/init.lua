@@ -42,6 +42,8 @@ if O.clang.autoformat then
 end
 
 -- vim.api.nvim_command('au! BufRead,BufNewFile *.fish set filetype=fish')
+vim.api.nvim_command('au FocusLost * silent! wa')
+vim.api.nvim_command(':set autowriteall')
 
 utils.define_augroups({
     _general_settings = {
