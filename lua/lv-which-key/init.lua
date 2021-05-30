@@ -75,7 +75,8 @@ vim.api.nvim_set_keymap("n", "<leader>v", ":Vista<CR>", {noremap = true, silent 
 
 -- pane controls
 -- vim.api.nvim_set_keymap("n", "<leader>p", "<c-w>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("n", "<leader><space>", ":Telescope commands<CR>", {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap("n", "<leader><space>", ":Telescope commands<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader><space>", ":Commands<CR>", {noremap = true, silent = true})
 
 -- open projects
 vim.api.nvim_set_keymap('n', '<leader>p', ":lua require'telescope'.extensions.project.project{}<CR>",

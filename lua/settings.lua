@@ -81,4 +81,7 @@ vim.g.floaterm_autoclose=1
 
 vim.cmd('set conceallevel=2')
 
+-- TODO: figure out mappings for this that dont conflict with autocomplete
 vim.g.UltiSnipsExpandTrigger = '<f5>'
+-- vim.g.UltiSnipsJumpForwardTrigger="<c-j>"
+-- vim.g.UltiSnipsJumpBackwardTrigger="<c-k>"

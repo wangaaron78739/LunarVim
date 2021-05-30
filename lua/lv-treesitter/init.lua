@@ -7,6 +7,7 @@ require'nvim-treesitter.configs'.setup {
     },
     highlight = {
         enable = O.treesitter.highlight.enabled, -- false will disable the whole extension
+        additional_vim_regex_highlighting = true,
         disable = {"latex"},
     },
     context_commentstring = {

@@ -166,8 +166,8 @@ return require("packer").startup(function(use)
     use {"mg979/vim-visual-multi", opt = true}
     use {"dag/vim-fish", opt = true}
     use {"tpope/vim-surround", opt = true}
-    -- use {"junegunn/fzf", opt = true} -- Telescope does most of this?
-    -- use {"junegunn/fzf.vim", opt = true}
+    use {"junegunn/fzf", opt = true} -- Telescope does most of this?
+    use {"junegunn/fzf.vim", opt = true}
     use {"lervag/vimtex", opt = true}
     use {"skywind3000/asyncrun.vim", opt = true}
     use {"Shatur95/neovim-cmake", opt = true}
