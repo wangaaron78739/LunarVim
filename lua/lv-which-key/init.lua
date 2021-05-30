@@ -67,8 +67,8 @@ vim.api.nvim_set_keymap("n", "<leader>/", "<cmd>Telescope live_grep<cr>", {norem
 -- vim.api.nvim_set_keymap("v", "<leader>/", ":CommentToggle<CR>", {noremap = true, silent = true})
 
 -- close buffer
-vim.api.nvim_set_keymap("n", "<leader>c", ":BufferClose<CR>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("n", "<leader>w", ":wa<CR>", {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap("n", "<leader>c", ":BufferClose<CR>", {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap("n", "<leader>w", ":wa<CR>", {noremap = true, silent = true})
 
 vim.api.nvim_set_keymap("n", "<leader>n", ":tabnew<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("n", "<leader>v", ":Vista<CR>", {noremap = true, silent = true})
@@ -109,7 +109,12 @@ local mappings = {
     },
     ["f"] = "Find File",
     ["h"] = "No Highlight",
-    ["w"] = "Save",
+    ["b"] = {
+        name = "+Buffer",
+        w = {":wa<CR>", "Write"},
+        c = {":BufferClose<CR>", "Write"},
+        f = {"<cmd>LspFormatting<cr><cmd>write<cr>", "Format"},
+    },
     ["n"] = "New file (in tab)",
     ["v"] = "Vista",
     ["p"] = "Projects",
