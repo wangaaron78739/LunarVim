@@ -129,7 +129,7 @@ local mappings = {
     },
     g = {
         name = "+Git",
-        g = {"<cmd>_G.__fterm_gitui()<CR>", "Gitui"},
+        g = {"<cmd>lua _G.__fterm_gitui()<CR>", "Gitui"},
         m = {"<cmd>!smerge '%:p:h'<CR>", "Sublime Merge"},
         j = {"<cmd>NextHunk<cr>", "Next Hunk"},
         k = {"<cmd>PrevHunk<cr>", "Prev Hunk"},
