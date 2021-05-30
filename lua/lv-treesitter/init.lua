@@ -6,7 +6,8 @@ require'nvim-treesitter.configs'.setup {
         -- disable = { "c", "ruby" },  -- optional, list of language that will be disabled
     },
     highlight = {
-        enable = O.treesitter.highlight.enabled -- false will disable the whole extension
+        enable = O.treesitter.highlight.enabled, -- false will disable the whole extension
+        additional_vim_regex_highlighting = true,
     },
     context_commentstring = {
         enable = true,
