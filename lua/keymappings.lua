@@ -80,3 +80,5 @@ vim.api.nvim_set_keymap('n', 'Y', 'yg_', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', 'vic', '?# %%<cr>VN', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('t', '<A-q>', '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', { noremap = true, silent = true })
 
+vim.api.nvim_set_keymap('n', 'gf', ':LspFormatting<cr><cmd>write<cr>', { noremap = true, silent = true })
+
