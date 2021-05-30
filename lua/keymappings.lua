@@ -13,12 +13,19 @@ vim.cmd([[
   tnoremap <C-j> <C-\><C-N><C-w>j
   tnoremap <C-k> <C-\><C-N><C-w>k
   tnoremap <C-l> <C-\><C-N><C-w>l
-  inoremap <C-h> <C-\><C-N><C-w>h
-  inoremap <C-j> <C-\><C-N><C-w>j
-  inoremap <C-k> <C-\><C-N><C-w>k
-  inoremap <C-l> <C-\><C-N><C-w>l
   tnoremap <Esc> <C-\><C-n>
 ]])
+-- vim.cmd([[
+--   tnoremap <C-h> <C-\><C-N><C-w>h
+--   tnoremap <C-j> <C-\><C-N><C-w>j
+--   tnoremap <C-k> <C-\><C-N><C-w>k
+--   tnoremap <C-l> <C-\><C-N><C-w>l
+--   inoremap <C-h> <C-\><C-N><C-w>h
+--   inoremap <C-j> <C-\><C-N><C-w>j
+--   inoremap <C-k> <C-\><C-N><C-w>k
+--   inoremap <C-l> <C-\><C-N><C-w>l
+--   tnoremap <Esc> <C-\><C-n>
+-- ]])
 
 -- TODO fix this
 -- resize with arrows
@@ -45,14 +52,14 @@ vim.api.nvim_set_keymap('x', 'K', ':move \'<-2<CR>gv-gv', {noremap = true, silen
 vim.api.nvim_set_keymap('x', 'J', ':move \'>+1<CR>gv-gv', {noremap = true, silent = true})
 
 -- Better nav for omnicomplete
-vim.cmd('inoremap <expr> <c-j> (\"\\<C-n>\")')
-vim.cmd('inoremap <expr> <c-k> (\"\\<C-p>\")')
+-- vim.cmd('inoremap <expr> <c-j> (\"\\<C-n>\")')
+-- vim.cmd('inoremap <expr> <c-k> (\"\\<C-p>\")')
 
 -- fix to get netrw's gx command to work correctly
 vim.api.nvim_set_keymap('n', 'gx', ":call netrw#BrowseX(expand((exists('g:netrw_gx')? g:netrw_gx : '<cfile>')),netrw#CheckIfRemote())<cr>", {noremap = true, silent = true})
 
-vim.cmd('vnoremap p "0p')
-vim.cmd('vnoremap P "0P')
+-- vim.cmd('vnoremap p "0p')
+-- vim.cmd('vnoremap P "0P')
 -- vim.api.nvim_set_keymap('v', 'p', '"0p', {silent = true})
 -- vim.api.nvim_set_keymap('v', 'P', '"0P', {silent = true})
 
@@ -70,4 +77,3 @@ vim.cmd('inoremap <expr> <S-TAB> (\"\\<C-p>\")')
 
 -- Toggle the QuickFix window
 vim.api.nvim_set_keymap('', '<C-q>', ':call QuickFixToggle()<CR>', {noremap = true, silent = true})
-
