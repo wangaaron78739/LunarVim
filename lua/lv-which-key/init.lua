@@ -72,7 +72,8 @@ vim.api.nvim_set_keymap('n', '<leader>p', ":lua require'telescope'.extensions.pr
 -- TODO create entire treesitter section
 
 -- Custom Keymaps
-vim.api.nvim_set_keymap("n", "<M-x>", ":Telescope commands<CR>", {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap("n", "<M-x>", ":Telescope commands<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<M-x>", ":Commands<CR>", {noremap = true, silent = true})
 
 local mappings = {
     ["/"] = "Comment",
