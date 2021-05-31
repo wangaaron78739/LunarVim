@@ -920,6 +920,11 @@ snippet compl "complement" iA
 endsnippet
 
 context "math()"
+snippet tran "transpose" iA
+^{T}
+endsnippet
+
+context "math()"
 snippet \\\ "setminus" iA
 \setminus
 endsnippet
@@ -1016,7 +1021,6 @@ snippet <> "hokje" iA
 \diamond 
 endsnippet
 
-
 context "math()"
 snippet '(?<!i)sts' "text subscript" irA
 _\text{$1} $0
@@ -1077,6 +1081,7 @@ endsnippet
 snippet today "Date"
 `d=$(date +%e); case $d in 1?) d=${d}th ;; *1) d=${d}st ;; *2) d=${d}nd ;; *3) d=${d}rd ;; *) d=${d}th ;; esac; date +"%B $d, %Y"`
 endsnippet
+
 
 # vim:ft=snippets
 

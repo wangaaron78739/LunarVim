@@ -108,6 +108,6 @@ vim.g.VM_maps = {
 -- vim.g.floaterm_autoclose=1
 
 -- Ultisnips
-vim.g.UltiSnipsExpandTrigger="<TAB>"
+vim.g.UltiSnipsExpandTrigger="<F5>"
 vim.g.UltiSnipsJumpForwardTrigger="<c-j>"
 vim.g.UltiSnipsJumpBackwardTrigger="<c-k>"

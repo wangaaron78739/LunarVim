@@ -63,6 +63,7 @@ vim.api.nvim_set_keymap('n', 'gx', ":call netrw#BrowseX(expand((exists('g:netrw_
 -- vim.api.nvim_set_keymap('v', 'p', '"0p', {silent = true})
 -- vim.api.nvim_set_keymap('v', 'P', '"0P', {silent = true})
 
+-- moved to lv_settings.lua
 vim.cmd('inoremap <expr> <TAB> (\"\\<C-n>\")')
 vim.cmd('inoremap <expr> <S-TAB> (\"\\<C-p>\")')
 
@@ -74,6 +75,5 @@ vim.cmd('inoremap <expr> <S-TAB> (\"\\<C-p>\")')
 -- map <leader>n <Plug>(miniyank-cycle)
 -- map <leader>N <Plug>(miniyank-cycleback)
 -- ]])
-
 -- Toggle the QuickFix window
 vim.api.nvim_set_keymap('', '<C-q>', ':call QuickFixToggle()<CR>', {noremap = true, silent = true})
