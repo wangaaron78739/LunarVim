@@ -89,7 +89,8 @@ vim.api.nvim_set_keymap('n', '<leader>p', ":lua require'telescope'.extensions.pr
 local mappings = {
     [" "] = "Commands",
     ["/"] = "Global search",
-    ["c"] = "Close Buffer",
+    -- ["c"] = "Close Buffer",
+    -- ["w"] = "Write Buffer",
     -- ["e"] = "Explorer",
     o = {
         name = "+Open new...",
@@ -99,8 +100,8 @@ local mappings = {
         t = {"<cmd>lua require'FTerm'.toggle()<CR>", "Terminal"},
         B = {"<cmd>lua _G.__fterm_broot()<CR>", "Broot"},
         P = {"<cmd>lua _G.__fterm_python()<CR>", "Python"},
-        T = {"<cmd>lua _G.__fterm_top()<CR>", "top"},
-        S = {"<cmd>lua _G.__fterm_spt()<CR>", "top"},
+        T = {"<cmd>lua _G.__fterm_top()<CR>", "System Monitor"},
+        S = {"<cmd>lua _G.__fterm_spt()<CR>", "Spotify"},
         -- t = {"<cmd>FloatermToggle<CR>", "Terminal"},
         -- T = {"<cmd>FloatermNew --wintype=normal --height=8<CR>", "Terminal Below"},
         -- P = {"<cmd>FloatermNew python<CR>", "Python"},
@@ -112,7 +113,7 @@ local mappings = {
     ["b"] = {
         name = "+Buffer",
         w = {":wa<CR>", "Write"},
-        c = {":BufferClose<CR>", "Write"},
+        c = {":BufferClose<CR>", "Close"},
         f = {"<cmd>LspFormatting<cr><cmd>write<cr>", "Format"},
     },
     ["n"] = "New file (in tab)",
