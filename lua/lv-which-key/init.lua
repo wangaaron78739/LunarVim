@@ -186,7 +186,7 @@ local mappings = {
         B = {"<cmd>Telescope buffers<cr>", "Buffers"},
         c = {"<cmd>Telescope colorscheme<cr>", "Colorscheme"},
         d = {"<cmd>Telescope lsp_document_diagnostics<cr>", "Document Diagnostics"},
-        e = {"<cmd>Telescope lsp_references<cr>", "References"},
+        R = {"<cmd>Telescope lsp_references<cr>", "References"},
         D = {"<cmd>Telescope lsp_workspace_diagnostics<cr>", "Workspace Diagnostics"},
         f = {"<cmd>Telescope find_files find_command=rg,--ignore,--hidden,--files<cr>", "Find File (+Hidden)"},
         m = {"<cmd>Telescope marks<cr>", "Marks"},
