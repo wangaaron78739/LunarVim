@@ -116,7 +116,21 @@ table.insert(gls.left, {
 })
 table.insert(gls.left, {
     FileName = {
-        provider = 'FileName',
+        -- provider = 'FileName',
+        provider = function(modified_icon, readonly_icon)
+          local file = vim.fn.expand('%:p')
+          if vim.fn.empty(file) == 1 then return '' end
+        --   if string.len(file_readonly(readonly_icon)) ~= 0 then
+        --     return file .. file_readonly(readonly_icon)
+        --   end
+          local icon = modified_icon or ''
+          if vim.bo.modifiable then
+            if vim.bo.modified then
+              return file .. ' ' .. icon .. '  '
+            end
+          end
+          return file .. ' '
+        end,
         condition = condition.hide_in_width,
         icon = '',
         highlight = {colors.purple, colors.bg}
