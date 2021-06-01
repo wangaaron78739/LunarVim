@@ -101,6 +101,7 @@ local mappings = {
     },
     g = {
         name = "+Git",
+        g = {"<cmd>G<cr>", "Open Vim-Fugitive"},
         j = {"<cmd>NextHunk<cr>", "Next Hunk"},
         k = {"<cmd>PrevHunk<cr>", "Prev Hunk"},
         p = {"<cmd>PreviewHunk<cr>", "Preview Hunk"},

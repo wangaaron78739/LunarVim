@@ -147,10 +147,10 @@ return require("packer").startup(function(use)
         -- simrat39/symbols-outline.nvim
 
         -- Git
-        use {'tpope/vim-fugitive', opt = true}
-        require_plugin('tpope/vim-fugitive')
+        use {'tpope/vim-fugitive', commit = 'da8d532b1a65382ab5647dfe81df5c5b989c64a4'}
+        require_plugin('vim-fugitive')
         use {'tpope/vim-rhubarb', opt = true}
-        require_plugin('tpope/rhubarb')
+        require_plugin('vim-rhubarb')
         -- pwntester/octo.nvim
 
         -- Easily Create Gists
