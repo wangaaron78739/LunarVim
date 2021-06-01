@@ -55,7 +55,7 @@ vim.g.tex_conceal = 'abdmgs'
 vim.g["sneak#label"] = 1
 
 -- Can these be moved to a new file?
--- vm
+-- TODO: why these are broken??
 vim.g.VM_maps = {
     -- ['Find Under'] = '<M-d>',
     -- ['Find Subword Under'] = '<M-d>',
