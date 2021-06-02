@@ -77,7 +77,7 @@ utils.define_augroups({
         }, {'FileType', 'dashboard', 'set showtabline=0 | autocmd BufLeave <buffer> set showtabline=2'}
     },
     _markdown = {{'FileType', 'markdown', 'setlocal wrap'}, {'FileType', 'markdown', 'setlocal spell'},
-        {'FileType', 'markdown', 'lua vim.o.guifont = "FiraCode Nerd Font:h17"'},
+        -- {'FileType', 'markdown', 'lua vim.o.guifont = "FiraCode Nerd Font:h15"'},
     },
     _solidity = {
         {'BufWinEnter', '.sol', 'setlocal filetype=solidity'}, {'BufRead', '*.sol', 'setlocal filetype=solidity'},
@@ -95,7 +95,7 @@ utils.define_augroups({
         {'FileType', 'latex', 'VimtexCompile'},
         {'FileType', 'latex', 'setlocal wrap'},
         {'FileType', 'latex', 'setlocal spell'},
-        {'FileType', 'latex', 'lua vim.o.guifont = "FiraCode Nerd Font:h17'},
+        -- {'FileType', 'latex', 'lua vim.o.guifont = "FiraCode Nerd Font:h15'},
     },
     _buffer_bindings = {
         {'FileType', 'dashboard', 'nnoremap <silent> <buffer> q :q<CR>'},
