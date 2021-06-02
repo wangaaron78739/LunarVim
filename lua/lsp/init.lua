@@ -104,6 +104,14 @@ local lsp_config = {}
 if O.document_highlight then
     function lsp_config.common_on_attach(client, bufnr)
         documentHighlight(client, bufnr)
+        require'lsp_signature'.on_attach({
+            bind = true,
+            doc_lines = 2,
+            floating_window = true,
+            hint_enable = true,
+            hint_scehem = "String",
+            hi_parameter = "Search"
+        })
     end
 end
 
