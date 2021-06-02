@@ -182,6 +182,7 @@ return require("packer").startup(function(use)
     use {"nvim-lua/completion-nvim", opt = true}
     use {"liuchengxu/vista.vim", opt = true}
     use "ray-x/lsp_signature.nvim"
+    use "nvim-treesitter/nvim-treesitter-textobjects"
 
     require_plugin("ultisnips")
     require_plugin("vim-floaterm")
