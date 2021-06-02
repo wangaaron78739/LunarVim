@@ -131,6 +131,7 @@ local mappings = {
         p = {"<cmd>Lspsaga preview_definition<cr>", "Preview Definition"},
         q = {"<cmd>Telescope quickfix<cr>", "Quickfix"},
         r = {"<cmd>Lspsaga rename<cr>", "Rename"},
+        R = {"<cmd>Telescope lsp_references<cr>", "References"},
         t = {"<cmd>LspTypeDefinition<cr>", "Type Definition"},
         x = {"<cmd>cclose<cr>", "Close Quickfix"},
         s = {"<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols"},
