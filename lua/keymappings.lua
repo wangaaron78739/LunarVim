@@ -81,12 +81,12 @@ vim.api.nvim_set_keymap('n', 'gb', '<c-o>', { silent = true })
 
 -- comment and copy
 vim.api.nvim_set_keymap('n', 'gyy', 'yy:CommentToggle<cr>p', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', 'gy', 'ygv:<c-u>call CommentOperator(visualmode())<cr>`>p', { noremap = true, silent = true }) -- TODO: how to make sure its pasted after?
+vim.api.nvim_set_keymap('v', 'gy', 'ygv:<c-u>call CommentOperator(visualmode())<cr>`>p', { noremap = true, silent = true })
 
 -- vim.api.nvim_set_keymap('n', 'vic', '?# %%<cr>VN', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('t', '<A-q>', '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', 'gf', ':LspFormatting<cr><cmd>write<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gf', ':LspFormatting<cr>', { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('i', '<C-l>', '<c-g>u<Esc>[s1z=`]a<c-g>u]]', { noremap = true, silent = true })
 
