@@ -18,7 +18,6 @@ O = {
     -- @usage pass a table with your desired languages
     treesitter = {
         ensure_installed = "all",
-        ignore_install = {"haskell"},
         highlight = {enabled = true},
         playground = {enabled = true},
         rainbow = {enabled = false}
@@ -28,17 +27,20 @@ O = {
     python = {
         linter = '',
         -- @usage can be 'yapf', 'black'
-        formatter = '',
-        autoformat = false,
+        formatter = 'black',
+        autoformat = true,
         isort = false,
         diagnostics = {virtual_text = {spacing = 0, prefix = ""}, signs = true, underline = true},
 		analysis = {type_checking = "basic", auto_search_paths = true, use_library_code_types = true}
     },
+    rust = {
+        autoformat = true,
+    },
     dart = {sdk_path = '/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot'},
     lua = {
         -- @usage can be 'lua-format'
-        formatter = '',
-        autoformat = false,
+        formatter = 'lua-format',
+        autoformat = true,
         diagnostics = {virtual_text = {spacing = 0, prefix = ""}, signs = true, underline = true}
     },
     sh = {
@@ -59,7 +61,7 @@ O = {
     },
     json = {
         -- @usage can be 'prettier'
-        formatter = '',
+        formatter = 'prettier',
         autoformat = false,
         diagnostics = {virtual_text = {spacing = 0, prefix = ""}, signs = true, underline = true}
     },

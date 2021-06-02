@@ -41,6 +41,11 @@ if O.clang.autoformat then
     table.insert(auto_formatters, hpp_autoformat)
 end
 
+local rust_autoformat = {'BufWritePre', '*.rs', 'lua vim.lsp.buf.formatting_sync(nil,1000)'}
+if O.rust.autoformat then
+    table.insert(auto_formatters, rust_autoformat)
+end
+
 -- vim.api.nvim_command('au! BufRead,BufNewFile *.fish set filetype=fish')
 -- Autosave
 vim.api.nvim_command('au FocusLost * silent! wa')
