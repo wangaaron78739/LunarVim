@@ -206,4 +206,10 @@ return require("packer").startup(function(use)
     require_plugin("vim-sneak")
     require_plugin("nvim-treesitter-textobjects")
 
+    -- Colorschemes
+    -- use {'Mofiqul/dracula.nvim', opt=true}
+    -- use {'tomasiser/vim-code-dark', opt=true}
+    -- require_plugin("Mofiqul/dracula.nvim")
+    -- require_plugin("tomasiser/vim-code-dark")
+
 end)
