@@ -70,7 +70,7 @@ vim.api.nvim_set_keymap("n", "<leader>/", "<cmd>Telescope live_grep<cr>", {norem
 -- vim.api.nvim_set_keymap("n", "<leader>c", ":BufferClose<CR>", {noremap = true, silent = true})
 -- vim.api.nvim_set_keymap("n", "<leader>w", ":wa<CR>", {noremap = true, silent = true})
 
-vim.api.nvim_set_keymap("n", "<leader>n", ":tabnew<CR>", {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap("n", "<leader>n", ":tabnew<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("n", "<leader>v", ":Vista<CR>", {noremap = true, silent = true})
 
 -- pane controls
@@ -112,11 +112,12 @@ local mappings = {
     ["h"] = "No Highlight",
     ["b"] = {
         name = "+Buffer",
-        w = {":wa<CR>", "Write"},
+        w = {":w<CR>", "Write"},
+        W = {":wa<CR>", "Write All"},
         c = {":BufferClose<CR>", "Close"},
         f = {"<cmd>LspFormatting<cr><cmd>write<cr>", "Format"},
+        n = {"<cmd>tabnew<CR>", "New"}
     },
-    ["n"] = "New file (in tab)",
     ["v"] = "Vista",
     ["p"] = "Projects",
     d = {
