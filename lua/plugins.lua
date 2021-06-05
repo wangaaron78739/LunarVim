@@ -189,6 +189,7 @@ return require("packer").startup(function(use)
     use {"liuchengxu/vista.vim", opt = true}
     use "ray-x/lsp_signature.nvim"
     use "nvim-treesitter/nvim-treesitter-textobjects"
+    use "RRethy/nvim-treesitter-textsubjects"
 
     require_plugin("ultisnips")
     require_plugin("vim-slime")
