@@ -15,7 +15,7 @@ local broot = term:new():setup({
     }
 })
 local python = term:new():setup({
-    cmd = "python",
+    cmd = "ipython",
     dimensions = {
         height = 0.9,
         width = 0.9
