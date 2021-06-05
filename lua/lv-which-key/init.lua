@@ -1,5 +1,4 @@
-require("which-key").setup {
-    plugins = {
+require("which-key").setup { plugins = {
         marks = true, -- shows a list of your marks on ' and `
         registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
         -- the presets plugin, adds help for a bunch of default keybindings in Neovim
@@ -196,7 +195,8 @@ local mappings = {
         R = {"<cmd>Telesope registers<cr>", "Registers"},
         t = {"<cmd>Telescope live_grep<cr>", "Text"},
         k = {"<cmd>Telescope keymaps<cr>", "Text"},
-        o = {"<cmd>TodoTelescope<cr>", "TODOs"}
+        o = {"<cmd>TodoTelescope<cr>", "TODOs"},
+        p = {"<cmd>Telescope commands<cr>", "Commands"}
     },
     S = {name = "+Session", s = {"<cmd>SessionSave<cr>", "Save Session"}, l = {"<cmd>SessionLoad<cr>", "Load Session"}},
     z = {
