@@ -88,7 +88,7 @@ vim.g.floaterm_height=0.8
 vim.g.floaterm_wintitle=0
 vim.g.floaterm_autoclose=1
 
-vim.cmd('set conceallevel=2')
+-- vim.cmd('set conceallevel=2')
 
 -- TODO: figure out mappings for this that dont conflict with autocomplete
 vim.g.UltiSnipsExpandTrigger = '<f5>'

@@ -108,7 +108,7 @@ utils.define_augroups({
         {'FileType', 'floaterm', 'nnoremap <silent> <buffer> q :q<CR>'},
         {'FileType', 'rnvimr', 'tnoremap <silent> <buffer> <nowait> - <ESC>:q<CR>'},
         {'FileType', 'rnvimr', 'inoremap <silent> <buffer> <nowait> - <ESC>:q<CR>'},
-        {'FileType', 'latex', 'set conceallevel=2'},
+        -- {'FileType', 'latex', 'set conceallevel=2'},
     },
     _auto_formatters = auto_formatters
 })
