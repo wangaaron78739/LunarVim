@@ -94,3 +94,5 @@ vim.cmd('set conceallevel=2')
 vim.g.UltiSnipsExpandTrigger = '<f5>'
 -- vim.g.UltiSnipsJumpForwardTrigger="<c-j>"
 -- vim.g.UltiSnipsJumpBackwardTrigger="<c-k>"
+
+vim.cmd([[let g:slime_target = "neovim"]])

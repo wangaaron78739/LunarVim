@@ -180,6 +180,8 @@ return require("packer").startup(function(use)
     use 'sindrets/diffview.nvim'
     use {'voldikss/vim-floaterm', opt = true}
     use {"SirVer/ultisnips", opt = true}
+    use {"jpalardy/vim-slime", opt = true}
+    -- https://github.com/tpope/vim-repeat
 
     -- lsp extensions
     use {"nvim-lua/lsp_extensions.nvim", opt = true}
@@ -189,6 +191,7 @@ return require("packer").startup(function(use)
     use "nvim-treesitter/nvim-treesitter-textobjects"
 
     require_plugin("ultisnips")
+    require_plugin("vim-slime")
     require_plugin("vim-floaterm")
     require_plugin("asyncrun.vim")
     require_plugin("vimtex")
