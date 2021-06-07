@@ -194,7 +194,7 @@ local mappings = {
         r = {"<cmd>Telescope oldfiles<cr>", "Open Recent File"},
         R = {"<cmd>Telesope registers<cr>", "Registers"},
         t = {"<cmd>Telescope live_grep<cr>", "Text"},
-        k = {"<cmd>Telescope keymaps<cr>", "Text"},
+        k = {"<cmd>Telescope keymaps<cr>", "Keymappings"},
         o = {"<cmd>TodoTelescope<cr>", "TODOs"},
         p = {"<cmd>Telescope commands<cr>", "Commands"}
     },
