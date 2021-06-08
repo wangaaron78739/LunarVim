@@ -17,6 +17,10 @@ require'lspconfig'.rust_analyzer.setup{
             procMacro = {
                 enable = true
             },
+            checkOnSave = {
+                enable = true,
+                command = "clippy" -- comment out to not use clippy
+            }
         }
     }
 }
