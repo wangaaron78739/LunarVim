@@ -42,7 +42,7 @@ plugins:
     nvim lua/plugins.lua
     nvim +PackerCompile +PackerInstall
 
-save: pull
+save: update
     git add . 
     git commit -v 
     just yadm-save
@@ -54,8 +54,7 @@ checkout-master:
     git checkout master 
 
 update: fetch checkout-master
-    git checkout master 
-    git pull
+    git pull --ff-only
 
 update-merge: fetch checkout-master
     git merge origin/master master
