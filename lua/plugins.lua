@@ -182,6 +182,8 @@ return require("packer").startup(function(use)
     use {"SirVer/ultisnips", opt = true}
     use {"jpalardy/vim-slime", opt = true}
     -- https://github.com/tpope/vim-repeat
+    use {"kmonad/kmonad-vim", opt=true}
+    use {"lambdalisue/suda.vim", opt=true}
 
     -- lsp extensions
     use {"nvim-lua/lsp_extensions.nvim", opt = true}
@@ -209,6 +211,8 @@ return require("packer").startup(function(use)
     require_plugin("vim-visual-multi")
     require_plugin("vim-sneak")
     require_plugin("nvim-treesitter-textobjects")
+    require_plugin("kmonad-vim")
+    require_plugin("suda.vim")
 
     -- Colorschemes
     -- use {'Mofiqul/dracula.nvim', opt=true}
