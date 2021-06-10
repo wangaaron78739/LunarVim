@@ -1,6 +1,7 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
+
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -27,6 +28,7 @@ local function require_plugin(plugin)
 end
 
 vim.cmd "autocmd BufWritePost plugins.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
+vim.cmd "autocmd BufWritePost plugins.lua luafile %" -- Auto compile when there are changes in plugins.lua
 
 return require("packer").startup(function(use)
     -- Packer can manage itself as an optional plugin
