@@ -184,7 +184,7 @@ return require("packer").startup(function(use)
     -- https://github.com/tpope/vim-repeat
     use {"kmonad/kmonad-vim", opt=true}
     use {"lambdalisue/suda.vim", opt=true}
-    use {"NoahTheDuke/vim-just", opt=true}
+    use "NoahTheDuke/vim-just"
 
     -- lsp extensions
     use {"nvim-lua/lsp_extensions.nvim", opt = true}
@@ -214,7 +214,6 @@ return require("packer").startup(function(use)
     require_plugin("nvim-treesitter-textobjects")
     require_plugin("kmonad-vim")
     require_plugin("suda.vim")
-    require_plugin("vim-just")
 
     -- Colorschemes
     -- use {'Mofiqul/dracula.nvim', opt=true}

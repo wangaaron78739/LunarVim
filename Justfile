@@ -48,7 +48,7 @@ save: update
     just yadm-save
 
 fetch:
-    git fetch --all
+    git fetch 
 
 checkout-master:
     git checkout master 
@@ -57,9 +57,10 @@ update: fetch checkout-master
     git pull --ff-only
 
 update-merge: fetch checkout-master
-    git merge origin/master master
+    git pull --rebase
 
 update-origin: update-merge
+    git fetch upstream
     git merge upstream/master master
     just yadm-save
     
