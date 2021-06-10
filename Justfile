@@ -6,7 +6,7 @@ _null:
 yadm-save message="update nvim config":
 	git push
 	cd ~  && yadm add ~/.config/nvim 
-	yadm commit -m {{message}}
+	yadm commit -m "{{message}}"
 
 # Install neovim (and dependencies)
 install:
