@@ -3,8 +3,8 @@
     just --list
 
 # Update nvim in YADM
-yadm-save message="update nvim config":
-	git push
+yadm-save message="update nvim config": fix-head
+	git push 
 	cd ~  && yadm add ~/.config/nvim 
 	yadm commit -m "{{message}}"
 
