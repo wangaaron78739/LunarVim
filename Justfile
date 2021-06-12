@@ -1,5 +1,5 @@
 # This is just here to handle empty `just` invocations
-_null:
+@_null:
     just --list
 
 # Update nvim in YADM
@@ -10,14 +10,15 @@ yadm-save message="update nvim config":
 
 # Install neovim (and dependencies)
 install:
-	sudo add-apt-repository -y ppa:neovim-ppa/unstable
-	sudo apt install ranger libjpeg8-dev zlib1g-dev libxtst-dev
-	pip3 install ueberzug
-	pip3 install neovim-remote
-	pip3 install pynvim --user
-	npm install -g tree-sitter-cli
-	sudo apt install neovim
-	git remote add upstream https://github.com/ChristianChiarulli/LunarVim.git
+    sudo add-apt-repository -y ppa:neovim-ppa/unstable
+    sudo apt install ranger libjpeg8-dev zlib1g-dev libxtst-dev neovim
+    pip3 install ueberzug
+    pip3 install neovim-remote
+    pip3 install pynvim --user
+    npm install -g tree-sitter-cli
+    git remote add upstream https://github.com/ChristianChiarulli/LunarVim.git
+    nvim # Run once to install packer and stuff
+    nvim +PackerInstall # Run again to install the plugins
 
 # Install neovide
 neovide:
