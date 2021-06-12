@@ -10,8 +10,7 @@ yadm-save message="update nvim config":
 
 # Install neovim (and dependencies)
 install:
-    sudo add-apt-repository -y ppa:neovim-ppa/unstable
-    sudo apt install ranger libjpeg8-dev zlib1g-dev libxtst-dev neovim
+    sudo apt install ranger libjpeg8-dev zlib1g-dev libxtst-dev 
     pip3 install ueberzug
     pip3 install neovim-remote
     pip3 install pynvim --user
@@ -19,29 +18,6 @@ install:
     git remote add upstream https://github.com/ChristianChiarulli/LunarVim.git
     nvim # Run once to install packer and stuff
     nvim +PackerInstall # Run again to install the plugins
-
-# Install neovide
-neovide:
-	sudo apt install -y curl \
-		gnupg ca-certificates git \
-		gcc-multilib g++-multilib cmake libssl-dev pkg-config \
-		libfreetype6-dev libasound2-dev libexpat1-dev libxcb-composite0-dev \
-		libbz2-dev libsndio-dev freeglut3-dev libxmu-dev libxi-dev libsdl2-dev
-
-	wget -qO - https://packages.lunarg.com/lunarg-signing-key-pub.asc | sudo apt-key add -
-	sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-focal.list https://packages.lunarg.com/vulkan/lunarg-vulkan-focal.list
-	sudo apt update
-	sudo apt install vulkan-sdk
-
-	git clone "https://github.com/Kethku/neovide" -b opengl
-	# cargo build --release
-	cargo install --path neovide
-	# cargo install --git https://github.com/Kethku/neovide
-
-# Install neovim from source
-from-source:
-	git clone https://github.com/neovim/neovim.git
-	cd neovim && make CMAKE_BUILD_TYPE=Release && make CMAKE_INSTALL_PREFIX=$HOME/.local/nvim install
 
 # Open neovim with main settings files
 settings:
