@@ -1,5 +1,5 @@
 # This is just here to handle empty `just` invocations
-@_null:
+@_default:
     just --list
 
 # Update nvim in YADM
@@ -28,6 +28,10 @@ plugins:
 	nvim lua/plugins.lua
 	nvim +PackerCompile +PackerInstall
 
+# Update Plugins using Packer
+update-plugins:
+    nvim +PackerSync
+
 # Fetch new changes 
 fetch:
     git fetch 
@@ -44,6 +48,7 @@ save-all: fix-head
     git commit -v 
     just yadm-save
 
+# Interactively save
 save: fix-head
     git ui 
     just yadm-save
@@ -54,9 +59,10 @@ update:
 
 # Update LunarVim from ChristianChiarulli's repo
 update-lunarvim: save
-	git fetch upstream
-	git merge upstream/master master
-	just yadm-save "update lunarvim"
+    git fetch upstream
+    git merge upstream/master master
+    just yadm-save "update lunarvim"
+    just update-plugins
     
 # Add me and my friends remotes
 remotes:
