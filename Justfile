@@ -4,6 +4,7 @@
 
 # Update nvim in YADM
 yadm-save message="update nvim config": fix-head
+    git pull
 	git push 
 	cd ~  && yadm add ~/.config/nvim 
 	yadm commit -m "{{message}}"
@@ -39,9 +40,10 @@ fetch:
 
 # Fix detached HEAD from doing yadm pull
 fix-head:
-    git checkout -b old_head && git branch -d master && git checkout -b master origin/master \
-    || echo "HEAD is okay"
-    git branch --set-upstream-to=origin/master master
+    #!/usr/bin/env fish
+    set hash (git rev-parse HEAD)
+    git checkout master
+    git merge $hash
 
 # Commit the whole config directory (also updates yadm)
 save-all: fix-head
