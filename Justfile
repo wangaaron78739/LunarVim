@@ -8,7 +8,8 @@ yadm-save message="update nvim config": fix-head
 	cd ~  && yadm add ~/.config/nvim 
 	yadm commit -m "{{message}}"
 
-# Install neovim (and dependencies)
+# TODO: install in an isolated virutal environment? (use pipx)
+# Install dependencies
 install:
     sudo apt install ranger libjpeg8-dev zlib1g-dev libxtst-dev 
     pip3 install ueberzug
