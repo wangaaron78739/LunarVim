@@ -5,9 +5,9 @@
 # Update nvim in YADM
 yadm-save message="update nvim config": fix-head
     git pull
-	git push 
-	cd ~  && yadm add ~/.config/nvim 
-	yadm commit -m "{{message}}"
+    git push 
+    cd ~  && yadm add ~/.config/nvim 
+    yadm commit -m "{{message}}"
 
 # TODO: install in an isolated virutal environment? (use pipx)
 # Install dependencies
