@@ -40,10 +40,11 @@ fetch:
 
 # Fix detached HEAD from doing yadm pull
 fix-head:
-    #!/usr/bin/env fish
-    set hash (git rev-parse HEAD)
-    git checkout master
-    git merge $hash
+    git branch -f master HEAD
+    # #!/usr/bin/env fish
+    # set hash (git rev-parse HEAD)
+    # git checkout master
+    # git merge $hash
 
 # Commit the whole config directory (also updates yadm)
 save-all: fix-head
