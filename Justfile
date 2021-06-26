@@ -43,7 +43,7 @@ _fix_head:
     #!/usr/bin/env bash
     set -euxo pipefail
     HASH=$(git rev-parse master)
-    git checkout -b master-$HASH $HASH
+    git branch master-$HASH $HASH
     git branch -f master HEAD 
     git checkout master
 # TODO: clean up old heads
