@@ -39,8 +39,17 @@ fetch:
     git fetch 
 
 # Fix detached HEAD from doing yadm pull
+_fix_head:
+    #!/usr/bin/env bash
+    set -euxo pipefail
+    HASH=$(git rev-parse master)
+    git checkout -b master-$HASH $HASH
+    git branch -f master HEAD 
+    git checkout master
+# TODO: clean up old heads
+
 fix-head:
-    test $(git rev-parse --abbrev-ref HEAD) = 'master' || git branch -f master HEAD
+    test $(git rev-parse --abbrev-ref HEAD) = 'master' || just _fix_head
 # #!/usr/bin/env fish
 # set hash (git rev-parse HEAD)
 # git checkout master
