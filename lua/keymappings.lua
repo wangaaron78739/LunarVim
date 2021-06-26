@@ -90,10 +90,3 @@ vim.api.nvim_set_keymap('n', 'gf', ':LspFormatting<cr>', { noremap = true, silen
 vim.api.nvim_set_keymap('i', '<C-l>', '<c-g>u<Esc>[s1z=`]a<c-g>u]]', { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('i', '<C-/>', '<C-\\><C-n><CMD>CommentToggle', { noremap = true, silent = true })
-
--- nvim-compe key map
-vim.cmd('inoremap <silent><expr> <C-Space> compe#complete()')
-vim.cmd("inoremap <silent><expr> <CR>      compe#confirm('<CR>')")
-vim.cmd("inoremap <silent><expr> <C-e>     compe#close('<C-e>')")
-vim.cmd("inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })")
-vim.cmd("inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })")
