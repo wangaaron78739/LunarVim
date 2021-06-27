@@ -156,7 +156,8 @@ local mappings = {
         D = {"<cmd>Telescope lsp_workspace_diagnostics<cr>", "Workspace Diagnostics"},
         f = {"<cmd>LspFormatting<cr><cmd>write<cr>", "Format"},
         i = {"<cmd>LspInfo<cr>", "Info"},
-        h = {"<cmd>LspHover<cr>", "Hover"},
+        h = {"<cmd>LspSaga hover_doc<cr>", "Hover"},
+        -- h = {"<cmd>LspHover<cr>", "Hover"},
         l = {"<cmd>Lspsaga lsp_finder<cr>", "LSP Finder"},
         L = {"<cmd>Lspsaga show_line_diagnostics<cr>", "Line Diagnostics"},
         p = {"<cmd>Lspsaga preview_definition<cr>", "Preview Definition"},
@@ -184,6 +185,7 @@ local mappings = {
         q = {"<cmd>TroubleToggle quickfix<cr>", "Quick Fixes"},
         l = {"<cmd>TroubleToggle loclist<cr>", "Location List"},
         o = {"<cmd>TroubleToggle todo<cr>", "TODOs"},
+        h = {"<cmd>Telescope help_tags<cr>", "Find Help"},
     },
     s = {
         name = "Search",
