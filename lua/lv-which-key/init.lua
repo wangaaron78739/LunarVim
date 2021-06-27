@@ -48,51 +48,52 @@ vim.g.mapleader = ' '
 
 -- no hl
 -- vim.api.nvim_set_keymap('n', '<Leader>h', ':set hlsearch!<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<Leader>h', ':noh<CR>', {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', '<Leader>h', ':noh<CR>', {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', '<Leader>h', ':let @/=""<CR>', {noremap = true, silent = true})
 
 -- explorer
 -- vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
 
 -- telescope
-vim.api.nvim_set_keymap('n', '<Leader>f', ':Telescope find_files <CR>', {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', '<Leader>f', ':Telescope find_files <CR>', {noremap = true, silent = true})
 
 -- dashboard
-vim.api.nvim_set_keymap('n', '<Leader>;', ':Dashboard<CR>', {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', '<Leader>;', ':Dashboard<CR>', {noremap = true, silent = true})
 
 -- Global search
-vim.api.nvim_set_keymap("n", "<leader>/", "<cmd>Telescope live_grep<cr>", {noremap = true, silent = true})
--- Comments
--- vim.api.nvim_set_keymap("n", "<leader>/", ":CommentToggle<CR>", {noremap = true, silent = true})
--- vim.api.nvim_set_keymap("v", "<leader>/", ":CommentToggle<CR>", {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap("n", "<leader>/", "<cmd>Telescope live_grep<cr>", {noremap = true, silent = true})
 
 -- close buffer
 -- vim.api.nvim_set_keymap("n", "<leader>c", ":BufferClose<CR>", {noremap = true, silent = true})
 -- vim.api.nvim_set_keymap("n", "<leader>w", ":wa<CR>", {noremap = true, silent = true})
 
 -- vim.api.nvim_set_keymap("n", "<leader>n", ":tabnew<CR>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("n", "<leader>v", ":Vista<CR>", {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap("n", "<leader>v", ":Vista<CR>", {noremap = true, silent = true})
 
 -- pane controls
 -- vim.api.nvim_set_keymap("n", "<leader>p", "<c-w>", {noremap = true, silent = true})
 -- vim.api.nvim_set_keymap("n", "<leader><space>", ":Telescope commands<CR>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("n", "<leader><space>", ":Commands<CR>", {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap("n", "<leader><space>", ":Commands<CR>", {noremap = true, silent = true})
 
 -- open projects
-vim.api.nvim_set_keymap('n', '<leader>p', ":lua require'telescope'.extensions.project.project{}<CR>",
-                        {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', '<leader>p', ":lua require'telescope'.extensions.project.project{}<CR>", {noremap = true, silent = true})
 
 -- TODO create entire treesitter section
 
 -- TODO support vim-surround in the which-key menus
 
 local mappings = {
-    [" "] = "Commands",
-    ["/"] = "Global search",
+    [" "] = {"<cmd>Commands<CR>", "Commands"},
+    ["/"] = {"<cmd>Telescope live_grep<cr>", "Global search"},
     -- ["c"] = "Close Buffer",
     -- ["w"] = "Write Buffer",
     -- ["e"] = "Explorer",
+    ["f"] = {':Telescope find_files <CR>', "Find File"},
+    ["h"] = {':noh<CR>', "No Highlight"},
+    ["v"] = {":Vista<CR>", "Vista"},
+    ["p"] = {":lua require'telescope'.extensions.project.project{}<CR>", "Projects"},
     o = {
-        name = "+Open new...",
+        name = "Open new...",
         s = {"<cmd>:NvimTreeToggle<cr>", "Sidebar"},
         r = {"<cmd>:RnvimrToggle<cr>", "Ranger"},
         p = {"<cmd>e ~/.config/nvim/<cr>", "Edit Private Config"},
@@ -107,20 +108,16 @@ local mappings = {
         -- b = {"<cmd>FloatermNew broot<CR>", "Broot"},
         o = {"<cmd>!open '%:p:h'<CR>", "Open File Explorer"},
     },
-    ["f"] = "Find File",
-    ["h"] = "No Highlight",
     ["b"] = {
-        name = "+Buffer",
+        name = "Buffer",
         w = {":w<CR>", "Write"},
         W = {":wa<CR>", "Write All"},
         c = {":BufferClose<CR>", "Close"},
         f = {"<cmd>LspFormatting<cr><cmd>write<cr>", "Format"},
         n = {"<cmd>tabnew<CR>", "New"}
     },
-    ["v"] = "Vista",
-    ["p"] = "Projects",
     d = {
-        name = "+Debug",
+        name = "Debug",
         b = {"<cmd>DebugToggleBreakpoint<cr>", "Toggle Breakpoint"},
         c = {"<cmd>DebugContinue<cr>", "Continue"},
         i = {"<cmd>DebugStepInto<cr>", "Step Into"},
@@ -129,7 +126,7 @@ local mappings = {
         s = {"<cmd>DebugStart<cr>", "Start"}
     },
     g = {
-        name = "+Git",
+        name = "Git",
         g = {"<cmd>lua _G.__fterm_gitui()<CR>", "Gitui"},
         m = {"<cmd>!smerge '%:p:h'<CR>", "Sublime Merge"},
         j = {"<cmd>NextHunk<cr>", "Next Hunk"},
@@ -145,7 +142,7 @@ local mappings = {
         C = {"<cmd>Telescope git_bcommits<cr>", "Checkout commit(for current file)"},
     },
     l = {
-        name = "+LSP",
+        name = "LSP",
         a = {"<cmd>Lspsaga code_action<cr>", "Code Action"},
         A = {"<cmd>Lspsaga range_code_action<cr>", "Selected Action"},
         d = {"<cmd>Telescope lsp_document_diagnostics<cr>", "Document Diagnostics"},
@@ -171,7 +168,7 @@ local mappings = {
         C = {'<cmd>VimtexCompileOutput<cr>', 'Compile Output Latex'},
     },
     t = {
-        name = "+Trouble",
+        name = "Trouble",
         t = {"<cmd>TroubleToggle<cr>", "Trouble"},
         d = {"<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document"},
         w = {"<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace"},
@@ -182,7 +179,7 @@ local mappings = {
         o = {"<cmd>TroubleToggle todo<cr>", "TODOs"},
     },
     s = {
-        name = "+Search",
+        name = "Search",
         b = {"<cmd>Telescope git_branches<cr>", "Checkout branch"},
         B = {"<cmd>Telescope buffers<cr>", "Buffers"},
         c = {"<cmd>Telescope colorscheme<cr>", "Colorscheme"},
@@ -198,14 +195,42 @@ local mappings = {
         o = {"<cmd>TodoTelescope<cr>", "TODOs"},
         p = {"<cmd>Telescope commands<cr>", "Commands"}
     },
-    S = {name = "+Session", s = {"<cmd>SessionSave<cr>", "Save Session"}, l = {"<cmd>SessionLoad<cr>", "Load Session"}},
+    r = {
+        name = "Replace",
+        f = {"<cmd>lua require('spectre').open_file_search()<cr>", "Current File"},
+        p = {"<cmd>lua require('spectre').open()<cr>", "Project"}
+    },
+    S = {
+        name = "Session", 
+        s = {"<cmd>SessionSave<cr>", "Save Session"}, 
+        l = {"<cmd>SessionLoad<cr>", "Load Session"}
+    },
     z = {
-        name = "+Zen",
+        name = "Zen",
         s = {"<cmd>TZBottom<cr>", "toggle status line"},
         t = {"<cmd>TZTop<cr>", "toggle tab bar"},
         z = {"<cmd>TZAtaraxis<cr>", "toggle zen"},
     }
 }
 
+local visualOpts = {
+    mode = "v", -- Visual mode
+    prefix = "<leader>",
+    buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = false -- use `nowait` when creating keymaps
+}
+
+local visualMappings = {
+    ["/"] = {"<cmd>CommentToggle<cr>", "Comment"},
+    r = {
+        name = "Replace",
+        f = {"<cmd>lua require('spectre').open_visual({path = vim.fn.expand('%')})<cr>", "File"},
+        p = {"<cmd>lua require('spectre').open_visual()<cr>", "Project"}
+    }
+}
+
 local wk = require("which-key")
 wk.register(mappings, opts)
+wk.register(visualMappings, visualOpts)
