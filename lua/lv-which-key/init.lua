@@ -171,9 +171,16 @@ local mappings = {
         n = {"<cmd>LspGotoNext<cr>", "Next"},
         N = {"<cmd>LspGotoPrev<cr>", "Previous"},
         V = {"<cmd>Vista nvim_lsp<cr>", "Vista"},
-        v = {'<cmd>VimtexView<cr>', 'View pdf'},
+    },
+    v = {
+        name = "Latex",
+        f = {"<cmd>call vimtex#fzf#run()<cr>", "Fzf Find"},
+        i = {"<cmd>VimtexInfo<cr>", "Project Information"},
+        s = {"<cmd>VimtexStop<cr>", "Stop Project Compilation"},
+        t = {"<cmd>VimtexTocToggle<cr>", "Toggle Table Of Content"},
+        v = {"<cmd>VimtexView<cr>", "View PDF"},
         c = {'<cmd>VimtexCompile<cr>', 'Compile Project Latex'},
-        C = {'<cmd>VimtexCompileOutput<cr>', 'Compile Output Latex'},
+        o = {'<cmd>VimtexCompileOutput<cr>', 'Compile Output Latex'},
     },
     t = {
         name = "Trouble",
