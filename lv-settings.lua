@@ -77,3 +77,6 @@ O.go.autoformat = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.scrolloff = 10
+
+-- Turn off cursorline
+-- O.cursorline = false

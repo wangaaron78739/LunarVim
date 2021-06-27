@@ -10,6 +10,7 @@ O = {
     wrap_lines = false,
     number = true,
     relative_number = true,
+    cursorline = true,
     shell = 'fish',
     timeoutlen = 100,
     nvim_tree_disable_netrw = 0, 
