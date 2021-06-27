@@ -1,5 +1,7 @@
 require('lv-globals')
 vim.cmd('luafile '..CONFIG_PATH..'/lv-settings.lua')
+
+
 require('settings')
 require('lv-gitblame')
 require('lv-matchup')
@@ -33,8 +35,6 @@ if O.extras then
     require('lv-spectre')
     require('lv-symbols-outline')
 end
-
-
 
 -- TODO is there a way to do this without vimscript
 vim.cmd('source '..CONFIG_PATH..'/vimscript/functions.vim')
