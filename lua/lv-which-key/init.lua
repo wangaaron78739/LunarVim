@@ -151,7 +151,7 @@ local mappings = {
         o = {"<cmd>Telescope git_status<cr>", "Open changed file"},
         b = {"<cmd>Telescope git_branches<cr>", "Checkout branch"},
         c = {"<cmd>Telescope git_commits<cr>", "Checkout commit"},
-        C = {"<cmd>Telescope git_bcommits<cr>", "Checkout commit(for current file)"},
+        C = {"<cmd>Telescope git_bcommits<cr>", "Checkout commit(for current file)"}
     },
     l = {
         name = "LSP",
@@ -197,7 +197,6 @@ local mappings = {
         q = {"<cmd>TroubleToggle quickfix<cr>", "Quick Fixes"},
         l = {"<cmd>TroubleToggle loclist<cr>", "Location List"},
         o = {"<cmd>TroubleToggle todo<cr>", "TODOs"},
-        h = {"<cmd>Telescope help_tags<cr>", "Find Help"},
     },
     s = {
         name = "Search",
@@ -207,6 +206,7 @@ local mappings = {
         d = {"<cmd>Telescope lsp_document_diagnostics<cr>", "Document Diagnostics"},
         D = {"<cmd>Telescope lsp_workspace_diagnostics<cr>", "Workspace Diagnostics"},
         f = {"<cmd>Telescope find_files find_command=rg,--ignore,--hidden,--files<cr>", "Find File (+Hidden)"},
+        h = {"<cmd>Telescope help_tags<cr>", "Find Help"},
         m = {"<cmd>Telescope marks<cr>", "Marks"},
         M = {"<cmd>Telescope man_pages<cr>", "Man Pages"},
         r = {"<cmd>Telescope oldfiles<cr>", "Open Recent File"},
@@ -230,7 +230,7 @@ local mappings = {
         name = "Zen",
         s = {"<cmd>TZBottom<cr>", "toggle status line"},
         t = {"<cmd>TZTop<cr>", "toggle tab bar"},
-        z = {"<cmd>TZAtaraxis<cr>", "toggle zen"},
+        z = {"<cmd>TZAtaraxis<cr>", "toggle zen"}
     }
 }
 

@@ -75,7 +75,7 @@ O.go.autoformat = true
 -- vim.g.neovide_refresh_rate=120
 
 -- My settings
-vim.o.ignorecase = true
+-- vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.scrolloff = 10
 
