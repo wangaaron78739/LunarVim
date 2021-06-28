@@ -113,7 +113,7 @@ local mappings = {
         -- b = {"<cmd>FloatermNew broot<CR>", "Broot"},
         o = {"<cmd>!open '%:p:h'<CR>", "Open File Explorer"},
     },
-    ["b"] = {
+    b = {
         name = "Buffer",
         w = {":w<CR>", "Write"},
         a = {":wa<CR>", "Write All"},
@@ -129,6 +129,32 @@ local mappings = {
         L = {"<cmd>BufferOrderByLanguage<cr>", "sort BufferLines automatically by language"},
     },
     d = {
+        name = "Diagnostics",
+        t = {"<cmd>TroubleToggle<cr>", "trouble"},
+        w = {"<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "workspace"},
+        d = {"<cmd>TroubleToggle lsp_document_diagnostics<cr>", "document"},
+        q = {"<cmd>TroubleToggle quickfix<cr>", "quickfix"},
+        l = {"<cmd>TroubleToggle loclist<cr>", "loclist"},
+        r = {"<cmd>TroubleToggle lsp_references<cr>", "references"}
+    },
+-- " Available Debug Adapters:
+-- "   https://microsoft.github.io/debug-adapter-protocol/implementors/adapters/
+-- " 
+-- " Adapter configuration and installation instructions:
+-- "   https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
+-- " 
+-- " Debug Adapter protocol:
+-- "   https://microsoft.github.io/debug-adapter-protocol/
+-- " Debugging
+-- command! DebugToggleBreakpoint lua require'dap'.toggle_breakpoint()
+-- command! DebugStart lua require'dap'.continue()
+-- command! DebugContinue lua require'dap'.continue()
+-- command! DebugStepOver lua require'dap'.step_over()
+-- command! DebugStepOut lua require'dap'.step_out()
+-- command! DebugStepInto lua require'dap'.step_into()
+-- command! DebugToggleRepl lua require'dap'.repl.toggle()
+-- command! DebugGetSession lua require'dap'.session()
+    D = {
         name = "Debug",
         b = {"<cmd>DebugToggleBreakpoint<cr>", "Toggle Breakpoint"},
         c = {"<cmd>DebugContinue<cr>", "Continue"},
@@ -141,13 +167,14 @@ local mappings = {
         name = "Git",
         g = {"<cmd>lua _G.__fterm_gitui()<CR>", "Gitui"},
         m = {"<cmd>!smerge '%:p:h'<CR>", "Sublime Merge"},
-        j = {"<cmd>NextHunk<cr>", "Next Hunk"},
-        k = {"<cmd>PrevHunk<cr>", "Prev Hunk"},
-        p = {"<cmd>PreviewHunk<cr>", "Preview Hunk"},
-        r = {"<cmd>ResetHunk<cr>", "Reset Hunk"},
-        R = {"<cmd>ResetBuffer<cr>", "Reset Buffer"},
-        s = {"<cmd>StageHunk<cr>", "Stage Hunk"},
-        u = {"<cmd>UndoStageHunk<cr>", "Undo Stage Hunk"},
+        j = {"<cmd>lua require 'lv-utils'.next_hunk()<cr>", "Next Hunk"},
+        k = {"<cmd>lua require 'lv-utils'.prev_hunk()<cr>", "Prev Hunk"},
+        l = {"<cmd>lua require 'lv-utils'.blame_line()<cr>", "Blame"},
+        p = {"<cmd>lua require 'lv-utils'.preview_hunk()<cr>", "Preview Hunk"},
+        r = {"<cmd>lua require 'lv-utils'.reset_hunk()<cr>", "Reset Hunk"},
+        R = {"<cmd>lua require 'lv-utils'.reset_buffer()<cr>", "Reset Buffer"},
+        s = {"<cmd>lua require 'lv-utils'.stage_hunk()<cr>", "Stage Hunk"},
+        u = {"<cmd>lua require 'lv-utils'.undo_stage_hunk()<cr>", "Undo Stage Hunk"},
         o = {"<cmd>Telescope git_status<cr>", "Open changed file"},
         b = {"<cmd>Telescope git_branches<cr>", "Checkout branch"},
         c = {"<cmd>Telescope git_commits<cr>", "Checkout commit"},
@@ -159,10 +186,10 @@ local mappings = {
         A = {"<cmd>Lspsaga range_code_action<cr>", "Selected Action"},
         d = {"<cmd>Telescope lsp_document_diagnostics<cr>", "Document Diagnostics"},
         D = {"<cmd>Telescope lsp_workspace_diagnostics<cr>", "Workspace Diagnostics"},
-        f = {"<cmd>LspFormatting<cr><cmd>write<cr>", "Format"},
-        i = {"<cmd>LspInfo<cr>", "Info"},
+        f = {"<cmd>lua require 'lv-utils'.formatting()<cr>", "Format"},
         h = {"<cmd>LspSaga hover_doc<cr>", "Hover"},
         -- h = {"<cmd>LspHover<cr>", "Hover"},
+        i = {"<cmd>LspInfo<cr>", "Info"},
         l = {"<cmd>Lspsaga lsp_finder<cr>", "LSP Finder"},
         L = {"<cmd>Lspsaga show_line_diagnostics<cr>", "Line Diagnostics"},
         p = {"<cmd>Lspsaga preview_definition<cr>", "Preview Definition"},
@@ -214,7 +241,9 @@ local mappings = {
         t = {"<cmd>Telescope live_grep<cr>", "Text"},
         k = {"<cmd>Telescope keymaps<cr>", "Keymappings"},
         o = {"<cmd>TodoTelescope<cr>", "TODOs"},
-        p = {"<cmd>Telescope commands<cr>", "Commands"}
+        p = {"<cmd>Telescope commands<cr>", "Commands"},
+        F = {"<cmd>lua require('spectre').open_file_search()<cr>", "Current File"},
+        P = {"<cmd>lua require('spectre').open()<cr>", "Project"}
     },
     r = {
         name = "Replace",
@@ -232,6 +261,13 @@ local mappings = {
         t = {"<cmd>TZTop<cr>", "toggle tab bar"},
         z = {"<cmd>TZAtaraxis<cr>", "toggle zen"}
     }
+    -- extras
+    -- z = {
+    --     name = "Zen",
+    --     s = {"<cmd>TZBottom<cr>", "toggle status line"},
+    --     t = {"<cmd>TZTop<cr>", "toggle tab bar"},
+    --     z = {"<cmd>TZAtaraxis<cr>", "toggle zen"}
+    -- }
 }
 
 local visualOpts = {
