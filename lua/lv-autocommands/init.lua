@@ -3,13 +3,13 @@ local utils = require('lv-utils')
 local auto_formatters = {            }
 
 local python_autoformat = {'BufWritePre', '*.py', 'lua vim.lsp.buf.formatting_sync(nil, 1000)'}
-if O.python.autoformat then table.insert(auto_formatters, python_autoformat) end
+if O.lang.python.autoformat then table.insert(auto_formatters, python_autoformat) end
 
 local javascript_autoformat = {'BufWritePre', '*.js', 'lua vim.lsp.buf.formatting_sync(nil, 1000)'}
 local javascriptreact_autoformat = {'BufWritePre', '*.jsx', 'lua vim.lsp.buf.formatting_sync(nil, 1000)'}
 local typescript_autoformat = {'BufWritePre', '*.ts', 'lua vim.lsp.buf.formatting_sync(nil, 1000)'}
 local typescriptreact_autoformat = {'BufWritePre', '*.tsx', 'lua vim.lsp.buf.formatting_sync(nil, 1000)'}
-if O.tsserver.autoformat then
+if O.lang.tsserver.autoformat then
     table.insert(auto_formatters, javascript_autoformat)
     table.insert(auto_formatters, javascriptreact_autoformat)
     table.insert(auto_formatters, typescript_autoformat)
@@ -17,23 +17,23 @@ if O.tsserver.autoformat then
 end
 
 local lua_format = {'BufWritePre', '*.lua', 'lua vim.lsp.buf.formatting_sync(nil, 1000)'}
-if O.lua.autoformat then table.insert(auto_formatters, lua_format) end
+if O.lang.lua.autoformat then table.insert(auto_formatters, lua_format) end
 
 local json_format = {'BufWritePre', '*.json', 'lua vim.lsp.buf.formatting_sync(nil, 1000)'}
-if O.json.autoformat then table.insert(auto_formatters, json_format) end
+if O.lang.json.autoformat then table.insert(auto_formatters, json_format) end
 
 local ruby_format = {'BufWritePre', '*.rb', 'lua vim.lsp.buf.formatting_sync(nil,1000)'}
-if O.ruby.autoformat then table.insert(auto_formatters, ruby_format) end
+if O.lang.ruby.autoformat then table.insert(auto_formatters, ruby_format) end
 
 local go_format = {'BufWritePre', '*.go', 'lua vim.lsp.buf.formatting_sync(nil,1000)'}
-if O.go.autoformat then table.insert(auto_formatters, go_format) end
+if O.lang.go.autoformat then table.insert(auto_formatters, go_format) end
 
 local c_autoformat = {'BufWritePre', '*.c', 'lua vim.lsp.buf.formatting_sync(nil,1000)'}
 local cpp_autoformat = {'BufWritePre', '*.cpp', 'lua vim.lsp.buf.formatting_sync(nil,1000)'}
 local cc_autoformat = {'BufWritePre', '*.cc', 'lua vim.lsp.buf.formatting_sync(nil,1000)'}
 local h_autoformat = {'BufWritePre', '*.h', 'lua vim.lsp.buf.formatting_sync(nil,1000)'}
 local hpp_autoformat = {'BufWritePre', '*.hpp', 'lua vim.lsp.buf.formatting_sync(nil,1000)'}
-if O.clang.autoformat then
+if O.lang.clang.autoformat then
     table.insert(auto_formatters, c_autoformat)
     table.insert(auto_formatters, cpp_autoformat)
     table.insert(auto_formatters, cc_autoformat)
@@ -42,7 +42,7 @@ if O.clang.autoformat then
 end
 
 local rust_autoformat = {'BufWritePre', '*.rs', 'lua vim.lsp.buf.formatting_sync(nil,1000)'}
-if O.rust.autoformat then
+if O.lang.rust.autoformat then
     table.insert(auto_formatters, rust_autoformat)
 end
 
