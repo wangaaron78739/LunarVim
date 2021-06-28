@@ -119,7 +119,7 @@ local mappings = {
         a = {":wa<CR>", "Write All"},
         c = {":BufferClose<CR>", "Close"},
         f = {"<cmd>LspFormatting<cr><cmd>write<cr>", "Format"},
-        n = {"<cmd>tabnew<CR>", "New"}, 
+        n = {"<cmd>tabnew<CR>", "New"},
         j = {"<cmd>BufferPick<cr>", "jump to buffer"},
         W = {"<cmd>BufferWipeout<cr>", "wipeout buffer"},
         e = {"<cmd>BufferCloseAllButCurrent<cr>", "close all but current buffer"},
@@ -177,7 +177,7 @@ local mappings = {
         N = {"<cmd>LspGotoPrev<cr>", "Previous"},
         V = {"<cmd>Vista nvim_lsp<cr>", "Vista"},
     },
-    v = {
+    L = {
         name = "Latex",
         f = {"<cmd>call vimtex#fzf#run()<cr>", "Fzf Find"},
         i = {"<cmd>VimtexInfo<cr>", "Project Information"},
@@ -222,8 +222,8 @@ local mappings = {
         p = {"<cmd>lua require('spectre').open()<cr>", "Project"}
     },
     S = {
-        name = "Session", 
-        s = {"<cmd>SessionSave<cr>", "Save Session"}, 
+        name = "Session",
+        s = {"<cmd>SessionSave<cr>", "Save Session"},
         l = {"<cmd>SessionLoad<cr>", "Load Session"}
     },
     z = {
