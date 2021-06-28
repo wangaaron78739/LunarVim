@@ -69,7 +69,6 @@ return require("packer").startup(function(use)
         end
     }
 
-    -- use {'lukas-reineke/indent-blankline.nvim', opt=true, branch = 'lua'}
     use {
         "lewis6991/gitsigns.nvim",
 
@@ -215,12 +214,25 @@ return require("packer").startup(function(use)
 
     --     -- Treesitter playground
     --     use {'nvim-treesitter/playground', opt = true}
-    --     -- Latex
+    
+    -- Latex
     use {"lervag/vimtex", event = "FileType latex", opt = true}
     require_plugin("vimtex")
+
+    -- use {'lukas-reineke/indent-blankline.nvim', opt=true, branch = 'lua'}
+    -- use {"nvim-telescope/telescope-fzy-native.nvim", opt = true}
+    -- use {"nvim-telescope/telescope-project.nvim", opt = true}
     --     -- comments in context
     --     use {'JoosepAlviste/nvim-ts-context-commentstring', opt = true}
     --     -- Git extras
+    -- Git
+    -- use {'tpope/vim-fugitive', opt = true}
+    -- use {'tpope/vim-rhubarb', opt = true}
+    -- pwntester/octo.nvim
+
+    -- Easily Create Gists
+    -- use {'mattn/vim-gist', opt = true}
+    -- use {'mattn/webapi-vim', opt = true}
     --     use {'f-person/git-blame.nvim', opt = true}
     --     -- diagnostics
     --     use {"folke/trouble.nvim", opt = true}
@@ -248,7 +260,6 @@ return require("packer").startup(function(use)
     --
     --     -- Sane gx for netrw_gx bug
     --     use {"felipec/vim-sanegx", opt = true}
-
     -- lsp root
     -- use {"ahmedkhalf/lsp-rooter.nvim", opt = true} -- with this nvim-tree will follow you
     -- require_plugin('lsp-rooter.nvim')
