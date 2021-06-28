@@ -45,6 +45,9 @@ vim.cmd('filetype plugin on') -- filetype detection
 -- vim.o.guifont = "SauceCodePro Nerd Font:h17"
 vim.o.guifont = "FiraCode Nerd Font:h13"
 
+vim.o.ignorecase = O.ignore_case
+vim.o.smartcase = O.smart_case
+
 -- quick-scope
 -- vim.g.qs_highlight_on_keys = {'f', 'F', 't', 'T'}
 
