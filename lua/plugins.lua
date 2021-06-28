@@ -111,7 +111,10 @@ return require("packer").startup(function(use)
 
     }
 
+    -- VSCode style snippets
     use {"hrsh7th/vim-vsnip"}
+
+    -- Better motions
     use {
         event = 'BufRead',
         'phaazon/hop.nvim',
@@ -166,9 +169,6 @@ return require("packer").startup(function(use)
             opt = true
         }
         require_plugin('bracey.vim')
-        -- Better motions
-        use {'phaazon/hop.nvim', opt = true}
-        require_plugin('hop.nvim')
         -- Colorizer
         use {'norcalli/nvim-colorizer.lua', opt = true}
         require_plugin('nvim-colorizer.lua')
