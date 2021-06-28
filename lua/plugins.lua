@@ -63,7 +63,6 @@ return require("packer").startup(function(use)
         config = function()
             require("lv-nvimtree").config()
         end
-
     }
 
     -- use {'lukas-reineke/indent-blankline.nvim', opt=true, branch = 'lua'}
@@ -159,8 +158,14 @@ return require("packer").startup(function(use)
     }
 
     -- matchup
-    use {'andymass/vim-matchup', opt = true}
-    require_plugin('vim-matchup')
+    use {'andymass/vim-matchup', 
+        event = "CursorMoved",
+        config = function()
+            require('lv-matchup').config()
+        end,
+        disable = not O.plugin.matchup.active,
+        opt = true
+    }
 
     --     -- Snippets
     --     use {"rafamadriz/friendly-snippets", opt = true}
@@ -244,6 +249,7 @@ return require("packer").startup(function(use)
             opt = true
         }
         require_plugin('bracey.vim')
+
         use {"nvim-telescope/telescope-fzy-native.nvim", opt = true}
         use {"nvim-telescope/telescope-project.nvim", opt = true}
         require_plugin('telescope-project.nvim')

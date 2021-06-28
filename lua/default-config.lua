@@ -31,9 +31,8 @@ O = {
         hop = {active = false},
         dial = {active = false},
         dashboard = {active = false},
+        matchup = {active = false},
         zen = {active = false}
-
-
     },
 
     lang = {
