@@ -25,7 +25,7 @@ O.plugin.matchup.active = true
 
 -- dashboard
 -- O.dashboard.custom_header = {""}
--- O.dashboard.footer = {""}
+O.dashboard.footer = {"Anshuman Medhi (IndianBoy42)"}
 
 -- if you don't want all the parsers change this to a table of the ones you want
 O.treesitter.ensure_installed = "all"
@@ -89,4 +89,3 @@ vim.o.scrolloff = 10
 -- Turn off cursorline
 -- O.cursorline = false
 
-O.dashboard.footer = "Anshuman Medhi (IndianBoy42)"
