@@ -122,8 +122,6 @@ return require("packer").startup(function(use)
 
     }
 
-    -- Extras, these do not load by default
-
     -- Better motions
     use {
         'phaazon/hop.nvim',
@@ -155,19 +153,19 @@ return require("packer").startup(function(use)
         disable = not O.plugin.dashboard.active,
         opt = true
     }
-
     -- Zen Mode TODO this don't work with whichkey might gave to make this built in, may have to replace with folke zen
     use {
-        "Pocco81/TrueZen.nvim",
-        -- event = 'BufEnter',
-        cmd = {"TZAtaraxis"},
-        -- cmd = {"TZAtaraxis", "TZMinimalist", "TZBottom", "TZTop"},
+        "folke/zen-mode.nvim",
+        cmd = "ZenMode",
         config = function()
-            require('lv-zen').config()
-        end
-        -- event = "BufEnter"
+            require("zen-mode").setup {
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+            }
+        end,
+        disable = not O.plugin.zen.active,
     }
-
     -- matchup
     use {
         'andymass/vim-matchup',
@@ -175,8 +173,7 @@ return require("packer").startup(function(use)
         config = function()
             require('lv-matchup').config()
         end,
-        disable = not O.plugin.matchup.active,
-        opt = true
+        disable = not O.plugin.matchup.active
     }
 
     use {
@@ -238,19 +235,143 @@ return require("packer").startup(function(use)
         disable = not O.plugin.indent_line.active
     }
 
+    -- comments in context
     use {
         'JoosepAlviste/nvim-ts-context-commentstring',
         event = "BufRead",
         disable = not O.plugin.ts_context_commentstring.active
     }
-    -- use {"nvim-telescope/telescope-fzy-native.nvim", opt = true}
-    -- use {"nvim-telescope/telescope-project.nvim", opt = true}
-    -- Git extras
-    -- Git
-    -- use {'tpope/vim-fugitive', opt = true}
-    -- use {'tpope/vim-rhubarb', opt = true}
-    -- pwntester/octo.nvim
 
+    -- Symbol Outline
+    use {
+        'simrat39/symbols-outline.nvim',
+        cmd = 'SymbolsOutline',
+        disable = not O.plugin.symbol_outline.active
+    }
+    -- diagnostics
+    use {
+        "folke/trouble.nvim",
+        cmd = 'TroubleToggle',
+        disable = not O.plugin.trouble.active
+    }
+    -- Debugging
+    use {
+        "mfussenegger/nvim-dap",
+        event = "BufRead",
+        disable = not O.plugin.debug.active
+    }
+    -- Better quickfix
+    use {
+        "kevinhwang91/nvim-bqf",
+        event = "BufRead",
+        disable = not O.plugin.bqf.active
+    }
+    -- Floating terminal
+    use {
+        'numToStr/FTerm.nvim',
+        event = "BufRead",
+        config = function()
+            require'FTerm'.setup({
+                dimensions = {height = 0.8, width = 0.8, x = 0.5, y = 0.5},
+                border = 'single' -- or 'double'
+            })
+        end,
+        disable = not O.plugin.floatterm.active
+    }
+    -- Search & Replace
+    use {
+        'windwp/nvim-spectre',
+        event = "BufRead",
+        config = function()
+            require('spectre').setup()
+        end,
+        disable = not O.plugin.spectre.active
+    }
+    -- lsp root with this nvim-tree will follow you
+    use {
+        "ahmedkhalf/lsp-rooter.nvim",
+        event = "BufRead",
+        config = function()
+            require("lsp-rooter").setup()
+        end,
+        disable = not O.plugin.lsp_rooter.active
+    }
+    -- Markdown preview
+    use {
+        'iamcco/markdown-preview.nvim',
+        run = 'cd app && npm install',
+        ft = 'markdown',
+        disable = not O.plugin.markdown_preview.active
+    }
+    -- Interactive scratchpad
+    use {
+        'metakirby5/codi.vim',
+        cmd = 'Codi',
+        disable = not O.plugin.codi.active
+    }
+    -- Use fzy for telescope
+    use {
+        "nvim-telescope/telescope-fzy-native.nvim",
+        event = "BufRead",
+        disable = not O.plugin.telescope_fzy.active
+    }
+    -- Use project for telescope
+    use {
+        "nvim-telescope/telescope-project.nvim",
+        event = "BufRead",
+        disable = not O.plugin.telescope_project.active
+    }
+    -- Sane gx for netrw_gx bug
+    use {
+        "felipec/vim-sanegx",
+        event = "BufRead",
+        disable = not O.plugin.sanegx.active
+    }
+    -- Sane gx for netrw_gx bug
+    use {
+        "folke/todo-comments.nvim",
+        event = "BufRead",
+        disable = not O.plugin.todo_comments.active
+    }
+    -- LSP Colors
+    use {
+        "folke/lsp-colors.nvim",
+        event = "BufRead",
+        disable = not O.plugin.lsp_colors.active
+    }
+    -- Git Blame
+    use {
+        "f-person/git-blame.nvim",
+        event = "BufRead",
+        disable = not O.plugin.git_blame.active
+    }
+    use {
+        'ruifm/gitlinker.nvim',
+        event = "BufRead",
+        config = function()
+            require"gitlinker".setup({
+                opts = {
+                    -- remote = 'github', -- force the use of a specific remote
+                    -- adds current line nr in the url for normal mode
+                    add_current_line_on_normal_mode = true,
+                    -- callback for what to do with the url
+                    action_callback = require"gitlinker.actions".open_in_browser,
+                    -- print the url after performing the action
+                    print_url = false,
+                    -- mapping to call url generation
+                    mappings = "<leader>gy"
+                }
+            })
+
+        end,
+        disable = not O.plugin.gitlinker.active,
+        requires = 'nvim-lua/plenary.nvim'
+
+    }
+    -- Git
+    -- https://github.com/kdheepak/lazygit.nvim
+    -- pwntester/octo.nvim
+    -- use 'sindrets/diffview.nvim'
     -- Easily Create Gists
     -- use {'mattn/vim-gist', opt = true}
     -- use {'mattn/webapi-vim', opt = true}
@@ -275,9 +396,6 @@ return require("packer").startup(function(use)
     --     }
     --     require_plugin('markdown-preview.nvim')
     --
-    -- Floating terminal
-    use {'numToStr/FTerm.nvim'}
-    require_plugin('FTerm.nvim')
     --
     --     -- Sane gx for netrw_gx bug
     --     use {"felipec/vim-sanegx", opt = true}
@@ -285,37 +403,24 @@ return require("packer").startup(function(use)
     -- use {"ahmedkhalf/lsp-rooter.nvim", opt = true} -- with this nvim-tree will follow you
     -- require_plugin('lsp-rooter.nvim')
 
-    -- Extras
-    if O.extras then
-        -- HTML preview
-        use {
-            'turbio/bracey.vim',
-            run = 'npm install --prefix server',
-            opt = true
-        }
+    -- Autotag
+    -- use {"windwp/nvim-ts-autotag", opt = true}
+    -- require_plugin("nvim-ts-autotag")
 
-        use {"nvim-telescope/telescope-fzy-native.nvim", opt = true}
-        use {"nvim-telescope/telescope-project.nvim", opt = true}
+    -- folke/todo-comments.nvim
+    -- gennaro-tedesco/nvim-jqx
+    -- TimUntersberger/neogit
+    -- folke/lsp-colors.nvim
+    -- simrat39/symbols-outline.nvim
 
-        -- Autotag
-        -- use {"windwp/nvim-ts-autotag", opt = true}
-        -- require_plugin("nvim-ts-autotag")
+    -- Git
+    -- use {'tpope/vim-fugitive', opt = true}
+    -- use {'tpope/vim-rhubarb', opt = true}
+    -- pwntester/octo.nvim
 
-        -- folke/todo-comments.nvim
-        -- gennaro-tedesco/nvim-jqx
-        -- TimUntersberger/neogit
-        -- folke/lsp-colors.nvim
-        -- simrat39/symbols-outline.nvim
-
-        -- Git
-        -- use {'tpope/vim-fugitive', opt = true}
-        -- use {'tpope/vim-rhubarb', opt = true}
-        -- pwntester/octo.nvim
-
-        -- Easily Create Gists
-        -- use {'mattn/vim-gist', opt = true}
-        -- use {'mattn/webapi-vim', opt = true}
-    end
+    -- Easily Create Gists
+    -- use {'mattn/vim-gist', opt = true}
+    -- use {'mattn/webapi-vim', opt = true}
 
     -- amedhi plugins
     use {"unblevable/quick-scope", opt = true}
@@ -366,6 +471,16 @@ return require("packer").startup(function(use)
     require_plugin("nvim-treesitter-textobjects")
     require_plugin("kmonad-vim")
     require_plugin("suda.vim")
+
+    -- HTML preview
+    use {
+        'turbio/bracey.vim',
+        run = 'npm install --prefix server',
+        opt = true
+    }
+
+    use {"nvim-telescope/telescope-fzy-native.nvim", opt = true}
+    use {"nvim-telescope/telescope-project.nvim", opt = true}
 
     -- Colorschemes
     -- use {'Mofiqul/dracula.nvim', opt=true}

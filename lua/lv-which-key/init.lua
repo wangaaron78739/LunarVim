@@ -100,6 +100,7 @@ local mappings = {
     ["h"] = {':noh<CR>', "No Highlight"},
     ["v"] = {":Vista<CR>", "Vista"},
     ["p"] = {":lua require'telescope'.extensions.project.project{}<CR>", "Projects"},
+    ["gy"] = "Gitlink",
     o = {
         name = "Open new...",
         s = {"<cmd>NvimTreeToggle<CR>", "Sidebar"},
@@ -258,19 +259,7 @@ local mappings = {
         s = {"<cmd>SessionSave<cr>", "Save Session"},
         l = {"<cmd>SessionLoad<cr>", "Load Session"}
     },
-    z = {
-        name = "Zen",
-        s = {"<cmd>TZBottom<cr>", "toggle status line"},
-        t = {"<cmd>TZTop<cr>", "toggle tab bar"},
-        z = {"<cmd>TZAtaraxis<cr>", "toggle zen"}
-    }
-    -- extras
-    -- z = {
-    --     name = "Zen",
-    --     s = {"<cmd>TZBottom<cr>", "toggle status line"},
-    --     t = {"<cmd>TZTop<cr>", "toggle tab bar"},
-    --     z = {"<cmd>TZAtaraxis<cr>", "toggle zen"}
-    -- }
+    z = { "<cmd>ZenMode<cr>", "toggle zen" }
 }
 
 local visualOpts = {
