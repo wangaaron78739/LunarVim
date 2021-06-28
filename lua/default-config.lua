@@ -28,6 +28,7 @@ O = {
     
     lang = {
         python = {
+            active = true,
             linter = '',
             -- @usage can be 'yapf', 'black'
             formatter = 'black',
@@ -45,10 +46,15 @@ O = {
             }
         },
         rust = {
+            active = true,
             autoformat = true,
+        dart = {
+            active = false,
+            sdk_path = '/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot'
         },
         dart = {sdk_path = '/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot'},
         lua = {
+            active = true,
             -- @usage can be 'lua-format'
             formatter = 'lua-format',
             autoformat = true,
@@ -59,6 +65,7 @@ O = {
             }
         },
         sh = {
+            active = false,
             -- @usage can be 'shellcheck'
             linter = '',
             -- @usage can be 'shfmt'
@@ -71,6 +78,7 @@ O = {
             }
         },
         tsserver = {
+            active = false,
             -- @usage can be 'eslint'
             linter = '',
             -- @usage can be 'prettier'
@@ -83,6 +91,7 @@ O = {
             }
         },
         json = {
+            active = true,
             -- @usage can be 'prettier'
             formatter = 'prettier',
             autoformat = false,
@@ -92,13 +101,15 @@ O = {
                 underline = true
             }
         },
-        tailwindls = {
+        tailwindcss = {
+            active = false,
             filetypes = {
                 'html', 'css', 'scss', 'javascript', 'javascriptreact',
                 'typescript', 'typescriptreact'
             }
         },
         clang = {
+            active = true,
             diagnostics = {
                 virtual_text = {spacing = 0, prefix = ""},
                 signs = true,
@@ -106,17 +117,39 @@ O = {
             },
             autoformat = true,
         },
-    	ruby = {
-    		diagnostics = {
+        ruby = {
+            active = false,
+            diagnostics = {
                 virtualtext = {spacing = 0, prefix = ""},
                 signs = true,
                 underline = true
             },
             filetypes = {'rb', 'erb', 'rakefile'}
-    	},
-        go = {},
-        -- css = {formatter = '', autoformat = false, virtual_text = true},
-        -- json = {formatter = '', autoformat = false, virtual_text = true}
+        },
+        go = {active = false},
+        elixer = {active = false},
+        vim = {active = true},
+        yaml = {active = false},
+        terraform = {active = false},
+        svelte = {active = false},
+        php = {active = false},
+        latex = {active = true},
+        kotlin = {active = false},
+        html = {active = false},
+        elm = {active = false},
+        emmet = {active = false},
+        graphql = {active = false},
+        efm = {active = true},
+        docker = {active = false},
+        cmake = {active = true},
+        java = {active = false},
+        css = {
+            active = false,
+            formatter = '', autoformat = false, virtual_text = true},
+        json = {
+            active = false,
+            formatter = '', autoformat = false, virtual_text = true}
+
     },
 	dashboard = {
 		custom_header = {
