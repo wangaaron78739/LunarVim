@@ -100,7 +100,6 @@ vim.cmd('setlocal spell')
 vim.cmd('set spelllang=en_us')
 
 vim.cmd('hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828')
--- vim.api.nvim_del_keymap('n', 'gc')
 
 -- FTerm
 require('fterms')

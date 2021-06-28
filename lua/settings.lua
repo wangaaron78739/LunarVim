@@ -51,13 +51,14 @@ vim.o.guifont = "FiraCode Nerd Font:h13"
 -- sneak
 vim.g["sneak#label"] = 1
 
+vim.g.VM_maps = nil
 -- Can these be moved to a new file?
 -- TODO: why these are broken??
 vim.g.VM_maps = {
-    -- ['Find Under'] = '<M-d>',
+    ['Find Under'] = '<M-d>',
     -- ['Find Subword Under'] = '<M-d>',
-    ['Select Cursor Down'] = '<C-S-j>',
-    ['Select Cursor Up'] = '<C-S-k>'
+    ['Select Cursor Down'] = '<M-j>',
+    ['Select Cursor Up'] = '<M-k>'
 }
 
 -- vim.o.guifont = "JetBrains\\ Mono\\ Regular\\ Nerd\\ Font\\ Complete"

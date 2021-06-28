@@ -83,6 +83,7 @@ return require("packer").startup(function(use)
     use {"windwp/nvim-autopairs"}
 
     -- Comments
+    -- FIXME: This lazy loading sucks
     use {
         "terrortylor/nvim-comment",
         cmd = "CommentToggle",

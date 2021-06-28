@@ -90,3 +90,6 @@ vim.api.nvim_set_keymap('n', 'gf', ':LspFormatting<cr>', { noremap = true, silen
 vim.api.nvim_set_keymap('i', '<C-l>', '<c-g>u<Esc>[s1z=`]a<c-g>u]]', { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('i', '<C-/>', '<C-\\><C-n><CMD>CommentToggle', { noremap = true, silent = true })
+
+-- vim.api.nvim_del_keymap('n', 'gc')
+vim.api.nvim_set_keymap('i', 'gcc', '<cmd>CommentToggle<cr>', { noremap = true, silent = true })
