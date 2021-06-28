@@ -24,6 +24,7 @@ O.plugin.matchup.active = true
 O.plugin.colorizer.active = true
 O.plugin.numb.active = true
 -- O.plugin.zen.active = true
+O.plugin.ts_playground.active = true
 
 -- dashboard
 -- O.dashboard.custom_header = {""}

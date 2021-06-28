@@ -34,7 +34,9 @@ O = {
         matchup = {active = false},
         colorizer = {active = false},
         numb = {active = false},
-        zen = {active = false}
+        ts_playground = {active = false},
+
+
     },
 
     lang = {

@@ -84,7 +84,7 @@ return require("packer").startup(function(use)
         "folke/which-key.nvim",
         config = function()
             require('lv-which-key').config()
-        end,
+        end
     }
 
     -- Autopairs
@@ -204,6 +204,12 @@ return require("packer").startup(function(use)
         disable = not O.plugin.numb.active
     }
 
+    -- Treesitter playground
+    use {
+        'nvim-treesitter/playground',
+        event = "BufRead",
+        disable = not O.plugin.ts_playground.active
+    }
     -- diagnostics
     use {"folke/trouble.nvim", opt = true}
     require_plugin('trouble.nvim')
