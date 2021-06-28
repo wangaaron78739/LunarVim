@@ -233,9 +233,9 @@ return require("packer").startup(function(use)
     --     }
     --     require_plugin('markdown-preview.nvim')
     --
-        -- Floating terminal
-        use {'numToStr/FTerm.nvim', opt = true}
-        require_plugin('FTerm.nvim')
+    -- Floating terminal
+    use {'numToStr/FTerm.nvim', opt = true}
+    require_plugin('FTerm.nvim')
     --
     --     -- Sane gx for netrw_gx bug
     --     use {"felipec/vim-sanegx", opt = true}

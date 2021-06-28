@@ -82,9 +82,11 @@ O.lang.go.autoformat = true
 -- vim.g.neovide_refresh_rate=120
 
 -- My settings
--- vim.o.ignorecase = true
+vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.scrolloff = 10
 
 -- Turn off cursorline
 -- O.cursorline = false
+
+O.dashboard.footer = "Anshuman Medhi (IndianBoy42)"
