@@ -47,6 +47,7 @@ if O.lang.rust.autoformat then
 end
 
 -- vim.api.nvim_command('au! BufRead,BufNewFile *.fish set filetype=fish')
+
 -- Autosave
 vim.api.nvim_command('au FocusLost * silent! wa')
 vim.api.nvim_command(':set autowriteall')
@@ -59,6 +60,9 @@ utils.define_augroups({
         {'BufNewFile', '*', 'setlocal formatoptions-=c formatoptions-=r formatoptions-=o'},
         {'VimLeavePre', '*', 'set title set titleold='},
         {'FileType', 'qf', 'set nobuflisted'},
+        {'BufWinEnter', 'lv-config.lua', 'PackerCompile'},
+        {'BufWinLeave', 'lv-config.lua', 'PackerCompile'},
+        {'BufWritePost', 'lv-config.lua', 'PackerCompile'}
 
         -- {'User', 'GoyoLeave', 'lua require(\'galaxyline\').disable_galaxyline()'},
         -- {'User', 'GoyoEnter', 'lua require(\'galaxyline\').galaxyline_augroup()'},
@@ -67,6 +71,7 @@ utils.define_augroups({
         -- {'FileType', 'java', 'luafile '..CONFIG_PATH..'/lua/lsp/java-ls.lua'},
         {'FileType', 'java', 'nnoremap ca <Cmd>lua require(\'jdtls\').code_action()<CR>'}
     },
+
     _go = {
         -- Go generally requires Tabs instead of spaces.
         {'FileType', 'go', 'setlocal tabstop=4'},
