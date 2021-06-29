@@ -89,7 +89,6 @@ return require("packer").startup(function(use)
     use {"windwp/nvim-autopairs"}
 
     -- Comments
-    -- FIXME: This lazy loading sucks
     use {
         "terrortylor/nvim-comment",
         cmd = "CommentToggle",
@@ -121,6 +120,8 @@ return require("packer").startup(function(use)
         event = "BufRead"
 
     }
+
+    -- Extras, these do not load by default
 
     -- Better motions
     use {
@@ -163,6 +164,16 @@ return require("packer").startup(function(use)
         end,
         disable = not O.plugin.zen.active
     }
+    -- Ranger
+    use {
+        "kevinhwang91/rnvimr",
+        cmd = "Rnvimr",
+        config = function()
+            require('lv-rnvimr').config()
+        end,
+        disable = not O.plugin.ranger.active
+    }
+
     -- matchup
     use {
         'andymass/vim-matchup',
@@ -202,14 +213,6 @@ return require("packer").startup(function(use)
         disable = not O.plugin.ts_playground.active
     }
 
-    --     -- Treesitter playground
-    --     use {'nvim-treesitter/playground', opt = true}
-
-    -- Latex
-    use {"lervag/vimtex", ft = "latex", opt = true,
-        disable = not O.lang.latex.active
-    }
-
     use {
         "lukas-reineke/indent-blankline.nvim",
         branch = "lua",
@@ -219,9 +222,8 @@ return require("packer").startup(function(use)
             vim.g.indentLine_enabled = 1
             vim.g.indent_blankline_char = "▏"
 
-            vim.g.indent_blankline_filetype_exclude = {
-                "help", "terminal", "dashboard"
-            }
+            vim.g.indent_blankline_filetype_exclude =
+                {"help", "terminal", "dashboard"}
             vim.g.indent_blankline_buftype_exclude = {"terminal"}
 
             vim.g.indent_blankline_show_trailing_blankline_indent = false
@@ -379,29 +381,23 @@ return require("packer").startup(function(use)
         requires = 'nvim-lua/plenary.nvim'
 
     }
-    -- Rust tools
-    -- TODO: use lazy loading maybe?
-    use {
-        "simrat39/rust-tools.nvim",
-        disable = not O.lang.rust.active
-    }
     -- Lazygit
     use {
         "kdheepak/lazygit.nvim",
         cmd = "LazyGit",
         disable = not O.plugin.lazygit.active
     }
-    -- Diffview
-    use {
-        "sindrets/diffview.nvim",
-        event = "BufRead",
-        disable = not O.plugin.diffview.active
-    }
     -- Octo.nvim
     use {
         "pwntester/octo.nvim",
         event = "BufRead",
         disable = not O.plugin.octo.active
+    }
+    -- Diffview
+    use {
+        "sindrets/diffview.nvim",
+        event = "BufRead",
+        disable = not O.plugin.diffview.active
     }
     -- Easily Create Gists
     use {
@@ -419,6 +415,14 @@ return require("packer").startup(function(use)
     }
 
     -- LANGUAGE SPECIFIC GOES HERE
+    -- Latex 
+    -- TODO what filetypes should this be active for?
+    use {"lervag/vimtex", ft = "latex", disable = not O.lang.latex.active}
+
+    -- Rust tools
+    -- TODO: use lazy loading maybe?
+    use {"simrat39/rust-tools.nvim", disable = not O.lang.rust.active}
+
     -- use {'mattn/webapi-vim', opt = true}
     --     use {'f-person/git-blame.nvim', opt = true}
     --     -- diagnostics

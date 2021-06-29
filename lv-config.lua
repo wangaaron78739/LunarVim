@@ -51,6 +51,7 @@ O.plugin.diffview.active = true
 O.plugin.bracey.active = true
 O.plugin.telescope_project.active = true
 O.plugin.gist.active = true
+O.plugin.ranger.active = true
 
 -- dashboard
 -- O.dashboard.custom_header = {""}
@@ -71,7 +72,7 @@ O.lang.clang.diagnostics.underline = false
 -- add things like O.python.formatter.isort.exec_path
 O.lang.python.formatter = 'black'
 -- O.python.linter = 'flake8'
-O.lang.python.active = true
+O.lang.python.active = false
 O.lang.python.isort = true
 O.lang.python.autoformat = true
 O.lang.python.diagnostics.virtual_text = true
@@ -83,7 +84,7 @@ O.lang.python.analysis.use_library_code_types = true
 
 -- lua
 -- TODO look into stylua
-O.lang.lua.active = true
+O.lang.lua.active = false
 O.lang.lua.formatter = 'lua-format'
 -- O.lua.formatter = 'lua-format'
 O.lang.lua.autoformat = true
@@ -109,6 +110,16 @@ O.lang.rust.autoformat = true
 
 -- Turn off relative_numbers
 -- O.relative_number = false
+
+-- Turn off cursorline
+-- O.cursorline = false
+
+-- Neovim turns the default cursor to 'Block'
+-- when switched back into terminal.
+-- This below line fixes that. Uncomment if needed.
+
+-- vim.cmd('autocmd VimLeave,VimSuspend * set guicursor=a:ver90') -- Beam
+-- vim.cmd('autocmd VimLeave,VimSuspend * set guicursor=a:hor20') -- Underline
 
 -- neovide settings
 -- vim.g.neovide_cursor_vfx_mode = "railgun"
