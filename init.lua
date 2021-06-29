@@ -85,7 +85,6 @@ require("trouble").setup {
 --     cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
 --     easing_function = "sine"        -- Default easing function
 -- })
-require('todo-comments').setup()
 require('diffview').setup()
 
 vim.cmd([[
@@ -95,7 +94,4 @@ autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * Tro
 vim.cmd('set spelllang=en_us')
 
 vim.cmd('hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828')
-
--- FTerm
-require('fterms')
 

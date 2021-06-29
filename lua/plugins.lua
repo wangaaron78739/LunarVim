@@ -275,6 +275,7 @@ return require("packer").startup(function(use)
                 dimensions = {height = 0.8, width = 0.8, x = 0.5, y = 0.5},
                 border = 'single' -- or 'double'
             })
+            require('fterms')
         end,
         disable = not O.plugin.floatterm.active
     }
@@ -327,7 +328,7 @@ return require("packer").startup(function(use)
         event = "BufRead",
         disable = not O.plugin.sanegx.active
     }
-    -- Sane gx for netrw_gx bug
+    -- Highlight TODO comments
     use {
         "folke/todo-comments.nvim",
         event = "BufRead",
