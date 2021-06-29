@@ -209,8 +209,9 @@ return require("packer").startup(function(use)
     --     use {'nvim-treesitter/playground', opt = true}
     
     -- Latex
-    use {"lervag/vimtex", event = "FileType latex", opt = true}
-    require_plugin("vimtex")
+    use {"lervag/vimtex", ft = "latex", opt = true,
+        disable = not O.lang.latex.active
+    }
 
     use {
         "lukas-reineke/indent-blankline.nvim",
@@ -366,12 +367,58 @@ return require("packer").startup(function(use)
         requires = 'nvim-lua/plenary.nvim'
 
     }
-    -- Git
-    -- https://github.com/kdheepak/lazygit.nvim
-    -- pwntester/octo.nvim
-    -- use 'sindrets/diffview.nvim'
+    -- Lazygit
+    use {
+        "kdheepak/lazygit.nvim",
+        cmd = "LazyGit",
+        disable = not O.plugin.lazygit.active
+    }
+    -- Lazygit
+    use {
+        "pwntester/octo.nvim",
+        event = "BufRead",
+        disable = not O.plugin.octo.active
+    }
+    -- Diffview
+    use {
+        "sindrets/diffview.nvim",
+        event = "BufRead",
+        disable = not O.plugin.diffview.active
+    }
+        -- Lazygit
+    use {
+        "kdheepak/lazygit.nvim",
+        cmd = "LazyGit",
+        disable = not O.plugin.lazygit.active
+    }
+    -- Lazygit
+    use {
+        "pwntester/octo.nvim",
+        event = "BufRead",
+        disable = not O.plugin.octo.active
+    }
+    -- Diffview
+    use {
+        "sindrets/diffview.nvim",
+        event = "BufRead",
+        disable = not O.plugin.diffview.active
+    }
     -- Easily Create Gists
-    -- use {'mattn/vim-gist', opt = true}
+    use {
+        "mattn/vim-gist",
+        event = "BufRead",
+        disable = not O.plugin.gist.active,
+        requires = 'mattn/webapi-vim'
+    }
+    -- HTML preview
+    use {
+        'turbio/bracey.vim',
+        event = "BufRead",
+        run = 'npm install --prefix server',
+        disable = not O.plugin.bracey.active
+    }
+
+    -- LANGUAGE SPECIFIC GOES HERE
     -- use {'mattn/webapi-vim', opt = true}
     --     use {'f-person/git-blame.nvim', opt = true}
     --     -- diagnostics
@@ -469,16 +516,6 @@ return require("packer").startup(function(use)
     require_plugin("nvim-treesitter-textobjects")
     require_plugin("kmonad-vim")
     require_plugin("suda.vim")
-
-    -- HTML preview
-    use {
-        'turbio/bracey.vim',
-        run = 'npm install --prefix server',
-        opt = true
-    }
-
-    use {"nvim-telescope/telescope-fzy-native.nvim", opt = true}
-    use {"nvim-telescope/telescope-project.nvim", opt = true}
 
     -- Colorschemes
     -- use {'Mofiqul/dracula.nvim', opt=true}
