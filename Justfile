@@ -82,3 +82,10 @@ remotes:
 	git remote add upstream https://github.com/ChristianChiarulli/LunarVim.git
 	git remote add jack https://github.com/jacfger/lunarvim   
 	git remote add aaron https://github.com/wangaaron78739/LunarVim.git 
+
+copy-config:
+    test "$PWD" == "$(~/.config/nvim)" || rsync -r . ~/.config/nvim
+
+git-copy-config:
+    git push
+    cd ~/.config/nvim && git checkout $(git rev-parse HEAD)
