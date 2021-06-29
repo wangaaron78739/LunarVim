@@ -54,7 +54,7 @@ return require("packer").startup(function(use)
     }
 
     -- VSCode style snippets
-    use {"hrsh7th/vim-vsnip", event = "InsertCharPre"}
+    use {"hrsh7th/vim-vsnip", event = "InsertEnter"}
     use {"rafamadriz/friendly-snippets", event = "InsertEnter"}
 
     -- Treesitter
