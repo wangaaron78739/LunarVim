@@ -30,7 +30,6 @@ end
 
 vim.cmd "autocmd BufWritePost plugins.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
 vim.cmd "autocmd BufWritePost lv-config.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
-vim.cmd "autocmd BufWritePost plugins.lua luafile %" -- Auto compile when there are changes in plugins.lua
 
 return require("packer").startup(function(use)
     -- Packer can manage itself as an optional plugin
@@ -219,7 +218,25 @@ return require("packer").startup(function(use)
     use {"lervag/vimtex", event = "FileType latex", opt = true}
     require_plugin("vimtex")
 
-    -- use {'lukas-reineke/indent-blankline.nvim', opt=true, branch = 'lua'}
+    use {
+        "lukas-reineke/indent-blankline.nvim",
+        branch = "lua",
+        event = "BufRead",
+        setup = function()
+
+            vim.g.indentLine_enabled = 1
+            vim.g.indent_blankline_char = "▏"
+
+            vim.g.indent_blankline_filetype_exclude = {
+                "help", "terminal", "dashboard"
+            }
+            vim.g.indent_blankline_buftype_exclude = {"terminal"}
+
+            vim.g.indent_blankline_show_trailing_blankline_indent = false
+            vim.g.indent_blankline_show_first_indent_level = true
+        end,
+        disable = not O.plugin.indent_line.active
+    }
     -- use {"nvim-telescope/telescope-fzy-native.nvim", opt = true}
     -- use {"nvim-telescope/telescope-project.nvim", opt = true}
     --     -- comments in context
