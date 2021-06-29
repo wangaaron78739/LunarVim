@@ -57,8 +57,8 @@ O = {
         octo = {active = false},
         diffview = {active = false},
         bracey = {active = false},
-        telescope_project = {active = false}
-
+        telescope_project = {active = false},
+        gist = {active = false}
     },
 
     lang = {
