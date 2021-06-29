@@ -161,7 +161,6 @@ return require("packer").startup(function(use)
     -- Zen Mode TODO this don't work with whichkey might gave to make this built in, may have to replace with folke zen
     use {
         "Pocco81/TrueZen.nvim",
-        disable = not O.plugin.zen.active,
         -- event = 'BufEnter',
         cmd = {"TZAtaraxis"},
         -- cmd = {"TZAtaraxis", "TZMinimalist", "TZBottom", "TZTop"},
@@ -217,7 +216,7 @@ return require("packer").startup(function(use)
     --     -- Treesitter playground
     --     use {'nvim-treesitter/playground', opt = true}
     --     -- Latex
-    use {"lervag/vimtex", opt = true}
+    use {"lervag/vimtex", event = "FileType latex", opt = true}
     require_plugin("vimtex")
     --     -- comments in context
     --     use {'JoosepAlviste/nvim-ts-context-commentstring', opt = true}
