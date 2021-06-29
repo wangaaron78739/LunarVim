@@ -237,11 +237,15 @@ return require("packer").startup(function(use)
         end,
         disable = not O.plugin.indent_line.active
     }
+
+    use {
+        'JoosepAlviste/nvim-ts-context-commentstring',
+        event = "BufRead",
+        disable = not O.plugin.ts_context_commentstring.active
+    }
     -- use {"nvim-telescope/telescope-fzy-native.nvim", opt = true}
     -- use {"nvim-telescope/telescope-project.nvim", opt = true}
-    --     -- comments in context
-    --     use {'JoosepAlviste/nvim-ts-context-commentstring', opt = true}
-    --     -- Git extras
+    -- Git extras
     -- Git
     -- use {'tpope/vim-fugitive', opt = true}
     -- use {'tpope/vim-rhubarb', opt = true}

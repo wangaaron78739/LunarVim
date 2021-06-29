@@ -10,7 +10,7 @@ require'nvim-treesitter.configs'.setup {
         additional_vim_regex_highlighting = true,
         disable = {"latex"},
     },
-    context_commentstring = {enable = true, config = {css = '// %s'}},
+    context_commentstring = {enable = O.plugin.ts_context_commentstring, config = {css = '// %s'}},
     -- indent = {enable = true, disable = {"python", "html", "javascript"}},
     -- TODO seems to be broken
     indent = {enable = {"javascriptreact"}},

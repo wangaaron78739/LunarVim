@@ -35,7 +35,8 @@ O = {
         colorizer = {active = false},
         numb = {active = false},
         ts_playground = {active = false},
-        indent_line = {active = false}
+        indent_line = {active = false},
+        ts_context_commentstring = {active = false}
 
 
     },
