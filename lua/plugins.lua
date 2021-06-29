@@ -38,8 +38,8 @@ return require("packer").startup(function(use)
 
     -- TODO refactor all of this (for now it works, but yes I know it could be wrapped in a simpler function)
     use {"neovim/nvim-lspconfig"}
-    use {"glepnir/lspsaga.nvim"}
-    use {"kabouzeid/nvim-lspinstall"}
+    use {"glepnir/lspsaga.nvim", event = "BufRead"}
+    use {"kabouzeid/nvim-lspinstall", event = "BufRead"}
     -- Telescope
     use {"nvim-lua/popup.nvim"}
     use {"nvim-lua/plenary.nvim"}
@@ -51,7 +51,7 @@ return require("packer").startup(function(use)
         event = "InsertEnter",
         config = function()
             require("lv-compe").config()
-        end,
+        end
     }
 
     -- VSCode style snippets
@@ -79,7 +79,15 @@ return require("packer").startup(function(use)
         event = "BufRead"
     }
 
-    use {"folke/which-key.nvim"}
+    -- whichkey
+    use {
+        "folke/which-key.nvim",
+        config = function()
+            require('lv-which-key').config()
+        end,
+    }
+
+    -- Autopairs
     use {"windwp/nvim-autopairs"}
 
     -- Comments
@@ -111,13 +119,12 @@ return require("packer").startup(function(use)
                                     {noremap = true, silent = true})
             vim.api.nvim_set_keymap('n', '<S-x>', ':BufferClose<CR>',
                                     {noremap = true, silent = true})
-        end
+        end,
+        event = "BufRead"
 
     }
 
-    -- use {"hrsh7th/vim-vsnip"}
-
-    -- extras, these do not load by default
+    -- Extras, these do not load by default
 
     -- Better motions
     use {
@@ -151,7 +158,7 @@ return require("packer").startup(function(use)
         opt = true
     }
 
-    -- Zen Mode TODO this don't work with whichkey might gave to make this built in
+    -- Zen Mode TODO this don't work with whichkey might gave to make this built in, may have to replace with folke zen
     use {
         "Pocco81/TrueZen.nvim",
         disable = not O.plugin.zen.active,
@@ -175,56 +182,53 @@ return require("packer").startup(function(use)
         opt = true
     }
 
-    -- Colorizer
-    use {'norcalli/nvim-colorizer.lua', opt = true}
-    require_plugin('nvim-colorizer.lua')
+    use {
+        "norcalli/nvim-colorizer.lua",
+        event = "BufRead",
+        config = function()
+            require("colorizer").setup()
+            vim.cmd("ColorizerReloadAllBuffers")
+        end,
+        disable = not O.plugin.colorizer.active
+    }
 
-    -- Peek lines
-    use {'nacro90/numb.nvim', opt = true}
-    require_plugin('numb.nvim')
-    --
-    --     -- Treesitter playground
-    --     use {'nvim-treesitter/playground', opt = true}
-    --     require_plugin('playground')
-    --
-    -- Latex
-    use {"lervag/vimtex", opt = true}
-    require_plugin("vimtex")
-    --
-    --     -- comments in context
-    --     use {'JoosepAlviste/nvim-ts-context-commentstring', opt = true}
-    --     require_plugin("nvim-ts-context-commentstring")
-    --
-    --
-    --     -- Git extras
-    --     use {'f-person/git-blame.nvim', opt = true}
-    --     require_plugin("git-blame.nvim")
-    --
-    --
+    use {
+        "nacro90/numb.nvim",
+        event = "BufRead",
+        config = function()
+            require('numb').setup {
+                show_numbers = true, -- Enable 'number' for the window while peeking
+                show_cursorline = true -- Enable 'cursorline' for the window while peeking
+            }
+        end,
+        disable = not O.plugin.numb.active
+    }
+
     -- diagnostics
     use {"folke/trouble.nvim", opt = true}
     require_plugin('trouble.nvim')
-    --
+
+    --     -- Treesitter playground
+    --     use {'nvim-treesitter/playground', opt = true}
+    --     -- Latex
+    use {"lervag/vimtex", opt = true}
+    require_plugin("vimtex")
+    --     -- comments in context
+    --     use {'JoosepAlviste/nvim-ts-context-commentstring', opt = true}
+    --     -- Git extras
+    --     use {'f-person/git-blame.nvim', opt = true}
+    --     -- diagnostics
+    --     use {"folke/trouble.nvim", opt = true}
     --     -- Debugging
     --     use {"mfussenegger/nvim-dap", opt = true}
-    --     require_plugin("nvim-dap")
-    --
     --     -- Better quickfix
     --     use {"kevinhwang91/nvim-bqf", opt = true}
-    --     require_plugin("nvim-bqf")
-    --
     --     -- Search & Replace
     --     use {'windwp/nvim-spectre', opt = true}
-    --     require_plugin('nvim-spectre')
-    --
     --     -- Symbol Outline
     --     use {'simrat39/symbols-outline.nvim', opt = true}
-    --     require_plugin('symbols-outline.nvim')
-    --
     --     -- Interactive scratchpad
     --     use {'metakirby5/codi.vim', opt = true}
-    --     require_plugin('codi.vim')
-    --
     --     -- Markdown preview
     --     use {
     --         'iamcco/markdown-preview.nvim',
@@ -234,7 +238,7 @@ return require("packer").startup(function(use)
     --     require_plugin('markdown-preview.nvim')
     --
     -- Floating terminal
-    use {'numToStr/FTerm.nvim', opt = true}
+    use {'numToStr/FTerm.nvim'}
     require_plugin('FTerm.nvim')
     --
     --     -- Sane gx for netrw_gx bug
@@ -252,11 +256,9 @@ return require("packer").startup(function(use)
             run = 'npm install --prefix server',
             opt = true
         }
-        require_plugin('bracey.vim')
 
         use {"nvim-telescope/telescope-fzy-native.nvim", opt = true}
         use {"nvim-telescope/telescope-project.nvim", opt = true}
-        require_plugin('telescope-project.nvim')
 
         -- Autotag
         -- use {"windwp/nvim-ts-autotag", opt = true}

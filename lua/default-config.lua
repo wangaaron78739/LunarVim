@@ -32,6 +32,8 @@ O = {
         dial = {active = false},
         dashboard = {active = false},
         matchup = {active = false},
+        colorizer = {active = false},
+        numb = {active = false},
         zen = {active = false}
     },
 
