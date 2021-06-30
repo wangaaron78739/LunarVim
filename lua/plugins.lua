@@ -425,6 +425,12 @@ return require("packer").startup(function(use)
     -- TODO: use lazy loading maybe?
     use {"simrat39/rust-tools.nvim", disable = not O.lang.rust.active}
 
+    -- Elixir
+    use {"elixir-editors/vim-elixir",
+        ft = {"elixir", "eelixir"},
+        disable = not O.lang.elixir.active
+    }
+    
     -- use {'mattn/webapi-vim', opt = true}
     --     use {'f-person/git-blame.nvim', opt = true}
     --     -- diagnostics
