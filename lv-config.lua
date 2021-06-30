@@ -72,7 +72,7 @@ O.lang.clang.diagnostics.underline = false
 -- add things like O.python.formatter.isort.exec_path
 O.lang.python.formatter = 'black'
 -- O.python.linter = 'flake8'
-O.lang.python.active = false
+O.lang.python.active = true
 O.lang.python.isort = true
 O.lang.python.autoformat = true
 O.lang.python.diagnostics.virtual_text = true
@@ -84,7 +84,7 @@ O.lang.python.analysis.use_library_code_types = true
 
 -- lua
 -- TODO look into stylua
-O.lang.lua.active = false
+O.lang.lua.active = true
 O.lang.lua.formatter = 'lua-format'
 -- O.lua.formatter = 'lua-format'
 O.lang.lua.autoformat = true
@@ -117,9 +117,13 @@ O.lang.rust.autoformat = true
 -- Neovim turns the default cursor to 'Block'
 -- when switched back into terminal.
 -- This below line fixes that. Uncomment if needed.
-
 -- vim.cmd('autocmd VimLeave,VimSuspend * set guicursor=a:ver90') -- Beam
 -- vim.cmd('autocmd VimLeave,VimSuspend * set guicursor=a:hor20') -- Underline
+-- NOTE: Above code doesn't take a value from the terminal's cursor and
+--       replace it. It hardcodes the cursor shape.
+--       And I think `ver` means vertical and `hor` means horizontal.
+--       The numbers didn't make a difference in alacritty. Please change
+--       the number to something that suits your needs if it looks weird.
 
 -- neovide settings
 -- vim.g.neovide_cursor_vfx_mode = "railgun"
