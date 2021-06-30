@@ -19,16 +19,38 @@ O.ignore_case = true
 O.smart_case = true
 
 -- After changing plugin config it is recommended to run :PackerCompile
+-- TODO: refine these selections
 O.plugin.hop.active = true
 O.plugin.dial.active = true
 O.plugin.dashboard.active = true
-O.plugin.matchup.active = false
-O.plugin.colorizer.active = false
-O.plugin.numb.active = false
-O.plugin.ts_playground.active = false
-O.plugin.indent_line.active = false
-O.plugin.gitlinker.active = true
+O.plugin.matchup.active = true
+O.plugin.colorizer.active = true
+O.plugin.numb.active = true
 O.plugin.zen.active = true
+O.plugin.ts_playground.active = true
+O.plugin.indent_line.active = true
+O.plugin.ts_context_commentstring.active = true
+O.plugin.symbol_outline.active = true
+O.plugin.debug.active = true
+O.plugin.bqf.active = true
+O.plugin.trouble.active = true
+O.plugin.floatterm.active = true
+O.plugin.spectre.active = true
+O.plugin.lsp_rooter.active = true
+O.plugin.markdown_preview.active = true
+O.plugin.codi.active = true
+O.plugin.telescope_fzy.active = true
+O.plugin.sanegx.active = true
+O.plugin.todo_comments.active = true
+O.plugin.lsp_colors.active = true
+O.plugin.git_blame.active = true
+O.plugin.gitlinker.active = true
+O.plugin.lazygit.active = true
+O.plugin.octo.active = true
+O.plugin.diffview.active = true
+O.plugin.bracey.active = true
+O.plugin.telescope_project.active = true
+O.plugin.gist.active = true
 
 -- dashboard
 -- O.dashboard.custom_header = {""}

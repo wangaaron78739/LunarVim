@@ -80,9 +80,9 @@ return require("packer").startup(function(use)
     -- whichkey
     use {
         "folke/which-key.nvim",
-        config = function()
-            require('lv-which-key').config()
-        end
+        --config = function()
+        --    require('lv-which-key').config()
+        --end
     }
 
     -- Autopairs
@@ -201,13 +201,10 @@ return require("packer").startup(function(use)
         event = "BufRead",
         disable = not O.plugin.ts_playground.active
     }
-    -- diagnostics
-    use {"folke/trouble.nvim", opt = true}
-    require_plugin('trouble.nvim')
 
     --     -- Treesitter playground
     --     use {'nvim-treesitter/playground', opt = true}
-    
+
     -- Latex
     use {"lervag/vimtex", ft = "latex", opt = true,
         disable = not O.lang.latex.active
@@ -250,7 +247,22 @@ return require("packer").startup(function(use)
     use {
         "folke/trouble.nvim",
         cmd = 'TroubleToggle',
-        disable = not O.plugin.trouble.active
+        disable = not O.plugin.trouble.active,
+        config = function()
+            -- TODO: move this to a separate file
+            vim.cmd([[
+            autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * TroubleRefresh
+            ]])
+
+            require("trouble").setup {
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+                position = "right",
+                auto_preview = false,
+                hover = "h"
+            }
+        end
     }
     -- Debugging
     use {
@@ -379,35 +391,17 @@ return require("packer").startup(function(use)
         cmd = "LazyGit",
         disable = not O.plugin.lazygit.active
     }
-    -- Lazygit
-    use {
-        "pwntester/octo.nvim",
-        event = "BufRead",
-        disable = not O.plugin.octo.active
-    }
     -- Diffview
     use {
         "sindrets/diffview.nvim",
         event = "BufRead",
         disable = not O.plugin.diffview.active
     }
-        -- Lazygit
-    use {
-        "kdheepak/lazygit.nvim",
-        cmd = "LazyGit",
-        disable = not O.plugin.lazygit.active
-    }
-    -- Lazygit
+    -- Octo.nvim
     use {
         "pwntester/octo.nvim",
         event = "BufRead",
         disable = not O.plugin.octo.active
-    }
-    -- Diffview
-    use {
-        "sindrets/diffview.nvim",
-        event = "BufRead",
-        disable = not O.plugin.diffview.active
     }
     -- Easily Create Gists
     use {
@@ -485,8 +479,6 @@ return require("packer").startup(function(use)
     use {"skywind3000/asyncrun.vim", opt = true}
     use {"Shatur95/neovim-cmake", opt = true}
     use 'karb94/neoscroll.nvim'
-    use "folke/todo-comments.nvim"
-    use 'sindrets/diffview.nvim'
     use {'voldikss/vim-floaterm', opt = true}
     use {"SirVer/ultisnips", opt = true}
     use {"jpalardy/vim-slime", opt = true}

@@ -10,7 +10,7 @@ require('lv-galaxyline')
 require('lv-telescope')
 require('lv-treesitter')
 require('lv-autopairs')
-
+require('lv-which-key').config()
 
 -- extras
 -- if O.extras then
@@ -69,14 +69,6 @@ if O.lang.tsserver.active then
 end
 
 -- FIXME: This is not the proper place to enable these plugins and stuff
-require("trouble").setup {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-    position = "right",
-    auto_preview = false,
-    hover = "h"
-}
 
 -- require('neoscroll').setup({
 --     -- All these keys will be mapped to their corresponding default scrolling animation
@@ -88,11 +80,8 @@ require("trouble").setup {
 --     cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
 --     easing_function = "sine"        -- Default easing function
 -- })
-require('diffview').setup()
 
-vim.cmd([[
-autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * TroubleRefresh
-]])
+require('diffview').setup()
 
 vim.cmd('set spelllang=en_us')
 
