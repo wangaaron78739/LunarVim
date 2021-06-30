@@ -59,7 +59,7 @@ vim.g.VM_maps = nil
 -- TODO: why these are broken??
 vim.g.VM_maps = {
     ['Find Under'] = '<M-d>',
-    -- ['Find Subword Under'] = '<M-d>',
+    ['Find Subword Under'] = '<M-d>',
     ['Select Cursor Down'] = '<M-j>',
     ['Select Cursor Up'] = '<M-k>'
 }

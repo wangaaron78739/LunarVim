@@ -62,6 +62,8 @@ O.treesitter.ensure_installed = "all"
 -- O.treesitter.ignore_install = {"haskell"}
 O.treesitter.highlight.enabled = true
 
+O.lang.clang.active = true
+O.lang.clang.autoformat = true
 O.lang.clang.diagnostics.virtual_text = false
 O.lang.clang.diagnostics.signs = false
 O.lang.clang.diagnostics.underline = false
@@ -105,7 +107,13 @@ O.lang.ruby.autoformat = true
 O.lang.go.autoformat = true
 
 -- rust
+O.lang.rust.active = true
 O.lang.rust.autoformat = true
+
+-- latex
+O.lang.latex.active = true
+O.lang.latex.autoformat = true
+
 -- create custom autocommand field (This would be easy with lua)
 
 -- Turn off relative_numbers

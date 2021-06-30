@@ -12,6 +12,7 @@ require('lv-treesitter')
 require('lv-autopairs')
 require('lv-which-key').config()
 
+
 -- extras
 -- if O.extras then
 --     require('lv-rnvimr')
@@ -81,9 +82,7 @@ end
 --     easing_function = "sine"        -- Default easing function
 -- })
 
-require('diffview').setup()
-
-vim.cmd('set spelllang=en_us')
+-- vim.cmd('set spelllang=en_us')
 
 vim.cmd('hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828')
 

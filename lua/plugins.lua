@@ -30,6 +30,8 @@ end
 
 vim.cmd "autocmd BufWritePost plugins.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
 vim.cmd "autocmd BufWritePost lv-config.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
+vim.cmd "autocmd BufWritePost plugins.lua PackerSync" -- Auto compile when there are changes in plugins.lua
+vim.cmd "autocmd BufWritePost lv-config.lua PackerSync" -- Auto compile when there are changes in plugins.lua
 
 return require("packer").startup(function(use)
     -- Packer can manage itself as an optional plugin
@@ -499,6 +501,14 @@ return require("packer").startup(function(use)
     use "nvim-treesitter/nvim-treesitter-textobjects"
     use "RRethy/nvim-treesitter-textsubjects"
 
+    -- mkdir
+    use {
+      'jghauser/mkdir.nvim',
+      config = function()
+        require('mkdir')
+      end
+    }
+
     require_plugin("ultisnips")
     require_plugin("vim-slime")
     require_plugin("vim-floaterm")
@@ -520,9 +530,9 @@ return require("packer").startup(function(use)
     require_plugin("suda.vim")
 
     -- Colorschemes
-    -- use {'Mofiqul/dracula.nvim', opt=true}
-    -- use {'tomasiser/vim-code-dark', opt=true}
-    -- require_plugin("Mofiqul/dracula.nvim")
-    -- require_plugin("tomasiser/vim-code-dark")
+    -- use {'Mofiqul/dracula.nvim'}
+    use {'marko-cerovac/material.nvim'}
+    use {'folke/tokyonight.nvim'}
+    -- use {'tomasiser/vim-code-dark'}
 
 end)
