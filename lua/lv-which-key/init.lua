@@ -99,7 +99,6 @@ local mappings = {
     ["f"] = {':Telescope find_files <CR>', "Find File"},
     ["h"] = {':noh<CR>', "No Highlight"},
     ["v"] = {":Vista<CR>", "Vista"},
-    ["p"] = {":lua require'telescope'.extensions.project.project{}<CR>", "Projects"},
     ["gy"] = "Gitlink",
     o = {
         name = "Open new...",
@@ -223,27 +222,6 @@ local mappings = {
         N = {"<cmd>LspGotoPrev<cr>", "Previous"},
         V = {"<cmd>Vista nvim_lsp<cr>", "Vista"},
     },
-    L = {
-        name = "Latex",
-        f = {"<cmd>call vimtex#fzf#run()<cr>", "Fzf Find"},
-        i = {"<cmd>VimtexInfo<cr>", "Project Information"},
-        s = {"<cmd>VimtexStop<cr>", "Stop Project Compilation"},
-        t = {"<cmd>VimtexTocToggle<cr>", "Toggle Table Of Content"},
-        v = {"<cmd>VimtexView<cr>", "View PDF"},
-        c = {'<cmd>VimtexCompile<cr>', 'Compile Project Latex'},
-        o = {'<cmd>VimtexCompileOutput<cr>', 'Compile Output Latex'},
-    },
-    t = {
-        name = "Trouble",
-        t = {"<cmd>TroubleToggle<cr>", "Trouble"},
-        d = {"<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document"},
-        w = {"<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace"},
-        r = {"<cmd>TroubleToggle lsp_references<cr>", "References"},
-        D = {"<cmd>TroubleToggle lsp_definitions<cr>", "Definitions"},
-        q = {"<cmd>TroubleToggle quickfix<cr>", "Quick Fixes"},
-        l = {"<cmd>TroubleToggle loclist<cr>", "Location List"},
-        o = {"<cmd>TroubleToggle todo<cr>", "TODOs"},
-    },
     s = {
         name = "Search",
         b = {"<cmd>Telescope git_branches<cr>", "Checkout branch"},
@@ -261,13 +239,11 @@ local mappings = {
         k = {"<cmd>Telescope keymaps<cr>", "Keymappings"},
         o = {"<cmd>TodoTelescope<cr>", "TODOs"},
         p = {"<cmd>Telescope commands<cr>", "Commands"},
-        F = {"<cmd>lua require('spectre').open_file_search()<cr>", "Current File"},
-        P = {"<cmd>lua require('spectre').open()<cr>", "Project"}
     },
     r = {
         name = "Replace",
-        f = {"<cmd>lua require('spectre').open_file_search()<cr>", "Current File"},
-        p = {"<cmd>lua require('spectre').open()<cr>", "Project"}
+        f = {"<cmd>lua require('spectre').open_file_search()<cr>", "in Current File"},
+        p = {"<cmd>lua require('spectre').open()<cr>", "in Project"}
     },
     S = {
         name = "Session",
@@ -280,12 +256,14 @@ local mappings = {
 if O.plugin.trouble.active then
     mappings['d'] = {
         name = "Diagnostics",
-        t = {"<cmd>TroubleToggle<cr>", "trouble"},
-        w = {"<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "workspace"},
-        d = {"<cmd>TroubleToggle lsp_document_diagnostics<cr>", "document"},
-        q = {"<cmd>TroubleToggle quickfix<cr>", "quickfix"},
-        l = {"<cmd>TroubleToggle loclist<cr>", "loclist"},
-        r = {"<cmd>TroubleToggle lsp_references<cr>", "references"}
+        t = {"<cmd>TroubleToggle<cr>", "Trouble"},
+        d = {"<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document"},
+        w = {"<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace"},
+        r = {"<cmd>TroubleToggle lsp_references<cr>", "References"},
+        D = {"<cmd>TroubleToggle lsp_definitions<cr>", "Definitions"},
+        q = {"<cmd>TroubleToggle quickfix<cr>", "Quick Fixes"},
+        l = {"<cmd>TroubleToggle loclist<cr>", "Location List"},
+        o = {"<cmd>TroubleToggle todo<cr>", "TODOs"},
     }
 end
 
@@ -295,7 +273,7 @@ if O.plugin.zen.active then
                             {noremap = true, silent = true})
     mappings["z"] = "Zen"
 end
-if O.plugin.telescope_project then
+if O.plugin.telescope_project.active then
     -- open projects
     vim.api.nvim_set_keymap('n', '<leader>p',
                             ":lua require'telescope'.extensions.project.project{}<CR>",
@@ -305,15 +283,16 @@ end
 
 if O.lang.latex.active then
     mappings["L"] = {
-        name = "+Latex",
-        c = {"<cmd>VimtexCompile<cr>", "Toggle Compilation Mode"},
+        name = "Latex",
         f = {"<cmd>call vimtex#fzf#run()<cr>", "Fzf Find"},
         i = {"<cmd>VimtexInfo<cr>", "Project Information"},
         s = {"<cmd>VimtexStop<cr>", "Stop Project Compilation"},
         t = {"<cmd>VimtexTocToggle<cr>", "Toggle Table Of Content"},
-        v = {"<cmd>VimtexView<cr>", "View PDF"}
+        v = {"<cmd>VimtexView<cr>", "View PDF"},
+        c = {'<cmd>VimtexCompile<cr>', 'Compile Project Latex'},
+        o = {'<cmd>VimtexCompileOutput<cr>', 'Compile Output Latex'},
     }
-}
+end
 
 local wk = require("which-key")
 wk.register(mappings, opts)
