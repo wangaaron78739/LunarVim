@@ -41,11 +41,14 @@ return require("packer").startup(function(use)
     use {"neovim/nvim-lspconfig"}
     use {"glepnir/lspsaga.nvim", event = "BufRead"}
     use {"kabouzeid/nvim-lspinstall", event = "BufRead"}
-    -- Telescope
     use {"nvim-lua/popup.nvim"}
     use {"nvim-lua/plenary.nvim"}
-    use {"nvim-telescope/telescope.nvim"}
-
+    -- Telescope
+    use {
+        "nvim-telescope/telescope.nvim", 
+        config = [[require('lv-telescope')]],    
+        cmd = "Telescope"
+    }
     -- Autocomplete
     use {
         "hrsh7th/nvim-compe",
@@ -328,12 +331,14 @@ return require("packer").startup(function(use)
     use {
         "nvim-telescope/telescope-fzy-native.nvim",
         event = "BufRead",
+        after = "telescope.nvim",
         disable = not O.plugin.telescope_fzy.active
     }
     -- Use project for telescope
     use {
         "nvim-telescope/telescope-project.nvim",
         event = "BufRead",
+        after = "telescope.nvim",
         disable = not O.plugin.telescope_project.active
     }
     -- Sane gx for netrw_gx bug
