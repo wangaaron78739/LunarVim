@@ -118,6 +118,7 @@ local mappings = {
     },
     b = {
         name = "Buffers",
+        B = {"<cmd>Telescope buffers<cr>", "Buffers"},
         w = {":w<CR>", "Write"},
         a = {":wa<CR>", "Write All"},
         c = {":BufferClose<CR>", "Close"},
@@ -225,7 +226,6 @@ local mappings = {
     s = {
         name = "Search",
         b = {"<cmd>Telescope git_branches<cr>", "Checkout branch"},
-        B = {"<cmd>Telescope buffers<cr>", "Buffers"},
         c = {"<cmd>Telescope colorscheme<cr>", "Colorscheme"},
         d = {"<cmd>Telescope lsp_document_diagnostics<cr>", "Document Diagnostics"},
         D = {"<cmd>Telescope lsp_workspace_diagnostics<cr>", "Workspace Diagnostics"},
