@@ -82,3 +82,7 @@ end
 
 vim.cmd('hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828')
 
+-- TODO: Refactor and organize these
+-- Autosave
+vim.api.nvim_command('au FocusLost * silent! wa')
+vim.api.nvim_command(':set autowriteall')

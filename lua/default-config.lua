@@ -254,10 +254,25 @@ require('lv-utils').define_augroups({
     -- },
     _markdown = {
         {'FileType', 'markdown', 'setlocal wrap'},
-        {'FileType', 'markdown', 'setlocal spell'}
+        {'FileType', 'markdown', 'setlocal spell'},
+        -- {'FileType', 'markdown', 'lua vim.o.guifont = "FiraCode Nerd Font:h15"'},
+    },
+    _fish = {
+        {'BufWinEnter', '.fish', 'setlocal filetype=fish'}, {'BufRead', '*.fish', 'setlocal filetype=fish'},
+        {'BufNewFile', '*.fish', 'setlocal filetype=fish'}
+    },
+    _latex = {
+        {'FileType', 'latex', 'VimtexCompile'},
+        {'FileType', 'latex', 'setlocal wrap'},
+        {'FileType', 'latex', 'setlocal spell'},
+        -- {'FileType', 'latex', 'lua vim.o.guifont = "FiraCode Nerd Font:h15'},
     },
     _buffer_bindings = {
-        {'FileType', 'floaterm', 'nnoremap <silent> <buffer> q :q<CR>'}
+        {'FileType', 'dashboard', 'nnoremap <silent> <buffer> q :q<CR>'},
+        {'FileType', 'lspinfo', 'nnoremap <silent> <buffer> q :q<CR>'},
+        {'FileType', 'floaterm', 'nnoremap <silent> <buffer> q :q<CR>'},
+        {'FileType', 'rnvimr', 'tnoremap <silent> <buffer> <nowait> - <ESC>:q<CR>'},
+        {'FileType', 'rnvimr', 'inoremap <silent> <buffer> <nowait> - <ESC>:q<CR>'},
     }
 })
 
