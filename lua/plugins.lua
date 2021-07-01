@@ -21,9 +21,9 @@ packer.init {
     clone_timeout = 300
   },
   display = {
-    open_fn = function()
-      return require("packer.util").float { border = "single" }
-    end,
+    -- open_fn = function()
+    --   return require("packer.util").float { border = "single" }
+    -- end,
   },
 }
 
@@ -490,10 +490,6 @@ return require("packer").startup(function(use)
     -- use {"ahmedkhalf/lsp-rooter.nvim", opt = true} -- with this nvim-tree will follow you
     -- require_plugin('lsp-rooter.nvim')
 
-    -- Autotag
-    -- use {"windwp/nvim-ts-autotag", opt = true}
-    -- require_plugin("nvim-ts-autotag")
-
     -- folke/todo-comments.nvim
     -- gennaro-tedesco/nvim-jqx
     -- TimUntersberger/neogit
@@ -510,32 +506,52 @@ return require("packer").startup(function(use)
     -- use {'mattn/webapi-vim', opt = true}
 
     -- amedhi plugins
+
     use {"unblevable/quick-scope", opt = true}
+    require_plugin("quick-scope")
     use {"justinmk/vim-sneak", opt = true}
-    use {"wellle/targets.vim", opt = true}
+    require_plugin("vim-sneak")
+    -- use {"wellle/targets.vim", opt = true}
+    -- require_plugin("targets.vim")
     use {"mg979/vim-visual-multi", opt = true}
-    use {"dag/vim-fish", opt = true}
+    require_plugin("vim-visual-multi")
     use {"tpope/vim-surround", opt = true}
+    require_plugin("vim-surround")
     use {"junegunn/fzf", opt = true} -- Telescope does most of this?
     use {"junegunn/fzf.vim", opt = true}
+    require_plugin("fzf")
+    require_plugin("fzf.vim")
     use {"skywind3000/asyncrun.vim", opt = true}
+    require_plugin("asyncrun.vim")
     use {"Shatur95/neovim-cmake", opt = true}
-    use 'karb94/neoscroll.nvim'
-    use {'voldikss/vim-floaterm', opt = true}
-    use {"SirVer/ultisnips", opt = true}
+    require_plugin("neovim-cmake")
+    -- use {"SirVer/ultisnips", opt = true}
+    -- require_plugin("ultisnips")
     use {"jpalardy/vim-slime", opt = true}
+    require_plugin("vim-slime")
     -- https://github.com/tpope/vim-repeat
+    use {"dag/vim-fish", opt = true}
+    require_plugin("vim-fish")
     use {"kmonad/kmonad-vim", opt=true}
+    require_plugin("kmonad-vim")
     use {"lambdalisue/suda.vim", opt=true}
+    require_plugin("suda.vim")
+    use {"liuchengxu/vista.vim", opt = true}
+    require_plugin("vista.vim")
     use "NoahTheDuke/vim-just"
+    -- use 'karb94/neoscroll.nvim'
 
     -- lsp extensions
     use {"nvim-lua/lsp_extensions.nvim", opt = true}
-    use {"nvim-lua/completion-nvim", opt = true}
-    use {"liuchengxu/vista.vim", opt = true}
+    require_plugin("lsp_extensions.nvim")
+    -- use {"nvim-lua/completion-nvim", opt = true}
+    -- require_plugin("completion-nvim")
     use "ray-x/lsp_signature.nvim"
+
+    -- treesitter extensions
     use "nvim-treesitter/nvim-treesitter-textobjects"
     use "RRethy/nvim-treesitter-textsubjects"
+    use {"windwp/nvim-ts-autotag"}
 
     -- mkdir
     use {
@@ -544,26 +560,6 @@ return require("packer").startup(function(use)
         require('mkdir')
       end
     }
-
-    require_plugin("ultisnips")
-    require_plugin("vim-slime")
-    require_plugin("vim-floaterm")
-    require_plugin("asyncrun.vim")
-    require_plugin("neovim-cmake")
-    require_plugin("fzf")
-    require_plugin("fzf.vim")
-    require_plugin("vista.vim")
-    require_plugin("vim-surround")
-    require_plugin("lsp_extensions.nvim")
-    require_plugin("completion-nvim")
-    require_plugin("targets.vim")
-    require_plugin("quick-scope")
-    require_plugin("vim-fish")
-    require_plugin("vim-visual-multi")
-    require_plugin("vim-sneak")
-    require_plugin("nvim-treesitter-textobjects")
-    require_plugin("kmonad-vim")
-    require_plugin("suda.vim")
 
     -- Colorschemes
     -- use {'Mofiqul/dracula.nvim'}
