@@ -115,7 +115,7 @@ return require("packer").startup(function(use)
     -- Comments
     use {
         "terrortylor/nvim-comment",
-        cmd = "CommentToggle",
+        event = "BufRead",
         config = function()
             require('nvim_comment').setup()
         end
