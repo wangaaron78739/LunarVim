@@ -17,6 +17,7 @@ O.extras = true
 O.leader_key = ' '
 O.ignore_case = true
 O.smart_case = true
+O.shell = 'fish'
 
 -- After changing plugin config it is recommended to run :PackerCompile
 -- TODO: refine these selections
@@ -36,7 +37,7 @@ O.plugin.bqf.active = true
 O.plugin.trouble.active = true
 O.plugin.floatterm.active = true
 O.plugin.spectre.active = true
-O.plugin.lsp_rooter.active = true
+O.plugin.lsp_rooter.active = false -- This is actually more confusing sometimes
 O.plugin.markdown_preview.active = true
 O.plugin.codi.active = true
 O.plugin.telescope_fzy.active = true
@@ -88,7 +89,6 @@ O.lang.python.analysis.use_library_code_types = true
 -- TODO look into stylua
 O.lang.lua.active = true
 O.lang.lua.formatter = 'lua-format'
--- O.lua.formatter = 'lua-format'
 O.lang.lua.autoformat = true
 
 -- javascript

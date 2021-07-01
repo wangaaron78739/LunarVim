@@ -31,6 +31,7 @@ require('lv-which-key').config()
 -- LSP
 require('lsp')
 -- TODO should I put this in the filetype files?
+if O.lang.efm.active then require('lsp.efm-general-ls') end
 if O.lang.java.active then require('lsp.java-ls') end
 if O.lang.clang.active then require('lsp.clangd') end
 if O.lang.sh.active then require('lsp.bash-ls') end
@@ -38,7 +39,6 @@ if O.lang.cmake.active then require('lsp.cmake-ls') end
 if O.lang.css.active then require('lsp.css-ls') end
 if O.lang.dart.active then require('lsp.dart-ls') end
 if O.lang.docker.active then require('lsp.docker-ls') end
-if O.lang.efm.active then require('lsp.efm-general-ls') end
 if O.lang.elm.active then require('lsp.elm-ls') end
 if O.lang.emmet.active then require('lsp.emmet-ls') end
 if O.lang.graphql.active then require('lsp.graphql-ls') end
