@@ -86,7 +86,7 @@ vim.api.nvim_set_keymap('v', 'ic', [[/#+\s*%+<cr>oN]], { noremap = true, silent 
 
 vim.api.nvim_set_keymap('t', '<A-q>', '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', 'gf', ':LspFormatting<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gf', '<cmd>lua vim.lsp.buf.formatting()<cr>', { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('i', '<C-l>', '<c-g>u<Esc>[s1z=`]a<c-g>u]]', { noremap = true, silent = true })
 
