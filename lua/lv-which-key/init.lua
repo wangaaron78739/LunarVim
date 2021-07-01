@@ -264,6 +264,8 @@ if O.plugin.trouble.active then
         q = {"<cmd>TroubleToggle quickfix<cr>", "Quick Fixes"},
         l = {"<cmd>TroubleToggle loclist<cr>", "Location List"},
         o = {"<cmd>TroubleToggle todo<cr>", "TODOs"},
+        j = {"<cmd>Lspsaga diagnostic_jump_prev<cr>", "Prev Diagnostic"},
+        k = {"<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostic"},
     }
 end
 
@@ -280,7 +282,11 @@ if O.plugin.telescope_project.active then
                             {noremap = true, silent = true})
     mappings["p"] = "Projects"
 end
-
+if O.plugin.lazygit.active then
+    vim.api.nvim_set_keymap("n", "<leader>gg", ":LazyGit<CR>",
+                            {noremap = true, silent = true})
+    mappings["gg"] = "LazyGit"
+end
 if O.lang.latex.active then
     mappings["L"] = {
         name = "Latex",

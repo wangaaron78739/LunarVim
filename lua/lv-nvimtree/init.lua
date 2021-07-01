@@ -94,9 +94,13 @@ local view = require 'nvim-tree.view'
 M.toggle_tree = function()
     if view.win_open() then
         require'nvim-tree'.close()
-        require'bufferline.state'.set_offset(0)
+        if package.loaded['bufferline.state'] then
+            require'bufferline.state'.set_offset(0)
+        end
     else
-        require'bufferline.state'.set_offset(31, 'File Explorer')
+        if package.loaded['bufferline.state'] then
+            require'bufferline.state'.set_offset(31, 'File Explorer')
+        end
         require'nvim-tree'.find_file(true)
     end
 
