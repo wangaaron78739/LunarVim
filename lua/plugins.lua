@@ -62,8 +62,8 @@ return require("packer").startup(function(use)
     use {"nvim-lua/plenary.nvim"}
     -- Telescope
     use {
-        "nvim-telescope/telescope.nvim", 
-        config = [[require('lv-telescope')]],    
+        "nvim-telescope/telescope.nvim",
+        config = [[require('lv-telescope')]],
         cmd = "Telescope"
     }
     -- Autocomplete
@@ -429,6 +429,12 @@ return require("packer").startup(function(use)
         event = "BufRead",
         disable = not O.plugin.gist.active,
         requires = 'mattn/webapi-vim'
+    }
+    -- Lush Create Color Schemes
+    use {
+        "rktjmp/lush.nvim",
+        cmd = {"LushRunQuickstart", "LushRunTutorial", "Lushify"},
+        disable = not O.plugin.lush.active,
     }
     -- HTML preview
     use {
