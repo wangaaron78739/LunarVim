@@ -54,6 +54,7 @@ O = {
         codi = {active = PLUGINS_ENABLED_BY_DEFAULT},
         telescope_fzy = {active = PLUGINS_ENABLED_BY_DEFAULT},
         sanegx = {active = PLUGINS_ENABLED_BY_DEFAULT},
+        snap = {active = PLUGINS_ENABLED_BY_DEFAULT},
         ranger = {active = PLUGINS_ENABLED_BY_DEFAULT},
         todo_comments = {active = PLUGINS_ENABLED_BY_DEFAULT},
         lsp_colors = {active = PLUGINS_ENABLED_BY_DEFAULT},

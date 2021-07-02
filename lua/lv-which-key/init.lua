@@ -70,8 +70,14 @@ M.config = function()
     -- telescope
     -- vim.api.nvim_set_keymap('n', '<Leader>f', ':Telescope find_files <CR>', {noremap = true, silent = true})
 
-    -- dashboard
-    -- vim.api.nvim_set_keymap('n', '<Leader>;', ':Dashboard<CR>', {noremap = true, silent = true})
+    -- telescope or snap
+    if O.plugin.snap.active then
+        vim.api.nvim_set_keymap('n', '<Leader>f', ':Snap find_files<CR>',
+                                {noremap = true, silent = true})
+    else
+        vim.api.nvim_set_keymap('n', '<Leader>f', ':Telescope find_files<CR>',
+                                {noremap = true, silent = true})
+    end
 
     -- Global search
     -- vim.api.nvim_set_keymap("n", "<leader>/", "<cmd>Telescope live_grep<cr>", {noremap = true, silent = true})
@@ -101,7 +107,10 @@ M.config = function()
         -- ["c"] = "Close Buffer",
         -- ["w"] = "Write Buffer",
         -- ["e"] = "Explorer",
-        ["f"] = {':Telescope find_files <CR>', "Find File"},
+        ["f"] = {
+            O.plugin.snap.active and '<cmd>Snap find_files<cr>' or
+                '<cmd>Telescope find_files <CR>', "Find File"
+        },
         ["h"] = {':noh<CR>', "No Highlight"},
         ["v"] = {":Vista<CR>", "Vista"},
         ["gy"] = "Gitlink",
@@ -123,7 +132,10 @@ M.config = function()
         },
         b = {
             name = "Buffers",
-            B = {"<cmd>Telescope buffers<cr>", "Buffers"},
+            B = {
+                O.plugin.snap.active and "<cmd>Snap buffers<cr>" or
+                    "<cmd>Telescope buffers<cr>", "Buffers"
+            },
             w = {":w<CR>", "Write"},
             a = {":wa<CR>", "Write All"},
             c = {":BufferClose<CR>", "Close"},
@@ -272,15 +284,22 @@ M.config = function()
                 "Workspace Diagnostics"
             },
             f = {
-                "<cmd>Telescope find_files find_command=rg,--ignore,--hidden,--files<cr>",
+                O.plugin.snap.active and "<cmd>Snap find_files<cr>" or
+                    "<cmd>Telescope find_files find_command=rg,--ignore,--hidden,--files<cr>",
                 "Find File (+Hidden)"
             },
             h = {"<cmd>Telescope help_tags<cr>", "Find Help"},
             -- m = {"<cmd>Telescope marks<cr>", "Marks"},
             M = {"<cmd>Telescope man_pages<cr>", "Man Pages"},
-            r = {"<cmd>Telescope oldfiles<cr>", "Open Recent File"},
+            r = {
+                O.plugin.snap.active and "<cmd>Snap oldfiles<cr>" or
+                    "<cmd>Telescope oldfiles<cr>", "Open Recent File"
+            },
             R = {"<cmd>Telesope registers<cr>", "Registers"},
-            t = {"<cmd>Telescope live_grep<cr>", "Text"},
+            t = {
+                O.plugin.snap.active and "<cmd>Snap live_grep<cr>" or
+                    "<cmd>Telescope live_grep<cr>", "Text"
+            },
             k = {"<cmd>Telescope keymaps<cr>", "Keymappings"},
             o = {"<cmd>TodoTelescope<cr>", "TODOs"},
             p = {"<cmd>Telescope commands<cr>", "Commands"}
@@ -369,7 +388,10 @@ M.config = function()
         mappings["L"] = {
             name = "+Lush",
             l = {":Lushify<cr>", "Lushify"},
-            x = {":lua require('lush').export_to_buffer(require('lush_theme.cool_name'))", "Lush Export"},
+            x = {
+                ":lua require('lush').export_to_buffer(require('lush_theme.cool_name'))",
+                "Lush Export"
+            },
             t = {":LushRunTutorial<cr>", "Lush Tutorial"},
             q = {":LushRunQuickstart<cr>", "Lush Quickstart"}
         }
