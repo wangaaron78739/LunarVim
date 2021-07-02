@@ -480,8 +480,9 @@ return require("packer").startup(function(use)
     -- require_plugin("targets.vim")
     use {"mg979/vim-visual-multi", opt = true}
     require_plugin("vim-visual-multi")
-    use {"tpope/vim-surround", opt = true}
-    require_plugin("vim-surround")
+    -- use {"tpope/vim-surround", opt = true}
+    -- require_plugin("vim-surround")
+    use {"machakann/vim-sandwich"}
     use {"junegunn/fzf", opt = true} -- Telescope does most of this?
     use {"junegunn/fzf.vim", opt = true}
     require_plugin("fzf")

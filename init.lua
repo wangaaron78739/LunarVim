@@ -33,3 +33,12 @@ vim.cmd('hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828')
 -- Autosave
 vim.api.nvim_command('au FocusLost * silent! wa')
 vim.api.nvim_command(':set autowriteall')
+
+-- vim-sandwhich
+vim.api.nvim_command('runtime macros/sandwich/keymap/surround.vim')
+vim.api.nvim_command([[
+xmap is <Plug>(textobj-sandwich-query-i)
+xmap as <Plug>(textobj-sandwich-query-a)
+omap is <Plug>(textobj-sandwich-query-i)
+omap as <Plug>(textobj-sandwich-query-a)
+]])
