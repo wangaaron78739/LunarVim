@@ -1,21 +1,35 @@
-vim.g.tex_flavor = 'latex'
-vim.g.vimtex_view_method = 'zathura'
-vim.g.vimtex_quickfix_mode = 0
-vim.g.tex_conceal = 'abdmgs'
-vim.g.vimtex_compiler_method = "tectonic"
-vim.g.vimtex_compiler_latexmk = {
-    ['options'] = {
-        '-shell-escape', '-verbose', '-file-line-error', '-synctex=1',
-        '-interaction=nonstopmode'
+local M = {}
+
+M.config = function()
+    vim.g.tex_flavor = 'latex'
+    vim.g.vimtex_view_method = 'zathura'
+    vim.g.vimtex_view_automatic = 1
+    vim.g.vimtex_quickfix_mode = 0
+    vim.g.tex_conceal = 'abdmgs'
+
+    -- vim.g.vimtex_compiler_method = "tectonic"
+    vim.g.vimtex_compiler_method = 'generic'
+    vim.g.vimtex_compiler_generic =
+        { -- Tectonic does not do continuous compilation, so this may work as a custom continuous version
+            cmd = 'watchexec -e tex -- tectonic --synctex --keep-logs *.tex'
+        }
+    vim.g.vimtex_compiler_tectonic = {
+        ['options'] = {'--synctex', '--keep-logs'}
     }
-}
--- Compile on initialization, cleanup on quit TODO: translate to lua
-vim.api.nvim_exec([[
-        augroup vimtex_event_1
-            au!
-            au User VimtexEventQuit     call vimtex#compiler#clean(0)
-            au User VimtexEventInitPost call vimtex#compiler#compile()
-            au User VimtexEventInitPost setlocal wrap
-            au User VimtexEventInitPost setlocal spell
-        augroup END
-    ]], false)
+    vim.g.vimtex_compiler_latexmk = {
+        ['options'] = {
+            '-shell-escape', '-verbose', '-file-line-error', '-synctex=1',
+            '-interaction=nonstopmode'
+        }
+    }
+    require'lv-utils'.define_augroups {
+        _vimtex_event = {
+            -- {'User', 'VimtexEventQuit', 'call vimtex#compiler#clean(0)'},
+            -- {'FileType', 'tex', 'call vimtex#compiler#compile()'}, -- FIXME: This doesn't work for some reason (not continuous)
+            {'FileType', 'tex', 'setlocal wrap'},
+            {'FileType', 'tex', 'setlocal spell'}
+        }
+    }
+end
+
+return M

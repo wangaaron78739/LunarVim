@@ -473,7 +473,14 @@ return require("packer").startup(function(use)
     -- LANGUAGE SPECIFIC GOES HERE
     -- Latex 
     -- TODO what filetypes should this be active for?
-    use {"lervag/vimtex", ft = "tex", disable = not O.lang.latex.active}
+    use {
+        "lervag/vimtex",
+        -- ft = "tex",
+        config = function()
+            require'lv-vimtex'.config()
+        end,
+        disable = not O.lang.latex.active
+    }
 
     -- Rust tools
     -- TODO: use lazy loading maybe?

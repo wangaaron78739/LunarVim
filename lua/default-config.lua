@@ -253,12 +253,12 @@ require('lv-utils').define_augroups({
         {'BufRead', '*.fish', 'setlocal filetype=fish'},
         {'BufNewFile', '*.fish', 'setlocal filetype=fish'}
     },
-    _latex = {
-        {'FileType', 'latex', 'VimtexCompile'},
-        {'FileType', 'latex', 'setlocal wrap'},
-        {'FileType', 'latex', 'setlocal spell'}
-        -- {'FileType', 'latex', 'lua vim.o.guifont = "FiraCode Nerd Font:h15'},
-    },
+    -- _latex = {
+    --     {'FileType', 'latex', 'VimtexCompile'},
+    --     {'FileType', 'latex', 'setlocal wrap'},
+    --     {'FileType', 'latex', 'setlocal spell'}
+    --     -- {'FileType', 'latex', 'lua vim.o.guifont = "FiraCode Nerd Font:h15'},
+    -- },
     _buffer_bindings = {
         {'FileType', 'dashboard', 'nnoremap <silent> <buffer> q :q<CR>'},
         {'FileType', 'lspinfo', 'nnoremap <silent> <buffer> q :q<CR>'},
