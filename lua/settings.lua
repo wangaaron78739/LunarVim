@@ -4,8 +4,8 @@ vim.cmd('set inccommand=split') -- Make substitution work in realtime
 vim.o.hidden = O.hidden_files -- Required to keep multiple buffers open multiple buffers
 vim.o.title = true
 TERMINAL = vim.fn.expand('$TERMINAL')
-vim.cmd('let &titleold="'..TERMINAL..'"')
-vim.o.titlestring="%<%F%=%l/%L - nvim"
+vim.cmd('let &titleold="' .. TERMINAL .. '"')
+vim.o.titlestring = "%<%F%=%l/%L - nvim"
 vim.wo.wrap = O.wrap_lines -- Display long lines as just one line
 vim.cmd('set whichwrap+=<,>,[,],h,l') -- move to next line with theses keys
 vim.cmd('syntax on') -- syntax highlighting
@@ -71,14 +71,14 @@ vim.g.floaterm_keymap_toggle = '<F4>'
 -- vim.g.floaterm_keymap_next   = '<F2>'
 -- vim.g.floaterm_keymap_prev   = '<F3>'
 -- vim.g.floaterm_keymap_new    = '<F4>'
-vim.g.floaterm_title=''
-vim.g.floaterm_gitcommit='floaterm'
-vim.g.floaterm_shell=O.shell
-vim.g.floaterm_autoinsert=1
-vim.g.floaterm_width=0.8
-vim.g.floaterm_height=0.8
-vim.g.floaterm_wintitle=0
-vim.g.floaterm_autoclose=1
+vim.g.floaterm_title = ''
+vim.g.floaterm_gitcommit = 'floaterm'
+vim.g.floaterm_shell = O.shell
+vim.g.floaterm_autoinsert = 1
+vim.g.floaterm_width = 0.8
+vim.g.floaterm_height = 0.8
+vim.g.floaterm_wintitle = 0
+vim.g.floaterm_autoclose = 1
 
 -- vim.cmd('set conceallevel=2')
 

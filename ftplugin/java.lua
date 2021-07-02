@@ -27,8 +27,8 @@ end
 require'lspconfig'.jdtls.setup {
     on_attach = on_attach,
     cmd = {DATA_PATH .. "/lspinstall/java/jdtls.sh"},
-    filetypes = { "java" },
-    root_dir = util.root_pattern({'.git', 'build.gradle', 'pom.xml'}),
+    filetypes = {"java"},
+    root_dir = util.root_pattern({'.git', 'build.gradle', 'pom.xml'})
     -- init_options = {bundles = bundles}
     -- on_attach = require'lsp'.common_on_attach
 }
@@ -41,10 +41,10 @@ require'lspconfig'.jdtls.setup {
 -- })
 
 -- TODO setup autoformat stuff later
-    -- _java = {
-    --     -- {'FileType', 'java', 'luafile '..CONFIG_PATH..'/lua/lsp/java-ls.lua'},
-    --     {
-    --         'FileType', 'java',
-    --         'nnoremap ca <Cmd>lua require(\'jdtls\').code_action()<CR>'
-    --     }
-    -- }
+-- _java = {
+--     -- {'FileType', 'java', 'luafile '..CONFIG_PATH..'/lua/lsp/java-ls.lua'},
+--     {
+--         'FileType', 'java',
+--         'nnoremap ca <Cmd>lua require(\'jdtls\').code_action()<CR>'
+--     }
+-- }

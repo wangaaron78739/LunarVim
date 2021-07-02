@@ -53,7 +53,6 @@ O.lang.python.analysis.type_checking = "off"
 O.lang.python.analysis.auto_search_paths = true
 O.lang.python.analysis.use_library_code_types = true
 
-
 -- lua
 -- TODO look into stylua
 O.lang.lua.formatter = 'lua-format'

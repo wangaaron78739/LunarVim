@@ -8,83 +8,81 @@ require'nvim-treesitter.configs'.setup {
     highlight = {
         enable = O.treesitter.highlight.enabled, -- false will disable the whole extension
         additional_vim_regex_highlighting = true,
-        disable = {"latex"},
+        disable = {"latex"}
     },
-    context_commentstring = {enable = O.plugin.ts_context_commentstring, config = {css = '// %s'}},
+    context_commentstring = {
+        enable = O.plugin.ts_context_commentstring,
+        config = {css = '// %s'}
+    },
     -- indent = {enable = true, disable = {"python", "html", "javascript"}},
     -- TODO seems to be broken
     indent = {enable = {"javascriptreact"}},
     autotag = {enable = true},
     textobjects = {
         swap = {
-          enable = true,
-          swap_next = {
-            ["<leader>aa"] = "@parameter.inner",
-            ["<leader>af"] = "@function.inner",
-            ["<leader>ac"] = "@class.inner",
-            ["<leader>ak"] = "@block.inner",
-            ["<leader>ai"] = "@conditional.inner",
-            ["<leader>aC"] = "@call.inner",
-            ["<leader>al"] = "@loop.inner",
-          },
+            enable = true,
+            swap_next = {
+                ["<leader>aa"] = "@parameter.inner",
+                ["<leader>af"] = "@function.inner",
+                ["<leader>ac"] = "@class.inner",
+                ["<leader>ak"] = "@block.inner",
+                ["<leader>ai"] = "@conditional.inner",
+                ["<leader>aC"] = "@call.inner",
+                ["<leader>al"] = "@loop.inner"
+            }
         },
         move = {
-          enable = true,
-          set_jumps = true, -- whether to set jumps in the jumplist
-          goto_next_start = {
-            ["]m"] = "@function.outer",
-            ["]]"] = "@class.outer",
-            ["]a"] = "@parameter.outer",
-          },
-          goto_next_end = {
-            ["]M"] = "@function.outer",
-            ["]["] = "@class.outer",
-            ["]A"] = "@parameter.outer",
-          },
-          goto_previous_start = {
-            ["[m"] = "@function.outer",
-            ["[["] = "@class.outer",
-            ["]a"] = "@parameter.outer",
-          },
-          goto_previous_end = {
-            ["[M"] = "@function.outer",
-            ["[]"] = "@class.outer",
-            ["]a"] = "@parameter.outer",
-          },
+            enable = true,
+            set_jumps = true, -- whether to set jumps in the jumplist
+            goto_next_start = {
+                ["]m"] = "@function.outer",
+                ["]]"] = "@class.outer",
+                ["]a"] = "@parameter.outer"
+            },
+            goto_next_end = {
+                ["]M"] = "@function.outer",
+                ["]["] = "@class.outer",
+                ["]A"] = "@parameter.outer"
+            },
+            goto_previous_start = {
+                ["[m"] = "@function.outer",
+                ["[["] = "@class.outer",
+                ["]a"] = "@parameter.outer"
+            },
+            goto_previous_end = {
+                ["[M"] = "@function.outer",
+                ["[]"] = "@class.outer",
+                ["]a"] = "@parameter.outer"
+            }
         },
         select = {
-          enable = true,
-          keymaps = {
-            -- You can use the capture groups defined in textobjects.scm
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-            ["ac"] = "@class.outer",
-            ["ic"] = "@class.inner",
-            -- ["aa"] = "@parameter.outer",
-            ["ia"] = "@parameter.inner",
-            ["ak"] = "@block.outer",
-            ["ik"] = "@block.inner",
-            ["ai"] = "@conditional.outer",
-            ["ii"] = "@conditional.inner",
-            ["aC"] = "@call.outer",
-            ["iC"] = "@call.inner",
-            ["al"] = "@loop.outer",
-            ["il"] = "@loop.inner",
-            ["iF"] = { -- Or you can define your own textobjects like this
-              python = "(function_definition) @function",
-              cpp = "(function_definition) @function",
-              c = "(function_definition) @function",
-              java = "(method_declaration) @function",
-            },
-          },
-        },
-    },
-    textsubjects = {
-        enable = true,
-        keymaps = {
-            ['.'] = 'textsubjects-smart',
+            enable = true,
+            keymaps = {
+                -- You can use the capture groups defined in textobjects.scm
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                ["ic"] = "@class.inner",
+                -- ["aa"] = "@parameter.outer",
+                ["ia"] = "@parameter.inner",
+                ["ak"] = "@block.outer",
+                ["ik"] = "@block.inner",
+                ["ai"] = "@conditional.outer",
+                ["ii"] = "@conditional.inner",
+                ["aC"] = "@call.outer",
+                ["iC"] = "@call.inner",
+                ["al"] = "@loop.outer",
+                ["il"] = "@loop.inner",
+                ["iF"] = { -- Or you can define your own textobjects like this
+                    python = "(function_definition) @function",
+                    cpp = "(function_definition) @function",
+                    c = "(function_definition) @function",
+                    java = "(method_declaration) @function"
+                }
+            }
         }
     },
+    textsubjects = {enable = true, keymaps = {['.'] = 'textsubjects-smart'}},
     playground = {
         enable = O.plugin.ts_playground.active,
         disable = {},

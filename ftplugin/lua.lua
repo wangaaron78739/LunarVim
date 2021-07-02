@@ -52,9 +52,9 @@ local lua_fmt = {
 }
 
 if O.lang.lua.formatter == 'lua-format' then
-  table.insert(lua_arguments, luaFormat)
+    table.insert(lua_arguments, luaFormat)
 elseif O.lang.lua.formatter == 'lua-fmt' then
-  table.insert(lua_arguments, lua_fmt)
+    table.insert(lua_arguments, lua_fmt)
 end
 
 require"lspconfig".efm.setup {
@@ -62,10 +62,5 @@ require"lspconfig".efm.setup {
     cmd = {DATA_PATH .. "/lspinstall/efm/efm-langserver"},
     init_options = {documentFormatting = true, codeAction = false},
     filetypes = {"lua"},
-    settings = {
-        rootMarkers = {".git/"},
-        languages = {
-            lua = lua_arguments,
-        }
-    }
+    settings = {rootMarkers = {".git/"}, languages = {lua = lua_arguments}}
 }

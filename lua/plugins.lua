@@ -1,7 +1,6 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
-
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -11,20 +10,16 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 local packer_ok, packer = pcall(require, "packer")
-if not packer_ok then
-  return
-end
+if not packer_ok then return end
 
 packer.init {
-  -- compile_path = vim.fn.stdpath('data')..'/site/pack/loader/start/packer.nvim/plugin/packer_compiled.vim',
-  git = {
-    clone_timeout = 300
-  },
-  -- display = {
-  --   -- open_fn = function()
-  --   --   return require("packer.util").float { border = "single" }
-  --   -- end,
-  -- },
+    -- compile_path = vim.fn.stdpath('data')..'/site/pack/loader/start/packer.nvim/plugin/packer_compiled.vim',
+    git = {clone_timeout = 300}
+    -- display = {
+    --   -- open_fn = function()
+    --   --   return require("packer.util").float { border = "single" }
+    --   -- end,
+    -- },
 }
 
 --- Check if a file or directory exists in this path
@@ -111,8 +106,11 @@ return require("packer").startup(function(use)
     use {"folke/which-key.nvim"}
 
     -- Autopairs
-    use {"windwp/nvim-autopairs",
-        config = function() require'lv-autopairs' end
+    use {
+        "windwp/nvim-autopairs",
+        config = function()
+            require 'lv-autopairs'
+        end
     }
 
     -- Comments
@@ -249,8 +247,9 @@ return require("packer").startup(function(use)
             vim.g.indentLine_enabled = 1
             vim.g.indent_blankline_char = "▏"
 
-            vim.g.indent_blankline_filetype_exclude =
-                {"help", "terminal", "dashboard"}
+            vim.g.indent_blankline_filetype_exclude = {
+                "help", "terminal", "dashboard"
+            }
             vim.g.indent_blankline_buftype_exclude = {"terminal"}
 
             vim.g.indent_blankline_show_trailing_blankline_indent = false
@@ -439,7 +438,7 @@ return require("packer").startup(function(use)
     use {
         "rktjmp/lush.nvim",
         cmd = {"LushRunQuickstart", "LushRunTutorial", "Lushify"},
-        disable = not O.plugin.lush.active,
+        disable = not O.plugin.lush.active
     }
     -- HTML preview
     use {
@@ -465,7 +464,8 @@ return require("packer").startup(function(use)
     use {"simrat39/rust-tools.nvim", disable = not O.lang.rust.active}
 
     -- Elixir
-    use {"elixir-editors/vim-elixir",
+    use {
+        "elixir-editors/vim-elixir",
         ft = {"elixir", "eelixir"},
         disable = not O.lang.elixir.active
     }
@@ -497,9 +497,9 @@ return require("packer").startup(function(use)
     -- https://github.com/tpope/vim-repeat
     use {"dag/vim-fish", opt = true}
     require_plugin("vim-fish")
-    use {"kmonad/kmonad-vim", opt=true}
+    use {"kmonad/kmonad-vim", opt = true}
     require_plugin("kmonad-vim")
-    use {"lambdalisue/suda.vim", opt=true}
+    use {"lambdalisue/suda.vim", opt = true}
     require_plugin("suda.vim")
     use {"liuchengxu/vista.vim", opt = true}
     require_plugin("vista.vim")
@@ -520,10 +520,10 @@ return require("packer").startup(function(use)
 
     -- mkdir
     use {
-      'jghauser/mkdir.nvim',
-      config = function()
-        require('mkdir')
-      end
+        'jghauser/mkdir.nvim',
+        config = function()
+            require('mkdir')
+        end
     }
 
     -- Colorschemes
@@ -531,7 +531,7 @@ return require("packer").startup(function(use)
     use {'marko-cerovac/material.nvim'}
     use {'folke/tokyonight.nvim'}
     -- use {'tomasiser/vim-code-dark'}
-        
+
     -- use {'mattn/webapi-vim', opt = true}
     --     use {'f-person/git-blame.nvim', opt = true}
     --     -- diagnostics

@@ -25,14 +25,15 @@ require'lspconfig'.tsserver.setup {
                                                       "jsconfig.json", ".git"),
     settings = {documentFormatting = false},
     handlers = {
-        ["textDocument/publishDiagnostics"] = vim.lsp.with(
-            vim.lsp.diagnostic.on_publish_diagnostics, {
-                virtual_text = O.lang.tsserver.diagnostics.virtual_text,
-                signs = O.lang.tsserver.diagnostics.signs,
-                underline = O.lang.tsserver.diagnostics.underline,
-                update_in_insert = true
+        ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic
+                                                               .on_publish_diagnostics,
+                                                           {
+            virtual_text = O.lang.tsserver.diagnostics.virtual_text,
+            signs = O.lang.tsserver.diagnostics.signs,
+            underline = O.lang.tsserver.diagnostics.underline,
+            update_in_insert = true
 
-            })
+        })
     }
 }
 

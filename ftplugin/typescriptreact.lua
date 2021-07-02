@@ -25,14 +25,15 @@ require'lspconfig'.tsserver.setup {
                                                       "jsconfig.json", ".git"),
     settings = {documentFormatting = false},
     handlers = {
-        ["textDocument/publishDiagnostics"] = vim.lsp.with(
-            vim.lsp.diagnostic.on_publish_diagnostics, {
-                virtual_text = O.lang.tsserver.diagnostics.virtual_text,
-                signs = O.lang.tsserver.diagnostics.signs,
-                underline = O.lang.tsserver.diagnostics.underline,
-                update_in_insert = true
+        ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic
+                                                               .on_publish_diagnostics,
+                                                           {
+            virtual_text = O.lang.tsserver.diagnostics.virtual_text,
+            signs = O.lang.tsserver.diagnostics.signs,
+            underline = O.lang.tsserver.diagnostics.underline,
+            update_in_insert = true
 
-            })
+        })
     }
 }
 
@@ -67,22 +68,25 @@ if O.lang.tsserver.autoformat then
 end
 vim.cmd("setl ts=2 sw=2")
 
-local nvim_lsp = require'lspconfig'
-local configs = require'lspconfig/configs'
+local nvim_lsp = require 'lspconfig'
+local configs = require 'lspconfig/configs'
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 configs.emmet_ls = {
-  default_config = {
-    cmd = {'emmet-ls', '--stdio'};
-    filetypes = {'html', 'css', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact'};
-    root_dir = function()
-      return vim.loop.cwd()
-    end;
-    settings = {};
-  };
+    default_config = {
+        cmd = {'emmet-ls', '--stdio'},
+        filetypes = {
+            'html', 'css', 'javascript', 'javascriptreact', 'typescript',
+            'typescriptreact'
+        },
+        root_dir = function()
+            return vim.loop.cwd()
+        end,
+        settings = {}
+    }
 }
 
-nvim_lsp.emmet_ls.setup{
-  -- on_attach = on_attach;
+nvim_lsp.emmet_ls.setup {
+    -- on_attach = on_attach;
 }

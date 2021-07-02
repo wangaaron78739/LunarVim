@@ -30,13 +30,13 @@ M.config = function()
         },
         f = {
             description = {'  Neovim Config Files'},
-            command = 'lua require(\'telescope.builtin\').find_files({search_dirs = {"'..CONFIG_PATH..'"}})'
+            command = 'lua require(\'telescope.builtin\').find_files({search_dirs = {"' ..
+                CONFIG_PATH .. '"}})'
         }
         -- e = {description = {'  Marks              '}, command = 'Telescope marks'}
     }
 
     -- file_browser = {description = {' File Browser'}, command = 'Telescope find_files'},
-
 
     -- vim.g.dashboard_session_directory = CACHE_PATH..'/session'
     vim.g.dashboard_custom_footer = O.dashboard.footer

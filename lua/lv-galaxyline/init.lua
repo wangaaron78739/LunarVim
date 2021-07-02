@@ -97,7 +97,8 @@ table.insert(gls.left, {
                 ['!'] = colors.blue,
                 t = colors.blue
             }
-            vim.api.nvim_command('hi GalaxyViMode guifg=' .. mode_color[vim.fn.mode()])
+            vim.api.nvim_command('hi GalaxyViMode guifg=' ..
+                                     mode_color[vim.fn.mode()])
             return '▊ '
         end,
         highlight = {colors.red, colors.bg}
@@ -166,18 +167,18 @@ table.insert(gls.left, {
     FileName = {
         -- provider = 'FileName',
         provider = function(modified_icon, readonly_icon)
-          local file = vim.fn.expand('%:p')
-          if vim.fn.empty(file) == 1 then return '' end
-        --   if string.len(file_readonly(readonly_icon)) ~= 0 then
-        --     return file .. file_readonly(readonly_icon)
-        --   end
-          local icon = modified_icon or ''
-          if vim.bo.modifiable then
-            if vim.bo.modified then
-              return file .. ' ' .. icon .. '  '
+            local file = vim.fn.expand('%:p')
+            if vim.fn.empty(file) == 1 then return '' end
+            --   if string.len(file_readonly(readonly_icon)) ~= 0 then
+            --     return file .. file_readonly(readonly_icon)
+            --   end
+            local icon = modified_icon or ''
+            if vim.bo.modifiable then
+                if vim.bo.modified then
+                    return file .. ' ' .. icon .. '  '
+                end
             end
-          end
-          return file .. ' '
+            return file .. ' '
         end,
         condition = condition.hide_in_width,
         icon = '',
@@ -194,20 +195,42 @@ table.insert(gls.left, {
 })
 
 table.insert(gls.right, {
-    DiagnosticError = {provider = 'DiagnosticError', icon = '  ', highlight = {colors.error_red, colors.bg}}
+    DiagnosticError = {
+        provider = 'DiagnosticError',
+        icon = '  ',
+        highlight = {colors.error_red, colors.bg}
+    }
 })
-table.insert(gls.right, {DiagnosticWarn = {provider = 'DiagnosticWarn', icon = '  ', highlight = {colors.orange, colors.bg}}})
+table.insert(gls.right, {
+    DiagnosticWarn = {
+        provider = 'DiagnosticWarn',
+        icon = '  ',
+        highlight = {colors.orange, colors.bg}
+    }
+})
 
 table.insert(gls.right, {
-    DiagnosticHint = {provider = 'DiagnosticHint', icon = '  ', highlight = {colors.vivid_blue, colors.bg}}
+    DiagnosticHint = {
+        provider = 'DiagnosticHint',
+        icon = '  ',
+        highlight = {colors.vivid_blue, colors.bg}
+    }
 })
 
-table.insert(gls.right, {DiagnosticInfo = {provider = 'DiagnosticInfo', icon = '  ', highlight = {colors.info_yellow, colors.bg}}})
+table.insert(gls.right, {
+    DiagnosticInfo = {
+        provider = 'DiagnosticInfo',
+        icon = '  ',
+        highlight = {colors.info_yellow, colors.bg}
+    }
+})
 
 table.insert(gls.right, {
     TreesitterIcon = {
         provider = function()
-            if next(vim.treesitter.highlighter.active) ~= nil then return ' ' end
+            if next(vim.treesitter.highlighter.active) ~= nil then
+                return ' '
+            end
             return ''
         end,
         separator = ' ',
@@ -250,7 +273,8 @@ table.insert(gls.right, {
 table.insert(gls.right, {
     Tabstop = {
         provider = function()
-            return "Spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth") .. " "
+            return "Spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth") ..
+                       " "
         end,
         condition = condition.hide_in_width,
         separator = ' ',
@@ -300,7 +324,11 @@ table.insert(gls.short_line_left, {
 })
 
 table.insert(gls.short_line_left, {
-    SFileName = {provider = 'SFileName', condition = condition.buffer_not_empty, highlight = {colors.grey, colors.bg}}
+    SFileName = {
+        provider = 'SFileName',
+        condition = condition.buffer_not_empty,
+        highlight = {colors.grey, colors.bg}
+    }
 })
 
---table.insert(gls.short_line_right[1] = {BufferIcon = {provider = 'BufferIcon', highlight = {colors.grey, colors.bg}}})
+-- table.insert(gls.short_line_right[1] = {BufferIcon = {provider = 'BufferIcon', highlight = {colors.grey, colors.bg}}})
