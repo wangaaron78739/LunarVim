@@ -60,9 +60,16 @@ vim.g.VM_maps = nil
 vim.g.VM_maps = {
     ['Find Under'] = '<M-d>',
     ['Find Subword Under'] = '<M-d>',
-    ['Select Cursor Down'] = '<M-j>',
-    ['Select Cursor Up'] = '<M-k>'
+    ['Add Cursor Down'] = '<M-j>',
+    ['Add Cursor Up'] = '<M-k>',
+    ['Select Cursor Down'] = '<M-S-j>',
+    ['Select Cursor Up'] = '<M-S-k>',
+    ['Visual Cursors'] = '<M-c>',
+    ['Visual Regex'] = 'm',
+    ['Find Operator'] = 'm' -- FIXME: Some plugin is conflicting and making this not work, unless i type fast
 }
+vim.g.VM_leader = '\\'
+vim.g.VM_theme = 'neon'
 
 -- vim.o.guifont = "JetBrains\\ Mono\\ Regular\\ Nerd\\ Font\\ Complete"
 
