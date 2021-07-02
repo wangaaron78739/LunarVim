@@ -15,5 +15,7 @@ vim.api.nvim_exec([[
             au!
             au User VimtexEventQuit     call vimtex#compiler#clean(0)
             au User VimtexEventInitPost call vimtex#compiler#compile()
+            au User VimtexEventInitPost setlocal wrap
+            au User VimtexEventInitPost setlocal spell
         augroup END
     ]], false)
