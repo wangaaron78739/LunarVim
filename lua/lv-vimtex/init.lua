@@ -10,12 +10,10 @@ vim.g.vimtex_compiler_latexmk = {
     }
 }
 -- Compile on initialization, cleanup on quit TODO: translate to lua
--- vim.api.nvim_exec(
---     [[
---         augroup vimtex_event_1
---             au!
---             au User VimtexEventQuit     call vimtex#compiler#clean(0)
---             au User VimtexEventInitPost call vimtex#compiler#compile()
---         augroup END
---     ]], false
--- )
+vim.api.nvim_exec([[
+        augroup vimtex_event_1
+            au!
+            au User VimtexEventQuit     call vimtex#compiler#clean(0)
+            au User VimtexEventInitPost call vimtex#compiler#compile()
+        augroup END
+    ]], false)
