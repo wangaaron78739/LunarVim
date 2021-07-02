@@ -298,7 +298,8 @@ M.config = function()
             s = {"<cmd>SessionSave<cr>", "Save Session"},
             l = {"<cmd>SessionLoad<cr>", "Load Session"}
         },
-        z = {"<cmd>ZenMode<cr>", "toggle zen"}
+        z = {"<cmd>ZenMode<cr>", "toggle zen"},
+        T = {name = "Treesitter", i = {":TSConfigInfo<cr>", "Info"}}
     }
 
     if O.plugin.trouble.active then
@@ -318,7 +319,12 @@ M.config = function()
             k = {"<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostic"}
         }
     end
-
+    if O.plugin.ts_playground.active then
+        vim.api.nvim_set_keymap("n", "<leader>Th",
+                                ":TSHighlightCapturesUnderCursor<CR>",
+                                {noremap = true, silent = true})
+        mappings[""] = "Highlight Capture"
+    end
     if O.plugin.gitlinker.active then mappings["gy"] = "Gitlink" end
     if O.plugin.zen.active then
         vim.api.nvim_set_keymap("n", "<leader>z", ":ZenMode<CR>",
@@ -331,6 +337,16 @@ M.config = function()
                                 ":lua require'telescope'.extensions.project.project{}<CR>",
                                 {noremap = true, silent = true})
         mappings["p"] = "Projects"
+    end
+    if O.plugin.spectre.active then
+        mappings['r'] = {
+            name = "Replace",
+            f = {
+                "<cmd>lua require('spectre').open_file_search()<cr>",
+                "Current File"
+            },
+            p = {"<cmd>lua require('spectre').open()<cr>", "Project"}
+        }
     end
     if O.plugin.lazygit.active then
         vim.api.nvim_set_keymap("n", "<leader>gg", ":LazyGit<CR>",
@@ -347,6 +363,14 @@ M.config = function()
             v = {"<cmd>VimtexView<cr>", "View PDF"},
             c = {'<cmd>VimtexCompile<cr>', 'Compile Project Latex'},
             o = {'<cmd>VimtexCompileOutput<cr>', 'Compile Output Latex'}
+        }
+    end
+    if O.lushmode then
+        mappings["L"] = {
+            name = "+Lush",
+            l = {":Lushify<cr>", "Lushify"},
+            t = {":LushRunTutorial<cr>", "Lush Tutorial"},
+            q = {":LushRunQuickstart<cr>", "Lush Quickstart"}
         }
     end
 
