@@ -111,3 +111,7 @@ vim.api.nvim_set_keymap('i', '<C-/>', '<C-\\><C-n><CMD>CommentToggle',
 -- vim.api.nvim_del_keymap('n', 'gc')
 vim.api.nvim_set_keymap('n', 'gcc', '<cmd>CommentToggle<cr>',
                         {noremap = true, silent = true})
+
+-- Visual mode start search (like *)
+vim.api.nvim_set_keymap('v', '*', '"ay/<C-R>a<cr>',
+                        {noremap = true, silent = true})
