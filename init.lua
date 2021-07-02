@@ -6,7 +6,6 @@ vim.g.colors_name = O.colorscheme
 vim.g.syntax = true
 require('lv-utils')
 require('keymappings')
-require('colorscheme') -- This plugin must be required somewhere after nvimtree. Placing it before will break navigation keymappings
 require('lv-galaxyline')
 require('lv-treesitter')
 require('lsp')
