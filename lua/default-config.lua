@@ -139,6 +139,7 @@ O = {
             }
         },
         clang = {
+            autoformat = false,
             diagnostics = {
                 virtual_text = {spacing = 0, prefix = ""},
                 signs = true,
