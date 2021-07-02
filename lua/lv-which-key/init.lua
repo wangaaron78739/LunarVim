@@ -369,6 +369,7 @@ M.config = function()
         mappings["L"] = {
             name = "+Lush",
             l = {":Lushify<cr>", "Lushify"},
+            x = {":lua require('lush').export_to_buffer(require('lush_theme.cool_name'))", "Lush Export"},
             t = {":LushRunTutorial<cr>", "Lush Tutorial"},
             q = {":LushRunQuickstart<cr>", "Lush Quickstart"}
         }

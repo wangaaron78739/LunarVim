@@ -18,6 +18,7 @@ O.leader_key = ' '
 O.ignore_case = true
 O.smart_case = true
 O.shell = 'fish'
+O.lushmode = false
 
 -- After changing plugin config it is recommended to run :PackerCompile
 -- TODO: refine these selections
