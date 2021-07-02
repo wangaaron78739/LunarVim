@@ -24,22 +24,29 @@ require'lspconfig/configs'.jdtls = nil -- important, unset the loaded config aga
 --     uninstall_script = nil -- can be omitted
 -- })
 
+-- local config = require"lspinstall/util".extract_config("julia")
+local config = {}
+require'lspinstall/servers'.julia = vim.tbl_extend('error', config, {
+    install_script = [[
+    julia -e 'using Pkg; Pkg.add("LanguageServer"); Pkg.add("SymbolServer")'
+  ]],
+    uninstall_script = nil -- can be omitted
+})
+
 require'lspinstall'.setup()
 
 -- Auto reload LSP servers after install
 local function setup_servers()
-  require'lspinstall'.setup()
-  local servers = require'lspinstall'.installed_servers()
-  for _, server in pairs(servers) do
-    require'lspconfig'[server].setup{}
-  end
+    require'lspinstall'.setup()
+    local servers = require'lspinstall'.installed_servers()
+    for _, server in pairs(servers) do require'lspconfig'[server].setup {} end
 end
 
 setup_servers()
 
 -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-require'lspinstall'.post_install_hook = function ()
-  setup_servers() -- reload installed servers
-  vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+require'lspinstall'.post_install_hook = function()
+    setup_servers() -- reload installed servers
+    vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
 end
 
