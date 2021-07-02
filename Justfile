@@ -23,6 +23,7 @@ install:
 
 # Install lsp that I want
 lsps:
+    nvim +'LspInstall efm'
     nvim +'LspInstall rust'
     nvim +'LspInstall lua'
     nvim +'LspInstall python'
