@@ -35,9 +35,9 @@ O.treesitter.highlight.enabled = true
 
 O.lang.clang.active = true
 O.lang.clang.autoformat = true
-O.lang.clang.diagnostics.virtual_text = false
-O.lang.clang.diagnostics.signs = false
-O.lang.clang.diagnostics.underline = false
+O.lang.clang.diagnostics.virtual_text = true
+O.lang.clang.diagnostics.signs = true
+O.lang.clang.diagnostics.underline = true
 
 -- python
 -- add things like O.python.formatter.yapf.exec_path
