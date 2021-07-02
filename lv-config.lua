@@ -21,8 +21,8 @@ O.shell = 'fish'
 O.lushmode = false
 
 -- After changing plugin config it is recommended to run :PackerCompile
--- TODO: refine these selections
 O.plugin.lsp_rooter.active = false -- This is actually more confusing sometimes
+O.plugin.snap.active = false -- This is actually more confusing sometimes
 
 -- dashboard
 -- O.dashboard.custom_header = {""}
