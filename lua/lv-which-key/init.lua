@@ -353,28 +353,35 @@ M.config = function()
     local wk = require("which-key")
     wk.register(mappings, opts)
 
-    local visualOpts = {
-        mode = "v", -- Visual mode
+    --     local visualOpts = {
+    --         mode = "v", -- Visual mode
+    --         prefix = "<leader>",
+    --         buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+    --         silent = true, -- use `silent` when creating keymaps
+    --         noremap = true, -- use `noremap` when creating keymaps
+    --         nowait = false -- use `nowait` when creating keymaps
+    --     }
+    --     local visualMappings = {
+    --         ["/"] = {"<cmd>CommentToggle<cr>", "Comment"},
+    --         r = {
+    --             name = "Replace",
+    --             f = {
+    --                 "<cmd>lua require('spectre').open_visual({path = vim.fn.expand('%')})<cr>",
+    --                 "File"
+    --             },
+    --             p = {"<cmd>lua require('spectre').open_visual()<cr>", "Project"}
+    --         }
+    --     }
+    --     wk.register(visualMappings, visualOpts)
+
+    local surropts = {
+        mode = "n", -- NORMAL mode
         prefix = "<leader>",
         buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
         silent = true, -- use `silent` when creating keymaps
         noremap = true, -- use `noremap` when creating keymaps
         nowait = false -- use `nowait` when creating keymaps
     }
-
-    local visualMappings = {
-        ["/"] = {"<cmd>CommentToggle<cr>", "Comment"},
-        r = {
-            name = "Replace",
-            f = {
-                "<cmd>lua require('spectre').open_visual({path = vim.fn.expand('%')})<cr>",
-                "File"
-            },
-            p = {"<cmd>lua require('spectre').open_visual()<cr>", "Project"}
-        }
-    }
-
-    wk.register(visualMappings, visualOpts)
 
 end
 
