@@ -59,10 +59,12 @@ return require("packer").startup(function(use)
     -- TODO refactor all of this (for now it works, but yes I know it could be wrapped in a simpler function)
     use {"neovim/nvim-lspconfig"}
     use {"glepnir/lspsaga.nvim", event = "BufRead"}
-    use {"kabouzeid/nvim-lspinstall", event = "BufRead"}
+    use {"kabouzeid/nvim-lspinstall"}
+    -- Telescope
     use {"nvim-lua/popup.nvim"}
     use {"nvim-lua/plenary.nvim"}
-    -- Telescope
+    use {"tjdevries/astronauta.nvim"}
+    -- Telescope - search through things
     use {
         "nvim-telescope/telescope.nvim",
         config = [[require('lv-telescope')]],
@@ -101,12 +103,7 @@ return require("packer").startup(function(use)
     }
 
     -- whichkey
-    use {
-        "folke/which-key.nvim",
-        --config = function()
-        --    require('lv-which-key').config()
-        --end
-    }
+    use {"folke/which-key.nvim"}
 
     -- Autopairs
     use {"windwp/nvim-autopairs",
@@ -461,50 +458,6 @@ return require("packer").startup(function(use)
         ft = {"elixir", "eelixir"},
         disable = not O.lang.elixir.active
     }
-    
-    -- use {'mattn/webapi-vim', opt = true}
-    --     use {'f-person/git-blame.nvim', opt = true}
-    --     -- diagnostics
-    --     use {"folke/trouble.nvim", opt = true}
-    --     -- Debugging
-    --     use {"mfussenegger/nvim-dap", opt = true}
-    --     -- Better quickfix
-    --     use {"kevinhwang91/nvim-bqf", opt = true}
-    --     -- Search & Replace
-    --     use {'windwp/nvim-spectre', opt = true}
-    --     -- Symbol Outline
-    --     use {'simrat39/symbols-outline.nvim', opt = true}
-    --     -- Interactive scratchpad
-    --     use {'metakirby5/codi.vim', opt = true}
-    --     -- Markdown preview
-    --     use {
-    --         'iamcco/markdown-preview.nvim',
-    --         run = 'cd app && npm install',
-    --         opt = true
-    --     }
-    --     require_plugin('markdown-preview.nvim')
-    --
-    --
-    --     -- Sane gx for netrw_gx bug
-    --     use {"felipec/vim-sanegx", opt = true}
-    -- lsp root
-    -- use {"ahmedkhalf/lsp-rooter.nvim", opt = true} -- with this nvim-tree will follow you
-    -- require_plugin('lsp-rooter.nvim')
-
-    -- folke/todo-comments.nvim
-    -- gennaro-tedesco/nvim-jqx
-    -- TimUntersberger/neogit
-    -- folke/lsp-colors.nvim
-    -- simrat39/symbols-outline.nvim
-
-    -- Git
-    -- use {'tpope/vim-fugitive', opt = true}
-    -- use {'tpope/vim-rhubarb', opt = true}
-    -- pwntester/octo.nvim
-
-    -- Easily Create Gists
-    -- use {'mattn/vim-gist', opt = true}
-    -- use {'mattn/webapi-vim', opt = true}
 
     -- amedhi plugins
 
@@ -567,5 +520,49 @@ return require("packer").startup(function(use)
     use {'marko-cerovac/material.nvim'}
     use {'folke/tokyonight.nvim'}
     -- use {'tomasiser/vim-code-dark'}
+        
+    -- use {'mattn/webapi-vim', opt = true}
+    --     use {'f-person/git-blame.nvim', opt = true}
+    --     -- diagnostics
+    --     use {"folke/trouble.nvim", opt = true}
+    --     -- Debugging
+    --     use {"mfussenegger/nvim-dap", opt = true}
+    --     -- Better quickfix
+    --     use {"kevinhwang91/nvim-bqf", opt = true}
+    --     -- Search & Replace
+    --     use {'windwp/nvim-spectre', opt = true}
+    --     -- Symbol Outline
+    --     use {'simrat39/symbols-outline.nvim', opt = true}
+    --     -- Interactive scratchpad
+    --     use {'metakirby5/codi.vim', opt = true}
+    --     -- Markdown preview
+    --     use {
+    --         'iamcco/markdown-preview.nvim',
+    --         run = 'cd app && npm install',
+    --         opt = true
+    --     }
+    --     require_plugin('markdown-preview.nvim')
+    --
+    --
+    --     -- Sane gx for netrw_gx bug
+    --     use {"felipec/vim-sanegx", opt = true}
+    -- lsp root
+    -- use {"ahmedkhalf/lsp-rooter.nvim", opt = true} -- with this nvim-tree will follow you
+    -- require_plugin('lsp-rooter.nvim')
+
+    -- folke/todo-comments.nvim
+    -- gennaro-tedesco/nvim-jqx
+    -- TimUntersberger/neogit
+    -- folke/lsp-colors.nvim
+    -- simrat39/symbols-outline.nvim
+
+    -- Git
+    -- use {'tpope/vim-fugitive', opt = true}
+    -- use {'tpope/vim-rhubarb', opt = true}
+    -- pwntester/octo.nvim
+
+    -- Easily Create Gists
+    -- use {'mattn/vim-gist', opt = true}
+    -- use {'mattn/webapi-vim', opt = true}
 
 end)
