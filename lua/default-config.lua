@@ -63,6 +63,8 @@ O = {
         bracey = {active = false},
         telescope_project = {active = false},
         gist = {active = false}
+        dap_install = {active = false}
+
     },
 
     lang = {
