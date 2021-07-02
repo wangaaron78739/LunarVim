@@ -21,6 +21,16 @@ install:
     nvim # Run once to install packer and stuff
     nvim +PackerInstall # Run again to install the plugins
 
+# Install lsp that I want
+lsps:
+    nvim +'LspInstall rust'
+    nvim +'LspInstall lua'
+    nvim +'LspInstall python'
+    nvim +'LspInstall cpp'
+    nvim +'LspInstall cmake'
+    nvim +'LspInstall latex'
+    nvim +'LspInstall json'
+
 # Open neovim with main settings files
 settings:
     nvim init.lua lua/settings.lua lua/plugins.lua lua/keymappings.lua lua/lv-autocommands/init.lua lua/lv-which-key/init.lua
@@ -28,7 +38,7 @@ settings:
 # Open plugins.lua (and PackerInstall automatically afterwards)
 plugins:
 	nvim lua/plugins.lua
-	nvim +PackerCompile +PackerInstall
+	nvim +PackerCompile +PackerSync
 
 # Update Plugins using Packer
 update-plugins:
