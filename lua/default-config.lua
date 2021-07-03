@@ -271,6 +271,20 @@ require('lv-utils').define_augroups({
             'FileType', 'rnvimr',
             'inoremap <silent> <buffer> <nowait> - <ESC>:q<CR>'
         }
+    },
+    _terminal_insert = {
+        {'BufEnter', '*', [[if &buftype == 'terminal' | :startinsert | endif]]}
+    },
+    _auto_reload = {
+        -- will check for external file changes on cursor hold
+        {'CursorHold', '*', 'silent! checktime'}
+    },
+    _mode_switching = {
+        -- will switch between absolute and relative line numbers depending on mode
+        {'InsertEnter', '*', 'setlocal number norelativenumber nocursorline'},
+        {'InsertLeave ', '*', 'setlocal relativenumber cursorline'},
+        {'WinEnter', '*', 'setlocal cursorline'},
+        {'WinLeave', '*', 'setlocal nocursorline'}
     }
 })
 
