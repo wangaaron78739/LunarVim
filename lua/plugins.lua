@@ -590,9 +590,14 @@ return require("packer").startup(function(use)
     -- use {'tpope/vim-rhubarb', opt = true}
     -- pwntester/octo.nvim
 
+    -- https://github.com/rockerBOO/awesome-neovim
     -- https://github.com/rmagatti/auto-session
     -- https://github.com/kevinhwang91/nvim-hlslens
     -- https://github.com/gcmt/wildfire.vim
     -- https://github.com/neomake/neomake
+    -- https://github.com/tversteeg/registers.nvim
+    -- https://github.com/jbyuki/nabla.nvim
+    -- https://github.com/famiu/nvim-reload
+    -- https://github.com/ggandor/lightspeed.nvim
 
 end)
