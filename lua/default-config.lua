@@ -269,7 +269,8 @@ require('lv-utils').define_augroups({
         -- {'FileType', 'markdown', 'set guifont "FiraCode Nerd Font:h15"'},
     },
     _fish = {
-        {'BufWinEnter,BufRead,BufNewFile', '*.fish', 'setlocal filetype=fish'}
+        {'BufWinEnter,BufRead,BufNewFile', '*.fish', 'setlocal filetype=fish'},
+        {'FileType', 'fish', 'setlocal commenstring', "# %s"}
     },
     _kbd = {
         {'BufWinEnter,BufRead,BufNewFile', '*.kbd', 'setlocal filetype=kmonad'}
