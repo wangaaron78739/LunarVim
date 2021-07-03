@@ -1,3 +1,4 @@
+-- TODO: Check if this really activates correctly
 require'lspconfig'.julials.setup {
     on_new_config = function(new_config, new_root_dir)
         server_path =

@@ -35,7 +35,8 @@ require'lspinstall/servers'.julia = vim.tbl_extend('error', config, {
 })
 
 -- Install Zig Lanuage Server
-local config = {}
+local config = require"lspinstall/util".extract_config("zls")
+config.default_config.cmd[1] = "./zls/zls"
 require'lspinstall/servers'.zig = vim.tbl_extend('error', config, {
     install_script = [[
         os=$(uname -s | tr "[:upper:]" "[:lower:]")
@@ -54,9 +55,7 @@ require'lspinstall/servers'.zig = vim.tbl_extend('error', config, {
         curl -L -o "$mchn-$os.tar.xz" "https://github.com/zigtools/zls/releases/latest/download/$mchn-$os.tar.xz"
         tar xavf $mchn-$os.tar.xz
         mv $mchn-$os zls
-    ]],
-    uninstall_script = nil, -- can be omitted
-    cmd = {DATA_PATH .. "/lspinstall/zig/zls/zls"}
+    ]]
 })
 
 require'lspinstall'.setup()

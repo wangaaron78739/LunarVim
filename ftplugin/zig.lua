@@ -6,6 +6,7 @@ require'lspconfig'.zls.setup {
     root_dir = require'lspconfig'.util.root_pattern(".git", "build.zig",
                                                     "zls.json"),
     on_attach = require'lsp'.common_on_attach
+    -- cmd = {DATA_PATH .. "/lspinstall/zig/zls/zls"}, -- TODO: Is this really necessary
 }
 
 require('lv-utils').define_augroups({
