@@ -84,7 +84,7 @@ if (status) then
     wk.register({
         [textobj_prefixes["swap"]] = "Swap",
         [textobj_prefixes["goto_next"]] = "Jump [",
-        [textobj_prefixes["goto_next"]] = "Jump ]"
+        [textobj_prefixes["goto_prev"]] = "Jump ]"
     }, normal)
     wk.register(textobj_move_keymaps["goto_next_start"], normal)
     wk.register(textobj_move_keymaps["goto_next_end"], normal)
