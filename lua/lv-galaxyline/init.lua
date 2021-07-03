@@ -22,7 +22,7 @@ local colors = {
     info_yellow = '#FFCC66'
 }
 
--- galaxyline themes for Gruvbox and NVCode.
+-- galaxyline themes for Gruvbox and LunarVim.
 -- Uncomment and change 'colors_colorschemeName'
 -- to 'colors' to enable.
 
@@ -46,8 +46,8 @@ local colors = {
 --     error_red = '#CC241D',
 --     info_yellow = '#D79921'
 -- }
--- colors for NVCode theme (very minimal changes)
--- local colors_nvcode = {
+-- colors for LunarVim theme (very minimal changes)
+-- local colors_lunarvim = {
 --     bg = '#2E2E2E',
 --     yellow = '#DCDCAA',
 --     dark_yellow = '#D7BA7D',
@@ -239,17 +239,15 @@ table.insert(gls.right, {
     }
 })
 
-local get_lsp_client = function (msg)
+local get_lsp_client = function(msg)
     msg = msg or "No Active LSP Client"
     local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
     local clients = vim.lsp.get_active_clients()
-    if next(clients) == nil then
-        return msg
-    end
+    if next(clients) == nil then return msg end
     local lsps = ""
-    for _,client in ipairs(clients) do
+    for _, client in ipairs(clients) do
         local filetypes = client.config.filetypes
-        if filetypes and vim.fn.index(filetypes, buf_ft) ~=1 then
+        if filetypes and vim.fn.index(filetypes, buf_ft) ~= 1 then
             -- print(client.name)
             if lsps == "" then
                 -- print("first", lsps)
@@ -266,7 +264,6 @@ local get_lsp_client = function (msg)
         return lsps
     end
 end
-
 
 table.insert(gls.right, {
     ShowLspClient = {

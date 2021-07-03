@@ -34,7 +34,7 @@ O = {
         enable = true
     },
 
-    database = {save_location = '~/.config/nvcode_db', auto_execute = 1},
+    database = {save_location = '~/.config/nvim/.db', auto_execute = 1},
 
     plugin = {
         hop = {active = PLUGINS_ENABLED_BY_DEFAULT},
