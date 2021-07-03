@@ -477,23 +477,18 @@ return require("packer").startup(function(use)
     -- TODO what filetypes should this be active for?
     use {
         "lervag/vimtex",
-        -- ft = "tex",
+        ft = "tex",
         config = function()
             require'lv-vimtex'.config()
-        end,
-        disable = not O.lang.latex.active
+        end
     }
 
     -- Rust tools
     -- TODO: use lazy loading maybe?
-    use {"simrat39/rust-tools.nvim", disable = not O.lang.rust.active}
+    use {"simrat39/rust-tools.nvim", ft = "rust"}
 
     -- Elixir
-    use {
-        "elixir-editors/vim-elixir",
-        ft = {"elixir", "eelixir"},
-        disable = not O.lang.elixir.active
-    }
+    use {"elixir-editors/vim-elixir", ft = {"elixir", "eelixir"}}
 
     -- amedhi plugins
     -- TODO: stop using require_plugin
