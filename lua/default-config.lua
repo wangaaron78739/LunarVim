@@ -4,6 +4,7 @@ CACHE_PATH = vim.fn.stdpath('cache')
 TERMINAL = vim.fn.expand('$TERMINAL')
 
 PLUGINS_ENABLED_BY_DEFAULT = true
+AUTOFORMAT_ENABLED_BY_DEFAULT = true
 
 O = {
     auto_close_tree = 0,
@@ -93,7 +94,7 @@ O = {
             linter = '',
             -- @usage can be 'yapf', 'black'
             formatter = '',
-            autoformat = false,
+            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
             isort = false,
             diagnostics = {
                 virtual_text = {spacing = 0, prefix = ""},
@@ -107,12 +108,13 @@ O = {
             }
         },
         dart = {
+            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
             sdk_path = '/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot'
         },
         lua = {
             -- @usage can be 'lua-format'
             formatter = '',
-            autoformat = false,
+            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
             diagnostics = {
                 virtual_text = {spacing = 0, prefix = ""},
                 signs = true,
@@ -124,7 +126,7 @@ O = {
             linter = '',
             -- @usage can be 'shfmt'
             formatter = '',
-            autoformat = false,
+            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
             diagnostics = {
                 virtual_text = {spacing = 0, prefix = ""},
                 signs = true,
@@ -136,7 +138,7 @@ O = {
             linter = '',
             -- @usage can be 'prettier'
             formatter = '',
-            autoformat = false,
+            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
             diagnostics = {
                 virtual_text = {spacing = 0, prefix = ""},
                 signs = true,
@@ -146,7 +148,7 @@ O = {
         json = {
             -- @usage can be 'prettier'
             formatter = '',
-            autoformat = false,
+            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
             diagnostics = {
                 virtual_text = {spacing = 0, prefix = ""},
                 signs = true,
@@ -160,7 +162,7 @@ O = {
             }
         },
         clang = {
-            autoformat = false,
+            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
             diagnostics = {
                 virtual_text = {spacing = 0, prefix = ""},
                 signs = true,
@@ -177,35 +179,39 @@ O = {
             },
             filetypes = {'rb', 'erb', 'rakefile'}
         },
-        go = {},
-        elixir = {},
-        vim = {},
-        yaml = {},
-        terraform = {},
+        go = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        elixir = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        vim = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        yaml = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        terraform = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
         rust = {
+            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
             linter = '',
             formatter = '',
-            autoformat = false,
             diagnostics = {
                 virtual_text = {spacing = 0, prefix = ""},
                 signs = true,
                 underline = true
             }
         },
-        svelte = {},
-        php = {},
-        latex = {},
-        kotlin = {},
-        html = {},
-        elm = {},
-        emmet = {active = true},
-        graphql = {},
-        efm = {},
-        docker = {},
-        cmake = {},
-        java = {},
-        zig = {},
-        css = {formatter = '', autoformat = false, virtual_text = true}
+        svelte = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        php = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        latex = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        kotlin = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        html = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        elm = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        emmet = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT, active = true},
+        graphql = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        efm = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        docker = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        cmake = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        java = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        zig = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        css = {
+            formatter = '',
+            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
+            virtual_text = true
+        }
 
     },
 
