@@ -319,25 +319,34 @@ M.config = function()
             l = {"<cmd>SessionLoad<cr>", "Load Session"}
         },
         z = {"<cmd>ZenMode<cr>", "toggle zen"},
-        T = {name = "Treesitter", i = {":TSConfigInfo<cr>", "Info"}}
+        T = {name = "Treesitter", i = {":TSConfigInfo<cr>", "Info"}},
+        d = {
+            name = "Diagnostics",
+            k = {"<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostic"},
+            j = {"<cmd>Lspsaga diagnostic_jump_prev<cr>", "Prev Diagnostic"}
+        }
     }
 
+    if O.plugin.symbol_outline.active then
+        mappings['d']['s'] = {"<cmd>SymbolsOutline<cr>", "Symbols"}
+    end
     if O.plugin.trouble.active then
-        mappings['d'] = {
-            name = "Diagnostics",
-            t = {"<cmd>TroubleToggle<cr>", "Trouble"},
-            d = {"<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document"},
-            w = {
-                "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace"
-            },
-            r = {"<cmd>TroubleToggle lsp_references<cr>", "References"},
-            D = {"<cmd>TroubleToggle lsp_definitions<cr>", "Definitions"},
-            q = {"<cmd>TroubleToggle quickfix<cr>", "Quick Fixes"},
-            l = {"<cmd>TroubleToggle loclist<cr>", "Location List"},
-            o = {"<cmd>TroubleToggle todo<cr>", "TODOs"},
-            j = {"<cmd>Lspsaga diagnostic_jump_prev<cr>", "Prev Diagnostic"},
-            k = {"<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostic"}
+        mappings['d']['t'] = {"<cmd>TroubleToggle<cr>", "Trouble"}
+        mappings['d']['d'] = {
+            "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document"
         }
+        mappings['d']['w'] = {
+            "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace"
+        }
+        mappings['d']['r'] = {
+            "<cmd>TroubleToggle lsp_references<cr>", "References"
+        }
+        mappings['d']['D'] = {
+            "<cmd>TroubleToggle lsp_definitions<cr>", "Definitions"
+        }
+        mappings['d']['q'] = {"<cmd>TroubleToggle quickfix<cr>", "Quick Fixes"}
+        mappings['d']['l'] = {"<cmd>TroubleToggle loclist<cr>", "Location List"}
+        mappings['d']['o'] = {"<cmd>TroubleToggle todo<cr>", "TODOs"}
     end
     if O.plugin.ts_playground.active then
         vim.api.nvim_set_keymap("n", "<leader>Th",
