@@ -22,6 +22,38 @@ parser_config.cmake = {
 --     -- used_by = {"bar", "baz"} -- additional filetypes that use this parser
 -- }
 
+local textobj_moves_prefixes = {
+    goto_next_start = "]",
+    goto_next_end = "]",
+    goto_previous_start = "]",
+    goto_previous_end = "]"
+}
+local textobj_moves = {
+    ["function"] = {"[", "]"},
+    ["class"] = {"m", "M"},
+    ["parameter"] = {"a", "A"},
+    ["block"] = {"b", "B"},
+    ["statement"] = {"s", "S"},
+    ["call"] = {"c", "C"}
+}
+local textobj_move_configs = {
+    enable = true,
+    set_jumps = true, -- whether to set jumps in the jumplist
+    goto_next_start = {},
+    goto_next_end = {},
+    goto_previous_start = {},
+    goto_previous_end = {}
+}
+for obj, suffix in pairs(textobj_moves) do
+    textobj_move_configs["goto_next_start"][textobj_moves_prefixes["goto_next_start"] ..
+        suffix[1]] = '@' .. obj .. '.outer'
+    textobj_move_configs["goto_next_end"][textobj_moves_prefixes["goto_next_end"] ..
+        suffix[1]] = '@' .. obj .. '.outer'
+    textobj_move_configs["goto_previous_start"][textobj_moves_prefixes["goto_previous_start"] ..
+        suffix[2]] = '@' .. obj .. '.outer'
+    textobj_move_configs["goto_previous_end"][textobj_moves_prefixes["goto_previous_end"] ..
+        suffix[2]] = '@' .. obj .. '.outer'
+end
 require'nvim-treesitter.configs'.setup {
     ensure_installed = O.treesitter.ensure_installed, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
     ignore_install = O.treesitter.ignore_install,
@@ -43,6 +75,7 @@ require'nvim-treesitter.configs'.setup {
     indent = {enable = {"javascriptreact"}},
     autotag = {enable = true},
     textobjects = {
+        -- TODO: Add these to the which key menu
         swap = {
             enable = true,
             swap_next = {
@@ -52,61 +85,70 @@ require'nvim-treesitter.configs'.setup {
                 ["<leader>ak"] = "@block.inner",
                 ["<leader>ai"] = "@conditional.inner",
                 ["<leader>aC"] = "@call.inner",
+                ["<leader>as"] = "@statement.inner",
                 ["<leader>al"] = "@loop.inner"
             }
         },
-        move = {
-            enable = true,
-            set_jumps = true, -- whether to set jumps in the jumplist
-            goto_next_start = {
-                ["]m"] = "@function.outer",
-                ["]]"] = "@class.outer",
-                ["]a"] = "@parameter.outer"
-            },
-            goto_next_end = {
-                ["]M"] = "@function.outer",
-                ["]["] = "@class.outer",
-                ["]A"] = "@parameter.outer"
-            },
-            goto_previous_start = {
-                ["[m"] = "@function.outer",
-                ["[["] = "@class.outer",
-                ["]a"] = "@parameter.outer"
-            },
-            goto_previous_end = {
-                ["[M"] = "@function.outer",
-                ["[]"] = "@class.outer",
-                ["]a"] = "@parameter.outer"
-            }
-        },
+        move = textobj_move_configs,
+        --     {
+        --     enable = true,
+        --     set_jumps = true, -- whether to set jumps in the jumplist
+        --     goto_next_start = {
+        --         ["]]"] = "@function.outer",
+        --         ["]m"] = "@class.outer",
+        --         ["]a"] = "@parameter.outer",
+        --         ["]b"] = "@block.outer",
+        --         ["]s"] = "@statement.outer"
+        --     },
+        --     goto_next_end = {
+        --         ["]["] = "@function.outer",
+        --         ["]M"] = "@class.outer",
+        --         ["]A"] = "@parameter.outer",
+        --         ["]B"] = "@block.outer",
+        --         ["]S"] = "@statement.outer"
+        --     },
+        --     goto_previous_start = {
+        --         ["[["] = "@function.outer",
+        --         ["[m"] = "@class.outer",
+        --         ["[a"] = "@parameter.outer",
+        --         ["[b"] = "@block.outer",
+        --         ["[s"] = "@statement.outer"
+        --     },
+        --     goto_previous_end = {
+        --         ["[]"] = "@function.outer",
+        --         ["[M"] = "@class.outer",
+        --         ["[A"] = "@parameter.outer",
+        --         ["[B"] = "@block.outer",
+        --         ["[S"] = "@statement.outer"
+        --     }
+        -- } ,
         select = {
             enable = true,
             keymaps = {
                 -- You can use the capture groups defined in textobjects.scm
                 ["af"] = "@function.outer",
                 ["if"] = "@function.inner",
-                ["ac"] = "@class.outer",
-                ["ic"] = "@class.inner",
-                -- ["aa"] = "@parameter.outer",
+                ["aC"] = "@class.outer",
+                ["iC"] = "@class.inner",
+                ["aa"] = "@parameter.outer",
                 ["ia"] = "@parameter.inner",
                 ["ak"] = "@block.outer",
                 ["ik"] = "@block.inner",
                 ["ai"] = "@conditional.outer",
                 ["ii"] = "@conditional.inner",
-                ["aC"] = "@call.outer",
-                ["iC"] = "@call.inner",
+                ["ac"] = "@call.outer",
+                ["ic"] = "@call.inner",
                 ["al"] = "@loop.outer",
                 ["il"] = "@loop.inner",
-                ["iF"] = { -- Or you can define your own textobjects like this
-                    python = "(function_definition) @function",
-                    cpp = "(function_definition) @function",
-                    c = "(function_definition) @function",
-                    java = "(method_declaration) @function"
-                }
+                ["as"] = "@statement.outer",
+                ["is"] = "@statement.inner"
             }
         }
     },
-    textsubjects = {enable = true, keymaps = {['.'] = 'textsubjects-smart'}},
+    textsubjects = {
+        enable = true,
+        keymaps = {['.'] = 'textsubjects-smart', [';'] = 'textsubjects-big'}
+    },
     playground = {
         enable = O.plugin.ts_playground.active,
         disable = {},
