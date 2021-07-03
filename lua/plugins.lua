@@ -454,9 +454,8 @@ return require("packer").startup(function(use)
     -- Lush Create Color Schemes
     use {
         "rktjmp/lush.nvim",
-        event = "VimEnter"
         -- cmd = {"LushRunQuickstart", "LushRunTutorial", "Lushify"},
-        -- disable = not O.plugin.lush.active,
+        disable = not O.plugin.lush.active
     }
     -- HTML preview
     use {
