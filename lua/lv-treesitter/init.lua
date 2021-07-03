@@ -39,7 +39,7 @@ local textobj_suffixes = {
 local textobj_sel_keymaps = {}
 local textobj_swap_keymaps = {}
 local textobj_move_keymaps = {
-    enable = true,
+    enable = O.plugin.ts_textobjects,
     set_jumps = true, -- whether to set jumps in the jumplist
     goto_next_start = {},
     goto_next_end = {},
@@ -93,21 +93,21 @@ require'nvim-treesitter.configs'.setup {
         -- disable = { "c", "ruby" },  -- optional, list of language that will be disabled
     },
     highlight = {
-        enable = O.treesitter.highlight.enabled, -- false will disable the whole extension
+        enable = O.treesitter.enabled, -- false will disable the whole extension
         additional_vim_regex_highlighting = true,
         disable = {"latex"}
     },
     context_commentstring = {
-        enable = O.plugin.ts_context_commentstring,
+        enable = O.plugin.ts_context_commentstring.active,
         config = {css = '// %s'}
     },
     -- indent = {enable = true, disable = {"python", "html", "javascript"}},
     -- TODO seems to be broken
     indent = {enable = {"javascriptreact"}},
-    autotag = {enable = true},
+    autotag = {enable = O.plugin.ts_autotag.active},
     textobjects = {
         swap = {
-            enable = true,
+            enable = O.plugin.ts_textobjects,
             swap_next = textobj_swap_keymaps
             --     {
             --     ["<leader>aa"] = "@parameter.inner",
@@ -154,7 +154,7 @@ require'nvim-treesitter.configs'.setup {
         --     }
         -- } ,
         select = {
-            enable = true,
+            enable = O.plugin.ts_textobjects,
             keymaps = textobj_sel_keymaps
             --     {
             --     -- You can use the capture groups defined in textobjects.scm
@@ -178,7 +178,7 @@ require'nvim-treesitter.configs'.setup {
         }
     },
     textsubjects = {
-        enable = true,
+        enable = O.plugin.ts_textsubjects,
         keymaps = {['.'] = 'textsubjects-smart', [';'] = 'textsubjects-big'}
     },
     playground = {
@@ -198,5 +198,10 @@ require'nvim-treesitter.configs'.setup {
             goto_node = '<cr>',
             show_help = '?'
         }
+    },
+    rainbow = {
+        enable = O.plugin.ts_rainbow.active,
+        extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
+        max_file_lines = 1000 -- Do not enable for files with more than 1000 lines, int
     }
 }

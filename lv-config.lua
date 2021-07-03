@@ -31,7 +31,7 @@ O.dashboard.footer = {"Anshuman Medhi (IndianBoy42)"}
 -- if you don't want all the parsers change this to a table of the ones you want
 O.treesitter.ensure_installed = "all"
 -- O.treesitter.ignore_install = {"haskell"}
-O.treesitter.highlight.enabled = true
+O.treesitter.enabled = true
 
 O.lang.clang.active = true
 O.lang.clang.autoformat = true

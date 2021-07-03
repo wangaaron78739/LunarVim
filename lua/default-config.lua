@@ -22,15 +22,13 @@ O = {
     smart_case = true,
     lushmode = false,
     hl_search = true,
-    leader_key = "space";
+    leader_key = "space",
 
     -- @usage pass a table with your desired languages
     treesitter = {
         ensure_installed = "all",
         ignore_install = {"haskell"},
-        highlight = {enabled = true},
-        playground = {enabled = true},
-        rainbow = {enabled = true}
+        enable = true
     },
 
     database = {save_location = '~/.config/nvcode_db', auto_execute = 1},
@@ -44,8 +42,13 @@ O = {
         numb = {active = PLUGINS_ENABLED_BY_DEFAULT},
         zen = {active = PLUGINS_ENABLED_BY_DEFAULT},
         ts_playground = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        indent_line = {active = PLUGINS_ENABLED_BY_DEFAULT},
         ts_context_commentstring = {active = PLUGINS_ENABLED_BY_DEFAULT},
+        ts_textobjects = {active = PLUGINS_ENABLED_BY_DEFAULT},
+        ts_autotag = {active = PLUGINS_ENABLED_BY_DEFAULT},
+        ts_textsubjects = {active = PLUGINS_ENABLED_BY_DEFAULT},
+        ts_rainbow = {active = PLUGINS_ENABLED_BY_DEFAULT},
+        ts_context = {active = PLUGINS_ENABLED_BY_DEFAULT},
+        indent_line = {active = PLUGINS_ENABLED_BY_DEFAULT},
         symbol_outline = {active = PLUGINS_ENABLED_BY_DEFAULT},
         debug = {active = PLUGINS_ENABLED_BY_DEFAULT},
         bqf = {active = PLUGINS_ENABLED_BY_DEFAULT},
@@ -150,7 +153,7 @@ O = {
             diagnostics = {
                 virtual_text = {spacing = 0, prefix = ""},
                 signs = true,
-                underline = true,
+                underline = true
             },
             cross_file_rename = true,
             header_insertion = 'never'

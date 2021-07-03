@@ -550,10 +550,20 @@ return require("packer").startup(function(use)
     use {"gennaro-tedesco/nvim-jqx"}
 
     -- treesitter extensions
-    use {"nvim-treesitter/nvim-treesitter-textobjects"}
-    use {"RRethy/nvim-treesitter-textsubjects"}
-    use {"windwp/nvim-ts-autotag"}
-    use {"romgrk/nvim-treesitter-context"}
+    use {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        disable = not O.plugin.ts_textobjects.active
+    }
+    use {
+        "RRethy/nvim-treesitter-textsubjects",
+        disable = not O.plugin.ts_textsubjects.active
+    }
+    use {"windwp/nvim-ts-autotag", disable = not O.plugin.ts_autotag.active}
+    use {
+        "romgrk/nvim-treesitter-context",
+        disable = not O.plugin.ts_context.active
+    }
+    use {"p00f/nvim-ts-rainbow", disable = not O.plugin.ts_rainbow.active}
 
     -- mkdir
     use {
