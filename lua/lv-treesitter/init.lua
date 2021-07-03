@@ -22,7 +22,6 @@ parser_config.cmake = {
 --     -- used_by = {"bar", "baz"} -- additional filetypes that use this parser
 -- }
 
--- TODO: Add these to the which key menu
 local textobj_prefixes = {
     -- goto_next = "]",
     -- goto_previous = "[",
@@ -71,6 +70,26 @@ for obj, suffix in pairs(textobj_suffixes) do
 
     textobj_swap_keymaps[textobj_prefixes["swap"] .. suffix[1]] = '@' .. obj ..
                                                                       '.outer'
+end
+local status, wk = pcall(require, "which-key")
+if (status) then
+    local normal = {
+        mode = "n" -- Normal mode
+    }
+    local operators = {
+        mode = "o" -- Operator mode
+    }
+    wk.register(textobj_sel_keymaps, operators)
+    wk.register(textobj_swap_keymaps, normal)
+    wk.register({
+        [textobj_prefixes["swap"]] = "Swap",
+        [textobj_prefixes["goto_next"]] = "Jump [",
+        [textobj_prefixes["goto_next"]] = "Jump ]"
+    }, normal)
+    wk.register(textobj_move_keymaps["goto_next_start"], normal)
+    wk.register(textobj_move_keymaps["goto_next_end"], normal)
+    wk.register(textobj_move_keymaps["goto_previous_start"], normal)
+    wk.register(textobj_move_keymaps["goto_previous_end"], normal)
 end
 
 require'nvim-treesitter.configs'.setup {
