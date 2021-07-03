@@ -116,7 +116,7 @@ M.config = function()
         ["gy"] = "Gitlink",
         o = {
             name = "Open new...",
-            s = {"<cmd>NvimTreeToggle<CR>", "Sidebar"},
+            f = {"<cmd>NvimTreeToggle<CR>", "File Sidebar"},
             r = {"<cmd>:RnvimrToggle<cr>", "Ranger"},
             p = {"<cmd>e ~/.config/nvim/<cr>", "Edit Private Config"},
             -- t = {"<cmd>lua require'FTerm'.toggle()<CR>", "Terminal"},
@@ -328,7 +328,7 @@ M.config = function()
     }
 
     if O.plugin.symbol_outline.active then
-        mappings['d']['s'] = {"<cmd>SymbolsOutline<cr>", "Symbols"}
+        mappings['o']['s'] = {"<cmd>SymbolsOutline<cr>", "Symbols Sidebar"}
     end
     if O.plugin.trouble.active then
         mappings['d']['t'] = {"<cmd>TroubleToggle<cr>", "Trouble"}
