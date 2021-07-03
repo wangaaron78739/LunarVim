@@ -559,6 +559,7 @@ return require("packer").startup(function(use)
     use {"nvim-treesitter/nvim-treesitter-textobjects"}
     use {"RRethy/nvim-treesitter-textsubjects"}
     use {"windwp/nvim-ts-autotag"}
+    use {"romgrk/nvim-treesitter-context"}
 
     -- mkdir
     use {
