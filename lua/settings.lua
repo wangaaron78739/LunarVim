@@ -1,5 +1,4 @@
----  HELPERS  ---
-local cmd = vim.cmd
+---  HELPERS  --- local cmd = vim.cmd
 local opt = vim.opt
 
 ---  VIM ONLY COMMANDS  ---
@@ -50,6 +49,8 @@ opt.number          = O.number                  -- set numbered lines
 opt.relativenumber  = O.relative_number         -- set relative numbered lines
 opt.signcolumn      = "yes"                     -- always show the sign column, otherwise it would shift the text each time
 opt.wrap            = O.wrap_lines              -- display lines as one long line
+opt.scrolloff       = O.scrolloff               -- Scrolloffset to block the cursor from reaching the top/bottom
+
 -- LuaFormatter on
 
 -- TODO: Clean up and organize all of these below
@@ -100,3 +101,19 @@ vim.g.UltiSnipsExpandTrigger = '<f5>'
 -- vim.g.UltiSnipsJumpBackwardTrigger="<c-k>"
 
 vim.g.slime_target = 'neovim'
+
+-- Neovim turns the default cursor to 'Block'
+-- when switched back into terminal.
+-- This below line fixes that. Uncomment if needed.
+-- vim.cmd('autocmd VimLeave,VimSuspend * set guicursor=a:ver90') -- Beam
+-- vim.cmd('autocmd VimLeave,VimSuspend * set guicursor=a:hor20') -- Underline
+-- NOTE: Above code doesn't take a value from the terminal's cursor and
+--       replace it. It hardcodes the cursor shape.
+--       And I think `ver` means vertical and `hor` means horizontal.
+--       The numbers didn't make a difference in alacritty. Please change
+--       the number to something that suits your needs if it looks weird.
+
+-- neovide settings
+-- vim.g.neovide_cursor_vfx_mode = "railgun"
+-- vim.g.neovide_refresh_rate=120
+

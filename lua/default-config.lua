@@ -20,6 +20,7 @@ O = {
     extras = true,
     ignore_case = true,
     smart_case = true,
+    scrolloff = 0,
     lushmode = false,
     hl_search = true,
     leader_key = "space",
@@ -256,7 +257,7 @@ require('lv-utils').define_augroups({
     _markdown = {
         {'FileType', 'markdown', 'setlocal wrap'},
         {'FileType', 'markdown', 'setlocal spell'}
-        -- {'FileType', 'markdown', 'lua vim.o.guifont = "FiraCode Nerd Font:h15"'},
+        -- {'FileType', 'markdown', 'set guifont "FiraCode Nerd Font:h15"'},
     },
     _fish = {
         {'BufWinEnter,BufRead,BufNewFile', '*.fish', 'setlocal filetype=fish'}
@@ -276,7 +277,7 @@ require('lv-utils').define_augroups({
     --     {'FileType', 'latex', 'VimtexCompile'},
     --     {'FileType', 'latex', 'setlocal wrap'},
     --     {'FileType', 'latex', 'setlocal spell'}
-    --     -- {'FileType', 'latex', 'lua vim.o.guifont = "FiraCode Nerd Font:h15'},
+    --     -- {'FileType', 'latex', 'set guifont "FiraCode Nerd Font:h15'},
     -- },
     _buffer_bindings = {
         {'FileType', 'dashboard', 'nnoremap <silent> <buffer> q :q<CR>'},
