@@ -23,10 +23,10 @@ parser_config.cmake = {
 -- }
 
 local textobj_prefixes = {
-    -- goto_next = "]",
-    -- goto_previous = "[",
-    goto_next = "<leader>j",
-    goto_previous = "<leader>J",
+    goto_next = "]",
+    goto_previous = "[",
+    -- goto_next = "<leader>j",
+    -- goto_previous = "<leader>J",
     inner = "i",
     outer = "a",
     swap = "<leader>a"
@@ -57,11 +57,11 @@ for obj, suffix in pairs(textobj_suffixes) do
     textobj_move_keymaps["goto_next_start"][textobj_prefixes["goto_next"] ..
         suffix[1]] = '@' .. obj .. '.outer'
     textobj_move_keymaps["goto_next_end"][textobj_prefixes["goto_next"] ..
-        suffix[1]] = '@' .. obj .. '.outer'
+        suffix[2]] = '@' .. obj .. '.outer'
     textobj_move_keymaps["goto_previous_start"][textobj_prefixes["goto_previous"] ..
         suffix[2]] = '@' .. obj .. '.outer'
     textobj_move_keymaps["goto_previous_end"][textobj_prefixes["goto_previous"] ..
-        suffix[2]] = '@' .. obj .. '.outer'
+        suffix[1]] = '@' .. obj .. '.outer'
 
     textobj_sel_keymaps[textobj_prefixes["inner"] .. suffix[1]] = '@' .. obj ..
                                                                       '.inner'
@@ -82,9 +82,9 @@ if (status) then
     wk.register(textobj_sel_keymaps, operators)
     wk.register(textobj_swap_keymaps, normal)
     wk.register({
-        [textobj_prefixes["swap"]] = "Swap",
-        [textobj_prefixes["goto_next"]] = "Jump [",
-        [textobj_prefixes["goto_prev"]] = "Jump ]"
+        [textobj_prefixes["swap"]] = "Swap"
+        -- [textobj_prefixes["goto_next"]] = "Jump [",
+        -- [textobj_prefixes["goto_previous"]] = "Jump ]"
     }, normal)
     wk.register(textobj_move_keymaps["goto_next_start"], normal)
     wk.register(textobj_move_keymaps["goto_next_end"], normal)
