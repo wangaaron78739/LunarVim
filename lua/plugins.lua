@@ -488,7 +488,7 @@ return require("packer").startup(function(use)
     use {"simrat39/rust-tools.nvim", ft = "rust"}
 
     -- Elixir
-    use {"elixir-editors/vim-elixir", ft = {"elixir", "eelixir"}}
+    use {"elixir-editors/vim-elixir", ft = {"elixir", "eelixir", "euphoria3"}}
 
     -- amedhi plugins
     -- TODO: stop using require_plugin
