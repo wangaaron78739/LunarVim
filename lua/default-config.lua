@@ -20,7 +20,7 @@ O = {
     ignore_case = true,
     smart_case = true,
     lushmode = false,
-    leader_key = "space";
+    leader_key = "space",
 
     -- @usage pass a table with your desired languages
     treesitter = {
@@ -188,6 +188,7 @@ O = {
         docker = {},
         cmake = {},
         java = {},
+        zig = {},
         css = {formatter = '', autoformat = false, virtual_text = true}
 
     },
@@ -255,6 +256,10 @@ require('lv-utils').define_augroups({
         {'BufWinEnter', '.fish', 'setlocal filetype=fish'},
         {'BufRead', '*.fish', 'setlocal filetype=fish'},
         {'BufNewFile', '*.fish', 'setlocal filetype=fish'}
+    },
+    _zig = {
+        {"BufRead,BufNewFile", "*.zig", "set filetype=zig"},
+        {"BufRead,BufNewFile", "*.zir", "set filetype=zir"}
     },
     -- _latex = {
     --     {'FileType', 'latex', 'VimtexCompile'},

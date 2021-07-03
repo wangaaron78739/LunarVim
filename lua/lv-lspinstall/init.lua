@@ -24,6 +24,7 @@ require'lspconfig/configs'.jdtls = nil -- important, unset the loaded config aga
 --     uninstall_script = nil -- can be omitted
 -- })
 
+-- Install Julia Language Server
 -- local config = require"lspinstall/util".extract_config("julia")
 local config = {}
 require'lspinstall/servers'.julia = vim.tbl_extend('error', config, {
@@ -31,6 +32,31 @@ require'lspinstall/servers'.julia = vim.tbl_extend('error', config, {
     julia -e 'using Pkg; Pkg.add("LanguageServer"); Pkg.add("SymbolServer")'
   ]],
     uninstall_script = nil -- can be omitted
+})
+
+-- Install Zig Lanuage Server
+local config = {}
+require'lspinstall/servers'.zig = vim.tbl_extend('error', config, {
+    install_script = [[
+        os=$(uname -s | tr "[:upper:]" "[:lower:]")
+        mchn=$(uname -m | tr "[:upper:]" "[:lower:]")
+        if [ $mchn = "arm64" ]; then
+        mchn="aarch64"
+        fi
+        case $os in
+        linux)
+        platform="unknown-linux-gnu"
+        ;;
+        darwin)
+        platform="apple-darwin"
+        ;;
+        esac
+        curl -L -o "$mchn-$os.tar.xz" "https://github.com/zigtools/zls/releases/latest/download/$mchn-$os.tar.xz"
+        tar xavf $mchn-$os.tar.xz
+        mv $mchn-$os zls
+    ]],
+    uninstall_script = nil, -- can be omitted
+    cmd = {DATA_PATH .. "/lspinstall/zig/zls/zls"}
 })
 
 require'lspinstall'.setup()
