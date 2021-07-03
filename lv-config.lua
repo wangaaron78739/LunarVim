@@ -22,7 +22,8 @@ O.lushmode = false
 
 -- After changing plugin config it is recommended to run :PackerCompile
 O.plugin.lsp_rooter.active = false -- This is actually more confusing sometimes
-O.plugin.snap.active = false -- This is actually more confusing sometimes
+O.plugin.snap.active = false
+O.plugin.octo.active = false
 
 -- dashboard
 -- O.dashboard.custom_header = {""}

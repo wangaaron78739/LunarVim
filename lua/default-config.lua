@@ -23,8 +23,8 @@ O = {
     scrolloff = 0,
     lushmode = false,
     hl_search = true,
-    transparent_window = false;
-    leader_key = "space";
+    transparent_window = false,
+    leader_key = "space",
 
     -- @usage pass a table with your desired languages
     treesitter = {
@@ -76,7 +76,15 @@ O = {
         bracey = {active = PLUGINS_ENABLED_BY_DEFAULT},
         telescope_project = {active = PLUGINS_ENABLED_BY_DEFAULT},
         gist = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        dap_install = {active = PLUGINS_ENABLED_BY_DEFAULT}
+        dap_install = {active = PLUGINS_ENABLED_BY_DEFAULT},
+        visual_multi = {active = PLUGINS_ENABLED_BY_DEFAULT},
+        sneak = {active = PLUGINS_ENABLED_BY_DEFAULT},
+        quickscope = {active = PLUGINS_ENABLED_BY_DEFAULT},
+        surround = {active = PLUGINS_ENABLED_BY_DEFAULT},
+        fzf = {active = PLUGINS_ENABLED_BY_DEFAULT},
+        slime = {active = PLUGINS_ENABLED_BY_DEFAULT},
+        bullets = {active = PLUGINS_ENABLED_BY_DEFAULT},
+        vista = {active = PLUGINS_ENABLED_BY_DEFAULT}
 
     },
 

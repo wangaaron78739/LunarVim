@@ -489,65 +489,74 @@ return require("packer").startup(function(use)
     -- Elixir
     use {"elixir-editors/vim-elixir", ft = {"elixir", "eelixir", "euphoria3"}}
 
+    -- Justfile
+    use {"NoahTheDuke/vim-just", ft = 'just'}
+
+    -- Fish shell
+    -- use {"dag/vim-fish", ft = 'fish'} -- Treesitter highlighting is fine
+
+    -- KMonad 
+    use {"kmonad/kmonad-vim", ft = 'kmonad'}
+
+    -- Json querying 
+    use {"gennaro-tedesco/nvim-jqx", ft = "json"}
+
     -- amedhi plugins
     -- TODO: stop using require_plugin
 
     -- LSP get function signature
-    use "ray-x/lsp_signature.nvim"
+    use {"ray-x/lsp_signature.nvim"}
 
     -- See jumpable characters
-    use {"unblevable/quick-scope", opt = true}
-    require_plugin("quick-scope")
+    use {"unblevable/quick-scope", disable = not O.plugin.quickscope.active}
 
     -- 2 letter find
-    use {"justinmk/vim-sneak", opt = true}
-    require_plugin("vim-sneak")
+    use {"justinmk/vim-sneak", disable = not O.plugin.sneak.active}
 
     -- Multi cursor support
-    use {"mg979/vim-visual-multi", opt = true}
-    require_plugin("vim-visual-multi")
+    use {"mg979/vim-visual-multi", disable = not O.plugin.visual_multi.active}
 
     -- Surround plugin
-    use {"machakann/vim-sandwich"}
+    use {"machakann/vim-sandwich", disable = not O.plugin.surround.active}
 
     -- fzf based search
-    use {"junegunn/fzf", opt = true} -- Telescope does most of this?
-    use {"junegunn/fzf.vim", opt = true}
-    require_plugin("fzf")
-    require_plugin("fzf.vim")
+    use {"junegunn/fzf", disable = not O.plugin.fzf.active} -- Telescope does most of this?
+    use {"junegunn/fzf.vim", disable = not O.plugin.fzf.active}
 
     -- Run commands async
-    use {"skywind3000/asyncrun.vim", opt = true}
-    require_plugin("asyncrun.vim")
+    use {"skywind3000/asyncrun.vim"}
 
     -- Build cmake projects from neovim
-    -- use {"Shatur95/neovim-cmake", opt = true}
-    -- require_plugin("neovim-cmake")
+    -- use {"Shatur95/neovim-cmake"}
 
     -- Auto activating snippets
     -- use {"SirVer/ultisnips"} -- TODO: port my snippets from vscode
 
     -- Send to terminal
-    use {"jpalardy/vim-slime", opt = true}
-    require_plugin("vim-slime")
+    use {"jpalardy/vim-slime", disable = not O.plugin.slime.active}
 
     -- Repeat plugin commands
-    -- use {"tpope/vim-repeat"}
+    use {"tpope/vim-repeat"}
+
+    -- mkdir
+    use {
+        'jghauser/mkdir.nvim',
+        config = function()
+            require('mkdir')
+        end
+    }
 
     -- Sudo write files
-    use {"lambdalisue/suda.vim", opt = true}
-    require_plugin("suda.vim")
-    use {"liuchengxu/vista.vim", opt = true}
-    require_plugin("vista.vim")
+    use {"lambdalisue/suda.vim"}
+    use {"liuchengxu/vista.vim", disable = not O.plugin.vista.active}
+
+    -- Helper for lists
+    use {"dkarter/bullets.vim", disable = not O.plugin.bullets.active}
 
     -- 'smooth' scrolling
     -- use 'karb94/neoscroll.nvim'
 
     -- Language plugins
-    use {"NoahTheDuke/vim-just", ft = 'just'}
-    -- use {"dag/vim-fish", ft = 'fish'} -- Treesitter highlighting is fine
-    use {"kmonad/kmonad-vim", ft = 'kmonad'}
-    use {"gennaro-tedesco/nvim-jqx"}
 
     -- treesitter extensions
     use {
@@ -569,23 +578,21 @@ return require("packer").startup(function(use)
         disable = not O.plugin.ts_hintobjects.active
     }
 
-    -- mkdir
-    use {
-        'jghauser/mkdir.nvim',
-        config = function()
-            require('mkdir')
-        end
-    }
-
     -- Colorschemes
     use {'marko-cerovac/material.nvim'}
     use {'folke/tokyonight.nvim'}
     -- use {'Mofiqul/dracula.nvim'}
     -- use {'tomasiser/vim-code-dark'}
 
+    -- TODO: add and configure these packages
     -- Git
     -- use {'tpope/vim-fugitive', opt = true}
     -- use {'tpope/vim-rhubarb', opt = true}
     -- pwntester/octo.nvim
+
+    -- https://github.com/rmagatti/auto-session
+    -- https://github.com/kevinhwang91/nvim-hlslens
+    -- https://github.com/gcmt/wildfire.vim
+    -- https://github.com/neomake/neomake
 
 end)
