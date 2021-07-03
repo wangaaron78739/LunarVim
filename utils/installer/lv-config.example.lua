@@ -19,6 +19,7 @@ O.ignore_case = true
 O.smart_case = true
 O.shell = 'fish'
 O.lushmode = false
+O.transparent_window = false
 
 -- After changing plugin config it is recommended to run :PackerCompile
 -- TODO: refine these selections

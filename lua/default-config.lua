@@ -23,7 +23,8 @@ O = {
     scrolloff = 0,
     lushmode = false,
     hl_search = true,
-    leader_key = "space",
+    transparent_window = false;
+    leader_key = "space";
 
     -- @usage pass a table with your desired languages
     treesitter = {
