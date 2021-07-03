@@ -1,3 +1,27 @@
+local parser_config = require"nvim-treesitter.parsers".get_parser_configs()
+parser_config.make = {
+    install_info = {
+        url = "https://github.com/alemuller/tree-sitter-make", -- local path or git repo
+        files = {"src/parser.c"},
+        requires_generate_from_grammar = true
+    }
+}
+parser_config.cmake = {
+    install_info = {
+        url = "https://github.com/uyha/tree-sitter-cmake", -- local path or git repo
+        files = {"src/parser.c"},
+        requires_generate_from_grammar = true
+    }
+}
+-- parser_config.just = {
+--     install_info = {
+--         url = "~/dev/tree-sitter-just", -- local path or git repo
+--         files = {"src/parser.c"}
+--     }
+--     -- filetype = "just", -- if filetype does not agrees with parser name
+--     -- used_by = {"bar", "baz"} -- additional filetypes that use this parser
+-- }
+
 require'nvim-treesitter.configs'.setup {
     ensure_installed = O.treesitter.ensure_installed, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
     ignore_install = O.treesitter.ignore_install,
