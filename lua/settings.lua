@@ -1,23 +1,18 @@
 ---  HELPERS  ---
-
-
 local cmd = vim.cmd
 local opt = vim.opt
 
-
 ---  VIM ONLY COMMANDS  ---
 
-
-cmd('filetype plugin on')               -- filetype detection
-cmd('let &titleold="'..TERMINAL..'"')   
-cmd('set inccommand=split')             -- show what you are substituting in real time
-cmd('set iskeyword+=-')                 -- treat dash as a separate word
-cmd('set whichwrap+=<,>,[,],h,l')       -- move to next line with theses keys
-
+cmd('filetype plugin on') -- filetype detection
+cmd('let &titleold="' .. TERMINAL .. '"')
+cmd('set inccommand=split') -- show what you are substituting in real time
+cmd('set iskeyword+=-') -- treat dash as a separate word
+cmd('set whichwrap+=<,>,[,],h,l') -- move to next line with theses keys
 
 ---  SETTINGS  ---
 
-
+-- LuaFormatter off
 opt.backup          = false                     -- creates a backup file
 opt.clipboard       = "unnamedplus"             -- allows neovim to access the system clipboard
 opt.cmdheight       = 2                         -- more space in the neovim command line for displaying messages
@@ -25,7 +20,7 @@ opt.colorcolumn     = "99999"                   -- fix indentline for now
 opt.completeopt     = {'menuone', 'noselect'}
 opt.conceallevel    = 0                         -- so that `` is visible in markdown files
 opt.fileencoding    = "utf-8"                   -- the encoding written to a file
-opt.guifont         = "FiraCode Nerd Font:h13"  -- the font used in graphical neovim applications
+opt.guifont         = "FiraCode Nerd Font:h14"  -- the font used in graphical neovim applications
 opt.hidden          = O.hidden_files            -- required to keep multiple buffers and open multiple buffers
 opt.hlsearch        = O.hl_search               -- highlight all matches on previous search pattern
 opt.ignorecase      = O.ignore_case             -- ignore case in search patterns
@@ -55,6 +50,7 @@ opt.number          = O.number                  -- set numbered lines
 opt.relativenumber  = O.relative_number         -- set relative numbered lines
 opt.signcolumn      = "yes"                     -- always show the sign column, otherwise it would shift the text each time
 opt.wrap            = O.wrap_lines              -- display lines as one long line
+-- LuaFormatter on
 
 -- TODO: Clean up and organize all of these below
 -- quick-scope
@@ -103,4 +99,4 @@ vim.g.UltiSnipsExpandTrigger = '<f5>'
 -- vim.g.UltiSnipsJumpForwardTrigger="<c-j>"
 -- vim.g.UltiSnipsJumpBackwardTrigger="<c-k>"
 
-vim.cmd([[let g:slime_target = "neovim"]])
+vim.g.slime_target = 'neovim'
