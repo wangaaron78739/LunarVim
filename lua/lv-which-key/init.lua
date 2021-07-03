@@ -252,7 +252,7 @@ M.config = function()
                 "Workspace Diagnostics"
             },
             f = {"<cmd>lua vim.lsp.buf.formatting()<cr>", "Format"},
-            h = {"<cmd>LspSaga hover_doc<cr>", "Hover"},
+            h = {"<cmd>Lspsaga hover_doc<cr>", "Hover"},
             -- h = {"<cmd>LspHover<cr>", "Hover"},
             i = {"<cmd>LspInfo<cr>", "Info"},
             l = {"<cmd>Lspsaga lsp_finder<cr>", "LSP Finder"},
