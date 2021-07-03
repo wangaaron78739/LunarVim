@@ -1,6 +1,7 @@
 CONFIG_PATH = vim.fn.stdpath('config')
 DATA_PATH = vim.fn.stdpath('data')
 CACHE_PATH = vim.fn.stdpath('cache')
+TERMINAL = vim.fn.expand('$TERMINAL')
 
 PLUGINS_ENABLED_BY_DEFAULT = true
 
@@ -16,11 +17,12 @@ O = {
     shell = 'bash',
     timeoutlen = 100,
     nvim_tree_disable_netrw = 0,
-    extras = false,
+    extras = true,
     ignore_case = true,
     smart_case = true,
     lushmode = false,
-    leader_key = "space",
+    hl_search = true,
+    leader_key = "space";
 
     -- @usage pass a table with your desired languages
     treesitter = {
@@ -28,7 +30,7 @@ O = {
         ignore_install = {"haskell"},
         highlight = {enabled = true},
         playground = {enabled = true},
-        rainbow = {enabled = false}
+        rainbow = {enabled = true}
     },
 
     database = {save_location = '~/.config/nvcode_db', auto_execute = 1},
