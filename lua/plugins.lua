@@ -484,7 +484,7 @@ return require("packer").startup(function(use)
 
     -- Rust tools
     -- TODO: use lazy loading maybe?
-    use {"simrat39/rust-tools.nvim", ft = "rust"}
+    use {"simrat39/rust-tools.nvim"}
 
     -- Elixir
     use {"elixir-editors/vim-elixir", ft = {"elixir", "eelixir", "euphoria3"}}
@@ -529,7 +529,8 @@ return require("packer").startup(function(use)
                 cycle_group_fwd_key = nil,
                 cycle_group_bwd_key = nil
             }
-        end, disable = not O.plugin.sneak.active
+        end,
+        disable = not O.plugin.sneak.active
     }
 
     -- Multi cursor support
