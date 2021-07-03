@@ -22,21 +22,31 @@ parser_config.cmake = {
 --     -- used_by = {"bar", "baz"} -- additional filetypes that use this parser
 -- }
 
-local textobj_moves_prefixes = {
-    goto_next_start = "]",
-    goto_next_end = "]",
-    goto_previous_start = "]",
-    goto_previous_end = "]"
+-- TODO: Add these to the which key menu
+local textobj_prefixes = {
+    -- goto_next = "]",
+    -- goto_previous = "[",
+    goto_next = "<leader>j",
+    goto_previous = "<leader>J",
+    inner = "i",
+    outer = "a",
+    swap = "<leader>a"
 }
-local textobj_moves = {
-    ["function"] = {"[", "]"},
+-- Next and previous respectively
+local textobj_suffixes = {
+    ["function"] = {"f", "F"},
     ["class"] = {"m", "M"},
     ["parameter"] = {"a", "A"},
-    ["block"] = {"b", "B"},
+    ["block"] = {"k", "K"},
+    ["conditional"] = {"i", "I"},
+    ["call"] = {"c", "C"},
+    ["loop"] = {"l", "L"},
     ["statement"] = {"s", "S"},
-    ["call"] = {"c", "C"}
+    ["comment"] = {"/", "?"}
 }
-local textobj_move_configs = {
+local textobj_sel_keymaps = {}
+local textobj_swap_keymaps = {}
+local textobj_move_keymaps = {
     enable = true,
     set_jumps = true, -- whether to set jumps in the jumplist
     goto_next_start = {},
@@ -44,16 +54,25 @@ local textobj_move_configs = {
     goto_previous_start = {},
     goto_previous_end = {}
 }
-for obj, suffix in pairs(textobj_moves) do
-    textobj_move_configs["goto_next_start"][textobj_moves_prefixes["goto_next_start"] ..
+for obj, suffix in pairs(textobj_suffixes) do
+    textobj_move_keymaps["goto_next_start"][textobj_prefixes["goto_next"] ..
         suffix[1]] = '@' .. obj .. '.outer'
-    textobj_move_configs["goto_next_end"][textobj_moves_prefixes["goto_next_end"] ..
+    textobj_move_keymaps["goto_next_end"][textobj_prefixes["goto_next"] ..
         suffix[1]] = '@' .. obj .. '.outer'
-    textobj_move_configs["goto_previous_start"][textobj_moves_prefixes["goto_previous_start"] ..
+    textobj_move_keymaps["goto_previous_start"][textobj_prefixes["goto_previous"] ..
         suffix[2]] = '@' .. obj .. '.outer'
-    textobj_move_configs["goto_previous_end"][textobj_moves_prefixes["goto_previous_end"] ..
+    textobj_move_keymaps["goto_previous_end"][textobj_prefixes["goto_previous"] ..
         suffix[2]] = '@' .. obj .. '.outer'
+
+    textobj_sel_keymaps[textobj_prefixes["inner"] .. suffix[1]] = '@' .. obj ..
+                                                                      '.inner'
+    textobj_sel_keymaps[textobj_prefixes["outer"] .. suffix[1]] = '@' .. obj ..
+                                                                      '.outer'
+
+    textobj_swap_keymaps[textobj_prefixes["swap"] .. suffix[1]] = '@' .. obj ..
+                                                                      '.outer'
 end
+
 require'nvim-treesitter.configs'.setup {
     ensure_installed = O.treesitter.ensure_installed, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
     ignore_install = O.treesitter.ignore_install,
@@ -75,21 +94,21 @@ require'nvim-treesitter.configs'.setup {
     indent = {enable = {"javascriptreact"}},
     autotag = {enable = true},
     textobjects = {
-        -- TODO: Add these to the which key menu
         swap = {
             enable = true,
-            swap_next = {
-                ["<leader>aa"] = "@parameter.inner",
-                ["<leader>af"] = "@function.inner",
-                ["<leader>ac"] = "@class.inner",
-                ["<leader>ak"] = "@block.inner",
-                ["<leader>ai"] = "@conditional.inner",
-                ["<leader>aC"] = "@call.inner",
-                ["<leader>as"] = "@statement.inner",
-                ["<leader>al"] = "@loop.inner"
-            }
+            swap_next = textobj_swap_keymaps
+            --     {
+            --     ["<leader>aa"] = "@parameter.inner",
+            --     ["<leader>af"] = "@function.inner",
+            --     ["<leader>ac"] = "@class.inner",
+            --     ["<leader>ak"] = "@block.inner",
+            --     ["<leader>ai"] = "@conditional.inner",
+            --     ["<leader>aC"] = "@call.inner",
+            --     ["<leader>as"] = "@statement.inner",
+            --     ["<leader>al"] = "@loop.inner"
+            -- }
         },
-        move = textobj_move_configs,
+        move = textobj_move_keymaps,
         --     {
         --     enable = true,
         --     set_jumps = true, -- whether to set jumps in the jumplist
@@ -124,25 +143,26 @@ require'nvim-treesitter.configs'.setup {
         -- } ,
         select = {
             enable = true,
-            keymaps = {
-                -- You can use the capture groups defined in textobjects.scm
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["aC"] = "@class.outer",
-                ["iC"] = "@class.inner",
-                ["aa"] = "@parameter.outer",
-                ["ia"] = "@parameter.inner",
-                ["ak"] = "@block.outer",
-                ["ik"] = "@block.inner",
-                ["ai"] = "@conditional.outer",
-                ["ii"] = "@conditional.inner",
-                ["ac"] = "@call.outer",
-                ["ic"] = "@call.inner",
-                ["al"] = "@loop.outer",
-                ["il"] = "@loop.inner",
-                ["as"] = "@statement.outer",
-                ["is"] = "@statement.inner"
-            }
+            keymaps = textobj_sel_keymaps
+            --     {
+            --     -- You can use the capture groups defined in textobjects.scm
+            --     ["af"] = "@function.outer",
+            --     ["if"] = "@function.inner",
+            --     ["aC"] = "@class.outer",
+            --     ["iC"] = "@class.inner",
+            --     ["aa"] = "@parameter.outer",
+            --     ["ia"] = "@parameter.inner",
+            --     ["ak"] = "@block.outer",
+            --     ["ik"] = "@block.inner",
+            --     ["ai"] = "@conditional.outer",
+            --     ["ii"] = "@conditional.inner",
+            --     ["ac"] = "@call.outer",
+            --     ["ic"] = "@call.inner",
+            --     ["al"] = "@loop.outer",
+            --     ["il"] = "@loop.inner",
+            --     ["as"] = "@statement.outer",
+            --     ["is"] = "@statement.inner"
+            -- }
         }
     },
     textsubjects = {
