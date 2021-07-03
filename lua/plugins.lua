@@ -14,7 +14,9 @@ if not packer_ok then return end
 
 packer.init {
     -- compile_path = vim.fn.stdpath('data')..'/site/pack/loader/start/packer.nvim/plugin/packer_compiled.vim',
-    compile_path = require("packer.util").join_paths(vim.fn.stdpath('config'), 'plugin', 'packer_compiled.vim'),
+    compile_path = require("packer.util").join_paths(vim.fn.stdpath('config'),
+                                                     'plugin',
+                                                     'packer_compiled.vim'),
     git = {clone_timeout = 300}
     -- display = {
     --   -- open_fn = function()
@@ -61,14 +63,16 @@ return require("packer").startup(function(use)
             require('lv-lspinstall')
         end
     }
-    -- Telescope
+    -- Utilities
     use {"nvim-lua/popup.nvim"}
     use {"nvim-lua/plenary.nvim"}
     use {"tjdevries/astronauta.nvim"}
     -- Telescope - search through things
     use {
         "nvim-telescope/telescope.nvim",
-        config = [[require('lv-telescope')]],
+        config = function()
+            require('lv-telescope')
+        end,
         cmd = "Telescope"
     }
     -- Snap
@@ -76,9 +80,9 @@ return require("packer").startup(function(use)
         "camspiers/snap",
         rocks = "fzy",
         config = function()
-          require("lv-snap").config()
+            require("lv-snap").config()
         end,
-        disable = not O.plugin.snap.active,
+        disable = not O.plugin.snap.active
     }
     -- Autocomplete
     use {
@@ -148,7 +152,6 @@ return require("packer").startup(function(use)
 
     use {
         "romgrk/barbar.nvim",
-
         config = function()
             vim.api.nvim_set_keymap('n', '<TAB>', ':BufferNext<CR>',
                                     {noremap = true, silent = true})
@@ -451,7 +454,7 @@ return require("packer").startup(function(use)
     -- Lush Create Color Schemes
     use {
         "rktjmp/lush.nvim",
-        event = "VimEnter",
+        event = "VimEnter"
         -- cmd = {"LushRunQuickstart", "LushRunTutorial", "Lushify"},
         -- disable = not O.plugin.lush.active,
     }
@@ -493,52 +496,68 @@ return require("packer").startup(function(use)
     }
 
     -- amedhi plugins
+    -- TODO: stop using require_plugin
 
+    -- LSP get function signature
+    use "ray-x/lsp_signature.nvim"
+
+    -- See jumpable characters
     use {"unblevable/quick-scope", opt = true}
     require_plugin("quick-scope")
+
+    -- 2 letter find
     use {"justinmk/vim-sneak", opt = true}
     require_plugin("vim-sneak")
-    -- use {"wellle/targets.vim", opt = true}
-    -- require_plugin("targets.vim")
+
+    -- Multi cursor support
     use {"mg979/vim-visual-multi", opt = true}
     require_plugin("vim-visual-multi")
-    -- use {"tpope/vim-surround", opt = true}
-    -- require_plugin("vim-surround")
+
+    -- Surround plugin
     use {"machakann/vim-sandwich"}
+
+    -- fzf based search
     use {"junegunn/fzf", opt = true} -- Telescope does most of this?
     use {"junegunn/fzf.vim", opt = true}
     require_plugin("fzf")
     require_plugin("fzf.vim")
+
+    -- Run commands async
     use {"skywind3000/asyncrun.vim", opt = true}
     require_plugin("asyncrun.vim")
-    use {"Shatur95/neovim-cmake", opt = true}
-    require_plugin("neovim-cmake")
-    -- use {"SirVer/ultisnips", opt = true}
-    -- require_plugin("ultisnips")
+
+    -- Build cmake projects from neovim
+    -- use {"Shatur95/neovim-cmake", opt = true}
+    -- require_plugin("neovim-cmake")
+
+    -- Auto activating snippets
+    -- use {"SirVer/ultisnips"} -- TODO: port my snippets from vscode
+
+    -- Send to terminal
     use {"jpalardy/vim-slime", opt = true}
     require_plugin("vim-slime")
-    -- https://github.com/tpope/vim-repeat
-    use {"dag/vim-fish", opt = true}
-    require_plugin("vim-fish")
-    use {"kmonad/kmonad-vim", opt = true}
-    require_plugin("kmonad-vim")
+
+    -- Repeat plugin commands
+    -- use {"tpope/vim-repeat"}
+
+    -- Sudo write files
     use {"lambdalisue/suda.vim", opt = true}
     require_plugin("suda.vim")
     use {"liuchengxu/vista.vim", opt = true}
     require_plugin("vista.vim")
-    use "NoahTheDuke/vim-just"
+
+    -- 'smooth' scrolling
     -- use 'karb94/neoscroll.nvim'
 
-    -- lsp extensions
-    use {"nvim-lua/lsp_extensions.nvim", opt = true}
-    require_plugin("lsp_extensions.nvim")
-    -- use {"nvim-lua/completion-nvim", opt = true}
-    -- require_plugin("completion-nvim")
-    use "ray-x/lsp_signature.nvim"
+    -- Language plugins
+    use {"NoahTheDuke/vim-just", ft = 'just'}
+    -- use {"dag/vim-fish", ft = 'fish'} -- Treesitter highlighting is fine
+    use {"kmonad/kmonad-vim", ft = 'kmonad'}
+    use {"gennaro-tedesco/nvim-jqx"}
 
     -- treesitter extensions
-    use "nvim-treesitter/nvim-treesitter-textobjects"
-    use "RRethy/nvim-treesitter-textsubjects"
+    use {"nvim-treesitter/nvim-treesitter-textobjects"}
+    use {"RRethy/nvim-treesitter-textsubjects"}
     use {"windwp/nvim-ts-autotag"}
 
     -- mkdir
@@ -550,53 +569,14 @@ return require("packer").startup(function(use)
     }
 
     -- Colorschemes
-    -- use {'Mofiqul/dracula.nvim'}
     use {'marko-cerovac/material.nvim'}
     use {'folke/tokyonight.nvim'}
+    -- use {'Mofiqul/dracula.nvim'}
     -- use {'tomasiser/vim-code-dark'}
-
-    -- use {'mattn/webapi-vim', opt = true}
-    --     use {'f-person/git-blame.nvim', opt = true}
-    --     -- diagnostics
-    --     use {"folke/trouble.nvim", opt = true}
-    --     -- Debugging
-    --     use {"mfussenegger/nvim-dap", opt = true}
-    --     -- Better quickfix
-    --     use {"kevinhwang91/nvim-bqf", opt = true}
-    --     -- Search & Replace
-    --     use {'windwp/nvim-spectre', opt = true}
-    --     -- Symbol Outline
-    --     use {'simrat39/symbols-outline.nvim', opt = true}
-    --     -- Interactive scratchpad
-    --     use {'metakirby5/codi.vim', opt = true}
-    --     -- Markdown preview
-    --     use {
-    --         'iamcco/markdown-preview.nvim',
-    --         run = 'cd app && npm install',
-    --         opt = true
-    --     }
-    --     require_plugin('markdown-preview.nvim')
-    --
-    --
-    --     -- Sane gx for netrw_gx bug
-    --     use {"felipec/vim-sanegx", opt = true}
-    -- lsp root
-    -- use {"ahmedkhalf/lsp-rooter.nvim", opt = true} -- with this nvim-tree will follow you
-    -- require_plugin('lsp-rooter.nvim')
-
-    -- folke/todo-comments.nvim
-    -- gennaro-tedesco/nvim-jqx
-    -- TimUntersberger/neogit
-    -- folke/lsp-colors.nvim
-    -- simrat39/symbols-outline.nvim
 
     -- Git
     -- use {'tpope/vim-fugitive', opt = true}
     -- use {'tpope/vim-rhubarb', opt = true}
     -- pwntester/octo.nvim
-
-    -- Easily Create Gists
-    -- use {'mattn/vim-gist', opt = true}
-    -- use {'mattn/webapi-vim', opt = true}
 
 end)
