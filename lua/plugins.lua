@@ -564,6 +564,10 @@ return require("packer").startup(function(use)
         disable = not O.plugin.ts_context.active
     }
     use {"p00f/nvim-ts-rainbow", disable = not O.plugin.ts_rainbow.active}
+    use {
+        "mfussenegger/nvim-ts-hint-textobject",
+        disable = not O.plugin.ts_hintobjects.active
+    }
 
     -- mkdir
     use {

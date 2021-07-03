@@ -48,6 +48,7 @@ O = {
         ts_textsubjects = {active = PLUGINS_ENABLED_BY_DEFAULT},
         ts_rainbow = {active = PLUGINS_ENABLED_BY_DEFAULT},
         ts_context = {active = PLUGINS_ENABLED_BY_DEFAULT},
+        ts_hintobjects = {active = PLUGINS_ENABLED_BY_DEFAULT},
         indent_line = {active = PLUGINS_ENABLED_BY_DEFAULT},
         symbol_outline = {active = PLUGINS_ENABLED_BY_DEFAULT},
         debug = {active = PLUGINS_ENABLED_BY_DEFAULT},
