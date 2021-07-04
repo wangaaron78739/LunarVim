@@ -2,7 +2,7 @@ local M = {}
 
 M.config = function()
     -- Buffer line setup
-    require "bufferline".setup {
+    require"bufferline".setup {
         options = {
             indicator_icon = "▎",
             buffer_close_icon = "",

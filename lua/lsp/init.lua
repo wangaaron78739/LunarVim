@@ -132,7 +132,7 @@ function lsp_config.tsserver_on_attach(client, bufnr)
         -- update imports on file move
         update_imports_on_move = false,
         require_confirmation_on_move = false,
-        watch_dir = nil,
+        watch_dir = nil
     }
 
     -- required to fix code action ranges

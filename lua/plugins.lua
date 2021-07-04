@@ -465,9 +465,7 @@ return require("packer").startup(function(use)
             "javascript", "javascriptreact", "javascript.jsx", "typescript",
             "typescriptreact", "typescript.tsx"
         },
-        config = function()
-            require('null-ls').setup()
-        end
+        config = function() require('null-ls').setup() end
     }
 
     -- Latex 
