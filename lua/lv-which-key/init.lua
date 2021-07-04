@@ -1,7 +1,3 @@
-if not package.loaded['which-key'] then
-  return
-end
-
 local M = {}
 
 M.config = function()
