@@ -1,14 +1,13 @@
-require('default-config')
-require('keymappings')
+require 'default-config'
+require 'keymappings'
 vim.cmd('luafile ' .. CONFIG_PATH .. '/lv-config.lua')
-require('settings')
-require('plugins')
-require('lv-utils')
-require('lv-galaxyline')
-require('lv-which-key')
-require('lv-treesitter')
-require('lsp')
-if O.lang.emmet.active then require('lsp.emmet-ls') end
+require 'settings'
+require 'plugins'
+require 'lv-utils'
+require 'lv-galaxyline'
+require 'lv-which-key'
+require 'lv-treesitter'
+require 'lsp'
 
 -- FIXME: This is not the proper place to enable these plugins and stuff
 
@@ -28,9 +27,6 @@ if O.lang.emmet.active then require('lsp.emmet-ls') end
 vim.cmd('hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828')
 
 -- TODO: Refactor and organize these
--- Autosave
-vim.api.nvim_command('au FocusLost * silent! wa')
-vim.api.nvim_command(':set autowriteall')
 
 -- vim-sandwhich
 vim.api.nvim_command('runtime macros/sandwich/keymap/surround.vim')

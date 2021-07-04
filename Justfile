@@ -39,7 +39,7 @@ settings:
 # Open plugins.lua (and PackerInstall automatically afterwards)
 plugins:
 	nvim lua/plugins.lua
-	nvim +PackerCompile +PackerSync
+	nvim +PackerSync
 
 # Update Plugins using Packer
 update-plugins:

@@ -22,7 +22,8 @@ packer.init {
         open_fn = function()
             return require("packer.util").float {border = "single"}
         end
-    }
+    },
+    auto_reload_compiled = false
 }
 
 --- Check if a file or directory exists in this path
@@ -574,7 +575,13 @@ return require("packer").startup(function(use)
     use {"mg979/vim-visual-multi", disable = not O.plugin.visual_multi.active}
 
     -- Surround plugin
-    use {"machakann/vim-sandwich", disable = not O.plugin.surround.active}
+    use {
+        "machakann/vim-sandwich",
+        config = function()
+            vim.api.nvim_command('runtime macros/sandwich/keymap/surround.vim')
+        end,
+        disable = not O.plugin.surround.active
+    }
 
     -- fzf based search
     use {"junegunn/fzf", disable = not O.plugin.fzf.active} -- Telescope does most of this?

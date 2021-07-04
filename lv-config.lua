@@ -158,3 +158,6 @@ vim.g.slime_target = 'neovim'
 -- vim.g.neovide_cursor_vfx_mode = "railgun"
 -- vim.g.neovide_refresh_rate=120
 
+-- Autosave
+vim.api.nvim_command('au FocusLost * silent! wa')
+vim.api.nvim_command(':set autowriteall')

@@ -137,6 +137,13 @@ if O.plugin.ts_hintobjects.active then
     map('v', 'm', [[:lua require('tsht').nodes()<CR>]], nore)
 end
 
+if O.plugin.surround.active then
+    map('x', 'is', [[<Plug>(textobj-sandwich-query-i)]], opts)
+    map('x', 'as', [[<Plug>(textobj-sandwich-query-a)]], opts)
+    map('o', 'is', [[<Plug>(textobj-sandwich-query-i)]], opts)
+    map('o', 'as', [[<Plug>(textobj-sandwich-query-a)]], opts)
+end
+
 -- map('i', '<C-TAB>', 'compe#complete()', {noremap = true, silent = true, expr = true})
 
 -- vim.cmd([[
