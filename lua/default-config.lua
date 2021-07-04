@@ -3,8 +3,14 @@ DATA_PATH = vim.fn.stdpath('data')
 CACHE_PATH = vim.fn.stdpath('cache')
 TERMINAL = vim.fn.expand('$TERMINAL')
 
-PLUGINS_ENABLED_BY_DEFAULT = true
-AUTOFORMAT_ENABLED_BY_DEFAULT = true
+local enable_plugins_by_default = true
+local enable_autofmt_by_default = true
+
+local diagnostics = {
+    virtual_text = {spacing = 0, prefix = ""},
+    signs = true,
+    underline = true
+}
 
 O = {
     auto_close_tree = 0,
@@ -37,55 +43,55 @@ O = {
     database = {save_location = '~/.config/nvim/.db', auto_execute = 1},
 
     plugin = {
-        hop = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        dial = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        dashboard = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        matchup = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        colorizer = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        numb = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        zen = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        ts_playground = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        ts_context_commentstring = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        ts_textobjects = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        ts_autotag = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        ts_textsubjects = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        ts_rainbow = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        ts_context = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        ts_hintobjects = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        indent_line = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        symbol_outline = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        debug = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        bqf = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        trouble = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        floatterm = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        spectre = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        lsp_rooter = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        markdown_preview = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        codi = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        telescope_fzy = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        sanegx = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        snap = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        ranger = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        todo_comments = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        lsp_colors = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        git_blame = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        gitlinker = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        lazygit = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        octo = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        lush = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        diffview = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        bracey = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        telescope_project = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        gist = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        dap_install = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        visual_multi = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        sneak = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        quickscope = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        surround = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        fzf = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        slime = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        bullets = {active = PLUGINS_ENABLED_BY_DEFAULT},
-        vista = {active = PLUGINS_ENABLED_BY_DEFAULT}
+        hop = {active = enable_plugins_by_default},
+        dial = {active = enable_plugins_by_default},
+        dashboard = {active = enable_plugins_by_default},
+        matchup = {active = enable_plugins_by_default},
+        colorizer = {active = enable_plugins_by_default},
+        numb = {active = enable_plugins_by_default},
+        zen = {active = enable_plugins_by_default},
+        ts_playground = {active = enable_plugins_by_default},
+        ts_context_commentstring = {active = enable_plugins_by_default},
+        ts_textobjects = {active = enable_plugins_by_default},
+        ts_autotag = {active = enable_plugins_by_default},
+        ts_textsubjects = {active = enable_plugins_by_default},
+        ts_rainbow = {active = enable_plugins_by_default},
+        ts_context = {active = enable_plugins_by_default},
+        ts_hintobjects = {active = enable_plugins_by_default},
+        indent_line = {active = enable_plugins_by_default},
+        symbol_outline = {active = enable_plugins_by_default},
+        debug = {active = enable_plugins_by_default},
+        bqf = {active = enable_plugins_by_default},
+        trouble = {active = enable_plugins_by_default},
+        floatterm = {active = enable_plugins_by_default},
+        spectre = {active = enable_plugins_by_default},
+        lsp_rooter = {active = enable_plugins_by_default},
+        markdown_preview = {active = enable_plugins_by_default},
+        codi = {active = enable_plugins_by_default},
+        telescope_fzy = {active = enable_plugins_by_default},
+        sanegx = {active = enable_plugins_by_default},
+        snap = {active = enable_plugins_by_default},
+        ranger = {active = enable_plugins_by_default},
+        todo_comments = {active = enable_plugins_by_default},
+        lsp_colors = {active = enable_plugins_by_default},
+        git_blame = {active = enable_plugins_by_default},
+        gitlinker = {active = enable_plugins_by_default},
+        lazygit = {active = enable_plugins_by_default},
+        octo = {active = enable_plugins_by_default},
+        lush = {active = enable_plugins_by_default},
+        diffview = {active = enable_plugins_by_default},
+        bracey = {active = enable_plugins_by_default},
+        telescope_project = {active = enable_plugins_by_default},
+        gist = {active = enable_plugins_by_default},
+        dap_install = {active = enable_plugins_by_default},
+        visual_multi = {active = enable_plugins_by_default},
+        sneak = {active = enable_plugins_by_default},
+        quickscope = {active = enable_plugins_by_default},
+        surround = {active = enable_plugins_by_default},
+        fzf = {active = enable_plugins_by_default},
+        slime = {active = enable_plugins_by_default},
+        bullets = {active = enable_plugins_by_default},
+        vista = {active = enable_plugins_by_default}
 
     },
 
@@ -94,13 +100,9 @@ O = {
             linter = '',
             -- @usage can be 'yapf', 'black'
             formatter = '',
-            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
+            autoformat = enable_autofmt_by_default,
             isort = false,
-            diagnostics = {
-                virtual_text = {spacing = 0, prefix = ""},
-                signs = true,
-                underline = true
-            },
+            diagnostics = diagnostics,
             analysis = {
                 type_checking = "basic",
                 auto_search_paths = true,
@@ -108,52 +110,36 @@ O = {
             }
         },
         dart = {
-            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
+            autoformat = enable_autofmt_by_default,
             sdk_path = '/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot'
         },
         lua = {
             -- @usage can be 'lua-format'
             formatter = '',
-            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
-            diagnostics = {
-                virtual_text = {spacing = 0, prefix = ""},
-                signs = true,
-                underline = true
-            }
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
         },
         sh = {
             -- @usage can be 'shellcheck'
             linter = '',
             -- @usage can be 'shfmt'
             formatter = '',
-            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
-            diagnostics = {
-                virtual_text = {spacing = 0, prefix = ""},
-                signs = true,
-                underline = true
-            }
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
         },
         tsserver = {
             -- @usage can be 'eslint'
             linter = '',
             -- @usage can be 'prettier'
             formatter = '',
-            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
-            diagnostics = {
-                virtual_text = {spacing = 0, prefix = ""},
-                signs = true,
-                underline = true
-            }
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
         },
         json = {
             -- @usage can be 'prettier'
             formatter = '',
-            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
-            diagnostics = {
-                virtual_text = {spacing = 0, prefix = ""},
-                signs = true,
-                underline = true
-            }
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
         },
         tailwindcss = {
             filetypes = {
@@ -162,58 +148,83 @@ O = {
             }
         },
         clang = {
-            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
-            diagnostics = {
-                virtual_text = {spacing = 0, prefix = ""},
-                signs = true,
-                underline = true
-            },
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics,
             cross_file_rename = true,
             header_insertion = 'never'
         },
         ruby = {
-            diagnostics = {
-                virtualtext = {spacing = 0, prefix = ""},
-                signs = true,
-                underline = true
-            },
+            diagnostics = diagnostics,
             filetypes = {'rb', 'erb', 'rakefile', 'ruby'}
         },
-        go = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
-        elixir = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
-        vim = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
-        yaml = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
-        terraform = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
+        go = {autoformat = enable_autofmt_by_default},
+        elixir = {autoformat = enable_autofmt_by_default},
+        vim = {autoformat = enable_autofmt_by_default},
+        yaml = {autoformat = enable_autofmt_by_default},
+        terraform = {autoformat = enable_autofmt_by_default},
         rust = {
-            rust_tools = {
-                active = false
-            },
-            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
+            rust_tools = {active = false},
+            autoformat = enable_autofmt_by_default,
             linter = '',
             formatter = '',
-            diagnostics = {
-                virtual_text = {spacing = 0, prefix = ""},
-                signs = true,
-                underline = true
-            }
+            diagnostics = diagnostics
         },
-        svelte = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
-        php = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
-        latex = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
-        kotlin = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
-        html = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
-        elm = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
-        emmet = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT, active = true},
-        graphql = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
-        efm = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
-        docker = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
-        cmake = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
-        java = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
-        zig = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
-        css = {
-            formatter = '',
-            autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
-            virtual_text = true
+        svelte = {
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
+        },
+        php = {
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
+        },
+        latex = {
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
+        },
+        kotlin = {
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
+        },
+        html = {
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
+        },
+        elm = {
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
+        },
+        emmet = {
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics,
+            active = true
+        },
+        graphql = {
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
+        },
+        efm = {
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
+        },
+        docker = {
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
+        },
+        cmake = {
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
+        },
+        java = {
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
+        },
+        zig = {
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
+        },
+        julia = {
+            autoformat = enable_autofmt_by_default,
+            diagnostics = diagnostics
         }
 
     },

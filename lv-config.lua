@@ -35,7 +35,6 @@ O.treesitter.ensure_installed = "all"
 O.treesitter.enabled = true
 
 O.lang.clang.active = true
-O.lang.clang.autoformat = true
 O.lang.clang.diagnostics.virtual_text = true
 O.lang.clang.diagnostics.signs = true
 O.lang.clang.diagnostics.underline = true
@@ -47,7 +46,6 @@ O.lang.clang.diagnostics.underline = true
 O.lang.python.formatter = 'black'
 -- O.python.linter = 'flake8'
 O.lang.python.isort = true
-O.lang.python.autoformat = true
 O.lang.python.diagnostics.virtual_text = true
 O.lang.python.diagnostics.signs = true
 O.lang.python.diagnostics.underline = true
@@ -58,30 +56,23 @@ O.lang.python.analysis.use_library_code_types = true
 -- lua
 -- TODO look into stylua
 O.lang.lua.formatter = 'lua-format'
-O.lang.lua.autoformat = true
 
 -- javascript
 O.lang.tsserver.formatter = 'prettier'
 O.lang.tsserver.linter = 'eslint'
-O.lang.tsserver.autoformat = true
 
 -- json
-O.lang.json.autoformat = true
 
 -- ruby
-O.lang.ruby.autoformat = true
 
 -- go
-O.lang.go.autoformat = true
 
 -- rust
 O.lang.rust.active = true
 O.lang.rust.rust_tools.active = true
-O.lang.rust.autoformat = true
 
 -- latex
 O.lang.latex.active = true
-O.lang.latex.autoformat = true
 
 -- create custom autocommand field (This would be easy with lua)
 
