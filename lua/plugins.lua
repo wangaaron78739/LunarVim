@@ -635,7 +635,10 @@ return require("packer").startup(function(use)
         cmd = "DogeGenerate"
     }
 
-    use "sbdchd/neoformat"
+    use {
+        "sbdchd/neoformat",
+        config = function() require'lv-neoformat'.config() end
+    }
 
     -- Colorschemes
     -- use {'marko-cerovac/material.nvim'}
