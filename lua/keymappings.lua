@@ -88,14 +88,15 @@ map('i', '<c-k>', '(\"\\<C-p>\")', expr)
 map('i', '<S-TAB>', '(\"\\<C-p>\")', expr)
 -- vim.cmd('inoremap <expr> <S-TAB> (\"\\<C-p>\")')
 
--- map('i', '<C-TAB>', 'compe#complete()', {noremap = true, silent = true, expr = true})
+-- QuickFix
+vim.api.nvim_set_keymap('n', '<C-A-j>', ':cnext<CR>',
+                        {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<C-A-k>', ':cprev<CR>',
+                        {noremap = true, silent = true})
 
--- vim.cmd([[
--- map p <Plug>(miniyank-autoput)
--- map P <Plug>(miniyank-autoPut)
--- map <leader>n <Plug>(miniyank-cycle)
--- map <leader>N <Plug>(miniyank-cycleback)
--- ]])
+-- Escape key clears search and spelling highlights
+vim.api.nvim_set_keymap('n', '<ESC>', ":nohls | :setlocal nospell<ESC>",
+                        {silent = true})
 
 -- Toggle the QuickFix window
 map('', '<C-q>', ':call QuickFixToggle()<CR>', nore)
@@ -139,3 +140,12 @@ if O.plugin.ts_hintobjects.active then
     map('o', 'm', [[:<C-U>lua require('tsht').nodes()<CR>]], opts)
     map('v', 'm', [[:lua require('tsht').nodes()<CR>]], nore)
 end
+
+-- map('i', '<C-TAB>', 'compe#complete()', {noremap = true, silent = true, expr = true})
+
+-- vim.cmd([[
+-- map p <Plug>(miniyank-autoput)
+-- map P <Plug>(miniyank-autoPut)
+-- map <leader>n <Plug>(miniyank-cycle)
+-- map <leader>N <Plug>(miniyank-cycleback)
+-- ]])
