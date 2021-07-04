@@ -493,6 +493,14 @@ return require("packer").startup(function(use)
     -- Elixir
     use {"elixir-editors/vim-elixir", ft = {"elixir", "eelixir", "euphoria3"}}
 
+    -- Tabnine
+    use {
+        "tzachar/compe-tabnine",
+        run="./install.sh",
+        requires = "hrsh7th/nvim-compe",
+        disable = not O.plugin.tabnine.active
+    }
+    
     -- Flutter
     use {
         'akinsho/flutter-tools.nvim',

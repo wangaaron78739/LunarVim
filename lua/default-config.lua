@@ -92,7 +92,8 @@ O = {
         slime = {active = enable_plugins_by_default},
         bullets = {active = enable_plugins_by_default},
         vista = {active = enable_plugins_by_default},
-        startuptime = {active = enable_plugins_by_default}
+        startuptime = {active = enable_plugins_by_default},
+        tabnine = {active = enable_plugins_by_default}
 
     },
 
