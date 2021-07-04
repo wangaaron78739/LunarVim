@@ -3,8 +3,10 @@ local opts = {silent = true}
 local nore = {noremap = true, silent = true}
 local expr = {noremap = true, silent = true, expr = true}
 
--- TODO: change all the vim.cmd to vim.api.nvim_set_keymap
--- vim.api.nvim_set_keymap('n', '-', ':RnvimrToggle<CR>', nore)
+-- TODO: change all the vim.cmd to map
+
+-- map('n', '-', ':RnvimrToggle<CR>', nore)
+
 -- better window movement -- tmux_navigator supplies these if installed
 if not O.plugin.tmux_navigator.active then
     map('n', '<C-h>', '<C-w>h', opts)
@@ -43,12 +45,12 @@ map('n', '<C-Left>', ':vertical resize -2<CR>', opts)
 map('n', '<C-Right>', ':vertical resize +2<CR>', opts)
 
 -- Move current line / block with Alt-j/k ala vscode.
-vim.api.nvim_set_keymap('n', '<C-A-j>', ':m .+1<CR>==', nore)
-vim.api.nvim_set_keymap('n', '<C-A-k>', ':m .-2<CR>==', nore)
-vim.api.nvim_set_keymap('i', '<A-j>', '<Esc>:m .+1<CR>==gi', nore)
-vim.api.nvim_set_keymap('i', '<A-k>', '<Esc>:m .-2<CR>==gi', nore)
-vim.api.nvim_set_keymap('x', '<A-j>', ':m \'>+1<CR>gv-gv', nore)
-vim.api.nvim_set_keymap('x', '<A-k>', ':m \'<-2<CR>gv-gv', nore)
+map('n', '<C-A-j>', ':m .+1<CR>==', nore)
+map('n', '<C-A-k>', ':m .-2<CR>==', nore)
+map('i', '<A-j>', '<Esc>:m .+1<CR>==gi', nore)
+map('i', '<A-k>', '<Esc>:m .-2<CR>==gi', nore)
+map('x', '<A-j>', ':m \'>+1<CR>gv-gv', nore)
+map('x', '<A-k>', ':m \'<-2<CR>gv-gv', nore)
 -- Move selected line / block of text in visual mode
 map('x', 'K', ':move \'<-2<CR>gv=gv', nore)
 map('x', 'J', ':move \'>+1<CR>gv=gv', nore)
@@ -86,14 +88,15 @@ map('i', '<S-TAB>', '(\"\\<C-p>\")', expr)
 -- vim.cmd('inoremap <expr> <S-TAB> (\"\\<C-p>\")')
 
 -- QuickFix
-vim.api.nvim_set_keymap('n', '<C-A-j>', ':cnext<CR>', nore)
-vim.api.nvim_set_keymap('n', '<C-A-k>', ':cprev<CR>', nore)
+-- map('n', ']q', ':cnext<CR>', nore)
+-- map('n', '[q', ':cprev<CR>', nore)
+map('n', '<C-A-j>', ':cnext<CR>', nore)
+map('n', '<C-A-k>', ':cprev<CR>', nore)
 -- Toggle the QuickFix window -- FIXME: this function doesn't exist anymore
 -- map('', '<C-q>', ':call QuickFixToggle()<CR>', nore)
 
 -- Escape key clears search and spelling highlights
-vim.api.nvim_set_keymap('n', '<ESC>', ":nohls | :setlocal nospell<ESC>",
-                        {silent = true})
+map('n', '<ESC>', ":nohls | :setlocal nospell<ESC>", {silent = true})
 
 -- Yank till end of the line 
 map('n', 'Y', 'yg_', nore)
