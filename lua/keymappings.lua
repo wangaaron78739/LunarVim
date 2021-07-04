@@ -66,8 +66,9 @@ map('i', 'jk', '<ESC>', nore)
 map('i', 'kj', '<ESC>', nore)
 
 -- Tab switch buffer
-map('n', '<TAB>', ':bnext<CR>', nore)
-map('n', '<S-TAB>', ':bprevious<CR>', nore)
+-- map('n', '<TAB>', ':bnext<CR>', nore)
+-- map('n', '<S-TAB>', ':bprevious<CR>', nore)
+map('n', '<TAB>', '<cmd>b#<cr>', nore)
 
 -- Preserve register on pasting in visual mode
 map('v', 'p', 'pgvy', nore)
