@@ -133,7 +133,7 @@ local mappings = {
         w = {":w<CR>", "Write"},
         a = {":wa<CR>", "Write All"},
         c = {":bdelete<CR>", "Close"},
-        f = {"<cmd>lua vim.lsp.buf.formatting()<cr>", "Format"},
+        f = {"<cmd>lua vim.lsp.buf.formatting()<cr>", "Format"}, -- TODO: switch between neoformat and lsp
         n = {"<cmd>tabnew<CR>", "New"},
         -- W = {"<cmd>BufferWipeout<cr>", "wipeout buffer"},
         -- e = {
@@ -236,7 +236,6 @@ local mappings = {
             "<cmd>Telescope lsp_workspace_diagnostics<cr>",
             "Workspace Diagnostics"
         },
-        f = {"<cmd>lua vim.lsp.buf.formatting()<cr>", "Format"},
         h = {"<cmd>Lspsaga hover_doc<cr>", "Hover"},
         -- h = {"<cmd>LspHover<cr>", "Hover"},
         i = {"<cmd>LspInfo<cr>", "Info"},

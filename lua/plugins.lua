@@ -669,6 +669,8 @@ return require("packer").startup(function(use)
         cmd = "DogeGenerate"
     }
 
+    use "sbdchd/neoformat"
+
     -- Colorschemes
     -- use {'marko-cerovac/material.nvim'}
     -- use {'folke/tokyonight.nvim'}

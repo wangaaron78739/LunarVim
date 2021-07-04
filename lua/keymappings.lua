@@ -110,7 +110,7 @@ map('v', 'ic', [[/#+\s*%+<cr>oN]], nore)
 -- Close FTerm
 map('t', '<A-q>', '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', nore)
 
--- Format buffer
+-- Format buffer -- TODO: switch between neoformat and lsp
 map('n', 'gf', '<cmd>lua vim.lsp.buf.formatting()<cr>', nore)
 
 -- Spell checking

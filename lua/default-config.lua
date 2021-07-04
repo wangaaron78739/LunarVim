@@ -4,7 +4,8 @@ CACHE_PATH = vim.fn.stdpath('cache')
 TERMINAL = vim.fn.expand('$TERMINAL')
 
 local enable_plugins_by_default = true
-local enable_autofmt_by_default = true
+local enable_autofmt_by_default = false -- this is the lsp autoformat
+-- TODO: switch between neoformat and lsp autoformat smartly
 
 local diagnostics = {
     virtual_text = {spacing = 0, prefix = ""},
@@ -327,6 +328,12 @@ require('lv-utils').define_augroups({
         {'InsertLeave ', '*', 'setlocal relativenumber cursorline'},
         {'WinEnter', '*', 'setlocal cursorline'},
         {'WinLeave', '*', 'setlocal nocursorline'}
+    },
+    _neoformat = {
+        {
+            "BufWritePre", "*",
+            [[try | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry]]
+        }
     }
 })
 
