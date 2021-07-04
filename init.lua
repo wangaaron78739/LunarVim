@@ -7,6 +7,7 @@ vim.g.syntax = true
 require('lv-utils')
 require('keymappings')
 require('lv-galaxyline')
+require('lv-which-key')
 require('lv-treesitter')
 require('lsp')
 if O.lang.emmet.active then require('lsp.emmet-ls') end
@@ -41,3 +42,4 @@ xmap as <Plug>(textobj-sandwich-query-a)
 omap is <Plug>(textobj-sandwich-query-i)
 omap as <Plug>(textobj-sandwich-query-a)
 ]])
+

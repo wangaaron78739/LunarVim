@@ -1,6 +1,4 @@
--- if not package.loaded['nvim-treesitter'] then
---   return
--- end
+-- if not package.loaded['nvim-treesitter'] then return end
 local parser_config = require"nvim-treesitter.parsers".get_parser_configs()
 -- parser_config.make = {
 --     install_info = {

@@ -120,10 +120,10 @@ return require("packer").startup(function(use)
 
     -- whichkey
     use {
-        "folke/which-key.nvim",
-        config = function()
-            require('lv-which-key').config()
-        end
+        "folke/which-key.nvim"
+        -- config = function()
+        --     require('lv-which-key').config()
+        -- end
     }
 
     -- Autopairs
