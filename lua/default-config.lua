@@ -179,7 +179,10 @@ O = {
         },
         php = {
             autoformat = enable_autofmt_by_default,
-            diagnostics = diagnostics
+            diagnostics = diagnostics,
+            format = {braces = "psr12"},
+            environment = {php_version = "7.4"},
+            filetypes = {'php', 'phtml'}
         },
         latex = {
             autoformat = enable_autofmt_by_default,
