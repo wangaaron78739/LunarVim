@@ -625,5 +625,6 @@ return require("packer").startup(function(use)
     -- https://github.com/NTBBloodbath/doom-nvim
     -- https://github.com/MenkeTechnologies/zpwr#zpwr-features
     -- https://github.com/justinmk/vim-dirvish
+    -- https://github.com/mbbill/undotree
 
 end)
