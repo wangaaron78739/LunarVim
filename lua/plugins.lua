@@ -73,8 +73,8 @@ return require("packer").startup(function(use)
         "nvim-telescope/telescope.nvim",
         config = function()
             require('lv-telescope')
-        end,
-        cmd = "Telescope"
+        end
+        -- cmd = "Telescope"
     }
     -- Snap
     use {
