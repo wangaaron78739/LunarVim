@@ -23,7 +23,8 @@ O.hlsearch = true
 
 -- After changing plugin config it is recommended to run :PackerCompile
 local disable_plugins = {
-    "lsp_rooter", "snap", "octo", "lush", "fzf", "tabnine", "tmux_navigator"
+    "lsp_rooter", "snap", "octo", "lush", "fzf", "tabnine", "tmux_navigator",
+    "git_blame"
 }
 for _, v in ipairs(disable_plugins) do O.plugin[v].active = false end
 -- O.plugin.lsp_rooter.active = false -- This is actually more confusing sometimes
