@@ -87,13 +87,12 @@ map('i', '<S-TAB>', '(\"\\<C-p>\")', expr)
 -- QuickFix
 vim.api.nvim_set_keymap('n', '<C-A-j>', ':cnext<CR>', nore)
 vim.api.nvim_set_keymap('n', '<C-A-k>', ':cprev<CR>', nore)
+-- Toggle the QuickFix window -- FIXME: this function doesn't exist anymore
+-- map('', '<C-q>', ':call QuickFixToggle()<CR>', nore)
 
 -- Escape key clears search and spelling highlights
 vim.api.nvim_set_keymap('n', '<ESC>', ":nohls | :setlocal nospell<ESC>",
                         {silent = true})
-
--- Toggle the QuickFix window
-map('', '<C-q>', ':call QuickFixToggle()<CR>', nore)
 
 -- Yank till end of the line 
 map('n', 'Y', 'yg_', nore)
