@@ -1,6 +1,7 @@
 local lush = require('lush')
 local hsl = lush.hsl
 
+-- LuaFormatter off
 local theme = lush(function()
     local c = {
         bg = hsl("#212121"),
@@ -357,6 +358,7 @@ local theme = lush(function()
         CodiVirtualText {fg = c.hint_blue}
     }
 end)
+-- LuaFormatter on
 
 -- return our parsed theme for extension or use else where.
 return theme
