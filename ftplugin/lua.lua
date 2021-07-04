@@ -43,7 +43,7 @@ end
 local lua_arguments = {}
 
 local luaFormat = {
-    formatCommand = "lua-format -i --no-keep-simple-function-one-line --column-limit=80",
+    formatCommand = "lua-format -i --column-limit=80",
     formatStdin = true
 }
 
