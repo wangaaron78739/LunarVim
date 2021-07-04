@@ -43,7 +43,7 @@ O.treesitter.ensure_installed = "all"
 O.treesitter.enabled = true
 
 O.lang.clang.active = true
-O.lang.clang.diagnostics.virtual_text = true
+-- O.lang.clang.diagnostics.virtual_text = true
 O.lang.clang.diagnostics.signs = true
 O.lang.clang.diagnostics.underline = true
 
@@ -54,7 +54,7 @@ O.lang.clang.diagnostics.underline = true
 O.lang.python.formatter = 'black'
 -- O.python.linter = 'flake8'
 O.lang.python.isort = true
-O.lang.python.diagnostics.virtual_text = true
+-- O.lang.python.diagnostics.virtual_text = true
 O.lang.python.diagnostics.signs = true
 O.lang.python.diagnostics.underline = true
 O.lang.python.analysis.type_checking = "off"
