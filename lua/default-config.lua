@@ -185,6 +185,9 @@ O = {
         yaml = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
         terraform = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
         rust = {
+            rust_tools = {
+                active = false
+            },
             autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT,
             linter = '',
             formatter = '',

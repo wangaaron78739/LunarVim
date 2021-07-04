@@ -76,6 +76,7 @@ O.lang.go.autoformat = true
 
 -- rust
 O.lang.rust.active = true
+O.lang.rust.rust_tools.active = true
 O.lang.rust.autoformat = true
 
 -- latex
