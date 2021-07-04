@@ -15,7 +15,7 @@ M.config = function()
             offsets = {
                 {
                     filetype = "NvimTree",
-                    text = "EXPLORER",
+                    text = "",
                     text_align = "center",
                     padding = 1
                 }
