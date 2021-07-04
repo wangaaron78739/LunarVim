@@ -56,7 +56,7 @@ return require("packer").startup(function(use)
 
     -- TODO refactor all of this (for now it works, but yes I know it could be wrapped in a simpler function)
     use {"neovim/nvim-lspconfig"}
-    use {"glepnir/lspsaga.nvim"}
+    use {"glepnir/lspsaga.nvim"} -- TODO: could remove this later
     use {
         "kabouzeid/nvim-lspinstall",
         config = function()
@@ -496,11 +496,11 @@ return require("packer").startup(function(use)
     -- Tabnine
     use {
         "tzachar/compe-tabnine",
-        run="./install.sh",
+        run = "./install.sh",
         requires = "hrsh7th/nvim-compe",
         disable = not O.plugin.tabnine.active
     }
-    
+
     -- Flutter
     use {
         'akinsho/flutter-tools.nvim',
@@ -523,6 +523,8 @@ return require("packer").startup(function(use)
     -- Json querying 
     use {"gennaro-tedesco/nvim-jqx", ft = "json"}
 
+    -------------------------------------------------------------------
+    -------------------------------------------------------------------
     -- amedhi plugins
     -- TODO: stop using require_plugin
 
@@ -530,7 +532,11 @@ return require("packer").startup(function(use)
     use {"ray-x/lsp_signature.nvim"}
 
     -- See jumpable characters
-    use {"unblevable/quick-scope", disable = not O.plugin.quickscope.active}
+    use {
+        "unblevable/quick-scope",
+        disable = not O.plugin.quickscope.active,
+        event = "BufRead"
+    }
 
     -- 2 letter find
     -- use {"justinmk/vim-sneak", disable = not O.plugin.sneak.active}
@@ -566,8 +572,7 @@ return require("packer").startup(function(use)
     use {"junegunn/fzf.vim", disable = not O.plugin.fzf.active}
 
     -- Run commands async
-    use {"skywind3000/asyncrun.vim"}
-
+    -- use {"skywind3000/asyncrun.vim"}
     -- Build cmake projects from neovim
     -- use {"Shatur95/neovim-cmake"}
 
@@ -585,15 +590,24 @@ return require("packer").startup(function(use)
         'jghauser/mkdir.nvim',
         config = function()
             require('mkdir')
-        end
+        end,
+        event = "BufRead"
     }
 
     -- Sudo write files
-    use {"lambdalisue/suda.vim"}
-    use {"liuchengxu/vista.vim", disable = not O.plugin.vista.active}
+    use {"lambdalisue/suda.vim", cmd = {"SudaWrite", "SudaRead"}}
+    use {
+        "liuchengxu/vista.vim",
+        disable = not O.plugin.vista.active,
+        cmd = "Vista"
+    }
 
     -- Helper for lists
-    use {"dkarter/bullets.vim", ft = "markdown", disable = not O.plugin.bullets.active}
+    use {
+        "dkarter/bullets.vim",
+        event = "BufRead",
+        disable = not O.plugin.bullets.active
+    }
 
     -- 'smooth' scrolling
     -- use 'karb94/neoscroll.nvim'

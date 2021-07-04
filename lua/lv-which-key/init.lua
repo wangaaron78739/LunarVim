@@ -104,8 +104,6 @@ local mappings = {
             '<cmd>Telescope find_files <CR>', "Find File"
     },
     ["h"] = {':noh<CR>', "No Highlight"},
-    ["v"] = {":Vista<CR>", "Vista"},
-    ["gy"] = "Gitlink",
     o = {
         name = "Open",
         f = {"<cmd>NvimTreeToggle<CR>", "File Sidebar"},
@@ -122,7 +120,9 @@ local mappings = {
         -- T = {"<cmd>FloatermNew --wintype=normal --height=8<CR>", "Terminal Below"},
         -- P = {"<cmd>FloatermNew python<CR>", "Python"},
         -- b = {"<cmd>FloatermNew broot<CR>", "Broot"},
-        o = {"<cmd>!open '%:p:h'<CR>", "Open File Explorer"}
+        o = {"<cmd>!open '%:p:h'<CR>", "Open File Explorer"},
+        v = {"<cmd>Vista nvim_lsp<cr>", "Vista"}
+        -- ["v"] = {":Vista<CR>", "Vista"},
     },
     b = {
         name = "Buffers",
@@ -254,8 +254,7 @@ local mappings = {
             "Workspace Symbols"
         },
         n = {"<cmd>LspGotoNext<cr>", "Next"},
-        N = {"<cmd>LspGotoPrev<cr>", "Previous"},
-        V = {"<cmd>Vista nvim_lsp<cr>", "Vista"}
+        N = {"<cmd>LspGotoPrev<cr>", "Previous"}
     },
     s = {
         name = "Search",

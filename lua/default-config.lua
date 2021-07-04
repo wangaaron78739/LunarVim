@@ -198,7 +198,7 @@ O = {
         emmet = {
             autoformat = enable_autofmt_by_default,
             diagnostics = diagnostics,
-            active = true
+            active = false
         },
         graphql = {
             autoformat = enable_autofmt_by_default,
