@@ -104,9 +104,6 @@ M.config = function()
     local mappings = {
         [" "] = {"<cmd>Commands<CR>", "Commands"},
         ["/"] = {"<cmd>Telescope live_grep<cr>", "Global search"},
-        -- ["c"] = "Close Buffer",
-        -- ["w"] = "Write Buffer",
-        -- ["e"] = "Explorer",
         ["f"] = {
             O.plugin.snap.active and '<cmd>Snap find_files<cr>' or
                 '<cmd>Telescope find_files <CR>', "Find File"
@@ -133,35 +130,33 @@ M.config = function()
         },
         b = {
             name = "Buffers",
-            B = {
+            j = {
                 O.plugin.snap.active and "<cmd>Snap buffers<cr>" or
-                    "<cmd>Telescope buffers<cr>", "Buffers"
+                    "<cmd>Telescope buffers<cr>", "Jump to "
             },
             w = {":w<CR>", "Write"},
             a = {":wa<CR>", "Write All"},
-            c = {":BufferClose<CR>", "Close"},
+            c = {":bdelete<CR>", "Close"},
             f = {"<cmd>lua vim.lsp.buf.formatting()<cr>", "Format"},
             n = {"<cmd>tabnew<CR>", "New"},
-            j = {"<cmd>BufferPick<cr>", "jump to buffer"},
-            W = {"<cmd>BufferWipeout<cr>", "wipeout buffer"},
-            e = {
-                "<cmd>BufferCloseAllButCurrent<cr>",
-                "close all but current buffer"
-            },
+            -- W = {"<cmd>BufferWipeout<cr>", "wipeout buffer"},
+            -- e = {
+            --     "<cmd>BufferCloseAllButCurrent<cr>",
+            --     "close all but current buffer"
+            -- },
             h = {
-                "<cmd>BufferCloseBuffersLeft<cr>",
-                "close all buffers to the left"
+                "<cmd>BufferLineCloseLeft<cr>", "close all buffers to the left"
             },
             l = {
-                "<cmd>BufferCloseBuffersRight<cr>",
+                "<cmd>BufferLineCloseRight<cr>",
                 "close all BufferLines to the right"
             },
             D = {
-                "<cmd>BufferOrderByDirectory<cr>",
+                "<cmd>BufferLineSortByDirectory<cr>",
                 "sort BufferLines automatically by directory"
             },
             L = {
-                "<cmd>BufferOrderByLanguage<cr>",
+                "<cmd>BufferLineSortByExtension<cr>",
                 "sort BufferLines automatically by language"
             }
         },
