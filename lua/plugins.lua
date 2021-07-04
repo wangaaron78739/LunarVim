@@ -17,12 +17,12 @@ packer.init {
     compile_path = require("packer.util").join_paths(vim.fn.stdpath('config'),
                                                      'plugin',
                                                      'packer_compiled.vim'),
-    git = {clone_timeout = 300}
-    -- display = {
-    --   -- open_fn = function()
-    --   --   return require("packer.util").float { border = "single" }
-    --   -- end,
-    -- },
+    git = {clone_timeout = 300},
+    display = {
+        open_fn = function()
+            return require("packer.util").float {border = "single"}
+        end
+    }
 }
 
 --- Check if a file or directory exists in this path
@@ -67,6 +67,7 @@ return require("packer").startup(function(use)
     use {"nvim-lua/popup.nvim"}
     use {"nvim-lua/plenary.nvim"}
     use {"tjdevries/astronauta.nvim"}
+
     -- Telescope - search through things
     use {
         "nvim-telescope/telescope.nvim",
@@ -84,6 +85,7 @@ return require("packer").startup(function(use)
         end,
         disable = not O.plugin.snap.active
     }
+
     -- Autocomplete
     use {
         "hrsh7th/nvim-compe",
