@@ -134,6 +134,14 @@ map('n', 'gpd', ':Lspsaga preview_definition<cr>', opts)
 -- Slightly easier commands
 map('n', ';', ':', opts)
 
+-- lsp keys
+map('n', 'gd', "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+map('n', 'gD', "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+map('n', 'gr', "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+map('n', 'gi', "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+map('n', 'K', "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
+map('n', '<C-k>', "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+
 if O.plugin.ts_hintobjects.active then
     map('o', 'm', [[:<C-U>lua require('tsht').nodes()<CR>]], opts)
     map('v', 'm', [[:lua require('tsht').nodes()<CR>]], nore)

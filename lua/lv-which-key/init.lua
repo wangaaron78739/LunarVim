@@ -154,52 +154,26 @@ local mappings = {
             "sort BufferLines automatically by language"
         }
     },
-
-    -- diagnostics vanilla nvim
-    -- -- diagnostic
-    -- function lv_utils.get_all()
-    --     vim.lsp.diagnostic.get_all()
-    -- end
-    -- function lv_utils.get_next()
-    --     vim.lsp.diagnostic.get_next()
-    -- end
-    -- function lv_utils.get_prev()
-    --     vim.lsp.diagnostic.get_prev()
-    -- end
-    -- function lv_utils.goto_next()
-    --     vim.lsp.diagnostic.goto_next()
-    -- end
-    -- function lv_utils.goto_prev()
-    --     vim.lsp.diagnostic.goto_prev()
-    -- end
-    -- function lv_utils.show_line_diagnostics()
-    --     vim.lsp.diagnostic.show_line_diagnostics()
-    -- end
     -- " Available Debug Adapters:
     -- "   https://microsoft.github.io/debug-adapter-protocol/implementors/adapters/
-    -- " 
+    -- "
     -- " Adapter configuration and installation instructions:
     -- "   https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
-    -- " 
+    -- "
     -- " Debug Adapter protocol:
     -- "   https://microsoft.github.io/debug-adapter-protocol/
-    -- " Debugging
-    -- command! DebugToggleBreakpoint lua require'dap'.toggle_breakpoint()
-    -- command! DebugStart lua require'dap'.continue()
-    -- command! DebugContinue lua require'dap'.continue()
-    -- command! DebugStepOver lua require'dap'.step_over()
-    -- command! DebugStepOut lua require'dap'.step_out()
-    -- command! DebugStepInto lua require'dap'.step_into()
-    -- command! DebugToggleRepl lua require'dap'.repl.toggle()
-    -- command! DebugGetSession lua require'dap'.session()
     D = {
         name = "Debug",
-        b = {"<cmd>DebugToggleBreakpoint<cr>", "Toggle Breakpoint"},
-        c = {"<cmd>DebugContinue<cr>", "Continue"},
-        i = {"<cmd>DebugStepInto<cr>", "Step Into"},
-        o = {"<cmd>DebugStepOver<cr>", "Step Over"},
-        r = {"<cmd>DebugToggleRepl<cr>", "Toggle Repl"},
-        s = {"<cmd>DebugStart<cr>", "Start"}
+        s = {"<cmd>lua require'dap'.continue()<cr>", "Start"},
+        b = {
+            "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint"
+        },
+        c = {"<cmd>lua require'dap'.continue()<cr>", "Continue"},
+        i = {"<cmd>lua require'dap'.step_into()<cr>", "Step Into"},
+        u = {"<cmd>lua require'dap'.step_out()<cr>", "Step Out"},
+        o = {"<cmd>lua require'dap'.step_over()<cr>", "Step Over"},
+        r = {"<cmd>lua require'dap'.repl.toggle()<cr>", "Toggle Repl"},
+        S = {"<cmd>lua require'dap'.session()<cr>", "Get Session"}
     },
     g = {
         name = "Git",
@@ -228,18 +202,14 @@ local mappings = {
         name = "LSP",
         a = {"<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action"},
         A = {"<cmd>lua vim.lsp.buf.range_code_action()<cr>", "Selected Action"},
-        d = {
-            "<cmd>Telescope lsp_document_diagnostics<cr>",
-            "Document Diagnostics"
-        },
-        D = {
-            "<cmd>Telescope lsp_workspace_diagnostics<cr>",
-            "Workspace Diagnostics"
-        },
         h = {"<cmd>lua vim.lsp.buf.hover()<cr>", "Hover"}, -- h = {"<cmd>LspHover<cr>", "Hover"},
         i = {"<cmd>LspInfo<cr>", "Info"},
         f = {"<cmd>Lspsaga lsp_finder<cr>", "LSP Finder"},
-        l = {"<cmd>Lspsaga show_line_diagnostics<cr>", "Line Diagnostics"},
+        -- l = {"<cmd>Lspsaga show_line_diagnostics<cr>", "Line Diagnostics"},
+        l = {
+            "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>",
+            "Line Diagnostics"
+        },
         p = {"<cmd>Lspsaga preview_definition<cr>", "Preview Definition"},
         q = {"<cmd>Telescope quickfix<cr>", "Quickfix"},
         r = {"<cmd>lua vim.lsp.buf.rename()<cr>", "Rename"}, -- r = {"<cmd>Lspsaga rename<cr>", "Rename"},
@@ -252,9 +222,7 @@ local mappings = {
         S = {
             "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
             "Workspace Symbols"
-        },
-        n = {"<cmd>LspGotoNext<cr>", "Next"},
-        N = {"<cmd>LspGotoPrev<cr>", "Previous"}
+        }
     },
     s = {
         name = "Search",
@@ -295,14 +263,19 @@ local mappings = {
             "<cmd>lua require('spectre').open_file_search()<cr>",
             "in Current File"
         },
-        p = {"<cmd>lua require('spectre').open()<cr>", "in Project"}
+        p = {"<cmd>lua require('spectre').open()<cr>", "in Project"},
+        n = {"<cmd>lua vim.lsp.buf.rename()<cr>", "Rename"}
     },
     z = {"<cmd>ZenMode<cr>", "toggle zen"},
     T = {name = "Treesitter", i = {":TSConfigInfo<cr>", "Info"}},
     d = {
         name = "Diagnostics",
-        k = {"<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostic"},
-        j = {"<cmd>Lspsaga diagnostic_jump_prev<cr>", "Prev Diagnostic"}
+        -- k = {"<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostic"},
+        -- j = {"<cmd>Lspsaga diagnostic_jump_prev<cr>", "Prev Diagnostic"}
+        -- n = {"<cmd>LspGotoNext<cr>", "Next"},
+        -- N = {"<cmd>LspGotoPrev<cr>", "Previous"}
+        j = {"<cmd>lua vim.lsp.diagnostic.goto_next()<cr>", "Next"},
+        k = {"<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>", "Previous"}
     }
 }
 
