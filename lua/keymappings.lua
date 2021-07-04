@@ -129,6 +129,9 @@ map('v', '*', '"ay/<C-R>a<cr>', nore)
 -- peek definition
 map('n', 'gpd', ':Lspsaga preview_definition<cr>', opts)
 
+-- Slightly easier commands
+map('n', ';', ':', opts)
+
 if O.plugin.ts_hintobjects.active then
     map('o', 'm', [[:<C-U>lua require('tsht').nodes()<CR>]], opts)
     map('v', 'm', [[:lua require('tsht').nodes()<CR>]], nore)
