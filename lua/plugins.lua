@@ -626,11 +626,17 @@ return require("packer").startup(function(use)
         disable = not O.plugin.startuptime.active
     }
 
+    -- Visual undo tree
+    use "mbbill/undotree"
+
     -- Colorschemes
     use {'marko-cerovac/material.nvim'}
     use {'folke/tokyonight.nvim'}
     -- use {'Mofiqul/dracula.nvim'}
     -- use {'tomasiser/vim-code-dark'}
+
+    -- -- Explore tar archives
+    -- use "vim-scripts/tar.vim"
 
     -- TODO: add and configure these packages
     -- Git
@@ -638,20 +644,21 @@ return require("packer").startup(function(use)
     -- use {'tpope/vim-rhubarb', opt = true}
     -- pwntester/octo.nvim
 
-    -- https://github.com/rockerBOO/awesome-neovim
-    -- https://github.com/rmagatti/auto-session
-    -- https://github.com/kevinhwang91/nvim-hlslens
-    -- https://github.com/gcmt/wildfire.vim
-    -- https://github.com/neomake/neomake
-    -- https://github.com/tversteeg/registers.nvim
-    -- https://github.com/jbyuki/nabla.nvim
-    -- https://github.com/famiu/nvim-reload
-    -- https://github.com/ggandor/lightspeed.nvim
-    -- https://github.com/lvim-tech/lvim
-    -- https://github.com/jose-elias-alvarez/null-ls.nvim
+    -- https://github.com/rockerBOO/awesome-neovim -- collection
+
+    -- alt nvim ide
+    -- https://github.com/lvim-tech/lvim 
     -- https://github.com/NTBBloodbath/doom-nvim
-    -- https://github.com/MenkeTechnologies/zpwr#zpwr-features
-    -- https://github.com/justinmk/vim-dirvish
+    -- https://github.com/MenkeTechnologies/zpwr#zpwr-features 
+    -- https://github.com/kevinhwang91/nvim-hlslens
+
+    -- https://github.com/gcmt/wildfire.vim -- ts hint textobjects seems okay for this
+    -- https://github.com/neomake/neomake
+    -- https://github.com/tversteeg/registers.nvim -- which-key provides this
+    -- https://github.com/jbyuki/nabla.nvim 
+    -- https://github.com/famiu/nvim-reload
+    -- https://github.com/jose-elias-alvarez/null-ls.nvim
+    -- https://github.com/justinmk/vim-dirvish -- netrw/nvim-tree alternative
     -- https://github.com/mbbill/undotree
 
 end)
