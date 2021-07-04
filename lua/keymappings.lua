@@ -69,6 +69,7 @@ map('i', 'kj', '<ESC>', nore)
 -- map('n', '<TAB>', ':bnext<CR>', nore)
 -- map('n', '<S-TAB>', ':bprevious<CR>', nore)
 map('n', '<TAB>', '<cmd>b#<cr>', nore)
+map('n', '<S-TAB>', ':bnext<CR>', nore)
 
 -- Preserve register on pasting in visual mode
 map('v', 'p', 'pgvy', nore)
