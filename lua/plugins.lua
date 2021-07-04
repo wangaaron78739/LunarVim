@@ -546,7 +546,7 @@ return require("packer").startup(function(use)
                 full_inclusive_prefix_key = '<c-x>',
                 -- By default, the values of these will be decided at runtime,
                 -- based on `jump_to_first_match`
-                labels = nil,
+                labels = O.hint_labels,
                 cycle_group_fwd_key = nil,
                 cycle_group_bwd_key = nil
             }

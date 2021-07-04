@@ -35,6 +35,8 @@ O = {
     leader_key = "space",
     vnsip_dir = CONFIG_PATH .. "/snippets",
 
+    hint_labels = {'h', 'j', 'f', 'd', 'n', 'v', 's', 'l', 'a'},
+
     -- @usage pass a table with your desired languages
     treesitter = {
         ensure_installed = "all",

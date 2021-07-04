@@ -67,6 +67,7 @@ for obj, suffix in pairs(textobj_suffixes) do
     textobj_swap_keymaps[textobj_prefixes["swap"] .. suffix[1]] = '@' .. obj ..
                                                                       '.outer'
 end
+vim.g.ts_hint_textobject_keys = O.hint_labels -- Requires https://github.com/mfussenegger/nvim-ts-hint-textobject/pull/2
 
 -- Add which key menu entries
 local status, wk = pcall(require, "which-key")
