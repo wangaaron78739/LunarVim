@@ -289,6 +289,7 @@ require('lv-utils').define_augroups({
     --     {'FileType', 'latex', 'setlocal spell'}
     --     -- {'FileType', 'latex', 'set guifont "FiraCode Nerd Font:h15'},
     -- },
+    _packer_compile = {{'User', 'PackerComplete', '++once PackerCompile'}},
     _buffer_bindings = {
         {'FileType', 'dashboard', 'nnoremap <silent> <buffer> q :q<CR>'},
         {'FileType', 'lspinfo', 'nnoremap <silent> <buffer> q :q<CR>'},
