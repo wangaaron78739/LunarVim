@@ -56,7 +56,7 @@ return require("packer").startup(function(use)
 
     -- TODO refactor all of this (for now it works, but yes I know it could be wrapped in a simpler function)
     use {"neovim/nvim-lspconfig"}
-    use {"glepnir/lspsaga.nvim"} -- TODO: could remove this later
+    use {"glepnir/lspsaga.nvim", cmd = "Lspsaga"} -- TODO: could remove this later
     use {
         "kabouzeid/nvim-lspinstall",
         config = function()
@@ -92,11 +92,13 @@ return require("packer").startup(function(use)
         "hrsh7th/nvim-compe",
         config = function()
             require("lv-compe").config()
-        end
+        end,
+        event = "InsertEnter"
     }
 
     -- VSCode style snippets
     use {"hrsh7th/vim-vsnip", event = "InsertEnter"}
+    -- use {"hrsh7th/vim-vsnip-integ", event = "InsertEnter", after = "vim-vsnip"}
     use {"rafamadriz/friendly-snippets", event = "InsertEnter"}
 
     -- Treesitter
@@ -131,7 +133,8 @@ return require("packer").startup(function(use)
         "windwp/nvim-autopairs",
         config = function()
             require 'lv-autopairs'
-        end
+        end,
+        after = {"nvim-compe", "telescope.nvim"}
     }
 
     -- Comments
@@ -480,7 +483,8 @@ return require("packer").startup(function(use)
     use {
         "tzachar/compe-tabnine",
         run = "./install.sh",
-        requires = "hrsh7th/nvim-compe",
+        after = "nvim-compe",
+        -- event = "InsertEnter",
         disable = not O.plugin.tabnine.active
     }
 
@@ -492,7 +496,8 @@ return require("packer").startup(function(use)
         ft = "tex",
         config = function()
             require'lv-vimtex'.config()
-        end
+        end,
+        disable = not O.lang.latex.active
     }
 
     -- Rust tools
