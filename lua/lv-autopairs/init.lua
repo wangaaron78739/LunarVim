@@ -20,10 +20,12 @@ MUtils.completion_confirm = function()
     end
 end
 
-require("nvim-autopairs.completion.compe").setup({
-    map_cr = true, --  map <CR> on insert mode
-    map_complete = true -- it will auto insert `(` after select function or method item
-})
+if package.loaded['compe'] then
+    require("nvim-autopairs.completion.compe").setup({
+        map_cr = true, --  map <CR> on insert mode
+        map_complete = true -- it will auto insert `(` after select function or method item
+    })
+end
 
 npairs.setup({
     check_ts = true,
