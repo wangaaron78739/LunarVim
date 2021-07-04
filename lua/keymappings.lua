@@ -40,6 +40,20 @@ map('n', '<C-Down>', ':resize +2<CR>', opts)
 map('n', '<C-Left>', ':vertical resize -2<CR>', opts)
 map('n', '<C-Right>', ':vertical resize +2<CR>', opts)
 
+-- Move current line / block with Alt-j/k ala vscode.
+vim.api.nvim_set_keymap('n', '<A-j>', ':m .+1<CR>==',
+                        {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<A-k>', ':m .-2<CR>==',
+                        {noremap = true, silent = true})
+vim.api.nvim_set_keymap('i', '<A-j>', '<Esc>:m .+1<CR>==gi',
+                        {noremap = true, silent = true})
+vim.api.nvim_set_keymap('i', '<A-k>', '<Esc>:m .-2<CR>==gi',
+                        {noremap = true, silent = true})
+vim.api.nvim_set_keymap('x', '<A-j>', ':m \'>+1<CR>gv-gv',
+                        {noremap = true, silent = true})
+vim.api.nvim_set_keymap('x', '<A-k>', ':m \'<-2<CR>gv-gv',
+                        {noremap = true, silent = true})
+
 -- better indenting
 map('n', '<', 'v<', nore)
 map('n', '>', 'v>', nore)
