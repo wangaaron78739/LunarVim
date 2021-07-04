@@ -1,6 +1,8 @@
 local M = {}
 
 M.config = function()
+    if package.loaded['which-key'] then return end -- Don't reload
+
     require("which-key").setup {
         plugins = {
             marks = true, -- shows a list of your marks on ' and `
