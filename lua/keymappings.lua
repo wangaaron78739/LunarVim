@@ -79,6 +79,8 @@ map('v', 'P', 'p', nore) -- for normal p behaviour
 
 -- Original paste for when 'nvim-anywise-reg.lua' is installed
 map('n', '<M-p>', 'p', nore)
+map('n', '<M-C-p>', [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
+map('n', '<M-S-p>', [[<cmd>call setreg('p', getreg('+'), 'l')<cr>"pp]], nore) -- linewise paste
 
 -- Better nav for omnicomplete
 map('i', '<c-j>', '(\"\\<C-n>\")', expr)
