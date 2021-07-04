@@ -28,7 +28,7 @@ M.config = function()
             fill = {
                 guifg = {attribute = "fg", highlight = "Normal"},
                 guibg = {attribute = "bg", highlight = "StatusLineNC"}
-            },
+            }
             -- background = {
             --     guifg = {attribute = "fg", highlight = "Normal"},
             --     guibg = {attribute = "bg", highlight = "StatusLine"}

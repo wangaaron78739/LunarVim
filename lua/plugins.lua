@@ -60,9 +60,7 @@ return require("packer").startup(function(use)
     use {"glepnir/lspsaga.nvim", cmd = "Lspsaga"} -- TODO: could remove this later
     use {
         "kabouzeid/nvim-lspinstall",
-        config = function()
-            require('lv-lspinstall')
-        end,
+        config = function() require('lv-lspinstall') end,
         cmd = "LspInstall"
     }
     -- Utilities
@@ -73,27 +71,21 @@ return require("packer").startup(function(use)
     -- Telescope - search through things
     use {
         "nvim-telescope/telescope.nvim",
-        config = function()
-            require('lv-telescope')
-        end
+        config = function() require('lv-telescope') end
         -- cmd = "Telescope"
     }
     -- Snap
     use {
         "camspiers/snap",
         rocks = "fzy",
-        config = function()
-            require("lv-snap").config()
-        end,
+        config = function() require("lv-snap").config() end,
         disable = not O.plugin.snap.active
     }
 
     -- Autocomplete
     use {
         "hrsh7th/nvim-compe",
-        config = function()
-            require("lv-compe").config()
-        end,
+        config = function() require("lv-compe").config() end,
         event = "InsertEnter"
     }
 
@@ -108,16 +100,12 @@ return require("packer").startup(function(use)
     use {
         "kyazdani42/nvim-tree.lua",
         cmd = "NvimTreeToggle",
-        config = function()
-            require("lv-nvimtree").config()
-        end
+        config = function() require("lv-nvimtree").config() end
     }
 
     use {
         "lewis6991/gitsigns.nvim",
-        config = function()
-            require("lv-gitsigns").config()
-        end,
+        config = function() require("lv-gitsigns").config() end,
         event = "BufRead"
     }
 
@@ -132,9 +120,7 @@ return require("packer").startup(function(use)
     -- Autopairs
     use {
         "windwp/nvim-autopairs",
-        config = function()
-            require 'lv-autopairs'
-        end,
+        config = function() require 'lv-autopairs' end,
         after = {"nvim-compe", "telescope.nvim"}
     }
 
@@ -142,9 +128,7 @@ return require("packer").startup(function(use)
     use {
         "terrortylor/nvim-comment",
         event = "BufRead",
-        config = function()
-            require('nvim_comment').setup()
-        end
+        config = function() require('nvim_comment').setup() end
     }
 
     -- Color
@@ -158,9 +142,7 @@ return require("packer").startup(function(use)
 
     use {
         "akinsho/nvim-bufferline.lua",
-        config = function()
-            require("lv-bufferline").config()
-        end,
+        config = function() require("lv-bufferline").config() end,
         --         "romgrk/barbar.nvim",
         --         config = function()
         --             require 'lv-barbar'
@@ -174,9 +156,7 @@ return require("packer").startup(function(use)
     use {
         'phaazon/hop.nvim',
         event = 'BufRead',
-        config = function()
-            require('lv-hop').config()
-        end,
+        config = function() require('lv-hop').config() end,
         disable = not O.plugin.hop.active,
         opt = true
     }
@@ -184,9 +164,7 @@ return require("packer").startup(function(use)
     use {
         'monaqa/dial.nvim',
         event = 'BufRead',
-        config = function()
-            require('lv-dial').config()
-        end,
+        config = function() require('lv-dial').config() end,
         disable = not O.plugin.dial.active,
         opt = true
     }
@@ -195,9 +173,7 @@ return require("packer").startup(function(use)
         "ChristianChiarulli/dashboard-nvim",
         event = 'BufWinEnter',
         cmd = {"Dashboard", "DashboardNewFile", "DashboardJumpMarks"},
-        config = function()
-            require('lv-dashboard').config()
-        end,
+        config = function() require('lv-dashboard').config() end,
         disable = not O.plugin.dashboard.active,
         opt = true
     }
@@ -206,18 +182,14 @@ return require("packer").startup(function(use)
         "folke/zen-mode.nvim",
         cmd = "ZenMode",
         -- event = "BufRead",
-        config = function()
-            require('lv-zen').config()
-        end,
+        config = function() require('lv-zen').config() end,
         disable = not O.plugin.zen.active
     }
     -- Ranger
     use {
         "kevinhwang91/rnvimr",
         cmd = "Rnvimr",
-        config = function()
-            require('lv-rnvimr').config()
-        end,
+        config = function() require('lv-rnvimr').config() end,
         disable = not O.plugin.ranger.active
     }
 
@@ -225,9 +197,7 @@ return require("packer").startup(function(use)
     use {
         'andymass/vim-matchup',
         event = "CursorMoved",
-        config = function()
-            require('lv-matchup').config()
-        end,
+        config = function() require('lv-matchup').config() end,
         disable = not O.plugin.matchup.active
     }
 
@@ -342,18 +312,14 @@ return require("packer").startup(function(use)
     use {
         'windwp/nvim-spectre',
         event = "BufRead",
-        config = function()
-            require('spectre').setup()
-        end,
+        config = function() require('spectre').setup() end,
         disable = not O.plugin.spectre.active
     }
     -- lsp root with this nvim-tree will follow you
     use {
         "ahmedkhalf/lsp-rooter.nvim",
         event = "BufRead",
-        config = function()
-            require("lsp-rooter").setup()
-        end,
+        config = function() require("lsp-rooter").setup() end,
         disable = not O.plugin.lsp_rooter.active
     }
     -- Markdown preview
@@ -496,9 +462,7 @@ return require("packer").startup(function(use)
     use {
         "lervag/vimtex",
         ft = "tex",
-        config = function()
-            require'lv-vimtex'.config()
-        end,
+        config = function() require'lv-vimtex'.config() end,
         disable = not O.lang.latex.active
     }
 
@@ -516,9 +480,7 @@ return require("packer").startup(function(use)
     use {
         'akinsho/flutter-tools.nvim',
         requires = 'nvim-lua/plenary.nvim',
-        config = function()
-            require('lv-flutter-tools')
-        end,
+        config = function() require('lv-flutter-tools') end,
         ft = 'dart'
     }
 
@@ -605,9 +567,7 @@ return require("packer").startup(function(use)
     -- mkdir
     use {
         'jghauser/mkdir.nvim',
-        config = function()
-            require('mkdir')
-        end,
+        config = function() require('mkdir') end,
         event = "BufRead"
     }
 
@@ -671,9 +631,7 @@ return require("packer").startup(function(use)
     -- Vim Doge Documentation Generator
     use {
         "kkoomen/vim-doge",
-        config = function()
-            vim.cmd([[call doge#install()]])
-        end,
+        config = function() vim.cmd([[call doge#install()]]) end,
         cmd = "DogeGenerate"
     }
 

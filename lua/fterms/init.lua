@@ -20,18 +20,8 @@ local top = term:new():setup({
     cmd = "btm",
     dimensions = {height = 0.9, width = 0.9}
 })
-function _G.__fterm_broot()
-    broot:toggle()
-end
-function _G.__fterm_python()
-    python:toggle()
-end
-function _G.__fterm_gitui()
-    gitui:toggle()
-end
-function _G.__fterm_top()
-    top:toggle()
-end
-function _G.__fterm_spt()
-    spt:toggle()
-end
+function _G.__fterm_broot() broot:toggle() end
+function _G.__fterm_python() python:toggle() end
+function _G.__fterm_gitui() gitui:toggle() end
+function _G.__fterm_top() top:toggle() end
+function _G.__fterm_spt() spt:toggle() end

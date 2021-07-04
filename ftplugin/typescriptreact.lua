@@ -82,9 +82,7 @@ configs.emmet_ls = {
             'html', 'css', 'javascript', 'javascriptreact', 'typescript',
             'typescriptreact'
         },
-        root_dir = function()
-            return vim.loop.cwd()
-        end,
+        root_dir = function() return vim.loop.cwd() end,
         settings = {}
     }
 }

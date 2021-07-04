@@ -112,9 +112,7 @@ vim.fn.getbufvar(0, 'ts')
 
 table.insert(gls.left, {
     GitIcon = {
-        provider = function()
-            return ' '
-        end,
+        provider = function() return ' ' end,
         condition = condition.check_git_workspace,
         separator = ' ',
         separator_highlight = {'NONE', colors.bg},
@@ -334,9 +332,7 @@ table.insert(gls.right, {
 
 table.insert(gls.right, {
     Space = {
-        provider = function()
-            return ' '
-        end,
+        provider = function() return ' ' end,
         separator = ' ',
         separator_highlight = {'NONE', colors.bg},
         highlight = {colors.orange, colors.bg}
