@@ -61,7 +61,8 @@ return require("packer").startup(function(use)
         "kabouzeid/nvim-lspinstall",
         config = function()
             require('lv-lspinstall')
-        end
+        end,
+        cmd = "LspInstall"
     }
     -- Utilities
     use {"nvim-lua/popup.nvim"}
