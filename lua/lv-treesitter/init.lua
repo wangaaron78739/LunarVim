@@ -74,6 +74,11 @@ if (status) then
         mode = "o" -- Operator mode
     }
     wk.register(textobj_sel_keymaps, operators)
+    wk.register({
+        ["m"] = "Hint Objects",
+        ["."] = "Textsubject",
+        [";"] = "Textsubject-big"
+    }, operators)
     wk.register(textobj_swap_keymaps, normal)
     wk.register({
         [textobj_prefixes["swap"]] = "Swap"

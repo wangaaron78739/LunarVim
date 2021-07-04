@@ -407,13 +407,14 @@ wk.register(mappings, opts)
 --     }
 --     wk.register(visualMappings, visualOpts)
 
-    local surropts = {
-        mode = "n", -- NORMAL mode
-        prefix = "<leader>",
-        buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-        silent = true, -- use `silent` when creating keymaps
-        noremap = true, -- use `noremap` when creating keymaps
-        nowait = false -- use `nowait` when creating keymaps
-    }
-
+if O.plugin.surround.active then
+    local ops = {mode = "o"}
+    wk.register({["s"] = "Surround", ["S"] = "Surround Rest", ["ss"] = "Line"},
+                ops)
 end
+if O.plugin.sneak.active then
+    local ops = {mode = "o"}
+    wk.register({["z"] = "Light speed", ["Z"] = "Light speed bwd"}, ops)
+end
+
+-- FIXME: duplicate entries for some of the operators
