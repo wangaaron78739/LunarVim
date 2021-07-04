@@ -85,9 +85,9 @@ O = {
         gist = {active = enable_plugins_by_default},
         dap_install = {active = enable_plugins_by_default},
         visual_multi = {active = enable_plugins_by_default},
-        sneak = {active = enable_plugins_by_default},
+        sneak = {active = enable_plugins_by_default}, -- Uses lightspeed.nvim
         quickscope = {active = enable_plugins_by_default},
-        surround = {active = enable_plugins_by_default},
+        surround = {active = enable_plugins_by_default}, -- Uses vim-sandwhich
         fzf = {active = enable_plugins_by_default},
         slime = {active = enable_plugins_by_default},
         bullets = {active = enable_plugins_by_default},

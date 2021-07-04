@@ -1,4 +1,6 @@
 -- if not package.loaded['nvim-treesitter'] then return end
+-- 
+-- Custom parsers
 local parser_config = require"nvim-treesitter.parsers".get_parser_configs()
 -- parser_config.make = {
 --     install_info = {
@@ -16,6 +18,7 @@ local parser_config = require"nvim-treesitter.parsers".get_parser_configs()
 --     -- used_by = {"bar", "baz"} -- additional filetypes that use this parser
 -- }
 
+-- Custom text objects
 local textobj_prefixes = {
     goto_next = "]",
     goto_previous = "[",
@@ -25,8 +28,7 @@ local textobj_prefixes = {
     outer = "a",
     swap = "<leader>a"
 }
--- Next and previous respectively
-local textobj_suffixes = {
+local textobj_suffixes = { -- Next and previous respectively
     ["function"] = {"f", "F"},
     ["class"] = {"m", "M"},
     ["parameter"] = {"a", "A"},
@@ -65,6 +67,8 @@ for obj, suffix in pairs(textobj_suffixes) do
     textobj_swap_keymaps[textobj_prefixes["swap"] .. suffix[1]] = '@' .. obj ..
                                                                       '.outer'
 end
+
+-- Add which key menu entries
 local status, wk = pcall(require, "which-key")
 if (status) then
     local normal = {
