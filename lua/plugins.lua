@@ -602,6 +602,13 @@ return require("packer").startup(function(use)
         disable = not O.plugin.ts_hintobjects.active
     }
 
+    -- Startup profiler
+    use {
+        'tweekmonster/startuptime.vim',
+        cmd = "StartupTime",
+        disable = not O.plugin.startuptime.active
+    }
+
     -- Colorschemes
     use {'marko-cerovac/material.nvim'}
     use {'folke/tokyonight.nvim'}
