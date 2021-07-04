@@ -8,6 +8,7 @@ cmd('filetype plugin on') -- filetype detection
 cmd('let &titleold="' .. TERMINAL .. '"')
 cmd('set inccommand=split') -- show what you are substituting in real time
 cmd('set iskeyword+=-') -- treat dash as a separate word
+cmd('set sessionoptions+=globals') -- Track global variables in sessionopts
 cmd('set whichwrap+=<,>,[,],h,l') -- move to next line with theses keys
 if O.transparent_window then
     cmd('au ColorScheme * hi Normal ctermbg=none guibg=none')
