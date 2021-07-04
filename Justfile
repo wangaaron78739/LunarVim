@@ -77,17 +77,6 @@ save-all: fix-head
 save: fix-head
     git ui 
     just yadm-save
-
-# Pull changes from my repository (rebase)
-update: 
-	git pull --rebase
-
-# Update LunarVim from ChristianChiarulli's repo
-update-lunarvim: save
-    git fetch upstream
-    git merge upstream/master master
-    just yadm-save "update lunarvim"
-    just update-plugins
     
 # Add me and my friends remotes
 remotes:
