@@ -19,6 +19,7 @@ O.ignore_case = true
 O.smart_case = true
 O.shell = 'fish'
 O.lushmode = false
+O.hlsearch = true
 
 -- After changing plugin config it is recommended to run :PackerCompile
 local disable_plugins = {

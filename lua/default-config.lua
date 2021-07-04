@@ -29,9 +29,10 @@ O = {
     smart_case = true,
     scrolloff = 0,
     lushmode = false,
-    hl_search = true,
+    hl_search = false,
     transparent_window = false,
     leader_key = "space",
+    vnsip_dir = CONFIG_PATH .. "/snippets",
 
     -- @usage pass a table with your desired languages
     treesitter = {
