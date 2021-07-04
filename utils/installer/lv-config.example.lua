@@ -61,7 +61,6 @@ O.lang.python.analysis.type_checking = "off"
 O.lang.python.analysis.auto_search_paths = true
 O.lang.python.analysis.use_library_code_types = true
 
-
 -- lua
 -- TODO look into stylua
 O.lang.lua.formatter = 'lua-format'
@@ -95,7 +94,7 @@ O.lang.php.environment.php_version = "7.4"
 O.lang.php.autoformat = false
 O.lang.php.diagnostics.signs = true
 O.lang.php.diagnostics.underline = true
-O.lang.php.filetypes = { "php", "phtml"  }
+O.lang.php.filetypes = {"php", "phtml"}
 
 -- create custom autocommand field (This would be easy with lua)
 

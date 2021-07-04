@@ -1,7 +1,6 @@
 -- if not package.loaded['galaxyline'] then
 --   return
 -- end
-
 local gl = require('galaxyline')
 -- get my theme in galaxyline repo
 -- local colors = require('galaxyline.theme').default

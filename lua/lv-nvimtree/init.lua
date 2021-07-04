@@ -1,7 +1,6 @@
---if not package.loaded['nvim-tree.view'] then
+-- if not package.loaded['nvim-tree.view'] then
 --  return
---end
-
+-- end
 local M = {}
 
 M.config = function()
