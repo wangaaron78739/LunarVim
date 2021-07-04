@@ -288,10 +288,6 @@ require('lv-utils').define_augroups({
         {'BufWinEnter,BufRead,BufNewFile', '*.just', 'setlocal filetype=just'},
         {'BufWinEnter,BufRead,BufNewFile', 'Justfile', 'setlocal filetype=just'}
     },
-    _zig = {
-        {"BufRead,BufNewFile", "*.zig", "set filetype=zig"},
-        {"BufRead,BufNewFile", "*.zir", "set filetype=zir"}
-    },
     -- _latex = {
     --     {'FileType', 'latex', 'VimtexCompile'},
     --     {'FileType', 'latex', 'setlocal wrap'},
