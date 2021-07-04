@@ -619,5 +619,10 @@ return require("packer").startup(function(use)
     -- https://github.com/jbyuki/nabla.nvim
     -- https://github.com/famiu/nvim-reload
     -- https://github.com/ggandor/lightspeed.nvim
+    -- https://github.com/lvim-tech/lvim
+    -- https://github.com/jose-elias-alvarez/null-ls.nvim
+    -- https://github.com/NTBBloodbath/doom-nvim
+    -- https://github.com/MenkeTechnologies/zpwr#zpwr-features
+    -- https://github.com/justinmk/vim-dirvish
 
 end)
