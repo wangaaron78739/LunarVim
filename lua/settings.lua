@@ -5,8 +5,8 @@ local opt = vim.opt
 ---  VIM ONLY COMMANDS  ---
 
 cmd('filetype plugin on') -- filetype detection
-cmd('let &titleold="' .. TERMINAL .. '"')
 cmd('set inccommand=nosplit') -- show what you are substituting in real time
+opt.inccommand = "nosplit"
 cmd('set iskeyword+=-') -- treat dash as a separate word
 cmd('set sessionoptions+=globals') -- Track global variables in sessionopts
 cmd('set whichwrap+=<,>,[,],h,l') -- move to next line with theses keys
@@ -59,5 +59,7 @@ opt.relativenumber  = O.relative_number         -- set relative numbered lines
 opt.signcolumn      = "yes"                     -- always show the sign column, otherwise it would shift the text each time
 opt.wrap            = O.wrap_lines              -- display lines as one long line
 opt.scrolloff       = O.scrolloff               -- Scrolloffset to block the cursor from reaching the top/bottom
+opt.breakindent     = true                      -- Apply indentation for wrapped lines
+opt.pastetoggle     = '<F3>'                    -- Enter Paste Mode with
 -- LuaFormatter on
 

@@ -264,6 +264,8 @@ O = {
     }
 }
 
+vim.cmd('let &titleold="' .. TERMINAL .. '"')
+
 -- TODO find a new home for these autocommands
 require('lv-utils').define_augroups({
     _general_settings = {
