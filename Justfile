@@ -40,11 +40,11 @@ settings:
 # Open plugins.lua (and PackerInstall automatically afterwards)
 plugins:
 	nvim lua/plugins.lua
-	nvim +PackerSync
+	nvim lua/plugins.lua +PackerSync
 
 # Update Plugins using Packer
 update-plugins:
-    nvim +PackerSync
+    nvim lua/plugins.lua +PackerSync
 
 # Fetch new changes 
 fetch:

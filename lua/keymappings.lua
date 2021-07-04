@@ -148,6 +148,8 @@ map('n', 'gi', "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 map('n', 'K', "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
 map('n', '<C-k>', "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 
+-- map('c', ';', "<CR>", opts)
+
 if O.plugin.ts_hintobjects.active then
     map('o', 'm', [[:<C-U>lua require('tsht').nodes()<CR>]], opts)
     map('v', 'm', [[:lua require('tsht').nodes()<CR>]], nore)

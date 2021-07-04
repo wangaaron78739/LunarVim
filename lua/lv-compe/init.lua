@@ -6,7 +6,7 @@ local M = {}
 vim.g.vsnip_snippet_dir = O.vnsip_dir
 
 M.config = function()
-    opt = {
+    local opt = {
         enabled = O.auto_complete,
         autocomplete = true,
         debug = false,
@@ -18,7 +18,14 @@ M.config = function()
         max_abbr_width = 100,
         max_kind_width = 100,
         max_menu_width = 100,
-        documentation = true,
+        documentation = {
+            border = 'single',
+            winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
+            max_width = 120,
+            min_width = 60,
+            max_height = math.floor(vim.o.lines * 0.3),
+            min_height = 1
+        },
 
         source = {
             path = {kind = "   (Path)"},

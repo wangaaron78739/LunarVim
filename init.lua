@@ -3,7 +3,6 @@ vim.cmd('luafile ' .. CONFIG_PATH .. '/lv-config.lua')
 require 'keymappings'
 require 'settings'
 require 'plugins'
-require 'lv-utils'
 require 'lv-galaxyline'
 require 'lv-which-key'
 require 'lv-treesitter'
