@@ -260,7 +260,6 @@ return require("packer").startup(function(use)
         "lukas-reineke/indent-blankline.nvim",
         event = "BufRead",
         setup = function()
-
             vim.g.indentLine_enabled = 1
             vim.g.indent_blankline_char = "▏"
 
