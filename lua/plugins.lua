@@ -112,7 +112,6 @@ return require("packer").startup(function(use)
 
     use {
         "lewis6991/gitsigns.nvim",
-
         config = function()
             require("lv-gitsigns").config()
         end,
@@ -477,7 +476,7 @@ return require("packer").startup(function(use)
         'christoomey/vim-tmux-navigator',
         disable = not O.plugin.tmux_navigator.active
     }
-    
+
     -- Tabnine
     use {
         "tzachar/compe-tabnine",
@@ -656,6 +655,15 @@ return require("packer").startup(function(use)
 
     -- Visual undo tree
     use {"mbbill/undotree", cmd = {"UndotreeToggle", "UndotreeShow"}}
+
+    -- Vim Doge Documentation Generator
+    use {
+        "kkoomen/vim-doge",
+        config = function()
+            vim.cmd([[call doge#install()]])
+        end,
+        cmd = "DogeGenerate"
+    }
 
     -- Colorschemes
     -- use {'marko-cerovac/material.nvim'}
