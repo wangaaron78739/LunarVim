@@ -21,7 +21,9 @@ O.shell = 'fish'
 O.lushmode = false
 
 -- After changing plugin config it is recommended to run :PackerCompile
-local disable_plugins = {"lsp_rooter", "snap", "octo", "lush", "fzf", "tabnine"}
+local disable_plugins = {
+    "lsp_rooter", "snap", "octo", "lush", "fzf", "tabnine", "tmux_navigator"
+}
 for _, v in ipairs(disable_plugins) do O.plugin[v].active = false end
 -- O.plugin.lsp_rooter.active = false -- This is actually more confusing sometimes
 -- O.plugin.snap.active = false

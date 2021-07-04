@@ -93,7 +93,8 @@ O = {
         bullets = {active = enable_plugins_by_default},
         vista = {active = enable_plugins_by_default},
         startuptime = {active = enable_plugins_by_default},
-        tabnine = {active = enable_plugins_by_default}
+        tabnine = {active = enable_plugins_by_default},
+        tmux_navigator = {active = enable_plugins_by_default}
 
     },
 

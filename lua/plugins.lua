@@ -472,6 +472,20 @@ return require("packer").startup(function(use)
         disable = not O.plugin.dap_install.active
     }
 
+    -- Tmux navigator
+    use {
+        'christoomey/vim-tmux-navigator',
+        disable = not O.plugin.tmux_navigator.active
+    }
+    
+    -- Tabnine
+    use {
+        "tzachar/compe-tabnine",
+        run = "./install.sh",
+        requires = "hrsh7th/nvim-compe",
+        disable = not O.plugin.tabnine.active
+    }
+
     -- LANGUAGE SPECIFIC GOES HERE
     -- Latex 
     -- TODO what filetypes should this be active for?
@@ -492,14 +506,6 @@ return require("packer").startup(function(use)
 
     -- Elixir
     use {"elixir-editors/vim-elixir", ft = {"elixir", "eelixir", "euphoria3"}}
-
-    -- Tabnine
-    use {
-        "tzachar/compe-tabnine",
-        run = "./install.sh",
-        requires = "hrsh7th/nvim-compe",
-        disable = not O.plugin.tabnine.active
-    }
 
     -- Flutter
     use {

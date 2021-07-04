@@ -5,11 +5,13 @@ local expr = {noremap = true, silent = true, expr = true}
 
 -- TODO: change all the vim.cmd to vim.api.nvim_set_keymap
 -- vim.api.nvim_set_keymap('n', '-', ':RnvimrToggle<CR>', nore)
--- better window movement
+-- better window movement -- tmux_navigator supplies these if installed
+if not O.plugin.tmux_navigator.active then
 map('n', '<C-h>', '<C-w>h', opts)
 map('n', '<C-j>', '<C-w>j', opts)
 map('n', '<C-k>', '<C-w>k', opts)
 map('n', '<C-l>', '<C-w>l', opts)
+end
 -- TODO fix this
 -- Terminal window navigation
 map('t', '<C-h>', [[<C-\><C-N><C-w>h]], nore)
