@@ -94,6 +94,15 @@ M.config = function()
         {key = "h", cb = tree_cb("close_node")},
         {key = "v", cb = tree_cb("vsplit")}
     }
+    require "lv-utils".define_augroups {
+        _nvimtree_statusline = {
+            {
+                "BufEnter,BufWinEnter,WinEnter,CmdwinEnter",
+                "*",
+                [[if bufname('%') == "NvimTree" | set laststatus=0 | else | set laststatus=2 | endif]]
+            }
+        }
+    }
 end
 
 local view = require 'nvim-tree.view'
