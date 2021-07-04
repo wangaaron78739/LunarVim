@@ -177,7 +177,7 @@ O = {
                 signs = true,
                 underline = true
             },
-            filetypes = {'rb', 'erb', 'rakefile'}
+            filetypes = {'rb', 'erb', 'rakefile', 'ruby'}
         },
         go = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
         elixir = {autoformat = AUTOFORMAT_ENABLED_BY_DEFAULT},
