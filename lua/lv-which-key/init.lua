@@ -308,11 +308,6 @@ M.config = function()
             },
             p = {"<cmd>lua require('spectre').open()<cr>", "in Project"}
         },
-        S = {
-            name = "Session",
-            s = {"<cmd>SessionSave<cr>", "Save Session"},
-            l = {"<cmd>SessionLoad<cr>", "Load Session"}
-        },
         z = {"<cmd>ZenMode<cr>", "toggle zen"},
         T = {name = "Treesitter", i = {":TSConfigInfo<cr>", "Info"}},
         d = {

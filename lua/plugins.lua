@@ -577,7 +577,8 @@ return require("packer").startup(function(use)
     -- 'smooth' scrolling
     -- use 'karb94/neoscroll.nvim'
 
-    -- Language plugins
+    -- Session Management
+    use "rmagatti/auto-session"
 
     -- treesitter extensions
     use {
