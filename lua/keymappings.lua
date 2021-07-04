@@ -41,18 +41,15 @@ map('n', '<C-Left>', ':vertical resize -2<CR>', opts)
 map('n', '<C-Right>', ':vertical resize +2<CR>', opts)
 
 -- Move current line / block with Alt-j/k ala vscode.
-vim.api.nvim_set_keymap('n', '<A-j>', ':m .+1<CR>==',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<A-k>', ':m .-2<CR>==',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('i', '<A-j>', '<Esc>:m .+1<CR>==gi',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('i', '<A-k>', '<Esc>:m .-2<CR>==gi',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('x', '<A-j>', ':m \'>+1<CR>gv-gv',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('x', '<A-k>', ':m \'<-2<CR>gv-gv',
-                        {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<C-A-j>', ':m .+1<CR>==', nore)
+vim.api.nvim_set_keymap('n', '<C-A-k>', ':m .-2<CR>==', nore)
+vim.api.nvim_set_keymap('i', '<A-j>', '<Esc>:m .+1<CR>==gi', nore)
+vim.api.nvim_set_keymap('i', '<A-k>', '<Esc>:m .-2<CR>==gi', nore)
+vim.api.nvim_set_keymap('x', '<A-j>', ':m \'>+1<CR>gv-gv', nore)
+vim.api.nvim_set_keymap('x', '<A-k>', ':m \'<-2<CR>gv-gv', nore)
+-- Move selected line / block of text in visual mode
+map('x', 'K', ':move \'<-2<CR>gv=gv', nore)
+map('x', 'J', ':move \'>+1<CR>gv=gv', nore)
 
 -- better indenting
 map('n', '<', 'v<', nore)
@@ -70,10 +67,6 @@ map('i', 'kj', '<ESC>', nore)
 map('n', '<TAB>', ':bnext<CR>', nore)
 map('n', '<S-TAB>', ':bprevious<CR>', nore)
 
--- Move selected line / block of text in visual mode
-map('x', 'K', ':move \'<-2<CR>gv=gv', nore)
-map('x', 'J', ':move \'>+1<CR>gv=gv', nore)
-
 -- Preserve register on pasting in visual mode
 map('v', 'p', 'pgvy', nore)
 map('v', 'P', 'p', nore) -- for normal p behaviour
@@ -89,10 +82,8 @@ map('i', '<S-TAB>', '(\"\\<C-p>\")', expr)
 -- vim.cmd('inoremap <expr> <S-TAB> (\"\\<C-p>\")')
 
 -- QuickFix
-vim.api.nvim_set_keymap('n', '<C-A-j>', ':cnext<CR>',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<C-A-k>', ':cprev<CR>',
-                        {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<C-A-j>', ':cnext<CR>', nore)
+vim.api.nvim_set_keymap('n', '<C-A-k>', ':cprev<CR>', nore)
 
 -- Escape key clears search and spelling highlights
 vim.api.nvim_set_keymap('n', '<ESC>', ":nohls | :setlocal nospell<ESC>",
