@@ -10,13 +10,14 @@ yadm-save message="update nvim config": fix-head
     yadm commit -m "{{message}}"
 
 # TODO: install in an isolated virutal environment? (use pipx)
-# Install dependencies
+# Install dependencies # TODO: there are some dependencies not included here
 install:
     sudo apt install ranger libjpeg8-dev zlib1g-dev libxtst-dev 
     pip3 install ueberzug
     pip3 install neovim-remote
     pip3 install pynvim --user
     npm install -g tree-sitter-cli
+    cargo install stylua
     git remote add upstream https://github.com/ChristianChiarulli/LunarVim.git
     nvim # Run once to install packer and stuff
     nvim +PackerInstall # Run again to install the plugins
