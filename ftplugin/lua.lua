@@ -42,8 +42,13 @@ end
 
 local lua_arguments = {}
 
+local stylua = {
+    formatCommand = "stylua --stdin-filepath . -",
+    formatStdin = true
+}
+
 local luaFormat = {
-    formatCommand = "lua-format -i --column-limit=80",
+    formatCommand = "lua-format --column-limit=80",
     formatStdin = true
 }
 
@@ -56,6 +61,8 @@ if O.lang.lua.formatter == 'lua-format' then
     table.insert(lua_arguments, luaFormat)
 elseif O.lang.lua.formatter == 'lua-fmt' then
     table.insert(lua_arguments, lua_fmt)
+elseif O.lang.lua.formatter == 'stylua' then
+    table.insert(lua_arguments, stylua)
 end
 
 require"lspconfig".efm.setup {
