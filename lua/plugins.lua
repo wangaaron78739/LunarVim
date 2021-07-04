@@ -493,6 +493,16 @@ return require("packer").startup(function(use)
     -- Elixir
     use {"elixir-editors/vim-elixir", ft = {"elixir", "eelixir", "euphoria3"}}
 
+    -- Flutter
+    use {
+        'akinsho/flutter-tools.nvim',
+        requires = 'nvim-lua/plenary.nvim',
+        config = function()
+            require('lv-flutter-tools')
+        end,
+        ft = 'dart'
+    }
+
     -- Justfile
     use {"NoahTheDuke/vim-just", ft = 'just'}
 
