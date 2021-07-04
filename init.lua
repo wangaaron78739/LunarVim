@@ -1,6 +1,6 @@
 require 'default-config'
-require 'keymappings'
 vim.cmd('luafile ' .. CONFIG_PATH .. '/lv-config.lua')
+require 'keymappings'
 require 'settings'
 require 'plugins'
 require 'lv-utils'
