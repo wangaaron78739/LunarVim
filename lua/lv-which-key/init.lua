@@ -226,8 +226,8 @@ local mappings = {
     },
     l = {
         name = "LSP",
-        a = {"<cmd>Lspsaga code_action<cr>", "Code Action"},
-        A = {"<cmd>Lspsaga range_code_action<cr>", "Selected Action"},
+        a = {"<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action"},
+        A = {"<cmd>lua vim.lsp.buf.range_code_action()<cr>", "Selected Action"},
         d = {
             "<cmd>Telescope lsp_document_diagnostics<cr>",
             "Document Diagnostics"
@@ -236,17 +236,18 @@ local mappings = {
             "<cmd>Telescope lsp_workspace_diagnostics<cr>",
             "Workspace Diagnostics"
         },
-        h = {"<cmd>Lspsaga hover_doc<cr>", "Hover"},
-        -- h = {"<cmd>LspHover<cr>", "Hover"},
+        h = {"<cmd>lua vim.lsp.buf.hover()<cr>", "Hover"}, -- h = {"<cmd>LspHover<cr>", "Hover"},
         i = {"<cmd>LspInfo<cr>", "Info"},
-        l = {"<cmd>Lspsaga lsp_finder<cr>", "LSP Finder"},
-        L = {"<cmd>Lspsaga show_line_diagnostics<cr>", "Line Diagnostics"},
+        f = {"<cmd>Lspsaga lsp_finder<cr>", "LSP Finder"},
+        l = {"<cmd>Lspsaga show_line_diagnostics<cr>", "Line Diagnostics"},
         p = {"<cmd>Lspsaga preview_definition<cr>", "Preview Definition"},
         q = {"<cmd>Telescope quickfix<cr>", "Quickfix"},
-        r = {"<cmd>Lspsaga rename<cr>", "Rename"},
+        r = {"<cmd>lua vim.lsp.buf.rename()<cr>", "Rename"}, -- r = {"<cmd>Lspsaga rename<cr>", "Rename"},
         R = {"<cmd>Telescope lsp_references<cr>", "References"},
-        t = {"<cmd>LspTypeDefinition<cr>", "Type Definition"},
-        x = {"<cmd>cclose<cr>", "Close Quickfix"},
+        t = {
+            "<cmd>lua require 'lv-utils'.type_definition()<cr>",
+            "Type Definition"
+        },
         s = {"<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols"},
         S = {
             "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",

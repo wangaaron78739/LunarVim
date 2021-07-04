@@ -112,6 +112,7 @@ map('t', '<A-q>', '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', nore)
 
 -- Format buffer -- TODO: switch between neoformat and lsp
 map('n', 'gf', '<cmd>lua vim.lsp.buf.formatting()<cr>', nore)
+map('n', 'gh', '<cmd>lua vim.lsp.buf.hover()<cr>', nore)
 
 -- Spell checking
 map('i', '<C-l>', '<c-g>u<Esc>[s1z=`]a<c-g>u]]', nore)
