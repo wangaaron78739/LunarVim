@@ -77,6 +77,9 @@ map('n', '<S-TAB>', ':bnext<CR>', nore)
 map('v', 'p', 'pgvy', nore)
 map('v', 'P', 'p', nore) -- for normal p behaviour
 
+-- Original paste for when 'nvim-anywise-reg.lua' is installed
+map('n', '<M-p>', 'p', nore)
+
 -- Better nav for omnicomplete
 map('i', '<c-j>', '(\"\\<C-n>\")', expr)
 -- vim.cmd('inoremap <expr> <c-j> (\"\\<C-n>\")')

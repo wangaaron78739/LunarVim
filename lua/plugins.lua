@@ -655,9 +655,28 @@ return require("packer").startup(function(use)
         cmd = "DogeGenerate"
     }
 
+    -- Autoformat everything
     use {
         "sbdchd/neoformat",
         config = function() require'lv-neoformat'.config() end
+    }
+
+    -- 'Smarter' pasting
+    use {
+        'AckslD/nvim-anywise-reg.lua',
+        event = 'BufRead',
+        config = function()
+            require("anywise_reg").setup {
+                operators = {'y', 'd', 'c'},
+                textobjects = {
+                    {'a', 'i'}, -- Add 'i' if you want to track inner selections as well
+                    -- TODO: how to auto get all the textobjects in the world
+                    {'w', 'W', 'b', 'B', '(', 'a', 'f', 'm', 's', '/', 'c'}
+                },
+                paste_key = 'p',
+                register_print_cmd = false
+            }
+        end
     }
 
     -- Colorschemes
