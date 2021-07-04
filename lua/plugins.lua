@@ -468,7 +468,7 @@ return require("packer").startup(function(use)
     -- Debugger management
     use {
         'Pocco81/DAPInstall.nvim',
-        event = "BufRead",
+        cmd = "DIInstall",
         disable = not O.plugin.dap_install.active
     }
 
@@ -593,7 +593,7 @@ return require("packer").startup(function(use)
     use {"liuchengxu/vista.vim", disable = not O.plugin.vista.active}
 
     -- Helper for lists
-    use {"dkarter/bullets.vim", disable = not O.plugin.bullets.active}
+    use {"dkarter/bullets.vim", ft = "markdown", disable = not O.plugin.bullets.active}
 
     -- 'smooth' scrolling
     -- use 'karb94/neoscroll.nvim'
@@ -635,11 +635,11 @@ return require("packer").startup(function(use)
     }
 
     -- Visual undo tree
-    use "mbbill/undotree"
+    use {"mbbill/undotree", cmd = {"UndotreeToggle", "UndotreeShow"}}
 
     -- Colorschemes
-    use {'marko-cerovac/material.nvim'}
-    use {'folke/tokyonight.nvim'}
+    -- use {'marko-cerovac/material.nvim'}
+    -- use {'folke/tokyonight.nvim'}
     -- use {'Mofiqul/dracula.nvim'}
     -- use {'tomasiser/vim-code-dark'}
 
