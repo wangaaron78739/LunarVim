@@ -14,6 +14,10 @@ if O.transparent_window then
     cmd('au ColorScheme * hi Normal ctermbg=none guibg=none')
 end
 
+--- COLORSCHEME ---
+
+vim.g.colors_name = O.colorscheme
+
 ---  SETTINGS  ---
 
 -- LuaFormatter off
