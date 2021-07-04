@@ -591,14 +591,20 @@ return require("packer").startup(function(use)
         "RRethy/nvim-treesitter-textsubjects",
         disable = not O.plugin.ts_textsubjects.active
     }
-    use {"windwp/nvim-ts-autotag", disable = not O.plugin.ts_autotag.active}
+    use { -- TODO: check if this lazy load is ok
+        "windwp/nvim-ts-autotag",
+        event = "BufRead",
+        disable = not O.plugin.ts_autotag.active
+    }
     use {
         "romgrk/nvim-treesitter-context",
+        event = "BufRead",
         disable = not O.plugin.ts_context.active
     }
     use {"p00f/nvim-ts-rainbow", disable = not O.plugin.ts_rainbow.active}
     use {
         "mfussenegger/nvim-ts-hint-textobject",
+        event = "BufRead",
         disable = not O.plugin.ts_hintobjects.active
     }
 
