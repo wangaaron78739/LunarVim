@@ -31,6 +31,7 @@ local disable_plugins = {
   "tabnine",
   "tmux_navigator",
   "hop",
+  "lazygit",
 }
 for _, v in ipairs(disable_plugins) do
   O.plugin[v].active = false
