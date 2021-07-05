@@ -380,10 +380,14 @@ require("lv-utils").define_augroups {
   },
   _mode_switching = {
     -- will switch between absolute and relative line numbers depending on mode
-    { "InsertEnter", "*", "setlocal number norelativenumber nocursorline" },
-    { "InsertLeave ", "*", "setlocal relativenumber cursorline" },
-    { "WinEnter", "*", "setlocal cursorline" },
-    { "WinLeave", "*", "setlocal nocursorline" },
+    {
+      "InsertEnter",
+      "*",
+      "if &relativenumber | let g:ms_relativenumberoff = 1 | setlocal number norelativenumber | endif",
+    },
+    { "InsertLeave", "*", 'if exists("g:ms_relativenumberoff") | setlocal relativenumber | endif' },
+    --[[ { "InsertEnter", "*", "if &cursorline | let g:ms_cursorlineoff = 1 | setlocal nocursorline | endif" },
+    { "InsertLeave", "*", 'if exists("g:ms_cursorlineoff") | setlocal cursorline | endif' }, ]]
   },
   _neoformat = {
     {
