@@ -149,6 +149,7 @@ local mappings = {
       "<cmd>BufferLineSortByExtension<cr>",
       "sort BufferLines automatically by language",
     },
+    S = { "<cmd>setlocal spell!", "Spellcheck" },
   },
   -- " Available Debug Adapters:
   -- "   https://microsoft.github.io/debug-adapter-protocol/implementors/adapters/

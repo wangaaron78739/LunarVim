@@ -124,6 +124,9 @@ return require("packer").startup(function(use)
     event = "BufRead",
     config = function()
       require("nvim_comment").setup()
+      -- Fix gcc keymapping
+      -- vim.api.nvim_del_keymap('n', 'gc')
+      vim.api.nvim_set_keymap("n", "gcc", "<cmd>CommentToggle<cr>", { noremap = true, silent = true })
     end,
   }
 
@@ -158,17 +161,15 @@ return require("packer").startup(function(use)
       require("lv-hop").config()
     end,
     disable = not O.plugin.hop.active,
-    opt = true,
   }
   -- Enhanced increment/decrement
   use {
     "monaqa/dial.nvim",
-    event = "BufRead",
+    cmd = { "DialIncrement", "DialDecrement" },
     config = function()
       require("lv-dial").config()
     end,
     disable = not O.plugin.dial.active,
-    opt = true,
   }
   -- Dashboard
   use {
@@ -179,7 +180,6 @@ return require("packer").startup(function(use)
       require("lv-dashboard").config()
     end,
     disable = not O.plugin.dashboard.active,
-    opt = true,
   }
   -- Zen Mode
   use {
@@ -237,13 +237,13 @@ return require("packer").startup(function(use)
   -- Treesitter playground
   use {
     "nvim-treesitter/playground",
-    event = "BufRead",
+    cmd = "TSPlaygroundToggle",
     disable = not O.plugin.ts_playground.active,
   }
 
   use {
     "lukas-reineke/indent-blankline.nvim",
-    event = "BufRead",
+    event = "InsertEnter",
     setup = function()
       vim.g.indentLine_enabled = 1
       vim.g.indent_blankline_char = "▏"
@@ -299,6 +299,7 @@ return require("packer").startup(function(use)
   -- Debugging
   use {
     "mfussenegger/nvim-dap",
+    -- TODO: load on command
     config = function()
       local dap = require "dap"
       dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
@@ -310,6 +311,7 @@ return require("packer").startup(function(use)
   use {
     "kevinhwang91/nvim-bqf",
     event = "BufRead",
+    -- cmd = "copen",
     disable = not O.plugin.bqf.active,
   }
   -- Floating terminal
@@ -328,7 +330,7 @@ return require("packer").startup(function(use)
   -- Search & Replace
   use {
     "windwp/nvim-spectre",
-    event = "BufRead",
+    event = "BufRead", -- TODO: load on command
     config = function()
       require("spectre").setup()
     end,
@@ -424,19 +426,20 @@ return require("packer").startup(function(use)
   -- Octo.nvim
   use {
     "pwntester/octo.nvim",
-    event = "BufRead",
+    cmd = "Octo",
     disable = not O.plugin.octo.active,
   }
   -- Diffview
   use {
     "sindrets/diffview.nvim",
     event = "BufRead",
+    -- ft = 'diff'?
     disable = not O.plugin.diffview.active,
   }
   -- Easily Create Gists
   use {
     "mattn/vim-gist",
-    event = "BufRead",
+    cmd = "Gist",
     disable = not O.plugin.gist.active,
     requires = "mattn/webapi-vim",
   }
@@ -449,7 +452,8 @@ return require("packer").startup(function(use)
   -- HTML preview
   use {
     "turbio/bracey.vim",
-    event = "BufRead",
+    -- event = "BufRead",
+    ft = "html",
     run = "npm install --prefix server",
     disable = not O.plugin.bracey.active,
   }
@@ -505,9 +509,9 @@ return require("packer").startup(function(use)
   }
 
   -- Rust tools
-  -- TODO: use lazy loading maybe?
   use {
     "simrat39/rust-tools.nvim",
+    -- TODO: use lazy loading maybe?
     disable = not O.lang.rust.rust_tools.active,
   }
 
@@ -562,7 +566,7 @@ return require("packer").startup(function(use)
   use {
     "unblevable/quick-scope",
     keys = O.plugin.quickscope.on_keys,
-    event = (O.plugin.quickscope.on_keys ~= nil) and "BufRead" or nil,
+    event = (O.plugin.quickscope.on_keys == nil) and "BufRead" or nil,
     config = function()
       vim.g.qs_highlight_on_keys = O.plugin.quickscope.on_keys
     end,
@@ -573,6 +577,7 @@ return require("packer").startup(function(use)
   use {
     "ggandor/lightspeed.nvim",
     config = require("lv-lightspeed").config,
+    -- event  = "BufRead",
     disable = not O.plugin.lightspeed.active,
   }
 
@@ -584,7 +589,14 @@ return require("packer").startup(function(use)
     "machakann/vim-sandwich",
     config = function()
       vim.api.nvim_command "runtime macros/sandwich/keymap/surround.vim"
+      vim.api.nvim_command [[
+        xmap is <Plug>(textobj-sandwich-query-i)
+        xmap as <Plug>(textobj-sandwich-query-a)
+        omap is <Plug>(textobj-sandwich-query-i)
+        omap as <Plug>(textobj-sandwich-query-a)
+    ]]
     end,
+    eventl = "BufRead",
     disable = not O.plugin.surround.active,
   }
 
@@ -601,7 +613,16 @@ return require("packer").startup(function(use)
   -- use {"SirVer/ultisnips"} -- TODO: port my snippets from vscode
 
   -- Send to terminal
-  use { "jpalardy/vim-slime", disable = not O.plugin.slime.active }
+  use {
+    "jpalardy/vim-slime",
+    disable = not O.plugin.slime.active,
+    cmd = {
+      "SlimeSend",
+      "SlimeSend0",
+      "SlimeSendCurrentLine",
+      "SlimeConfig",
+    },
+  }
 
   -- Repeat plugin commands
   use { "tpope/vim-repeat" }
@@ -612,7 +633,7 @@ return require("packer").startup(function(use)
     config = function()
       require "mkdir"
     end,
-    event = "BufRead",
+    event = "BufWritePre",
   }
 
   -- Sudo write files
@@ -628,7 +649,7 @@ return require("packer").startup(function(use)
   -- Helper for lists
   use {
     "dkarter/bullets.vim",
-    event = "BufRead",
+    ft = { "txt", "markdown" }, -- TODO: what filetypes?
     disable = not O.plugin.bullets.active,
   }
 
@@ -636,7 +657,7 @@ return require("packer").startup(function(use)
   -- use 'karb94/neoscroll.nvim'
 
   -- Session Management
-  use "rmagatti/auto-session"
+  use { "rmagatti/auto-session" }
 
   -- treesitter extensions
   use {
@@ -672,7 +693,7 @@ return require("packer").startup(function(use)
   }
 
   -- Visual undo tree
-  use { "mbbill/undotree", cmd = { "UndotreeToggle", "UndotreeShow" } }
+  use { "mbbill/undotree", cmd = { "UndotreeToggle", "UndotreeShow" }, disable = not O.plugin.undotree.active }
 
   -- Vim Doge Documentation Generator
   use {
@@ -681,6 +702,7 @@ return require("packer").startup(function(use)
       vim.cmd [[call doge#install()]]
     end,
     cmd = "DogeGenerate",
+    disable = not O.plugin.doge.active,
   }
 
   -- Autoformat everything
@@ -689,6 +711,7 @@ return require("packer").startup(function(use)
     config = function()
       require("lv-neoformat").config()
     end,
+    disable = not O.plugin.neoformat.active,
   }
 
   -- 'Smarter' pasting
@@ -708,12 +731,13 @@ return require("packer").startup(function(use)
         register_print_cmd = false,
       }
     end,
+    disable = not O.plugin.anywise_reg.active,
   }
 
   -- Editorconfig support
   use {
-    event = "BufRead",
     "editorconfig/editorconfig-vim",
+    event = "BufRead",
     config = function()
       require "lv-editorconfig"
     end,
@@ -727,7 +751,7 @@ return require("packer").startup(function(use)
   -- use {'tomasiser/vim-code-dark'}
 
   -- -- Explore tar archives
-  -- use "vim-scripts/tar.vim"
+  -- use { "vim-scripts/tar.vim" }
 
   -- TODO: add and configure these packages
   -- Git

@@ -26,12 +26,13 @@ O.hlsearch = true
 local disable_plugins = {
   "lsp_rooter",
   "snap",
-  "octo",
   "lush",
   "fzf",
   "tabnine",
   "tmux_navigator",
   "git_blame",
+  "hop",
+  "bracey",
 }
 for _, v in ipairs(disable_plugins) do
   O.plugin[v].active = false
@@ -131,10 +132,11 @@ vim.g.VM_maps = {
   ["Select Cursor Down"] = "<M-S-j>",
   ["Select Cursor Up"] = "<M-S-k>",
   ["Visual Cursors"] = "<M-c>",
-  ["Visual Regex"] = "m",
-  ["Find Operator"] = "m", -- FIXME: Some plugin is conflicting and making this not work, unless i type fast
+  ["Visual Regex"] = "/",
+  -- FIXME: Some plugin is conflicting and making this not work, unless i type fast
+  ["Find Operator"] = "m",
 }
-vim.g.VM_leader = "\\"
+vim.g.VM_leader = [[\]]
 vim.g.VM_theme = "neon"
 
 -- vim.o.guifont = "JetBrains\\ Mono\\ Regular\\ Nerd\\ Font\\ Complete"

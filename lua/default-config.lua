@@ -44,6 +44,9 @@ O = {
     ensure_installed = "all",
     ignore_install = { "haskell" },
     enable = true,
+    -- Specify languages that need the normal vim syntax highlighting as well
+    -- disable as much as possible for performance
+    additional_vim_regex_highlighting = { "latex" },
   },
 
   database = { save_location = "~/.config/nvim/.db", auto_execute = 1 },
@@ -105,6 +108,7 @@ O = {
     lightspeed = { active = enable_plugins_by_default }, -- Uses lightspeed.nvim
     quickscope = {
       active = enable_plugins_by_default,
+      -- event = "BufRead"
       -- on_keys = { "f", "F", "t", "T" }, -- Comment this line to have it always visible
     },
     surround = { active = enable_plugins_by_default }, -- Uses vim-sandwhich
@@ -117,6 +121,10 @@ O = {
     tmux_navigator = { active = enable_plugins_by_default },
     flutter_tools = { active = enable_plugins_by_default },
     editorconfig = { active = enable_plugins_by_default },
+    anywise_reg = { active = enable_plugins_by_default },
+    neoformat = { active = enable_plugins_by_default },
+    doge = { active = enable_plugins_by_default },
+    undotree = { active = enable_plugins_by_default },
   },
 
   lang = {

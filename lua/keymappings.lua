@@ -80,7 +80,9 @@ map("v", "P", "p", nore) -- for normal p behaviour
 -- Original paste for when 'nvim-anywise-reg.lua' is installed
 map("n", "<M-p>", "p", nore)
 map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
-map("n", "<M-S-p>", [[<cmd>call setreg('p', getreg('+'), 'l')<cr>"pp]], nore) -- linewise paste
+map("n", "<M-S-P>", "P", nore)
+map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
+-- map("n", "<M-S-p>", [[<cmd>call setreg('p', getreg('+'), 'l')<cr>"pp]], nore) -- linewise paste
 
 -- Better nav for omnicomplete
 map("i", "<c-j>", '("\\<C-n>")', expr)
@@ -128,10 +130,6 @@ map("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u]]", nore)
 
 -- Vscode style commenting in insert mode
 map("i", "<C-/>", "<C-\\><C-n><CMD>CommentToggle", nore)
-
--- Fix gcc keymapping
--- vim.api.nvim_del_keymap('n', 'gc')
-map("n", "gcc", "<cmd>CommentToggle<cr>", nore)
 
 -- Visual mode start search (like *)
 map("v", "*", '"ay/<C-R>a<cr>', nore)

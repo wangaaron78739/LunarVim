@@ -18,6 +18,7 @@ end
 --- COLORSCHEME ---
 
 vim.g.colors_name = O.colorscheme
+vim.cmd "hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828"
 
 ---  SETTINGS  ---
 
@@ -62,4 +63,5 @@ opt.wrap = O.wrap_lines -- display lines as one long line
 opt.scrolloff = O.scrolloff -- Scrolloffset to block the cursor from reaching the top/bottom
 opt.breakindent = true -- Apply indentation for wrapped lines
 opt.pastetoggle = "<F3>" -- Enter Paste Mode with
+opt.spelllang = "en_us" -- Spell check language
 -- LuaFormatter on

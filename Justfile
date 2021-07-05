@@ -46,6 +46,13 @@ plugins:
 update-plugins:
     nvim lua/plugins.lua +PackerSync
 
+# Profile startup time
+startup:
+    nvim +PackerCompile +'StartupTime -- lua/plugins.lua'
+
+stylua:
+    stylua **.lua
+
 # Fetch new changes 
 fetch:
     git fetch 
