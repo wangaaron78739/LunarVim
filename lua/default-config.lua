@@ -33,6 +33,7 @@ O = {
   transparent_window = false,
   leader_key = "space",
   vnsip_dir = CONFIG_PATH .. "/snippets",
+  breakpoint_sign = { text = "🛑", texthl = "", linehl = "", numhl = "" },
 
   hint_labels = { "h", "j", "f", "d", "n", "v", "s", "l", "a" },
 

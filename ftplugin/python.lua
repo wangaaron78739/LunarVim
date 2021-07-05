@@ -73,3 +73,6 @@ if O.lang.python.autoformat then
     },
   }
 end
+
+local dap_install = require "dap-install"
+dap_install.config("python_dbg", {})

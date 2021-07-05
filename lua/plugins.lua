@@ -319,7 +319,11 @@ return require("packer").startup(function(use)
   -- Debugging
   use {
     "mfussenegger/nvim-dap",
-    event = "BufRead",
+    config = function()
+      require "dap"
+      vim.fn.sign_define("DapBreakpoint", O.breakpoint_sign)
+      require("dap").defaults.fallback.terminal_win_cmd = "50vsplit new"
+    end,
     disable = not O.plugin.debug.active,
   }
   -- Better quickfix
