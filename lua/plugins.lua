@@ -561,8 +561,12 @@ return require("packer").startup(function(use)
   -- See jumpable characters
   use {
     "unblevable/quick-scope",
+    keys = O.plugin.quickscope.on_keys,
+    event = (O.plugin.quickscope.on_keys ~= nil) and "BufRead" or nil,
+    config = function()
+      vim.g.qs_highlight_on_keys = O.plugin.quickscope.on_keys
+    end,
     disable = not O.plugin.quickscope.active,
-    event = "BufRead",
   }
 
   -- 2 letter find at lightspeed

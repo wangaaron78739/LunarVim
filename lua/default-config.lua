@@ -103,7 +103,10 @@ O = {
     dap_install = { active = enable_plugins_by_default },
     visual_multi = { active = enable_plugins_by_default },
     lightspeed = { active = enable_plugins_by_default }, -- Uses lightspeed.nvim
-    quickscope = { active = enable_plugins_by_default },
+    quickscope = {
+      active = enable_plugins_by_default,
+      -- on_keys = { "f", "F", "t", "T" }, -- Comment this line to have it always visible
+    },
     surround = { active = enable_plugins_by_default }, -- Uses vim-sandwhich
     fzf = { active = enable_plugins_by_default },
     slime = { active = enable_plugins_by_default },
