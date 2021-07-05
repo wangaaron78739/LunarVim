@@ -197,7 +197,7 @@ return require("packer").startup(function(use)
   -- Ranger
   use {
     "kevinhwang91/rnvimr",
-    cmd = "Rnvimr",
+    cmd = "RnvimrToggle",
     config = function()
       require("lv-rnvimr").config()
     end,

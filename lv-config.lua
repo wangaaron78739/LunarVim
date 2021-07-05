@@ -162,7 +162,3 @@ vim.api.nvim_command "au FocusLost * silent! wa"
 vim.api.nvim_command ":set autowriteall"
 
 vim.g.gitblame_enabled = 0
-
-vim.g.minimap_auto_start = 1
-vim.g.minimap_auto_start_win_enter = 1
-vim.g.minimap_width = 2 -- Like a scrollbar
