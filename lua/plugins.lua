@@ -668,6 +668,7 @@ return require("packer").startup(function(use)
     event = "BufWinEnter",
     run = "cargo install --locked code-minimap",
     config = function()
+      table.insert(vim.g.minimap_block_filetypes, "dashboard")
     end,
   }
 

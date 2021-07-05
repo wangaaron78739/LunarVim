@@ -152,6 +152,7 @@ local mappings = {
       "sort BufferLines automatically by language",
     },
     S = { "<cmd>setlocal spell!", "Spellcheck" },
+    C = { "<cmd>setlocal cursorcolumn!", "Cursor column" },
   },
   -- " Available Debug Adapters:
   -- "   https://microsoft.github.io/debug-adapter-protocol/implementors/adapters/

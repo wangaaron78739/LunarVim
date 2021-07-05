@@ -118,9 +118,6 @@ O.scrolloff = 10
 -- quick-scope
 -- vim.g.qs_highlight_on_keys = {'f', 'F', 't', 'T'}
 
--- sneak
-vim.g["sneak#label"] = 1
-
 vim.g.VM_maps = nil
 -- Can these be moved to a new file?
 vim.g.VM_maps = {
