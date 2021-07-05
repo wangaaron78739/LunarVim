@@ -120,14 +120,16 @@ return require("packer").startup(function(use)
 
   -- Comments
   use {
-    "terrortylor/nvim-comment",
+    "b3nj5m1n/kommentary",
+    -- "terrortylor/nvim-comment",
+    -- config = function()
+    --  -- require("nvim_comment").setup()
+    --  -- Fix gcc keymapping -- Doesn't work with lazy load?
+    -- FIXME: why doesn't this work, which-key is so weird
+    --vim.api.nvim_set_keymap("n", "gc", "<cmd>kommentary_motion_default<cr>", { noremap = true, silent = true })
+    --vim.api.nvim_set_keymap("n", "gcc", "<cmd>kommentary_line_default<cr>", { noremap = true, silent = true })
+    -- end,
     event = "BufRead",
-    config = function()
-      require("nvim_comment").setup()
-      -- Fix gcc keymapping
-      -- vim.api.nvim_del_keymap('n', 'gc')
-      vim.api.nvim_set_keymap("n", "gcc", "<cmd>CommentToggle<cr>", { noremap = true, silent = true })
-    end,
   }
 
   -- Color
@@ -349,6 +351,7 @@ return require("packer").startup(function(use)
   use {
     "iamcco/markdown-preview.nvim",
     run = "cd app && npm install",
+    -- "previm/previm",
     ft = "markdown",
     disable = not O.plugin.markdown_preview.active,
   }
@@ -393,7 +396,7 @@ return require("packer").startup(function(use)
   -- Git Blame
   use {
     "f-person/git-blame.nvim",
-    event = "BufRead",
+    cmd = "GitBlameToggle",
     disable = not O.plugin.git_blame.active,
   }
   use {
@@ -624,17 +627,20 @@ return require("packer").startup(function(use)
     },
   }
 
+  -- Better neovim terminal
+  use { "kassio/neoterm", config = "require('lv-neoterm')", cmd = "T" }
+
   -- Repeat plugin commands
   use { "tpope/vim-repeat" }
 
-  -- mkdir
-  use {
-    "jghauser/mkdir.nvim",
-    config = function()
-      require "mkdir"
-    end,
-    event = "BufWritePre",
-  }
+  -- mkdir -- Goes into a infinite loop and freezes neovim
+  -- use {
+  --   "jghauser/mkdir.nvim",
+  --   config = function()
+  --     require "mkdir"
+  --   end,
+  --   event = "BufWritePre",
+  -- }
 
   -- Sudo write files
   use { "lambdalisue/suda.vim", cmd = { "SudaWrite", "SudaRead" } }
@@ -656,8 +662,17 @@ return require("packer").startup(function(use)
   -- 'smooth' scrolling
   -- use 'karb94/neoscroll.nvim'
 
+  -- Code Minimap
+  use {
+    "wfxr/minimap.vim",
+    event = "BufWinEnter",
+    run = "cargo install --locked code-minimap",
+    config = function()
+    end,
+  }
+
   -- Session Management
-  use { "rmagatti/auto-session" }
+  use { "rmagatti/auto-session", requires = { "rmagatti/session-lens" } }
 
   -- treesitter extensions
   use {
@@ -744,6 +759,9 @@ return require("packer").startup(function(use)
     disable = not O.plugin.editorconfig.active,
   }
 
+  -- Doesn't work?
+  use { "famiu/nvim-reload", cmd = { "Reload", "Restart" } }
+
   -- Colorschemes
   -- use {'marko-cerovac/material.nvim'}
   -- use {'folke/tokyonight.nvim'}
@@ -756,8 +774,7 @@ return require("packer").startup(function(use)
   -- TODO: add and configure these packages
   -- Git
   -- use {'tpope/vim-fugitive', opt = true}
-  -- use {'tpope/vim-rhubarb', opt = true}
-  -- pwntester/octo.nvim
+  -- use {'tpope/vim-rhubarb'}
 
   -- https://github.com/rockerBOO/awesome-neovim -- collection
 
@@ -771,8 +788,5 @@ return require("packer").startup(function(use)
   -- https://github.com/neomake/neomake
   -- https://github.com/tversteeg/registers.nvim -- which-key provides this
   -- https://github.com/jbyuki/nabla.nvim
-  -- https://github.com/famiu/nvim-reload
-  -- https://github.com/jose-elias-alvarez/null-ls.nvim
   -- https://github.com/justinmk/vim-dirvish -- netrw/nvim-tree alternative
-  -- https://github.com/mbbill/undotree
 end)

@@ -93,7 +93,8 @@ end
 -- TODO support vim-surround in the which-key menus
 
 local mappings = {
-  [" "] = { "<cmd>Commands<CR>", "Commands" },
+  [" "] = { "<cmd>Telescope commands<cr>", "Commands" },
+  [";"] = { "<cmd>Dashboard<CR>", "Dashboard" },
   ["/"] = { "<cmd>Telescope live_grep<cr>", "Global search" },
   ["f"] = {
     O.plugin.snap.active and "<cmd>Snap find_files<cr>" or "<cmd>Telescope find_files <CR>",
@@ -101,7 +102,7 @@ local mappings = {
   },
   ["h"] = { ":noh<CR>", "No Highlight" },
   o = {
-    name = "Open",
+    name = "Toggle window",
     f = { "<cmd>NvimTreeToggle<CR>", "File Sidebar" },
     u = { "<cmd>UndotreeToggle<CR>", "Undo tree" },
     r = { "<cmd>:RnvimrToggle<cr>", "Ranger" },
@@ -118,6 +119,7 @@ local mappings = {
     -- b = {"<cmd>FloatermNew broot<CR>", "Broot"},
     o = { "<cmd>!open '%:p:h'<CR>", "Open File Explorer" },
     v = { "<cmd>Vista nvim_lsp<cr>", "Vista" },
+    m = { "<cmd>MinimapToggle<cr>", "Minimap" },
     -- ["v"] = {":Vista<CR>", "Vista"},
   },
   b = {
@@ -185,6 +187,7 @@ local mappings = {
     j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
     k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
     l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
+    L = { "<cmd>GitBlameToggle<cr>", "Blame Toggle" },
     p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
     r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
     R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
@@ -255,7 +258,6 @@ local mappings = {
     },
     k = { "<cmd>Telescope keymaps<cr>", "Keymappings" },
     o = { "<cmd>TodoTelescope<cr>", "TODOs" },
-    p = { "<cmd>Telescope commands<cr>", "Commands" },
   },
   r = {
     name = "Replace",

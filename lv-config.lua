@@ -30,7 +30,6 @@ local disable_plugins = {
   "fzf",
   "tabnine",
   "tmux_navigator",
-  "git_blame",
   "hop",
   "bracey",
 }
@@ -139,24 +138,6 @@ vim.g.VM_maps = {
 vim.g.VM_leader = [[\]]
 vim.g.VM_theme = "neon"
 
--- vim.o.guifont = "JetBrains\\ Mono\\ Regular\\ Nerd\\ Font\\ Complete"
-
--- Floaterm
-vim.g.floaterm_keymap_toggle = "<F4>"
--- vim.g.floaterm_keymap_next   = '<F2>'
--- vim.g.floaterm_keymap_prev   = '<F3>'
--- vim.g.floaterm_keymap_new    = '<F4>'
-vim.g.floaterm_title = ""
-vim.g.floaterm_gitcommit = "floaterm"
-vim.g.floaterm_shell = O.shell
-vim.g.floaterm_autoinsert = 1
-vim.g.floaterm_width = 0.8
-vim.g.floaterm_height = 0.8
-vim.g.floaterm_wintitle = 0
-vim.g.floaterm_autoclose = 1
-
--- vim.cmd('set conceallevel=2')
-
 -- TODO: figure out mappings for this that dont conflict with autocomplete
 vim.g.UltiSnipsExpandTrigger = "<f5>"
 -- vim.g.UltiSnipsJumpForwardTrigger="<c-j>"
@@ -182,3 +163,9 @@ vim.g.slime_target = "neovim"
 -- Autosave
 vim.api.nvim_command "au FocusLost * silent! wa"
 vim.api.nvim_command ":set autowriteall"
+
+vim.g.gitblame_enabled = 0
+
+vim.g.minimap_auto_start = 1
+vim.g.minimap_auto_start_win_enter = 1
+vim.g.minimap_width = 2 -- Like a scrollbar
