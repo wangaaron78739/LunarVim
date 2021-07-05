@@ -494,20 +494,20 @@ return require("packer").startup(function(use)
   -- LANGUAGE SPECIFIC GOES HERE
 
   -- Null ls, for hooking local plugins into lsp
-  use {
-    "jose-elias-alvarez/null-ls.nvim",
-    ft = {
-      "javascript",
-      "javascriptreact",
-      "javascript.jsx",
-      "typescript",
-      "typescriptreact",
-      "typescript.tsx",
-    },
-    config = function()
-      require("null-ls").setup()
-    end,
-  }
+  -- use {
+  --   "jose-elias-alvarez/null-ls.nvim",
+  --   ft = {
+  --     "javascript",
+  --     "javascriptreact",
+  --     "javascript.jsx",
+  --     "typescript",
+  --     "typescriptreact",
+  --     "typescript.tsx",
+  --   },
+  --   config = function()
+  --     require("null-ls").setup()
+  --   end,
+  -- }
 
   -- Latex
   -- TODO what filetypes should this be active for?
@@ -729,10 +729,7 @@ return require("packer").startup(function(use)
           -- TODO: how to auto get all the textobjects in the world
           { "w", "W", "b", "B", "(", "a", "f", "m", "s", "/", "c" },
         },
-        paste_keys = {
-          ["p"] = "p",
-          ["P"] = "P",
-        },
+        paste_keys = { ["p"] = "p", ["P"] = "P" },
         paste_key = "p",
         paste_behind_key = "P",
         register_print_cmd = false,
