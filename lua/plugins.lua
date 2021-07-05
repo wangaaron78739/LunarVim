@@ -614,6 +614,8 @@ return require("packer").startup(function(use)
 
   -- Sudo write files
   use { "lambdalisue/suda.vim", cmd = { "SudaWrite", "SudaRead" } }
+
+  -- Vista viewer
   use {
     "liuchengxu/vista.vim",
     disable = not O.plugin.vista.active,
@@ -642,6 +644,11 @@ return require("packer").startup(function(use)
     "RRethy/nvim-treesitter-textsubjects",
     disable = not O.plugin.ts_textsubjects.active,
   }
+  use {
+    "mfussenegger/nvim-ts-hint-textobject",
+    event = "BufRead",
+    disable = not O.plugin.ts_hintobjects.active,
+  }
   use { -- TODO: check if this lazy load is ok
     "windwp/nvim-ts-autotag",
     event = "BufRead",
@@ -653,11 +660,6 @@ return require("packer").startup(function(use)
     disable = not O.plugin.ts_context.active,
   }
   use { "p00f/nvim-ts-rainbow", disable = not O.plugin.ts_rainbow.active }
-  use {
-    "mfussenegger/nvim-ts-hint-textobject",
-    event = "BufRead",
-    disable = not O.plugin.ts_hintobjects.active,
-  }
 
   -- Startup profiler
   use {
