@@ -340,7 +340,7 @@ return require("packer").startup(function(use)
   -- Search & Replace
   use {
     "windwp/nvim-spectre",
-    -- event = "BufRead", -- TODO: load on command
+    event = "BufRead", -- TODO: load on command
     config = function()
       require("lv-spectre").setup()
     end,
