@@ -763,7 +763,25 @@ return require("packer").startup(function(use)
   }
 
   -- Doesn't work?
-  use { "famiu/nvim-reload", cmd = { "Reload", "Restart" } }
+  use {
+    "famiu/nvim-reload",
+    cmd = { "Reload", "Restart" },
+    config = function()
+      local reload = require "nvim-reload"
+      reload.modules_reload_external = { "packer" }
+      reload.vim_reload_dirs = {
+        CONFIG_PATH,
+        PLUGIN_PATH,
+      }
+      reload.lua_reload_dirs = {
+        CONFIG_PATH,
+        PLUGIN_PATH,
+      }
+      reload.post_reload_hook = function()
+        vim.cmd "noh"
+      end
+    end,
+  }
 
   -- Colorschemes
   -- use {'marko-cerovac/material.nvim'}
