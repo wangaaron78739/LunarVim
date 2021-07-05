@@ -741,6 +741,16 @@ return require("packer").startup(function(use)
     end,
   }
 
+  -- Editorconfig support
+  use {
+    event = "BufRead",
+    "editorconfig/editorconfig-vim",
+    config = function()
+      require "lv-editorconfig"
+    end,
+    disable = not O.plugin.editorconfig.active,
+  }
+
   -- Colorschemes
   -- use {'marko-cerovac/material.nvim'}
   -- use {'folke/tokyonight.nvim'}
