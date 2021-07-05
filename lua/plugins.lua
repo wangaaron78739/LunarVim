@@ -682,6 +682,7 @@ return require("packer").startup(function(use)
     run = "cargo install --locked code-minimap",
     config = function()
       table.insert(vim.g.minimap_block_filetypes, "dashboard")
+      vim.g.minimap_width = 2 -- Like a scrollbar
       -- vim.g.minimap_highlight_search = true
       -- vim.g.minimap_highlight_range = true
     end,

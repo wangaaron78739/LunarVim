@@ -163,7 +163,8 @@ map("n", "<C-A-k>", ":cprev<CR>", nore)
 -- map('', '<C-q>', ':call QuickFixToggle()<CR>', nore)
 
 -- Double Escape key clears search and spelling highlights
-map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell | call minimap#vim#ClearColorSearch()<ESC>", nore)
+-- map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell | call minimap#vim#ClearColorSearch()<ESC>", nore)
+map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell<cr>", nore)
 map("n", "<ESC>", "<Plug>ClearHighLights", sile)
 
 -- Map `cp` to `xp` (transpose two adjacent chars)
