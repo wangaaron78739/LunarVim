@@ -27,8 +27,7 @@ require("lspconfig").texlab.setup {
       diagnosticsDelay = O.lang.latex.diagnostics_delay,
       formatterLineLength = O.lang.latex.formatter_line_length,
       forwardSearch = {
-        -- args = O.lang.latex.forward_search.args,
-        args = {},
+        args = O.lang.latex.forward_search.args,
         executable = O.lang.latex.forward_search.executable,
       },
       latexFormatter = O.lang.latex.latex_formatter,
