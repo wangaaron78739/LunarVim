@@ -25,7 +25,6 @@ O = {
   shell = "bash",
   timeoutlen = 100,
   nvim_tree_disable_netrw = 0,
-  extras = true,
   ignore_case = true,
   smart_case = true,
   scrolloff = 0,
