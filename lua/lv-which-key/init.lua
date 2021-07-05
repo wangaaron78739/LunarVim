@@ -216,10 +216,7 @@ local mappings = {
     q = { "<cmd>Telescope quickfix<cr>", "Quickfix" },
     r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" }, -- r = {"<cmd>Lspsaga rename<cr>", "Rename"},
     R = { "<cmd>Telescope lsp_references<cr>", "References" },
-    t = {
-      "<cmd>lua require 'lv-utils'.type_definition()<cr>",
-      "Type Definition",
-    },
+    t = { "<cmd>lua vim.lsp.buf.type_definition() <cr>", "Type Definition" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
     S = {
       "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
