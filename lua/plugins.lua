@@ -320,9 +320,9 @@ return require("packer").startup(function(use)
   use {
     "mfussenegger/nvim-dap",
     config = function()
-      require "dap"
+      local dap = require "dap"
+      dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
       vim.fn.sign_define("DapBreakpoint", O.breakpoint_sign)
-      require("dap").defaults.fallback.terminal_win_cmd = "50vsplit new"
     end,
     disable = not O.plugin.debug.active,
   }
@@ -476,7 +476,7 @@ return require("packer").startup(function(use)
   -- Debugger management
   use {
     "Pocco81/DAPInstall.nvim",
-    cmd = "DIInstall",
+    -- cmd = "DIInstall",
     disable = not O.plugin.dap_install.active,
   }
 
