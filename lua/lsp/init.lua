@@ -81,21 +81,24 @@ end
 local lsp_config = {}
 
 lsp_config.diag_next = function()
-  vim.lsp.diagnostic.goto_next { popup_opts = { border = O.lsp_border } }
+  vim.lsp.diagnostic.goto_next { popup_opts = { border = O.lsp.border } }
 end
 lsp_config.diag_prev = function()
-  vim.lsp.diagnostic.goto_prev { popup_opts = { border = O.lsp_border } }
+  vim.lsp.diagnostic.goto_prev { popup_opts = { border = O.lsp.border } }
 end
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = O.lsp_border,
+  border = O.lsp.border,
 })
 
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  border = O.lsp_border,
+  border = O.lsp.border,
 })
 
 local lsp_sign_opt = O.plugin.lsp_signature
 lsp_sign_opt.bind = true
+lsp_sign_opt.handler_opts = {
+  border = O.lsp.border, -- double, single, shadow, none
+}
 lsp_sign_opt.hint_scheme = "String"
 lsp_sign_opt.hi_parameter = "Search"
 if O.document_highlight then
