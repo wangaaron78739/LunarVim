@@ -11,12 +11,17 @@ vmap g<C-x> <Plug>(dial-decrement-additional)
 ]]
 
   local dial = require "dial"
+  local function enum_cyclic(name, list)
+    dial.augends["custom#" .. name] = dial.common.enum_cyclic {
+      name = name,
+      strlist = list,
+    }
+    table.insert(dial.config.searchlist.normal, "custom#" .. name)
+  end
 
-  dial.augends["custom#boolean"] = dial.common.enum_cyclic {
-    name = "boolean",
-    strlist = { "true", "false" },
-  }
-  table.insert(dial.config.searchlist.normal, "custom#boolean")
+  enum_cyclic("boolean", { "true", "false" })
+  enum_cyclic("Boolean", { "True", "False" })
+
 end
 
 return M
