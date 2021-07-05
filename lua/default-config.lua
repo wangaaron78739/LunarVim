@@ -189,7 +189,22 @@ O = {
         },
         latex = {
             autoformat = enable_autofmt_by_default,
-            diagnostics = diagnostics
+            diagnostics = diagnostics,
+            filetypes = {'tex', 'bib'},
+            aux_directory = ".",
+            bibtex_formatter = "texlab",
+            build = {
+                args = {'-pdf', '-interaction=nonstopmode', '-synctex=1', '%f'},
+                executable = "latexmk",
+                forward_search_after = false,
+                on_save = false
+            },
+            chktex = {on_edit = false, on_open_and_save = false},
+            diagnostics_delay = vim.opt.updatetime,
+            formatter_line_length = 80,
+            forward_search = {args = {}, executable = ""},
+            latex_formatter = "latexindent",
+            latexindent = {modify_line_breaks = false}
         },
         kotlin = {
             autoformat = enable_autofmt_by_default,
