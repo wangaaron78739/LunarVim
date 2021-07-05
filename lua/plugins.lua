@@ -667,12 +667,16 @@ return require("packer").startup(function(use)
         event = 'BufRead',
         config = function()
             require("anywise_reg").setup {
-                operators = {'y', 'd'}, -- putting 'c' breaks it (doesn't enter insert mode)
+                operators = {'y', 'd', 'c'}, -- putting 'c' breaks it (doesn't enter insert mode)
                 registers = {"+", "a"},
                 textobjects = {
                     {'a', 'i'}, -- Add 'i' if you want to track inner selections as well
                     -- TODO: how to auto get all the textobjects in the world
                     {'w', 'W', 'b', 'B', '(', 'a', 'f', 'm', 's', '/', 'c'}
+                },
+                paste_keys = {
+                    ['p' ]= 'p',
+                    ['P' ]= 'P'
                 },
                 paste_key = 'p',
                 paste_behind_key = 'P',
