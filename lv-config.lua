@@ -111,7 +111,6 @@ vim.g["sneak#label"] = 1
 
 vim.g.VM_maps = nil
 -- Can these be moved to a new file?
--- TODO: why these are broken??
 vim.g.VM_maps = {
     ['Find Under'] = '<M-d>',
     ['Find Subword Under'] = '<M-d>',
