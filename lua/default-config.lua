@@ -113,6 +113,7 @@ O = {
     startuptime = { active = enable_plugins_by_default },
     tabnine = { active = enable_plugins_by_default },
     tmux_navigator = { active = enable_plugins_by_default },
+    flutter_tools = { active = enable_plugins_by_default },
   },
 
   lang = {

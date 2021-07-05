@@ -553,6 +553,7 @@ return require("packer").startup(function(use)
     config = function()
       require "lv-flutter-tools"
     end,
+    disable = not O.plugin.flutter_tools.active,
     ft = "dart",
   }
 
