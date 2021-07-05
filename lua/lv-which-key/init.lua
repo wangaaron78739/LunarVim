@@ -273,8 +273,8 @@ local mappings = {
     -- j = {"<cmd>Lspsaga diagnostic_jump_prev<cr>", "Prev Diagnostic"}
     -- n = {"<cmd>LspGotoNext<cr>", "Next"},
     -- N = {"<cmd>LspGotoPrev<cr>", "Previous"}
-    j = { "<cmd>lua require("lsp").diag_next()<cr>", "Next" },
-    k = { "<cmd>lua require("lsp").diag_prev()<cr>", "Previous" },
+    j = { [[<cmd>lua require("lsp").diag_next()<cr>]], "Next" },
+    k = { [[<cmd>lua require("lsp").diag_prev()<cr>]], "Previous" },
   },
 }
 
@@ -308,8 +308,13 @@ if O.plugin.gitlinker.active then
   mappings["gy"] = "Gitlink"
 end
 if O.plugin.zen.active then
-  vim.api.nvim_set_keymap("n", "<leader>z", ":ZenMode<CR>", { noremap = true, silent = true })
-  mappings["z"] = "Zen"
+  mappings["z"] = {
+    name = "Zen",
+    -- z  = {"<cmd>ZenMode<CR>", "ZenMode"},
+    z = { "<cmd>TZAtaraxis<CR>", "Ataraxis" },
+    f = { "<cmd>TZFocus<CR>", "Focus" },
+    m = { "<cmd>TZMinimalist<CR>", "Minimalist" },
+  }
 end
 if O.plugin.telescope_project.active then
   -- open projects
