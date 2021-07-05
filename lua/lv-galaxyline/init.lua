@@ -104,6 +104,7 @@ table.insert(gls.left, {
       return "▊"
     end,
     -- highlight = 'TabLineSel'
+    highlight = "StatusLineNC",
     -- highlight = {colors.red, colors.bg}
   },
 })
@@ -163,7 +164,8 @@ table.insert(gls.left, {
     provider = "FileIcon",
     condition = condition.hide_in_width,
     icon = "",
-    highlight = { colors.purple, colors.bg },
+    highlight = "StatusLineNC",
+    -- highlight = { colors.purple, colors.bg },
   },
 })
 table.insert(gls.left, {
@@ -187,17 +189,18 @@ table.insert(gls.left, {
     end,
     condition = condition.hide_in_width,
     icon = "",
-    highlight = { colors.purple, colors.bg },
+    highlight = "StatusLineNC",
+    -- highlight = { colors.purple, colors.bg },
   },
 })
-table.insert(gls.left, {
+--[[ table.insert(gls.left, {
   VistaPlugin = {
     provider = "VistaPlugin",
     condition = condition.hide_in_width,
     icon = "",
     highlight = { colors.cyan, colors.bg },
   },
-})
+}) ]]
 
 table.insert(gls.right, {
   DiagnosticError = {
@@ -255,7 +258,7 @@ local get_lsp_client = function(msg)
     return msg
   end
   local lsps = ""
-  for _, client in ipairs(clients) do
+  for i, client in ipairs(clients) do
     local filetypes = client.config.filetypes
     if filetypes and vim.fn.index(filetypes, buf_ft) ~= 1 then
       -- print(client.name)
@@ -264,6 +267,7 @@ local get_lsp_client = function(msg)
         lsps = client.name
       else
         lsps = lsps .. ", " .. client.name
+        break -- Stop at 2 else the statusline explodes
         -- print("more", lsps)
       end
     end
