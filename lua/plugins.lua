@@ -307,7 +307,15 @@ return require("packer").startup(function(use)
       dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
       vim.fn.sign_define("DapBreakpoint", O.breakpoint_sign)
     end,
+    module = "dap",
     disable = not O.plugin.debug.active,
+  }
+  -- Debugger installing
+  use {
+    "Pocco81/DAPInstall.nvim",
+    cmd = { "DIInstall", "DIList", "DIUninstall" },
+    module = "dap-install",
+    disable = not O.plugin.dap_install.active,
   }
   -- Better quickfix
   use {
@@ -462,12 +470,6 @@ return require("packer").startup(function(use)
     ft = "html",
     run = "npm install --prefix server",
     disable = not O.plugin.bracey.active,
-  }
-  -- Debugger management
-  use {
-    "Pocco81/DAPInstall.nvim",
-    -- cmd = "DIInstall",
-    disable = not O.plugin.dap_install.active,
   }
 
   -- Tmux navigator
