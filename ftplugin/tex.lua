@@ -1,3 +1,6 @@
+vim.opt_local.wrap = true
+vim.opt_local.spell = true
+
 require("lspconfig").texlab.setup {
   cmd = { DATA_PATH .. "/lspinstall/latex/texlab" },
   on_attach = require("lsp").common_on_attach,

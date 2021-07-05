@@ -52,42 +52,6 @@ local opts = {
   nowait = false, -- use `nowait` when creating keymaps
 }
 
--- no hl
--- vim.api.nvim_set_keymap('n', '<Leader>h', ':set hlsearch!<CR>', {noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<Leader>h', ':noh<CR>', {noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<Leader>h', ':let @/=""<CR>', {noremap = true, silent = true})
-
--- explorer
--- vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
-
--- telescope
--- vim.api.nvim_set_keymap('n', '<Leader>f', ':Telescope find_files <CR>', {noremap = true, silent = true})
-
--- telescope or snap
-if O.plugin.snap.active then
-  vim.api.nvim_set_keymap("n", "<Leader>f", ":Snap find_files<CR>", { noremap = true, silent = true })
-else
-  vim.api.nvim_set_keymap("n", "<Leader>f", ":Telescope find_files<CR>", { noremap = true, silent = true })
-end
-
--- Global search
--- vim.api.nvim_set_keymap("n", "<leader>/", "<cmd>Telescope live_grep<cr>", {noremap = true, silent = true})
-
--- close buffer
--- vim.api.nvim_set_keymap("n", "<leader>c", ":BufferClose<CR>", {noremap = true, silent = true})
--- vim.api.nvim_set_keymap("n", "<leader>w", ":wa<CR>", {noremap = true, silent = true})
-
--- vim.api.nvim_set_keymap("n", "<leader>n", ":tabnew<CR>", {noremap = true, silent = true})
--- vim.api.nvim_set_keymap("n", "<leader>v", ":Vista<CR>", {noremap = true, silent = true})
-
--- pane controls
--- vim.api.nvim_set_keymap("n", "<leader>p", "<c-w>", {noremap = true, silent = true})
--- vim.api.nvim_set_keymap("n", "<leader><space>", ":Telescope commands<CR>", {noremap = true, silent = true})
--- vim.api.nvim_set_keymap("n", "<leader><space>", ":Commands<CR>", {noremap = true, silent = true})
-
--- open projects
--- vim.api.nvim_set_keymap('n', '<leader>p', ":lua require'telescope'.extensions.project.project{}<CR>", {noremap = true, silent = true})
-
 -- TODO create entire treesitter section
 
 -- TODO support vim-surround in the which-key menus
@@ -100,7 +64,7 @@ local mappings = {
     O.plugin.snap.active and "<cmd>Snap find_files<cr>" or "<cmd>Telescope find_files <CR>",
     "Find File",
   },
-  ["h"] = { ":noh<CR>", "No Highlight" },
+  ["h"] = { "<cmd>noh<CR><cmd>call minimap#vim#ClearColorSearch()<cr>", "No Highlight" },
   o = {
     name = "Toggle window",
     f = { "<cmd>NvimTreeToggle<CR>", "File Sidebar" },

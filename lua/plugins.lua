@@ -669,6 +669,8 @@ return require("packer").startup(function(use)
     run = "cargo install --locked code-minimap",
     config = function()
       table.insert(vim.g.minimap_block_filetypes, "dashboard")
+      vim.g.minimap_highlight_search = true
+      vim.g.minimap_highlight_range = true
     end,
   }
 
@@ -783,8 +785,8 @@ return require("packer").startup(function(use)
   -- https://github.com/lvim-tech/lvim
   -- https://github.com/NTBBloodbath/doom-nvim
   -- https://github.com/MenkeTechnologies/zpwr#zpwr-features
-  -- https://github.com/kevinhwang91/nvim-hlslens
 
+  -- https://github.com/kevinhwang91/nvim-hlslens
   -- https://github.com/gcmt/wildfire.vim -- ts hint textobjects seems okay for this
   -- https://github.com/neomake/neomake
   -- https://github.com/tversteeg/registers.nvim -- which-key provides this

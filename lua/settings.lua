@@ -5,7 +5,6 @@ local opt = vim.opt
 ---  VIM ONLY COMMANDS  ---
 
 cmd "filetype plugin on"
-cmd "set inccommand=nosplit"
 opt.inccommand = "nosplit"
 cmd "set iskeyword+=-"
 cmd "set sessionoptions+=globals"

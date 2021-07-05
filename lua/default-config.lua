@@ -330,6 +330,11 @@ require("lv-utils").define_augroups {
       "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
     },
     {
+      "BufRead",
+      "*",
+      "set hlsearch",
+    },
+    {
       "BufNewFile",
       "*",
       "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
