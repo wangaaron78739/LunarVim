@@ -36,7 +36,7 @@ return require("packer").startup(function(use)
   -- Packer can manage itself as an optional plugin
   use "wbthomason/packer.nvim"
 
-  -- TODO refactor all of this (for now it works, but yes I know it could be wrapped in a simpler function)
+  -- Lsp Configs
   use { "neovim/nvim-lspconfig" }
   use {
     "kabouzeid/nvim-lspinstall",
@@ -45,6 +45,7 @@ return require("packer").startup(function(use)
     end,
     cmd = "LspInstall",
   }
+
   -- Utilities
   use { "nvim-lua/popup.nvim" }
   use { "nvim-lua/plenary.nvim" }
@@ -691,7 +692,8 @@ return require("packer").startup(function(use)
   }
 
   -- Session Management
-  use { "rmagatti/auto-session", requires = { "rmagatti/session-lens" } }
+  use { "rmagatti/auto-session" }
+  use { "rmagatti/session-lens" }
 
   -- treesitter extensions
   use {
@@ -799,11 +801,11 @@ return require("packer").startup(function(use)
     end,
   }
 
-  use { "Iron-E/nvim-libmodal" }
-  use { "Iron-E/nvim-tabmode", after = "nvim-libmodal" }
+  -- use { "Iron-E/nvim-libmodal" }
+  -- use { "Iron-E/nvim-tabmode", after = "nvim-libmodal" }
 
-  for _, plugin in pairs(O.custom_plugins) do
-    use(plugin)
+  if #O.custom_plugins > 0 then
+    use(O.custom_plugins)
   end
 
   -- Colorschemes

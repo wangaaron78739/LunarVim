@@ -4,6 +4,7 @@ local gitui = term:new():setup {
   cmd = "gitui",
   dimensions = { height = 0.9, width = 0.9 },
 }
+-- FIXME: able to open files correctly
 local broot = term:new():setup {
   cmd = "broot",
   dimensions = { height = 0.9, width = 0.9 },

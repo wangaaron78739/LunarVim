@@ -183,7 +183,7 @@ require("nvim-treesitter.configs").setup {
   },
   textsubjects = {
     enable = O.plugin.ts_textsubjects,
-    keymaps = { ["."] = "textsubjects-smart", [";"] = "textsubjects-big" },
+    keymaps = { ["."] = "textsubjects-smart", [";"] = "textsubjects-container-outer" },
   },
   playground = {
     enable = O.plugin.ts_playground.active,
