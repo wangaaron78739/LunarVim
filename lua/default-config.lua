@@ -12,6 +12,7 @@ local diagnostics = {
   signs = true,
   underline = true,
 }
+local lsp_border = "single"
 
 O = {
   auto_close_tree = 0,
@@ -34,6 +35,7 @@ O = {
   leader_key = "space",
   vnsip_dir = CONFIG_PATH .. "/snippets",
   breakpoint_sign = { text = "🛑", texthl = "", linehl = "", numhl = "" },
+  lsp_border = lsp_border,
 
   hint_labels = { "h", "j", "f", "d", "n", "v", "s", "l", "a" },
 
@@ -89,7 +91,7 @@ O = {
       max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
       max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
       handler_opts = {
-        border = "shadow", -- double, single, shadow, none
+        border = lsp_border, -- double, single, shadow, none
       },
     },
     git_blame = { active = enable_plugins_by_default },

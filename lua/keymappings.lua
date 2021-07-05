@@ -149,8 +149,6 @@ map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
 map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
--- vim.cmd "nnoremap <silent> <C-p> :lua vim.lsp.diagnostic.goto_prev()<CR>"
--- vim.cmd "nnoremap <silent> <C-n> :lua vim.lsp.diagnostic.goto_next()<CR>"
 vim.cmd 'command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()'
 -- scroll down hover doc or scroll in definition preview
 --vim.cmd "nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>"

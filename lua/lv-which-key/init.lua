@@ -273,8 +273,8 @@ local mappings = {
     -- j = {"<cmd>Lspsaga diagnostic_jump_prev<cr>", "Prev Diagnostic"}
     -- n = {"<cmd>LspGotoNext<cr>", "Next"},
     -- N = {"<cmd>LspGotoPrev<cr>", "Previous"}
-    j = { "<cmd>lua vim.lsp.diagnostic.goto_next()<cr>", "Next" },
-    k = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>", "Previous" },
+    j = { "<cmd>lua require("lsp").diag_next()<cr>", "Next" },
+    k = { "<cmd>lua require("lsp").diag_prev()<cr>", "Previous" },
   },
 }
 

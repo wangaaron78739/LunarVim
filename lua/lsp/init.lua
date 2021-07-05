@@ -16,7 +16,6 @@ vim.fn.sign_define(
   { texthl = "LspDiagnosticsSignInformation", text = "", numhl = "LspDiagnosticsSignInformation" }
 )
 
-
 -- Set Default Prefix.
 -- Note: You can set a prefix per lsp server in the lv-globals.lua file
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -80,6 +79,20 @@ local function documentHighlight(client, bufnr)
   end
 end
 local lsp_config = {}
+
+lsp_config.diag_next = function()
+  vim.lsp.diagnostic.goto_next { popup_opts = { border = O.lsp_border } }
+end
+lsp_config.diag_prev = function()
+  vim.lsp.diagnostic.goto_prev { popup_opts = { border = O.lsp_border } }
+end
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = O.lsp_border,
+})
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+  border = O.lsp_border,
+})
 
 local lsp_sign_opt = O.plugin.lsp_signature
 lsp_sign_opt.bind = true
