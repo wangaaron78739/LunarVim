@@ -565,12 +565,11 @@ return require("packer").startup(function(use)
     event = "BufRead",
   }
 
-  -- 2 letter find
-  -- use {"justinmk/vim-sneak", disable = not O.plugin.sneak.active}
+  -- 2 letter find at lightspeed
   use {
     "ggandor/lightspeed.nvim",
     config = require("lv-lightspeed").config,
-    disable = not O.plugin.sneak.active,
+    disable = not O.plugin.lightspeed.active,
   }
 
   -- Multi cursor support

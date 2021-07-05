@@ -393,7 +393,7 @@ if O.plugin.surround.active then
   local ops = { mode = "o" }
   wk.register({ ["s"] = "Surround", ["S"] = "Surround Rest", ["ss"] = "Line" }, ops)
 end
-if O.plugin.sneak.active then
+if O.plugin.lightspeed.active then
   local ops = { mode = "o" }
   wk.register({ ["z"] = "Light speed", ["Z"] = "Light speed bwd" }, ops)
 end
