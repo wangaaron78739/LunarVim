@@ -1,11 +1,14 @@
 -- TODO: Check if this really activates correctly
-require'lspconfig'.julials.setup {
-    on_new_config = function(new_config, new_root_dir)
-        server_path =
-            "/home/amedhi/.julia/packages/LanguageServer/jiDTR/src/LanguageServer.jl"
-        cmd = {
-            "julia", "--project=" .. server_path, "--startup-file=no",
-            "--history-file=no", "-e", [[
+require("lspconfig").julials.setup {
+  on_new_config = function(new_config, new_root_dir)
+    server_path = "/home/amedhi/.julia/packages/LanguageServer/jiDTR/src/LanguageServer.jl"
+    cmd = {
+      "julia",
+      "--project=" .. server_path,
+      "--startup-file=no",
+      "--history-file=no",
+      "-e",
+      [[
           using Pkg;
           Pkg.instantiate()
           using LanguageServer; using SymbolServer;
@@ -16,9 +19,8 @@ require'lspconfig'.julials.setup {
           server = LanguageServer.LanguageServerInstance(stdin, stdout, project_path, depot_path);
           server.runlinter = true;
           run(server);
-        ]]
-        };
-        new_config.cmd = cmd
-    end
+        ]],
+    }
+    new_config.cmd = cmd
+  end,
 }
-

@@ -1,4 +1,4 @@
-local util = require 'lspconfig/util'
+local util = require "lspconfig/util"
 -- In Vimscript
 -- augroup lsp
 --   au!
@@ -20,17 +20,17 @@ local util = require 'lspconfig/util'
 -- };
 
 local on_attach = function(client, bufr)
-    -- require('jdtls').setup_dap()
-    require'lsp'.common_on_attach(client, bufr)
+  -- require('jdtls').setup_dap()
+  require("lsp").common_on_attach(client, bufr)
 end
 
-require'lspconfig'.jdtls.setup {
-    on_attach = on_attach,
-    cmd = {DATA_PATH .. "/lspinstall/java/jdtls.sh"},
-    filetypes = {"java"},
-    root_dir = util.root_pattern({'.git', 'build.gradle', 'pom.xml'})
-    -- init_options = {bundles = bundles}
-    -- on_attach = require'lsp'.common_on_attach
+require("lspconfig").jdtls.setup {
+  on_attach = on_attach,
+  cmd = { DATA_PATH .. "/lspinstall/java/jdtls.sh" },
+  filetypes = { "java" },
+  root_dir = util.root_pattern { ".git", "build.gradle", "pom.xml" },
+  -- init_options = {bundles = bundles}
+  -- on_attach = require'lsp'.common_on_attach
 }
 
 -- require('jdtls').start_or_attach({

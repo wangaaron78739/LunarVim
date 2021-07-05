@@ -1,12 +1,12 @@
-require 'default-config'
-vim.cmd('luafile ' .. CONFIG_PATH .. '/lv-config.lua')
-require 'keymappings'
-require 'settings'
-require 'plugins'
-require 'lv-galaxyline'
-require 'lv-which-key'
-require 'lv-treesitter'
-require 'lsp'
+require "default-config"
+vim.cmd("luafile " .. CONFIG_PATH .. "/lv-config.lua")
+require "keymappings"
+require "settings"
+require "plugins"
+require "lv-galaxyline"
+require "lv-which-key"
+require "lv-treesitter"
+require "lsp"
 
 -- FIXME: This is not the proper place to enable these plugins and stuff
 
@@ -23,16 +23,15 @@ require 'lsp'
 
 -- vim.cmd('set spelllang=en_us')
 
-vim.cmd('hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828')
+vim.cmd "hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828"
 
 -- TODO: Refactor and organize these
 
 -- vim-sandwhich
-vim.api.nvim_command('runtime macros/sandwich/keymap/surround.vim')
-vim.api.nvim_command([[
+vim.api.nvim_command "runtime macros/sandwich/keymap/surround.vim"
+vim.api.nvim_command [[
 xmap is <Plug>(textobj-sandwich-query-i)
 xmap as <Plug>(textobj-sandwich-query-a)
 omap is <Plug>(textobj-sandwich-query-i)
 omap as <Plug>(textobj-sandwich-query-a)
-]])
-
+]]
