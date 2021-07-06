@@ -103,12 +103,7 @@ return require("packer").startup(function(use)
   }
 
   -- whichkey
-  use {
-    "folke/which-key.nvim",
-    -- config = function()
-    --     require('lv-which-key').config()
-    -- end
-  }
+  use { "folke/which-key.nvim" }
 
   -- Autopairs
   use {
@@ -568,7 +563,7 @@ return require("packer").startup(function(use)
   -- amedhi plugins
 
   -- LSP get function signature
-  use { "ray-x/lsp_signature.nvim" }
+  use { "ray-x/lsp_signature.nvim", module = "lsp_signature" }
 
   -- See jumpable characters
   use {
@@ -584,13 +579,14 @@ return require("packer").startup(function(use)
   -- 2 letter find at lightspeed
   use {
     "ggandor/lightspeed.nvim",
-    config = require("lv-lightspeed").config,
-    -- event  = "BufRead",
+    config = function()
+      require("lv-lightspeed").config()
+    end,
     disable = not O.plugin.lightspeed.active,
   }
 
   -- Multi cursor support
-  use { "mg979/vim-visual-multi", disable = not O.plugin.visual_multi.active }
+  use { "mg979/vim-visual-multi", disable = not O.plugin.visual_multi.active, event = "BufRead" }
 
   -- Surround plugin
   use {
@@ -604,7 +600,7 @@ return require("packer").startup(function(use)
         omap as <Plug>(textobj-sandwich-query-a)
     ]]
     end,
-    eventl = "BufRead",
+    event = "BufRead",
     disable = not O.plugin.surround.active,
   }
 
@@ -636,7 +632,7 @@ return require("packer").startup(function(use)
   use { "kassio/neoterm", config = "require('lv-neoterm')", cmd = "T" }
 
   -- Repeat plugin commands
-  use { "tpope/vim-repeat" }
+  use { "tpope/vim-repeat", event = "BufRead" }
 
   -- mkdir -- Goes into a infinite loop and freezes neovim
   -- use {
@@ -734,9 +730,7 @@ return require("packer").startup(function(use)
   -- Vim Doge Documentation Generator
   use {
     "kkoomen/vim-doge",
-    config = function()
-      vim.cmd [[call doge#install()]]
-    end,
+    run = ":call doge#install()",
     cmd = "DogeGenerate",
     disable = not O.plugin.doge.active,
   }
@@ -744,10 +738,11 @@ return require("packer").startup(function(use)
   -- Autoformat everything
   use {
     "sbdchd/neoformat",
-    event = "BufRead",
     config = function()
       require("lv-neoformat").config()
     end,
+    -- event = "BufRead",
+    cmd = "Neoformat",
   }
 
   -- 'Smarter' pasting
