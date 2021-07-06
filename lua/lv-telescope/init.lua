@@ -1,10 +1,12 @@
+-- https://github.com/ibhagwan/nvim-lua/blob/main/lua/plugin/telescope.lua
+local sorters = require "telescope.sorters"
 local actions = require "telescope.actions"
+local functions = require "lv-telescope.functions"
 -- if O.plugin.trouble.active then
 --     local trouble = require("trouble.providers.telescope")
 -- end
 -- Global remapping
 ------------------------------
--- '--color=never',
 local rg = {
   "rg",
   "--color=never",
@@ -22,6 +24,7 @@ for i, v in ipairs(rg) do
   fd[i] = v
 end
 table.insert(fd, "--files")
+
 require("telescope").setup {
   defaults = {
     find_command = fd,
@@ -40,9 +43,9 @@ require("telescope").setup {
       horizontal = { mirror = false },
       vertical = { mirror = false },
     },
-    file_sorter = require("telescope.sorters").get_fzy_sorter,
+    file_sorter = sorters.get_fzy_sorter,
     file_ignore_patterns = {},
-    generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+    generic_sorter = sorters.get_generic_fuzzy_sorter,
     shorten_path = true,
     winblend = 0,
     border = {},
@@ -72,6 +75,7 @@ require("telescope").setup {
         ["<C-down>"] = actions.preview_scrolling_down,
         ["<M-q>"] = actions.send_to_qflist + actions.open_qflist,
         ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+        ["<C-y>"] = functions.set_prompt_to_entry_value,
       },
       n = {
         ["j"] = actions.move_selection_next,
@@ -102,3 +106,24 @@ require("telescope").setup {
 
 -- require'telescope'.load_extension('fzy_native')
 -- require'telescope'.load_extension('project')
+
+TelescopeMapArgs = TelescopeMapArgs or {}
+
+local map_tele = function(mode, key, f, options, buffer)
+  local map_key = vim.api.nvim_replace_termcodes(key .. f, true, true, true)
+
+  TelescopeMapArgs[map_key] = options or {}
+
+  local rhs = string.format("<cmd>lua require('plugin.telescope')['%s'](TelescopeMapArgs['%s'])<CR>", f, map_key)
+
+  local map_options = {
+    noremap = true,
+    silent = true,
+  }
+
+  if not buffer then
+    vim.api.nvim_set_keymap(mode, key, rhs, map_options)
+  else
+    vim.api.nvim_buf_set_keymap(0, mode, key, rhs, map_options)
+  end
+end
