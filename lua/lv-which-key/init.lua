@@ -85,10 +85,11 @@ local mappings = {
   t = {
     name = "Toggle",
     t = { "<cmd>lua require'FTerm'.toggle()<CR>", "Terminal" },
+    w = { "<cmd>setlocal wrap!<CR>", "Wrap" },
     s = { "<cmd>setlocal spell!<CR>", "Spellcheck" },
     c = { "<cmd>setlocal cursorcolumn!<CR>", "Cursor column" },
     l = { "<cmd>setlocal cursorline!<CR>", "Cursor line" },
-    h = { "<cmd>noh<CR>", "Cursor line" },
+    h = { "<cmd>setlocal hlsearch<CR>", "hlsearch" },
   },
   b = {
     name = "Buffers",
@@ -207,11 +208,12 @@ local mappings = {
       "<cmd>Telescope lsp_workspace_diagnostics<cr>",
       "Workspace Diagnostics",
     },
-    f = {
-      O.plugin.snap.active and "<cmd>Snap find_files<cr>"
-        or "<cmd>Telescope find_files find_command=rg,--ignore,--hidden,--files<cr>",
-      "Find File (+Hidden)",
-    },
+    -- TODO: better (less repetive way to do this)
+    -- f = {
+    --   O.plugin.snap.active and "<cmd>Snap find_files<cr>"
+    --     or "<cmd>Telescope find_files find_command=rg,--no-config,--ignore,--hidden,--files,--no-heading,--with-filename,--line-number,--column,--smart-case<cr>",
+    --   "Find File (+Hidden)",
+    -- },
     h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
     -- m = {"<cmd>Telescope marks<cr>", "Marks"},
     M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
@@ -236,7 +238,6 @@ local mappings = {
     p = { "<cmd>lua require('spectre').open()<cr>", "in Project" },
     n = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
   },
-  z = { "<cmd>ZenMode<cr>", "toggle zen" },
   T = { name = "Treesitter", i = { ":TSConfigInfo<cr>", "Info" } },
   d = {
     name = "Diagnostics",

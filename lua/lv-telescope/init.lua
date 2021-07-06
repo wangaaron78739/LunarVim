@@ -58,31 +58,36 @@ require("telescope").setup {
     buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
     mappings = {
       i = {
-        -- ["<C-c>"] = actions.close,
+        ["<C-x>"] = actions.delete_buffer,
+        ["<C-s>"] = actions.select_horizontal,
+        ["<C-v>"] = actions.select_vertical,
+        ["<C-t>"] = actions.select_tab,
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
         -- ["<c-t>"] = trouble.open_with_trouble,
-        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-        -- To disable a keymap, put [map] = false
-        -- So, to not map "<C-n>", just put
-        -- ["<c-x>"] = false,
-        -- ["<esc>"] = actions.close,
-
-        -- Otherwise, just set the mapping to the function that you want it to be.
-        -- ["<C-i>"] = actions.select_horizontal,
-
-        -- Add up multiple actions
         ["<CR>"] = actions.select_default + actions.center,
-
-        -- You can perform as many actions in a row as you like
-        -- ["<CR>"] = actions.select_default + actions.center + my_cool_custom_action,
+        ["<S-up>"] = actions.preview_scrolling_up,
+        ["<S-down>"] = actions.preview_scrolling_down,
+        ["<C-up>"] = actions.preview_scrolling_up,
+        ["<C-down>"] = actions.preview_scrolling_down,
+        ["<M-q>"] = actions.send_to_qflist + actions.open_qflist,
+        ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
       },
       n = {
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
+        ["j"] = actions.move_selection_next,
+        ["k"] = actions.move_selection_previous,
         -- ["<c-t>"] = trouble.open_with_trouble,
-        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-        -- ["<C-i>"] = my_cool_custom_action,
+        ["<C-x>"] = actions.delete_buffer,
+        ["<C-s>"] = actions.select_horizontal,
+        ["<C-v>"] = actions.select_vertical,
+        ["<C-t>"] = actions.select_tab,
+        ["<S-up>"] = actions.preview_scrolling_up,
+        ["<S-down>"] = actions.preview_scrolling_down,
+        ["<C-up>"] = actions.preview_scrolling_up,
+        ["<C-down>"] = actions.preview_scrolling_down,
+        ["<C-q>"] = actions.send_to_qflist,
+        ["<M-q>"] = actions.send_to_qflist + actions.open_qflist,
+        ["<C-c>"] = actions.close,
       },
     },
   },
@@ -95,4 +100,5 @@ require("telescope").setup {
   },
 }
 
+-- require'telescope'.load_extension('fzy_native')
 -- require'telescope'.load_extension('project')
