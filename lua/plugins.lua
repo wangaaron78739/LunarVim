@@ -116,15 +116,15 @@ return require("packer").startup(function(use)
 
   -- Comments
   use {
-    "b3nj5m1n/kommentary",
-    -- "terrortylor/nvim-comment",
-    -- config = function()
-    --  -- require("nvim_comment").setup()
-    --  -- Fix gcc keymapping -- Doesn't work with lazy load?
-    -- FIXME: why doesn't this work, which-key is so weird
-    --vim.api.nvim_set_keymap("n", "gc", "<cmd>kommentary_motion_default<cr>", { noremap = true, silent = true })
-    --vim.api.nvim_set_keymap("n", "gcc", "<cmd>kommentary_line_default<cr>", { noremap = true, silent = true })
-    -- end,
+    -- "b3nj5m1n/kommentary",
+    "terrortylor/nvim-comment",
+    config = function()
+      require("nvim_comment").setup()
+      --  -- Fix gcc keymapping -- Doesn't work with lazy load?
+      -- FIXME: why doesn't this work, which-key is so weird
+      --vim.api.nvim_set_keymap("n", "gc", "<cmd>kommentary_motion_default<cr>", { noremap = true, silent = true })
+      --vim.api.nvim_set_keymap("n", "gcc", "<cmd>kommentary_line_default<cr>", { noremap = true, silent = true })
+    end,
     event = "BufRead",
   }
 
