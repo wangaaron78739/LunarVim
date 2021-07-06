@@ -5,40 +5,47 @@ require("FTerm").setup {
   border = "single", -- or 'double'
 }
 
-local gitui = term:new():setup {
-  cmd = "gitui",
-  dimensions = { height = 0.9, width = 0.9 },
-}
--- FIXME: able to open files correctly
-local broot = term:new():setup {
-  cmd = "broot",
-  dimensions = { height = 0.9, width = 0.9 },
-}
-local python = term:new():setup {
-  cmd = "ipython",
-  dimensions = { height = 0.9, width = 0.9 },
-}
-local spt = term:new():setup {
-  cmd = "spt",
-  dimensions = { height = 0.9, width = 0.9 },
-}
-local top = term:new():setup {
-  cmd = "btm",
-  dimensions = { height = 0.9, width = 0.9 },
-}
+local function right(cmd)
+  return term:new():setup {
+    cmd = cmd,
+    dimensions = { height = 0.95, width = 0.4, x = 1.0, y = 0.5 },
+  }
+end
 
-function _G.__fterm_broot()
-  broot:toggle()
+local function under(cmd)
+  return term:new():setup {
+    cmd = cmd,
+    dimensions = { height = 0.4, width = 0.6 },
+  }
 end
-function _G.__fterm_python()
-  python:toggle()
+
+local function popup(cmd)
+  return term:new():setup {
+    cmd = cmd,
+    dimensions = { height = 0.9, width = 0.9 },
+  }
 end
-function _G.__fterm_gitui()
-  gitui:toggle()
+
+local M = {}
+M.down = under(nil)
+M.right = right(nil)
+M.term = popup(nil)
+M.gitui = popup "gitui"
+-- FIXME: broot unable to open files correctly
+M.broot = popup "broot"
+M.python = popup "ipython"
+M.spt = popup "spt"
+M.top = popup "btm"
+
+function _G.ftopen(name)
+  M[name]:open()
 end
-function _G.__fterm_top()
-  top:toggle()
-end
-function _G.__fterm_spt()
-  spt:toggle()
-end
+
+require("lv-utils").define_augroups {
+  _close_fterm = {
+    { "FileType", "FTerm", "nnoremap <silent> <buffer> q :q<CR>" },
+    -- { "FileType", "FTerm", "tnoremap <silent> <buffer> <esc> <nop>" },
+    -- { "FileType", "FTerm", "tnoremap <silent> <buffer> <M-e> <C-\\><C-n>" },
+    { "FileType", "FTerm", "tnoremap <silent> <buffer> <M-q> <C-\\><C-n><CMD>q<CR>" },
+  },
+}

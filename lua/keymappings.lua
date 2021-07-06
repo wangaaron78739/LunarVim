@@ -133,8 +133,6 @@ map("v", "<M-)>", "<Esc>f(vi(", sile)
 map("v", "<M-(>", "<Esc>F)vi)", sile)
 map("n", "<M-j>", "jV", sile)
 map("n", "<M-k>", "kV", sile)
---[[ map("v", "<M-j>", "joj", sile)
-map("v", "<M-k>", "kok", sile) ]]
 map("v", "<M-j>", "<Esc>jV", sile)
 map("v", "<M-k>", "<Esc>kV", sile)
 
@@ -201,9 +199,9 @@ map("v", "gyc", "ygvgc`>p", sile)
 -- Select Jupyter Cell
 map("v", "ic", [[/#+\s*%+<cr>oN]], nore)
 
--- Close FTerm
-map("n", "<A-i>", '<CMD>lua require("FTerm").toggle()<CR>', nore)
-map("t", "<A-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', nore)
+-- Toggle FTerm
+map("n", "<M-i>", '<CMD>lua require("FTerm").toggle()<CR>', nore)
+map("t", "<M-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', nore)
 -- map("t", "<Esc>", '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', nore)
 
 -- Format buffer -- TODO: switch between neoformat and lsp
@@ -232,7 +230,7 @@ map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", sile)
 map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", sile)
 map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", sile)
 map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", sile)
-map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", sile)
+-- map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", sile)
 vim.cmd 'command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()'
 -- scroll down hover doc or scroll in definition preview
 --vim.cmd "nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>"

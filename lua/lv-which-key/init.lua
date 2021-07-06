@@ -58,7 +58,7 @@ local mappings = {
     "Find File",
   },
   h = {
-    "<Plug>ClearHighLights", --"<cmd>noh<CR><cmd>call minimap#vim#ClearColorSearch()<cr>"
+    "<Plug>ClearHighLights", -- "<cmd>noh<CR><cmd>call minimap#vim#ClearColorSearch()<cr>"
     "No Highlight",
   },
   w = { "<cmd>up<CR>", "Write" },
@@ -68,19 +68,16 @@ local mappings = {
     u = { "<cmd>UndotreeToggle<CR>", "Undo tree" },
     r = { "<cmd>:RnvimrToggle<cr>", "Ranger" },
     P = { "<cmd>e ~/.config/nvim/<cr>", "Edit Private Config" },
-    t = { "<cmd>vnew term://$SHELL<CR>", "Terminal" },
-    b = { "<cmd>lua _G.__fterm_broot()<CR>", "Broot" },
-    p = { "<cmd>lua _G.__fterm_python()<CR>", "Python" },
-    M = { "<cmd>lua _G.__fterm_top()<CR>", "System Monitor" },
-    S = { "<cmd>lua _G.__fterm_spt()<CR>", "Spotify" },
-    -- t = {"<cmd>FloatermToggle<CR>", "Terminal"},
+    b = { "<cmd>lua _G.ftopen('broot')<CR>", "Broot" },
+    p = { "<cmd>lua _G.ftopen('python')<CR>", "Python" },
+    M = { "<cmd>lua _G.ftopen('top')<CR>", "System Monitor" },
+    S = { "<cmd>lua _G.ftopen('spt')<CR>", "Spotify" },
+    t = { "<cmd>lua _G.ftopen('right')<CR>", "Terminal" },
     -- T = {"<cmd>FloatermNew --wintype=normal --height=8<CR>", "Terminal Below"},
-    -- P = {"<cmd>FloatermNew python<CR>", "Python"},
-    -- b = {"<cmd>FloatermNew broot<CR>", "Broot"},
     o = { "<cmd>!open '%:p:h'<CR>", "Open File Explorer" },
     v = { "<cmd>Vista nvim_lsp<cr>", "Vista" },
-    m = { "<cmd>MinimapToggle<cr>", "Minimap" },
     -- ["v"] = {":Vista<CR>", "Vista"},
+    m = { "<cmd>MinimapToggle<cr>", "Minimap" },
   },
   t = {
     name = "Toggle",
@@ -121,6 +118,7 @@ local mappings = {
       "<cmd>BufferLineSortByExtension<cr>",
       "sort BufferLines automatically by language",
     },
+    t = { "<cmd>vnew term://$SHELL<CR>", "Terminal" },
   },
   -- " Available Debug Adapters:
   -- "   https://microsoft.github.io/debug-adapter-protocol/implementors/adapters/
@@ -151,7 +149,7 @@ local mappings = {
   },
   g = {
     name = "Git",
-    g = { "<cmd>lua _G.__fterm_gitui()<CR>", "Gitui" },
+    g = { "<cmd>lua _G.fttoggle('gitui')<CR>", "Gitui" },
     m = { "<cmd>!smerge '%:p:h'<CR>", "Sublime Merge" },
     j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
     k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
