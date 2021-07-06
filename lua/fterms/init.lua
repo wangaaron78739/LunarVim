@@ -1,5 +1,10 @@
 local term = require "FTerm.terminal"
 
+require("FTerm").setup {
+  dimensions = { height = 0.8, width = 0.8, x = 0.5, y = 0.5 },
+  border = "single", -- or 'double'
+}
+
 local gitui = term:new():setup {
   cmd = "gitui",
   dimensions = { height = 0.9, width = 0.9 },
@@ -21,6 +26,7 @@ local top = term:new():setup {
   cmd = "btm",
   dimensions = { height = 0.9, width = 0.9 },
 }
+
 function _G.__fterm_broot()
   broot:toggle()
 end

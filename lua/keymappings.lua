@@ -202,7 +202,9 @@ map("v", "gyc", "ygvgc`>p", sile)
 map("v", "ic", [[/#+\s*%+<cr>oN]], nore)
 
 -- Close FTerm
-map("t", "<A-q>", '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', nore)
+map("n", "<A-i>", '<CMD>lua require("FTerm").toggle()<CR>', nore)
+map("t", "<A-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', nore)
+-- map("t", "<Esc>", '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', nore)
 
 -- Format buffer -- TODO: switch between neoformat and lsp
 map("n", "gf", "<cmd>Neoformat<cr>", nore)

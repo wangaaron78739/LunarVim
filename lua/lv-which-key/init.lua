@@ -68,7 +68,6 @@ local mappings = {
     u = { "<cmd>UndotreeToggle<CR>", "Undo tree" },
     r = { "<cmd>:RnvimrToggle<cr>", "Ranger" },
     P = { "<cmd>e ~/.config/nvim/<cr>", "Edit Private Config" },
-    -- t = {"<cmd>lua require'FTerm'.toggle()<CR>", "Terminal"},
     t = { "<cmd>vnew term://$SHELL<CR>", "Terminal" },
     b = { "<cmd>lua _G.__fterm_broot()<CR>", "Broot" },
     p = { "<cmd>lua _G.__fterm_python()<CR>", "Python" },
@@ -82,6 +81,14 @@ local mappings = {
     v = { "<cmd>Vista nvim_lsp<cr>", "Vista" },
     m = { "<cmd>MinimapToggle<cr>", "Minimap" },
     -- ["v"] = {":Vista<CR>", "Vista"},
+  },
+  t = {
+    name = "Toggle",
+    t = { "<cmd>lua require'FTerm'.toggle()<CR>", "Terminal" },
+    s = { "<cmd>setlocal spell!<CR>", "Spellcheck" },
+    c = { "<cmd>setlocal cursorcolumn!<CR>", "Cursor column" },
+    l = { "<cmd>setlocal cursorline!<CR>", "Cursor line" },
+    h = { "<cmd>noh<CR>", "Cursor line" },
   },
   b = {
     name = "Buffers",
@@ -113,12 +120,6 @@ local mappings = {
       "<cmd>BufferLineSortByExtension<cr>",
       "sort BufferLines automatically by language",
     },
-  },
-  t = {
-    s = { "<cmd>setlocal spell!<CR>", "Spellcheck" },
-    c = { "<cmd>setlocal cursorcolumn!<CR>", "Cursor column" },
-    l = { "<cmd>setlocal cursorline!<CR>", "Cursor line" },
-    h = { "<cmd>noh<CR>", "Cursor line" },
   },
   -- " Available Debug Adapters:
   -- "   https://microsoft.github.io/debug-adapter-protocol/implementors/adapters/

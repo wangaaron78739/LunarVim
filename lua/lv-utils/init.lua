@@ -71,17 +71,13 @@ lv_utils.define_augroups {
   _buffer_bindings = {
     { "FileType", "dashboard", "nnoremap <silent> <buffer> q :q<CR>" },
     { "FileType", "lspinfo", "nnoremap <silent> <buffer> q :q<CR>" },
-    { "FileType", "floaterm", "nnoremap <silent> <buffer> q :q<CR>" },
-    {
-      "FileType",
-      "rnvimr",
-      "tnoremap <silent> <buffer> <nowait> - <ESC>:q<CR>",
-    },
-    {
-      "FileType",
-      "rnvimr",
-      "inoremap <silent> <buffer> <nowait> - <ESC>:q<CR>",
-    },
+    { "FileType", "FTerm", "nnoremap <silent> <buffer> q :q<CR>" },
+    { "FileType", "FTerm", "tnoremap <silent> <buffer> <esc> <nop>" },
+    { "FileType", "FTerm", "tnoremap <silent> <buffer> <M-q> <C-\\><C-n><CMD>q<CR>" },
+    { "FileType", "FTerm", "tnoremap <silent> <buffer> <M-e> <C-\\><C-n>" },
+    { "FileType", "rnvimr", "tnoremap <silent> <buffer> <M-q> <C-\\><C-n><CMD>q<CR>" },
+    { "FileType", "rnvimr", "tnoremap <silent> <buffer> <nowait> - <ESC>:q<CR>" },
+    { "FileType", "rnvimr", "inoremap <silent> <buffer> <nowait> - <ESC>:q<CR>" },
   },
   _terminal_insert = {
     { "BufEnter", "*", [[if &buftype == 'terminal' | :startinsert | endif]] },
