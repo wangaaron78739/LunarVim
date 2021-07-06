@@ -59,10 +59,14 @@ map("t", "<Esc>", [[<C-\><C-n>]], nore)
 
 -- TODO fix this
 -- resize with arrows
-map("n", "<C-Up>", ":resize -2<CR>", sile)
-map("n", "<C-Down>", ":resize +2<CR>", sile)
-map("n", "<C-Left>", ":vertical resize -2<CR>", sile)
-map("n", "<C-Right>", ":vertical resize +2<CR>", sile)
+local resize_prefix = "<C-"
+if vim.fn.has "mac" == 1 then
+  resize_prefix = "<A-"
+end
+vim.api.nvim_set_keymap("n", resize_prefix .. "Up>", ":resize -2<CR>", { silent = true })
+vim.api.nvim_set_keymap("n", resize_prefix .. "Down>", ":resize +2<CR>", { silent = true })
+vim.api.nvim_set_keymap("n", resize_prefix .. "Left>", ":vertical resize -2<CR>", { silent = true })
+vim.api.nvim_set_keymap("n", resize_prefix .. "Right>", ":vertical resize +2<CR>", { silent = true })
 
 -- Move current line / block with Alt-j/k ala vscode.
 map("n", "<C-A-j>", ":m .+1<CR>==", nore)
