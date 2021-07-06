@@ -5,16 +5,27 @@ local actions = require "telescope.actions"
 -- Global remapping
 ------------------------------
 -- '--color=never',
+local rg = {
+  "rg",
+  "--color=never",
+  "--no-config",
+  "--no-heading",
+  "--with-filename",
+  "--line-number",
+  "--column",
+  "--smart-case",
+  "--ignore",
+  "--hidden",
+}
+local fd = {}
+for i, v in ipairs(rg) do
+  fd[i] = v
+end
+table.insert(fd, "--files")
 require("telescope").setup {
   defaults = {
-    find_command = {
-      "rg",
-      "--no-heading",
-      "--with-filename",
-      "--line-number",
-      "--column",
-      "--smart-case",
-    },
+    find_command = fd,
+    vimgrep_arguments = rg,
     prompt_prefix = " ",
     selection_caret = " ",
     entry_prefix = "  ",
