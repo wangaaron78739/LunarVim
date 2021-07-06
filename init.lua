@@ -16,7 +16,8 @@ if O.format_on_save then
       {
         "BufWritePre",
         "*",
-        [[try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry]],
+        [[undojoin | Neoformat]],
+        -- [[try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry]],
       },
     },
   }
