@@ -158,6 +158,7 @@ O = {
       diagnostics = diagnostics,
     },
     tailwindcss = {
+      active = false,
       filetypes = {
         "html",
         "css",
