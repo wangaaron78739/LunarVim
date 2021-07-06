@@ -29,47 +29,50 @@ require("lspconfig").sumneko_lua.setup {
     },
   },
 }
-if O.lang.lua.autoformat then
-  require("lv-utils").define_augroups {
-    _lua_autoformat = {
-      {
-        "BufWritePre",
-        "*.lua",
-        "lua vim.lsp.buf.formatting_sync(nil, 1000)",
+
+local function efm_setup()
+  if O.lang.lua.autoformat then
+    require("lv-utils").define_augroups {
+      _lua_autoformat = {
+        {
+          "BufWritePre",
+          "*.lua",
+          "lua vim.lsp.buf.formatting_sync(nil, 1000)",
+        },
       },
-    },
+    }
+  end
+
+  local lua_arguments = {}
+
+  local stylua = {
+    formatCommand = "stylua --stdin-filepath . -", -- TODO: UNTESTED
+    formatStdin = true,
+  }
+
+  local luaFormat = {
+    formatCommand = "lua-format --column-limit=80",
+    formatStdin = true,
+  }
+
+  local lua_fmt = {
+    formatCommand = "luafmt --indent-count 2 --line-width 120 --stdin",
+    formatStdin = true,
+  }
+
+  if O.lang.lua.formatter == "lua-format" then
+    table.insert(lua_arguments, luaFormat)
+  elseif O.lang.lua.formatter == "lua-fmt" then
+    table.insert(lua_arguments, lua_fmt)
+  elseif O.lang.lua.formatter == "stylua" then
+    table.insert(lua_arguments, stylua)
+  end
+
+  require("lspconfig").efm.setup {
+    -- init_options = {initializationOptions},
+    cmd = { DATA_PATH .. "/lspinstall/efm/efm-langserver" },
+    init_options = { documentFormatting = true, codeAction = false },
+    filetypes = { "lua" },
+    settings = { rootMarkers = { ".git/" }, languages = { lua = lua_arguments } },
   }
 end
-
-local lua_arguments = {}
-
-local stylua = {
-  formatCommand = "stylua --stdin-filepath . -", -- TODO: UNTESTED
-  formatStdin = true,
-}
-
-local luaFormat = {
-  formatCommand = "lua-format --column-limit=80",
-  formatStdin = true,
-}
-
-local lua_fmt = {
-  formatCommand = "luafmt --indent-count 2 --line-width 120 --stdin",
-  formatStdin = true,
-}
-
-if O.lang.lua.formatter == "lua-format" then
-  table.insert(lua_arguments, luaFormat)
-elseif O.lang.lua.formatter == "lua-fmt" then
-  table.insert(lua_arguments, lua_fmt)
-elseif O.lang.lua.formatter == "stylua" then
-  table.insert(lua_arguments, stylua)
-end
-
-require("lspconfig").efm.setup {
-  -- init_options = {initializationOptions},
-  cmd = { DATA_PATH .. "/lspinstall/efm/efm-langserver" },
-  init_options = { documentFormatting = true, codeAction = false },
-  filetypes = { "lua" },
-  settings = { rootMarkers = { ".git/" }, languages = { lua = lua_arguments } },
-}

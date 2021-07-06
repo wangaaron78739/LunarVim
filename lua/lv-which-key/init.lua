@@ -58,13 +58,19 @@ local opts = {
 
 local mappings = {
   [" "] = { "<cmd>Telescope commands<cr>", "Commands" },
+  ["<tab>"] = { "Tab mode" },
   [";"] = { "<cmd>Dashboard<CR>", "Dashboard" },
   ["/"] = { "<cmd>Telescope live_grep<cr>", "Global search" },
-  ["f"] = {
+  -- ["/"] = { "<cmd>lua require('spectre').open()<cr>", "Global search" },
+  f = {
     O.plugin.snap.active and "<cmd>Snap find_files<cr>" or "<cmd>Telescope find_files <CR>",
     "Find File",
   },
-  ["h"] = { "<cmd>noh<CR><cmd>call minimap#vim#ClearColorSearch()<cr>", "No Highlight" },
+  h = {
+    "<Plug>ClearHighLights", --"<cmd>noh<CR><cmd>call minimap#vim#ClearColorSearch()<cr>"
+    "No Highlight",
+  },
+  w = { "<cmd>up<CR>", "Write" },
   o = {
     name = "Toggle window",
     f = { "<cmd>NvimTreeToggle<CR>", "File Sidebar" },
@@ -92,10 +98,11 @@ local mappings = {
       O.plugin.snap.active and "<cmd>Snap buffers<cr>" or "<cmd>Telescope buffers<cr>",
       "Jump to ",
     },
-    w = { ":w<CR>", "Write" },
-    a = { ":wa<CR>", "Write All" },
+    w = { "<cmd>w<CR>", "Write" },
+    a = { "<cmd>wa<CR>", "Write All" },
     c = { ":bdelete!<CR>", "Close" },
-    f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" }, -- TODO: switch between neoformat and lsp
+    f = { "<cmd>Neoformat<cr>", "Format" }, -- TODO: switch between neoformat and lsp
+    -- f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" }, -- TODO: switch between neoformat and lsp
     n = { "<cmd>tabnew<CR>", "New" },
     -- W = {"<cmd>BufferWipeout<cr>", "wipeout buffer"},
     -- e = {
@@ -115,8 +122,12 @@ local mappings = {
       "<cmd>BufferLineSortByExtension<cr>",
       "sort BufferLines automatically by language",
     },
-    S = { "<cmd>setlocal spell!", "Spellcheck" },
-    C = { "<cmd>setlocal cursorcolumn!", "Cursor column" },
+  },
+  t = {
+    s = { "<cmd>setlocal spell!<CR>", "Spellcheck" },
+    c = { "<cmd>setlocal cursorcolumn!<CR>", "Cursor column" },
+    l = { "<cmd>setlocal cursorline!<CR>", "Cursor line" },
+    h = { "<cmd>noh<CR>", "Cursor line" },
   },
   -- " Available Debug Adapters:
   -- "   https://microsoft.github.io/debug-adapter-protocol/implementors/adapters/
@@ -244,6 +255,14 @@ local mappings = {
     j = { [[<cmd>lua require("lsp").diag_next()<cr>]], "Next" },
     k = { [[<cmd>lua require("lsp").diag_prev()<cr>]], "Previous" },
   },
+  P = {
+    name = "Packer",
+    c = { "<cmd>PackerCompile<cr>", "Compile" },
+    i = { "<cmd>PackerInstall<cr>", "Install" },
+    r = { ":luafile %<cr>", "Reload" },
+    s = { "<cmd>PackerSync<cr>", "Sync" },
+    u = { "<cmd>PackerUpdate<cr>", "Update" },
+  },
 }
 
 if O.plugin.symbol_outline.active then
@@ -365,5 +384,10 @@ if O.plugin.lightspeed.active then
   local ops = { mode = "o" }
   wk.register({ ["z"] = "Light speed", ["Z"] = "Light speed bwd" }, ops)
 end
+
+-- if O.plugin.visual_multi.active then
+local ops = { mode = "n" }
+wk.register({ [vim.g.VM_leader] = "which_key_ignore" }, ops)
+-- end
 
 -- FIXME: duplicate entries for some of the operators

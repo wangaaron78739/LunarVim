@@ -5,7 +5,6 @@ PLUGIN_PATH = DATA_PATH .. "site/pack/*/start/*"
 TERMINAL = vim.fn.expand "$TERMINAL"
 
 local enable_plugins_by_default = true
-local enable_autofmt_by_default = false -- this is the lsp autoformat
 -- TODO: switch between neoformat and lsp autoformat smartly
 
 local diagnostics = {
@@ -16,6 +15,7 @@ local diagnostics = {
 local lsp_border = "single"
 
 O = {
+  format_on_save = true,
   auto_close_tree = 0,
   auto_complete = true,
   colorscheme = "lunar",
@@ -37,9 +37,7 @@ O = {
   vnsip_dir = CONFIG_PATH .. "/snippets",
   breakpoint_sign = { text = "🛑", texthl = "", linehl = "", numhl = "" },
   lsp = { border = lsp_border },
-
   hint_labels = { "h", "j", "f", "d", "n", "v", "s", "l", "a" },
-
   -- @usage pass a table with your desired languages
   treesitter = {
     ensure_installed = "all",
@@ -49,9 +47,7 @@ O = {
     -- disable as much as possible for performance
     additional_vim_regex_highlighting = { "latex" },
   },
-
   database = { save_location = "~/.config/nvim/.db", auto_execute = 1 },
-
   plugin = {
     hop = { active = enable_plugins_by_default },
     dial = { active = enable_plugins_by_default },
@@ -123,17 +119,17 @@ O = {
     flutter_tools = { active = enable_plugins_by_default },
     editorconfig = { active = enable_plugins_by_default },
     anywise_reg = { active = enable_plugins_by_default },
-    neoformat = { active = enable_plugins_by_default },
     doge = { active = enable_plugins_by_default },
     undotree = { active = enable_plugins_by_default },
   },
-
+  custom_plugins = {},
+  user_autocommands = {
+    { "FileType", "qf", "set nobuflisted" },
+  },
   lang = {
     python = {
       linter = "",
       -- @usage can be 'yapf', 'black'
-      formatter = "",
-      autoformat = enable_autofmt_by_default,
       isort = false,
       diagnostics = diagnostics,
       analysis = {
@@ -143,35 +139,22 @@ O = {
       },
     },
     dart = {
-      autoformat = enable_autofmt_by_default,
       sdk_path = "/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot",
     },
     lua = {
-      -- @usage can be 'lua-format'
-      formatter = "",
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
     },
     sh = {
       -- @usage can be 'shellcheck'
       linter = "",
-      -- @usage can be 'shfmt'
-      formatter = "",
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
     },
     tsserver = {
       -- @usage can be 'eslint'
       linter = "",
-      -- @usage can be 'prettier'
-      formatter = "",
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
     },
     json = {
-      -- @usage can be 'prettier'
-      formatter = "",
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
     },
     tailwindcss = {
@@ -186,7 +169,6 @@ O = {
       },
     },
     clang = {
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
       cross_file_rename = true,
       header_insertion = "never",
@@ -195,31 +177,26 @@ O = {
       diagnostics = diagnostics,
       filetypes = { "rb", "erb", "rakefile", "ruby" },
     },
-    go = { autoformat = enable_autofmt_by_default },
-    elixir = { autoformat = enable_autofmt_by_default },
-    vim = { autoformat = enable_autofmt_by_default },
-    yaml = { autoformat = enable_autofmt_by_default },
-    terraform = { autoformat = enable_autofmt_by_default },
+    go = {},
+    elixir = {},
+    vim = {},
+    yaml = {},
+    terraform = {},
     rust = {
       rust_tools = { active = false },
-      autoformat = enable_autofmt_by_default,
       linter = "",
-      formatter = "",
       diagnostics = diagnostics,
     },
     svelte = {
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
     },
     php = {
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
       format = { braces = "psr12" },
       environment = { php_version = "7.4" },
       filetypes = { "php", "phtml" },
     },
     latex = {
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
       filetypes = { "tex", "bib" },
       aux_directory = ".",
@@ -238,54 +215,41 @@ O = {
       latexindent = { modify_line_breaks = false },
     },
     kotlin = {
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
     },
     html = {
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
     },
     elm = {
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
     },
     emmet = {
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
       active = false,
     },
     graphql = {
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
     },
     efm = {
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
     },
     docker = {
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
     },
     cmake = {
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
     },
     java = {
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
     },
     zig = {
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
     },
     julia = {
-      autoformat = enable_autofmt_by_default,
       diagnostics = diagnostics,
     },
   },
-
   dashboard = {
-
     custom_header = {
       "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
       "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣶⣾⠿⠿⠟⠛⠛⠛⠛⠿⠿⣿⣷⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
@@ -311,95 +275,3 @@ O = {
 }
 
 vim.cmd('let &titleold="' .. TERMINAL .. '"')
-
--- TODO find a new home for these autocommands
-require("lv-utils").define_augroups {
-  _general_settings = {
-    {
-      "TextYankPost",
-      "*",
-      "lua require('vim.highlight').on_yank({higroup = 'Search', timeout = 200})",
-    },
-    {
-      "BufWinEnter",
-      "*",
-      "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
-    },
-    {
-      "BufRead",
-      "*",
-      "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
-    },
-    {
-      "BufRead",
-      "*",
-      "set hlsearch",
-    },
-    {
-      "BufNewFile",
-      "*",
-      "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
-    },
-    { "VimLeavePre", "*", "set title set titleold=" },
-    { "FileType", "qf", "set nobuflisted" },
-  },
-  -- _solidity = {
-  --     {'BufWinEnter', '.sol', 'setlocal filetype=solidity'}, {'BufRead', '*.sol', 'setlocal filetype=solidity'},
-  --     {'BufNewFile', '*.sol', 'setlocal filetype=solidity'}
-  -- },
-  -- _gemini = {
-  --     {'BufWinEnter', '.gmi', 'setlocal filetype=markdown'}, {'BufRead', '*.gmi', 'setlocal filetype=markdown'},
-  --     {'BufNewFile', '*.gmi', 'setlocal filetype=markdown'}
-  -- },
-  -- _latex = {
-  --     {'FileType', 'latex', 'VimtexCompile'},
-  --     {'FileType', 'latex', 'setlocal wrap'},
-  --     {'FileType', 'latex', 'setlocal spell'}
-  --     -- {'FileType', 'latex', 'set guifont "FiraCode Nerd Font:h15'},
-  -- },
-  _packer_compile = { { "User", "PackerComplete", "++once PackerCompile" } },
-  _buffer_bindings = {
-    { "FileType", "dashboard", "nnoremap <silent> <buffer> q :q<CR>" },
-    { "FileType", "lspinfo", "nnoremap <silent> <buffer> q :q<CR>" },
-    { "FileType", "floaterm", "nnoremap <silent> <buffer> q :q<CR>" },
-    {
-      "FileType",
-      "rnvimr",
-      "tnoremap <silent> <buffer> <nowait> - <ESC>:q<CR>",
-    },
-    {
-      "FileType",
-      "rnvimr",
-      "inoremap <silent> <buffer> <nowait> - <ESC>:q<CR>",
-    },
-  },
-  _terminal_insert = {
-    { "BufEnter", "*", [[if &buftype == 'terminal' | :startinsert | endif]] },
-  },
-  _auto_reload = {
-    -- will check for external file changes on cursor hold
-    { "CursorHold", "*", "silent! checktime" },
-  },
-  _auto_resize = {
-    -- will cause split windows to be resized evenly if main window is resized
-    { "VimResized ", "*", "wincmd =" },
-  },
-  _mode_switching = {
-    -- will switch between absolute and relative line numbers depending on mode
-    {
-      "InsertEnter",
-      "*",
-      "if &relativenumber | let g:ms_relativenumberoff = 1 | setlocal number norelativenumber | endif",
-    },
-    { "InsertLeave", "*", 'if exists("g:ms_relativenumberoff") | setlocal relativenumber | endif' },
-    --[[ { "InsertEnter", "*", "if &cursorline | let g:ms_cursorlineoff = 1 | setlocal nocursorline | endif" },
-    { "InsertLeave", "*", 'if exists("g:ms_cursorlineoff") | setlocal cursorline | endif' }, ]]
-  },
-  _neoformat = {
-    {
-      "BufWritePre",
-      "*",
-      [[try | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry]],
-    },
-  },
-}

@@ -120,13 +120,14 @@ O.scrolloff = 10
 vim.g.VM_maps = nil
 -- Can these be moved to a new file?
 vim.g.VM_maps = {
-  ["Find Under"] = "<M-d>",
-  ["Find Subword Under"] = "<M-d>",
+  ["Find Under"] = "<M-n>",
+  ["Find Subword Under"] = "<M-n>",
   ["Add Cursor Down"] = "<M-j>",
   ["Add Cursor Up"] = "<M-k>",
   ["Select Cursor Down"] = "<M-S-j>",
   ["Select Cursor Up"] = "<M-S-k>",
   ["Visual Cursors"] = "<M-c>",
+  ["Visual Add"] = "<M-a>", -- Turn visual selection into a multiple regions
   ["Visual Regex"] = "/",
   -- FIXME: Some plugin is conflicting and making this not work, unless i type fast
   ["Find Operator"] = "m",

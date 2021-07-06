@@ -1,18 +1,40 @@
 local map = vim.api.nvim_set_keymap
-local opts = { silent = true }
+local sile = { silent = true }
 local nore = { noremap = true, silent = true }
 local expr = { noremap = true, silent = true, expr = true }
 
--- TODO: change all the vim.cmd to map
+vim.cmd [[
+    cnoreabbrev W! w!
+    cnoreabbrev Q! q!
+    cnoreabbrev Qa! qa!
+    cnoreabbrev Qall! qall!
+    cnoreabbrev Wq wq
+    cnoreabbrev Wa wa
+    cnoreabbrev wQ wq
+    cnoreabbrev WQ wq
+    cnoreabbrev Wq wq
+    cnoreabbrev qw wq
+    cnoreabbrev Qw wq
+    cnoreabbrev QW wq
+    cnoreabbrev qW wq
+    cnoreabbrev W w
+    cnoreabbrev Q q
+    cnoreabbrev Qa qa
+    cnoreabbrev Qall qall
+]]
+-- <ctrl-s> to Save
+map("n", "<C-S>", "<esc>:update<cr>", sile)
+map("v", "<C-S>", "<esc>:update<cr>", sile)
+map("i", "<C-S>", "<esc>:update<cr>", sile)
 
 -- map('n', '-', ':RnvimrToggle<CR>', nore)
 
 -- better window movement -- tmux_navigator supplies these if installed
 if not O.plugin.tmux_navigator.active then
-  map("n", "<C-h>", "<C-w>h", opts)
-  map("n", "<C-j>", "<C-w>j", opts)
-  map("n", "<C-k>", "<C-w>k", opts)
-  map("n", "<C-l>", "<C-w>l", opts)
+  map("n", "<C-h>", "<C-w>h", sile)
+  map("n", "<C-j>", "<C-w>j", sile)
+  map("n", "<C-k>", "<C-w>k", sile)
+  map("n", "<C-l>", "<C-w>l", sile)
 end
 -- TODO fix this
 -- Terminal window navigation
@@ -25,24 +47,13 @@ map("i", "<C-j>", [[<C-\><C-N><C-w>j]], nore)
 map("i", "<C-k>", [[<C-\><C-N><C-w>k]], nore)
 map("i", "<C-l>", [[<C-\><C-N><C-w>l]], nore)
 map("t", "<Esc>", [[<C-\><C-n>]], nore)
--- vim.cmd([[
---   tnoremap <C-h> <C-\><C-N><C-w>h
---   tnoremap <C-j> <C-\><C-N><C-w>j
---   tnoremap <C-k> <C-\><C-N><C-w>k
---   tnoremap <C-l> <C-\><C-N><C-w>l
---   inoremap <C-h> <C-\><C-N><C-w>h
---   inoremap <C-j> <C-\><C-N><C-w>j
---   inoremap <C-k> <C-\><C-N><C-w>k
---   inoremap <C-l> <C-\><C-N><C-w>l
---   tnoremap <Esc> <C-\><C-n>
--- ]])
 
 -- TODO fix this
 -- resize with arrows
-map("n", "<C-Up>", ":resize -2<CR>", opts)
-map("n", "<C-Down>", ":resize +2<CR>", opts)
-map("n", "<C-Left>", ":vertical resize -2<CR>", opts)
-map("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+map("n", "<C-Up>", ":resize -2<CR>", sile)
+map("n", "<C-Down>", ":resize +2<CR>", sile)
+map("n", "<C-Left>", ":vertical resize -2<CR>", sile)
+map("n", "<C-Right>", ":vertical resize +2<CR>", sile)
 
 -- Move current line / block with Alt-j/k ala vscode.
 map("n", "<C-A-j>", ":m .+1<CR>==", nore)
@@ -77,6 +88,16 @@ map("n", "<S-TAB>", ":bnext<CR>", nore)
 map("v", "p", "pgvy", nore)
 map("v", "P", "p", nore) -- for normal p behaviour
 
+-- Non destructive delete/change
+local function _op(m, c)
+  map(m, "<M-" .. c .. ">", '"_' .. c, nore)
+end
+_op("n", "d")
+_op("n", "c")
+_op("n", "D")
+_op("n", "C")
+map("v", "x", '"_d', nore)
+map("v", "r", '"_r', nore)
 -- Original paste for when 'nvim-anywise-reg.lua' is installed
 map("n", "<M-p>", "p", nore)
 map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
@@ -84,15 +105,54 @@ map("n", "<M-S-P>", "P", nore)
 map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
 -- map("n", "<M-S-p>", [[<cmd>call setreg('p', getreg('+'), 'l')<cr>"pp]], nore) -- linewise paste
 
+-- Select next/previous text object
+map("n", "<M-w>", "wviw", sile)
+map("n", "<M-b>", "bviwo", sile)
+map("v", "<M-w>", "eowo", sile)
+map("v", "<M-b>", "oboge", sile)
+-- map("v", "<M-w>", "<Esc>wviw", sile)
+-- map("v", "<M-b>", "<Esc>bviwo", sile)
+map("n", "<M-S-W>", "WviW", sile)
+map("n", "<M-S-B>", "BviWo", sile)
+map("v", "<M-S-W>", "EOWO", sile)
+map("v", "<M-S-B>", "OBOGE", sile)
+--[[ map("v", "<M-S-W>", "<Esc>WviW", sile)
+map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
+map("n", "<M-)>", "f(va(", sile)
+map("n", "<M-(>", "F)va)o", sile)
+map("v", "<M-)>", "<Esc>f(vi(", sile)
+map("v", "<M-(>", "<Esc>F)vi)", sile)
+map("n", "<M-j>", "jV", sile)
+map("n", "<M-k>", "kV", sile)
+--[[ map("v", "<M-j>", "joj", sile)
+map("v", "<M-k>", "kok", sile) ]]
+map("v", "<M-j>", "<Esc>jV", sile)
+map("v", "<M-k>", "<Esc>kV", sile)
+
+-- Charwise visual select line
+map("v", "v", "^og_", sile)
+map("v", "V", "0og_", sile)
+
+-- Select last pasted/yanked text
+map("n", "g<C-v>", "`[v`]", nore)
+
+-- move along visual lines, not numbered ones
+-- without interferring with {count}<down|up>
+map("n", "<up>", "v:count == 0 ? 'gk' : '<up>'", expr)
+map("v", "<up>", "v:count == 0 ? 'gk' : '<up>'", expr)
+map("n", "<down>", "v:count == 0 ? 'gj' : '<down>'", expr)
+map("v", "<down>", "v:count == 0 ? 'gj' : '<down>'", expr)
+
 -- Better nav for omnicomplete
 map("i", "<c-j>", '("\\<C-n>")', expr)
--- vim.cmd('inoremap <expr> <c-j> (\"\\<C-n>\")')
 map("i", "<TAB>", '("\\<C-n>")', expr)
--- vim.cmd('inoremap <expr> <TAB> (\"\\<C-n>\")')
 map("i", "<c-k>", '("\\<C-p>")', expr)
--- vim.cmd('inoremap <expr> <c-k> (\"\\<C-p>\")')
 map("i", "<S-TAB>", '("\\<C-p>")', expr)
--- vim.cmd('inoremap <expr> <S-TAB> (\"\\<C-p>\")')
+
+-- Search and Replace
+-- 'c*' for word, '<leader>c*' for WORD
+map("n", "c*", [[:%s/\<<C-r><C-w>\>//g<Left><Left>]], nore)
+map("n", "<leader>c*", [[:%s/\<<C-r><C-a>\>//g<Left><Left>]], nore)
 
 -- QuickFix
 -- map('n', ']q', ':cnext<CR>', nore)
@@ -102,18 +162,31 @@ map("n", "<C-A-k>", ":cprev<CR>", nore)
 -- Toggle the QuickFix window -- FIXME: this function doesn't exist anymore
 -- map('', '<C-q>', ':call QuickFixToggle()<CR>', nore)
 
--- Escape key clears search and spelling highlights
-map("n", "<ESC>", ":nohls | :setlocal nospell<ESC>", { silent = true })
+-- Double Escape key clears search and spelling highlights
+map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell | call minimap#vim#ClearColorSearch()<ESC>", nore)
+map("n", "<ESC>", "<Plug>ClearHighLights", sile)
+
+-- Map `cp` to `xp` (transpose two adjacent chars)
+-- as a **repeatable action** with `.`
+-- (since the `@=` trick doesn't work
+-- nmap cp @='xp'<CR>
+-- http://vimcasts.org/transcripts/61/en/
+map("n", "<Plug>TransposeCharacters", [[xp:call repeat#set("\<Plug>TransposeCharacters")<CR>]], nore)
+map("n", "cp", "<Plug>TransposeCharacters", {})
+-- Make xp repeatable
+-- map("n", "xp", "<Plug>TransposeCharacters", {})
 
 -- Yank till end of the line
 map("n", "Y", "yg_", nore)
 
 -- Go Back
-map("n", "gb", "<c-o>", opts)
+map("n", "gb", "<c-o>", sile)
 
 -- comment and copy
-map("n", "gyy", "yy:CommentToggle<cr>p", nore)
-map("v", "gy", "ygv:<c-u>call CommentOperator(visualmode())<cr>`>p", nore)
+map("n", "gcy", "yygccp", sile)
+map("n", "gcj", "gccjgcc", sile)
+map("v", "gyc", "ygvgc`>p", sile)
+-- map("v", "gjc", "gc", sile) -- Don't know how to implement this
 
 -- Select Jupyter Cell
 map("v", "ic", [[/#+\s*%+<cr>oN]], nore)
@@ -122,7 +195,8 @@ map("v", "ic", [[/#+\s*%+<cr>oN]], nore)
 map("t", "<A-q>", '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', nore)
 
 -- Format buffer -- TODO: switch between neoformat and lsp
-map("n", "gf", "<cmd>lua vim.lsp.buf.formatting()<cr>", nore)
+map("n", "gf", "<cmd>Neoformat<cr>", nore)
+-- map("n", "gf", "<cmd>lua vim.lsp.buf.formatting()<cr>", nore)
 map("n", "gh", "<cmd>lua vim.lsp.buf.hover()<cr>", nore)
 
 -- Spell checking
@@ -135,43 +209,34 @@ map("i", "<C-/>", "<C-\\><C-n><CMD>CommentToggle", nore)
 map("v", "*", '"ay/<C-R>a<cr>', nore)
 
 -- peek definition
-map("n", "gpd", ":Lspsaga preview_definition<cr>", opts)
+map("n", "gpd", ":Lspsaga preview_definition<cr>", sile)
 
 -- Slightly easier commands
-map("n", ";", ":", opts)
+map("n", ";", ":", sile)
 
 -- lsp keys
-map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
-map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", sile)
+map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", sile)
+map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", sile)
+map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", sile)
+map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", sile)
+map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", sile)
 vim.cmd 'command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()'
 -- scroll down hover doc or scroll in definition preview
 --vim.cmd "nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>"
 -- scroll up hover doc
 --vim.cmd "nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>"
 
--- map('c', ';', "<CR>", opts)
+-- map('c', ';', "<CR>", sile)
 
 if O.plugin.ts_hintobjects.active then
-  map("o", "m", [[:<C-U>lua require('tsht').nodes()<CR>]], opts)
+  map("o", "m", [[:<C-U>lua require('tsht').nodes()<CR>]], sile)
   map("v", "m", [[:lua require('tsht').nodes()<CR>]], nore)
 end
 
 if O.plugin.surround.active then
-  map("x", "is", [[<Plug>(textobj-sandwich-query-i)]], opts)
-  map("x", "as", [[<Plug>(textobj-sandwich-query-a)]], opts)
-  map("o", "is", [[<Plug>(textobj-sandwich-query-i)]], opts)
-  map("o", "as", [[<Plug>(textobj-sandwich-query-a)]], opts)
+  map("x", "is", [[<Plug>(textobj-sandwich-query-i)]], sile)
+  map("x", "as", [[<Plug>(textobj-sandwich-query-a)]], sile)
+  map("o", "is", [[<Plug>(textobj-sandwich-query-i)]], sile)
+  map("o", "as", [[<Plug>(textobj-sandwich-query-a)]], sile)
 end
-
--- map('i', '<C-TAB>', 'compe#complete()', {noremap = true, silent = true, expr = true})
-
--- vim.cmd([[
--- map p <Plug>(miniyank-autoput)
--- map P <Plug>(miniyank-autoPut)
--- map <leader>n <Plug>(miniyank-cycle)
--- map <leader>N <Plug>(miniyank-cycleback)
--- ]])

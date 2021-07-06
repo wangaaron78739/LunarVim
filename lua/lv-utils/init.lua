@@ -22,4 +22,89 @@ function lv_utils.define_augroups(definitions) -- {{{1
   end
 end
 
+lv_utils.define_augroups {
+  _user_autocmds = O.user_autocommands,
+  _general_settings = {
+    {
+      "TextYankPost",
+      "*",
+      "lua require('vim.highlight').on_yank({higroup = 'Search', timeout = 200})",
+    },
+    {
+      "BufWinEnter",
+      "*",
+      "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
+    },
+    {
+      "BufRead",
+      "*",
+      "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
+    },
+    {
+      "BufRead",
+      "*",
+      "set hlsearch",
+    },
+    {
+      "BufNewFile",
+      "*",
+      "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
+    },
+    { "VimLeavePre", "*", "set title set titleold=" },
+    { "FileType", "qf", "set nobuflisted" },
+  },
+  -- _solidity = {
+  --     {'BufWinEnter', '.sol', 'setlocal filetype=solidity'}, {'BufRead', '*.sol', 'setlocal filetype=solidity'},
+  --     {'BufNewFile', '*.sol', 'setlocal filetype=solidity'}
+  -- },
+  -- _gemini = {
+  --     {'BufWinEnter', '.gmi', 'setlocal filetype=markdown'}, {'BufRead', '*.gmi', 'setlocal filetype=markdown'},
+  --     {'BufNewFile', '*.gmi', 'setlocal filetype=markdown'}
+  -- },
+  -- _latex = {
+  --     {'FileType', 'latex', 'VimtexCompile'},
+  --     {'FileType', 'latex', 'setlocal wrap'},
+  --     {'FileType', 'latex', 'setlocal spell'}
+  --     -- {'FileType', 'latex', 'set guifont "FiraCode Nerd Font:h15'},
+  -- },
+  _packer_compile = { { "User", "PackerComplete", "++once PackerCompile" } },
+  _buffer_bindings = {
+    { "FileType", "dashboard", "nnoremap <silent> <buffer> q :q<CR>" },
+    { "FileType", "lspinfo", "nnoremap <silent> <buffer> q :q<CR>" },
+    { "FileType", "floaterm", "nnoremap <silent> <buffer> q :q<CR>" },
+    {
+      "FileType",
+      "rnvimr",
+      "tnoremap <silent> <buffer> <nowait> - <ESC>:q<CR>",
+    },
+    {
+      "FileType",
+      "rnvimr",
+      "inoremap <silent> <buffer> <nowait> - <ESC>:q<CR>",
+    },
+  },
+  _terminal_insert = {
+    { "BufEnter", "*", [[if &buftype == 'terminal' | :startinsert | endif]] },
+  },
+  _auto_reload = {
+    -- will check for external file changes on cursor hold
+    { "CursorHold", "*", "silent! checktime" },
+  },
+  _auto_resize = {
+    -- will cause split windows to be resized evenly if main window is resized
+    { "VimResized ", "*", "wincmd =" },
+  },
+  _mode_switching = {
+    -- will switch between absolute and relative line numbers depending on mode
+    {
+      "InsertEnter",
+      "*",
+      "if &relativenumber | let g:ms_relativenumberoff = 1 | setlocal number norelativenumber | endif",
+    },
+    { "InsertLeave", "*", 'if exists("g:ms_relativenumberoff") | setlocal relativenumber | endif' },
+    --[[ { "InsertEnter", "*", "if &cursorline | let g:ms_cursorlineoff = 1 | setlocal nocursorline | endif" },
+    { "InsertLeave", "*", 'if exists("g:ms_cursorlineoff") | setlocal cursorline | endif' }, ]]
+  },
+}
+
 return lv_utils

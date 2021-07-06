@@ -5,14 +5,16 @@
 require("lspconfig").zls.setup {
   root_dir = require("lspconfig").util.root_pattern(".git", "build.zig", "zls.json"),
   on_attach = require("lsp").common_on_attach,
-  -- cmd = {DATA_PATH .. "/lspinstall/zig/zls/zls"}, -- TODO: Is this really necessary
+  cmd = { DATA_PATH .. "/lspinstall/zig/zls/zls" }, -- TODO: Is this really necessary
 }
 
-require("lv-utils").define_augroups {
-  _zig_autoformat = {
-    { "BufWritePre", "*.zig", "lua vim.lsp.buf.formatting_sync(nil, 1000)" },
-    { "BufEnter", "*.zig", [[setlocal commentstring=//\ %s]] },
-  },
-}
+if O.lang.zig.autoformat then
+  require("lv-utils").define_augroups {
+    _zig_autoformat = {
+      { "BufWritePre", "*.zig", "lua vim.lsp.buf.formatting_sync(nil, 1000)" },
+    },
+  }
+end
+vim.opt_local.commentstring = [[// %s]]
 
 vim.cmd "setl expandtab tabstop=8 softtabstop=4 shiftwidth=4"

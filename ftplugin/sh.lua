@@ -9,31 +9,33 @@ require("lspconfig").bashls.setup {
 }
 
 -- sh
-local sh_arguments = {}
+local function efm_setup()
+  local sh_arguments = {}
 
-local shfmt = { formatCommand = "shfmt -ci -s -bn", formatStdin = true }
+  local shfmt = { formatCommand = "shfmt -ci -s -bn", formatStdin = true }
 
-local shellcheck = {
-  LintCommand = "shellcheck -f gcc -x",
-  lintFormats = {
-    "%f:%l:%c: %trror: %m",
-    "%f:%l:%c: %tarning: %m",
-    "%f:%l:%c: %tote: %m",
-  },
-}
+  local shellcheck = {
+    LintCommand = "shellcheck -f gcc -x",
+    lintFormats = {
+      "%f:%l:%c: %trror: %m",
+      "%f:%l:%c: %tarning: %m",
+      "%f:%l:%c: %tote: %m",
+    },
+  }
 
-if O.lang.sh.formatter == "shfmt" then
-  table.insert(sh_arguments, shfmt)
+  if O.lang.sh.formatter == "shfmt" then
+    table.insert(sh_arguments, shfmt)
+  end
+
+  if O.lang.sh.linter == "shellcheck" then
+    table.insert(sh_arguments, shellcheck)
+  end
+
+  require("lspconfig").efm.setup {
+    -- init_options = {initializationOptions},
+    cmd = { DATA_PATH .. "/lspinstall/efm/efm-langserver" },
+    init_options = { documentFormatting = true, codeAction = false },
+    filetypes = { "sh" },
+    settings = { rootMarkers = { ".git/" }, languages = { sh = sh_arguments } },
+  }
 end
-
-if O.lang.sh.linter == "shellcheck" then
-  table.insert(sh_arguments, shellcheck)
-end
-
-require("lspconfig").efm.setup {
-  -- init_options = {initializationOptions},
-  cmd = { DATA_PATH .. "/lspinstall/efm/efm-langserver" },
-  init_options = { documentFormatting = true, codeAction = false },
-  filetypes = { "sh" },
-  settings = { rootMarkers = { ".git/" }, languages = { sh = sh_arguments } },
-}

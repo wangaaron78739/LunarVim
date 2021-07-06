@@ -148,9 +148,9 @@ return require("packer").startup(function(use)
     end,
     --         "romgrk/barbar.nvim",
     --         config = function()
-    --             require 'lv-barbar'
+    --             require 'lv-barbar'.config()
     --         end,
-    event = "BufRead",
+    -- event = "BufRead",
   }
 
   -- Extras, these do not load by default
@@ -332,9 +332,9 @@ return require("packer").startup(function(use)
   -- Search & Replace
   use {
     "windwp/nvim-spectre",
-    event = "BufRead", -- TODO: load on command
+    -- event = "BufRead", -- TODO: load on command
     config = function()
-      require("spectre").setup()
+      require("lv-spectre").setup()
     end,
     disable = not O.plugin.spectre.active,
   }
@@ -385,6 +385,9 @@ return require("packer").startup(function(use)
   use {
     "folke/todo-comments.nvim",
     event = "BufRead",
+    config = function()
+      require("todo-comments").setup()
+    end,
     disable = not O.plugin.todo_comments.active,
   }
   -- LSP Colors
@@ -560,7 +563,6 @@ return require("packer").startup(function(use)
   -------------------------------------------------------------------
   -------------------------------------------------------------------
   -- amedhi plugins
-  -- TODO: stop using require_plugin
 
   -- LSP get function signature
   use { "ray-x/lsp_signature.nvim" }
@@ -660,7 +662,18 @@ return require("packer").startup(function(use)
   }
 
   -- 'smooth' scrolling
-  -- use 'karb94/neoscroll.nvim'
+  --[[ use {
+    "karb94/neoscroll.nvim",
+    require("neoscroll").setup {
+      -- All these keys will be mapped to their corresponding default scrolling animation
+      mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
+      hide_cursor = false, -- Hide cursor while scrolling
+      stop_eof = false, -- Stop at <EOF> when scrolling downwards
+      respect_scrolloff = true, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+      cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+      easing_function = "sine",        -- Default easing function
+    },
+  } ]]
 
   -- Code Minimap
   use {
@@ -669,8 +682,8 @@ return require("packer").startup(function(use)
     run = "cargo install --locked code-minimap",
     config = function()
       table.insert(vim.g.minimap_block_filetypes, "dashboard")
-      vim.g.minimap_highlight_search = true
-      vim.g.minimap_highlight_range = true
+      -- vim.g.minimap_highlight_search = true
+      -- vim.g.minimap_highlight_range = true
     end,
   }
 
@@ -726,10 +739,10 @@ return require("packer").startup(function(use)
   -- Autoformat everything
   use {
     "sbdchd/neoformat",
+    event = "BufRead",
     config = function()
       require("lv-neoformat").config()
     end,
-    disable = not O.plugin.neoformat.active,
   }
 
   -- 'Smarter' pasting
@@ -783,6 +796,13 @@ return require("packer").startup(function(use)
     end,
   }
 
+  use { "Iron-E/nvim-libmodal" }
+  use { "Iron-E/nvim-tabmode", after = "nvim-libmodal" }
+
+  for _, plugin in pairs(O.custom_plugins) do
+    use(plugin)
+  end
+
   -- Colorschemes
   -- use {'marko-cerovac/material.nvim'}
   -- use {'folke/tokyonight.nvim'}
@@ -800,6 +820,7 @@ return require("packer").startup(function(use)
   -- https://github.com/rockerBOO/awesome-neovim -- collection
 
   -- alt nvim ide
+  -- https://github.com/ibhagwan/nvim-lua
   -- https://github.com/lvim-tech/lvim
   -- https://github.com/NTBBloodbath/doom-nvim
   -- https://github.com/MenkeTechnologies/zpwr#zpwr-features

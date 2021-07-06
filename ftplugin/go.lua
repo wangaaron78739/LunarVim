@@ -11,12 +11,9 @@ if O.lang.go.autoformat then
     _go_format = {
       { "BufWritePre", "*.go", "lua vim.lsp.buf.formatting_sync(nil,1000)" },
     },
-    _go = {
-      -- Go generally requires Tabs instead of spaces.
-      { "FileType", "go", "setlocal tabstop=4" },
-      { "FileType", "go", "setlocal shiftwidth=4" },
-      { "FileType", "go", "setlocal softtabstop=4" },
-      { "FileType", "go", "setlocal noexpandtab" },
-    },
   }
 end
+vim.opt_local.tabstop = 4
+vim.opt_local.shiftwidth = 4
+vim.opt_local.softtabstop = 4
+vim.opt_local.expandtab = false

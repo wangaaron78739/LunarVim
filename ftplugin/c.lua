@@ -15,33 +15,13 @@ if O.lang.clang.autoformat then
       "*." .. extension,
       "lua vim.lsp.buf.formatting_sync(nil,1000)",
     })
-    table.insert(autocmds, {
-      "BufEnter",
-      "*." .. extension,
-      [[setlocal commentstring=//\ %s]],
-    })
   end
   require("lv-utils").define_augroups {
     _cpp = autocmds,
-    -- {
-    --     {'BufWritePre', '*.c', 'lua vim.lsp.buf.formatting_sync(nil,1000)'},
-    --     {
-    --         'BufWritePre', '*.cpp',
-    --         'lua vim.lsp.buf.formatting_sync(nil,1000)'
-    --     },
-    --     {'BufWritePre', '*.cc', 'lua vim.lsp.buf.formatting_sync(nil,1000)'},
-    --     {'BufWritePre', '*.h', 'lua vim.lsp.buf.formatting_sync(nil,1000)'},
-    --     {
-    --         'BufWritePre', '*.hpp',
-    --         'lua vim.lsp.buf.formatting_sync(nil,1000)'
-    --     }, {'BufEnter', '*.cpp', 'setlocal commenstring', "// %s"},
-    --     {'BufEnter', '*.c', 'setlocal commenstring', "// %s"},
-    --     {'BufEnter', '*.h', 'setlocal commenstring', "// %s"},
-    --     {'BufEnter', '*.hpp', 'setlocal commenstring', "// %s"},
-    --     {'BufEnter', '*.cc', 'setlocal commenstring', "// %s"}
-    -- }
   }
 end
+
+vim.opt_local.commentstring = [[// %s]]
 
 require("lspconfig").clangd.setup {
   cmd = {
