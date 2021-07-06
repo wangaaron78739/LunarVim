@@ -72,7 +72,7 @@ local colors = {
 
 local condition = require "galaxyline.condition"
 local gls = gl.section
-gl.short_line_list = { "NvimTree", "vista", "dbui", "packer", "minimap" }
+gl.short_line_list = { "NvimTree", "vista", "dbui", "packer", "minimap", "spectre_panel" }
 
 table.insert(gls.left, {
   ViMode = {
