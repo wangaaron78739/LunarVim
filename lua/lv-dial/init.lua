@@ -21,7 +21,6 @@ vmap g<C-x> <Plug>(dial-decrement-additional)
 
   enum_cyclic("boolean", { "true", "false" })
   enum_cyclic("Boolean", { "True", "False" })
-
 end
 
 return M

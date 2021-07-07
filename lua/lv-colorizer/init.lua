@@ -9,4 +9,4 @@ require("colorizer").setup({ "*" }, {
 })
 -- names    = true;         -- "Name" codes like Blue
 
-      vim.cmd "ColorizerReloadAllBuffers"
+vim.cmd "ColorizerReloadAllBuffers"

@@ -66,7 +66,7 @@ O.lang.latex.active = true
 O.lang.latex.chktex.on_edit = true
 O.lang.latex.chktex.on_open_and_save = true
 -- TODO: use tectonic here
--- O.lang.latex.build.args = 
+-- O.lang.latex.build.args =
 -- O.lang.latex.build.executable =
 -- O.lang.latex.chktex.build.on_save = true -- This is handled by vimtex?
 
