@@ -162,8 +162,10 @@ map("i", "<S-TAB>", '("\\<C-p>")', expr)
 
 -- Search and Replace
 -- 'c*' for word, '<leader>c*' for WORD
-map("n", "c*", [[:%s/\<<C-r><C-w>\>//g<Left><Left>]], nore)
-map("n", "<leader>c*", [[:%s/\<<C-r><C-a>\>//g<Left><Left>]], nore)
+map("n", ",", [[*]], nore)
+map("n", "g,", [[yiw/<C-R>+<CR>]], nore)
+map("n", "c,", [[:%s/\<<C-r><C-w>\>//g<Left><Left>]], nore)
+map("n", "<leader>c,", [[:%s/\<<C-r><C-a>\>//g<Left><Left>]], nore)
 
 -- QuickFix
 -- map('n', ']q', ':cnext<CR>', nore)
@@ -206,6 +208,7 @@ map("v", "ic", [[/#+\s*%+<cr>oN]], nore)
 -- Toggle FTerm
 map("n", "<M-i>", '<CMD>lua require("FTerm").toggle()<CR>', nore)
 map("t", "<M-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', nore)
+map("n", "<M-t>", ":T ", nore)
 -- map("t", "<Esc>", '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', nore)
 
 -- Format buffer -- TODO: switch between neoformat and lsp
