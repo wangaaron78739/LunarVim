@@ -17,23 +17,27 @@ M.config = function()
       command = "Telescope find_files",
     },
     c = {
+      description = { "  New Buffer         " },
+      command = "Telescope find_files",
+    },
+    d = {
       description = { "  Recently Used Files" },
       command = "Telescope oldfiles",
     },
-    d = {
+    e = {
       description = { "  Load Session       " },
       -- command = "SessionLoad",
       command = "Telescope session-lens search_session",
     },
-    e = {
+    f = {
       description = { "  Find Word          " },
       command = "Telescope live_grep",
     },
-    f = {
+    g = {
       description = { "  Settings           " },
       command = ":e " .. CONFIG_PATH .. "/lv-config.lua",
     },
-    g = {
+    h = {
       description = { "  Neovim Config Files" },
       command = "Telescope find_files cwd=" .. CONFIG_PATH,
     },
