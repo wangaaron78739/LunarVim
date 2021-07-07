@@ -16,12 +16,12 @@ install:
     pipx install ranger-fm
     pipx inject ranger-fm pynvim ueberzug
     pipx install neovim-remote
-    pip3 install pynvim --user
+    # pip3 install pynvim --user
     npm install -g tree-sitter-cli
     cargo install stylua
     git remote add upstream https://github.com/ChristianChiarulli/LunarVim.git
     nvim # Run once to install packer and stuff
-    nvim +PackerInstall # Run again to install the plugins
+    nvim +PackerSync # Run again to install the plugins
 
 # Install lsp that I want
 lsps:
