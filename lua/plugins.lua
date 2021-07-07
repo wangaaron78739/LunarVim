@@ -620,7 +620,12 @@ return require("packer").startup(function(use)
   }
 
   -- Better neovim terminal
-  use { "kassio/neoterm", config = "require('lv-neoterm')", cmd = "T" }
+  use {
+    "kassio/neoterm",
+    config = "require('lv-neoterm')",
+    cmd = "T",
+    keys = { "gx", "gxx" },
+  }
 
   -- Repeat plugin commands
   use { "tpope/vim-repeat", event = "BufRead" }
