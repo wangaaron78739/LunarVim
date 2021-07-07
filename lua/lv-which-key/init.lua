@@ -149,7 +149,7 @@ local mappings = {
   },
   g = {
     name = "Git",
-    g = { "<cmd>lua _G.fttoggle('gitui')<CR>", "Gitui" },
+    g = { "<cmd>lua _G.ftopen('gitui')<CR>", "Gitui" },
     m = { "<cmd>!smerge '%:p:h'<CR>", "Sublime Merge" },
     j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
     k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
