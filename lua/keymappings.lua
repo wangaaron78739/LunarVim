@@ -172,8 +172,6 @@ map("n", "<leader>c,", [[:%s/\<<C-r><C-a>\>//g<Left><Left>]], nore)
 -- map('n', '[q', ':cprev<CR>', nore)
 map("n", "<C-A-j>", ":cnext<CR>", nore)
 map("n", "<C-A-k>", ":cprev<CR>", nore)
--- Toggle the QuickFix window -- FIXME: this function doesn't exist anymore
--- map('', '<C-q>', ':call QuickFixToggle()<CR>', nore)
 
 -- Double Escape key clears search and spelling highlights
 -- map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell | call minimap#vim#ClearColorSearch()<ESC>", nore)

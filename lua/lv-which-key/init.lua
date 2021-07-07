@@ -66,8 +66,13 @@ local mappings = {
     name = "Toggle window",
     f = { "<cmd>NvimTreeToggle<CR>", "File Sidebar" },
     u = { "<cmd>UndotreeToggle<CR>", "Undo tree" },
-    r = { "<cmd>:RnvimrToggle<cr>", "Ranger" },
-    P = { "<cmd>e ~/.config/nvim/<cr>", "Edit Private Config" },
+    r = { "<cmd>RnvimrToggle<cr>", "Ranger" },
+    q = { "<cmd>QuickFixToggle<cr>", "Ranger" },
+    o = { "<cmd>!open '%:p:h'<CR>", "Open File Explorer" },
+    v = { "<cmd>Vista nvim_lsp<cr>", "Vista" },
+    -- ["v"] = {":Vista<CR>", "Vista"},
+    m = { "<cmd>MinimapToggle<cr>", "Minimap" },
+
     b = { "<cmd>lua _G.ftopen('broot')<CR>", "Broot" },
     p = { "<cmd>lua _G.ftopen('python')<CR>", "Python" },
     M = { "<cmd>lua _G.ftopen('top')<CR>", "System Monitor" },
@@ -78,6 +83,7 @@ local mappings = {
     v = { "<cmd>Vista nvim_lsp<cr>", "Vista" },
     -- ["v"] = {":Vista<CR>", "Vista"},
     m = { "<cmd>MinimapToggle<cr>", "Minimap" },
+    q = { "<cmd>QuickFixToggle<cr>", "Ranger" },
   },
   t = {
     name = "Toggle",
@@ -193,6 +199,7 @@ local mappings = {
       "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
       "Workspace Symbols",
     },
+    T = { name = "Treesitter", i = { ":TSConfigInfo<cr>", "Info" } },
   },
   s = {
     name = "Search",
@@ -206,7 +213,7 @@ local mappings = {
       "<cmd>Telescope lsp_workspace_diagnostics<cr>",
       "Workspace Diagnostics",
     },
-    -- TODO: better (less repetive way to do this)
+    -- TODO: better (less repetitive way to do this)
     -- f = {
     --   O.plugin.snap.active and "<cmd>Snap find_files<cr>"
     --     or "<cmd>Telescope find_files find_command=rg,--no-config,--ignore,--hidden,--files,--no-heading,--with-filename,--line-number,--column,--smart-case<cr>",
@@ -236,7 +243,6 @@ local mappings = {
     p = { "<cmd>lua require('spectre').open()<cr>", "in Project" },
     n = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
   },
-  T = { name = "Treesitter", i = { ":TSConfigInfo<cr>", "Info" } },
   d = {
     name = "Diagnostics",
     -- k = {"<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostic"},
