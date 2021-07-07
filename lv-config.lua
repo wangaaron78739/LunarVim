@@ -24,16 +24,11 @@ local disable_plugins = {
   "hop",
   "lazygit",
   "anywise_reg",
+  "quickscope",
 }
 for _, v in ipairs(disable_plugins) do
   O.plugin[v].active = false
 end
--- O.plugin.lsp_rooter.active = false -- This is actually more confusing sometimes
--- O.plugin.snap.active = false
--- O.plugin.octo.active = false
--- O.plugin.lush.active = false
--- O.plugin.fzf.active = false
--- O.plugin.tabnine.active = false
 
 -- dashboard
 -- O.dashboard.custom_header = {""}
@@ -43,7 +38,7 @@ O.dashboard.footer = { "Anshuman Medhi (IndianBoy42)" }
 O.treesitter.ignore_install = {}
 O.treesitter.enabled = true
 
-O.lang.clang.active = true
+-- Clang
 -- O.lang.clang.diagnostics.virtual_text = true
 O.lang.clang.diagnostics.signs = true
 O.lang.clang.diagnostics.underline = true
@@ -62,7 +57,7 @@ O.lang.tsserver.formatter = "prettier"
 O.lang.rust.rust_tools.active = true
 
 -- latex
-O.lang.latex.active = true
+O.lang.latex.vimtex.active = true
 O.lang.latex.chktex.on_edit = true
 O.lang.latex.chktex.on_open_and_save = true
 -- TODO: use tectonic here
