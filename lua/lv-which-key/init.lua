@@ -138,7 +138,7 @@ local mappings = {
       "<cmd>BufferLineSortByExtension<cr>",
       "sort BufferLines automatically by language",
     },
-    t = { "<cmd>vnew term://$SHELL<CR>", "Terminal" },
+    t = { "<cmd>vnew term://" .. O.shell .. "<CR>", "Terminal" },
   },
   -- " Available Debug Adapters:
   -- "   https://microsoft.github.io/debug-adapter-protocol/implementors/adapters/
