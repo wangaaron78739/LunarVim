@@ -705,6 +705,7 @@ return require("packer").startup(function(use)
   -- Session Management
   use { "rmagatti/auto-session" }
   use { "rmagatti/session-lens" }
+  -- https://github.com/tpope/vim-obsession
 
   -- treesitter extensions
   use {
