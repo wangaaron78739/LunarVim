@@ -38,7 +38,6 @@ O = {
   vnsip_dir = CONFIG_PATH .. "/snippets",
   breakpoint_sign = { text = "🛑", texthl = "", linehl = "", numhl = "" },
   lsp = { border = lsp_border },
-  hint_labels = { "h", "j", "f", "d", "n", "v", "s", "l", "a" },
   -- @usage pass a table with your desired languages
   treesitter = {
     ensure_installed = "all",
@@ -47,6 +46,29 @@ O = {
     -- Specify languages that need the normal vim syntax highlighting as well
     -- disable as much as possible for performance
     additional_vim_regex_highlighting = { "latex" },
+    -- The below are for treesitter-textobjects plugin
+    textobj_prefixes = {
+      goto_next = "]", -- Go to next
+      goto_previous = "[", -- Go to previous
+      inner = "i", -- Select inside
+      outer = "a", -- Selct around
+      swap = "<leader>a", -- Swap with next
+    },
+    textobj_suffixes = {
+      -- Start and End respectively for the goto keys
+      -- for other keys it only uses the first
+      ["function"] = { "f", "F" },
+      ["class"] = { "m", "M" },
+      ["parameter"] = { "a", "A" },
+      ["block"] = { "k", "K" },
+      ["conditional"] = { "i", "I" },
+      ["call"] = { "c", "C" },
+      ["loop"] = { "l", "L" },
+      ["statement"] = { "s", "S" },
+      ["comment"] = { "/", "?" },
+    },
+    -- The below is for treesitter hint textobjects plugin
+    hint_labels = { "h", "j", "f", "d", "n", "v", "s", "l", "a" },
   },
   database = { save_location = "~/.config/nvim/.db", auto_execute = 1 },
   plugin = {
