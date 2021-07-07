@@ -624,7 +624,7 @@ return require("packer").startup(function(use)
   use {
     "kassio/neoterm",
     config = "require('lv-neoterm')",
-    cmd = "T",
+    cmd = { "T", "Tmap", "Tnew", "Ttoggle", "Topen" },
     keys = { "gx", "gxx" },
   }
 
