@@ -631,6 +631,24 @@ return require("packer").startup(function(use)
   -- Repeat plugin commands
   use { "tpope/vim-repeat", event = "BufRead" }
 
+  -- Smart abbreviations, substitutions and case renaming
+  use {
+    "tpope/vim-abolish",
+    event = "InsertEnter",
+    config = function()
+      require "lv-abolish"
+    end,
+  }
+
+  -- See more character information in ga
+  use { "tpope/vim-characterize", keys = { "ga" } }
+
+  -- Readline bindings
+  -- https://github.com/tpope/vim-rsi
+
+  -- Detect indentation from file
+  use { "zsugabubus/crazy8.nvim", event = "BufRead" }
+
   -- mkdir -- Goes into a infinite loop and freezes neovim
   -- use {
   --   "jghauser/mkdir.nvim",
