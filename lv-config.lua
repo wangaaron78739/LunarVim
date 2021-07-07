@@ -121,7 +121,19 @@ vim.g.slime_target = "neovim"
 -- vim.g.neovide_refresh_rate=120
 
 -- Autosave
-vim.api.nvim_command "au FocusLost * silent! wa"
-vim.api.nvim_command ":set autowriteall"
+require("lv-utils").define_augroups {
+  _focus_lost = {
+    { "FocusLost", "*", "silent! w" },
+    { "FocusLost", "*", [[silent! call feedkeys("\<C-\>\<C-n>")]] },
+    { "TabLeave,BufLeave", "*", "silent! w" },
+    { "TabLeave,BufLeave", "*", "stopinsert" },
+  },
+}
+vim.opt.autowriteall = true
+-- vim.api.nvim_command "au FocusLost * silent! wa"
+-- vim.api.nvim_command "au TabLeave * silent! w"
+-- vim.api.nvim_command "au TabLeave * silent! stopinsert"
+-- vim.api.nvim_command [[au FocusLost * silent! call feedkeys("\<C-\>\<C-n>")]]
+-- vim.api.nvim_command ":set autowriteall"
 
 vim.g.gitblame_enabled = 0
