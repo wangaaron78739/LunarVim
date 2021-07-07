@@ -20,6 +20,7 @@ install:
     npm install -g tree-sitter-cli
     cargo install stylua
     git remote add upstream https://github.com/ChristianChiarulli/LunarVim.git
+    cp ./utils/efm-config.yaml ~/.config/efm-langserver/config.yaml
     nvim # Run once to install packer and stuff
     nvim +PackerSync # Run again to install the plugins
 

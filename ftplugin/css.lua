@@ -8,3 +8,7 @@ require("lspconfig").cssls.setup {
   on_attach = require("lsp").common_on_attach,
 }
 vim.cmd "setl ts=2 sw=2"
+
+if O.lang.css.efm.active == true then
+  require("lsp.efm-ls").generic_setup { "css" }
+end

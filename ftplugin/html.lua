@@ -12,3 +12,7 @@ require("lspconfig").html.setup {
   capabilities = capabilities,
 }
 vim.cmd "setl ts=2 sw=2"
+
+if O.lang.html.efm.active == true then
+  require("lsp.efm-ls").generic_setup { "html" }
+end

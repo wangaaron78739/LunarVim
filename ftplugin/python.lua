@@ -1,56 +1,3 @@
-local python_arguments = {}
-
--- TODO replace with path argument
-local function efm_setup()
-  local flake8 = {
-    LintCommand = "flake8 --ignore=E501 --stdin-display-name ${INPUT} -",
-    lintStdin = true,
-    lintFormats = { "%f:%l:%c: %m" },
-  }
-
-  local isort = { formatCommand = "isort --quiet -", formatStdin = true }
-
-  local yapf = { formatCommand = "yapf --quiet", formatStdin = true }
-  local black = { formatCommand = "black --quiet -", formatStdin = true }
-
-  if O.lang.python.linter == "flake8" then
-    table.insert(python_arguments, flake8)
-  end
-
-  if O.lang.python.isort then
-    table.insert(python_arguments, isort)
-  end
-
-  if O.lang.python.formatter == "yapf" then
-    table.insert(python_arguments, yapf)
-  elseif O.lang.python.formatter == "black" then
-    table.insert(python_arguments, black)
-  end
-
-  require("lspconfig").efm.setup {
-    -- init_options = {initializationOptions},
-    cmd = { DATA_PATH .. "/lspinstall/efm/efm-langserver" },
-    init_options = { documentFormatting = true, codeAction = false },
-    filetypes = { "python" },
-    settings = {
-      rootMarkers = { ".git/", "requirements.txt" },
-      languages = { python = python_arguments },
-    },
-  }
-
-  if O.lang.python.autoformat then
-    require("lv-utils").define_augroups {
-      _python_autoformat = {
-        {
-          "BufWritePre",
-          "*.py",
-          "lua vim.lsp.buf.formatting_sync(nil, 1000)",
-        },
-      },
-    }
-  end
-end
-
 -- npm i -g pyright
 require("lspconfig").pyright.setup {
   cmd = {
@@ -80,4 +27,8 @@ require("lspconfig").pyright.setup {
 if O.plugin.debug.active and O.plugin.dap_install.active then
   local dap_install = require "dap-install"
   dap_install.config("python_dbg", {})
+end
+
+if O.lang.python.efm.active == true then
+  require("lsp.efm-ls").generic_setup { "python" }
 end
