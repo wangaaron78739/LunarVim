@@ -215,8 +215,7 @@ return require("packer").startup(function(use)
     "norcalli/nvim-colorizer.lua",
     event = "BufRead",
     config = function()
-      require("colorizer").setup()
-      vim.cmd "ColorizerReloadAllBuffers"
+      require "lv-colorizer"
     end,
     disable = not O.plugin.colorizer.active,
   }
@@ -324,7 +323,7 @@ return require("packer").startup(function(use)
   -- Floating terminal
   use {
     "numToStr/FTerm.nvim",
-    event = "BufRead",
+    event = "BufWinEnter",
     config = function()
       require "fterms"
     end,
@@ -373,7 +372,8 @@ return require("packer").startup(function(use)
   use {
     "nvim-telescope/telescope-project.nvim",
     event = "BufRead",
-    after = "telescope.nvim",
+    requires = "telescope.nvim",
+    -- setup = function () vim.cmd[[packadd telescope.nvim]] end,
     disable = not O.plugin.telescope_project.active,
   }
   -- Sane gx for netrw_gx bug
@@ -423,12 +423,6 @@ return require("packer").startup(function(use)
     end,
     disable = not O.plugin.gitlinker.active,
     requires = "nvim-lua/plenary.nvim",
-  }
-  -- Lazygit
-  use {
-    "kdheepak/lazygit.nvim",
-    cmd = "LazyGit",
-    disable = not O.plugin.lazygit.active,
   }
   -- Octo.nvim
   use {
@@ -506,7 +500,7 @@ return require("packer").startup(function(use)
     config = function()
       require("lv-vimtex").config()
     end,
-    disable = not O.lang.latex.active,
+    disable = not O.lang.latex.vimtex.enabled,
   }
 
   -- Rust tools

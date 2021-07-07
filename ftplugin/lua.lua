@@ -76,3 +76,5 @@ local function efm_setup()
     settings = { rootMarkers = { ".git/" }, languages = { lua = lua_arguments } },
   }
 end
+
+vim.cmd "setl ts=2 sw=2"
