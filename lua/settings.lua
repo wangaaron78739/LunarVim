@@ -20,8 +20,10 @@ vim.g.colors_name = O.colorscheme
 vim.cmd "hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828"
 
 ---  SETTINGS  ---
+-- https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim
 
 -- LuaFormatter off
+opt.backspace = "indent,eol,start"
 opt.backup = false -- creates a backup file
 opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
 opt.cmdheight = O.cmdheight -- more space in the neovim command line for displaying messages
