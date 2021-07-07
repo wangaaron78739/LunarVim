@@ -209,3 +209,6 @@ require("nvim-treesitter.configs").setup {
     max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
   },
 }
+
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
