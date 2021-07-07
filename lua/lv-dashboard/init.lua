@@ -18,7 +18,7 @@ M.config = function()
     },
     c = {
       description = { "  New Buffer         " }, -- TODO: change this icon
-      command = "Telescope find_files",
+      command = "enew",
     },
     d = {
       description = { "  Recently Used Files" },

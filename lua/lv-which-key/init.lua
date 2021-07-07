@@ -119,7 +119,8 @@ local mappings = {
     c = { ":bdelete!<CR>", "Close" },
     f = { "<cmd>Neoformat<cr>", "Format" }, -- TODO: switch between neoformat and lsp
     -- f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" }, -- TODO: switch between neoformat and lsp
-    n = { "<cmd>tabnew<CR>", "New" },
+    -- n = { "<cmd>tabnew<CR>", "New" },
+    n = { "<cmd>enew<CR>", "New" },
     -- W = {"<cmd>BufferWipeout<cr>", "wipeout buffer"},
     -- e = {
     --     "<cmd>BufferCloseAllButCurrent<cr>",
