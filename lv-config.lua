@@ -124,9 +124,10 @@ vim.g.slime_target = "neovim"
 require("lv-utils").define_augroups {
   _focus_lost = {
     { "FocusLost", "*", "silent! w" },
-    { "FocusLost", "*", [[silent! call feedkeys("\<C-\>\<C-n>")]] },
     { "TabLeave,BufLeave", "*", "silent! w" },
-    { "TabLeave,BufLeave", "*", "stopinsert" },
+    -- TODO: Make this only for File buffers not Terminals and Telescope
+    -- { "FocusLost", "*", [[silent! call feedkeys("\<C-\>\<C-n>")]] },
+    -- { "TabLeave,BufLeave", "*", "stopinsert" },
   },
 }
 vim.opt.autowriteall = true
