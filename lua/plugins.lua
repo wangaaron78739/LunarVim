@@ -764,6 +764,7 @@ return require("packer").startup(function(use)
   -- 'Smarter' pasting
   use {
     "IndianBoy42/nvim-anywise-reg.lua",
+    -- AckslD/nvim-anywise-reg.lua
     event = "BufRead",
     config = function()
       require("anywise_reg").setup {
