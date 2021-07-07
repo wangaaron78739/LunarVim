@@ -63,4 +63,6 @@ opt.scrolloff = O.scrolloff -- Scrolloffset to block the cursor from reaching th
 opt.breakindent = true -- Apply indentation for wrapped lines
 opt.pastetoggle = "<F3>" -- Enter Paste Mode with
 opt.spelllang = "en_us" -- Spell check language
+opt.foldlevelstart = 99 -- Don't fold on startup
+opt.foldmethod = "indent" -- Set default fold method as indent, although will be overriden by treesitter soon anyway
 -- LuaFormatter on
