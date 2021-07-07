@@ -501,7 +501,7 @@ return require("packer").startup(function(use)
     config = function()
       require("lv-vimtex").config()
     end,
-    disable = not O.lang.latex.vimtex.enabled,
+    disable = not O.lang.latex.vimtex.active,
   }
 
   -- Rust tools
