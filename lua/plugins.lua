@@ -727,7 +727,7 @@ return require("packer").startup(function(use)
   }
   use {
     "romgrk/nvim-treesitter-context",
-    event = "BufRead",
+    event = "CursorMoved",
     disable = not O.plugin.ts_context.active,
   }
   use { "p00f/nvim-ts-rainbow", disable = not O.plugin.ts_rainbow.active }
