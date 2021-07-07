@@ -127,6 +127,7 @@ return require("packer").startup(function(use)
       --vim.api.nvim_set_keymap("n", "gcc", "<cmd>kommentary_line_default<cr>", { noremap = true, silent = true })
     end,
     event = "BufRead",
+    keys = { "gc", "gcc" },
   }
 
   -- Color
