@@ -4,7 +4,6 @@ require "keymappings"
 require "settings"
 require "plugins"
 require "lv-utils"
--- Below three could be moved to config function() in plugins.lua?
 require "lv-galaxyline"
 require "lv-which-key"
 require "lv-treesitter"
