@@ -45,7 +45,7 @@ O = {
   document_highlight = true,
   leader_key = "space",
   vnsip_dir = CONFIG_PATH .. "/snippets",
-  breakpoint_sign = { text = "🛑", texthl = "", linehl = "", numhl = "" },
+  breakpoint_sign = { text = "🛑", texthl = "LspDiagnosticsSignError", linehl = "", numhl = "" },
   lsp = { border = lsp_border },
   -- @usage pass a table with your desired languages
   treesitter = {

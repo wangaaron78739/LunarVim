@@ -300,9 +300,7 @@ return require("packer").startup(function(use)
     "mfussenegger/nvim-dap",
     -- TODO: load on command
     config = function()
-      local dap = require "dap"
-      dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
-      vim.fn.sign_define("DapBreakpoint", O.breakpoint_sign)
+      require "lv-dap"
     end,
     module = "dap",
     disable = not O.plugin.debug.active,
