@@ -15,9 +15,10 @@ if vim.fn.empty(vim.fn.glob(EFM_CONF_PATH)) > 0 then
 end
 
 local diagnostics = {
-  virtual_text = { spacing = 0, prefix = "" },
+  virtual_text = { spacing = 0, prefix = "", severity_limit = "Warning" },
   signs = true,
   underline = true,
+  severity_sort = true,
 }
 local lsp_border = "single"
 
@@ -46,7 +47,7 @@ O = {
   leader_key = "space",
   vnsip_dir = CONFIG_PATH .. "/snippets",
   breakpoint_sign = { text = "🛑", texthl = "LspDiagnosticsSignError", linehl = "", numhl = "" },
-  lsp = { border = lsp_border },
+  lsp = { border = lsp_border, diagnostics = diagnostics },
   -- @usage pass a table with your desired languages
   treesitter = {
     ensure_installed = "all",

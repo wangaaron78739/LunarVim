@@ -18,11 +18,7 @@ vim.fn.sign_define(
 
 -- Set Default Prefix.
 -- Note: You can set a prefix per lsp server in the lv-globals.lua file
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-  virtual_text = { prefix = "", spacing = 0 },
-  signs = true,
-  underline = true,
-})
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, O.lsp.diagnostics)
 
 -- symbols for autocomplete
 vim.lsp.protocol.CompletionItemKind = {

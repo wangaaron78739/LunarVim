@@ -38,11 +38,6 @@ O.dashboard.footer = { "Anshuman Medhi (IndianBoy42)" }
 O.treesitter.ignore_install = {}
 O.treesitter.enabled = true
 
--- Clang
--- O.lang.clang.diagnostics.virtual_text = true
-O.lang.clang.diagnostics.signs = true
-O.lang.clang.diagnostics.underline = true
-
 -- python
 O.lang.python.formatter = "black"
 -- O.python.linter = 'flake8'
