@@ -13,6 +13,21 @@ M.config = function()
   vim.g.neoformat_basic_format_retab = 1
   -- Enable trimmming of trailing whitespace
   vim.g.neoformat_basic_format_trim = 1 ]]
+
+  -- autoformat
+  if O.format_on_save then
+    require("lv-utils").define_augroups {
+      autoformat = {
+        {
+          "BufWritePre",
+          "*",
+          -- FIXME: cannot undojoin after undo
+          -- [[undojoin | Neoformat]],
+          [[try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry]],
+        },
+      },
+    }
+  end
 end
 
 M.format_range_operator = function()

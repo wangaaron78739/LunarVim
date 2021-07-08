@@ -23,7 +23,7 @@ packer.init {
       return require("packer.util").float { border = "single" }
     end,
   },
-  auto_reload_compiled = false,
+  auto_reload_compiled = true,
 }
 
 -- vim.cmd "autocmd BufWritePost plugins.lua luafile %" -- Auto compile when there are changes in plugins.lua
@@ -217,7 +217,7 @@ require "lv-galaxyline"
 
   use {
     "norcalli/nvim-colorizer.lua",
-    event = "BufRead",
+    event = "BufWinEnter",
     config = function()
       require "lv-colorizer"
     end,
@@ -760,6 +760,7 @@ require "lv-galaxyline"
       require("lv-neoformat").config()
     end,
     -- event = "BufRead",
+    event = "BufWritePre",
     cmd = "Neoformat",
   }
 
