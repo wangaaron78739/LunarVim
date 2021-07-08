@@ -94,6 +94,11 @@ lv_utils.define_augroups {
     --[[ { "InsertEnter", "*", "if &cursorline | let g:ms_cursorlineoff = 1 | setlocal nocursorline | endif" },
     { "InsertLeave", "*", 'if exists("g:ms_cursorlineoff") | setlocal cursorline | endif' }, ]]
   },
+  _focus_lost = {
+    { "FocusLost,TabLeave,BufLeave", "*", [[if &buftype == '' | :update | endif]] },
+    -- { "FocusLost", "*", [[silent! call feedkeys("\<C-\>\<C-n>")]] },
+    { "TabLeave,BufLeave", "*", [[if &buftype == '' | :stopinsert | endif]] },
+  },
 }
 
 vim.cmd [[

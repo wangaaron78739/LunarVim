@@ -100,6 +100,8 @@ vim.g.UltiSnipsExpandTrigger = "<f5>"
 
 vim.g.slime_target = "neovim"
 
+vim.g.gitblame_enabled = 0
+
 -- Neovim turns the default cursor to 'Block'
 -- when switched back into terminal.
 -- This below line fixes that. Uncomment if needed.
@@ -115,21 +117,4 @@ vim.g.slime_target = "neovim"
 -- vim.g.neovide_cursor_vfx_mode = "railgun"
 -- vim.g.neovide_refresh_rate=120
 
--- Autosave
-require("lv-utils").define_augroups {
-  _focus_lost = {
-    { "FocusLost", "*", "silent! w" },
-    { "TabLeave,BufLeave", "*", "silent! w" },
-    -- TODO: Make this only for File buffers not Terminals and Telescope
-    { "FocusLost", "*", [[silent! call feedkeys("\<C-\>\<C-n>")]] },
-    { "TabLeave,BufLeave", "*", [[if &buftype != 'terminal' | :stopinsert | endif]] }
-  },
-}
 vim.opt.autowriteall = true
--- vim.api.nvim_command "au FocusLost * silent! wa"
--- vim.api.nvim_command "au TabLeave * silent! w"
--- vim.api.nvim_command "au TabLeave * silent! stopinsert"
--- vim.api.nvim_command [[au FocusLost * silent! call feedkeys("\<C-\>\<C-n>")]]
--- vim.api.nvim_command ":set autowriteall"
-
-vim.g.gitblame_enabled = 0
