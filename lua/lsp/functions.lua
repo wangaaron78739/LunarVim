@@ -29,6 +29,46 @@ M.preview_location_at = function(name)
   return vim.lsp.buf_request(0, "textDocument/" .. name, params, preview_location_callback)
 end
 
+local diagnostics_show
+M.toggle_diagnostics = function()
+  diagnostics_show = not diagnostics_show
+
+  local diagstyle = {
+    virtual_text = false,
+    signs = false,
+    underline = false,
+  }
+  if diagnostics_show then
+    -- TODO: How to preserve old diagnostics settings?
+    vim.b.old_diagnostics = O.lsp.diagnostics
+  else
+    diagstyle = vim.b.old_diagnostics
+  end
+
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics,
+    diagstyle
+  )
+
+  -- Refresh diagnostics
+  local clients = vim.lsp.buf_get_clients(0)
+  for k, v in pairs(clients) do
+    vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, k), 0, k, diagstyle)
+  end
+end
+
+-- FIXME: figure this stuff out?
+M.show_codelens = function()
+  vim.cmd [[ autocmd BufEnter,CursorHold,InsertLeave * lua vim.lsp.codelens.refresh() ]]
+  local clients = vim.lsp.buf_get_clients(0)
+  for k, v in pairs(clients) do
+    vim.lsp.codelens.display(vim.lsp.codelens.get(0, k), 0, k, O.lsp.codeLens)
+  end
+end
+M.run_codelens = function()
+  vim.lsp.codelens.run()
+end
+
 -- TODO: what is this?
 -- vim.cmd 'command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()'
 

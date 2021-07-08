@@ -81,7 +81,7 @@ lv_utils.define_augroups {
   },
   _auto_resize = {
     -- will cause split windows to be resized evenly if main window is resized
-    { "VimResized ", "*", "wincmd =" },
+    { "VimResized", "*", "wincmd =" },
   },
   _mode_switching = {
     -- will switch between absolute and relative line numbers depending on mode

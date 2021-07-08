@@ -151,10 +151,7 @@ local mappings = {
   -- "   https://microsoft.github.io/debug-adapter-protocol/
   D = {
     name = "Debug",
-    t = {
-      "<cmd>lua require'dap'.toggle_breakpoint()<cr>",
-      "Toggle Breakpoint",
-    },
+    t = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
     b = { "<cmd>lua require'dap'.step_back()<cr>", "Step Back" },
     c = { "<cmd>lua require'dap'.continue()<cr>", "Continue" },
     C = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "Run To Cursor" },
@@ -196,17 +193,13 @@ local mappings = {
     name = "LSP",
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
     A = { "<cmd>lua vim.lsp.buf.range_code_action()<cr>", "Selected Action" },
-    h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover" }, -- h = {"<cmd>LspHover<cr>", "Hover"},
+    h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover" },
     i = { "<cmd>LspInfo<cr>", "Info" },
-    f = { "<cmd>Lspsaga lsp_finder<cr>", "LSP Finder" },
-    -- l = {"<cmd>Lspsaga show_line_diagnostics<cr>", "Line Diagnostics"},
-    l = {
-      "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>",
-      "Line Diagnostics",
-    },
-    p = { "<cmd>Lspsaga preview_definition<cr>", "Preview Definition" },
+    -- TODO: What is the replacement for this?
+    -- f = { "<cmd>Lspsaga lsp_finder<cr>", "LSP Finder" },
+    -- p = { "<cmd>Lspsaga preview_definition<cr>", "Preview Definition" },
     q = { "<cmd>Telescope quickfix<cr>", "Quickfix" },
-    r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" }, -- r = {"<cmd>Lspsaga rename<cr>", "Rename"},
+    r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
     R = { "<cmd>Telescope lsp_references<cr>", "References" },
     t = { "<cmd>lua vim.lsp.buf.type_definition() <cr>", "Type Definition" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
@@ -260,12 +253,10 @@ local mappings = {
   },
   d = {
     name = "Diagnostics",
-    -- k = {"<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostic"},
-    -- j = {"<cmd>Lspsaga diagnostic_jump_prev<cr>", "Prev Diagnostic"}
-    -- n = {"<cmd>LspGotoNext<cr>", "Next"},
-    -- N = {"<cmd>LspGotoPrev<cr>", "Previous"}
     j = { [[<cmd>lua require("lsp").diag_next()<cr>]], "Next" },
     k = { [[<cmd>lua require("lsp").diag_prev()<cr>]], "Previous" },
+    i = { "<cmd>lua require('lsp.functions').toggle_diagnostics()<CR>", "Toggle Inline" },
+    l = { "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>", "Line Diagnostics" },
   },
   P = {
     name = "Packer",
@@ -296,7 +287,7 @@ if O.plugin.trouble.active then
     "Definitions",
   }
   mappings["d"]["q"] = { "<cmd>TroubleToggle quickfix<cr>", "Quick Fixes" }
-  mappings["d"]["l"] = { "<cmd>TroubleToggle loclist<cr>", "Location List" }
+  mappings["d"]["L"] = { "<cmd>TroubleToggle loclist<cr>", "Location List" }
   mappings["d"]["o"] = { "<cmd>TroubleToggle todo<cr>", "TODOs" }
 end
 if O.plugin.ts_playground.active then
