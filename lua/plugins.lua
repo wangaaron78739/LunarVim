@@ -716,7 +716,8 @@ return require("packer").startup(function(use)
     disable = not O.plugin.ts_textsubjects.active,
   }
   use {
-    "mfussenegger/nvim-ts-hint-textobject",
+    "IndianBoy42/nvim-ts-hint-textobject",
+    branch = "patch-1",
     event = "BufRead",
     disable = not O.plugin.ts_hintobjects.active,
   }
