@@ -1,6 +1,10 @@
 local M = {}
 
 M.config = function()
+  vim.g.neoformat_run_all_formatters = 0
+
+  vim.g.neoformat_enabled_python = { "black", "autopep8", "yapf", "docformatter" }
+  vim.g.neoformat_enabled_javascript = { "prettier" }
   vim.g.neoformat_enabled_lua = { "stylua", "luaformat" }
 
   --[[ -- Enable alignment
