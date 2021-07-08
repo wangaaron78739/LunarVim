@@ -121,8 +121,8 @@ require("lv-utils").define_augroups {
     { "FocusLost", "*", "silent! w" },
     { "TabLeave,BufLeave", "*", "silent! w" },
     -- TODO: Make this only for File buffers not Terminals and Telescope
-    -- { "FocusLost", "*", [[silent! call feedkeys("\<C-\>\<C-n>")]] },
-    -- { "TabLeave,BufLeave", "*", "stopinsert" },
+    { "FocusLost", "*", [[silent! call feedkeys("\<C-\>\<C-n>")]] },
+    { "TabLeave,BufLeave", "*", [[if &buftype != 'terminal' | :stopinsert | endif]] }
   },
 }
 vim.opt.autowriteall = true
