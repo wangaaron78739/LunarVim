@@ -101,12 +101,13 @@ local mappings = {
     s = { ":T ", "Run cmd in" },
   },
   T = {
-    name = "Toggle",
+    name = "Toggle Opts",
     w = { "<cmd>setlocal wrap!<CR>", "Wrap" },
     s = { "<cmd>setlocal spell!<CR>", "Spellcheck" },
     c = { "<cmd>setlocal cursorcolumn!<CR>", "Cursor column" },
     l = { "<cmd>setlocal cursorline!<CR>", "Cursor line" },
     h = { "<cmd>setlocal hlsearch<CR>", "hlsearch" },
+    -- TODO: Toggle comment visibility
   },
   b = {
     name = "Buffers",
