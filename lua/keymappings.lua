@@ -209,11 +209,6 @@ map("t", "<M-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', nore)
 map("n", "<M-t>", ":T ", nore)
 -- map("t", "<Esc>", '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', nore)
 
--- Format buffer -- TODO: switch between neoformat and lsp
-map("n", "gf", "<cmd>Neoformat<cr>", nore)
--- map("n", "gf", "<cmd>lua vim.lsp.buf.formatting()<cr>", nore)
-map("n", "gh", "<cmd>lua vim.lsp.buf.hover()<cr>", nore)
-
 -- Spell checking
 map("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u]]", nore)
 
@@ -223,26 +218,27 @@ map("i", "<C-/>", "<C-\\><C-n><CMD>CommentToggle", nore)
 -- Visual mode start search (like *)
 map("v", "*", '"ay/<C-R>a<cr>', nore)
 
--- peek definition
-map("n", "gpd", ":Lspsaga preview_definition<cr>", sile)
-
 -- Slightly easier commands
 map("n", ";", ":", sile)
+-- map('c', ';', "<CR>", sile)
 
 -- lsp keys
 map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", sile)
 map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", sile)
 map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", sile)
 map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", sile)
+map("n", "gh", "<cmd>lua vim.lsp.buf.hover()<cr>", nore)
 map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", sile)
 -- map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", sile)
 vim.cmd 'command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()'
--- scroll down hover doc or scroll in definition preview
---vim.cmd "nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>"
--- scroll up hover doc
---vim.cmd "nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>"
+-- map("n", "gpd", ":Lspsaga preview_definition<cr>", sile) -- Convert to native lsp
 
--- map('c', ';', "<CR>", sile)
+-- Format buffer -- TODO: switch between neoformat and lsp
+-- map("n", "gf", "<cmd>lua vim.lsp.buf.formatting()<cr>", nore)
+map("n", "gf", "<cmd>Neoformat<cr>", nore)
+-- Format a range -- TODO: can do with Neoformat?
+-- vim.api.nvim_set_keymap("n", "gm", [[<cmd>lua require("lsp.functions").format_range_operator()<CR>]], nore)
+vim.api.nvim_set_keymap("n", "gm", [[<cmd>lua require("lv-neoformat").format_range_operator()<CR>]], nore)
 
 if O.plugin.ts_hintobjects.active then
   map("o", "m", [[:<C-U>lua require('tsht').nodes()<CR>]], sile)
