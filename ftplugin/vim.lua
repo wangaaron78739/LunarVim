@@ -1,3 +1,7 @@
+if require("lv-utils").check_lsp_client_active "vimls" then
+  return
+end
+
 -- npm install -g vim-language-server
 require("lspconfig").vimls.setup {
   cmd = {

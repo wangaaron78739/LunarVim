@@ -1,5 +1,23 @@
 local lv_utils = {}
 
+function lv_utils.reload_lv_config()
+  vim.cmd "source ~/.config/nvim/lv-config.lua"
+  vim.cmd "source ~/.config/nvim/lua/plugins.lua"
+  vim.cmd "source ~/.config/nvim/lua/lv-neoformat/init.lua"
+  vim.cmd ":PackerCompile"
+  vim.cmd ":PackerInstall"
+end
+
+function lv_utils.check_lsp_client_active(name)
+  local clients = vim.lsp.get_active_clients()
+  for _, client in pairs(clients) do
+    if client.name == name then
+      return true
+    end
+  end
+  return false
+end
+
 function lv_utils.define_augroups(definitions) -- {{{1
   -- Create autocommand groups based on the passed definitions
   --

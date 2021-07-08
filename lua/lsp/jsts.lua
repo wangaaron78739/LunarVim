@@ -1,3 +1,4 @@
+-- OLD and OUTDATED
 -- Example configuations here: https://github.com/mattn/efm-langserver
 -- You can look for project scope Prettier and Eslint with e.g. vim.fn.glob("node_modules/.bin/prettier") etc. If it is not found revert to global Prettier where needed.
 local M = {}

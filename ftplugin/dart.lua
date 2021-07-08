@@ -1,3 +1,7 @@
+if require("lv-utils").check_lsp_client_active "dartls" then
+  return
+end
+
 if not O.plugin .. flutter_tools.active then
   require("lspconfig").dartls.setup {
     cmd = { "dart", O.lang.dart.sdk_path, "--lsp" },

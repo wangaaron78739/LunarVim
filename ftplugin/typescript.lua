@@ -7,6 +7,7 @@
 -- require'completion'.on_attach(client)
 -- require'illuminate'.on_attach(client)
 -- end
+if not require("lv-utils").check_lsp_client_active "tsserver" then
 require("lspconfig").tsserver.setup {
   cmd = {
     DATA_PATH .. "/lspinstall/typescript/node_modules/.bin/typescript-language-server",
@@ -34,7 +35,9 @@ require("lspconfig").tsserver.setup {
     }),
   },
 }
+end
 if O.lang.typescript.efm.active == true then
   require("lsp.efm-ls").generic_setup { "typescript" }
+end
 end
 vim.cmd "setl ts=2 sw=2"

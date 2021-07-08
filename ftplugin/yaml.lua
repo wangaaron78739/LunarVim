@@ -1,3 +1,7 @@
+if require("lv-utils").check_lsp_client_active "yamlls" then
+  return
+end
+
 -- npm install -g yaml-language-server
 require("lspconfig").yamlls.setup {
   cmd = {

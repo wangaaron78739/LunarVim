@@ -1,3 +1,7 @@
+if require("lv-utils").check_lsp_client_active "dockerls" then
+  return
+end
+
 -- npm install -g dockerfile-language-server-nodejs
 require("lspconfig").dockerls.setup {
   cmd = {

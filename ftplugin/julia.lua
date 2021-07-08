@@ -1,3 +1,7 @@
+if require("lv-utils").check_lsp_client_active "julials" then
+  return
+end
+
 -- TODO: Check if this really activates correctly
 require("lspconfig").julials.setup {
   on_new_config = function(new_config, new_root_dir)

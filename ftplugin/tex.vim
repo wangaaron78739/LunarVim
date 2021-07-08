@@ -1,3 +1,4 @@
+" Vim sandwhich bindings for LaTeX
 scriptencoding utf-8
 if !exists('s:local_recipes')
   let s:local_recipes = [
