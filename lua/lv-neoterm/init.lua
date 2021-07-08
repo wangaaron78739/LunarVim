@@ -1,5 +1,6 @@
 vim.g.neoterm_default_mod = "vertical"
-vim.g.neoterm_autoinsert = 0
+vim.g.neoterm_autoinsert = 1
+vim.g.neoterm_autoscroll = 1
 vim.g.neoterm_bracketed_paste = 1
 vim.g.neoterm_repl_python = { "ipython" }
 vim.g.neoterm_automap_keys = "<leader>te" -- FIXME: This doesnt work!?
