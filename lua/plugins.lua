@@ -138,7 +138,9 @@ return require("packer").startup(function(use)
   use { "kyazdani42/nvim-web-devicons" }
 
   -- Status Line and Bufferline
-  use { "glepnir/galaxyline.nvim" }
+  use { "glepnir/galaxyline.nvim", config = function ()
+require "lv-galaxyline"
+  end }
 
   use {
     "akinsho/nvim-bufferline.lua",
