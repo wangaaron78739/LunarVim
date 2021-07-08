@@ -227,11 +227,15 @@ map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", sile)
 map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", sile)
 map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", sile)
 map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", sile)
-map("n", "gh", "<cmd>lua vim.lsp.buf.hover()<cr>", nore)
-map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", sile)
 -- map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", sile)
-vim.cmd 'command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()'
--- map("n", "gpd", ":Lspsaga preview_definition<cr>", sile) -- Convert to native lsp
+-- Preview variants
+map("n", "gpd", [[<cmd>lua require("lsp.functions").preview_location_at("definition")<CR>]], sile)
+map("n", "gpD", [[<cmd>lua require("lsp.functions").preview_location_at("declaration")<CR>]], sile)
+map("n", "gpr", [[<cmd>lua require("lsp.functions").preview_location_at("references")<CR>]], sile)
+map("n", "gpi", [[<cmd>lua require("lsp.functions").preview_location_at("implementation")<CR>]], sile)
+-- Hover
+map("n", "gh", "<cmd>lua vim.lsp.buf.hover()<cr>", sile)
+map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", sile)
 
 -- Format buffer -- TODO: switch between neoformat and lsp
 -- map("n", "gf", "<cmd>lua vim.lsp.buf.formatting()<cr>", nore)
