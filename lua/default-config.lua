@@ -15,7 +15,7 @@ if vim.fn.empty(vim.fn.glob(EFM_CONF_PATH)) > 0 then
 end
 
 local codeLens = {
-  virtual_text = { spacing = 0, prefix = ""},
+  virtual_text = { spacing = 0, prefix = "" },
   signs = true,
   underline = true,
   severity_sort = true,
