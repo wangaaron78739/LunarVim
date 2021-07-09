@@ -23,6 +23,7 @@ M.config = function()
   g.nvim_tree_allow_resize = 1
   g.nvim_tree_lsp_diagnostics = 1
   g.nvim_tree_auto_ignore_ft = { "startify", "dashboard" }
+  g.nvim_tree_disable_window_picker = 1
 
   g.nvim_tree_show_icons = {
     git = 1,
