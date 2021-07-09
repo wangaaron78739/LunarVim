@@ -6,7 +6,7 @@ local last_echo = { false, -1, -1 }
 -- The timer used for displaying a diagnostic in the commandline.
 local echo_timer = nil
 -- The timer after which to display a diagnostic in the commandline.
-local echo_timeout = 250
+local echo_timeout = 30
 -- The highlight group to use for warning messages.
 local warning_hlgroup = "WarningMsg"
 -- The highlight group to use for error messages.
