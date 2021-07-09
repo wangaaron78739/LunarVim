@@ -107,11 +107,9 @@ require("lv-utils").define_augroups {
   },
 }
 
+-- TODO: enable this in a ftplugin maybe
 if O.lang.emmet.active then
   require "lsp.emmet-ls"
-end
-if O.lang.tailwindcss.active then
-  require "lsp.tailwindcss-ls"
 end
 
 -- Use a loop to conveniently both setup defined servers
