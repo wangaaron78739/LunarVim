@@ -49,7 +49,7 @@ for obj, suffix in pairs(textobj_suffixes) do
   end
 
   if textobj_prefixes["swap"] ~= nil then
-    textobj_swap_keymaps[textobj_prefixes["swap"] .. suffix[1]] = "@" .. obj .. ".outer"
+    textobj_swap_keymaps[textobj_prefixes["swap"] .. suffix[1]] = "@" .. obj .. ".inner"
   end
 end
 
