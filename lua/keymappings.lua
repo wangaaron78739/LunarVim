@@ -255,3 +255,9 @@ if O.plugin.surround.active then
   map("o", "is", [[<Plug>(textobj-sandwich-query-i)]], sile)
   map("o", "as", [[<Plug>(textobj-sandwich-query-a)]], sile)
 end
+
+-- TODO: Use more standard regex syntax
+-- map("n", "/", "/\v", nore)
+
+map("n", "<cr>", "o<esc>", nore)
+map("n", "<M-cr>", "O<esc>", nore)
