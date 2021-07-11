@@ -840,6 +840,8 @@ return require("packer").startup(function(use)
     end,
   }
 
+  use "AndrewRadev/splitjoin.vim"
+
   -- use { "Iron-E/nvim-libmodal" }
   -- use { "Iron-E/nvim-tabmode", after = "nvim-libmodal" }
 
