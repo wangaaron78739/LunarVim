@@ -79,10 +79,13 @@ end
 lsp_config.diag_prev = function()
   vim.lsp.diagnostic.goto_prev { popup_opts = { border = O.lsp.border } }
 end
+-- TODO: figure out how to floating window the code actions
+-- vim.lsp.handlers["textDocument/codeAction"] = vim.lsp.with(vim.lsp.handlers.codeAction, {
+--   border = O.lsp.border,
+-- })
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = O.lsp.border,
 })
-
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
   border = O.lsp.border,
 })
