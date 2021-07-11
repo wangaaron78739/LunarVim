@@ -36,10 +36,15 @@ M.config = function()
       -- nvim_lua = {kind = "  "},
       nvim_lua = false,
       -- spell = {kind = "   (Spell)"},
+      spell = false,
       tags = false,
+      vim_dadbod_completion = false,
       -- snippets_nvim = {kind = "  "},
+      snippets_nvim = false,
       -- ultisnips = {kind = "  "},
+      ultisnips = false,
       -- treesitter = {kind = "  "},
+      treesitter = false,
       emoji = { kind = " ﲃ  (Emoji)", filetypes = { "markdown", "text" } },
       -- for emoji press : (idk if that in compe tho)
     },
@@ -96,8 +101,10 @@ M.config = function()
   vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
 
   vim.api.nvim_set_keymap("i", "<C-Space>", "compe#complete()", { noremap = true, silent = true, expr = true })
-  vim.api.nvim_set_keymap("i", "<CR>", "compe#confirm('<CR>')", { noremap = true, silent = true, expr = true })
+  vim.api.nvim_set_keymap("i", "<C-y>", [[compe#confirm('<C-y>')]], { expr = true })
   vim.api.nvim_set_keymap("i", "<C-e>", "compe#close('<C-e>')", { noremap = true, silent = true, expr = true })
+  vim.api.nvim_set_keymap("i", "<CR>", [[compe#confirm('<CR>')]], { expr = true })
+  -- vim.api.nvim_set_keymap("i", "<CR>", "compe#close('<CR>')", { noremap = true, silent = true, expr = true })
   vim.api.nvim_set_keymap("i", "<C-f>", "compe#scroll({ 'delta': +4 })", { noremap = true, silent = true, expr = true })
   vim.api.nvim_set_keymap("i", "<C-d>", "compe#scroll({ 'delta': -4 })", { noremap = true, silent = true, expr = true })
 end

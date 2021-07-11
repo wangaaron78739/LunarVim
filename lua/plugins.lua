@@ -112,7 +112,8 @@ return require("packer").startup(function(use)
     config = function()
       require "lv-autopairs"
     end,
-    after = { "nvim-compe", "telescope.nvim" },
+    -- after = { "nvim-compe", "telescope.nvim" },
+    after = "telescope.nvim",
   }
 
   -- Comments
