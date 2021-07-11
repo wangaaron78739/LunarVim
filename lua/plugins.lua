@@ -559,7 +559,19 @@ return require("packer").startup(function(use)
   -- amedhi plugins
 
   -- LSP get function signature
-  use { "ray-x/lsp_signature.nvim", module = "lsp_signature" }
+  use {
+    "ray-x/lsp_signature.nvim",
+    config = function()
+      local lsp_sign_opt = O.plugin.lsp_signature
+      lsp_sign_opt.bind = true
+      lsp_sign_opt.handler_opts = {
+        border = O.lsp.border, -- double, single, shadow, none
+      }
+      lsp_sign_opt.hint_scheme = "String"
+      lsp_sign_opt.hi_parameter = "Search"
+      require("lsp_signature").on_attach(lsp_sign_opt)
+    end,
+  }
 
   -- See jumpable characters
   use {

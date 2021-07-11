@@ -90,17 +90,9 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
   border = O.lsp.border,
 })
 
-local lsp_sign_opt = O.plugin.lsp_signature
-lsp_sign_opt.bind = true
-lsp_sign_opt.handler_opts = {
-  border = O.lsp.border, -- double, single, shadow, none
-}
-lsp_sign_opt.hint_scheme = "String"
-lsp_sign_opt.hi_parameter = "Search"
 if O.document_highlight then
   function lsp_config.common_on_attach(client, bufnr)
     documentHighlight(client, bufnr)
-    require("lsp_signature").on_attach(lsp_sign_opt)
   end
 end
 
