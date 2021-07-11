@@ -116,7 +116,7 @@ lv_utils.define_augroups {
   _focus_lost = {
     { "FocusLost,TabLeave,BufLeave", "*", [[if &buftype == '' | :update | endif]] },
     -- { "FocusLost", "*", [[silent! call feedkeys("\<C-\>\<C-n>")]] },
-    { "TabLeave,BufLeave", "*", [[if &buftype == '' | :stopinsert | endif]] },
+    -- { "TabLeave,BufLeave", "*", [[if &buftype == '' | :stopinsert | endif]] }, -- FIXME: This breaks compe
   },
 }
 
