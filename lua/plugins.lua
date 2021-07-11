@@ -76,7 +76,7 @@ return require("packer").startup(function(use)
     config = function()
       require("lv-compe").config()
     end,
-    event = "InsertEnter",
+    -- event = "InsertEnter",
   }
 
   -- VSCode style snippets
