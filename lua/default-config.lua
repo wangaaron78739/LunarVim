@@ -5,7 +5,7 @@ PLUGIN_PATH = DATA_PATH .. "site/pack/*/start/*"
 TERMINAL = vim.fn.expand "$TERMINAL"
 
 local enable_plugins_by_default = true
-local enable_efm_by_default = true
+local enable_efm_by_default = false
 -- TODO: switch between neoformat and lsp autoformat smartly
 
 local EFM_CONF_PATH = os.getenv "HOME" .. "/.config/efm-langserver/config.yaml"
