@@ -57,9 +57,9 @@ local mappings = {
     O.plugin.snap.active and "<cmd>Snap find_files<cr>" or "<cmd>Telescope find_files <CR>",
     "Find File",
   },
-  h = {
-    "<Plug>ClearHighLights", -- "<cmd>noh<CR><cmd>call minimap#vim#ClearColorSearch()<cr>"
-    "No Highlight",
+  k = {
+    "<cmd>lua require('lv-kakmode').enter()<cr>",
+    "Kakoune",
   },
   w = { "<cmd>up<CR>", "Write" },
   o = {

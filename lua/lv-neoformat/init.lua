@@ -42,7 +42,7 @@ M.format_range_operator = function()
     if end_col == 1 then
       vim.fn.setpos(".", { 0, end_row - 1, -1, 0 })
     else
-      vim.fn.setpos(".", { 0, end_row, end_col - 1, 0 })
+      vim.fn.setpos(".", { 0, end_row, end_col + 1, 0 })
     end
 
     vim.cmd "Neoformat"
