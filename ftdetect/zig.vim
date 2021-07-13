@@ -1,2 +1,2 @@
-au BufRead,BufNewFile *.zig setlocal filetype=zig
-au BufRead,BufNewFile *.zir setlocal filetype=zir
+au VimEnter,BufWinEnter,BufRead,BufNewFile *.zig setlocal filetype=zig
+au VimEnter,BufWinEnter,BufRead,BufNewFile *.zir setlocal filetype=zir
