@@ -163,9 +163,12 @@ map("i", "<S-TAB>", '("\\<C-p>")', expr)
 -- Search and Replace
 -- 'c*' for word, '<leader>c*' for WORD
 map("n", ",", [[*]], nore)
-map("n", "g,", [[yiw/<C-R>+<CR>]], nore)
+map("n", "g,", [[/<C-R>+<CR>]], nore)
+-- map("n", "g,", [[/<C-R><C-W>]], nore)
 map("n", "c,", [[:%s/\<<C-r><C-w>\>//g<Left><Left>]], nore)
 map("n", "<leader>c,", [[:%s/\<<C-r><C-a>\>//g<Left><Left>]], nore)
+map("n", "c*", [[:%s/\<<C-r><C-w>\>//g<Left><Left>]], nore)
+map("n", "<leader>c*", [[:%s/\<<C-r><C-a>\>//g<Left><Left>]], nore)
 
 -- QuickFix
 -- map('n', ']q', ':cnext<CR>', nore)
