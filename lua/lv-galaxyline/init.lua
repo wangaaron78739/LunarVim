@@ -74,7 +74,7 @@ local condition = require "galaxyline.condition"
 local gls = gl.section
 gl.short_line_list = { "NvimTree", "vista", "dbui", "packer", "minimap", "spectre_panel" }
 
-table.insert(gls.left, {
+local mode_indicator = {
   ViMode = {
     provider = function()
       -- auto change color according the vim mode
@@ -99,15 +99,25 @@ table.insert(gls.left, {
         ["r?"] = colors.cyan,
         ["!"] = colors.blue,
         t = colors.blue,
+
+        -- libmodal modes
       }
-      vim.api.nvim_command("hi GalaxyViMode guifg=" .. mode_color[vim.fn.mode()])
+      local mode_name = vim.fn.mode()
+      local mode_text = "▊"
+      if vim.g.libmodalActiveModeName then
+        -- mode_name = vim.g.libmodalActiveModeName
+        -- mode_text = mode_name
+      end
+
+      vim.api.nvim_command("hi GalaxyViMode guifg=" .. mode_color[mode_name])
       return "▊"
     end,
     separator_highlight = "StatusLineSeparator",
     highlight = "StatusLineNC",
     -- highlight = {colors.red, colors.bg}
   },
-})
+}
+table.insert(gls.left, mode_indicator)
 -- print(vim.fn.getbufvar(0, 'ts'))
 vim.fn.getbufvar(0, "ts")
 
@@ -357,19 +367,19 @@ table.insert(gls.right, {
   },
 })
 
-table.insert(gls.right, {
-  PerCent = {
-    provider = "LinePercent",
-    separator = " ",
-    separator_highlight = "StatusLineSeparator",
-    highlight = "StatusLineNC",
-  },
-})
+-- table.insert(gls.right, {
+--   PerCent = {
+--     provider = "LinePercent",
+--     separator = " ",
+--     separator_highlight = "StatusLineSeparator",
+--     highlight = "StatusLineNC",
+--   },
+-- })
 
 table.insert(gls.right, {
   Tabstop = {
     provider = function()
-      return "Spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth") .. " "
+      return "SW:" .. vim.api.nvim_buf_get_option(0, "shiftwidth") .. " "
     end,
     condition = condition.hide_in_width,
     separator = " ",
@@ -388,15 +398,15 @@ table.insert(gls.right, {
   },
 })
 
-table.insert(gls.right, {
-  FileEncode = {
-    provider = "FileEncode",
-    condition = condition.hide_in_width,
-    separator = " ",
-    separator_highlight = "StatusLineSeparator",
-    highlight = "StatusLineNC",
-  },
-})
+-- table.insert(gls.right, {
+--   FileEncode = {
+--     provider = "FileEncode",
+--     condition = condition.hide_in_width,
+--     separator = " ",
+--     separator_highlight = "StatusLineSeparator",
+--     highlight = "StatusLineNC",
+--   },
+-- })
 
 table.insert(gls.right, {
   Space = {
@@ -408,6 +418,8 @@ table.insert(gls.right, {
     highlight = "StatusLineNC",
   },
 })
+
+table.insert(gls.right, mode_indicator)
 
 table.insert(gls.short_line_left, {
   BufferType = {
