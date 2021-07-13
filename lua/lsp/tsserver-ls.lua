@@ -36,6 +36,7 @@ M.setup = function()
           update_in_insert = true,
         }),
       },
+      flags = O.lsp.flags,
     }
   end
 end

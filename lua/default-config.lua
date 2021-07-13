@@ -59,7 +59,14 @@ O = {
   leader_key = "space",
   vnsip_dir = CONFIG_PATH .. "/snippets",
   breakpoint_sign = { text = "🛑", texthl = "LspDiagnosticsSignError", linehl = "", numhl = "" },
-  lsp = { border = lsp_border, diagnostics = diagnostics, codeLens = codeLens },
+  lsp = {
+    border = lsp_border,
+    diagnostics = diagnostics,
+    codeLens = codeLens,
+    flags = {
+      debounce_text_changes = 150,
+    },
+  },
   -- @usage pass a table with your desired languages
   treesitter = {
     ensure_installed = "all",

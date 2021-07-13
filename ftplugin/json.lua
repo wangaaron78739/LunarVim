@@ -18,6 +18,8 @@ require("lspconfig").jsonls.setup {
       end,
     },
   },
+
+  flags = O.lsp.flags,
 }
 
 if O.lang.json.autoformat then

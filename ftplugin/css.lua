@@ -7,6 +7,7 @@ if not require("lv-utils").check_lsp_client_active "cssls" then
       "--stdio",
     },
     on_attach = require("lsp").common_on_attach,
+    flags = O.lsp.flags,
   }
 end
 

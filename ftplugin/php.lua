@@ -23,4 +23,5 @@ require("lspconfig").intelephense.setup {
       environment = { phpVersion = O.lang.php.environment.php_version },
     },
   },
+  flags = O.lsp.flags,
 }

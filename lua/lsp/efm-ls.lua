@@ -23,6 +23,7 @@ function efm.generic_setup(ft)
       init_options = { documentFormatting = true, codeAction = false, completion = false, documentSymbol = false },
       filetypes = ft,
       -- rootMarkers = {".git/", "package.json"},
+      flags = O.lsp.flags,
     }
     -- end
   end

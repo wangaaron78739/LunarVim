@@ -27,4 +27,5 @@ require("lspconfig").julials.setup {
     }
     new_config.cmd = cmd
   end,
+  flags = O.lsp.flags,
 }

@@ -35,6 +35,7 @@ require("lspconfig").jdtls.setup {
   root_dir = util.root_pattern { ".git", "build.gradle", "pom.xml" },
   -- init_options = {bundles = bundles}
   -- on_attach = require'lsp'.common_on_attach
+  flags = O.lsp.flags,
 }
 
 -- require('jdtls').start_or_attach({

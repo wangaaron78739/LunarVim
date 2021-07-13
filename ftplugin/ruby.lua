@@ -15,6 +15,7 @@ require("lspconfig").solargraph.setup {
     }),
   },
   filetypes = O.lang.ruby.filetypes,
+  flags = O.lsp.flags,
 }
 
 if O.lang.ruby.autoformat then

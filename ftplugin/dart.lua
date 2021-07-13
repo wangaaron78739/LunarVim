@@ -13,6 +13,7 @@ if not O.plugin .. flutter_tools.active then
       outline = false,
       suggestFromUnimportedLibraries = true,
     },
+    flags = O.lsp.flags,
   }
 end
 

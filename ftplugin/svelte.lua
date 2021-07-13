@@ -7,4 +7,5 @@ require("lspconfig").svelte.setup {
   filetypes = { "svelte" },
   root_dir = require("lspconfig.util").root_pattern("package.json", ".git"),
   on_attach = require("lsp").common_on_attach,
+  flags = O.lsp.flags,
 }

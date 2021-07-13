@@ -41,6 +41,7 @@ require("lspconfig").clangd.setup {
       update_in_insert = true,
     }),
   },
+  flags = O.lsp.flags,
 }
 
 if O.lang.clang.efm.active == true then

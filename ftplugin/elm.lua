@@ -10,4 +10,5 @@ require("lspconfig").elmls.setup {
     elmPath = DATA_PATH .. "/lspinstall/elm/node_modules/.bin/elm",
     elmTestPath = DATA_PATH .. "/lspinstall/elm/node_modules/.bin/elm-test",
   },
+  flags = O.lsp.flags,
 }

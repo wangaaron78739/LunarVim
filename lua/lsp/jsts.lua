@@ -143,6 +143,7 @@ M.setup = function()
         update_in_insert = true,
       }),
     },
+  flags = O.lsp.flags
   }
 
   vim.cmd "setl ts=2 sw=2"

@@ -34,4 +34,5 @@ require("lspconfig").kotlin_language_server.setup {
   root_dir = function(fname)
     return util.root_pattern(unpack(root_files))(fname) or util.root_pattern(unpack(fallback_root_files))(fname)
   end,
+  flags = O.lsp.flags,
 }

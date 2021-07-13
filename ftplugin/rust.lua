@@ -100,6 +100,7 @@ else
         },
       },
     },
+    flags = O.lsp.flags,
   }
 end
 

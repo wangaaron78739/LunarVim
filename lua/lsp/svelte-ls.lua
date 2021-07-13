@@ -5,4 +5,5 @@ require("lspconfig").svelte.setup {
     "--stdio",
   },
   on_attach = require("lsp").common_on_attach,
+  flags = O.lsp.flags
 }

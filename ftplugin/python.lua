@@ -22,6 +22,7 @@ require("lspconfig").pyright.setup {
       },
     },
   },
+  flags = O.lsp.flags,
 }
 
 if O.plugin.debug.active and O.plugin.dap_install.active then
