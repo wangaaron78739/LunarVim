@@ -43,9 +43,12 @@ end
 
 require("lv-utils").define_augroups {
   _close_fterm = {
-    { "FileType", "FTerm", "nnoremap <silent> <buffer> q :q<CR>" },
+    { "FileType", "FTerm", "nnoremap <silent> <buffer> q <CMD>q<CR>" },
     -- { "FileType", "FTerm", "tnoremap <silent> <buffer> <esc> <nop>" },
     -- { "FileType", "FTerm", "tnoremap <silent> <buffer> <M-e> <C-\\><C-n>" },
-    { "FileType", "FTerm", "tnoremap <silent> <buffer> <M-q> <C-\\><C-n><CMD>q<CR>" },
+    { "FileType", "FTerm", "tnoremap <silent> <buffer> <C-h> <C-\\><C-n><CMD>q<CR>" },
+    { "FileType", "FTerm", "tnoremap <silent> <buffer> <C-j> <C-\\><C-n><CMD>q<CR>" },
+    { "FileType", "FTerm", "tnoremap <silent> <buffer> <C-k> <C-\\><C-n><CMD>q<CR>" },
+    { "FileType", "FTerm", "tnoremap <silent> <buffer> <C-l> <C-\\><C-n><CMD>q<CR>" },
   },
 }
