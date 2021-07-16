@@ -738,8 +738,7 @@ return require("packer").startup(function(use)
     disable = not O.plugin.ts_textsubjects.active,
   }
   use {
-    "IndianBoy42/nvim-ts-hint-textobject",
-    branch = "patch-1",
+    "mfussenegger/nvim-ts-hint-textobject",
     config = function()
       -- vim.g.ts_hint_textobject_keys = O.treesitter.hint_labels -- Requires https://github.com/mfussenegger/nvim-ts-hint-textobject/pull/2
       require("tsht").config.hint_keys = O.treesitter.hint_labels -- Requires https://github.com/mfussenegger/nvim-ts-hint-textobject/pull/2
