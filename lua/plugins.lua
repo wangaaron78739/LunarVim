@@ -611,6 +611,7 @@ return require("packer").startup(function(use)
       -- Force clear the sandwhich style bindings (compat with lightspeed)
       vim.api.nvim_del_keymap("n", "sd")
       vim.api.nvim_del_keymap("n", "sa")
+      vim.api.nvim_del_keymap("n", "sr")
       -- vim.api.nvim_del_keymap("n", "sc")
     end,
     event = "BufRead",
