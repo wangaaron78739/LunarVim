@@ -1,3 +1,5 @@
+vim.opt_local.commentstring = [[// %s]]
+
 if require("lv-utils").check_lsp_client_active "clangd" then
   return
 end
@@ -24,8 +26,6 @@ if O.lang.clang.autoformat then
     _cpp = autocmds,
   }
 end
-
-vim.opt_local.commentstring = [[// %s]]
 
 require("lspconfig").clangd.setup {
   cmd = {
