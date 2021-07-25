@@ -199,15 +199,16 @@ return require("packer").startup(function(use)
     end,
     disable = not O.plugin.zen.active,
   }
+
   -- Ranger
-  use {
-    "kevinhwang91/rnvimr",
-    -- cmd = "RnvimrToggle",
-    config = function()
-      require("lv-rnvimr").config()
-    end,
-    disable = not O.plugin.ranger.active,
-  }
+  -- use {
+  --   "kevinhwang91/rnvimr",
+  --   -- cmd = "RnvimrToggle",
+  --   config = function()
+  --     require("lv-rnvimr").config()
+  --   end,
+  --   disable = not O.plugin.ranger.active,
+  -- }
 
   -- matchup
   use {
