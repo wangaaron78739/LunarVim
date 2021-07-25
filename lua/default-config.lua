@@ -47,6 +47,7 @@ O = {
   cmdheight = 2,
   cursorline = true,
   shell = "bash",
+  termshell = "bash",
   timeoutlen = 300,
   nvim_tree_disable_netrw = 0,
   ignore_case = true,

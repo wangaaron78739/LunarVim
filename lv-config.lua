@@ -9,7 +9,8 @@ an executable
 -- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
 -- general
 O.colorscheme = "snazzy"
-O.shell = "fish"
+-- O.shell = "fish"
+O.termshell = "fish"
 O.lushmode = false
 O.hlsearch = true -- This has a bug
 
