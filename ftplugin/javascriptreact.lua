@@ -1,6 +1,6 @@
 require("lsp.tsserver-ls").setup()
 
-if O.lang.javascriptreact.efm.active == true then
+if O.lang.javascript.efm.active == true then
   require("lsp.efm-ls").generic_setup { "javascriptreact" }
 end
 
