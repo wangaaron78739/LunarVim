@@ -36,8 +36,6 @@ map("n", "<C-S>", "<esc>:update<cr>", sile)
 map("v", "<C-S>", "<esc>:update<cr>", sile)
 map("i", "<C-S>", "<esc>:update<cr>", sile)
 
--- map('n', '-', ':RnvimrToggle<CR>', nore)
-
 -- better window movement -- tmux_navigator supplies these if installed
 if not O.plugin.tmux_navigator.active then
   map("n", "<C-h>", "<C-w>h", sile)
@@ -277,3 +275,5 @@ end
 
 map("n", "<cr>", "o<esc>", nore)
 map("n", "<M-cr>", "O<esc>", nore)
+
+map("n", "Q", "@q", nore)

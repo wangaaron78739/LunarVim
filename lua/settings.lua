@@ -69,4 +69,6 @@ opt.breakindent = true -- Apply indentation for wrapped lines
 opt.pastetoggle = "<F3>" -- Enter Paste Mode with
 opt.foldlevelstart = 99 -- Don't fold on startup
 opt.foldmethod = "indent" -- Set default fold method as indent, although will be overriden by treesitter soon anyway
+opt.lazyredraw = true -- When running macros and regexes on a large file, lazy redraw tells neovim/vim not to draw the screen, which greatly speeds it up, upto 6-7x faster
 -- LuaFormatter on
+

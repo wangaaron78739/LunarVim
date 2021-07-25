@@ -9,14 +9,15 @@ local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
 --         requires_generate_from_grammar = true
 --     }
 -- }
--- parser_config.just = {
---     install_info = {
---         url = "~/dev/tree-sitter-just", -- local path or git repo
---         files = {"src/parser.c"}
---     }
---     -- filetype = "just", -- if filetype does not agrees with parser name
---     -- used_by = {"bar", "baz"} -- additional filetypes that use this parser
--- }
+
+parser_config.just = {
+  install_info = {
+    url = "~/dev/tree-sitter-just", -- local path or git repo
+    files = { "src/parser.c", "src/scanner.cc" },
+  },
+  -- filetype = "just", -- if filetype does not agrees with parser name
+  -- used_by = {"bar", "baz"} -- additional filetypes that use this parser
+}
 
 -- Custom text objects
 local textobj_prefixes = O.treesitter.textobj_prefixes

@@ -613,7 +613,6 @@ return require("packer").startup(function(use)
       vim.api.nvim_del_keymap("n", "sd")
       vim.api.nvim_del_keymap("n", "sa")
       vim.api.nvim_del_keymap("n", "sr")
-      -- vim.api.nvim_del_keymap("n", "sc")
     end,
     event = "BufRead",
     disable = not O.plugin.surround.active,
@@ -732,7 +731,8 @@ return require("packer").startup(function(use)
 
   -- treesitter extensions
   use {
-    "nvim-treesitter/nvim-treesitter-textobjects",
+    -- "nvim-treesitter/nvim-treesitter-textobjects",
+    "jacfger/nvim-treesitter-textobjects",
     disable = not O.plugin.ts_textobjects.active,
   }
   use {
@@ -845,6 +845,8 @@ return require("packer").startup(function(use)
 
   use { "Iron-E/nvim-libmodal" }
   -- use { "Iron-E/nvim-tabmode", after = "nvim-libmodal" }
+
+  -- use { "~/code/glow.nvim", run = ":GlowInstall" }
 
   if #O.custom_plugins > 0 then
     use(O.custom_plugins)
