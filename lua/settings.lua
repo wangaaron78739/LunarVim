@@ -62,13 +62,14 @@ opt.relativenumber = O.relative_number -- set relative numbered lines
 opt.numberwidth = O.number_width -- set number column width to 2 {default 4}
 opt.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
 opt.wrap = O.wrap_lines -- display lines as one long line
+opt.linebreak = true -- dont linebreak in the middle of words
 opt.spell = O.spell
 opt.spelllang = O.spelllang
 opt.scrolloff = O.scrolloff -- Scrolloffset to block the cursor from reaching the top/bottom
 opt.breakindent = true -- Apply indentation for wrapped lines
 opt.pastetoggle = "<F3>" -- Enter Paste Mode with
 opt.foldlevelstart = 99 -- Don't fold on startup
+opt.foldcolumn = O.fold_columns -- Add fold indicators to number column
 opt.foldmethod = "indent" -- Set default fold method as indent, although will be overriden by treesitter soon anyway
 opt.lazyredraw = true -- When running macros and regexes on a large file, lazy redraw tells neovim/vim not to draw the screen, which greatly speeds it up, upto 6-7x faster
 -- LuaFormatter on
-

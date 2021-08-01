@@ -273,7 +273,34 @@ end
 -- TODO: Use more standard regex syntax
 -- map("n", "/", "/\v", nore)
 
+-- Open a new line in normal mode
 map("n", "<cr>", "o<esc>", nore)
 map("n", "<M-cr>", "O<esc>", nore)
 
+-- Quick activate macro
 map("n", "Q", "@q", nore)
+
+-- Reselect in visual line
+map("n", "gV", "V'>o'<", nore)
+map("v", "gV", "<esc>V'>o", nore)
+
+local function undo_brkpt(key)
+  map("i", key, key .. "<c-g>u", nore)
+end
+local undo_brkpts = {
+  "<CR>",
+  ",",
+  ".",
+  ";",
+  "{",
+  "}",
+  "[",
+  "]",
+  "(",
+  ")",
+  "'",
+  '"',
+}
+for _, v in ipairs(undo_brkpts) do
+  undo_brkpt(v)
+end

@@ -31,6 +31,7 @@ local lsp_border = "single"
 O = {
   format_on_save = true,
   auto_close_tree = 0,
+  fold_columns = "0",
   auto_complete = true,
   colorscheme = "lunar",
   colorcolumn = "99999",

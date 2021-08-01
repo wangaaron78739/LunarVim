@@ -609,10 +609,12 @@ return require("packer").startup(function(use)
         omap is <Plug>(textobj-sandwich-query-i)
         omap as <Plug>(textobj-sandwich-query-a)
     ]]
-      -- Force clear the sandwhich style bindings (compat with lightspeed)
-      vim.api.nvim_del_keymap("n", "sd")
-      vim.api.nvim_del_keymap("n", "sa")
-      vim.api.nvim_del_keymap("n", "sr")
+      -- Force clear the sandwhich style bindings (compat with lightspeed) -- FIXME: doesn't work
+      -- vim.api.nvim_del_keymap("n", "sd")
+      -- vim.api.nvim_del_keymap("n", "sa")
+      -- vim.api.nvim_del_keymap("n", "sdb")
+      -- vim.api.nvim_del_keymap("n", "sab")
+      -- vim.api.nvim_del_keymap("n", "sr")
     end,
     event = "BufRead",
     disable = not O.plugin.surround.active,
@@ -669,7 +671,7 @@ return require("packer").startup(function(use)
   -- https://github.com/tpope/vim-rsi
 
   -- Detect indentation from file
-  use { "zsugabubus/crazy8.nvim", event = "BufRead" }
+  -- use { "zsugabubus/crazy8.nvim", event = "BufRead" }
 
   -- mkdir -- Goes into a infinite loop and freezes neovim
   -- use {
@@ -841,12 +843,55 @@ return require("packer").startup(function(use)
     end,
   }
 
-  use { "AndrewRadev/splitjoin.vim" }
+  use {
+    "AndrewRadev/splitjoin.vim",
+    config = function()
+      vim.api.nvim_set_keymap("n", "gj", "gJ", {})
+      vim.api.nvim_set_keymap("n", "gk", "gS", {})
+    end,
+  }
 
   use { "Iron-E/nvim-libmodal" }
   -- use { "Iron-E/nvim-tabmode", after = "nvim-libmodal" }
 
   -- use { "~/code/glow.nvim", run = ":GlowInstall" }
+
+  use {
+    "abecodes/tabout.nvim",
+    config = function()
+      local pairs = {
+        "''",
+        '""',
+        "``",
+        "()",
+        "{}",
+        "[]",
+      }
+      require("tabout").setup {
+        tabkey = "<Tab>", -- key to trigger tabout
+        act_as_tab = true, -- shift content if tab out is not possible
+        completion = true, -- if the tabkey is used in a completion pum
+        tabouts = {
+          { open = "'", close = "'" },
+          { open = '"', close = '"' },
+          { open = "`", close = "`" },
+          { open = "(", close = ")" },
+          { open = "[", close = "]" },
+          { open = "{", close = "}" },
+        },
+        ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
+        exclude = {}, -- tabout will ignore these filetypes
+      }
+    end,
+    after = { "nvim-compe" }, -- if a completion plugin is using tabs load it before
+  }
+
+  use {
+    "gelguy/wilder.nvim",
+    config = function()
+      require("lv-wilder").config()
+    end,
+  }
 
   if #O.custom_plugins > 0 then
     use(O.custom_plugins)
