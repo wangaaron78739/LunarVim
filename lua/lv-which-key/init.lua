@@ -193,14 +193,12 @@ local mappings = {
   l = {
     name = "LSP",
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-    A = { "<cmd>lua vim.lsp.buf.range_code_action()<cr>", "Selected Action" },
-    h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover" },
     i = { "<cmd>LspInfo<cr>", "Info" },
     -- TODO: What is the replacement for this?
     -- f = { "<cmd>Lspsaga lsp_finder<cr>", "LSP Finder" },
     -- p = { "<cmd>Lspsaga preview_definition<cr>", "Preview Definition" },
     q = { "<cmd>Telescope quickfix<cr>", "Quickfix" },
-    r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
+    r = { "<cmd>lua Rename.rename()<CR>", "Rename" },
     R = { "<cmd>Telescope lsp_references<cr>", "References" },
     t = { "<cmd>lua vim.lsp.buf.type_definition() <cr>", "Type Definition" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
@@ -214,6 +212,11 @@ local mappings = {
     name = "Search",
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
     c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
+    s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
+    S = {
+      "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
+      "Workspace Symbols",
+    },
     d = {
       "<cmd>Telescope lsp_document_diagnostics<cr>",
       "Document Diagnostics",

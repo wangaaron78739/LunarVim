@@ -96,7 +96,7 @@ else
         procMacro = { enable = true },
         rustcheckOnSave = {
           enable = true,
-          command = "clippy", -- comment out to not use clippy
+          -- command = "clippy", -- comment out to not use clippy
         },
       },
     },

@@ -133,10 +133,15 @@ map("n", "<M-)>", "f(va(", sile)
 map("n", "<M-(>", "F)va)o", sile)
 map("v", "<M-)>", "<Esc>f(vi(", sile)
 map("v", "<M-(>", "<Esc>F)vi)", sile)
-map("n", "<M-j>", "jV", sile)
-map("n", "<M-k>", "kV", sile)
-map("v", "<M-j>", "<Esc>jV", sile)
-map("v", "<M-k>", "<Esc>kV", sile)
+-- map("n", "<M-j>", "jV", sile)
+-- map("n", "<M-k>", "kV", sile)
+-- map("v", "<M-j>", "<Esc>jV", sile)
+-- map("v", "<M-k>", "<Esc>kV", sile)
+
+map("v", "<M-l>", "l", sile)
+map("n", "<M-l>", "<c-v>l", sile)
+map("v", "<M-h>", "h", sile)
+map("n", "<M-h>", "<c-v>h", sile)
 
 -- Charwise visual select line
 map("v", "v", "^og_", sile)
@@ -206,11 +211,13 @@ map("n", "cp", "<Plug>TransposeCharacters", {})
 map("n", "Y", "yg_", nore)
 
 -- Go Back
-map("n", "gb", "<c-o>", sile)
+map("n", "gb", "<c-o>", nore)
+map("n", "GB", "<c-i>", nore)
 
 -- comment and copy
 map("n", "gcy", "yygccp", sile)
 map("n", "gcj", "gccjgcc", sile)
+map("n", "gck", "gccjgcc", sile)
 map("v", "gyc", "ygvgc`>p", sile)
 -- map("v", "gjc", "gc", sile) -- Don't know how to implement this
 
@@ -246,8 +253,10 @@ map("n", "gpD", [[<cmd>lua require("lsp.functions").preview_location_at("declara
 map("n", "gpr", [[<cmd>lua require("lsp.functions").preview_location_at("references")<CR>]], sile)
 map("n", "gpi", [[<cmd>lua require("lsp.functions").preview_location_at("implementation")<CR>]], sile)
 -- Hover
+-- map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", sile)
 map("n", "gh", "<cmd>lua vim.lsp.buf.hover()<cr>", sile)
-map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", sile)
+map("n", "K", "<cmd>lua vim.lsp.buf.code_action()<cr>", {})
+map("v", "K", "<esc><cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>", {})
 
 -- Format buffer -- TODO: switch between neoformat and lsp
 -- map("n", "gf", "<cmd>lua vim.lsp.buf.formatting()<cr>", nore)

@@ -571,7 +571,25 @@ return require("packer").startup(function(use)
       }
       lsp_sign_opt.hint_scheme = "String"
       lsp_sign_opt.hi_parameter = "Search"
-      require("lsp_signature").on_attach(lsp_sign_opt)
+      require("lsp_signature").setup(lsp_sign_opt)
+    end,
+  }
+
+  use { "RishabhRD/popfix" }
+  use {
+    "RishabhRD/nvim-lsputils",
+    config = function()
+      vim.lsp.handlers["textDocument/codeAction"] = require("lsputil.codeAction").code_action_handler
+      vim.cmd [[
+        au FileType lsputil_codeaction_list nmap <buffer> K <CR>
+      ]]
+      -- vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler
+      -- vim.lsp.handlers['textDocument/definition'] = require'lsputil.locations'.definition_handler
+      -- vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
+      -- vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
+      -- vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
+      -- vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
+      -- vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
     end,
   }
 
@@ -868,7 +886,8 @@ return require("packer").startup(function(use)
         "[]",
       }
       require("tabout").setup {
-        tabkey = "<Tab>", -- key to trigger tabout
+        tabkey = "", -- key to trigger tabout
+        backwards_tabkey = "", -- key to trigger tabout
         act_as_tab = true, -- shift content if tab out is not possible
         completion = true, -- if the tabkey is used in a completion pum
         tabouts = {

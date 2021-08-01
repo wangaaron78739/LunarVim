@@ -81,7 +81,9 @@ M.config = function()
     elseif check_back_space() then
       return t "<Tab>"
     else
-      return vim.fn["compe#complete"]()
+      -- return vim.fn["compe#complete"]()
+      return t "<Cmd>Tabout<CR>"
+      -- return vim.fn["compe#complete"]()
     end
   end
 
@@ -91,7 +93,8 @@ M.config = function()
     elseif vim.fn.call("vsnip#jumpable", { -1 }) == 1 then
       return t "<Plug>(vsnip-jump-prev)"
     else
-      return t "<S-Tab>"
+      -- return t "<S-Tab>"
+      return t "<Cmd>TaboutBack<CR>"
     end
   end
 
