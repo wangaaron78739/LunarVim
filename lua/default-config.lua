@@ -180,6 +180,7 @@ O = {
     anywise_reg = { active = enable_plugins_by_default },
     doge = { active = enable_plugins_by_default },
     undotree = { active = enable_plugins_by_default },
+    ts_iswap = { active = enable_plugins_by_default },
   },
   custom_plugins = {},
   user_autocommands = {

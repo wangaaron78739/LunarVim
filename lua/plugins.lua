@@ -768,6 +768,7 @@ return require("packer").startup(function(use)
     event = "BufRead",
     disable = not O.plugin.ts_hintobjects.active,
   }
+  use { "mizlan/iswap.nvim", cmd = { "ISwap", "ISwapWith" }, disable = not O.plugin.ts_iswap.active }
   use { -- TODO: check if this lazy load is ok
     "windwp/nvim-ts-autotag",
     event = "BufRead",

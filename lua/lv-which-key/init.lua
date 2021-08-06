@@ -45,11 +45,10 @@ local opts = {
 
 -- TODO create entire treesitter section
 
--- TODO support vim-surround in the which-key menus
+-- TODO support vim-sandwich in the which-key menus
 
 local mappings = {
   [" "] = { "<cmd>Telescope commands<cr>", "Commands" },
-  ["<tab>"] = { "Tab mode" },
   [";"] = { "<cmd>Dashboard<CR>", "Dashboard" },
   ["/"] = { "<cmd>Telescope live_grep<cr>", "Global search" },
   -- ["/"] = { "<cmd>lua require('spectre').open()<cr>", "Global search" },
@@ -250,10 +249,12 @@ local mappings = {
     name = "Replace",
     n = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
     ["*"] = {
-      [[/<C-r><C-a><CR>]], "current WORD"
+      [[/<C-r><C-a><CR>]],
+      "current WORD",
     },
     ["/"] = {
-      [[:%s/<C-R>///g<Left><Left>]], "last search"
+      [[:%s/<C-R>///g<Left><Left>]],
+      "last search",
     },
   },
   d = {
@@ -270,6 +271,11 @@ local mappings = {
     r = { ":luafile %<cr>", "Reload" },
     s = { "<cmd>PackerSync<cr>", "Sync" },
     u = { "<cmd>PackerUpdate<cr>", "Update" },
+  },
+  a = {
+    name = "+Swap",
+    [" "] = { "<cmd>ISwap<cr>", "Interactive" },
+    ["w"] = { "<cmd>ISwapWith<cr>", "I. With" },
   },
 }
 
@@ -322,9 +328,9 @@ if O.plugin.telescope_project.active then
 end
 if O.plugin.spectre.active then
   mappings["rf"] = {
-      "<cmd>lua require('spectre').open_file_search()<cr>",
-      "Current File",
-    }
+    "<cmd>lua require('spectre').open_file_search()<cr>",
+    "Current File",
+  }
   mappings["rp"] = { "<cmd>lua require('spectre').open()<cr>", "Project" }
 end
 if O.plugin.lazygit.active then
