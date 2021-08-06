@@ -117,7 +117,7 @@ vim.g.gitblame_enabled = 0
 --       the number to something that suits your needs if it looks weird.
 
 -- neovide settings
--- vim.g.neovide_cursor_vfx_mode = "railgun"
+-- vim.g.neovide_cursor_vfx_mode = "pixiedust"
 -- vim.g.neovide_refresh_rate=120
 
 vim.opt.autowriteall = true
