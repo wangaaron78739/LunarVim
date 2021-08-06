@@ -627,12 +627,6 @@ return require("packer").startup(function(use)
         omap is <Plug>(textobj-sandwich-query-i)
         omap as <Plug>(textobj-sandwich-query-a)
     ]]
-      -- Force clear the sandwhich style bindings (compat with lightspeed) -- FIXME: doesn't work
-      -- vim.api.nvim_del_keymap("n", "sd")
-      -- vim.api.nvim_del_keymap("n", "sa")
-      -- vim.api.nvim_del_keymap("n", "sdb")
-      -- vim.api.nvim_del_keymap("n", "sab")
-      -- vim.api.nvim_del_keymap("n", "sr")
     end,
     event = "BufRead",
     disable = not O.plugin.surround.active,
