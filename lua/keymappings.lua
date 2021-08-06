@@ -5,10 +5,10 @@ local expr = { noremap = true, silent = true, expr = true }
 
 -- Set leader
 if O.leader_key == " " or O.leader_key == "space" then
-  vim.api.nvim_set_keymap("n", "<Space>", "<NOP>", { noremap = true, silent = true })
+  map("n", "<Space>", "<NOP>", nore)
   vim.g.mapleader = " "
 else
-  vim.api.nvim_set_keymap("n", O.leader_key, "<NOP>", { noremap = true, silent = true })
+  map("n", O.leader_key, "<NOP>", nore)
   vim.g.mapleader = O.leader_key
 end
 
@@ -61,10 +61,10 @@ local resize_prefix = "<C-"
 if vim.fn.has "mac" == 1 then
   resize_prefix = "<A-"
 end
-vim.api.nvim_set_keymap("n", resize_prefix .. "Up>", ":resize -2<CR>", { silent = true })
-vim.api.nvim_set_keymap("n", resize_prefix .. "Down>", ":resize +2<CR>", { silent = true })
-vim.api.nvim_set_keymap("n", resize_prefix .. "Left>", ":vertical resize -2<CR>", { silent = true })
-vim.api.nvim_set_keymap("n", resize_prefix .. "Right>", ":vertical resize +2<CR>", { silent = true })
+map("n", resize_prefix .. "Up>", ":resize -2<CR>", sile)
+map("n", resize_prefix .. "Down>", ":resize +2<CR>", sile)
+map("n", resize_prefix .. "Left>", ":vertical resize -2<CR>", sile)
+map("n", resize_prefix .. "Right>", ":vertical resize +2<CR>", sile)
 
 -- Move current line / block with Alt-j/k ala vscode.
 map("n", "<C-A-j>", ":m .+1<CR>==", nore)
@@ -88,6 +88,8 @@ map("v", ">", ">gv", nore)
 -- I hate escape
 map("i", "jk", "<ESC>", nore)
 map("i", "kj", "<ESC>", nore)
+map("v", "jk", "<ESC>", nore)
+map("v", "kj", "<ESC>", nore)
 
 -- Tab switch buffer
 -- map('n', '<TAB>', ':bnext<CR>', nore)
@@ -100,15 +102,15 @@ map("v", "p", "pgvy", nore)
 map("v", "P", "p", nore) -- for normal p behaviour
 
 -- Non destructive delete/change
-local function _op(m, c)
+local function noclobber(m, c)
   map(m, "<M-" .. c .. ">", '"_' .. c, nore)
 end
-_op("n", "d")
-_op("n", "c")
-_op("n", "D")
-_op("n", "C")
+noclobber("n", "d")
+noclobber("n", "c")
+noclobber("n", "D")
+noclobber("n", "C")
 map("v", "x", '"_d', nore)
-map("v", "r", '"_r', nore)
+map("v", "r", '"_c', nore)
 -- Original paste for when 'nvim-anywise-reg.lua' is installed
 map("n", "<M-p>", "p", nore)
 map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
@@ -179,6 +181,8 @@ map("n", "c+", [[:%s/<C-r>+//g<Left><Left>]], {}) -- Search and replace the curr
 map("n", "c/", [[:%s///g<Left><Left><Left>]], {}) -- Search and replace
 map("n", "+", [[/<C-R>+<CR>]], {}) -- Search for the current yank register
 
+map("v", "<leader>r", [["ay:%s/<C-r>a//g<Left><Left>]], {}) -- Search and replace the current selection
+
 -- Visual mode search
 map("v", "*", '"ay/<C-R>a<CR>gn', {}) -- Search for the current selection
 map("v", "n", "<esc>ngn", {}) -- Continue the search and keep selecting (equivalent ish to doing `gn` in normal)
@@ -186,10 +190,6 @@ map("v", "N", "<esc>NgN", {}) -- Continue the search and keep selecting (equival
 
 -- MultiSelect all search matches in file
 map("n", "<M-/>", "VggoG/", {})
-
--- Change all according to operator
-vim.api.nvim_set_keymap("n", "<leader>c", [[<cmd>lua require("functions").change_all_operator()<CR>]], {})
-map("v", "<leader>c", [["ay:%s/<C-r>a//g<Left><Left>]], {}) -- Search and replace the current selection
 
 -- Double Escape key clears search and spelling highlights
 -- map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell | call minimap#vim#ClearColorSearch()<ESC>", nore)
@@ -263,19 +263,12 @@ map("n", "gf", "<cmd>Neoformat<cr>", nore)
 map("n", "==", "<cmd>Neoformat<cr>", nore)
 -- Format a range -- TODO: can do with Neoformat?
 -- vim.api.nvim_set_keymap("n", "gm", [[<cmd>lua require("lsp.functions").format_range_operator()<CR>]], nore)
-vim.api.nvim_set_keymap("n", "gm", [[<cmd>lua require("lv-neoformat").format_range_operator()<CR>]], nore)
-vim.api.nvim_set_keymap("n", "=", [[<cmd>lua require("lv-neoformat").format_range_operator()<CR>]], nore)
+map("n", "gm", [[<cmd>lua require("lv-neoformat").format_range_operator()<CR>]], nore)
+map("n", "=", [[<cmd>lua require("lv-neoformat").format_range_operator()<CR>]], nore)
 
 if O.plugin.ts_hintobjects.active then
   map("o", "m", [[:<C-U>lua require('tsht').nodes()<CR>]], sile)
   map("v", "m", [[:lua require('tsht').nodes()<CR>]], nore)
-end
-
-if O.plugin.surround.active then
-  map("x", "is", [[<Plug>(textobj-sandwich-query-i)]], sile)
-  map("x", "as", [[<Plug>(textobj-sandwich-query-a)]], sile)
-  map("o", "is", [[<Plug>(textobj-sandwich-query-i)]], sile)
-  map("o", "as", [[<Plug>(textobj-sandwich-query-a)]], sile)
 end
 
 -- TODO: Use more standard regex syntax
@@ -312,3 +305,6 @@ local undo_brkpts = {
 for _, v in ipairs(undo_brkpts) do
   undo_brkpt(v)
 end
+
+map("n", "[[", "vmo<esc>", sile)
+map("n", "]]", "vmo<esc>", sile)

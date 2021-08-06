@@ -61,6 +61,7 @@ local mappings = {
     "Kakoune",
   },
   w = { "<cmd>up<CR>", "Write" },
+  c = { [[<cmd>lua require("functions").change_all_operator()<CR>]], "Change all "},
   o = {
     name = "Toggle window",
     f = { "<cmd>NvimTreeToggle<CR>", "File Sidebar" },

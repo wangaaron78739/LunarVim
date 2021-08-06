@@ -158,12 +158,10 @@ return require("packer").startup(function(use)
     -- event = "BufRead",
   }
 
-  -- Extras, these do not load by default
-
   -- Better motions
   use {
     "phaazon/hop.nvim",
-    event = "BufRead",
+    cmd = { "HopChar2", "HopChar1", "HopWord", "HopLine", "HopPattern" },
     config = function()
       require("lv-hop").config()
     end,
@@ -860,7 +858,7 @@ return require("packer").startup(function(use)
     "AndrewRadev/splitjoin.vim",
     config = function()
       vim.api.nvim_set_keymap("n", "gj", "gJ", {})
-      vim.api.nvim_set_keymap("n", "gk", "gS", {})
+      vim.api.nvim_set_keymap("n", "gs", "gS", {})
     end,
   }
 
