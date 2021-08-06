@@ -248,12 +248,13 @@ local mappings = {
   },
   r = {
     name = "Replace",
-    f = {
-      "<cmd>lua require('spectre').open_file_search()<cr>",
-      "in Current File",
-    },
-    p = { "<cmd>lua require('spectre').open()<cr>", "in Project" },
     n = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
+    ["*"] = {
+      [[/<C-r><C-a><CR>]], "current WORD"
+    },
+    ["/"] = {
+      [[:%s/<C-R>///g<Left><Left>]], "last search"
+    },
   },
   d = {
     name = "Diagnostics",
@@ -272,6 +273,9 @@ local mappings = {
   },
 }
 
+for k, v in pairs(O.plugin_which_keys) do
+  mappings[k] = v
+end
 if O.plugin.symbol_outline.active then
   mappings["o"]["s"] = { "<cmd>SymbolsOutline<cr>", "Symbols Sidebar" }
 end
@@ -293,10 +297,6 @@ if O.plugin.trouble.active then
   mappings["d"]["q"] = { "<cmd>TroubleToggle quickfix<cr>", "Quick Fixes" }
   mappings["d"]["L"] = { "<cmd>TroubleToggle loclist<cr>", "Location List" }
   mappings["d"]["o"] = { "<cmd>TroubleToggle todo<cr>", "TODOs" }
-end
-if O.plugin.ts_playground.active then
-  vim.api.nvim_set_keymap("n", "<leader>Th", ":TSHighlightCapturesUnderCursor<CR>", { noremap = true, silent = true })
-  mappings[""] = "Highlight Capture"
 end
 if O.plugin.gitlinker.active then
   mappings["gy"] = "Gitlink"
@@ -321,14 +321,11 @@ if O.plugin.telescope_project.active then
   mappings["p"] = "Projects"
 end
 if O.plugin.spectre.active then
-  mappings["r"] = {
-    name = "Replace",
-    f = {
+  mappings["rf"] = {
       "<cmd>lua require('spectre').open_file_search()<cr>",
       "Current File",
-    },
-    p = { "<cmd>lua require('spectre').open()<cr>", "Project" },
-  }
+    }
+  mappings["rp"] = { "<cmd>lua require('spectre').open()<cr>", "Project" }
 end
 if O.plugin.lazygit.active then
   vim.api.nvim_set_keymap("n", "<leader>gg", ":LazyGit<CR>", { noremap = true, silent = true })

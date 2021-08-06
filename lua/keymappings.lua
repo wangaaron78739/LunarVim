@@ -174,12 +174,11 @@ map("n", "<C-A-k>", ":cprev<CR>", nore)
 -- + for the yank
 -- c for change
 -- / for search (new search)
-map("n", "<leader>*", [[/<C-r><C-a><CR>]], {}) -- Search the current WORD
 map("n", "c*", [[:%s/\<<C-r><C-w>\>//g<Left><Left>]], {}) -- Search and replace the current word
-map("n", "+", [[/<C-R>+<CR>]], {}) -- Search for the current yank register
 map("n", "c+", [[:%s/<C-r>+//g<Left><Left>]], {}) -- Search and replace the current yank
 map("n", "c/", [[:%s///g<Left><Left><Left>]], {}) -- Search and replace
-map("n", "<leader>r/", [[:%s/<C-R>///g<Left><Left>]], {}) -- Search and replace the last search
+map("n", "+", [[/<C-R>+<CR>]], {}) -- Search for the current yank register
+
 -- Visual mode search
 map("v", "*", '"ay/<C-R>a<CR>gn', {}) -- Search for the current selection
 map("v", "n", "<esc>ngn", {}) -- Continue the search and keep selecting (equivalent ish to doing `gn` in normal)

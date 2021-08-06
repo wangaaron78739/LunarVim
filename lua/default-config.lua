@@ -105,6 +105,7 @@ O = {
   efm = {
     config_path = EFM_CONF_PATH,
   },
+  plugin_which_keys = {},
   plugin = {
     hop = { active = enable_plugins_by_default },
     dial = { active = enable_plugins_by_default },
