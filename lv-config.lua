@@ -120,7 +120,6 @@ vim.g.gitblame_enabled = 0
 -- vim.g.neovide_cursor_vfx_mode = "pixiedust"
 -- vim.g.neovide_refresh_rate=120
 
-vim.opt.autowriteall = true
 vim.g.sandwich_no_default_key_mappings = 1
 vim.g.operator_sandwich_no_default_key_mappings = 1
 vim.g.textobj_sandwich_no_default_key_mappings = 1
