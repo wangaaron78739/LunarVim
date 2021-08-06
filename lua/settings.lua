@@ -16,7 +16,7 @@ end
 
 --- COLORSCHEME ---
 
-vim.g.colors_name = O.colorscheme
+vim.cmd("colorscheme " .. O.colorscheme)
 vim.cmd "hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828"
 
 ---  SETTINGS  ---
