@@ -139,6 +139,26 @@ require("nvim-treesitter.configs").setup {
     extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
     max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
   },
+  refactor = {
+    smart_rename = {
+      enable = true,
+      keymaps = {
+        smart_rename = "<leader>rt",
+      },
+    },
+    highlight_definitions = { enable = true },
+    navigation = {
+      enable = true,
+      keymaps = {
+        goto_definition_lsp_fallback = "gd",
+        goto_definition = "<leader>lnd",
+        list_definitions = "<leader>lnD",
+        -- list_definitions_toc = "gO",
+        goto_next_usage = "<a-*>",
+        goto_previous_usage = "<a-#>",
+      },
+    },
+  },
 }
 
 vim.opt.foldmethod = "expr"

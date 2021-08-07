@@ -754,13 +754,17 @@ return require("packer").startup(function(use)
   use {
     "mfussenegger/nvim-ts-hint-textobject",
     config = function()
-      -- vim.g.ts_hint_textobject_keys = O.treesitter.hint_labels -- Requires https://github.com/mfussenegger/nvim-ts-hint-textobject/pull/2
       require("tsht").config.hint_keys = O.treesitter.hint_labels -- Requires https://github.com/mfussenegger/nvim-ts-hint-textobject/pull/2
     end,
     event = "BufRead",
     disable = not O.plugin.ts_hintobjects.active,
   }
-  use { "mizlan/iswap.nvim", cmd = { "ISwap", "ISwapWith" }, disable = not O.plugin.ts_iswap.active }
+  use {
+    "mizlan/iswap.nvim",
+    cmd = { "ISwap", "ISwapWith" },
+    disable = not O.plugin.ts_iswap.active,
+  }
+  use { "tommcdo/vim-exchange" } -- TODO: may not actually need a whole plugin for this
   use { -- TODO: check if this lazy load is ok
     "windwp/nvim-ts-autotag",
     event = "BufRead",
@@ -772,6 +776,7 @@ return require("packer").startup(function(use)
     disable = not O.plugin.ts_context.active,
   }
   use { "p00f/nvim-ts-rainbow", disable = not O.plugin.ts_rainbow.active }
+  use { "nvim-treesitter/nvim-treesitter-refactor" }
 
   -- Startup profiler
   use {
@@ -902,6 +907,13 @@ return require("packer").startup(function(use)
     "gelguy/wilder.nvim",
     config = function()
       require("lv-wilder").config()
+    end,
+  }
+
+  use {
+    "ThePrimeagen/refactoring.nvim",
+    config = function()
+      require("lv-refactoring").setup()
     end,
   }
 
