@@ -56,6 +56,7 @@ O = {
   scrolloff = 0,
   lushmode = false,
   hl_search = false,
+  inc_subs = "split",
   transparent_window = false,
   document_highlight = true,
   leader_key = "space",

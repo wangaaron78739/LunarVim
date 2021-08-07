@@ -40,28 +40,10 @@ M.config = function()
 end
 
 M.format_range_operator = function()
-  local old_func = vim.go.operatorfunc
-  _G.op_func_formatting = function()
-    local start_row, start_col = unpack(vim.api.nvim_buf_get_mark(0, "["))
-    local end_row, end_col = unpack(vim.api.nvim_buf_get_mark(0, "]"))
-
-    vim.fn.setpos(".", { 0, start_row, start_col + 1, 0 })
-    vim.cmd "normal! v"
-    -- Convert exclusive end position to inclusive
-    if end_col == 1 then
-      vim.fn.setpos(".", { 0, end_row - 1, -1, 0 })
-    else
-      vim.fn.setpos(".", { 0, end_row, end_col + 1, 0 })
-    end
-
+  require("lv-utils").operatorfunc_scaffold("format_range_operatorfunc", true, function()
     vim.cmd "Neoformat"
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, true, true), "n", false) -- Exit visual mode
-
-    vim.go.operatorfunc = old_func
-    _G.op_func_formatting = nil
-  end
-  vim.go.operatorfunc = "v:lua.op_func_formatting"
-  vim.api.nvim_feedkeys("g@", "n", false)
+  end)
 end
 
 return M

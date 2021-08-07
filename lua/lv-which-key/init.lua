@@ -67,7 +67,6 @@ local mappings = {
   },
   -- w = { "<cmd>up<CR>", "Write" },
   w = { "<cmd>w<CR>", "Write" },
-  c = { [[<cmd>lua require("functions").change_all_operator()<CR>]], "Change all "},
   o = {
     name = "Toggle window",
     f = { "<cmd>NvimTreeToggle<CR>", "File Sidebar" },
@@ -206,7 +205,7 @@ local mappings = {
       "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
       "Workspace Symbols",
     },
-    T = { name = "Treesitter", i = { ":TSConfigInfo<cr>", "Info" } },
+    T = { ":TSConfigInfo<cr>", "Info" },
   },
   s = {
     name = "Search",
@@ -234,30 +233,30 @@ local mappings = {
     h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
     -- m = {"<cmd>Telescope marks<cr>", "Marks"},
     M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-    r = {
+    R = {
       O.plugin.snap.active and "<cmd>Snap oldfiles<cr>" or "<cmd>Telescope oldfiles<cr>",
       "Open Recent File",
     },
-    R = { "<cmd>Telesope registers<cr>", "Registers" },
+    -- R = { "<cmd>Telesope registers<cr>", "Registers" },
     t = {
       O.plugin.snap.active and "<cmd>Snap live_grep<cr>" or "<cmd>Telescope live_grep<cr>",
       "Text",
     },
     k = { "<cmd>Telescope keymaps<cr>", "Keymappings" },
     o = { "<cmd>TodoTelescope<cr>", "TODOs" },
+    i = "for (object)",
+    r = "and Replace",
   },
   r = {
-    name = "Replace",
-    n = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
-    ["*"] = {
-      [[/<C-r><C-a><CR>]],
-      "current WORD",
-    },
-    ["/"] = {
-      [[:%s/<C-R>///g<Left><Left>]],
-      "last search",
-    },
+    name = "Replace/Refactor",
+    n = { "<cmd>lua Rename.rename()<CR>", "Rename" },
+    t = "Rename TS",
+    ["/"] = "Last search",
+    ["+"] = "Last yank",
+    ["."] = "Last insert",
+    -- r = { [[<cmd>lua require("lv-utils").change_all_operator()<CR>]], "@Replace" },
   },
+  c = "Change all",
   d = {
     name = "Diagnostics",
     j = { [[<cmd>lua require("lsp").diag_next()<cr>]], "Next" },
@@ -278,6 +277,8 @@ local mappings = {
     [" "] = { "<cmd>ISwap<cr>", "Interactive" },
     ["w"] = { "<cmd>ISwapWith<cr>", "I. With" },
   },
+  -- m = "Multi",
+  m = "which_key_ignore",
 }
 
 for k, v in pairs(O.plugin_which_keys) do

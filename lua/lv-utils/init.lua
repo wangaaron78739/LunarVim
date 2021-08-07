@@ -1,6 +1,6 @@
-local lv_utils = {}
+local M = {}
 
-function lv_utils.reload_lv_config()
+function M.reload_lv_config()
   vim.cmd "source ~/.config/nvim/lv-config.lua"
   vim.cmd "source ~/.config/nvim/lua/plugins.lua"
   vim.cmd "source ~/.config/nvim/lua/lv-neoformat/init.lua"
@@ -8,7 +8,7 @@ function lv_utils.reload_lv_config()
   vim.cmd ":PackerInstall"
 end
 
-function lv_utils.check_lsp_client_active(name)
+function M.check_lsp_client_active(name)
   local clients = vim.lsp.get_active_clients()
   for _, client in pairs(clients) do
     if client.name == name then
@@ -18,7 +18,7 @@ function lv_utils.check_lsp_client_active(name)
   return false
 end
 
-function lv_utils.define_augroups(definitions) -- {{{1
+function M.define_augroups(definitions) -- {{{1
   -- Create autocommand groups based on the passed definitions
   --
   -- The key will be the name of the group, and each definition
@@ -40,7 +40,7 @@ function lv_utils.define_augroups(definitions) -- {{{1
   end
 end
 
-lv_utils.define_augroups {
+M.define_augroups {
   _user_autocmds = O.user_autocommands,
   _general_settings = {
     {
@@ -130,4 +130,53 @@ vim.cmd [[
 endfunction
 ]]
 
-return lv_utils
+function M.operatorfunc_helper_select(lines)
+  local start_row, start_col = unpack(vim.api.nvim_buf_get_mark(0, "["))
+  local end_row, end_col = unpack(vim.api.nvim_buf_get_mark(0, "]"))
+
+  vim.fn.setpos(".", { 0, start_row, start_col + 1, 0 })
+  if lines then
+    vim.cmd "normal! V"
+  else
+    vim.cmd "normal! v"
+  end
+  if end_col == 1 then
+    vim.fn.setpos(".", { 0, end_row - 1, -1, 0 })
+  else
+    vim.fn.setpos(".", { 0, end_row, end_col + 1, 0 })
+  end
+end
+
+function M.post_operatorfunc(old_func)
+  vim.go.operatorfunc = old_func
+  _G.op_func_change_all_operator = nil
+end
+
+function M.operatorfunc_scaffold(name, lines, operatorfunc)
+  local old_func = vim.go.operatorfunc
+
+  _G[name] = function()
+    M.operatorfunc_helper_select(lines)
+
+    operatorfunc()
+
+    M.post_operatorfunc(old_func)
+  end
+
+  vim.go.operatorfunc = "v:lua." .. name
+  vim.api.nvim_feedkeys("g@", "n", false)
+end
+
+function M.operatorfunc_scaffoldV_keys(name, verbkeys)
+  M.operatorfunc_scaffold(name, true, function()
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(verbkeys, true, true, true), "m", false)
+  end)
+end
+
+function M.operatorfunc_scaffold_keys(name, verbkeys)
+  M.operatorfunc_scaffold(name, false, function()
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(verbkeys, true, true, true), "m", false)
+  end)
+end
+
+return M

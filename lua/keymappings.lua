@@ -32,9 +32,12 @@ vim.cmd [[
     cnoreabbrev Qall qall
 ]]
 -- <ctrl-s> to Save
-map("n", "<C-S>", "<esc>:update<cr>", sile)
-map("v", "<C-S>", "<esc>:update<cr>", sile)
-map("i", "<C-S>", "<esc>:update<cr>", sile)
+map("n", "<C-s>", "<esc><cmd>write<cr>", sile)
+map("v", "<C-s>", "<esc><cmd>write<cr>", sile)
+map("i", "<C-s>", "<esc><cmd>write<cr>", sile)
+map("i", "<C-f>", "<esc>/\v", sile)
+map("n", "<C-f>", "<esc>/\v", sile)
+map("i", "<C-v>", "<C-R>+", sile)
 
 -- better window movement -- tmux_navigator supplies these if installed
 if not O.plugin.tmux_navigator.active then
@@ -59,7 +62,7 @@ map("t", "<Esc>", [[<C-\><C-n>]], nore)
 -- resize with arrows
 local resize_prefix = "<C-"
 if vim.fn.has "mac" == 1 then
-  resize_prefix = "<A-"
+  resize_prefix = "<M-"
 end
 map("n", resize_prefix .. "Up>", ":resize -2<CR>", sile)
 map("n", resize_prefix .. "Down>", ":resize +2<CR>", sile)
@@ -67,12 +70,12 @@ map("n", resize_prefix .. "Left>", ":vertical resize -2<CR>", sile)
 map("n", resize_prefix .. "Right>", ":vertical resize +2<CR>", sile)
 
 -- Move current line / block with Alt-j/k ala vscode.
-map("n", "<C-A-j>", ":m .+1<CR>==", nore)
-map("n", "<C-A-k>", ":m .-2<CR>==", nore)
-map("i", "<A-j>", "<Esc>:m .+1<CR>==gi", nore)
-map("i", "<A-k>", "<Esc>:m .-2<CR>==gi", nore)
-map("x", "<A-j>", ":m '>+1<CR>gv-gv", nore)
-map("x", "<A-k>", ":m '<-2<CR>gv-gv", nore)
+map("n", "<C-M-j>", ":m .+1<CR>==", nore)
+map("n", "<C-M-k>", ":m .-2<CR>==", nore)
+map("i", "<M-j>", "<Esc>:m .+1<CR>==gi", nore)
+map("i", "<M-k>", "<Esc>:m .-2<CR>==gi", nore)
+map("x", "<M-j>", ":m '>+1<CR>gv-gv", nore)
+map("x", "<M-k>", ":m '<-2<CR>gv-gv", nore)
 -- Move selected line / block of text in visual mode
 map("x", "K", ":move '<-2<CR>gv=gv", nore)
 map("x", "J", ":move '>+1<CR>gv=gv", nore)
@@ -88,8 +91,8 @@ map("v", ">", ">gv", nore)
 -- I hate escape
 map("i", "jk", "<ESC>", nore)
 map("i", "kj", "<ESC>", nore)
-map("v", "jk", "<ESC>", nore)
-map("v", "kj", "<ESC>", nore)
+-- map("v", "jk", "<ESC>", nore)
+-- map("v", "kj", "<ESC>", nore)
 
 -- Tab switch buffer
 -- map('n', '<TAB>', ':bnext<CR>', nore)
@@ -112,10 +115,20 @@ noclobber("n", "C")
 map("v", "x", '"_d', nore)
 map("v", "r", '"_c', nore)
 -- Original paste for when 'nvim-anywise-reg.lua' is installed
-map("n", "<M-p>", "p", nore)
-map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
-map("n", "<M-S-P>", "P", nore)
-map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
+if O.plugin.anywise_reg.active then
+  map("n", "<M-p>", "p", nore)
+  map("n", "<M-S-P>", "P", nore)
+  map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
+  map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
+else
+  -- Paste over textobject
+  function _G.paste_over_operator()
+    require("lv-utils").operatorfunc_scaffold_keys("paste_over_operatorfunc", "p")
+  end
+  map("n", "<M-p>", "<cmd>call v:lua.paste_over_operator()<cr>", sile)
+  map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
+  map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
+end
 -- map("n", "<M-S-p>", [[<cmd>call setreg('p', getreg('+'), 'l')<cr>"pp]], nore) -- linewise paste
 
 -- Select next/previous text object
@@ -140,8 +153,10 @@ map("v", "<M-(>", "<Esc>F)vi)", sile)
 -- map("v", "<M-j>", "<Esc>jV", sile)
 -- map("v", "<M-k>", "<Esc>kV", sile)
 
+-- map("v", "<M-l>", "o<ESC>lvlh", sile)
 map("v", "<M-l>", "l", sile)
 map("n", "<M-l>", "<c-v>l", sile)
+-- map("v", "<M-h>", "<ESC>hvhl", sile)
 map("v", "<M-h>", "h", sile)
 map("n", "<M-h>", "<c-v>h", sile)
 
@@ -168,28 +183,37 @@ map("i", "<S-TAB>", '("\\<C-p>")', expr)
 -- QuickFix
 -- map('n', ']q', ':cnext<CR>', nore)
 -- map('n', '[q', ':cprev<CR>', nore)
-map("n", "<C-A-j>", ":cnext<CR>", nore)
-map("n", "<C-A-k>", ":cprev<CR>", nore)
+-- map("n", "<C-M-j>", ":cnext<CR>", nore)
+-- map("n", "<C-M-k>", ":cprev<CR>", nore)
 
--- Search and Replace -- TODO: Should these move to <leader>r?
--- * for word or current selection
--- + for the yank
--- c for change
--- / for search (new search)
-map("n", "c*", [[:%s/\<<C-r><C-w>\>//g<Left><Left>]], {}) -- Search and replace the current word
-map("n", "c+", [[:%s/<C-r>+//g<Left><Left>]], {}) -- Search and replace the current yank
-map("n", "c/", [[:%s///g<Left><Left><Left>]], {}) -- Search and replace
+function _G.change_all_operator()
+  require("lv-utils").operatorfunc_scaffold_keys("change_all_operatorfunc", [["zy:%s/<C-r>z//g<Left><Left>]])
+end
+function _G.search_for_operator()
+  require("lv-utils").operatorfunc_scaffold_keys("search_for_operatorfunc", [["zy/<C-r>z<CR>]])
+end
+map("n", "<leader>c", [[<cmd>call v:lua.change_all_operator()<CR>]], {}) -- Search and replace textobject
+map("n", "<M-s>", [[<cmd>call v:lua.search_for_operator()<CR>]], {}) -- Search textobject
+
+-- Search and Replace from registers
+-- map("n", "<leader>C", [[:%s/<C-R>//g<Left><Left>]], {}) -- Search and replace register
+map("n", "<leader>r+", [[:%s/<C-R>+//g<Left><Left>]], {}) -- Search and replace the current yank
+map("n", "<leader>r/", [[:%s/<C-R>///g<Left><Left>]], {}) -- Search and replace last search
+map("n", "<leader>r.", [[:%s/<C-R>.//g<Left><Left>]], {}) -- Search and replace last insert
 map("n", "+", [[/<C-R>+<CR>]], {}) -- Search for the current yank register
 
-map("v", "<leader>r", [["ay:%s/<C-r>a//g<Left><Left>]], {}) -- Search and replace the current selection
+-- Search and replace
+map("n", "<leader>sr", [[:%s///g<Left><Left><Left>]], {})
+-- Search and replace the current selection
+map("v", "<leader>sr", [["zy:%s/<C-r>z//g<Left><Left>]], {})
+
+-- Start search and replace from search
+map("c", "<M-r>", [[<cr>:%s/<C-R>///g<Left><Left>]], {})
 
 -- Visual mode search
 map("v", "*", '"ay/<C-R>a<CR>gn', {}) -- Search for the current selection
 map("v", "n", "<esc>ngn", {}) -- Continue the search and keep selecting (equivalent ish to doing `gn` in normal)
 map("v", "N", "<esc>NgN", {}) -- Continue the search and keep selecting (equivalent ish to doing `gn` in normal)
-
--- MultiSelect all search matches in file
-map("n", "<M-/>", "VggoG/", {})
 
 -- Double Escape key clears search and spelling highlights
 -- map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell | call minimap#vim#ClearColorSearch()<ESC>", nore)
@@ -209,24 +233,35 @@ map("n", "cp", "<Plug>TransposeCharacters", {})
 -- Yank till end of the line
 map("n", "Y", "yg_", nore)
 
+-- charwise yank line
+map("n", "<m-y><m-y>", "^y$", nore)
+
 -- Go Back
 map("n", "gb", "<c-o>", nore)
 map("n", "GB", "<c-i>", nore)
 
--- comment and copy
-map("n", "gcy", "yygccp", sile)
+-- Commenting helpers
 map("n", "gcj", "gccjgcc", sile)
-map("n", "gck", "gccjgcc", sile)
-map("v", "gyc", "ygvgc`>p", sile)
+map("n", "gck", "gcckgcc", sile)
+map("n", "gcO", "O-<esc>gccA<BS>", sile)
+map("n", "gco", "o-<esc>gccA<BS>", sile)
+
+-- comment and copy
+map("v", "gy", '"zygvgc`>"zp`[', sile)
+function _G.comment_copy_operator()
+  require("lv-utils").operatorfunc_scaffoldV_keys("comment_copy_operatorfunc", "gy")
+end
+map("n", "gy", "<cmd>call v:lua.comment_copy_operator()<cr>", sile)
+map("n", "gyy", "Vgy", sile)
 -- map("v", "gjc", "gc", sile) -- Don't know how to implement this
 
 -- Select Jupyter Cell
 map("v", "ic", [[/#+\s*%+<cr>oN]], nore)
 
 -- Toggle FTerm
-map("n", "<M-i>", '<CMD>lua require("FTerm").toggle()<CR>', nore)
-map("t", "<M-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', nore)
-map("n", "<M-t>", ":T ", nore)
+map("n", "<M-i>", '<CMD>lua require("FTerm").toggle()<CR>', {})
+map("t", "<M-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', {})
+map("n", "<M-t>", ":T ", {})
 -- map("t", "<Esc>", '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', nore)
 
 -- Spell checking
@@ -239,6 +274,9 @@ map("i", "<C-/>", "<C-\\><C-n><CMD>CommentToggle", nore)
 map("n", ";", ":", {})
 map("v", ";", ":", {})
 -- map('c', ';', "<CR>", sile)
+
+-- Add semicolon
+map("i", ";;", "<esc>mzA;", nore)
 
 -- lsp keys
 map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", sile)
@@ -278,6 +316,9 @@ end
 map("n", "<cr>", "o<esc>", nore)
 map("n", "<M-cr>", "O<esc>", nore)
 
+-- Split line
+map("n", "go", "i<CR><ESC>k:sil! keepp s/\v +$//<CR>:noh<CR>j^", nore)
+
 -- Quick activate macro
 map("n", "Q", "@q", nore)
 
@@ -302,15 +343,75 @@ local undo_brkpts = {
   ")",
   "'",
   '"',
-}
+  }
 for _, v in ipairs(undo_brkpts) do
   undo_brkpt(v)
 end
+map("n", "U", "<C-R>", nore)
 
 -- Go to multi insert from Visual mode
 map("v", "I", "<M-a>i", sile)
-map("v", "A", "<M-a>i", sile)
+map("v", "A", "<M-a>a", sile)
+
+-- Select all matching regex search
+-- map("n", "<M-S-/>", "<M-/><M-a>", {})
+
+-- Multi select object
+function _G.multiselect_operator()
+  require("lv-utils").operatorfunc_scaffold_keys("multiselect_operatorfunc", "<M-n>")
+end
+map("n", "<M-v>", "<cmd>call v:lua.multiselect_operator()<cr>", sile)
+-- Multi select all
+function _G.multiselect_all_operator()
+  require("lv-utils").operatorfunc_scaffold_keys("multiselect_operatorfunc", "<M-s-a>")
+end
+map("n", "<M-S-v>", "<cmd>call v:lua.multiselect_all_operator()<cr>", sile)
 
 -- go to beginning and end of text object
-map("n", "[[", "vmo<esc>", sile)
-map("n", "]]", "vmo<esc>", sile)
+-- map("n", "[[", "vmo<esc>", sile)
+-- map("n", "]]", "vm<esc>", sile)
+function _G.gotobeg_operator()
+  require("lv-utils").operatorfunc_scaffold_keys("gotobeg_operatorfunc", "o<esc>")
+end
+function _G.gotoend_operator()
+  require("lv-utils").operatorfunc_scaffold_keys("gotoend_operatorfunc", "<esc>")
+end
+map("n", "[[", "<cmd>call v:lua.gotobeg_operator()<cr>", sile)
+map("n", "]]", "<cmd>call v:lua.gotoend_operator()<cr>", sile)
+
+-- Keymaps for easier access to 'ci' and 'di'
+local function quick_inside(key)
+  map("o", key, "i" .. key, {})
+end
+quick_inside "w"
+quick_inside "W"
+quick_inside "b"
+quick_inside "B"
+quick_inside "["
+quick_inside "("
+quick_inside "{"
+quick_inside '"'
+map("n", "r", '"_ci', {})
+-- map("n", "x", "di", {})
+-- map("n", "X", "x", nore)
+map("n", "<BS>", "X", nore)
+map("n", "<M-BS>", "x", nore)
+
+-- "better" end and beginning of line
+map("o", "H", "^", {}) -- do ^ first then 0
+map("o", "L", "$", {})
+-- map("n", "H", "^", {})
+map("n", "H", [[col('.') == match(getline('.'),'\S')+1 ? '0' : '^']], expr) -- do ^ first then 0
+map("n", "L", "$", {})
+
+-- map("n", "m-/", "")
+
+-- Free keys
+map("n", "C-q", "<NOP>", {})
+map("n", "C-n", "<NOP>", {})
+map("n", "C-p", "<NOP>", {})
+map("n", "C-o", "<NOP>", {})
+
+-- Select whole file
+map("o", "ie", ":<c-u>normal! mzggVG<cr>`z", nore)
+map("v", "ie", "gg0oG$", nore)

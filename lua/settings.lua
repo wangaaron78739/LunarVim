@@ -5,7 +5,6 @@ local opt = vim.opt
 ---  VIM ONLY COMMANDS  ---
 
 cmd "filetype plugin on"
-opt.inccommand = "nosplit"
 cmd "set iskeyword+=-"
 cmd "set sessionoptions+=globals"
 cmd "set whichwrap+=<,>,[,],h,l"
@@ -23,6 +22,7 @@ vim.cmd "hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828"
 -- https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim
 
 -- LuaFormatter off
+opt.inccommand = O.inc_subs -- Incremental substitution style
 opt.backspace = "indent,eol,start"
 opt.backup = false -- creates a backup file
 opt.clipboard = O.clipboard -- allows neovim to access the system clipboard
