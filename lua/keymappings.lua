@@ -286,7 +286,8 @@ map("n", "gV", "V'>o'<", nore)
 map("v", "gV", "<esc>V'>o", nore)
 
 local function undo_brkpt(key)
-  map("i", key, key .. "<c-g>u", nore)
+  -- map("i", key, key .. "<c-g>u", nore)
+  map("i", key, "<c-g>u" .. key, nore)
 end
 local undo_brkpts = {
   "<CR>",
