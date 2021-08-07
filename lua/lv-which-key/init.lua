@@ -48,7 +48,12 @@ local opts = {
 -- TODO support vim-sandwich in the which-key menus
 
 local mappings = {
-  [" "] = { "<cmd>Telescope commands<cr>", "Commands" },
+  -- [" "] = { "<cmd>Telescope commands<cr>", "Commands" },
+  [" "] = {
+    O.plugin.snap.active and "<cmd>Snap buffers<cr>" or "<cmd>Telescope buffers<cr>",
+    "Buffers",
+  },
+  ["<tab>"] = { "Tab mode" },
   [";"] = { "<cmd>Dashboard<CR>", "Dashboard" },
   ["/"] = { "<cmd>Telescope live_grep<cr>", "Global search" },
   -- ["/"] = { "<cmd>lua require('spectre').open()<cr>", "Global search" },
@@ -60,29 +65,24 @@ local mappings = {
     "<cmd>lua require('lv-kakmode').enter()<cr>",
     "Kakoune",
   },
-  w = { "<cmd>up<CR>", "Write" },
+  -- w = { "<cmd>up<CR>", "Write" },
+  w = { "<cmd>w<CR>", "Write" },
   c = { [[<cmd>lua require("functions").change_all_operator()<CR>]], "Change all "},
   o = {
     name = "Toggle window",
     f = { "<cmd>NvimTreeToggle<CR>", "File Sidebar" },
     u = { "<cmd>UndotreeToggle<CR>", "Undo tree" },
     r = { "<cmd>RnvimrToggle<cr>", "Ranger" },
-    q = { "<cmd>QuickFixToggle<cr>", "Ranger" },
+    q = { "<cmd>QuickFixToggle<cr>", "Quick fixes" },
     o = { "<cmd>!open '%:p:h'<CR>", "Open File Explorer" },
     v = { "<cmd>Vista nvim_lsp<cr>", "Vista" },
     -- ["v"] = {":Vista<CR>", "Vista"},
     m = { "<cmd>MinimapToggle<cr>", "Minimap" },
-
     b = { "<cmd>lua _G.ftopen('broot')<CR>", "Broot" },
     p = { "<cmd>lua _G.ftopen('python')<CR>", "Python" },
     M = { "<cmd>lua _G.ftopen('top')<CR>", "System Monitor" },
     S = { "<cmd>lua _G.ftopen('spt')<CR>", "Spotify" },
     t = { "<cmd>lua _G.ftopen('right')<CR>", "Terminal" },
-    o = { "<cmd>!open '%:p:h'<CR>", "Open File Explorer" },
-    v = { "<cmd>Vista nvim_lsp<cr>", "Vista" },
-    -- ["v"] = {":Vista<CR>", "Vista"},
-    m = { "<cmd>MinimapToggle<cr>", "Minimap" },
-    q = { "<cmd>QuickFixToggle<cr>", "Ranger" },
   },
   t = {
     name = "Terminals",

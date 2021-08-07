@@ -282,8 +282,8 @@ map("n", "<M-cr>", "O<esc>", nore)
 map("n", "Q", "@q", nore)
 
 -- Reselect in visual line
-map("n", "gV", "V'>o'<", nore)
-map("v", "gV", "<esc>V'>o", nore)
+-- map("n", "gV", "V'>o'<", nore)
+-- map("v", "gV", "<esc>V'>o", nore)
 
 local function undo_brkpt(key)
   -- map("i", key, key .. "<c-g>u", nore)
@@ -307,5 +307,10 @@ for _, v in ipairs(undo_brkpts) do
   undo_brkpt(v)
 end
 
+-- Go to multi insert from Visual mode
+map("v", "I", "<M-a>i", sile)
+map("v", "A", "<M-a>i", sile)
+
+-- go to beginning and end of text object
 map("n", "[[", "vmo<esc>", sile)
 map("n", "]]", "vmo<esc>", sile)
