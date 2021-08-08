@@ -114,6 +114,11 @@ noclobber("n", "D")
 noclobber("n", "C")
 map("v", "x", '"_d', nore)
 map("v", "r", '"_c', nore)
+
+-- Preserve cursor on yank in visual mode
+map("v", "y", "myy`y", nore)
+map("v", "<M-y>", "y", nore)
+
 -- Original paste for when 'nvim-anywise-reg.lua' is installed
 if O.plugin.anywise_reg.active then
   map("n", "<M-p>", "p", nore)
@@ -162,7 +167,7 @@ map("n", "<M-h>", "<c-v>h", sile)
 
 -- Charwise visual select line
 map("v", "v", "^og_", sile)
-map("v", "V", "0og_", sile)
+map("v", "V", "0o$", sile)
 
 -- Select last pasted/yanked text
 map("n", "g<C-v>", "`[v`]", nore)
@@ -233,9 +238,6 @@ map("n", "cp", "<Plug>TransposeCharacters", {})
 -- Yank till end of the line
 map("n", "Y", "yg_", nore)
 
--- charwise yank line
-map("n", "<m-y><m-y>", "^y$", nore)
-
 -- Go Back
 map("n", "gb", "<c-o>", nore)
 map("n", "GB", "<c-i>", nore)
@@ -247,12 +249,11 @@ map("n", "gcO", "O-<esc>gccA<BS>", sile)
 map("n", "gco", "o-<esc>gccA<BS>", sile)
 
 -- comment and copy
-map("v", "gy", '"zygvgc`>"zp`[', sile)
+map("v", "gy", '"z<M-y>gvgc`>"zp`[', sile)
 function _G.comment_copy_operator()
   require("lv-utils").operatorfunc_scaffoldV_keys("comment_copy_operatorfunc", "gy")
 end
 map("n", "gy", "<cmd>call v:lua.comment_copy_operator()<cr>", sile)
-map("n", "gyy", "Vgy", sile)
 -- map("v", "gjc", "gc", sile) -- Don't know how to implement this
 
 -- Select Jupyter Cell
@@ -322,9 +323,12 @@ map("n", "go", "i<CR><ESC>k:sil! keepp s/\v +$//<CR>:noh<CR>j^", nore)
 -- Quick activate macro
 map("n", "Q", "@q", nore)
 
--- Reselect in visual line
--- map("n", "gV", "V'>o'<", nore)
--- map("v", "gV", "<esc>V'>o", nore)
+-- Reselect visual linewise
+map("n", "gV", "'<V'>", nore)
+map("v", "gV", "<esc>'<V'>", nore)
+-- Reselect visual block wise
+map("n", "g<C-v>", "'<<C-v>'>", nore)
+map("v", "g<C-v>", "<esc>'<<C-v>'>", nore)
 
 local function undo_brkpt(key)
   -- map("i", key, key .. "<c-g>u", nore)
@@ -343,7 +347,7 @@ local undo_brkpts = {
   ")",
   "'",
   '"',
-  }
+}
 for _, v in ipairs(undo_brkpts) do
   undo_brkpt(v)
 end
@@ -415,3 +419,12 @@ map("n", "C-o", "<NOP>", {})
 -- Select whole file
 map("o", "ie", ":<c-u>normal! mzggVG<cr>`z", nore)
 map("v", "ie", "gg0oG$", nore)
+
+-- Operator for current line
+map("x", "o", "g_o^", nore)
+map("o", "o", ":normal vo<CR>", nore)
+map("x", "O", "$o0", nore)
+map("o", "O", ":normal vO<CR>", nore)
+
+-- Make change line (cc) honor indentation
+map("n", "cc", "^cg_", sile)
