@@ -287,6 +287,9 @@ end
 if O.plugin.symbol_outline.active then
   mappings["o"]["s"] = { "<cmd>SymbolsOutline<cr>", "Symbols Sidebar" }
 end
+if O.plugin.todo_comments.active then
+  mappings["o"]["T"] = { "<cmd>TodoTrouble<cr>", "Todos Sidebar" }
+end
 if O.plugin.trouble.active then
   mappings["d"]["t"] = { "<cmd>TroubleToggle<cr>", "Trouble" }
   mappings["d"]["d"] = {

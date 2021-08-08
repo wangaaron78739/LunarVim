@@ -2,9 +2,6 @@
 local sorters = require "telescope.sorters"
 local actions = require "telescope.actions"
 local functions = require "lv-telescope.functions"
--- if O.plugin.trouble.active then
---     local trouble = require("trouble.providers.telescope")
--- end
 -- Global remapping
 ------------------------------
 local rg = {
@@ -64,10 +61,9 @@ require("telescope").setup {
         ["<C-x>"] = actions.delete_buffer,
         ["<C-s>"] = actions.select_horizontal,
         ["<C-v>"] = actions.select_vertical,
-        ["<C-t>"] = actions.select_tab,
+        -- ["<C-t>"] = actions.select_tab,
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
-        -- ["<c-t>"] = trouble.open_with_trouble,
         ["<CR>"] = actions.select_default + actions.center,
         ["<S-up>"] = actions.preview_scrolling_up,
         ["<S-down>"] = actions.preview_scrolling_down,
@@ -80,11 +76,10 @@ require("telescope").setup {
       n = {
         ["j"] = actions.move_selection_next,
         ["k"] = actions.move_selection_previous,
-        -- ["<c-t>"] = trouble.open_with_trouble,
         ["<C-x>"] = actions.delete_buffer,
         ["<C-s>"] = actions.select_horizontal,
         ["<C-v>"] = actions.select_vertical,
-        ["<C-t>"] = actions.select_tab,
+        -- ["<C-t>"] = actions.select_tab,
         ["<S-up>"] = actions.preview_scrolling_up,
         ["<S-down>"] = actions.preview_scrolling_down,
         ["<C-up>"] = actions.preview_scrolling_up,
@@ -103,6 +98,8 @@ require("telescope").setup {
     "cmake",
   },
 }
+
+require("telescope").setup {}
 
 -- require'telescope'.load_extension('fzy_native')
 -- require'telescope'.load_extension('project')

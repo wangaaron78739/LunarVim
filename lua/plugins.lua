@@ -288,16 +288,28 @@ return require("packer").startup(function(use)
     config = function()
       -- TODO: move this to a separate file
       vim.cmd [[
-            autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * TroubleRefresh
+            autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * silent! TroubleRefresh
             ]]
 
       require("trouble").setup {
         -- your configuration comes here
         -- or leave it empty to use the default settings
-        -- refer to the configuration section below
         position = "right",
         auto_preview = false,
         hover = "h",
+      }
+
+      local trouble = require "trouble.providers.telescope"
+
+      local telescope = require "telescope"
+
+      telescope.setup {
+        defaults = {
+          mappings = {
+            i = { ["<c-t>"] = trouble.open_with_trouble },
+            n = { ["<c-t>"] = trouble.open_with_trouble },
+          },
+        },
       }
     end,
   }
