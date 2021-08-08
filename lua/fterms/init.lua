@@ -41,14 +41,22 @@ function _G.ftopen(name)
   M[name]:open()
 end
 
-require("lv-utils").define_augroups {
-  _close_fterm = {
-    { "FileType", "FTerm", "nnoremap <silent> <buffer> q <CMD>q<CR>" },
-    -- { "FileType", "FTerm", "tnoremap <silent> <buffer> <esc> <nop>" },
-    -- { "FileType", "FTerm", "tnoremap <silent> <buffer> <M-e> <C-\\><C-n>" },
-    { "FileType", "FTerm", "tnoremap <silent> <buffer> <C-h> <C-\\><C-n><CMD>q<CR>" },
-    { "FileType", "FTerm", "tnoremap <silent> <buffer> <C-j> <C-\\><C-n><CMD>q<CR>" },
-    { "FileType", "FTerm", "tnoremap <silent> <buffer> <C-k> <C-\\><C-n><CMD>q<CR>" },
-    { "FileType", "FTerm", "tnoremap <silent> <buffer> <C-l> <C-\\><C-n><CMD>q<CR>" },
-  },
-}
+function M.setup()
+  vim.api.nvim_set_keymap("n", "<M-i>", '<CMD>lua require("FTerm").toggle()<CR>', {})
+  vim.api.nvim_set_keymap("t", "<M-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', {})
+  -- map("t", "<Esc>", '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', nore)
+
+  require("lv-utils").define_augroups {
+    _close_fterm = {
+      { "FileType", "FTerm", "nnoremap <silent> <buffer> q <CMD>q<CR>" },
+      -- { "FileType", "FTerm", "tnoremap <silent> <buffer> <esc> <nop>" },
+      -- { "FileType", "FTerm", "tnoremap <silent> <buffer> <M-e> <C-\\><C-n>" },
+      { "FileType", "FTerm", "tnoremap <silent> <buffer> <C-h> <C-\\><C-n><CMD>q<CR>" },
+      { "FileType", "FTerm", "tnoremap <silent> <buffer> <C-j> <C-\\><C-n><CMD>q<CR>" },
+      { "FileType", "FTerm", "tnoremap <silent> <buffer> <C-k> <C-\\><C-n><CMD>q<CR>" },
+      { "FileType", "FTerm", "tnoremap <silent> <buffer> <C-l> <C-\\><C-n><CMD>q<CR>" },
+    },
+  }
+end
+
+return M

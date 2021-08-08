@@ -259,11 +259,8 @@ map("n", "gy", "<cmd>call v:lua.comment_copy_operator()<cr>", sile)
 -- Select Jupyter Cell
 map("v", "ic", [[/#+\s*%+<cr>oN]], nore)
 
--- Toggle FTerm
-map("n", "<M-i>", '<CMD>lua require("FTerm").toggle()<CR>', {})
-map("t", "<M-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', {})
+-- Neoterm helper
 map("n", "<M-t>", ":T ", {})
--- map("t", "<Esc>", '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', nore)
 
 -- Spell checking
 map("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u]]", nore)

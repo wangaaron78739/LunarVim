@@ -330,7 +330,7 @@ return require("packer").startup(function(use)
     "numToStr/FTerm.nvim",
     event = "BufWinEnter",
     config = function()
-      require "fterms"
+      require("fterms").setup()
     end,
     disable = not O.plugin.floatterm.active,
   }
