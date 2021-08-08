@@ -297,15 +297,9 @@ map("v", "K", "<esc><cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>", {})
 -- map("n", "gf", "<cmd>lua vim.lsp.buf.formatting()<cr>", nore)
 map("n", "gf", "<cmd>Neoformat<cr>", nore)
 map("n", "==", "<cmd>Neoformat<cr>", nore)
--- Format a range -- TODO: can do with Neoformat?
--- vim.api.nvim_set_keymap("n", "gm", [[<cmd>lua require("lsp.functions").format_range_operator()<CR>]], nore)
-map("n", "gm", [[<cmd>lua require("lv-neoformat").format_range_operator()<CR>]], nore)
-map("n", "=", [[<cmd>lua require("lv-neoformat").format_range_operator()<CR>]], nore)
 
-if O.plugin.ts_hintobjects.active then
-  map("o", "m", [[:<C-U>lua require('tsht').nodes()<CR>]], sile)
-  map("v", "m", [[:lua require('tsht').nodes()<CR>]], nore)
-end
+-- Format a range using lsp
+-- vim.api.nvim_set_keymap("n", "gm", [[<cmd>lua require("lsp.functions").format_range_operator()<CR>]], nore)
 
 -- TODO: Use more standard regex syntax
 -- map("n", "/", "/\v", nore)
