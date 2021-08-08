@@ -802,6 +802,7 @@ return require("packer").startup(function(use)
   }
 
   -- Autoformat everything
+  -- TODO: change to null-ls or formatter.nvim (steal from lunarvim)
   use {
     "sbdchd/neoformat",
     config = function()
