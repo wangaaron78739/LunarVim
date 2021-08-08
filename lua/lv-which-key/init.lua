@@ -104,6 +104,7 @@ local mappings = {
     w = { "<cmd>setlocal wrap!<CR>", "Wrap" },
     s = { "<cmd>setlocal spell!<CR>", "Spellcheck" },
     c = { "<cmd>setlocal cursorcolumn!<CR>", "Cursor column" },
+    g = { "<cmd>setlocal signcolumn!<CR>", "Cursor column" },
     l = { "<cmd>setlocal cursorline!<CR>", "Cursor line" },
     h = { "<cmd>setlocal hlsearch<CR>", "hlsearch" },
     -- TODO: Toggle comment visibility
@@ -200,11 +201,6 @@ local mappings = {
     r = { "<cmd>lua Rename.rename()<CR>", "Rename" },
     R = { "<cmd>Telescope lsp_references<cr>", "References" },
     t = { "<cmd>lua vim.lsp.buf.type_definition() <cr>", "Type Definition" },
-    s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
-    S = {
-      "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
-      "Workspace Symbols",
-    },
     T = { ":TSConfigInfo<cr>", "Info" },
   },
   s = {
@@ -322,14 +318,7 @@ if O.plugin.zen.active then
   }
 end
 if O.plugin.telescope_project.active then
-  -- open projects
-  vim.api.nvim_set_keymap(
-    "n",
-    "<leader>p",
-    ":lua require'telescope'.extensions.project.project{}<CR>",
-    { noremap = true, silent = true }
-  )
-  mappings["p"] = "Projects"
+  mappings["p"] = { "<cmd>lua require'telescope'.extensions.project.project{}<CR>", "Projects" }
 end
 if O.plugin.spectre.active then
   mappings["rf"] = {
@@ -339,8 +328,7 @@ if O.plugin.spectre.active then
   mappings["rp"] = { "<cmd>lua require('spectre').open()<cr>", "Project" }
 end
 if O.plugin.lazygit.active then
-  vim.api.nvim_set_keymap("n", "<leader>gg", ":LazyGit<CR>", { noremap = true, silent = true })
-  mappings["gg"] = "LazyGit"
+  mappings["gg"] = { "<cmd>LazyGit<CR>", "LazyGit" }
 end
 if O.lang.latex.active then
   mappings["L"] = {
@@ -402,7 +390,7 @@ end
 
 -- if O.plugin.visual_multi.active then
 local ops = { mode = "n" }
-wk.register({ [vim.g.VM_leader] = "which_key_ignore" }, ops)
+wk.register({ [vim.g.VM_leader] = "which_key_ignore", ["gy"] = "which_key_ignore", ["gyy"] = "which_key_ignore" }, ops)
 -- end
 
 -- FIXME: duplicate entries for some of the operators
