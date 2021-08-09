@@ -264,6 +264,7 @@ map("n", "gy", "<cmd>call v:lua.comment_copy_operator()<cr>", sile)
 -- map("v", "gjc", "gc", sile) -- Don't know how to implement this
 
 -- Select Jupyter Cell
+-- Change to onoremap
 map("v", "ic", [[/#+\s*%+<cr>oN]], nore)
 
 -- Neoterm helper
@@ -318,12 +319,17 @@ map("n", "go", "i<CR><ESC>k:sil! keepp s/\v +$//<CR>:noh<CR>j^", nore)
 -- Quick activate macro
 map("n", "Q", "@q", nore)
 
+-- Use reselect as an operator
+map("o", "gv", ":normal gv<CR>", {})
+
 -- Reselect visual linewise
 map("n", "gV", "'<V'>", nore)
 map("v", "gV", "<esc>'<V'>", nore)
+map("o", "gV", ":normal gV<CR>", nore)
 -- Reselect visual block wise
 map("n", "g<C-v>", "'<<C-v>'>", nore)
 map("v", "g<C-v>", "<esc>'<<C-v>'>", nore)
+map("o", "g<C-v>", ":normal g<C-v><CR>", nore)
 
 local function undo_brkpt(key)
   -- map("i", key, key .. "<c-g>u", nore)
