@@ -88,8 +88,8 @@ map("x", "K", ":move '<-2<CR>gv=gv", nore)
 map("x", "J", ":move '>+1<CR>gv=gv", nore)
 
 -- better indenting
-map("n", "<", "v<", nore)
-map("n", ">", "v>", nore)
+map("n", "<", "<<", { silent = true, noremap = true, nowait = true })
+map("n", ">", ">>", { silent = true, noremap = true, nowait = true })
 map("n", "g<", "<", nore)
 map("n", "g>", ">", nore)
 map("v", "<", "<gv", nore)
@@ -173,8 +173,8 @@ map("v", "<M-h>", "h", sile)
 map("n", "<M-h>", "<c-v>h", sile)
 
 -- Charwise visual select line
-map("v", "v", "^og_", sile)
-map("v", "V", "0o$", sile)
+map("v", "v", "^og_", nore)
+map("v", "V", "0o$", nore)
 
 -- Select last pasted/yanked text
 map("n", "g<C-v>", "`[v`]", nore)
@@ -199,10 +199,10 @@ map("i", "<S-TAB>", '("\\<C-p>")', expr)
 -- map("n", "<C-M-k>", ":cprev<CR>", nore)
 
 function _G.change_all_operator()
-  require("lv-utils").operatorfunc_scaffold_keys("change_all_operatorfunc", [["zy:%s/<C-r>z//g<Left><Left>]])
+  require("lv-utils").operatorfunc_scaffold_keys("change_all_operatorfunc", [["z<M-y>:%s/<C-r>z//g<Left><Left>]])
 end
 function _G.search_for_operator()
-  require("lv-utils").operatorfunc_scaffold_keys("search_for_operatorfunc", [["zy/<C-r>z<CR>]])
+  require("lv-utils").operatorfunc_scaffold_keys("search_for_operatorfunc", [["z<M-y>/<C-r>z<CR>]])
 end
 map("n", "<leader>c", [[<cmd>call v:lua.change_all_operator()<CR>]], {}) -- Search and replace textobject
 map("n", "<M-s>", [[<cmd>call v:lua.search_for_operator()<CR>]], {}) -- Search textobject
@@ -217,15 +217,17 @@ map("n", "+", [[/<C-R>+<CR>]], {}) -- Search for the current yank register
 -- Search and replace
 map("n", "<leader>sr", [[:%s///g<Left><Left><Left>]], {})
 -- Search and replace the current selection
-map("v", "<leader>sr", [["zy:%s/<C-r>z//g<Left><Left>]], {})
+map("v", "<leader>sr", [["z<M-y>:%s/<C-r>z//g<Left><Left>]], {})
+
+-- Visual mode search
+map("v", "*", '"z<M-y>/<C-R>z<CR>gn', {}) -- Search for the current selection
 
 -- Start search and replace from search
 map("c", "<M-r>", [[<cr>:%s/<C-R>///g<Left><Left>]], {})
 
--- Visual mode search
-map("v", "*", '"ay/<C-R>a<CR>gn', {}) -- Search for the current selection
-map("v", "n", "<esc>ngn", {}) -- Continue the search and keep selecting (equivalent ish to doing `gn` in normal)
-map("v", "N", "<esc>NgN", {}) -- Continue the search and keep selecting (equivalent ish to doing `gn` in normal)
+-- Continue the search and keep selecting (equivalent ish to doing `gn` in normal)
+map("v", "n", "<esc>ngn", {})
+map("v", "N", "<esc>NgN", {})
 
 -- Double Escape key clears search and spelling highlights
 -- map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell | call minimap#vim#ClearColorSearch()<ESC>", nore)
@@ -396,7 +398,7 @@ quick_inside "["
 quick_inside "("
 quick_inside "{"
 quick_inside '"'
-map("n", "r", '"_ci', {})
+-- map("n", "r", '"_ci', {})
 -- map("n", "x", "di", {})
 -- map("n", "X", "x", nore)
 map("n", "<BS>", "X", nore)
@@ -422,10 +424,10 @@ map("o", "ie", ":<c-u>normal! mzggVG<cr>`z", nore)
 map("v", "ie", "gg0oG$", nore)
 
 -- Operator for current line
-map("x", "o", "g_o^", nore)
-map("o", "o", ":normal vo<CR>", nore)
-map("x", "O", "$o0", nore)
-map("o", "O", ":normal vO<CR>", nore)
+map("x", "il", "g_o^", nore)
+map("o", "il", ":normal vil<CR>", nore)
+map("x", "al", "$o0", nore)
+map("o", "al", ":normal val<CR>", nore)
 
 -- Make change line (cc) honor indentation
 map("n", "cc", "^cg_", sile)
