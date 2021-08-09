@@ -429,3 +429,8 @@ map("o", "O", ":normal vO<CR>", nore)
 
 -- Make change line (cc) honor indentation
 map("n", "cc", "^cg_", sile)
+
+if O.plugin.zen.active then
+  vim.api.nvim_set_keymap("n", "zz", "<cmd>TZFocus<CR>", { silent = true })
+  vim.api.nvim_set_keymap("n", "zm", "<cmd>TZMinimalist<CR>", { silent = true })
+end
