@@ -121,14 +121,20 @@ _G.Rename = {
     local cword = vim.fn.expand "<cword>"
     local buf = vim.api.nvim_create_buf(false, true)
     local win = vim.api.nvim_open_win(buf, true, opts)
-    local dorename = string.format("<cmd>lua Rename.dorename(%d)<CR>", win)
+    local dorename = string.format("<cmd>lua Rename.dorename(%d, %d)<CR>", win)
+    local dontrename = string.format("<cmd>lua Rename.close_rename(%d, %d)<CR>", win)
 
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, { cword })
     vim.api.nvim_buf_set_keymap(buf, "i", "<CR>", dorename, { silent = true })
+    vim.api.nvim_buf_set_keymap(buf, "n", "<ESC>", dontrename, { silent = true })
   end,
-  dorename = function()
-    local new_name = vim.trim(vim.fn.getline ".")
+  close_rename = function(win, buf)
+    vim.api.nvim_buf_delete(buf, { force = true })
     vim.api.nvim_win_close(win, true)
+  end,
+  dorename = function(win, buf)
+    local new_name = vim.trim(vim.fn.getline ".")
+    _G.Rename.close_rename(win, buf)
     vim.lsp.buf.rename(new_name)
   end,
 }
