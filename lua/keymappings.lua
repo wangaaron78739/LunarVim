@@ -300,11 +300,8 @@ map("n", "gh", "<cmd>lua vim.lsp.buf.hover()<cr>", sile)
 map("n", "K", "<cmd>lua vim.lsp.buf.code_action()<cr>", {})
 map("v", "K", "<esc><cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>", {})
 
--- Format buffer -- TODO: switch between neoformat and lsp
+-- Format buffer using lsp
 -- map("n", "gf", "<cmd>lua vim.lsp.buf.formatting()<cr>", nore)
-map("n", "gf", "<cmd>Neoformat<cr>", nore)
-map("n", "==", "<cmd>Neoformat<cr>", nore)
-
 -- Format a range using lsp
 -- vim.api.nvim_set_keymap("n", "gm", [[<cmd>lua require("lsp.functions").format_range_operator()<CR>]], nore)
 
