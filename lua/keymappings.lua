@@ -3,6 +3,16 @@ local sile = { silent = true }
 local nore = { noremap = true, silent = true }
 local expr = { noremap = true, silent = true, expr = true }
 
+function silemap(mode, from, to)
+  map(mode, from, to, sile)
+end
+function noremap(mode, from, to)
+  map(mode, from, to, nore)
+end
+function exprmap(mode, from, to)
+  map(mode, from, to, expr)
+end
+
 -- Set leader
 if O.leader_key == " " or O.leader_key == "space" then
   map("n", "<Space>", "<NOP>", nore)
@@ -42,8 +52,6 @@ vim.cmd [[
 map("n", "<C-s>", "<esc><cmd>write<cr>", sile)
 map("v", "<C-s>", "<esc><cmd>write<cr>", sile)
 map("i", "<C-s>", "<esc><cmd>write<cr>", sile)
-map("i", "<C-f>", "<esc>/\v", sile)
-map("n", "<C-f>", "<esc>/\v", sile)
 map("i", "<C-v>", "<C-R>+", sile)
 
 -- better window movement -- tmux_navigator supplies these if installed
@@ -429,10 +437,8 @@ map("o", "il", ":normal vil<CR>", nore)
 map("x", "al", "$o0", nore)
 map("o", "al", ":normal val<CR>", nore)
 
--- Make change line (cc) honor indentation
+-- Make change line (cc) preserve indentation
 map("n", "cc", "^cg_", sile)
 
-if O.plugin.zen.active then
-  vim.api.nvim_set_keymap("n", "zz", "<cmd>TZFocus<CR>", { silent = true })
-  vim.api.nvim_set_keymap("n", "zm", "<cmd>TZMinimalist<CR>", { silent = true })
-end
+require("lv-hop").keymaps()
+require("lv-zen").keymaps()

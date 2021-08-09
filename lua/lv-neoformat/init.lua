@@ -38,20 +38,18 @@ M.config = function()
     }
   end
 
-  vim.api.nvim_set_keymap(
+  noremap(
     "n",
     "gm",
-    [[<cmd>lua require("lv-neoformat").format_range_operator()<CR>]],
-    { noremap = true, silent = true }
+    [[<cmd>lua require("lv-neoformat").format_range_operator()<CR>]]
   )
-  vim.api.nvim_set_keymap(
+  noremap(
     "n",
     "=",
-    [[<cmd>lua require("lv-neoformat").format_range_operator()<CR>]],
-    { noremap = true, silent = true }
+    [[<cmd>lua require("lv-neoformat").format_range_operator()<CR>]]
   )
-  vim.api.nvim_set_keymap("n", "gf", "<cmd>Neoformat<cr>", { noremap = true, silent = true })
-  vim.api.nvim_set_keymap("n", "==", "<cmd>Neoformat<cr>", { noremap = true, silent = true })
+  noremap("n", "gf", "<cmd>Neoformat<cr>")
+  noremap("n", "==", "<cmd>Neoformat<cr>")
 end
 
 M.format_range_operator = function()

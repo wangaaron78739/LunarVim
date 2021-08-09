@@ -82,6 +82,7 @@ O = {
     -- The below are for treesitter-textobjects plugin
     textobj_prefixes = {
       -- goto_next = "]", -- Go to next
+      -- goto_next = "'", -- Go to next
       goto_next = "&", -- Go to next
       goto_previous = "[", -- Go to previous
       inner = "i", -- Select inside

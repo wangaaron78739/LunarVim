@@ -1,9 +1,9 @@
 local M = {}
 
 M.config = function()
-  vim.api.nvim_set_keymap("n", "<TAB>", ":BufferNext<CR>", { noremap = true, silent = true })
-  vim.api.nvim_set_keymap("n", "<S-TAB>", ":BufferPrevious<CR>", { noremap = true, silent = true })
-  vim.api.nvim_set_keymap("n", "<S-x>", ":BufferClose<CR>", { noremap = true, silent = true })
+  noremap("n", "<TAB>", ":BufferNext<CR>")
+  noremap("n", "<S-TAB>", ":BufferPrevious<CR>")
+  noremap("n", "<S-x>", ":BufferClose<CR>")
 end
 
 return M

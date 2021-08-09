@@ -122,10 +122,6 @@ return require("packer").startup(function(use)
     "terrortylor/nvim-comment",
     config = function()
       require("nvim_comment").setup()
-      --  -- Fix gcc keymapping -- Doesn't work with lazy load?
-      -- FIXME: why doesn't this work, which-key is so weird
-      --vim.api.nvim_set_keymap("n", "gc", "<cmd>kommentary_motion_default<cr>", { noremap = true, silent = true })
-      --vim.api.nvim_set_keymap("n", "gcc", "<cmd>kommentary_line_default<cr>", { noremap = true, silent = true })
     end,
     event = "BufRead",
     -- event = "BufWinEnter",
@@ -768,10 +764,8 @@ return require("packer").startup(function(use)
     config = function()
       require("tsht").config.hint_keys = O.treesitter.hint_labels -- Requires https://github.com/mfussenegger/nvim-ts-hint-textobject/pull/2
 
-      if O.plugin.ts_hintobjects.active then
-        vim.api.nvim_set_keymap("o", "m", [[:<C-U>lua require('tsht').nodes()<CR>]], { silent = true })
-        vim.api.nvim_set_keymap("v", "m", [[:lua require('tsht').nodes()<CR>]], { silent = true })
-      end
+      silemap("o", "m", [[:<C-U>lua require('tsht').nodes()<CR>]])
+      silemap("v", "m", [[:lua require('tsht').nodes()<CR>]])
     end,
     event = "BufRead",
     disable = not O.plugin.ts_hintobjects.active,
