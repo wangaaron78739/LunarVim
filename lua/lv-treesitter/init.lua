@@ -12,7 +12,7 @@ local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
 
 parser_config.just = {
   install_info = {
-    url = "~/dev/tree-sitter-just", -- local path or git repo
+    url = "~/.local/share/nvim/site/pack/tree-sitter-just", -- local path or git repo
     files = { "src/parser.c", "src/scanner.cc" },
   },
   -- filetype = "just", -- if filetype does not agrees with parser name
