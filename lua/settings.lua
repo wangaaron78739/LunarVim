@@ -77,4 +77,5 @@ opt.autowriteall = true -- auto write on focus lost
 opt.sidescroll = 1
 opt.sidescrolloff = 10
 opt.listchars = { extends = '>', precedes = '<', trail = '_'}
+vim.g.python3_host_prog = O.python_interp
 -- LuaFormatter on

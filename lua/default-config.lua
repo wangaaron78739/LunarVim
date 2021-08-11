@@ -72,6 +72,7 @@ O = {
       debounce_text_changes = 150,
     },
   },
+  python_interp = "/usr/bin/python3.9", -- TODO: make a venv for this
   -- @usage pass a table with your desired languages
   treesitter = {
     ensure_installed = "all",
@@ -175,6 +176,7 @@ O = {
     surround = { active = enable_plugins_by_default }, -- Uses vim-sandwhich
     fzf = { active = enable_plugins_by_default },
     slime = { active = enable_plugins_by_default },
+    magma = { active = enable_plugins_by_default },
     bullets = { active = enable_plugins_by_default },
     vista = { active = enable_plugins_by_default },
     startuptime = { active = enable_plugins_by_default },

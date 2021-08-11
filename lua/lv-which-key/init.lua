@@ -354,6 +354,13 @@ if O.lushmode then
     q = { ":LushRunQuickstart<cr>", "Lush Quickstart" },
   }
 end
+if O.plugin.magma.active then
+  mappings["to"] = {
+    "<CMD>MagmaShowOutput<CR>",
+    "Magma Output",
+  }
+  mappings["tm"] = { "<CMD>MagmaInit<CR>", "Magma Init" }
+end
 
 local wk = require "which-key"
 wk.register(mappings, opts)

@@ -661,6 +661,21 @@ return require("packer").startup(function(use)
       "SlimeConfig",
     },
   }
+  -- https://github.com/dccsillag/magma-nvim might be better
+  use {
+    "dccsillag/magma-nvim",
+    config = function()
+      local remap = vim.api.nvim_set_keymap
+      remap("n", "gx", "nvim_exec('MagmaEvaluateOperator', v:true)", { expr = true, silent = true })
+      remap("v", "gx", ":<C-u>MagmaEvaluateVisual<CR>", { silent = true })
+      remap("n", "gxx", "<cmd>MagmaEvaluateLine<CR>", { silent = true })
+      vim.g.magma_automatically_open_output = false
+      -- TODO: add autocommands to initialize the kernel?
+    end,
+    run = ":UpdateRemotePlugins",
+    -- python3.9 -m pip install cairosvg pnglatex jupyter_client ipython ueberzug pillow
+    ft = { "python", "julia" },
+  }
 
   -- Better neovim terminal
   use {
