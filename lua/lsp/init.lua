@@ -79,16 +79,14 @@ end
 lsp_config.diag_prev = function()
   vim.lsp.diagnostic.goto_prev { popup_opts = { border = O.lsp.border } }
 end
--- TODO: figure out how to floating window the code actions
--- vim.lsp.handlers["textDocument/codeAction"] = vim.lsp.with(vim.lsp.handlers.codeAction, {
---   border = O.lsp.border,
--- })
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = O.lsp.border,
 })
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
   border = O.lsp.border,
 })
+-- vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
+-- vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
 
 if O.document_highlight then
   function lsp_config.common_on_attach(client, bufnr)
@@ -121,8 +119,8 @@ _G.Rename = {
     local cword = vim.fn.expand "<cword>"
     local buf = vim.api.nvim_create_buf(false, true)
     local win = vim.api.nvim_open_win(buf, true, opts)
-    local dorename = string.format("<cmd>lua Rename.dorename(%d, %d)<CR>", win)
-    local dontrename = string.format("<cmd>lua Rename.close_rename(%d, %d)<CR>", win)
+    local dorename = string.format("<cmd>lua Rename.dorename(%d, %d)<CR>", win, buf)
+    local dontrename = string.format("<cmd>lua Rename.close_rename(%d, %d)<CR>", win, buf)
 
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, { cword })
     vim.api.nvim_buf_set_keymap(buf, "i", "<CR>", dorename, { silent = true })
