@@ -25,6 +25,7 @@ local diagnostics = {
   signs = true,
   underline = true,
   severity_sort = true,
+  update_in_insert = true,
 }
 local lsp_border = "single"
 
