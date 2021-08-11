@@ -52,7 +52,7 @@ vim.cmd [[
 map("n", "<C-s>", "<esc><cmd>write<cr>", sile)
 map("v", "<C-s>", "<esc><cmd>write<cr>", sile)
 map("i", "<C-s>", "<esc><cmd>write<cr>", sile)
-map("i", "<C-v>", "<C-R>+", sile)
+-- map("i", "<C-v>", "<C-R>+", sile)
 
 -- better window movement -- tmux_navigator supplies these if installed
 if not O.plugin.tmux_navigator.active then

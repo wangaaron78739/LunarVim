@@ -87,10 +87,11 @@ local mappings = {
     name = "Terminals",
     e = "Neoterm automap",
     -- TODO: Slime commands or replace slime with neoterm
-    t = { "<cmd>Ttoggle<CR>", "Terminal" },
+    t = { "<cmd>Ttoggle<CR>", "Neoterm" },
     r = { "<cmd>TREPLSetTerm<CR> ", "Neoterm set repl..." },
     l = { "<cmd>Tls<CR>", "Neoterm list" },
-    m = { ":Tmap ", "Neoterm map a command" },
+    s = { ":T ", "Neoterm run" },
+    -- m = { ":Tmap ", "Neoterm map a command" },
     b = { "<cmd>lua _G.ftopen('broot')<CR>", "Broot" },
     p = { "<cmd>lua _G.ftopen('python')<CR>", "Python" },
     M = { "<cmd>lua _G.ftopen('top')<CR>", "System Monitor" },

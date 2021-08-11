@@ -840,8 +840,6 @@ return require("packer").startup(function(use)
     config = function()
       require("lv-neoformat").config()
     end,
-    -- event = "BufRead",
-    event = "BufWritePre",
     cmd = "Neoformat",
   }
 
