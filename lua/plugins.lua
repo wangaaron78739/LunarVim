@@ -166,7 +166,7 @@ return require("packer").startup(function(use)
   -- Enhanced increment/decrement
   use {
     "monaqa/dial.nvim",
-    cmd = { "DialIncrement", "DialDecrement" },
+    event = "BufRead",
     config = function()
       require("lv-dial").config()
     end,

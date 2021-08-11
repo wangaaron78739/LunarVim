@@ -442,3 +442,4 @@ map("n", "cc", "^cg_", sile)
 
 require("lv-hop").keymaps()
 require("lv-zen").keymaps()
+require("lv-dial").keymaps()
