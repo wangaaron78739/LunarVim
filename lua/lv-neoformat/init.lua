@@ -37,7 +37,16 @@ M.config = function()
       },
     }
   end
+end
 
+M.format_range_operator = function()
+  require("lv-utils").operatorfunc_scaffold("format_range_operatorfunc", true, function()
+    vim.cmd "Neoformat"
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, true, true), "n", false) -- Exit visual mode
+  end)
+end
+
+M.keymaps = function ()
   noremap(
     "n",
     "gm",
@@ -50,13 +59,6 @@ M.config = function()
   )
   noremap("n", "gf", "<cmd>Neoformat<cr>")
   noremap("n", "==", "<cmd>Neoformat<cr>")
-end
-
-M.format_range_operator = function()
-  require("lv-utils").operatorfunc_scaffold("format_range_operatorfunc", true, function()
-    vim.cmd "Neoformat"
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, true, true), "n", false) -- Exit visual mode
-  end)
 end
 
 return M
