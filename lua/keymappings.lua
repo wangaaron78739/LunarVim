@@ -440,6 +440,10 @@ map("o", "al", ":normal val<CR>", nore)
 -- Make change line (cc) preserve indentation
 map("n", "cc", "^cg_", sile)
 
+-- add j and k with count to jumplist
+map("n", "j", [[(v:count > 1 ? "m'" . v:count : '') . 'j']], expr)
+map("n", "k", [[(v:count > 1 ? "m'" . v:count : '') . 'k']], expr)
+
 require("lv-hop").keymaps()
 require("lv-zen").keymaps()
 require("lv-dial").keymaps()
