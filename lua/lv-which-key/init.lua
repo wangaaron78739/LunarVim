@@ -97,7 +97,14 @@ local mappings = {
     S = { "<cmd>lua _G.ftopen('spt')<CR>", "Spotify" },
     -- t = { "<cmd>lua _G.ftopen('right')<CR>", "Terminal" },
     -- t = { "<cmd>lua require'FTerm'.toggle()<CR>", "Terminal" },
-    s = { ":T ", "Run cmd in" },
+  },
+  x = {
+    name = "Execute",
+    -- m = "Magma",
+    -- mm = "Magma Line",
+    -- s = "Slime",
+    s = "Slime Line",
+    -- ss = "Slime Line",
   },
   T = {
     name = "Toggle Opts",

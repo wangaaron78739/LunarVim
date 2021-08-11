@@ -107,7 +107,11 @@ vim.g.UltiSnipsExpandTrigger = "<f5>"
 -- vim.g.UltiSnipsJumpForwardTrigger="<c-j>"
 -- vim.g.UltiSnipsJumpBackwardTrigger="<c-k>"
 
-vim.g.slime_target = "neovim"
+-- TODO: detect kitty or fallback to neovim
+vim.g.slime_target = O.plugin.slime.target
+vim.g.slime_no_mappings = true
+-- Fill in default config here somehow
+-- let g:slime_default_config = {"socket_name": "default", "target_pane": "1"}
 
 vim.g.gitblame_enabled = 0
 

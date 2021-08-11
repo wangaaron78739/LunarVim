@@ -175,7 +175,7 @@ O = {
     },
     surround = { active = enable_plugins_by_default }, -- Uses vim-sandwhich
     fzf = { active = enable_plugins_by_default },
-    slime = { active = enable_plugins_by_default },
+    slime = { active = enable_plugins_by_default, target = "kitty" },
     magma = { active = enable_plugins_by_default },
     bullets = { active = enable_plugins_by_default },
     vista = { active = enable_plugins_by_default },

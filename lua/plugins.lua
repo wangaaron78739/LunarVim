@@ -654,9 +654,15 @@ return require("packer").startup(function(use)
   use {
     "jpalardy/vim-slime",
     disable = not O.plugin.slime.active,
+    config = function()
+      local remap = vim.api.nvim_set_keymap
+      -- remap("n", "<leader>xs", ":MagmaEvaluateOperator<CR>", { expr = true, silent = true })
+      remap("v", "<leader>xs", ":<C-u>SlimeSend<CR>", { silent = true })
+      remap("n", "<leader>xss", "<cmd>SlimeSendCurrentLine<CR>", { silent = true })
+    end,
     cmd = {
       "SlimeSend",
-      "SlimeSend0",
+      "SlimeSend1",
       "SlimeSendCurrentLine",
       "SlimeConfig",
     },
