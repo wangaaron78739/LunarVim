@@ -662,8 +662,8 @@ return require("packer").startup(function(use)
     config = function()
       local remap = vim.api.nvim_set_keymap
       -- remap("n", "<leader>xs", ":MagmaEvaluateOperator<CR>", { expr = true, silent = true })
-      remap("v", "<leader>xs", ":<C-u>SlimeSend<CR>", { silent = true })
-      remap("n", "<leader>xss", "<cmd>SlimeSendCurrentLine<CR>", { silent = true })
+      remap("v", "<leader>ts", ":<C-u>SlimeSend<CR>", { silent = true })
+      remap("n", "<leader>tss", "<cmd>SlimeSendCurrentLine<CR>", { silent = true })
     end,
     cmd = {
       "SlimeSend",
@@ -691,7 +691,9 @@ return require("packer").startup(function(use)
   -- Better neovim terminal
   use {
     "kassio/neoterm",
-    config = "require('lv-neoterm')",
+    config = function()
+      require("lv-neoterm").config()
+    end,
     cmd = { "T", "Tmap", "Tnew", "Ttoggle", "Topen" },
     keys = { "gx", "gxx" },
   }

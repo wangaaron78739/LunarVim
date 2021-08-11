@@ -277,9 +277,6 @@ map("n", "gy", "<cmd>call v:lua.comment_copy_operator()<cr>", sile)
 -- Change to onoremap
 map("v", "ic", [[/#+\s*%+<cr>oN]], nore)
 
--- Neoterm helper
-map("n", "<M-t>", ":T ", {})
-
 -- Spell checking
 map("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u]]", nore)
 
@@ -447,4 +444,5 @@ map("n", "k", [[(v:count > 1 ? "m'" . v:count : '') . 'k']], expr)
 require("lv-hop").keymaps()
 require("lv-zen").keymaps()
 require("lv-dial").keymaps()
+require("lv-neoterm").keymaps()
 require("lv-neoformat").keymaps()
