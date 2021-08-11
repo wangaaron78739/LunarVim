@@ -82,7 +82,7 @@ M.config = function()
       return t "<Tab>"
     else
       -- return vim.fn["compe#complete"]()
-      return t "<Cmd>Tabout<CR>"
+      return t "<Plug>(Tabout)"
       -- return vim.fn["compe#complete"]()
     end
   end
@@ -94,7 +94,7 @@ M.config = function()
       return t "<Plug>(vsnip-jump-prev)"
     else
       -- return t "<S-Tab>"
-      return t "<Cmd>TaboutBack<CR>"
+      return t "<Plug>(TaboutBack)"
     end
   end
 
