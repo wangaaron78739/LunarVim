@@ -1,3 +1,5 @@
+nvim := 'nvim'
+
 # This is just here to handle empty `just` invocations
 @_default:
     just --list
@@ -21,36 +23,36 @@ install:
     cargo install stylua
     git remote add upstream https://github.com/ChristianChiarulli/LunarVim.git || true
     cp ./utils/efm-config.yaml ~/.config/efm-langserver/config.yaml
-    nvim # Run once to install packer and stuff
-    nvim +PackerSync # Run again to install the plugins
+    {{nvim}} # Run once to install packer and stuff
+    {{nvim}} +PackerSync # Run again to install the plugins
 
 # Install lsp that I want
 lsps:
-    nvim +'LspInstall efm'
-    nvim +'LspInstall rust'
-    nvim +'LspInstall lua'
-    nvim +'LspInstall python'
-    nvim +'LspInstall cpp'
-    nvim +'LspInstall cmake'
-    nvim +'LspInstall latex'
-    nvim +'LspInstall json'
+    {{nvim}} +'LspInstall efm'
+    {{nvim}} +'LspInstall rust'
+    {{nvim}} +'LspInstall lua'
+    {{nvim}} +'LspInstall python'
+    {{nvim}} +'LspInstall cpp'
+    {{nvim}} +'LspInstall cmake'
+    {{nvim}} +'LspInstall latex'
+    {{nvim}} +'LspInstall json'
 
 # Open neovim with main settings files
 settings:
-    nvim init.lua lv-config.lua lua/default-config.lua lua/settings.lua lua/plugins.lua lua/keymappings.lua lua/lv-which-key/init.lua
+    {{nvim}} init.lua lv-config.lua lua/default-config.lua lua/settings.lua lua/plugins.lua lua/keymappings.lua lua/lv-which-key/init.lua
 
 # Open plugins.lua (and PackerInstall automatically afterwards)
 plugins:
-	nvim lua/plugins.lua
-	nvim lua/plugins.lua +PackerSync
+	{{nvim}} lua/plugins.lua
+	{{nvim}} lua/plugins.lua +PackerSync
 
 # Update Plugins using Packer
 update-plugins:
-    nvim lua/plugins.lua +PackerSync
+    {{nvim}} lua/plugins.lua +PackerSync
 
 # Profile startup time
 startup:
-    nvim +PackerCompile +'StartupTime -- lua/plugins.lua'
+    {{nvim}} +PackerCompile +'StartupTime -- lua/plugins.lua'
 
 stylua:
     stylua **.lua
