@@ -1,4 +1,5 @@
 vim.opt.shadafile = "NONE"
+
 local disabled_built_ins = {
   "netrw",
   "netrwPlugin",
@@ -23,6 +24,16 @@ for _, plugin in pairs(disabled_built_ins) do
   vim.g["loaded_" .. plugin] = 1
 end
 
+-- Install packer first
+local execute = vim.api.nvim_command
+local fn = vim.fn
+local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+if fn.empty(fn.glob(install_path)) > 0 then
+  execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
+  execute "packadd packer.nvim"
+end
+
+-- Source all the config files
 require "default-config"
 vim.cmd("luafile " .. CONFIG_PATH .. "/lv-config.lua")
 require "keymappings"
