@@ -404,6 +404,9 @@ return require("packer").startup(function(use)
   -- Git Blame
   use {
     "f-person/git-blame.nvim",
+    setup = function()
+      vim.g.gitblame_enabled = 0
+    end,
     cmd = "GitBlameToggle",
     disable = not O.plugin.git_blame.active,
   }
@@ -616,19 +619,20 @@ return require("packer").startup(function(use)
   }
 
   -- Multi cursor support
-  use { "mg979/vim-visual-multi", disable = not O.plugin.visual_multi.active, event = "BufRead" }
+  use {
+    "mg979/vim-visual-multi",
+    setup = function()
+      require("lv-visual-multi").preconf()
+    end,
+    event = "BufRead",
+    disable = not O.plugin.visual_multi.active,
+  }
 
   -- Surround plugin
   use {
     "machakann/vim-sandwich",
     config = function()
-      vim.api.nvim_command "runtime macros/sandwich/keymap/surround.vim"
-      vim.api.nvim_command [[
-        xmap is <Plug>(textobj-sandwich-query-i)
-        xmap as <Plug>(textobj-sandwich-query-a)
-        omap is <Plug>(textobj-sandwich-query-i)
-        omap as <Plug>(textobj-sandwich-query-a)
-    ]]
+      require("lv-sandwich").config()
     end,
     event = "BufRead",
     disable = not O.plugin.surround.active,
@@ -650,11 +654,11 @@ return require("packer").startup(function(use)
   use {
     "jpalardy/vim-slime",
     disable = not O.plugin.slime.active,
+    setup = function()
+      require("lv-slime").preconf()
+    end,
     config = function()
-      local remap = vim.api.nvim_set_keymap
-      -- remap("n", "<leader>xs", ":MagmaEvaluateOperator<CR>", { expr = true, silent = true })
-      remap("v", "<leader>ts", ":<C-u>SlimeSend<CR>", { silent = true })
-      remap("n", "<leader>tss", "<cmd>SlimeSendCurrentLine<CR>", { silent = true })
+      require("lv-slime").config()
     end,
     cmd = {
       "SlimeSend",

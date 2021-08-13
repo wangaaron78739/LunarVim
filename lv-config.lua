@@ -75,45 +75,10 @@ O.scrolloff = 10
 -- quick-scope
 -- vim.g.qs_highlight_on_keys = {'f', 'F', 't', 'T'}
 
-vim.g.VM_maps = nil
-vim.g.VM_maps = {
-  ["Find Under"] = "<M-n>",
-  ["Select All"] = "<M-a>",
-  ["Find Subword Under"] = "<M-n>",
-  ["Add Cursor Down"] = "<M-j>",
-  ["Add Cursor Up"] = "<M-k>",
-  ["Select Cursor Down"] = "<M-S-j>",
-  ["Select Cursor Up"] = "<M-S-k>",
-  ["Skip Region"] = "n",
-  ["Remove Region"] = "N",
-  ["Visual Cursors"] = "<M-c>",
-  ["Visual Add"] = "<M-a>",
-  ["Visual All"] = "<M-S-a>",
-  ["Start Regex Search"] = "<M-/>",
-  ["Visual Regex"] = "/",
-  ["Add Cursor At Pos"] = "<M-S-n>", -- TODO: better keymap for this?
-  -- FIXME: Some plugin is conflicting and making this not work, unless i type fast
-  ["Find Operator"] = "m",
-  ["Visual Find"] = "<M-f>",
-  ["Undo"] = "u",
-  ["Redo"] = "<C-r>",
-}
-vim.g.VM_leader = [[<leader>m]]
--- vim.g.VM_leader = [[\]]
-vim.g.VM_theme = "neon"
-
 -- TODO: figure out mappings for this that dont conflict with autocomplete
 vim.g.UltiSnipsExpandTrigger = "<f5>"
 -- vim.g.UltiSnipsJumpForwardTrigger="<c-j>"
 -- vim.g.UltiSnipsJumpBackwardTrigger="<c-k>"
-
--- TODO: detect kitty or fallback to neovim
-vim.g.slime_target = O.plugin.slime.target
-vim.g.slime_no_mappings = true
--- Fill in default config here somehow
--- let g:slime_default_config = {"socket_name": "default", "target_pane": "1"}
-
-vim.g.gitblame_enabled = 0
 
 -- Neovim turns the default cursor to 'Block'
 -- when switched back into terminal.
@@ -131,6 +96,81 @@ vim.g.gitblame_enabled = 0
 -- vim.g.neovide_refresh_rate=120
 vim.opt.guifont = "FiraCode Nerd Font:h10" -- the font used in graphical neovim applications
 
-vim.g.sandwich_no_default_key_mappings = 1
-vim.g.operator_sandwich_no_default_key_mappings = 1
-vim.g.textobj_sandwich_no_default_key_mappings = 1
+require("lv-utils").define_augroups {
+  _general_settings = {
+    {
+      "TextYankPost",
+      "*",
+      "lua require('vim.highlight').on_yank({higroup = 'Search', timeout = 200})",
+    },
+    {
+      "BufWinEnter",
+      "*",
+      "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
+    },
+    {
+      "BufRead",
+      "*",
+      "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
+    },
+    {
+      "BufRead",
+      "*",
+      "set hlsearch",
+    },
+    {
+      "BufNewFile",
+      "*",
+      "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
+    },
+    { "FileType", "qf", "set nobuflisted" },
+    -- TODO: Test This -- { "BufWritePost", "lv-config.lua", "lua require('lv-utils').reload_lv_config()" },
+    -- { "VimLeavePre", "*", "set title set titleold=" },
+  },
+  -- _solidity = {
+  --     {'BufWinEnter', '.sol', 'setlocal filetype=solidity'}, {'BufRead', '*.sol', 'setlocal filetype=solidity'},
+  --     {'BufNewFile', '*.sol', 'setlocal filetype=solidity'}
+  -- },
+  -- _gemini = {
+  --     {'BufWinEnter', '.gmi', 'setlocal filetype=markdown'}, {'BufRead', '*.gmi', 'setlocal filetype=markdown'},
+  --     {'BufNewFile', '*.gmi', 'setlocal filetype=markdown'}
+  -- },
+  -- _latex = {
+  --     {'FileType', 'latex', 'VimtexCompile'},
+  --     {'FileType', 'latex', 'setlocal wrap'},
+  --     {'FileType', 'latex', 'setlocal spell'}
+  --     -- {'FileType', 'latex', 'set guifont "FiraCode Nerd Font:h15'},
+  -- },
+  _packer_compile = { { "User", "PackerComplete", "++once PackerCompile" } },
+  _buffer_bindings = {
+    { "FileType", "dashboard", "nnoremap <silent> <buffer> q :q<CR>" },
+    { "FileType", "lspinfo", "nnoremap <silent> <buffer> q :q<CR>" },
+  },
+  _terminal_insert = {
+    { "BufEnter", "*", [[if &buftype == 'terminal' | :startinsert | endif]] },
+  },
+  _auto_reload = {
+    -- will check for external file changes on cursor hold
+    { "CursorHold", "*", "silent! checktime" },
+  },
+  _auto_resize = {
+    -- will cause split windows to be resized evenly if main window is resized
+    { "VimResized", "*", "wincmd =" },
+  },
+  _mode_switching = {
+    -- will switch between absolute and relative line numbers depending on mode
+    {
+      "InsertEnter",
+      "*",
+      "if &relativenumber | let g:ms_relativenumberoff = 1 | setlocal number norelativenumber | endif",
+    },
+    { "InsertLeave", "*", 'if exists("g:ms_relativenumberoff") | setlocal relativenumber | endif' },
+    --[[ { "InsertEnter", "*", "if &cursorline | let g:ms_cursorlineoff = 1 | setlocal nocursorline | endif" },
+    { "InsertLeave", "*", 'if exists("g:ms_cursorlineoff") | setlocal cursorline | endif' }, ]]
+  },
+  _focus_lost = {
+    { "FocusLost,TabLeave,BufLeave", "*", [[if &buftype == '' | :update | endif]] },
+    -- { "FocusLost", "*", [[silent! call feedkeys("\<C-\>\<C-n>")]] },
+    -- { "TabLeave,BufLeave", "*", [[if &buftype == '' | :stopinsert | endif]] }, -- FIXME: This breaks compe
+  },
+}
