@@ -167,11 +167,18 @@ end
 -- vim.cmd 'command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()'
 
 -- Jump between diagnostics
+local line_diagnostics_opts = {
+  show_header = false,
+  border = O.lsp.border,
+}
+M.diag_line = function()
+  vim.lsp.diagnostic.show_line_diagnostics(line_diagnostics_opts)
+end
 M.diag_next = function()
-  vim.lsp.diagnostic.goto_next { popup_opts = { border = O.lsp.border } }
+  vim.lsp.diagnostic.goto_next { popup_opts = line_diagnostics_opts }
 end
 M.diag_prev = function()
-  vim.lsp.diagnostic.goto_prev { popup_opts = { border = O.lsp.border } }
+  vim.lsp.diagnostic.goto_prev { popup_opts = line_diagnostics_opts }
 end
 
 M.common_on_attach = function(client, bufnr)

@@ -7,7 +7,6 @@ TERMINAL = vim.fn.expand "$TERMINAL"
 local enable_plugins_by_default = true
 -- TODO: switch between neoformat and lsp autoformat smartly
 
-
 local codeLens = {
   virtual_text = { spacing = 0, prefix = "" },
   signs = true,
@@ -21,7 +20,6 @@ local diagnostics = {
   severity_sort = true,
   update_in_insert = true,
 }
-local lsp_border = "single"
 
 O = {
   format_on_save = true,
@@ -61,7 +59,8 @@ O = {
   vnsip_dir = CONFIG_PATH .. "/snippets",
   breakpoint_sign = { text = "🛑", texthl = "LspDiagnosticsSignError", linehl = "", numhl = "" },
   lsp = {
-    border = lsp_border,
+    -- single, double, rounded, solid, shadow, array(fullcustom)
+    border = "rounded",
     diagnostics = diagnostics,
     codeLens = codeLens,
     flags = {

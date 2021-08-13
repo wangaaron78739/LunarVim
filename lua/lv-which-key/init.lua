@@ -247,7 +247,7 @@ local mappings = {
     j = { [[<cmd>lua require("lsp.functions").diag_next()<cr>]], "Next" },
     k = { [[<cmd>lua require("lsp.functions").diag_prev()<cr>]], "Previous" },
     i = { "<cmd>lua require('lsp.functions').toggle_diagnostics()<CR>", "Toggle Inline" },
-    l = { "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>", "Line Diagnostics" },
+    l = { "<cmd>lua require('lsp.functions').diag_line()<CR>", "Line Diagnostics" },
   },
   P = {
     name = "Packer",
