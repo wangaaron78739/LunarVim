@@ -44,69 +44,6 @@ local function tsserver_on_attach(client, bufnr)
   -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", {silent = true})
 end
 
-local function setup_efm()
-  local prettier = {
-    formatCommand = "prettier --stdin-filepath ${INPUT}",
-    formatStdin = true,
-  }
-
-  if vim.fn.glob "node_modules/.bin/prettier" ~= "" then
-    prettier = {
-      formatCommand = "./node_modules/.bin/prettier --stdin-filepath ${INPUT}",
-      formatStdin = true,
-    }
-  end
-
-  require("lspconfig").efm.setup {
-    -- init_options = {initializationOptions},
-    cmd = { DATA_PATH .. "/lspinstall/efm/efm-langserver" },
-    init_options = { documentFormatting = true, codeAction = false },
-    filetypes = { "html", "css", "yaml", "vue", "javascript", "javascriptreact", "typescript", "typescriptreact" },
-    settings = {
-      rootMarkers = { ".git/", "package.json" },
-      languages = {
-        html = { prettier },
-        css = { prettier },
-        json = { prettier },
-        yaml = { prettier },
-      },
-    },
-  }
-
-  if O.lang.tsserver.autoformat then
-    require("lv-utils").define_augroups {
-      _javascript_autoformat = {
-        {
-          "BufWritePre",
-          "*.js",
-          "lua vim.lsp.buf.formatting_sync(nil, 1000)",
-        },
-      },
-      _javascriptreact_autoformat = {
-        {
-          "BufWritePre",
-          "*.jsx",
-          "lua vim.lsp.buf.formatting_sync(nil, 1000)",
-        },
-      },
-      _typescript_autoformat = {
-        {
-          "BufWritePre",
-          "*.ts",
-          "lua vim.lsp.buf.formatting_sync(nil, 1000)",
-        },
-      },
-      _typescriptreact_autoformat = {
-        {
-          "BufWritePre",
-          "*.tsx",
-          "lua vim.lsp.buf.formatting_sync(nil, 1000)",
-        },
-      },
-    }
-  end
-end
-
 M.setup = function()
   -- npm install -g typescript typescript-language-server
   -- require'snippets'.use_suggested_mappings()
@@ -143,7 +80,7 @@ M.setup = function()
         update_in_insert = true,
       }),
     },
-  flags = O.lsp.flags
+    flags = O.lsp.flags,
   }
 
   vim.cmd "setl ts=2 sw=2"

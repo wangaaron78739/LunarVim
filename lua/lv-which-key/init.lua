@@ -118,8 +118,9 @@ local mappings = {
     w = { "<cmd>w<CR>", "Write" },
     a = { "<cmd>wa<CR>", "Write All" },
     c = { ":bdelete!<CR>", "Close" },
-    f = { "<cmd>Neoformat<cr>", "Format" }, -- TODO: switch between neoformat and lsp
-    -- f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" }, -- TODO: switch between neoformat and lsp
+    -- TODO: switch between neoformat and lsp
+    -- f = { "<cmd>Neoformat<cr>", "Format" },
+    f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
     -- n = { "<cmd>tabnew<CR>", "New" },
     n = { "<cmd>enew<CR>", "New" },
     -- W = {"<cmd>BufferWipeout<cr>", "wipeout buffer"},
@@ -202,6 +203,7 @@ local mappings = {
     R = { "<cmd>Telescope lsp_references<cr>", "References" },
     t = { "<cmd>lua vim.lsp.buf.type_definition() <cr>", "Type Definition" },
     T = { ":TSConfigInfo<cr>", "Info" },
+    f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
   },
   s = {
     name = "Search",
@@ -395,9 +397,7 @@ if O.plugin.lightspeed.active then
   wk.register({ ["z"] = "Light speed", ["Z"] = "Light speed bwd" }, ops)
 end
 
--- if O.plugin.visual_multi.active then
 local ops = { mode = "n" }
-wk.register({ [vim.g.VM_leader] = "which_key_ignore", ["gy"] = "which_key_ignore", ["gyy"] = "which_key_ignore" }, ops)
--- end
+wk.register({ ["gy"] = "which_key_ignore", ["gyy"] = "which_key_ignore" }, ops)
 
 -- FIXME: duplicate entries for some of the operators

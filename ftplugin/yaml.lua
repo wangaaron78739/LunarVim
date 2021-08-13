@@ -12,7 +12,3 @@ require("lspconfig").yamlls.setup {
   flags = O.lsp.flags,
 }
 vim.cmd "setl ts=2 sw=2 ts=2 ai et"
-
-if O.lang.yaml.efm.active == true then
-  require("lsp.efm-ls").generic_setup { "yaml" }
-end

@@ -29,7 +29,3 @@ if O.plugin.debug.active and O.plugin.dap_install.active then
   local dap_install = require "dap-install"
   dap_install.config("python_dbg", {})
 end
-
-if O.lang.python.efm.active == true then
-  require("lsp.efm-ls").generic_setup { "python" }
-end

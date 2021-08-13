@@ -20,8 +20,6 @@ vim.cmd "hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828"
 
 ---  SETTINGS  ---
 -- https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim
-
--- LuaFormatter off
 opt.inccommand = O.inc_subs -- Incremental substitution style
 opt.backspace = "indent,eol,start"
 opt.backup = false -- creates a backup file
@@ -77,4 +75,3 @@ opt.sidescroll = 1
 opt.sidescrolloff = 10
 opt.listchars = { extends = ">", precedes = "<", trail = "_" }
 vim.g.python3_host_prog = O.python_interp
--- LuaFormatter on

@@ -43,7 +43,3 @@ require("lspconfig").clangd.setup {
   },
   flags = O.lsp.flags,
 }
-
-if O.lang.clang.efm.active == true then
-  require("lsp.efm-ls").generic_setup { "c", "cpp" }
-end

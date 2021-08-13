@@ -5,14 +5,8 @@ PLUGIN_PATH = DATA_PATH .. "site/pack/*/start/*"
 TERMINAL = vim.fn.expand "$TERMINAL"
 
 local enable_plugins_by_default = true
-local enable_efm_by_default = false
 -- TODO: switch between neoformat and lsp autoformat smartly
 
-local EFM_CONF_PATH = os.getenv "HOME" .. "/.config/efm-langserver/config.yaml"
-
-if vim.fn.empty(vim.fn.glob(EFM_CONF_PATH)) > 0 then
-  EFM_CONF_PATH = CONFIG_PATH .. "/utils/efm-config.yaml"
-end
 
 local codeLens = {
   virtual_text = { spacing = 0, prefix = "" },
@@ -31,6 +25,7 @@ local lsp_border = "single"
 
 O = {
   format_on_save = true,
+  format_on_save_timeout = 500,
   auto_close_tree = 0,
   fold_columns = "0",
   auto_complete = true,
@@ -108,9 +103,6 @@ O = {
     hint_labels = { "h", "j", "f", "d", "n", "v", "s", "l", "a" },
   },
   database = { save_location = "~/.config/nvim/.db", auto_execute = 1 },
-  efm = {
-    config_path = EFM_CONF_PATH,
-  },
   plugin_which_keys = {},
   plugin = {
     hop = { active = enable_plugins_by_default },
@@ -190,9 +182,6 @@ O = {
     ts_iswap = { active = enable_plugins_by_default },
   },
   custom_plugins = {},
-  user_autocommands = {
-    { "FileType", "qf", "set nobuflisted" },
-  },
   lang = {
     python = {
       isort = false,
@@ -202,26 +191,21 @@ O = {
         auto_search_paths = true,
         use_library_code_types = true,
       },
-      efm = { active = enable_efm_by_default },
     },
     dart = {
       sdk_path = "/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot",
     },
     lua = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     sh = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     tsserver = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     json = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     tailwindcss = {
       active = false,
@@ -238,52 +222,41 @@ O = {
     -- Used for js, ts, jsreact and tsreact -- I assume they are all similar enough
     javascript = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     clang = {
       diagnostics = diagnostics,
       cross_file_rename = true,
       header_insertion = "never",
-      efm = { active = enable_efm_by_default },
     },
     ruby = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
       filetypes = { "rb", "erb", "rakefile", "ruby" },
     },
     go = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     elixir = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     vim = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     yaml = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     terraform = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     rust = {
       rust_tools = { active = false },
       linter = "",
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     svelte = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     php = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
       format = { braces = "psr12" },
       environment = { php_version = "7.4" },
       filetypes = { "php", "phtml" },
@@ -291,7 +264,6 @@ O = {
     latex = {
       vimtex = { active = true },
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
       filetypes = { "tex", "bib" },
       aux_directory = ".",
       bibtex_formatter = "texlab",
@@ -311,15 +283,12 @@ O = {
     },
     kotlin = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     html = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     elm = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     emmet = {
       diagnostics = diagnostics,
@@ -327,27 +296,21 @@ O = {
     },
     graphql = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     docker = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     cmake = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     java = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     zig = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
     julia = {
       diagnostics = diagnostics,
-      efm = { active = enable_efm_by_default },
     },
   },
   dashboard = {

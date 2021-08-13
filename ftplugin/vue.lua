@@ -8,7 +8,3 @@ require("lspconfig").vuels.setup {
   root_dir = require("lspconfig").util.root_pattern(".git", "vue.config.js", "package.json", "yarn.lock"),
   flags = O.lsp.flags,
 }
-
-if O.lang.vue.efm.active == true then
-  require("lsp.efm-ls").generic_setup { "vue" }
-end

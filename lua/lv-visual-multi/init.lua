@@ -26,5 +26,7 @@ function M.preconf()
   vim.g.VM_leader = [[<leader>m]]
   -- vim.g.VM_leader = [[\]]
   vim.g.VM_theme = "neon"
+
+  require ("which-key").register({ [vim.g.VM_leader] = "which_key_ignore" }, { mode = "n" })
 end
 return M

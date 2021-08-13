@@ -7,7 +7,3 @@ if not require("lv-utils").check_lsp_client_active "bashls" then
   flags = O.lsp.flags,
   }
 end
-
-if O.lang.sh.efm.active == true then
-  require("lsp.efm-ls").generic_setup { "zsh" }
-end

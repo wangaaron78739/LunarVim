@@ -9,7 +9,7 @@ packer.init {
   compile_path = require("packer.util").join_paths(vim.fn.stdpath "config", "plugin", "packer_compiled.lua"),
   git = { clone_timeout = 300 },
   display = {
-    open_fn = function()
+                open_fn = function()
       return require("packer.util").float { border = "single" }
     end,
   },
@@ -483,22 +483,6 @@ return require("packer").startup(function(use)
 
   -- LANGUAGE SPECIFIC GOES HERE
 
-  -- Null ls, for hooking local plugins into lsp
-  -- use {
-  --   "jose-elias-alvarez/null-ls.nvim",
-  --   ft = {
-  --     "javascript",
-  --     "javascriptreact",
-  --     "javascript.jsx",
-  --     "typescript",
-  --     "typescriptreact",
-  --     "typescript.tsx",
-  --   },
-  --   config = function()
-  --     require("null-ls").setup()
-  --   end,
-  -- }
-
   -- Latex
   -- TODO what filetypes should this be active for?
   use {
@@ -829,14 +813,23 @@ return require("packer").startup(function(use)
     disable = not O.plugin.doge.active,
   }
 
-  -- Autoformat everything
   -- TODO: change to null-ls or formatter.nvim (steal from lunarvim)
+  -- -- Autoformat everything
+  -- use {
+  --   "sbdchd/neoformat",
+  --   config = function()
+  --     require("lv-neoformat").config()
+  --   end,
+  --   cmd = "Neoformat",
+  -- }
+
+  -- Null ls, for hooking local plugins into lsp
   use {
-    "sbdchd/neoformat",
+    "jose-elias-alvarez/null-ls.nvim",
     config = function()
-      require("lv-neoformat").config()
+      require("lv-null-ls").config()
     end,
-    cmd = "Neoformat",
+    requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
   }
 
   -- 'Smarter' pasting
@@ -948,10 +941,6 @@ return require("packer").startup(function(use)
       require("lv-refactoring").setup()
     end,
   }
-
-  if #O.custom_plugins > 0 then
-    use(O.custom_plugins)
-  end
 
   -- Colorschemes
   -- use {'marko-cerovac/material.nvim'}
