@@ -73,9 +73,13 @@ if O.lang.rust.rust_tools.active then
     server = {
       cmd = { DATA_PATH .. "/lspinstall/rust/rust-analyzer" },
       on_attach = require("lsp.functions").common_on_attach,
-      rustcheckOnSave = {
-        enable = true,
-        command = "clippy", -- comment out to not use clippy
+      settings = {
+        ["rust-analyzer"] = {
+          checkOnSave = {
+            enable = true,
+            command = "clippy", -- comment out to not use clippy
+          },
+        },
       },
     }, -- rust-analyser options
   }
@@ -98,7 +102,7 @@ else
         },
         cargo = { loadOutDirsFromCheck = true },
         procMacro = { enable = true },
-        rustcheckOnSave = {
+        checkOnSave = {
           enable = true,
           command = "clippy", -- comment out to not use clippy
         },
