@@ -231,8 +231,9 @@ M.rename = function()
   vim.api.nvim_buf_set_keymap(buf, "n", "<ESC>", dontrename, { silent = true })
 end
 M.close_rename = function(win, buf)
-  vim.api.nvim_buf_delete(buf, { force = true })
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, true, true), "n", false)
   vim.api.nvim_win_close(win, true)
+  vim.api.nvim_buf_delete(buf, { force = true })
 end
 M.dorename = function(win, buf)
   local new_name = vim.trim(vim.fn.getline ".")
