@@ -29,13 +29,13 @@ function M.setup()
   local refactor = require "refactoring"
   refactor.setup()
 
-  exprmap(
+  noremap(
     "v",
     "<Leader>re",
     [[<Cmd>lua require('refactoring').refactor('Extract Function')<CR><ESC>]],
     { noremap = true, silent = true, expr = false }
   )
-  exprmap(
+  noremap(
     "v",
     "<Leader>rf",
     [[<Cmd>lua require('lv-refactoring').telescope_refactors()<CR>]],
