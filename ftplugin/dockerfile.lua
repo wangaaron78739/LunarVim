@@ -8,7 +8,7 @@ require("lspconfig").dockerls.setup {
     DATA_PATH .. "/lspinstall/dockerfile/node_modules/.bin/docker-langserver",
     "--stdio",
   },
-  on_attach = require("lsp").common_on_attach,
+  on_attach = require("lsp.functions").common_on_attach,
   root_dir = vim.loop.cwd,
   flags = O.lsp.flags,
 }

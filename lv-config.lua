@@ -96,6 +96,7 @@ vim.g.UltiSnipsExpandTrigger = "<f5>"
 -- vim.g.neovide_refresh_rate=120
 vim.opt.guifont = "FiraCode Nerd Font:h10" -- the font used in graphical neovim applications
 
+-- Default autocommands
 require("lv-utils").define_augroups {
   _general_settings = {
     {

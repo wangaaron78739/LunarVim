@@ -8,6 +8,6 @@ require("lspconfig").vimls.setup {
     DATA_PATH .. "/lspinstall/vim/node_modules/.bin/vim-language-server",
     "--stdio",
   },
-  on_attach = require("lsp").common_on_attach,
+  on_attach = require("lsp.functions").common_on_attach,
   flags = O.lsp.flags,
 }

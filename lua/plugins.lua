@@ -9,7 +9,7 @@ packer.init {
   compile_path = require("packer.util").join_paths(vim.fn.stdpath "config", "plugin", "packer_compiled.lua"),
   git = { clone_timeout = 300 },
   display = {
-                open_fn = function()
+    open_fn = function()
       return require("packer.util").float { border = "single" }
     end,
   },
@@ -558,6 +558,13 @@ return require("packer").startup(function(use)
       require("lsp_signature").setup(lsp_sign_opt)
     end,
   }
+  use {
+    "kosayoda/nvim-lightbulb",
+    config = function()
+      vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
+    end,
+    event = BufRead,
+  }
 
   use { "RishabhRD/popfix" }
   use {
@@ -569,6 +576,8 @@ return require("packer").startup(function(use)
       vim.lsp.handlers["textDocument/declaration"] = require("lsputil.locations").declaration_handler
       vim.lsp.handlers["textDocument/typeDefinition"] = require("lsputil.locations").typeDefinition_handler
       vim.lsp.handlers["textDocument/implementation"] = require("lsputil.locations").implementation_handler
+      -- vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
+      -- vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
       vim.cmd [[
         au FileType lsputil_codeaction_list nmap <buffer> K <CR>
       ]]

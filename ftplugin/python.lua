@@ -4,7 +4,7 @@ require("lspconfig").pyright.setup {
     DATA_PATH .. "/lspinstall/python/node_modules/.bin/pyright-langserver",
     "--stdio",
   },
-  on_attach = require("lsp").common_on_attach,
+  on_attach = require("lsp.functions").common_on_attach,
   handlers = {
     ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
       virtual_text = O.lang.python.diagnostics.virtual_text,

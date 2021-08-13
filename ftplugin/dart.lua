@@ -5,7 +5,7 @@ end
 if not O.plugin .. flutter_tools.active then
   require("lspconfig").dartls.setup {
     cmd = { "dart", O.lang.dart.sdk_path, "--lsp" },
-    on_attach = require("lsp").common_on_attach,
+    on_attach = require("lsp.functions").common_on_attach,
     init_options = {
       closingLabels = false,
       flutterOutline = false,

@@ -12,7 +12,7 @@ function M.config()
       -- Formatters
       formatters.stylua,
       formatters.prettierd,
-      formatters.rustfmt,
+      -- formatters.rustfmt,
       formatters.shfmt,
       formatters.black, -- yapf, autopep8
       formatters.isort,

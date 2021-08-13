@@ -55,6 +55,7 @@ O = {
   inc_subs = "split",
   transparent_window = false,
   document_highlight = true,
+  autoecho_line_diagnostics = true,
   leader_key = "space",
   localleader_key = ",",
   vnsip_dir = CONFIG_PATH .. "/snippets",

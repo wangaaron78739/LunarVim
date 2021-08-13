@@ -4,6 +4,6 @@ require("lspconfig").svelte.setup {
     DATA_PATH .. "/lspinstall/svelte/node_modules/.bin/svelteserver",
     "--stdio",
   },
-  on_attach = require("lsp").common_on_attach,
+  on_attach = require("lsp.functions").common_on_attach,
   flags = O.lsp.flags
 }

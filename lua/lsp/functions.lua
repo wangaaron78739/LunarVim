@@ -50,10 +50,17 @@ M.echo_diagnostic = function()
     local width = vim.api.nvim_get_option "columns" - 15
     local lines = vim.split(diag.message, "\n")
     local message = lines[1]
-    local trimmed = false
+    local lineindex = 2
 
-    if #lines > 1 and #message <= short_line_limit then
-      message = message .. " " .. lines[2]
+    if width == 0 then
+      if #lines > 1 and #message <= short_line_limit then
+        message = message .. " " .. lines[lineindex]
+      end
+    else
+      while #message < width do
+        message = message .. " " .. lines[lineindex]
+        lineindex = lineindex + 1
+      end
     end
 
     if width > 0 and #message >= width then
@@ -75,6 +82,16 @@ M.echo_diagnostic = function()
 
     vim.api.nvim_echo(chunks, false, {})
   end, echo_timeout)
+end
+M.simple_echo_diagnostic = function()
+  local line_diagnostics = vim.lsp.diagnostic.get_line_diagnostics()
+  if vim.tbl_isempty(line_diagnostics) then
+    vim.cmd [[echo ""]]
+    return
+  end
+  for i, diagnostic in ipairs(line_diagnostics) do
+    vim.cmd("echo '" .. diagnostic.message .. "'")
+  end
 end
 
 -- Format a range using LSP
@@ -134,7 +151,7 @@ M.toggle_diagnostics = function()
   end
 end
 
--- FIXME: figure this stuff out?
+-- TODO: Implement codeLens handlers
 M.show_codelens = function()
   vim.cmd [[ autocmd BufEnter,CursorHold,InsertLeave * lua vim.lsp.codelens.refresh() ]]
   local clients = vim.lsp.buf_get_clients(0)
@@ -148,5 +165,79 @@ end
 
 -- TODO: what is this?
 -- vim.cmd 'command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()'
+
+-- Jump between diagnostics
+M.diag_next = function()
+  vim.lsp.diagnostic.goto_next { popup_opts = { border = O.lsp.border } }
+end
+M.diag_prev = function()
+  vim.lsp.diagnostic.goto_prev { popup_opts = { border = O.lsp.border } }
+end
+
+M.common_on_attach = function(client, bufnr)
+  -- Handle document highlighting
+  if O.document_highlight then
+    -- Set autocommands conditional on server_capabilities
+    if client.resolved_capabilities.document_highlight then
+      vim.api.nvim_exec(
+        [[
+        hi LspReferenceRead cterm=bold ctermbg=red guibg=#464646
+        hi LspReferenceText cterm=bold ctermbg=red guibg=#464646
+        hi LspReferenceWrite cterm=bold ctermbg=red guibg=#464646
+        augroup lsp_document_highlight
+          autocmd! * <buffer>
+          autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+          autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+        augroup END
+        ]],
+        false
+      )
+    end
+  end
+
+  if O.autoecho_line_diagnostics then
+    -- if client.resolved_capabilities.document_highlight then
+    -- autocmd CursorHoldI <buffer> lua vim.lsp.buf.signature_help()
+    vim.api.nvim_exec(
+      [[ augroup lsp_au
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua require("lsp.functions").echo_diagnostic()
+      augroup END ]],
+      false
+    )
+    -- end
+  end
+end
+
+-- Helper for better renaming interface
+M.rename = function()
+  local opts = {
+    relative = "cursor",
+    row = 0,
+    col = 0,
+    width = 30,
+    height = 1,
+    style = "minimal",
+    border = "single",
+  }
+  local cword = vim.fn.expand "<cword>"
+  local buf = vim.api.nvim_create_buf(false, true)
+  local win = vim.api.nvim_open_win(buf, true, opts)
+  local dorename = string.format("<cmd>lua require('lsp.functions').dorename(%d, %d)<CR>", win, buf)
+  local dontrename = string.format("<cmd>lua require('lsp.functions').close_rename(%d, %d)<CR>", win, buf)
+
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, { cword })
+  vim.api.nvim_buf_set_keymap(buf, "i", "<CR>", dorename, { silent = true })
+  vim.api.nvim_buf_set_keymap(buf, "n", "<ESC>", dontrename, { silent = true })
+end
+M.close_rename = function(win, buf)
+  vim.api.nvim_buf_delete(buf, { force = true })
+  vim.api.nvim_win_close(win, true)
+end
+M.dorename = function(win, buf)
+  local new_name = vim.trim(vim.fn.getline ".")
+  M.close_rename(win, buf)
+  vim.lsp.buf.rename(new_name)
+end
 
 return M

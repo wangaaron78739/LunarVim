@@ -118,7 +118,6 @@ local mappings = {
     w = { "<cmd>w<CR>", "Write" },
     a = { "<cmd>wa<CR>", "Write All" },
     c = { ":bdelete!<CR>", "Close" },
-    -- TODO: switch between neoformat and lsp
     -- f = { "<cmd>Neoformat<cr>", "Format" },
     f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
     -- n = { "<cmd>tabnew<CR>", "New" },
@@ -193,15 +192,17 @@ local mappings = {
   },
   l = {
     name = "LSP",
-    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-    i = { "<cmd>LspInfo<cr>", "Info" },
+    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action (K)" },
+    h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Code Action (gh)" },
+    I = { "<cmd>LspInfo<cr>", "Info" },
     -- TODO: What is the replacement for this?
     -- f = { "<cmd>Lspsaga lsp_finder<cr>", "LSP Finder" },
     -- p = { "<cmd>Lspsaga preview_definition<cr>", "Preview Definition" },
     q = { "<cmd>Telescope quickfix<cr>", "Quickfix" },
-    r = { "<cmd>lua Rename.rename()<CR>", "Rename" },
+    r = { "<cmd>lua require('lsp.functions').rename()<CR>", "Rename" },
     R = { "<cmd>Telescope lsp_references<cr>", "References" },
     t = { "<cmd>lua vim.lsp.buf.type_definition() <cr>", "Type Definition" },
+    s = { "<cmd>lua vim.lsp.buf.signature_help() <cr>", "Signature Help" },
     T = { ":TSConfigInfo<cr>", "Info" },
     f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
   },
@@ -210,24 +211,10 @@ local mappings = {
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
     c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
-    S = {
-      "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
-      "Workspace Symbols",
-    },
-    d = {
-      "<cmd>Telescope lsp_document_diagnostics<cr>",
-      "Document Diagnostics",
-    },
-    D = {
-      "<cmd>Telescope lsp_workspace_diagnostics<cr>",
-      "Workspace Diagnostics",
-    },
-    -- TODO: better (less repetitive way to do this)
-    -- f = {
-    --   O.plugin.snap.active and "<cmd>Snap find_files<cr>"
-    --     or "<cmd>Telescope find_files find_command=rg,--no-config,--ignore,--hidden,--files,--no-heading,--with-filename,--line-number,--column,--smart-case<cr>",
-    --   "Find File (+Hidden)",
-    -- },
+    S = { "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "Workspace Symbols" },
+    d = { "<cmd>Telescope lsp_document_diagnostics<cr>", "Document Diagnostics" },
+    D = { "<cmd>Telescope lsp_workspace_diagnostics<cr>", "Workspace Diagnostics" },
+    m = { "<cmd>Telescope lsp_implementations<cr>", "Workspace Diagnostics" },
     h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
     -- m = {"<cmd>Telescope marks<cr>", "Marks"},
     M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
@@ -247,7 +234,7 @@ local mappings = {
   },
   r = {
     name = "Replace/Refactor",
-    n = { "<cmd>lua Rename.rename()<CR>", "Rename" },
+    n = { "<cmd>lua require('lsp.functions').rename()<CR>", "Rename" },
     t = "Rename TS",
     ["/"] = "Last search",
     ["+"] = "Last yank",
@@ -257,8 +244,8 @@ local mappings = {
   c = "Change all",
   d = {
     name = "Diagnostics",
-    j = { [[<cmd>lua require("lsp").diag_next()<cr>]], "Next" },
-    k = { [[<cmd>lua require("lsp").diag_prev()<cr>]], "Previous" },
+    j = { [[<cmd>lua require("lsp.functions").diag_next()<cr>]], "Next" },
+    k = { [[<cmd>lua require("lsp.functions").diag_prev()<cr>]], "Previous" },
     i = { "<cmd>lua require('lsp.functions').toggle_diagnostics()<CR>", "Toggle Inline" },
     l = { "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>", "Line Diagnostics" },
   },

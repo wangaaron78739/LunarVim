@@ -25,7 +25,7 @@ local util = require "lspconfig/util"
 
 local on_attach = function(client, bufr)
   -- require('jdtls').setup_dap()
-  require("lsp").common_on_attach(client, bufr)
+  require("lsp.functions").common_on_attach(client, bufr)
 end
 
 require("lspconfig").jdtls.setup {
