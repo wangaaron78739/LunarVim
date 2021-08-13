@@ -39,7 +39,7 @@ function M.config()
       diagnostics.markdownlint,
 
       -- Code Actions
-      code_actions.gitsigns,
+      -- code_actions.gitsigns, -- TODO: reenable when I can lower the priority
     },
   }
   require("lspconfig")["null-ls"].setup {}
