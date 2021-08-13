@@ -129,6 +129,7 @@ vim.g.gitblame_enabled = 0
 -- neovide settings
 -- vim.g.neovide_cursor_vfx_mode = "pixiedust"
 -- vim.g.neovide_refresh_rate=120
+vim.opt.guifont = "FiraCode Nerd Font:h10" -- the font used in graphical neovim applications
 
 vim.g.sandwich_no_default_key_mappings = 1
 vim.g.operator_sandwich_no_default_key_mappings = 1
