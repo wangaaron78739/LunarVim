@@ -61,6 +61,7 @@ return require("packer").startup(function(use)
   }
 
   -- Autocomplete
+  -- TODO: replace with hrsh7th/nvim-cmp
   use {
     "hrsh7th/nvim-compe",
     config = function()
@@ -709,14 +710,13 @@ return require("packer").startup(function(use)
   -- Detect indentation from file
   -- use { "zsugabubus/crazy8.nvim", event = "BufRead" }
 
-  -- mkdir -- Goes into a infinite loop and freezes neovim
-  -- use {
-  --   "jghauser/mkdir.nvim",
-  --   config = function()
-  --     require "mkdir"
-  --   end,
-  --   event = "BufWritePre",
-  -- }
+  -- mkdir -- FIXME: Goes into a infinite loop and freezes neovim
+  use {
+    "jghauser/mkdir.nvim",
+    config = function()
+      require "mkdir"
+    end,
+  }
 
   -- Sudo write files
   use { "lambdalisue/suda.vim", cmd = { "SudaWrite", "SudaRead" } }
