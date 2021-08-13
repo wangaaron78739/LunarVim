@@ -5,30 +5,8 @@ end
 if O.lang.rust.rust_tools.active then
   local opts = {
     tools = { -- rust-tools options
-      -- automatically set inlay hints (type hints)
-      -- There is an issue due to which the hints are not applied on the first
-      -- opened file. For now, write to the file to trigger a reapplication of
-      -- the hints or just run :RustSetInlayHints.
-      -- default: true
-      autoSetHints = true,
-
-      -- whether to show hover actions inside the hover window
-      -- this overrides the default hover handler
-      -- default: true
-      hover_with_actions = true,
-
-      runnables = {
-        -- whether to use telescope for selection menu or not
-        -- default: true
-        use_telescope = true,
-
-        -- rest of the opts are forwarded to telescope
-      },
-
       inlay_hints = {
-        -- wheter to show parameter hints with the inlay hints or not
-        -- default: true
-        show_parameter_hints = true,
+        only_current_line = true,
 
         -- prefix for parameter hints
         -- default: "<-"
@@ -37,34 +15,24 @@ if O.lang.rust.rust_tools.active then
         -- prefix for all the other hints (type, chaining)
         -- default: "=>"
         other_hints_prefix = "=> ",
-
-        -- whether to align to the length of the longest line in the file
-        max_len_align = false,
-
-        -- padding from the left if max_len_align is true
-        max_len_align_padding = 1,
-
-        -- whether to align to the extreme right or not
-        right_align = false,
-
-        -- padding from the right if right_align is true
-        right_align_padding = 1,
       },
 
       hover_actions = {
         -- the border that is used for the hover window
         -- see vim.api.nvim_open_win()
-        border = {
-          { "╭", "FloatBorder" },
-          { "─", "FloatBorder" },
-          { "╮", "FloatBorder" },
-          { "│", "FloatBorder" },
-          { "╯", "FloatBorder" },
-          { "─", "FloatBorder" },
-          { "╰", "FloatBorder" },
-          { "│", "FloatBorder" },
-        },
+        border = O.lsp.border,
+        -- border = {
+        --   { "╭", "FloatBorder" },
+        --   { "─", "FloatBorder" },
+        --   { "╮", "FloatBorder" },
+        --   { "│", "FloatBorder" },
+        --   { "╯", "FloatBorder" },
+        --   { "─", "FloatBorder" },
+        --   { "╰", "FloatBorder" },
+        --   { "│", "FloatBorder" },
+        -- },
       },
+      autofocus = true,
     },
 
     -- all the opts to send to nvim-lspconfig
@@ -84,10 +52,12 @@ if O.lang.rust.rust_tools.active then
     }, -- rust-analyser options
   }
   require("rust-tools").setup(opts)
+
+  local map = vim.api.nvim_buf_set_keymap
+  -- map("n", "gj", "<cmd>RustJoinLines<cr>", {})
+  vim.cmd [[ autocmd FileType rust nmap gj <cmd>RustJoinLines<cr>]]
 else
-  vim.cmd [[
-        autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
-    ]]
+  vim.cmd [[ autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} } ]]
 
   require("lspconfig").rust_analyzer.setup {
     cmd = { DATA_PATH .. "/lspinstall/rust/rust-analyzer" },
