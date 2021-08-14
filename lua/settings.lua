@@ -15,7 +15,6 @@ end
 
 --- COLORSCHEME ---
 
-vim.cmd("colorscheme " .. O.colorscheme)
 vim.cmd "hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828"
 
 ---  SETTINGS  ---
@@ -74,4 +73,5 @@ opt.autowriteall = true -- auto write on focus lost
 opt.sidescroll = 1
 opt.sidescrolloff = 10
 opt.listchars = { extends = ">", precedes = "<", trail = "_" }
+opt.background = "dark"
 vim.g.python3_host_prog = O.python_interp

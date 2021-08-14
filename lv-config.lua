@@ -6,9 +6,7 @@ filled in as strings with either
 a global executable or a path to
 an executable
 ]]
--- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
--- general
-O.colorscheme = "snazzy"
+
 -- O.shell = "fish"
 O.termshell = "fish"
 O.lushmode = false
@@ -18,7 +16,6 @@ O.hlsearch = true -- This has a bug
 local disable_plugins = {
   "lsp_rooter",
   "snap",
-  "lush",
   "fzf",
   "tabnine",
   "tmux_navigator",

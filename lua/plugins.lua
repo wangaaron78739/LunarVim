@@ -119,9 +119,6 @@ return require("packer").startup(function(use)
     keys = { "gc", "gcc" },
   }
 
-  -- Color
-  use { "christianchiarulli/nvcode-color-schemes.vim", opt = true }
-
   -- Icons
   use { "kyazdani42/nvim-web-devicons" }
 
@@ -956,11 +953,50 @@ return require("packer").startup(function(use)
     end,
   }
 
-  -- Colorschemes
-  -- use {'marko-cerovac/material.nvim'}
-  -- use {'folke/tokyonight.nvim'}
-  -- use {'Mofiqul/dracula.nvim'}
-  -- use {'tomasiser/vim-code-dark'}
+  -- Lush - Create Color Schemes
+  use {
+    "rktjmp/lush.nvim",
+    -- cmd = {"LushRunQuickstart", "LushRunTutorial", "Lushify"},
+    disable = not O.plugin.lush.active,
+  }
+  -- Colorbuddy colorscheme helper
+  use { "tjdevries/colorbuddy.vim", module = "colorbuddy" }
+  -- Colorschemes -- https://github.com/folke/lsp-colors.nvim
+  use { "Yagua/nebulous.nvim" }
+  use { "christianchiarulli/nvcode-color-schemes.vim", opt = true }
+  -- use "RishabhRD/nvim-rdark"
+  -- use "marko-cerovac/material.nvim"
+  -- use "Shatur/neovim-ayu"
+  -- use "folke/tokyonight.nvim"
+  -- use "Mofiqul/dracula.nvim"
+  -- use "tomasiser/vim-code-dark"
+  -- use "glepnir/zephyr-nvim"
+  -- use "Th3Whit3Wolf/onebuddy" -- require('colorbuddy').colorscheme('onebuddy')
+  -- use "ishan9299/modus-theme-vim"
+  -- use "Th3Whit3Wolf/one-nvim"
+  -- use "ray-x/aurora"
+  -- use "tanvirtin/nvim-monokai"
+  -- -- use "nekonako/xresources-nvim"
+  -- use "bluz71/vim-moonfly-colors"
+  -- use "klooj/noogies"
+  -- use { "kuznetsss/meadow-nvim" }
+  -- use {
+  --   "olimorris/onedark.nvim",
+  --   as = "olimorris-onedark-nvim",
+  --   requires = "rktjmp/lush.nvim",
+  -- }
+  -- use { "navarasu/onedark.nvim", as = "navarasu-onedark-nvim" }
+  -- use { "ful1e5/onedark.nvim", as = "ful1e5-onedark-nvim" }
+  -- use {
+  --   "rafamadriz/neon",
+  --   config = function()
+  --     vim.g.neon_style = "dark"
+  --     vim.g.neon_italic_keyword = true
+  --     vim.g.neon_italic_function = true
+  --     vim.g.neon_transparent = true
+  --   end,
+  -- }
+  -- use { "adisen99/codeschool.nvim", requires = { "rktjmp/lush.nvim" } }
 
   -- -- Explore tar archives
   -- use { "vim-scripts/tar.vim" }

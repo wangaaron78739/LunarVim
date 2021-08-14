@@ -42,6 +42,13 @@ vim.cmd("luafile " .. CONFIG_PATH .. "/lv-config.lua")
 require "keymappings"
 require "settings"
 require "plugins"
+
+-- Colorscheme
+-- vim.cmd "colorscheme snazzy"
+vim.g.nb_style = "night"
+vim.cmd "colorscheme nebulous"
+-- require("colorbuddy").colorscheme "onebuddy"
+
 require "lv-utils"
 require "lv-galaxyline"
 require "lv-which-key"
