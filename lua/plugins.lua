@@ -204,7 +204,7 @@ return require("packer").startup(function(use)
   use {
     "theHamsta/nvim-treesitter-pairs",
     event = "BufRead",
-    disable = not O.plugin.ts_matchup.active
+    disable = not O.plugin.ts_matchup.active,
   }
 
   use {
@@ -476,12 +476,6 @@ return require("packer").startup(function(use)
     disable = not O.plugin.gist.active,
     requires = "mattn/webapi-vim",
   }
-  -- Lush Create Color Schemes
-  use {
-    "rktjmp/lush.nvim",
-    -- cmd = {"LushRunQuickstart", "LushRunTutorial", "Lushify"},
-    disable = not O.plugin.lush.active,
-  }
   -- HTML preview
   use {
     "turbio/bracey.vim",
@@ -649,6 +643,9 @@ return require("packer").startup(function(use)
   -- Surround plugin
   use {
     "machakann/vim-sandwich",
+    setup = function()
+      require("lv-sandwich").preconf()
+    end,
     config = function()
       require("lv-sandwich").config()
     end,

@@ -111,7 +111,7 @@ local map_tele = function(mode, key, f, options, buffer)
 
   TelescopeMapArgs[map_key] = options or {}
 
-  local rhs = string.format("<cmd>lua require('plugin.telescope')['%s'](TelescopeMapArgs['%s'])<CR>", f, map_key)
+  local rhs = string.format("<cmd>lua require('telescope')['%s'](TelescopeMapArgs['%s'])<CR>", f, map_key)
 
   local map_options = {
     noremap = true,

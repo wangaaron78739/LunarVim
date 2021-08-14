@@ -123,10 +123,14 @@ map("v", "P", "p", nore) -- for normal p behaviour
 local function noclobber(m, c)
   map(m, "<M-" .. c .. ">", '"_' .. c, nore)
 end
+local function noclobber_default(m, c)
+  map(m, "<M-" .. c .. ">", c, nore)
+  map(m, c, '"_' .. c, nore)
+end
 noclobber("n", "d")
-noclobber("n", "c")
 noclobber("n", "D")
-noclobber("n", "C")
+noclobber_default("n", "c")
+noclobber_default("v", "c")
 map("v", "x", '"_d', nore)
 map("v", "r", '"_c', nore)
 
@@ -146,6 +150,7 @@ else
     require("lv-utils").operatorfunc_scaffold_keys("paste_over_operatorfunc", "p")
   end
   map("n", "<M-p>", "<cmd>call v:lua.paste_over_operator()<cr>", sile)
+  map("n", "r", "<cmd>call v:lua.paste_over_operator()<cr>", sile)
   map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
   map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
 end

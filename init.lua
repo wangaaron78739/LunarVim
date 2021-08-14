@@ -3,6 +3,7 @@ vim.opt.shadafile = "NONE"
 if vim.g.started_by_firenvim then
 end
 
+-- Disable builtin plugins
 local disabled_built_ins = {
   "netrw",
   "netrwPlugin",
@@ -36,7 +37,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
   execute "packadd packer.nvim"
 end
 
--- Source all the config files
+-- Source the config files
 require "default-config"
 vim.cmd("luafile " .. CONFIG_PATH .. "/lv-config.lua")
 require "keymappings"
@@ -49,17 +50,19 @@ vim.g.nb_style = "night"
 vim.cmd "colorscheme nebulous"
 -- require("colorbuddy").colorscheme "onebuddy"
 
+-- 'Mandatory' plugin configs
 require "lv-utils"
 require "lv-galaxyline"
 require "lv-which-key"
 require "lv-treesitter"
 require "lsp"
 
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 vim.cmd [[
 function! SynGroup()                                                            
     let l:s = synID(line('.'), col('.'), 1)                                       
     echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
 endfun
 ]]
-
 vim.opt.shadafile = ""
