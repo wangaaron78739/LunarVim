@@ -13,10 +13,6 @@ if O.transparent_window then
   cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
 end
 
---- COLORSCHEME ---
-
-vim.cmd "hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828"
-
 ---  SETTINGS  ---
 -- https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim
 opt.inccommand = O.inc_subs -- Incremental substitution style

@@ -42,12 +42,7 @@ require "config"
 require "keymappings"
 require "settings"
 require "plugins"
-
--- Colorscheme
--- vim.cmd "colorscheme snazzy"
-vim.g.nb_style = "night"
-vim.cmd "colorscheme nebulous"
--- require("colorbuddy").colorscheme "onebuddy"
+require "theme"
 
 -- 'Mandatory' plugin configs
 require "lv-utils"
