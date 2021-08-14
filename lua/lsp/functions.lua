@@ -236,15 +236,19 @@ M.rename = function()
   vim.cmd [[normal! wb]]
   local width = calc_rename_window_size()
   local cword = vim.fn.expand "<cword>"
+  local rel = -1
+  if O.lsp.rename_border == "none" then
+    rel = 0
+  end
   local opts = {
     relative = "cursor",
-    row = 0,
-    col = 0,
+    row = rel,
+    col = rel,
     width = width,
     height = 1,
     style = "minimal",
     -- border = O.lsp.border,
-    border = "none",
+    border = O.lsp.rename_border,
     -- noautocmd = false
   }
   local buf = vim.api.nvim_create_buf(false, true)

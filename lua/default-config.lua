@@ -59,8 +59,9 @@ O = {
   vnsip_dir = CONFIG_PATH .. "/snippets",
   breakpoint_sign = { text = "🛑", texthl = "LspDiagnosticsSignError", linehl = "", numhl = "" },
   lsp = {
-    -- single, double, rounded, solid, shadow, array(fullcustom)
+    -- none, single, double, rounded, solid, shadow, array(fullcustom)
     border = "rounded",
+    rename_border = "none",
     diagnostics = diagnostics,
     codeLens = codeLens,
     flags = {
