@@ -400,13 +400,19 @@ map("n", "]]", "<cmd>call v:lua.gotoend_operator()<cr>", sile)
 local function quick_inside(key)
   map("o", key, "i" .. key, {})
 end
+local function quick_around(key)
+  map("o", key, "a" .. key, {})
+end
 quick_inside "w"
 quick_inside "W"
 quick_inside "b"
 quick_inside "B"
 quick_inside "["
+quick_around "]"
 quick_inside "("
+quick_around "]"
 quick_inside "{"
+quick_around "]"
 quick_inside '"'
 -- map("n", "r", '"_ci', {})
 -- map("n", "x", "di", {})
