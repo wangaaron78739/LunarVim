@@ -121,6 +121,7 @@ O = {
     ts_rainbow = { active = enable_plugins_by_default },
     ts_context = { active = enable_plugins_by_default },
     ts_hintobjects = { active = enable_plugins_by_default },
+    ts_matchup = { active = enable_plugins_by_default },
     indent_line = { active = enable_plugins_by_default },
     symbol_outline = { active = enable_plugins_by_default },
     debug = { active = enable_plugins_by_default },

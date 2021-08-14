@@ -204,6 +204,11 @@ return require("packer").startup(function(use)
     end,
     disable = not O.plugin.matchup.active,
   }
+  use {
+    "theHamsta/nvim-treesitter-pairs",
+    event = "BufRead",
+    disable = not O.plugin.ts_matchup.active
+  }
 
   use {
     "norcalli/nvim-colorizer.lua",
