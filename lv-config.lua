@@ -14,7 +14,6 @@ O.hlsearch = true -- This has a bug
 
 -- After changing plugin config it is recommended to run :PackerCompile
 local disable_plugins = {
-  "lsp_rooter",
   "snap",
   "fzf",
   "tabnine",

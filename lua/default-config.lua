@@ -128,7 +128,7 @@ O = {
     trouble = { active = enable_plugins_by_default },
     floatterm = { active = enable_plugins_by_default },
     spectre = { active = enable_plugins_by_default },
-    lsp_rooter = { active = enable_plugins_by_default },
+    project_nvim = { active = enable_plugins_by_default },
     markdown_preview = { active = enable_plugins_by_default },
     codi = { active = enable_plugins_by_default },
     telescope_fzy = { active = enable_plugins_by_default },
