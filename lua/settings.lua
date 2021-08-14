@@ -124,7 +124,8 @@ require("lv-utils").define_augroups {
     { "FileType", "lspinfo", "nnoremap <silent> <buffer> q :q<CR>" },
   },
   _terminal_insert = {
-    { "BufEnter", "*", [[if &buftype == 'terminal' | :startinsert | endif]] },
+    -- { "BufEnter", "*", [[if &buftype == 'terminal' | :startinsert | endif]] },
+    { "BufEnter", "term://*", "startinsert" },
   },
   _auto_reload = {
     -- will check for external file changes on cursor hold

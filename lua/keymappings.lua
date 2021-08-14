@@ -451,3 +451,6 @@ require("lv-zen").keymaps()
 require("lv-dial").keymaps()
 require("lv-neoterm").keymaps()
 require("lv-null-ls").keymaps()
+
+map("t", "<ESC>", "<ESC>", nore)
+map("t", "<ESC><ESC>", [[<C-\><C-n>]], nore)
