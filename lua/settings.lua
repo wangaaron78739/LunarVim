@@ -75,3 +75,95 @@ opt.sidescrolloff = 10
 opt.listchars = { extends = ">", precedes = "<", trail = "_" }
 opt.background = "dark"
 vim.g.python3_host_prog = O.python_interp
+
+-- Default autocommands
+require("lv-utils").define_augroups {
+  _general_settings = {
+    {
+      "TextYankPost",
+      "*",
+      "lua require('vim.highlight').on_yank({higroup = 'Search', timeout = 200})",
+    },
+    {
+      "BufWinEnter",
+      "*",
+      "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
+    },
+    {
+      "BufRead",
+      "*",
+      "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
+    },
+    {
+      "BufRead",
+      "*",
+      "set hlsearch",
+    },
+    {
+      "BufNewFile",
+      "*",
+      "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
+    },
+    { "FileType", "qf", "set nobuflisted" },
+    -- TODO: Test This -- { "BufWritePost", "lv-config.lua", "lua require('lv-utils').reload_lv_config()" },
+    -- { "VimLeavePre", "*", "set title set titleold=" },
+  },
+  -- _solidity = {
+  --     {'BufWinEnter', '.sol', 'setlocal filetype=solidity'}, {'BufRead', '*.sol', 'setlocal filetype=solidity'},
+  --     {'BufNewFile', '*.sol', 'setlocal filetype=solidity'}
+  -- },
+  -- _gemini = {
+  --     {'BufWinEnter', '.gmi', 'setlocal filetype=markdown'}, {'BufRead', '*.gmi', 'setlocal filetype=markdown'},
+  --     {'BufNewFile', '*.gmi', 'setlocal filetype=markdown'}
+  -- },
+  -- _latex = {
+  --     {'FileType', 'latex', 'VimtexCompile'},
+  --     {'FileType', 'latex', 'setlocal wrap'},
+  --     {'FileType', 'latex', 'setlocal spell'}
+  --     -- {'FileType', 'latex', 'set guifont "FiraCode Nerd Font:h15'},
+  -- },
+  _packer_compile = { { "User", "PackerComplete", "++once PackerCompile" } },
+  _buffer_bindings = {
+    { "FileType", "dashboard", "nnoremap <silent> <buffer> q :q<CR>" },
+    { "FileType", "lspinfo", "nnoremap <silent> <buffer> q :q<CR>" },
+  },
+  _terminal_insert = {
+    { "BufEnter", "*", [[if &buftype == 'terminal' | :startinsert | endif]] },
+  },
+  _auto_reload = {
+    -- will check for external file changes on cursor hold
+    { "CursorHold", "*", "silent! checktime" },
+  },
+  _auto_resize = {
+    -- will cause split windows to be resized evenly if main window is resized
+    { "VimResized", "*", "wincmd =" },
+  },
+  _mode_switching = {
+    -- will switch between absolute and relative line numbers depending on mode
+    {
+      "InsertEnter",
+      "*",
+      "if &relativenumber | let g:ms_relativenumberoff = 1 | setlocal number norelativenumber | endif",
+    },
+    { "InsertLeave", "*", 'if exists("g:ms_relativenumberoff") | setlocal relativenumber | endif' },
+    --[[ { "InsertEnter", "*", "if &cursorline | let g:ms_cursorlineoff = 1 | setlocal nocursorline | endif" },
+    { "InsertLeave", "*", 'if exists("g:ms_cursorlineoff") | setlocal cursorline | endif' }, ]]
+  },
+  _focus_lost = {
+    { "FocusLost,TabLeave,BufLeave", "*", [[if &buftype == '' | :update | endif]] },
+    -- { "FocusLost", "*", [[silent! call feedkeys("\<C-\>\<C-n>")]] },
+    -- { "TabLeave,BufLeave", "*", [[if &buftype == '' | :stopinsert | endif]] }, -- FIXME: This breaks compe
+  },
+}
+
+if O.format_on_save then
+  require("lv-utils").define_augroups {
+    autoformat = {
+      { "BufWritePre", "*", [[lua vim.lsp.buf.formatting_sync(nil, ]] .. O.format_on_save_timeout .. [[)]] },
+    },
+  }
+end
+
+-- neovide settings
+-- vim.g.neovide_cursor_vfx_mode = "pixiedust"
+-- vim.g.neovide_refresh_rate=120

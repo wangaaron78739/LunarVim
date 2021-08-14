@@ -41,14 +41,14 @@ O = {
   cmdheight = 2,
   cursorline = true,
   shell = "bash",
-  termshell = "bash",
+  termshell = "fish",
   timeoutlen = 300,
   nvim_tree_disable_netrw = 0,
   ignore_case = true,
   smart_case = true,
-  scrolloff = 0,
+  scrolloff = 10,
   lushmode = false,
-  hl_search = false,
+  hl_search = true,
   inc_subs = "split",
   transparent_window = false,
   document_highlight = true,
@@ -71,8 +71,9 @@ O = {
   -- @usage pass a table with your desired languages
   treesitter = {
     ensure_installed = "all",
-    ignore_install = { "haskell" },
+    ignore_install = {},
     active = true,
+    enabled = true,
     -- Specify languages that need the normal vim syntax highlighting as well
     -- disable as much as possible for performance
     additional_vim_regex_highlighting = { "latex" },
@@ -188,10 +189,11 @@ O = {
       isort = false,
       diagnostics = diagnostics,
       analysis = {
-        type_checking = "basic",
+        type_checking = "basic", -- off
         auto_search_paths = true,
         use_library_code_types = true,
       },
+      formatter = "black",
     },
     dart = {
       sdk_path = "/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot",
@@ -204,6 +206,8 @@ O = {
     },
     tsserver = {
       diagnostics = diagnostics,
+      linter = "eslint",
+      formatter = "prettier",
     },
     json = {
       diagnostics = diagnostics,
@@ -249,7 +253,7 @@ O = {
       diagnostics = diagnostics,
     },
     rust = {
-      rust_tools = { active = false },
+      rust_tools = { active = true },
       linter = "",
       diagnostics = diagnostics,
     },
@@ -275,7 +279,7 @@ O = {
         forward_search_after = false,
         on_save = false,
       },
-      chktex = { on_edit = false, on_open_and_save = false },
+      chktex = { on_edit = true, on_open_and_save = true },
       diagnostics_delay = vim.opt.updatetime,
       formatter_line_length = 80,
       forward_search = { args = {}, executable = "" },
@@ -335,8 +339,24 @@ O = {
       "⣿⣧⣤⣤⣤⡄⠀⠘⣿⣤⣤⡤⣿⠇⠀⢸⣿⠁⠀⠀⣼⣿⠀⠀⢿⣿⣤⣤⠔⣿⠃⠀⠀⣾⡇⠀⠀⠀⠀⠀⠀⢸⣿⣿⠋⠀⠀⠀⢠⣤⣤⣿⣥⣤⡄⠀⣼⣿⠀⣸⡏⠀⣿⠃",
       "⠉⠉⠉⠉⠉⠁⠀⠀⠈⠉⠉⠀⠉⠀⠀⠈⠉⠀⠀⠀⠉⠉⠀⠀⠀⠉⠉⠁⠈⠉⠀⠀⠀⠉⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠀⠀⠀⠀⠈⠉⠉⠉⠉⠉⠁⠀⠉⠁⠀⠉⠁⠀⠉⠀",
     },
-    footer = { "IndianBoy42 (amedhi@connect.ust.hk)" },
+    footer = { "Anshuman Medhi -- IndianBoy42 (amedhi@connect.ust.hk)" },
   },
 }
 
 vim.cmd('let &titleold="' .. TERMINAL .. '"')
+
+-- After changing plugin config it is recommended to run :PackerCompile
+local disable_plugins = {
+  "snap",
+  "fzf",
+  "tabnine",
+  "tmux_navigator",
+  "lazygit",
+  "anywise_reg",
+  "quickscope",
+}
+for _, v in ipairs(disable_plugins) do
+  O.plugin[v].active = false
+end
+
+vim.opt.guifont = "FiraCode Nerd Font:h10" -- the font used in graphical neovim applications

@@ -663,7 +663,12 @@ return require("packer").startup(function(use)
   -- use {"Shatur95/neovim-cmake"}
 
   -- Auto activating snippets
-  -- use {"SirVer/ultisnips"} -- TODO: port my snippets from vscode
+  -- use {
+  --   "SirVer/ultisnips",
+  --   setup = function()
+  --     vim.g.UltiSnipsExpandTrigger = "<f5>"
+  --   end,
+  -- } -- TODO: port my snippets from vscode
 
   -- Send to terminal
   use {
@@ -844,7 +849,6 @@ return require("packer").startup(function(use)
     disable = not O.plugin.doge.active,
   }
 
-  -- TODO: change to null-ls or formatter.nvim (steal from lunarvim)
   -- -- Autoformat everything
   -- use {
   --   "sbdchd/neoformat",
@@ -1041,3 +1045,4 @@ return require("packer").startup(function(use)
   -- https://github.com/jbyuki/nabla.nvim
   -- https://github.com/justinmk/vim-dirvish -- netrw/nvim-tree alternative
 end)
+

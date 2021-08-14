@@ -37,7 +37,7 @@ lsps:
 
 # Open neovim with main settings files
 settings:
-    {{nvim}} init.lua lv-config.lua lua/default-config.lua lua/settings.lua lua/plugins.lua lua/keymappings.lua lua/lv-which-key/init.lua
+    {{nvim}} init.lua.lua lua/config.lua lua/settings.lua lua/plugins.lua lua/keymappings.lua lua/lv-which-key/init.lua
 
 # Open plugins.lua (and PackerInstall automatically afterwards)
 plugins:

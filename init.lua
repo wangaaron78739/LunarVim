@@ -38,8 +38,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 -- Source the config files
-require "default-config"
-vim.cmd("luafile " .. CONFIG_PATH .. "/lv-config.lua")
+require "config"
 require "keymappings"
 require "settings"
 require "plugins"
