@@ -63,11 +63,54 @@ return require("packer").startup(function(use)
   -- Autocomplete
   -- TODO: replace with hrsh7th/nvim-cmp
   use {
-    "hrsh7th/nvim-compe",
+    "ms-jpq/coq_nvim",
+    branch = "coq",
     config = function()
-      require("lv-compe").config()
+      require("lv-coq").config()
     end,
-    -- event = "InsertEnter",
+    disable = not O.plugin.coq.active,
+  }
+  use {
+    "ms-jpq/coq.artifacts",
+    branch = "artifacts",
+    after = "coq_nvim",
+    disable = not O.plugin.coq.active,
+  }
+  -- use {
+  --   "hrsh7th/nvim-compe",
+  --   "hrsh7th/nvim-cmp",
+  --   config = function()
+  --     require("lv-compe").config()
+  --     require("lv-cmp").config()
+  --   end,
+  --   -- event = "InsertEnter",
+  -- disable = not O.plugin.compe.active,
+  -- }
+  -- -- Tabout
+  -- use {
+  --   "abecodes/tabout.nvim",
+  --   config = function()
+  --   end,
+  --   after = { "nvim-compe" }, -- if a completion plugin is using tabs load it before
+  -- disable = not O.plugin.compe.active,
+  -- }
+  -- -- Tabnine
+  -- use {
+  --   "tzachar/compe-tabnine",
+  --   run = "./install.sh",
+  --   after = "nvim-compe",
+  --   -- event = "InsertEnter",
+  --   disable = not O.plugin.tabnine.active,
+  -- disable = not O.plugin.compe.active,
+  -- }
+  -- Autopairs
+  use {
+    "windwp/nvim-autopairs",
+    config = function()
+      require "lv-autopairs"
+    end,
+    -- after = { "nvim-compe", "telescope.nvim" },
+    after = "telescope.nvim",
   }
 
   -- VSCode style snippets
@@ -96,16 +139,6 @@ return require("packer").startup(function(use)
 
   -- whichkey
   use { "folke/which-key.nvim" }
-
-  -- Autopairs
-  use {
-    "windwp/nvim-autopairs",
-    config = function()
-      require "lv-autopairs"
-    end,
-    -- after = { "nvim-compe", "telescope.nvim" },
-    after = "telescope.nvim",
-  }
 
   -- Comments
   use {
@@ -489,15 +522,6 @@ return require("packer").startup(function(use)
   use {
     "christoomey/vim-tmux-navigator",
     disable = not O.plugin.tmux_navigator.active,
-  }
-
-  -- Tabnine
-  use {
-    "tzachar/compe-tabnine",
-    run = "./install.sh",
-    after = "nvim-compe",
-    -- event = "InsertEnter",
-    disable = not O.plugin.tabnine.active,
   }
 
   -- LANGUAGE SPECIFIC GOES HERE
@@ -933,37 +957,6 @@ return require("packer").startup(function(use)
   -- use { "~/code/glow.nvim", run = ":GlowInstall" }
 
   use {
-    "abecodes/tabout.nvim",
-    config = function()
-      local pairs = {
-        "''",
-        '""',
-        "``",
-        "()",
-        "{}",
-        "[]",
-      }
-      require("tabout").setup {
-        tabkey = "", -- key to trigger tabout
-        backwards_tabkey = "", -- key to trigger tabout
-        act_as_tab = true, -- shift content if tab out is not possible
-        completion = true, -- if the tabkey is used in a completion pum
-        tabouts = {
-          { open = "'", close = "'" },
-          { open = '"', close = '"' },
-          { open = "`", close = "`" },
-          { open = "(", close = ")" },
-          { open = "[", close = "]" },
-          { open = "{", close = "}" },
-        },
-        ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
-        exclude = {}, -- tabout will ignore these filetypes
-      }
-    end,
-    after = { "nvim-compe" }, -- if a completion plugin is using tabs load it before
-  }
-
-  use {
     "gelguy/wilder.nvim",
     config = function()
       require("lv-wilder").config()
@@ -1045,4 +1038,3 @@ return require("packer").startup(function(use)
   -- https://github.com/jbyuki/nabla.nvim
   -- https://github.com/justinmk/vim-dirvish -- netrw/nvim-tree alternative
 end)
-

@@ -39,6 +39,9 @@ function M.define_augroups(definitions) -- {{{1
     vim.cmd "augroup END"
   end
 end
+function M.define_aucmd(name, aucmd)
+  M.define_augroups { [name] = { aucmd } }
+end
 
 function M.quickfix_toggle()
   vim.cmd [[

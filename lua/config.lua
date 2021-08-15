@@ -182,6 +182,8 @@ O = {
     doge = { active = enable_plugins_by_default },
     undotree = { active = enable_plugins_by_default },
     ts_iswap = { active = enable_plugins_by_default },
+    coq = { active = enable_plugins_by_default },
+    compe = { active = enable_plugins_by_default },
   },
   custom_plugins = {},
   lang = {

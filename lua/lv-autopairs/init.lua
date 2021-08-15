@@ -5,10 +5,10 @@ local npairs = require "nvim-autopairs"
 local Rule = require "nvim-autopairs.rule"
 
 -- if package.loaded["compe"] then
-require("nvim-autopairs.completion.compe").setup {
-  map_cr = true, --  map <CR> on insert mode
-  map_complete = true, -- it will auto insert `(` after select function or method item
-}
+-- require("nvim-autopairs.completion.compe").setup {
+--   map_cr = true, --  map <CR> on insert mode
+--   map_complete = true, -- it will auto insert `(` after select function or method item
+-- }
 -- end
 
 npairs.setup {
@@ -29,4 +29,3 @@ npairs.add_rules {
   Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node { "string", "comment" }),
   Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node { "function" }),
 }
-
