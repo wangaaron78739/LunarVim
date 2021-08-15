@@ -6,7 +6,7 @@ if O.lang.rust.rust_tools.active then
   local opts = {
     tools = { -- rust-tools options
       inlay_hints = {
-        only_current_line = true,
+        -- only_current_line = true,
 
         -- prefix for parameter hints
         -- default: "<-"
