@@ -620,7 +620,6 @@ return require("packer").startup(function(use)
   -- Send to terminal
   use {
     "jpalardy/vim-slime",
-    disable = not O.plugin.slime.active,
     setup = function()
       require("lv-slime").preconf()
     end,
@@ -633,6 +632,7 @@ return require("packer").startup(function(use)
       "SlimeSendCurrentLine",
       "SlimeConfig",
     },
+    disable = not O.plugin.slime.active,
   }
   -- https://github.com/dccsillag/magma-nvim might be better
   use {
@@ -640,10 +640,19 @@ return require("packer").startup(function(use)
     config = function()
       require("lv-magma").config()
     end,
+    setup = function()
+      require("lv-magma").setup()
+    end,
     run = ":UpdateRemotePlugins",
     -- python3.9 -m pip install cairosvg pnglatex jupyter_client ipython ueberzug pillow
     ft = { "python", "julia" },
     keys = { "gx", "gxx" },
+    cmd = {
+      "MagmaEvaluateOperator",
+      "MagmaEvaluateVisual",
+      "MagmaEvaluateLine",
+    },
+    disable = not O.plugin.magma.active,
   }
 
   -- Better neovim terminal
@@ -662,7 +671,8 @@ return require("packer").startup(function(use)
       "TREPLSendSelection",
       "TREPLSendFile",
     },
-    keys = { "gt", "gtt" },
+    keys = { "<M-x>", "<M-x><M-x>" },
+    disable = not O.plugin.neoterm.active,
   }
 
   -- Repeat plugin commands

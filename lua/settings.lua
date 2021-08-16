@@ -121,7 +121,6 @@ require("lv-utils").define_augroups {
   _packer_compile = { { "User", "PackerComplete", "++once PackerCompile" } },
   _buffer_bindings = {
     { "FileType", "dashboard", "nnoremap <silent> <buffer> q :q<CR>" },
-    { "FileType", "lspinfo", "nnoremap <silent> <buffer> q :q<CR>" },
   },
   _terminal_insert = {
     -- { "BufEnter", "*", [[if &buftype == 'terminal' | :startinsert | endif]] },

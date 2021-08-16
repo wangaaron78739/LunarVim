@@ -33,6 +33,7 @@ M.term = popup(nil)
 M.gitui = popup "gitui"
 -- FIXME: broot unable to open files correctly
 M.broot = popup "broot"
+M.xplr = popup "xplr"
 M.python = popup "ipython"
 M.spt = popup "spt"
 M.top = popup "btm"

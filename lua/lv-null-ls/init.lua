@@ -29,7 +29,7 @@ function M.config()
       -- diagnostics.chktex, -- vimtex?
       diagnostics.eslint,
       diagnostics.flake8,
-      diagnostics.pylint,
+      -- diagnostics.pylint,
       diagnostics.hadolint,
       -- diagnostics.luacheck,
       -- diagnostics.selene,

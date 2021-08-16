@@ -63,6 +63,7 @@ vim.lsp.protocol.CompletionItemKind = {
 require("lv-utils").define_augroups {
   _general_lsp = {
     { "FileType", "lspinfo", "nnoremap <silent> <buffer> q :q<CR>" },
+    { "FileType", "lspinfo", "nnoremap <buffer> I :LspInstall " },
   },
 }
 
