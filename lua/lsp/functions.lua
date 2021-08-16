@@ -135,31 +135,12 @@ M.preview_location_at = function(name)
   return vim.lsp.buf_request(0, "textDocument/" .. name, params, preview_location_callback)
 end
 
-local diagnostics_show
 M.toggle_diagnostics = function()
-  diagnostics_show = not diagnostics_show
-
-  local diagstyle = {
-    virtual_text = false,
-    signs = false,
-    underline = false,
-  }
-  if diagnostics_show then
-    -- TODO: How to preserve old diagnostics settings?
-    vim.b.old_diagnostics = O.lsp.diagnostics
+  vim.b.lsp_diagnostics_hide = not vim.b.lsp_diagnostics_hide
+  if vim.b.lsp_diagnostics_hide then
+    vim.lsp.diagnostic.enable()
   else
-    diagstyle = vim.b.old_diagnostics
-  end
-
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics,
-    diagstyle
-  )
-
-  -- Refresh diagnostics
-  local clients = vim.lsp.buf_get_clients(0)
-  for k, v in pairs(clients) do
-    vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, k), 0, k, diagstyle)
+    vim.lsp.diagnostic.disable()
   end
 end
 
