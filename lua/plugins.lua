@@ -253,10 +253,7 @@ return require("packer").startup(function(use)
     "nacro90/numb.nvim",
     event = "BufRead",
     config = function()
-      require("numb").setup {
-        show_numbers = true, -- Enable 'number' for the window while peeking
-        show_cursorline = true, -- Enable 'cursorline' for the window while peeking
-      }
+      require("numb").setup(O.plugin.numb)
     end,
     disable = not O.plugin.numb.active,
   }
@@ -308,31 +305,7 @@ return require("packer").startup(function(use)
     cmd = "TroubleToggle",
     disable = not O.plugin.trouble.active,
     config = function()
-      -- TODO: move this to a separate file
-      vim.cmd [[
-            autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * silent! TroubleRefresh
-            ]]
-
-      require("trouble").setup {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        position = "right",
-        auto_preview = false,
-        hover = "h",
-      }
-
-      local trouble = require "trouble.providers.telescope"
-
-      local telescope = require "telescope"
-
-      telescope.setup {
-        defaults = {
-          mappings = {
-            i = { ["<c-t>"] = trouble.open_with_trouble },
-            n = { ["<c-t>"] = trouble.open_with_trouble },
-          },
-        },
-      }
+      require("lv-trouble").config()
     end,
   }
   -- Debugging
@@ -381,29 +354,7 @@ return require("packer").startup(function(use)
   use {
     "ahmedkhalf/project.nvim",
     config = function()
-      require("project_nvim").setup {
-        -- Manual mode doesn't automatically change your root directory, so you have
-        -- the option to manually do so using `:ProjectRoot` command.
-        -- manual_mode = false,
-
-        -- When set to false, you will get a message when project.nvim changes your
-        -- directory.
-        silent_chdir = false,
-
-        -- Methods of detecting the root directory. **"lsp"** uses the native neovim
-        -- lsp, while **"pattern"** uses vim-rooter like glob pattern matching. Here
-        -- order matters: if one is not detected, the other is used as fallback. You
-        -- can also delete or rearangne the detection methods.
-        -- detection_methods = { "lsp", "pattern" },
-
-        -- All the patterns used to detect root dir, when **"pattern"** is in
-        -- detection_methods
-        -- patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
-
-        -- Table of lsp clients to ignore by name
-        -- eg: { "efm", ... }
-        -- ignore_lsp = {},
-      }
+      require("project_nvim").setup(O.plugin.project_nvim)
 
       require("telescope").load_extension "projects"
     end,
@@ -472,19 +423,7 @@ return require("packer").startup(function(use)
     "ruifm/gitlinker.nvim",
     event = "BufRead",
     config = function()
-      require("gitlinker").setup {
-        opts = {
-          -- remote = 'github', -- force the use of a specific remote
-          -- adds current line nr in the url for normal mode
-          add_current_line_on_normal_mode = true,
-          -- callback for what to do with the url
-          action_callback = require("gitlinker.actions").open_in_browser,
-          -- print the url after performing the action
-          print_url = false,
-          -- mapping to call url generation
-          mappings = "<leader>gy",
-        },
-      }
+      require("gitlinker").setup(O.plugin.gitlinker)
     end,
     disable = not O.plugin.gitlinker.active,
     requires = "nvim-lua/plenary.nvim",
@@ -591,14 +530,7 @@ return require("packer").startup(function(use)
   use {
     "ray-x/lsp_signature.nvim",
     config = function()
-      local lsp_sign_opt = O.plugin.lsp_signature
-      lsp_sign_opt.bind = true
-      lsp_sign_opt.handler_opts = {
-        border = O.lsp.border, -- double, single, shadow, none
-      }
-      lsp_sign_opt.hint_scheme = "String"
-      lsp_sign_opt.hi_parameter = "Search"
-      require("lsp_signature").setup(lsp_sign_opt)
+      require("lsp_signature").setup(O.plugin.lsp_signature)
     end,
   }
   use {
@@ -606,7 +538,7 @@ return require("packer").startup(function(use)
     config = function()
       vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
     end,
-    event = BufRead,
+    event = "BufRead",
   }
 
   use { "RishabhRD/popfix" }
@@ -621,16 +553,7 @@ return require("packer").startup(function(use)
       vim.lsp.handlers["textDocument/implementation"] = require("lsputil.locations").implementation_handler
       -- vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
       -- vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
-      vim.cmd [[
-        au FileType lsputil_codeaction_list nmap <buffer> K <CR>
-      ]]
-      -- vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler
-      -- vim.lsp.handlers['textDocument/definition'] = require'lsputil.locations'.definition_handler
-      -- vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
-      -- vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
-      -- vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
-      -- vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
-      -- vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
+      vim.cmd [[ au FileType lsputil_codeaction_list nmap <buffer> K <CR> ]]
     end,
   }
 
@@ -639,7 +562,7 @@ return require("packer").startup(function(use)
     "unblevable/quick-scope",
     keys = O.plugin.quickscope.on_keys,
     event = (O.plugin.quickscope.on_keys == nil) and "BufRead" or nil,
-    config = function()
+    setup = function()
       vim.g.qs_highlight_on_keys = O.plugin.quickscope.on_keys
     end,
     disable = not O.plugin.quickscope.active,
@@ -715,16 +638,12 @@ return require("packer").startup(function(use)
   use {
     "dccsillag/magma-nvim",
     config = function()
-      local remap = vim.api.nvim_set_keymap
-      remap("n", "gx", ":MagmaEvaluateOperator<CR>", { expr = true, silent = true })
-      remap("v", "gx", ":<C-u>MagmaEvaluateVisual<CR>", { silent = true })
-      remap("n", "gxx", "<cmd>MagmaEvaluateLine<CR>", { silent = true })
-      vim.g.magma_automatically_open_output = false
-      -- TODO: add autocommands to initialize the kernel?
+      require("lv-magma").config()
     end,
     run = ":UpdateRemotePlugins",
     -- python3.9 -m pip install cairosvg pnglatex jupyter_client ipython ueberzug pillow
     ft = { "python", "julia" },
+    keys = { "gx", "gxx" },
   }
 
   -- Better neovim terminal
@@ -733,8 +652,17 @@ return require("packer").startup(function(use)
     config = function()
       require("lv-neoterm").config()
     end,
-    cmd = { "T", "Tmap", "Tnew", "Ttoggle", "Topen" },
-    keys = { "gx", "gxx" },
+    cmd = {
+      "T",
+      "Tmap",
+      "Tnew",
+      "Ttoggle",
+      "Topen",
+      "TREPLSendLine",
+      "TREPLSendSelection",
+      "TREPLSendFile",
+    },
+    keys = { "gt", "gtt" },
   }
 
   -- Repeat plugin commands
@@ -897,17 +825,7 @@ return require("packer").startup(function(use)
     -- AckslD/nvim-anywise-reg.lua
     event = "BufRead",
     config = function()
-      require("anywise_reg").setup {
-        operators = { "y", "d" }, -- putting 'c' breaks it (wrong insert mode cursor)
-        registers = { "+", "a" },
-        textobjects = {
-          { "a", "i" }, -- Add 'i' if you want to track inner selections as well
-          -- TODO: how to auto get all the textobjects in the world
-          { "w", "W", "b", "B", "(", "a", "f", "m", "s", "/", "c" },
-        },
-        paste_keys = { ["p"] = "p", ["P"] = "P" },
-        register_print_cmd = false,
-      }
+      require("anywise_reg").setup(O.plugin.anywise_reg)
     end,
     disable = not O.plugin.anywise_reg.active,
   }
@@ -929,14 +847,8 @@ return require("packer").startup(function(use)
     config = function()
       local reload = require "nvim-reload"
       reload.modules_reload_external = { "packer" }
-      reload.vim_reload_dirs = {
-        CONFIG_PATH,
-        PLUGIN_PATH,
-      }
-      reload.lua_reload_dirs = {
-        CONFIG_PATH,
-        PLUGIN_PATH,
-      }
+      reload.vim_reload_dirs = { CONFIG_PATH, PLUGIN_PATH }
+      reload.lua_reload_dirs = { CONFIG_PATH, PLUGIN_PATH }
       reload.post_reload_hook = function()
         vim.cmd "noh"
       end
@@ -945,9 +857,9 @@ return require("packer").startup(function(use)
 
   use {
     "AndrewRadev/splitjoin.vim",
-    config = function()
-      vim.api.nvim_set_keymap("n", "gj", "gJ", {})
-      vim.api.nvim_set_keymap("n", "gs", "gS", {})
+    setup = function()
+      vim.g.splitjoin_split_mapping = "gs"
+      vim.g.splitjoin_join_mapping = "gj"
     end,
   }
 

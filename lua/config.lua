@@ -21,6 +21,7 @@ local diagnostics = {
   update_in_insert = true,
 }
 
+-- TODO: Cleanup this config struct
 O = {
   format_on_save = true,
   format_on_save_timeout = 500,
@@ -111,7 +112,11 @@ O = {
     dashboard = { active = enable_plugins_by_default },
     matchup = { active = enable_plugins_by_default },
     colorizer = { active = enable_plugins_by_default },
-    numb = { active = enable_plugins_by_default },
+    numb = {
+      active = enable_plugins_by_default,
+      show_numbers = true, -- Enable 'number' for the window while peeking
+      show_cursorline = true, -- Enable 'cursorline' for the window while peeking
+    },
     zen = { active = enable_plugins_by_default },
     ts_playground = { active = enable_plugins_by_default },
     ts_context_commentstring = { active = enable_plugins_by_default },
@@ -129,7 +134,30 @@ O = {
     trouble = { active = enable_plugins_by_default },
     floatterm = { active = enable_plugins_by_default },
     spectre = { active = enable_plugins_by_default },
-    project_nvim = { active = enable_plugins_by_default },
+    project_nvim = {
+      active = enable_plugins_by_default,
+      -- Manual mode doesn't automatically change your root directory, so you have
+      -- the option to manually do so using `:ProjectRoot` command.
+      -- manual_mode = false,
+
+      -- When set to false, you will get a message when project.nvim changes your
+      -- directory.
+      silent_chdir = false,
+
+      -- Methods of detecting the root directory. **"lsp"** uses the native neovim
+      -- lsp, while **"pattern"** uses vim-rooter like glob pattern matching. Here
+      -- order matters: if one is not detected, the other is used as fallback. You
+      -- can also delete or rearangne the detection methods.
+      -- detection_methods = { "lsp", "pattern" },
+
+      -- All the patterns used to detect root dir, when **"pattern"** is in
+      -- detection_methods
+      -- patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
+
+      -- Table of lsp clients to ignore by name
+      -- eg: { "efm", ... }
+      -- ignore_lsp = {},
+    },
     markdown_preview = { active = enable_plugins_by_default },
     codi = { active = enable_plugins_by_default },
     telescope_fzy = { active = enable_plugins_by_default },
@@ -149,9 +177,40 @@ O = {
       hint_prefix = "🐼 ", -- Panda for parameter
       max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
       max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
+      bind = true,
+      handler_opts = {
+        border = "rounded", -- double, single, shadow, none
+      },
+      hint_scheme = "String",
+      hi_parameter = "Search",
     },
     git_blame = { active = enable_plugins_by_default },
-    gitlinker = { active = enable_plugins_by_default },
+    gitlinker = {
+      active = enable_plugins_by_default,
+      opts = {
+        -- Manual mode doesn't automatically change your root directory, so you have
+        -- the option to manually do so using `:ProjectRoot` command.
+        -- manual_mode = false,
+
+        -- When set to false, you will get a message when project.nvim changes your
+        -- directory.
+        silent_chdir = false,
+
+        -- Methods of detecting the root directory. **"lsp"** uses the native neovim
+        -- lsp, while **"pattern"** uses vim-rooter like glob pattern matching. Here
+        -- order matters: if one is not detected, the other is used as fallback. You
+        -- can also delete or rearangne the detection methods.
+        -- detection_methods = { "lsp", "pattern" },
+
+        -- All the patterns used to detect root dir, when **"pattern"** is in
+        -- detection_methods
+        -- patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
+
+        -- Table of lsp clients to ignore by name
+        -- eg: { "efm", ... }
+        -- ignore_lsp = {},
+      },
+    },
     lazygit = { active = enable_plugins_by_default },
     octo = { active = enable_plugins_by_default },
     lush = { active = enable_plugins_by_default },
@@ -178,7 +237,18 @@ O = {
     tmux_navigator = { active = enable_plugins_by_default },
     flutter_tools = { active = enable_plugins_by_default },
     editorconfig = { active = enable_plugins_by_default },
-    anywise_reg = { active = enable_plugins_by_default },
+    anywise_reg = {
+      active = enable_plugins_by_default,
+      operators = { "y", "d" }, -- putting 'c' breaks it (wrong insert mode cursor)
+      registers = { "+", "a" },
+      textobjects = {
+        { "a", "i" }, -- Add 'i' if you want to track inner selections as well
+        -- TODO: how to auto get all the textobjects in the world
+        { "w", "W", "b", "B", "(", "a", "f", "m", "s", "/", "c" },
+      },
+      paste_keys = { ["p"] = "p", ["P"] = "P" },
+      register_print_cmd = false,
+    },
     doge = { active = enable_plugins_by_default },
     undotree = { active = enable_plugins_by_default },
     ts_iswap = { active = enable_plugins_by_default },
