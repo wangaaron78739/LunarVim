@@ -1,5 +1,15 @@
 local M = {}
 
+M.setup = function(name)
+  coq = require "coq"()
+  return function(obj)
+    name.setup(coq.lsp_ensure_capabilities(obj))
+  end
+end
+M.lspconfig = function(name)
+  return M.setup(require("lspconfig")[name])
+end
+
 -- Location information about the last message printed. The format is
 -- `(did print, buffer number, line number)`.
 local last_echo = { false, -1, -1 }
