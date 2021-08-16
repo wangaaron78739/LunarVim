@@ -55,7 +55,7 @@ O = {
   document_highlight = true,
   autoecho_line_diagnostics = false,
   leader_key = "space",
-  localleader_key = ",",
+  local_leader_key = ",",
   vnsip_dir = CONFIG_PATH .. "/snippets",
   breakpoint_sign = { text = "🛑", texthl = "LspDiagnosticsSignError", linehl = "", numhl = "" },
   lsp = {

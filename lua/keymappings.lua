@@ -21,12 +21,12 @@ else
   map("n", O.leader_key, "<NOP>", nore)
   vim.g.mapleader = O.leader_key
 end
-if O.localleader_key == " " or O.localleader_key == "space" then
+if O.local_leader_key == " " or O.local_leader_key == "space" then
   map("n", "<Space>", "<NOP>", nore)
   vim.g.maplocalleader = " "
 else
-  map("n", O.localleader_key, "<NOP>", nore)
-  vim.g.maplocalleader = O.localleader_key
+  map("n", O.local_leader_key, "<NOP>", nore)
+  vim.g.maplocalleader = O.local_leader_key
 end
 
 vim.cmd [[
