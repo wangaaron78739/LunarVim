@@ -165,14 +165,22 @@ end
 
 -- TODO: Implement codeLens handlers
 M.show_codelens = function()
-  vim.cmd [[ autocmd BufEnter,CursorHold,InsertLeave * lua vim.lsp.codelens.refresh() ]]
+  -- vim.cmd [[ autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh() ]]
+  -- vim.api.nvim_exec(
+  --   [[
+  --   augroup lsp_codelens_refresh
+  --     autocmd! * <buffer>
+  --     autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()
+  --   augroup END
+  --   ]],
+  --   false
+  -- )
+
   local clients = vim.lsp.buf_get_clients(0)
   for k, v in pairs(clients) do
     vim.lsp.codelens.display(vim.lsp.codelens.get(0, k), 0, k, O.lsp.codeLens)
+    -- vim.lsp.codelens.display(nil, 0, k, O.lsp.codeLens)
   end
-end
-M.run_codelens = function()
-  vim.lsp.codelens.run()
 end
 
 -- TODO: what is this?
@@ -195,7 +203,7 @@ end
 
 M.common_on_attach = function(client, bufnr)
   -- Handle document highlighting
-  if O.document_highlight then
+  if O.lsp.document_highlight then
     -- Set autocommands conditional on server_capabilities
     if client.resolved_capabilities.document_highlight then
       vim.api.nvim_exec(
@@ -211,7 +219,21 @@ M.common_on_attach = function(client, bufnr)
     end
   end
 
-  if O.autoecho_line_diagnostics then
+  if O.lsp.live_codelens then
+    if client.resolved_capabilities.code_lens then
+      vim.api.nvim_exec(
+        [[
+        augroup lsp_codelens_refresh
+          autocmd! * <buffer>
+          autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()
+        augroup END
+        ]],
+        false
+      )
+    end
+  end
+
+  if O.lsp.autoecho_line_diagnostics then
     -- if client.resolved_capabilities.document_highlight then
     -- autocmd CursorHoldI <buffer> lua vim.lsp.buf.signature_help()
     vim.api.nvim_exec(

@@ -52,13 +52,14 @@ O = {
   hl_search = true,
   inc_subs = "split",
   transparent_window = false,
-  document_highlight = true,
-  autoecho_line_diagnostics = false,
   leader_key = "space",
   local_leader_key = ",",
   vnsip_dir = CONFIG_PATH .. "/snippets",
   breakpoint_sign = { text = "🛑", texthl = "LspDiagnosticsSignError", linehl = "", numhl = "" },
   lsp = {
+    document_highlight = true,
+    autoecho_line_diagnostics = false,
+    live_codelens = true,
     -- none, single, double, rounded, solid, shadow, array(fullcustom)
     border = "rounded",
     rename_border = "none",

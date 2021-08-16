@@ -75,31 +75,12 @@ vim.g.python3_host_prog = O.python_interp
 -- Default autocommands
 require("lv-utils").define_augroups {
   _general_settings = {
-    {
-      "TextYankPost",
-      "*",
-      "lua require('vim.highlight').on_yank({higroup = 'Search', timeout = 200})",
-    },
-    {
-      "BufWinEnter",
-      "*",
-      "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
-    },
-    {
-      "BufRead",
-      "*",
-      "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
-    },
-    {
-      "BufRead",
-      "*",
-      "set hlsearch",
-    },
-    {
-      "BufNewFile",
-      "*",
-      "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
-    },
+    { "TextYankPost", "*", "lua require('vim.highlight').on_yank({higroup = 'Search', timeout = 200})" },
+    { "BufWinEnter", "*", "setlocal formatoptions-=c formatoptions-=r formatoptions-=o" },
+    { "BufRead", "*", "setlocal formatoptions-=c formatoptions-=r formatoptions-=o" },
+    { "BufRead", "*", "set hlsearch" },
+    -- { "CursorMoved,InsertEnter", "*", "nohlsearch" },
+    { "BufNewFile", "*", "setlocal formatoptions-=c formatoptions-=r formatoptions-=o" },
     { "FileType", "qf", "set nobuflisted" },
     -- TODO: Test This -- { "BufWritePost", "lv-config.lua", "lua require('lv-utils').reload_lv_config()" },
     -- { "VimLeavePre", "*", "set title set titleold=" },

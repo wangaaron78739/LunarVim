@@ -310,6 +310,7 @@ map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", sile)
 map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", sile)
 map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", sile)
 map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", sile)
+map("n", "gK", "<cmd>lua vim.lsp.codelens.run()<CR>", sile)
 -- map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", sile)
 -- Preview variants
 map("n", "gpd", [[<cmd>lua require("lsp.functions").preview_location_at("definition")<CR>]], sile)

@@ -51,6 +51,12 @@ if O.lang.rust.rust_tools.active then
   noremap("v", "<leader>lh", "<Cmd>RustHoverRange<CR>", { buffer = true })
   noremap("v", "gh", "<cmd>RustHoverRange<CR>", { buffer = true })
   noremap("n", "gj", "<cmd>RustJoinLines<CR>", { buffer = true })
+
+  -- require("lv-utils").define_augroups {
+  --   _rust_hover_range = {
+  --     { "CursorHold, CursorHoldI", "<buffer>", "RustHoverActions" },
+  --   },
+  -- }
 else
   vim.cmd [[ autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} } ]]
 

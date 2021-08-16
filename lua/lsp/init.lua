@@ -65,6 +65,12 @@ require("lv-utils").define_augroups {
     { "FileType", "lspinfo", "nnoremap <silent> <buffer> q :q<CR>" },
     { "FileType", "lspinfo", "nnoremap <buffer> I :LspInstall " },
   },
+  -- _codelens_refesh = {
+  --   { "BufEnter,CursorHold,InsertLeave", "*", "lua vim.lsp.codelens.refresh()" },
+  -- },
+  -- _lsp_hover = {
+  --   { "CursorHold, CursorHoldI", "*", "lua vim.lsp.buf.hover()" },
+  -- },
 }
 
 -- -- TODO: enable this in a ftplugin maybe
