@@ -1,5 +1,5 @@
 if not require("lv-utils").check_lsp_client_active "gopls" then
-  require("lspconfig").gopls.setup {
+  require("lsp.functions").lspconfig("gopls") {
     cmd = { DATA_PATH .. "/lspinstall/go/gopls" },
     settings = { gopls = { analyses = { unusedparams = true }, staticcheck = true } },
     root_dir = require("lspconfig").util.root_pattern(".git", "go.mod"),

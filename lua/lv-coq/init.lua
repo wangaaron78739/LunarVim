@@ -4,10 +4,9 @@ function M.config()
   -- TODO: reintegrate tabout
   vim.g.coq_settings = {
     ["keymap.jump_to_mark"] = "<c-n>",
-    ["clients.snippets.sources"] = {},
     -- ["limits.completion_auto_timeout"] =
   }
 
-  require("lv-utils").define_aucmd("_coq_start", { "BufRead", "*", "++once silent ! COQnow" })
+  require("lv-utils").define_aucmd("_coq_start", { "VimEnter", "*", "COQnow --shut-up" })
 end
 return M

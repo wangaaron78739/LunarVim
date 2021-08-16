@@ -1,5 +1,5 @@
 -- npm i -g pyright
-require("lspconfig").pyright.setup {
+require("lsp.functions").lspconfig("pyright") {
   cmd = {
     DATA_PATH .. "/lspinstall/python/node_modules/.bin/pyright-langserver",
     "--stdio",

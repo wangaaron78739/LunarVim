@@ -27,7 +27,7 @@ if O.lang.clang.autoformat then
   }
 end
 
-require("lspconfig").clangd.setup {
+require("lsp.functions").lspconfig("clangd") {
   cmd = {
     DATA_PATH .. "/lspinstall/cpp/clangd/bin/clangd",
     unpack(clangd_flags),

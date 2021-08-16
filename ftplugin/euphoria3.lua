@@ -3,7 +3,7 @@ if require("lv-utils").check_lsp_client_active "elixirls" then
 end
 
 -- TODO Remove this at some point
-require("lspconfig").elixirls.setup {
+require("lsp.functions").lspconfig("elixirls") {
   cmd = { DATA_PATH .. "/lspinstall/elixir/elixir-ls/language_server.sh" },
   flags = O.lsp.flags,
 }

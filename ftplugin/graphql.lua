@@ -3,4 +3,7 @@ if require("lv-utils").check_lsp_client_active "graphql" then
 end
 
 -- npm install -g graphql-language-service-cli
-require("lspconfig").graphql.setup { on_attach = require("lsp.functions").common_on_attach, flags = O.lsp.flags }
+require("lsp.functions").lspconfig "graphql" {
+  on_attach = require("lsp.functions").common_on_attach,
+  flags = O.lsp.flags,
+}

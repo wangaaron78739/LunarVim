@@ -3,7 +3,7 @@ if require("lv-utils").check_lsp_client_active "dockerls" then
 end
 
 -- npm install -g dockerfile-language-server-nodejs
-require("lspconfig").dockerls.setup {
+require("lsp.functions").lspconfig("dockerls") {
   cmd = {
     DATA_PATH .. "/lspinstall/dockerfile/node_modules/.bin/docker-langserver",
     "--stdio",

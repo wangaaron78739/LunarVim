@@ -21,16 +21,6 @@ if O.lang.rust.rust_tools.active then
         -- the border that is used for the hover window
         -- see vim.api.nvim_open_win()
         border = O.lsp.border,
-        -- border = {
-        --   { "╭", "FloatBorder" },
-        --   { "─", "FloatBorder" },
-        --   { "╮", "FloatBorder" },
-        --   { "│", "FloatBorder" },
-        --   { "╯", "FloatBorder" },
-        --   { "─", "FloatBorder" },
-        --   { "╰", "FloatBorder" },
-        --   { "│", "FloatBorder" },
-        -- },
       },
       autofocus = true,
     },
@@ -38,7 +28,7 @@ if O.lang.rust.rust_tools.active then
     -- all the opts to send to nvim-lspconfig
     -- these override the defaults set by rust-tools.nvim
     -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
-    server = {
+    server = require("lsp.functions").coq_lsp {
       cmd = { DATA_PATH .. "/lspinstall/rust/rust-analyzer" },
       on_attach = require("lsp.functions").common_on_attach,
       settings = {
@@ -53,13 +43,21 @@ if O.lang.rust.rust_tools.active then
   }
   require("rust-tools").setup(opts)
 
-  local map = vim.api.nvim_buf_set_keymap
-  -- map("n", "gj", "<cmd>RustJoinLines<cr>", {})
-  vim.cmd [[ autocmd FileType rust nmap gj <cmd>RustJoinLines<cr>]]
+  -- TODO fix these mappings
+  vim.api.nvim_exec(
+    [[
+    autocmd Filetype rust nnoremap <leader>lm <Cmd>RustExpandMacro<CR>
+    autocmd Filetype rust nnoremap <leader>lH <Cmd>RustToggleInlayHints<CR>
+    autocmd Filetype rust nnoremap <leader>le <Cmd>RustRunnables<CR>
+    autocmd Filetype rust nnoremap <leader>lh <Cmd>RustHoverActions<CR>
+    autocmd FileType rust nnoremap gj <cmd>RustJoinLines<cr>
+    ]],
+    true
+  )
 else
   vim.cmd [[ autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} } ]]
 
-  require("lspconfig").rust_analyzer.setup {
+  require("lsp.functions").lspconfig "rust_analyzer" {
     cmd = { DATA_PATH .. "/lspinstall/rust/rust-analyzer" },
     on_attach = require("lsp.functions").common_on_attach,
     filetypes = { "rust" },
@@ -81,17 +79,6 @@ else
     flags = O.lsp.flags,
   }
 end
-
--- TODO fix these mappings
-vim.api.nvim_exec(
-  [[
-    autocmd Filetype rust nnoremap <leader>lm <Cmd>RustExpandMacro<CR>
-    autocmd Filetype rust nnoremap <leader>lH <Cmd>RustToggleInlayHints<CR>
-    autocmd Filetype rust nnoremap <leader>le <Cmd>RustRunnables<CR>
-    autocmd Filetype rust nnoremap <leader>lh <Cmd>RustHoverActions<CR>
-    ]],
-  true
-)
 
 if O.lang.rust.autoformat then
   require("lv-utils").define_augroups {

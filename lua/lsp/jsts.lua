@@ -54,7 +54,7 @@ M.setup = function()
   -- require'completion'.on_attach(client)
   -- require'illuminate'.on_attach(client)
   -- end
-  require("lspconfig").tsserver.setup {
+  require("lsp.functions").lspconfig("tsserver") {
     cmd = {
       DATA_PATH .. "/lspinstall/typescript/node_modules/.bin/typescript-language-server",
       "--stdio",

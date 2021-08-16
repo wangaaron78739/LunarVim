@@ -10,7 +10,7 @@ local M = {}
 -- end
 M.setup = function()
   if not require("lv-utils").check_lsp_client_active "tsserver" then
-    require("lspconfig").tsserver.setup {
+    require("lsp.functions").lspconfig("tsserver") {
       cmd = {
         DATA_PATH .. "/lspinstall/typescript/node_modules/.bin/typescript-language-server",
         "--stdio",

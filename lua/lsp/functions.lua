@@ -1,9 +1,11 @@
 local M = {}
 
+M.coq = require "coq"()
+M.coq_lsp = M.coq.lsp_ensure_capabilities
 M.setup = function(name)
-  coq = require "coq"()
   return function(obj)
-    name.setup(coq.lsp_ensure_capabilities(obj))
+    -- TODO: inject flags and on_attach here
+    name.setup(M.coq_lsp(obj))
   end
 end
 M.lspconfig = function(name)

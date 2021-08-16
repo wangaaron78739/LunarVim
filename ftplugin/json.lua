@@ -3,7 +3,7 @@ if require("lv-utils").check_lsp_client_active "jsonls" then
 end
 
 -- npm install -g vscode-json-languageserver
-require("lspconfig").jsonls.setup {
+require("lsp.functions").lspconfig("jsonls") {
   cmd = {
     "node",
     DATA_PATH .. "/lspinstall/json/vscode-json/json-language-features/server/dist/node/jsonServerMain.js",

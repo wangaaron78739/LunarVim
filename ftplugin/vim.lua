@@ -3,7 +3,7 @@ if require("lv-utils").check_lsp_client_active "vimls" then
 end
 
 -- npm install -g vim-language-server
-require("lspconfig").vimls.setup {
+require("lsp.functions").lspconfig("vimls") {
   cmd = {
     DATA_PATH .. "/lspinstall/vim/node_modules/.bin/vim-language-server",
     "--stdio",

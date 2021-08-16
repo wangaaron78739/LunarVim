@@ -3,7 +3,7 @@ if require("lv-utils").check_lsp_client_active "solargraph" then
 end
 
 -- If you are using rvm, make sure to change below configuration
-require("lspconfig").solargraph.setup {
+require("lsp.functions").lspconfig("solargraph") {
   cmd = { DATA_PATH .. "/lspinstall/ruby/solargraph/solargraph", "stdio" },
   on_attach = require("lsp.functions").common_on_attach,
   handlers = {
