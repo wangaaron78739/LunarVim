@@ -31,6 +31,10 @@ local textobj_move_keymaps = {
   goto_next_end = {},
   goto_previous_start = {},
   goto_previous_end = {},
+  sel_next_outer = {},
+  sel_next_inner = {},
+  sel_previous_outer = {},
+  sel_previous_inner = {},
 }
 for obj, suffix in pairs(textobj_suffixes) do
   if textobj_prefixes["goto_next"] ~= nil then
@@ -40,6 +44,27 @@ for obj, suffix in pairs(textobj_suffixes) do
   if textobj_prefixes["goto_previous"] ~= nil then
     textobj_move_keymaps["goto_previous_start"][textobj_prefixes["goto_previous"] .. suffix[2]] = "@" .. obj .. ".outer"
     textobj_move_keymaps["goto_previous_end"][textobj_prefixes["goto_previous"] .. suffix[1]] = "@" .. obj .. ".outer"
+  end
+
+  if textobj_prefixes["sel_next"] ~= nil then
+    textobj_move_keymaps["sel_next_outer"][textobj_prefixes["sel_next"] .. suffix[1]] = {
+      ":lua require('nvim-treesitter.textobjects.move').goto_next_start('@" .. obj .. ".outer')<cr>va" .. suffix[1],
+      "@" .. obj .. ".outer",
+    }
+    textobj_move_keymaps["sel_next_inner"][textobj_prefixes["sel_next"] .. suffix[2]] = {
+      ":lua require('nvim-treesitter.textobjects.move').goto_next_start('@" .. obj .. ".inner')<cr>vi" .. suffix[1],
+      "@" .. obj .. ".inner",
+    }
+  end
+  if textobj_prefixes["sel_previous"] ~= nil then
+    textobj_move_keymaps["sel_previous_outer"][textobj_prefixes["sel_previous"] .. suffix[1]] = {
+      ":lua require('nvim-treesitter.textobjects.move').goto_previous_start('@" .. obj .. ".outer')<cr>va" .. suffix[1],
+      "@" .. obj .. ".outer",
+    }
+    textobj_move_keymaps["sel_previous_inner"][textobj_prefixes["sel_previous"] .. suffix[2]] = {
+      ":lua require('nvim-treesitter.textobjects.move').goto_previous_start('@" .. obj .. ".inner')<cr>vi" .. suffix[1],
+      "@" .. obj .. ".inner",
+    }
   end
 
   if textobj_prefixes["inner"] ~= nil then
@@ -57,12 +82,9 @@ end
 -- Add which key menu entries
 local status, wk = pcall(require, "which-key")
 if status then
-  local normal = {
-    mode = "n", -- Normal mode
-  }
-  local operators = {
-    mode = "o", -- Operator mode
-  }
+  local normal = { mode = "n" } -- Normal mode
+  local visual = { mode = "v" } -- Visual mode
+  local operators = { mode = "o" } -- Operator mode
   wk.register(textobj_sel_keymaps, operators)
   wk.register({
     ["m"] = "Hint Objects",
@@ -79,6 +101,10 @@ if status then
   wk.register(textobj_move_keymaps["goto_next_end"], normal)
   wk.register(textobj_move_keymaps["goto_previous_start"], normal)
   wk.register(textobj_move_keymaps["goto_previous_end"], normal)
+  wk.register(textobj_move_keymaps["sel_previous_outer"], visual)
+  wk.register(textobj_move_keymaps["sel_previous_inner"], visual)
+  wk.register(textobj_move_keymaps["sel_next_outer"], visual)
+  wk.register(textobj_move_keymaps["sel_next_inner"], visual)
 end
 
 require("nvim-treesitter.configs").setup {

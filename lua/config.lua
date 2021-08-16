@@ -82,14 +82,19 @@ O = {
     textobj_prefixes = {
       -- goto_next = "]", -- Go to next
       -- goto_next = "'", -- Go to next
-      goto_next = "&", -- Go to next
+      goto_next = "]", -- Go to next
       goto_previous = "[", -- Go to previous
+      -- goto_next = "<leader>n", -- Select next
+      -- goto_previous = "<leader>p", -- Select previous
+      sel_next = "]", -- Select next
+      sel_previous = "[", -- Select previous
       inner = "i", -- Select inside
       outer = "a", -- Selct around
       swap = "<leader>a", -- Swap with next
     },
     textobj_suffixes = {
       -- Start and End respectively for the goto keys
+      -- Outer and Inner for the select_{next,prev} keys
       -- for other keys it only uses the first
       ["function"] = { "f", "F" },
       ["class"] = { "m", "M" },
