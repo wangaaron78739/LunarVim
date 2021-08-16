@@ -98,6 +98,8 @@ map("x", "J", ":move '>+1<CR>gv=gv", nore)
 -- better indenting
 map("n", "<", "<<", { silent = true, noremap = true, nowait = true })
 map("n", ">", ">>", { silent = true, noremap = true, nowait = true })
+map("n", "<<", "<nop>", { silent = true, noremap = true, nowait = true })
+map("n", ">>", "<nop>", { silent = true, noremap = true, nowait = true })
 map("n", "g<", "<", nore)
 map("n", "g>", ">", nore)
 map("v", "<", "<gv", nore)
@@ -120,40 +122,48 @@ map("v", "p", "pgvy", nore)
 map("v", "P", "p", nore) -- for normal p behaviour
 
 -- Non destructive delete/change
-local function noclobber(m, c)
-  map(m, "<M-" .. c .. ">", '"_' .. c, nore)
+local function noclobber_meta(m, c)
+  if string.upper(c) == c then
+    map(m, "<M-S-" .. string.lower(c) .. ">", '"_' .. c, nore)
+  else
+    map(m, "<M-" .. c .. ">", '"_' .. c, nore)
+  end
 end
 local function noclobber_default(m, c)
-  map(m, "<M-" .. c .. ">", c, nore)
+  if string.upper(c) == c then
+    map(m, "<M-S-" .. string.lower(c) .. ">", c, nore)
+  else
+    map(m, "<M-" .. c .. ">", c, nore)
+  end
   map(m, c, '"_' .. c, nore)
 end
-noclobber("n", "d")
-noclobber("n", "D")
+noclobber_meta("n", "d")
+noclobber_meta("n", "D")
 noclobber_default("n", "c")
 noclobber_default("v", "c")
-map("v", "x", '"_d', nore)
-map("v", "r", '"_c', nore)
+noclobber_default("v", "C")
 
 -- Preserve cursor on yank in visual mode
 map("v", "y", "myy`y", nore)
+map("v", "Y", "myY`y", nore)
 map("v", "<M-y>", "y", nore)
 
--- Original paste for when 'nvim-anywise-reg.lua' is installed
-if O.plugin.anywise_reg.active then
-  map("n", "<M-p>", "p", nore)
-  map("n", "<M-S-P>", "P", nore)
-  map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
-  map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
-else
-  -- Paste over textobject
-  function _G.paste_over_operator()
-    require("lv-utils").operatorfunc_scaffold_keys("paste_over_operatorfunc", "p")
-  end
-  map("n", "<M-p>", "<cmd>call v:lua.paste_over_operator()<cr>", sile)
-  map("n", "r", "<cmd>call v:lua.paste_over_operator()<cr>", sile)
-  map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
-  map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
+-- -- Original paste for when 'nvim-anywise-reg.lua' is installed
+-- if O.plugin.anywise_reg.active then
+--   map("n", "<M-p>", "p", nore)
+--   map("n", "<M-S-P>", "P", nore)
+--   map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
+--   map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
+-- else
+
+-- Paste over textobject
+function _G.paste_over_operator()
+  require("lv-utils").operatorfunc_scaffold_keys("paste_over_operatorfunc", "p")
 end
+map("n", "<M-p>", "<cmd>call v:lua.paste_over_operator()<cr>", sile)
+map("n", "r", "<cmd>call v:lua.paste_over_operator()<cr>", sile)
+map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
+map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
 -- map("n", "<M-S-p>", [[<cmd>call setreg('p', getreg('+'), 'l')<cr>"pp]], nore) -- linewise paste
 
 -- Select next/previous text object
@@ -178,10 +188,9 @@ map("v", "<M-(>", "<Esc>F)vi)", sile)
 -- map("v", "<M-j>", "<Esc>jV", sile)
 -- map("v", "<M-k>", "<Esc>kV", sile)
 
--- map("v", "<M-l>", "o<ESC>lvlh", sile)
+-- Start selecting
 map("v", "<M-l>", "l", sile)
 map("n", "<M-l>", "<c-v>l", sile)
--- map("v", "<M-h>", "<ESC>hvhl", sile)
 map("v", "<M-h>", "h", sile)
 map("n", "<M-h>", "<c-v>h", sile)
 
@@ -258,7 +267,7 @@ map("n", "cp", "<Plug>TransposeCharacters", {})
 -- map("n", "xp", "<Plug>TransposeCharacters", {})
 
 -- Yank till end of the line
-map("n", "Y", "yg_", nore)
+map("n", "Y", "y$", nore)
 
 -- Go Back
 map("n", "gb", "<c-o>", nore)

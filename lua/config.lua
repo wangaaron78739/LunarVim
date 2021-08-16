@@ -107,7 +107,7 @@ O = {
       ["comment"] = { "/", "?" },
     },
     -- The below is for treesitter hint textobjects plugin
-    hint_labels = { "h", "j", "f", "d", "n", "v", "s", "l", "a" },
+    hint_labels = { "a", "s", "d", "f", "h", "j", "k", "l" },
   },
   database = { save_location = "~/.config/nvim/.db", auto_execute = 1 },
   plugin_which_keys = {},

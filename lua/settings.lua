@@ -104,20 +104,6 @@ require("lv-utils").define_augroups {
     -- TODO: Test This -- { "BufWritePost", "lv-config.lua", "lua require('lv-utils').reload_lv_config()" },
     -- { "VimLeavePre", "*", "set title set titleold=" },
   },
-  -- _solidity = {
-  --     {'BufWinEnter', '.sol', 'setlocal filetype=solidity'}, {'BufRead', '*.sol', 'setlocal filetype=solidity'},
-  --     {'BufNewFile', '*.sol', 'setlocal filetype=solidity'}
-  -- },
-  -- _gemini = {
-  --     {'BufWinEnter', '.gmi', 'setlocal filetype=markdown'}, {'BufRead', '*.gmi', 'setlocal filetype=markdown'},
-  --     {'BufNewFile', '*.gmi', 'setlocal filetype=markdown'}
-  -- },
-  -- _latex = {
-  --     {'FileType', 'latex', 'VimtexCompile'},
-  --     {'FileType', 'latex', 'setlocal wrap'},
-  --     {'FileType', 'latex', 'setlocal spell'}
-  --     -- {'FileType', 'latex', 'set guifont "FiraCode Nerd Font:h15'},
-  -- },
   _packer_compile = { { "User", "PackerComplete", "++once PackerCompile" } },
   _buffer_bindings = {
     { "FileType", "dashboard", "nnoremap <silent> <buffer> q :q<CR>" },
