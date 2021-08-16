@@ -43,17 +43,14 @@ if O.lang.rust.rust_tools.active then
   }
   require("rust-tools").setup(opts)
 
-  -- TODO fix these mappings
-  vim.api.nvim_exec(
-    [[
-    autocmd Filetype rust nnoremap <leader>lm <Cmd>RustExpandMacro<CR>
-    autocmd Filetype rust nnoremap <leader>lH <Cmd>RustToggleInlayHints<CR>
-    autocmd Filetype rust nnoremap <leader>le <Cmd>RustRunnables<CR>
-    autocmd Filetype rust nnoremap <leader>lh <Cmd>RustHoverActions<CR>
-    autocmd FileType rust nnoremap gj <cmd>RustJoinLines<cr>
-    ]],
-    true
-  )
+  -- -- TODO fix these mappings
+  noremap("n", "<leader>lm", "<Cmd>RustExpandMacro<CR>", { buffer = true })
+  noremap("n", "<leader>lH", "<Cmd>RustToggleInlayHints<CR>", { buffer = true })
+  noremap("n", "<leader>le", "<Cmd>RustRunnables<CR>", { buffer = true })
+  noremap("n", "<leader>lh", "<Cmd>RustHoverActions<CR>", { buffer = true })
+  noremap("v", "<leader>lh", "<Cmd>RustHoverRange<CR>", { buffer = true })
+  noremap("v", "gh", "<cmd>RustHoverRange<CR>", { buffer = true })
+  noremap("n", "gj", "<cmd>RustJoinLines<CR>", { buffer = true })
 else
   vim.cmd [[ autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} } ]]
 
