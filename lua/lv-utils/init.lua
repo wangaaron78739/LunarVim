@@ -1,5 +1,20 @@
 local M = {}
 
+function M.dump_table(o)
+  if type(o) == "table" then
+    local s = "{ "
+    for k, v in pairs(o) do
+      if type(k) ~= "number" then
+        k = '"' .. k .. '"'
+      end
+      s = s .. "[" .. k .. "] = " .. M.dump_table(v) .. ","
+    end
+    return s .. "} "
+  else
+    return tostring(o)
+  end
+end
+
 function M.reload_lv_config()
   -- FIXME: breaks things
   vim.cmd "source ~/.config/nvim/lv-config.lua"
@@ -137,5 +152,101 @@ vim.cmd [[
   command! FontUp lua require("lv-utils").mod_guifont(1)
   command! FontDown lua require("lv-utils").mod_guifont(-1)
 ]]
+
+function M.mini_window_setwidth(initwidth)
+  local wid = 0
+  local cword = vim.fn.expand "<cword>"
+  if #cword == 0 then
+    local cline = vim.fn.getline "."
+    wid = #cline + 2
+  else
+    wid = #cword + 1 -- + vim.o.sidescrolloff
+  end
+  if wid > 2 then
+    if wid > initwidth then
+      vim.api.nvim_win_set_width(0, wid)
+    end
+  end
+end
+function M.inline_text_input(opts)
+  local enter = opts.enter
+  local escape = opts.escape
+
+  if opts.at_begin then
+    vim.cmd [[normal! wb]]
+  end
+  if opts.init_cword then
+    opts.initial = vim.fn.expand "<cword>"
+  end
+  if opts.initial == nil then
+    opts.initial = ""
+  end
+
+  if not opts.border then
+    opts.border = "none"
+  end
+  if opts.rel == nil then
+    if opts.border == "none" then
+      opts.rel = 0
+    else
+      opts.rel = -1
+    end
+  end
+
+  local winopts = {
+    relative = "cursor",
+    row = opts.rel,
+    col = opts.rel,
+    width = #opts.initial + 1,
+    height = 1,
+    style = "minimal",
+    -- border = O.lsp.border,
+    border = opts.border,
+    -- noautocmd = false
+  }
+  local buf = vim.api.nvim_create_buf(false, true)
+  local win = vim.api.nvim_open_win(buf, true, winopts)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, { opts.initial })
+
+  if opts.minwidth then
+    opts.initwidth = winopts.width
+  else
+    opts.initwidth = 0
+  end
+
+  local function close_win()
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, true, true), "n", false)
+    vim.api.nvim_win_close(win, true)
+    vim.api.nvim_buf_delete(buf, { force = true })
+    if escape then
+      escape()
+    end
+  end
+  local function finish_cb()
+    local value = vim.trim(vim.fn.getline ".")
+    close_win()
+    if enter then
+      enter(value)
+    end
+  end
+
+  vim.opt_local.sidescrolloff = 0
+  local map = vim.api.nvim_buf_set_keymap
+  local fin = M.to_cmd(finish_cb)
+  local cls = M.to_cmd(close_win)
+  map(buf, "i", "<CR>", fin, {})
+  map(buf, "n", "<CR>", fin, {})
+  -- map(buf, "i", "<ESC>", "<NOP>", { noremap = true })
+  -- map(buf, "i", "<ESC><ESC>", "<ESC>", { noremap = true })
+  map(buf, "n", "<ESC>", cls, {})
+  map(buf, "n", "o", "<nop>", { noremap = true })
+  map(buf, "n", "O", "<nop>", { noremap = true })
+  vim.cmd(
+    string.format([[autocmd InsertCharPre <buffer> lua require("lv-utils").mini_window_setwidth(%d)]], opts.initwidth)
+  )
+  vim.cmd(
+    string.format([[autocmd InsertLeave <buffer> lua require("lv-utils").mini_window_setwidth(%d)]], opts.initwidth)
+  )
+end
 
 return M

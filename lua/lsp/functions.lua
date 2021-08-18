@@ -228,65 +228,14 @@ M.common_on_attach = function(client, bufnr)
   end
 end
 
-local calc_rename_window_size = function()
-  local cword = vim.fn.expand "<cword>"
-  if #cword == 0 then
-    local cline = vim.fn.getline "."
-    return #cline + 2
-  else
-    return #cword + 1 -- + vim.o.sidescrolloff
-  end
-end
-M.rename_window_size = function(win)
-  local wid = calc_rename_window_size()
-  if wid > 1 then
-    vim.api.nvim_win_set_width(win, wid)
-  end
-end
 -- Helper for better renaming interface
 M.rename = function()
-  vim.cmd [[normal! wb]]
-  local width = calc_rename_window_size()
-  local cword = vim.fn.expand "<cword>"
-  local rel = -1
-  if O.lsp.rename_border == "none" then
-    rel = 0
-  end
-  local opts = {
-    relative = "cursor",
-    row = rel,
-    col = rel,
-    width = width,
-    height = 1,
-    style = "minimal",
-    -- border = O.lsp.border,
+  require("lv-utils").inline_text_input {
     border = O.lsp.rename_border,
-    -- noautocmd = false
+    enter = vim.lsp.buf.rename,
+    init_cword = true,
+    at_begin = true,
   }
-  local buf = vim.api.nvim_create_buf(false, true)
-  local win = vim.api.nvim_open_win(buf, true, opts)
-  local dorename = string.format("<cmd>lua require('lsp.functions').dorename(%d, %d)<CR>", win, buf)
-  local dontrename = string.format("<cmd>lua require('lsp.functions').close_rename(%d, %d)<CR>", win, buf)
-  vim.cmd(string.format([[autocmd InsertCharPre <buffer> lua require("lsp.functions").rename_window_size(%d)]], win))
-  vim.cmd(string.format([[autocmd InsertLeave <buffer> lua require("lsp.functions").rename_window_size(%d)]], win))
-  vim.opt_local.sidescrolloff = 0
-  vim.b.width = width
-
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, { cword })
-  vim.api.nvim_buf_set_keymap(buf, "i", "<CR>", dorename, { silent = true })
-  vim.api.nvim_buf_set_keymap(buf, "n", "<ESC>", dontrename, { silent = true })
-  vim.api.nvim_buf_set_keymap(buf, "n", "o", "<nop>", { silent = true })
-  vim.api.nvim_buf_set_keymap(buf, "n", "O", "<nop>", { silent = true })
-end
-M.close_rename = function(win, buf)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, true, true), "n", false)
-  vim.api.nvim_win_close(win, true)
-  vim.api.nvim_buf_delete(buf, { force = true })
-end
-M.dorename = function(win, buf)
-  local new_name = vim.trim(vim.fn.getline ".")
-  M.close_rename(win, buf)
-  vim.lsp.buf.rename(new_name)
 end
 
 return M
