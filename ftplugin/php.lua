@@ -2,7 +2,7 @@ if require("lv-utils").check_lsp_client_active "intelephense" then
   return
 end
 
-require("lsp.functions").lspconfig("intelephense") {
+require("lsp.functions").lspconfig "intelephense" {
   cmd = {
     DATA_PATH .. "/lspinstall/php/node_modules/.bin/intelephense",
     "--stdio",

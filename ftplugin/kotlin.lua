@@ -28,7 +28,7 @@ local fallback_root_files = {
   "build.gradle.kts", -- Gradle
 }
 
-require("lsp.functions").lspconfig("kotlin_language_server") {
+require("lsp.functions").lspconfig "kotlin_language_server" {
   cmd = { bin_name },
   on_attach = require("lsp.functions").common_on_attach,
   root_dir = function(fname)

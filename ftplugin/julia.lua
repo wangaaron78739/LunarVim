@@ -5,7 +5,7 @@ if require("lv-utils").check_lsp_client_active "julials" then
 end
 
 -- TODO: Check if this really activates correctly
-require("lsp.functions").lspconfig("julials") {
+require("lsp.functions").lspconfig "julials" {
   -- on_new_config = function(new_config, new_root_dir)
   --   server_path = "/home/amedhi/.julia/packages/LanguageServer/jiDTR/src/LanguageServer.jl"
   --   cmd = {

@@ -2,7 +2,7 @@ vim.opt_local.wrap = true
 vim.opt_local.spell = true
 
 if not require("lv-utils").check_lsp_client_active "texlab" then
-  require("lsp.functions").lspconfig("texlab") {
+  require("lsp.functions").lspconfig "texlab" {
     cmd = { DATA_PATH .. "/lspinstall/latex/texlab" },
     on_attach = require("lsp.functions").common_on_attach,
     handlers = {
