@@ -394,9 +394,13 @@ map("n", "]]", utils.operatorfunc_keys("gotoend", "<esc>"), sile)
 -- Keymaps for easier access to 'ci' and 'di'
 local function quick_inside(key)
   map("o", key, "i" .. key, {})
+  map("o", "<M-" .. key .. ">", "a" .. key, {})
+  map("n", "<M-" .. key .. ">", "vi" .. key, {})
+  map("n", "<C-M-" .. key .. ">", "va" .. key, {})
 end
 local function quick_around(key)
   map("o", key, "a" .. key, {})
+  map("n", "<M-" .. key .. ">", "va" .. key, {})
 end
 quick_inside "w"
 quick_inside "W"
@@ -409,6 +413,9 @@ quick_around "]"
 quick_inside "{"
 quick_around "]"
 quick_inside '"'
+quick_inside "'"
+map("n", "<M-.>", "v.", {})
+map("n", "<M-;>", "v;", {})
 -- map("n", "r", '"_ci', {})
 -- map("n", "x", "di", {})
 -- map("n", "X", "x", nore)
