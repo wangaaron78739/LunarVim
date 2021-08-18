@@ -43,15 +43,22 @@ function M.define_aucmd(name, aucmd)
   M.define_augroups { [name] = { aucmd } }
 end
 
-function M.quickfix_toggle()
-  vim.cmd [[
-  if empty(filter(getwininfo(), 'v:val.quickfix'))
-    copen
-  else
-    cclose
-  endif
-]]
+function M.command(name, fn)
+  vim.cmd("command! " .. name .. " " .. fn)
 end
+
+_G.lv_utils_functions = {}
+local to_cmd_counter = 0
+function M.to_cmd(luafunction, opts)
+  if opts == nil then
+    opts = ""
+  end
+  local name = "fn" .. to_cmd_counter
+  to_cmd_counter = to_cmd_counter + 1
+  _G.lv_utils_functions[name] = luafunction
+  return "<cmd>call v:lua.lv_utils_functions." .. name .. "(" .. opts .. ")<cr>"
+end
+
 vim.cmd [[
   function! QuickFixToggle()
     if empty(filter(getwininfo(), 'v:val.quickfix'))
@@ -59,7 +66,7 @@ vim.cmd [[
     else
       cclose
     endif
-endfunction
+  endfunction
 ]]
 
 function M.operatorfunc_helper_select(lines)
@@ -84,10 +91,12 @@ function M.post_operatorfunc(old_func)
   _G.op_func_change_all_operator = nil
 end
 
+_G.lv_utils_operatorfuncs = {}
+-- wrapper for making operators easily
 function M.operatorfunc_scaffold(name, lines, operatorfunc)
   local old_func = vim.go.operatorfunc
 
-  _G[name] = function()
+  _G.lv_utils_operatorfuncs[name] = function()
     M.operatorfunc_helper_select(lines)
 
     operatorfunc()
@@ -95,18 +104,22 @@ function M.operatorfunc_scaffold(name, lines, operatorfunc)
     M.post_operatorfunc(old_func)
   end
 
-  vim.go.operatorfunc = "v:lua." .. name
-  vim.api.nvim_feedkeys("g@", "n", false)
+  return M.to_cmd(function()
+    vim.go.operatorfunc = "v:lua.lv_utils_operatorfuncs." .. name
+    vim.api.nvim_feedkeys("g@", "n", false)
+  end)
 end
 
-function M.operatorfunc_scaffoldV_keys(name, verbkeys)
-  M.operatorfunc_scaffold(name, true, function()
+-- keys linewise
+function M.operatorfuncV_keys(name, verbkeys)
+  return M.operatorfunc_scaffold(name, true, function()
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(verbkeys, true, true, true), "m", false)
   end)
 end
 
-function M.operatorfunc_scaffold_keys(name, verbkeys)
-  M.operatorfunc_scaffold(name, false, function()
+-- charwise linewise
+function M.operatorfunc_keys(name, verbkeys)
+  return M.operatorfunc_scaffold(name, false, function()
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(verbkeys, true, true, true), "m", false)
   end)
 end

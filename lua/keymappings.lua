@@ -1,3 +1,4 @@
+local utils = require "lv-utils"
 local map = vim.api.nvim_set_keymap
 local sile = { silent = true }
 local nore = { noremap = true, silent = true }
@@ -29,6 +30,7 @@ else
   vim.g.maplocalleader = O.local_leader_key
 end
 
+-- Command mode typos of wq
 vim.cmd [[
     cnoreabbrev W! w!
     cnoreabbrev Q! q!
@@ -48,10 +50,11 @@ vim.cmd [[
     cnoreabbrev Qa qa
     cnoreabbrev Qall qall
 ]]
+
 -- <ctrl-s> to Save
-map("n", "<C-s>", "<esc><cmd>write<cr>", sile)
-map("v", "<C-s>", "<esc><cmd>write<cr>", sile)
-map("i", "<C-s>", "<esc><cmd>write<cr>", sile)
+map("n", "<C-s>", "<cmd>write<cr>", sile)
+map("v", "<C-s>", "<cmd>write<cr>", sile)
+map("i", "<C-s>", "<cmd>write<cr>", sile)
 -- map("i", "<C-v>", "<C-R>+", sile)
 
 -- better window movement -- tmux_navigator supplies these if installed
@@ -145,7 +148,7 @@ noclobber_default("v", "C")
 
 -- Preserve cursor on yank in visual mode
 map("v", "y", "myy`y", nore)
-map("v", "Y", "myY`y", nore)
+map("v", "Y", "myY`y", nore) -- copy linewise
 map("v", "<M-y>", "y", nore)
 
 -- -- Original paste for when 'nvim-anywise-reg.lua' is installed
@@ -157,11 +160,7 @@ map("v", "<M-y>", "y", nore)
 -- else
 
 -- Paste over textobject
-function _G.paste_over_operator()
-  require("lv-utils").operatorfunc_scaffold_keys("paste_over_operatorfunc", "p")
-end
-map("n", "<M-p>", "<cmd>call v:lua.paste_over_operator()<cr>", sile)
-map("n", "r", "<cmd>call v:lua.paste_over_operator()<cr>", sile)
+map("n", "r", utils.operatorfunc_keys("paste_over", "p"), sile)
 map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
 map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
 -- map("n", "<M-S-p>", [[<cmd>call setreg('p', getreg('+'), 'l')<cr>"pp]], nore) -- linewise paste
@@ -200,9 +199,6 @@ map("n", "<M-h>", "<c-v>h", sile)
 map("v", "v", "^og_", nore)
 map("v", "V", "0o$", nore)
 
--- Select last pasted/yanked text
-map("n", "g<C-v>", "`[v`]", nore)
-
 -- move along visual lines, not numbered ones
 -- without interferring with {count}<down|up>
 map("n", "<up>", "v:count == 0 ? 'gk' : '<up>'", expr)
@@ -222,14 +218,21 @@ map("n", "[q", ":cprev<CR>", nore)
 -- map("n", "<C-M-j>", ":cnext<CR>", nore)
 -- map("n", "<C-M-k>", ":cprev<CR>", nore)
 
-function _G.change_all_operator()
-  require("lv-utils").operatorfunc_scaffold_keys("change_all_operatorfunc", [["z<M-y>:%s/<C-r>z//g<Left><Left>]])
-end
-function _G.search_for_operator()
-  require("lv-utils").operatorfunc_scaffold_keys("search_for_operatorfunc", [["z<M-y>/<C-r>z<CR>]])
-end
-map("n", "<leader>c", [[<cmd>call v:lua.change_all_operator()<CR>]], {}) -- Search and replace textobject
-map("n", "<M-s>", [[<cmd>call v:lua.search_for_operator()<CR>]], {}) -- Search textobject
+-- Diagnostics jumps
+map("n", "]d", [[<cmd>lua require("lsp.functions").diag_next()<cr>]], nore)
+map("n", "[d", [[<cmd>lua require("lsp.functions").diag_prev()<cr>]], nore)
+
+-- Search and replace the current selection
+map("v", "<leader>c", [["z<M-y>:%s/<C-r>z//g<Left><Left>]], {})
+map("n", "<leader>c", utils.operatorfunc_keys("change_all", "<leader>c"), {}) -- Search and replace textobject
+
+-- Search for the current selection
+map("v", "*", '"z<M-y>/<C-R>z<CR>', {}) -- Search for the current selection
+map("n", "<M-s>", utils.operatorfunc_keys("search_for", "*"), {}) -- Search textobject
+
+-- Select last pasted/yanked text
+map("v", "+", "`[v`]", nore)
+-- TODO: operator mode map
 
 -- Search and Replace from registers
 -- map("n", "<leader>C", [[:%s/<C-R>//g<Left><Left>]], {}) -- Search and replace register
@@ -240,11 +243,6 @@ map("n", "+", [[/<C-R>+<CR>]], {}) -- Search for the current yank register
 
 -- Search and replace
 map("n", "<leader>sr", [[:%s///g<Left><Left><Left>]], {})
--- Search and replace the current selection
-map("v", "<leader>sr", [["z<M-y>:%s/<C-r>z//g<Left><Left>]], {})
-
--- Visual mode search
-map("v", "*", '"z<M-y>/<C-R>z<CR>gn', {}) -- Search for the current selection
 
 -- Start search and replace from search
 map("c", "<M-r>", [[<cr>:%s/<C-R>///g<Left><Left>]], {})
@@ -283,10 +281,7 @@ map("n", "gco", "o-<esc>gccA<BS>", sile)
 
 -- comment and copy
 map("v", "gy", '"z<M-y>gvgc`>"zp`[', sile)
-function _G.comment_copy_operator()
-  require("lv-utils").operatorfunc_scaffoldV_keys("comment_copy_operatorfunc", "gy")
-end
-map("n", "gy", "<cmd>call v:lua.comment_copy_operator()<cr>", sile)
+map("n", "gy", utils.operatorfuncV_keys("comment_copy", "gy"), sile)
 -- map("v", "gjc", "gc", sile) -- Don't know how to implement this
 
 -- Select Jupyter Cell
@@ -351,8 +346,8 @@ map("n", "gV", "'<V'>", nore)
 map("v", "gV", "<esc>'<V'>", nore)
 map("o", "gV", ":normal gV<CR>", nore)
 -- Reselect visual block wise
-map("n", "g<C-v>", "'<<C-v>'>", nore)
-map("v", "g<C-v>", "<esc>'<<C-v>'>", nore)
+map("n", "g<C-v>", "'<C-v>'>", nore)
+map("v", "g<C-v>", "<esc>'<C-v>'>", nore)
 map("o", "g<C-v>", ":normal g<C-v><CR>", nore)
 
 local function undo_brkpt(key)
@@ -386,27 +381,15 @@ map("v", "A", "<M-a>a", sile)
 -- map("n", "<M-S-/>", "<M-/><M-a>", {})
 
 -- Multi select object
-function _G.multiselect_operator()
-  require("lv-utils").operatorfunc_scaffold_keys("multiselect_operatorfunc", "<M-n>")
-end
-map("n", "<M-v>", "<cmd>call v:lua.multiselect_operator()<cr>", sile)
+map("n", "<M-v>", utils.operatorfunc_keys("multiselect", "<M-n>"), sile)
 -- Multi select all
-function _G.multiselect_all_operator()
-  require("lv-utils").operatorfunc_scaffold_keys("multiselect_operatorfunc", "<M-s-a>")
-end
-map("n", "<M-S-v>", "<cmd>call v:lua.multiselect_all_operator()<cr>", sile)
+map("n", "<M-S-v>", utils.operatorfunc_keys("multiselect_all", "<M-S-a>"), sile)
 
 -- go to beginning and end of text object
 -- map("n", "[[", "vmo<esc>", sile)
 -- map("n", "]]", "vm<esc>", sile)
-function _G.gotobeg_operator()
-  require("lv-utils").operatorfunc_scaffold_keys("gotobeg_operatorfunc", "o<esc>")
-end
-function _G.gotoend_operator()
-  require("lv-utils").operatorfunc_scaffold_keys("gotoend_operatorfunc", "<esc>")
-end
-map("n", "[[", "<cmd>call v:lua.gotobeg_operator()<cr>", sile)
-map("n", "]]", "<cmd>call v:lua.gotoend_operator()<cr>", sile)
+map("n", "[[", utils.operatorfunc_keys("gotobeg", "o<esc>"), sile)
+map("n", "]]", utils.operatorfunc_keys("gotoend", "<esc>"), sile)
 
 -- Keymaps for easier access to 'ci' and 'di'
 local function quick_inside(key)
@@ -468,7 +451,6 @@ require("lv-hop").keymaps()
 require("lv-zen").keymaps()
 require("lv-dial").keymaps()
 require("lv-neoterm").keymaps()
-require("lv-null-ls").keymaps()
 
 map("t", "<ESC>", "<ESC>", nore)
 map("t", "<ESC><ESC>", [[<C-\><C-n>]], nore)

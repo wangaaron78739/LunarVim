@@ -45,13 +45,4 @@ function M.config()
   require("lspconfig")["null-ls"].setup {}
 end
 
-M.keymaps = function()
-  noremap("n", "gm", [[<cmd>lua require("lsp.functions").format_range_operator()<CR>]])
-  noremap("n", "=", [[<cmd>lua require("lsp.functions").format_range_operator()<CR>]])
-  noremap("v", "gm", "<cmd>lua vim.lsp.buf.range_formatting()<cr>")
-  noremap("v", "=", "<cmd>lua vim.lsp.buf.range_formatting()<cr>")
-  noremap("n", "gf", "<cmd>lua vim.lsp.buf.formatting()<cr>")
-  noremap("n", "==", "<cmd>lua vim.lsp.buf.formatting()<cr>")
-end
-
 return M

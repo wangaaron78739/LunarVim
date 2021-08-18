@@ -53,7 +53,6 @@ local mappings = {
     O.plugin.snap.active and "<cmd>Snap buffers<cr>" or "<cmd>Telescope buffers<cr>",
     "Buffers",
   },
-  ["<tab>"] = { "Tab mode" },
   [";"] = { "<cmd>Dashboard<CR>", "Dashboard" },
   ["/"] = { "<cmd>Telescope live_grep<cr>", "Global search" },
   -- ["/"] = { "<cmd>lua require('spectre').open()<cr>", "Global search" },
@@ -62,6 +61,8 @@ local mappings = {
     "Find File",
   },
   -- k = { "<cmd>lua require('lv-kakmode').enter()<cr>", "Kakoune" },
+  j = { "]", "Jump next (])" },
+  k = { "[", "Jump prev ([)" },
   -- w = { "<cmd>up<CR>", "Write" },
   w = { "<cmd>w<CR>", "Write" },
   o = {
@@ -125,10 +126,7 @@ local mappings = {
     --     "close all but current buffer"
     -- },
     h = { "<cmd>BufferLineCloseLeft<cr>", "close all buffers to the left" },
-    l = {
-      "<cmd>BufferLineCloseRight<cr>",
-      "close all BufferLines to the right",
-    },
+    l = { "<cmd>BufferLineCloseRight<cr>", "close all BufferLines to the right" },
     D = {
       "<cmd>BufferLineSortByDirectory<cr>",
       "sort BufferLines automatically by directory",
@@ -195,9 +193,7 @@ local mappings = {
     -- TODO: What is the replacement for this?
     -- f = { "<cmd>Lspsaga lsp_finder<cr>", "LSP Finder" },
     -- p = { "<cmd>Lspsaga preview_definition<cr>", "Preview Definition" },
-    q = { "<cmd>Telescope quickfix<cr>", "Quickfix" },
-    r = { "<cmd>lua require('lsp.functions').rename()<CR>", "Rename" },
-    R = { "<cmd>Telescope lsp_references<cr>", "References" },
+    r = { "<cmd>Telescope lsp_references<cr>", "References" },
     t = { "<cmd>lua vim.lsp.buf.type_definition() <cr>", "Type Definition" },
     s = { "<cmd>lua vim.lsp.buf.signature_help() <cr>", "Signature Help" },
     T = { ":TSConfigInfo<cr>", "Info" },
@@ -226,6 +222,7 @@ local mappings = {
     },
     k = { "<cmd>Telescope keymaps<cr>", "Keymappings" },
     o = { "<cmd>TodoTelescope<cr>", "TODOs" },
+    q = { "<cmd>Telescope quickfix<cr>", "Quickfix" },
     i = "for (object)",
     r = "and Replace",
   },

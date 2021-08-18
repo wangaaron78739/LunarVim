@@ -21,10 +21,6 @@ function M.telescope_refactors()
   }):find()
 end
 
-function M.extract_function_operator()
-  require("lv-utils").operatorfunc_scaffold_keys("multiselect_operatorfunc", "<M-n>")
-end
-
 function M.setup()
   local refactor = require "refactoring"
   refactor.setup()
@@ -35,6 +31,14 @@ function M.setup()
     [[<Cmd>lua require('refactoring').refactor('Extract Function')<CR><ESC>]],
     { noremap = true, silent = true, expr = false }
   )
+  noremap("n", "<Leader>re", require("lv-utils").operatorfunc_keys("extract_function", "<leader>re"), {})
+  noremap(
+    "v",
+    "<Leader>rv",
+    [[<Cmd>lua require('refactoring').refactor('Extract Variable')<CR><ESC>]],
+    { noremap = true, silent = true, expr = false }
+  )
+  noremap("n", "<Leader>re", require("lv-utils").operatorfunc_keys("extract_variable", "<leader>rf"), {})
   noremap(
     "v",
     "<Leader>rf",
