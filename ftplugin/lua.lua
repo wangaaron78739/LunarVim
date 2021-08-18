@@ -34,3 +34,10 @@ if not require("lv-utils").check_lsp_client_active "sumneko_lua" then
 end
 
 vim.cmd "setl ts=2 sw=2"
+
+require("lv-sandwich").add_recipe {
+  buns = { "[[", "]]" },
+  nesting = true,
+  skip_break = true,
+  input = { "s" },
+}
