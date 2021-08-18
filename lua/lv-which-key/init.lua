@@ -234,6 +234,7 @@ local mappings = {
     ["+"] = "Last yank",
     ["."] = "Last insert",
     -- r = { [[<cmd>lua require("lv-utils").change_all_operator()<CR>]], "@Replace" },
+    d = { "<cmd>DogeGenerate<cr>", "DogeGen" },
   },
   c = "Change all",
   d = {
