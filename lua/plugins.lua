@@ -816,14 +816,15 @@ return require("packer").startup(function(use)
     disable = not O.plugin.doge.active,
   }
 
-  -- -- Autoformat everything
-  -- use {
-  --   "sbdchd/neoformat",
-  --   config = function()
-  --     require("lv-neoformat").config()
-  --   end,
-  --   cmd = "Neoformat",
-  -- }
+  -- Autoformat everything
+  use {
+    "sbdchd/neoformat",
+    config = function()
+      require("lv-neoformat").config()
+    end,
+    cmd = "Neoformat",
+    disable = not O.plugin.neoformat.active,
+  }
 
   -- Null ls, for hooking local plugins into lsp
   use {

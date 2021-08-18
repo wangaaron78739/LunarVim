@@ -1,5 +1,9 @@
 local M = {}
 
+if not O.plugin.neoformat.active then
+  return M
+end
+
 M.config = function()
   vim.g.neoformat_run_all_formatters = 0
 
