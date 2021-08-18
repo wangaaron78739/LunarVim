@@ -29,3 +29,10 @@ if O.plugin.debug.active and O.plugin.dap_install.active then
   local dap_install = require "dap-install"
   dap_install.config("python_dbg", {})
 end
+
+require("lv-sandwich").add_recipe {
+  buns = { [["""]], [["""]] },
+  nesting = true,
+  skip_break = true,
+  input = { "s" },
+}
