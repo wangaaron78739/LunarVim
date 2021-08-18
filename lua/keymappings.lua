@@ -215,8 +215,8 @@ map("i", "<c-k>", '("\\<C-p>")', expr)
 map("i", "<S-TAB>", '("\\<C-p>")', expr)
 
 -- QuickFix
--- map('n', ']q', ':cnext<CR>', nore)
--- map('n', '[q', ':cprev<CR>', nore)
+map("n", "]q", ":cnext<CR>", nore)
+map("n", "[q", ":cprev<CR>", nore)
 -- map("n", "<C-M-j>", ":cnext<CR>", nore)
 -- map("n", "<C-M-k>", ":cprev<CR>", nore)
 
