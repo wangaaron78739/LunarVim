@@ -32,7 +32,8 @@ end
 
 require("lv-sandwich").add_recipe {
   buns = { [["""]], [["""]] },
-  nesting = true,
-  skip_break = true,
+  quoteescape = true,
+  expand_range = false,
+  nesting = false,
   input = { "s" },
 }

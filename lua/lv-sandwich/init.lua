@@ -1,11 +1,13 @@
 local M = {}
 
-M.recipes = {}
+local recipes = {}
 function M.add_recipe(recipe)
-  vim.list_extend(M.recipes, { recipe })
-  vim.g["sandwich#recipes"] = M.recipes
-  -- table.insert(vim.g["sandwich#recipes"], recipe)
-  -- vim.g["sandwich#recipes"]:append(recipe)
+  vim.list_extend(recipes, { recipe })
+  vim.g["sandwich#recipes"] = recipes
+end
+function M.add_recipes(recipes)
+  vim.list_extend(recipes, recipes)
+  vim.g["sandwich#recipes"] = recipes
 end
 
 function M.preconf()
@@ -17,8 +19,8 @@ end
 function M.config()
   vim.cmd "runtime macros/sandwich/keymap/surround.vim"
 
-  -- vim.tbl_extend(M.recipes, vim.g["sandwich#recipes"])
-  M.recipes = vim.g["sandwich#recipes"]
+  -- vim.tbl_extend(recipes, vim.g["sandwich#recipes"])
+  recipes = vim.g["sandwich#recipes"]
 
   -- TODO: use inline_text_input for sandwich function
   --   M.add_recipe {
@@ -28,7 +30,25 @@ function M.config()
   --     action = { "add" },
   --     input = { "f" },
   --   }
-  --
+  M.add_recipe {
+    external = { "ic", "ac" },
+    noremap = false,
+    kind = { "delete", "replace", "query" },
+    input = { "c" },
+  }
+  M.add_recipe {
+    external = { "ii", "ai" },
+    noremap = false,
+    kind = { "delete", "replace", "query" },
+    input = { "i" },
+  }
+  M.add_recipe {
+    external = { "if", "af" },
+    noremap = false,
+    kind = { "delete", "replace", "query" },
+    input = { "af" },
+  }
+
   vim.api.nvim_command [[
       xmap is <Plug>(textobj-sandwich-query-i)
       xmap as <Plug>(textobj-sandwich-query-a)
