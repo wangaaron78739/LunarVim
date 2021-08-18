@@ -111,4 +111,18 @@ function M.operatorfunc_scaffold_keys(name, verbkeys)
   end)
 end
 
+-- the font used in graphical neovim applications
+function M.set_guifont(size)
+  vim.opt.guifont = "FiraCode Nerd Font:h" .. size
+  vim.g.guifontsize = size
+end
+function M.mod_guifont(diff)
+  local size = vim.g.guifontsize
+  M.set_guifont(size + diff)
+end
+vim.cmd [[
+  command! FontUp lua require("lv-utils").mod_guifont(1)
+  command! FontDown lua require("lv-utils").mod_guifont(-1)
+]]
+
 return M

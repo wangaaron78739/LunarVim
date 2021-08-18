@@ -438,4 +438,4 @@ for _, v in ipairs(disable_plugins) do
   O.plugin[v].active = false
 end
 
-vim.opt.guifont = "FiraCode Nerd Font:h10" -- the font used in graphical neovim applications
+require("lv-utils").set_guifont(11)
