@@ -46,6 +46,9 @@ function M.setup()
   vim.api.nvim_set_keymap("n", "<M-i>", '<CMD>lua require("FTerm").toggle()<CR>', {})
   vim.api.nvim_set_keymap("t", "<M-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', {})
   -- map("t", "<Esc>", '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', nore)
+  vim.cmd [[
+    command! -nargs=1 Ftopen call v:lua.ftopen('<args>')
+  ]]
 
   require("lv-utils").define_augroups {
     _close_fterm = {
