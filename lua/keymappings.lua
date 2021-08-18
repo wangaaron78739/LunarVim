@@ -166,27 +166,29 @@ map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) --
 map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
 -- map("n", "<M-S-p>", [[<cmd>call setreg('p', getreg('+'), 'l')<cr>"pp]], nore) -- linewise paste
 
--- Select next/previous text object
-map("n", "<M-w>", "wviw", sile)
-map("n", "<M-b>", "bviwo", sile)
-map("v", "<M-w>", "eowo", sile)
-map("v", "<M-b>", "oboge", sile)
--- map("v", "<M-w>", "<Esc>wviw", sile)
--- map("v", "<M-b>", "<Esc>bviwo", sile)
-map("n", "<M-S-W>", "WviW", sile)
-map("n", "<M-S-B>", "BviWo", sile)
-map("v", "<M-S-W>", "EOWO", sile)
-map("v", "<M-S-B>", "OBOGE", sile)
---[[ map("v", "<M-S-W>", "<Esc>WviW", sile)
+if false then
+  -- Select next/previous text object
+  map("n", "<M-w>", "wviw", sile)
+  map("n", "<M-b>", "bviwo", sile)
+  map("v", "<M-w>", "eowo", sile)
+  map("v", "<M-b>", "oboge", sile)
+  -- map("v", "<M-w>", "<Esc>wviw", sile)
+  -- map("v", "<M-b>", "<Esc>bviwo", sile)
+  map("n", "<M-S-W>", "WviW", sile)
+  map("n", "<M-S-B>", "BviWo", sile)
+  map("v", "<M-S-W>", "EOWO", sile)
+  map("v", "<M-S-B>", "OBOGE", sile)
+  --[[ map("v", "<M-S-W>", "<Esc>WviW", sile)
 map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
-map("n", "<M-)>", "f(va(", sile)
-map("n", "<M-(>", "F)va)o", sile)
-map("v", "<M-)>", "<Esc>f(vi(", sile)
-map("v", "<M-(>", "<Esc>F)vi)", sile)
--- map("n", "<M-j>", "jV", sile)
--- map("n", "<M-k>", "kV", sile)
--- map("v", "<M-j>", "<Esc>jV", sile)
--- map("v", "<M-k>", "<Esc>kV", sile)
+  map("n", "<M-)>", "f(va(", sile)
+  map("n", "<M-(>", "F)va)o", sile)
+  map("v", "<M-)>", "<Esc>f(vi(", sile)
+  map("v", "<M-(>", "<Esc>F)vi)", sile)
+  -- map("n", "<M-j>", "jV", sile)
+  -- map("n", "<M-k>", "kV", sile)
+  -- map("v", "<M-j>", "<Esc>jV", sile)
+  -- map("v", "<M-k>", "<Esc>kV", sile)
+end
 
 -- Start selecting
 map("v", "<M-l>", "l", sile)

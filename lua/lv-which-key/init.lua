@@ -61,10 +61,7 @@ local mappings = {
     O.plugin.snap.active and "<cmd>Snap find_files<cr>" or "<cmd>Telescope find_files <CR>",
     "Find File",
   },
-  k = {
-    "<cmd>lua require('lv-kakmode').enter()<cr>",
-    "Kakoune",
-  },
+  -- k = { "<cmd>lua require('lv-kakmode').enter()<cr>", "Kakoune" },
   -- w = { "<cmd>up<CR>", "Write" },
   w = { "<cmd>w<CR>", "Write" },
   o = {
