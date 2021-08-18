@@ -5,9 +5,9 @@ function M.add_recipe(recipe)
   vim.list_extend(recipes, { recipe })
   vim.g["sandwich#recipes"] = recipes
 end
-function M.add_recipes(recipes)
-  vim.list_extend(recipes, recipes)
-  vim.g["sandwich#recipes"] = recipes
+function M.add_recipes(recipes_)
+  vim.list_extend(recipes, recipes_)
+  vim.g["sandwich#recipes"] = recipes_
 end
 
 function M.preconf()
