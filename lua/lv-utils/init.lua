@@ -249,4 +249,9 @@ function M.inline_text_input(opts)
   )
 end
 
+function M.syn_group()
+  local s = vim.fn.synID(vim.fn.line ".", vim.fn.col ".", 1)
+  print(vim.fn.synIDattr(s, "name") .. " -> " .. vim.fn.synIDattr(vim.fn.synIDtrans(s), "name"))
+end
+
 return M
