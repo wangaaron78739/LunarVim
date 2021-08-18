@@ -10,11 +10,11 @@ if O.lang.rust.rust_tools.active then
 
         -- prefix for parameter hints
         -- default: "<-"
-        parameter_hints_prefix = "<= ",
+        parameter_hints_prefix = "<- ",
 
         -- prefix for all the other hints (type, chaining)
         -- default: "=>"
-        other_hints_prefix = "=> ",
+        other_hints_prefix = "-> ",
       },
 
       hover_actions = {
