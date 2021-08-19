@@ -720,6 +720,7 @@ return require("packer").startup(function(use)
   }
 
   -- Helper for lists
+  -- FIXME: fucks up coq_nvim handling of <CR>
   use {
     "dkarter/bullets.vim",
     ft = { "txt", "markdown" }, -- TODO: what filetypes?

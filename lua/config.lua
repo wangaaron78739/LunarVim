@@ -414,6 +414,7 @@ local disable_plugins = {
   "lazygit",
   "anywise_reg",
   "quickscope",
+  "bullets",
 }
 for _, v in ipairs(disable_plugins) do
   O.plugin[v].active = false
