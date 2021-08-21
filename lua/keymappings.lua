@@ -3,6 +3,23 @@ local map = vim.api.nvim_set_keymap
 local sile = { silent = true }
 local nore = { noremap = true, silent = true }
 local expr = { noremap = true, silent = true, expr = true }
+local function op_from(lhs, rhs, opts)
+  if opts == nil then
+    opts = nore
+  end
+  if rhs == nil then
+    rhs = lhs
+  end
+
+  map("o", lhs, ":normal v" .. rhs .. "<cr>", opts)
+end
+local function sel_map(lhs, rhs, opts)
+  if opts == nil then
+    opts = nore
+  end
+  map("v", lhs, rhs, opts)
+  op_from(lhs, rhs, opts)
+end
 
 function silemap(mode, from, to)
   map(mode, from, to, sile)
@@ -124,7 +141,7 @@ map("n", "<S-TAB>", ":bnext<CR>", nore)
 map("v", "p", "pgvy", nore)
 map("v", "P", "p", nore) -- for normal p behaviour
 
--- Non destructive delete/change
+-- Add meta version that doesn't affect the clipboard
 local function noclobber_meta(m, c)
   if string.upper(c) == c then
     map(m, "<M-S-" .. string.lower(c) .. ">", '"_' .. c, nore)
@@ -132,6 +149,7 @@ local function noclobber_meta(m, c)
     map(m, "<M-" .. c .. ">", '"_' .. c, nore)
   end
 end
+-- Make the default not touch the clipboard, and add a meta version that does
 local function noclobber_default(m, c)
   if string.upper(c) == c then
     map(m, "<M-S-" .. string.lower(c) .. ">", c, nore)
@@ -161,6 +179,7 @@ map("v", "<M-y>", "y", nore)
 
 -- Paste over textobject
 map("n", "r", utils.operatorfunc_keys("paste_over", "p"), sile)
+map("n", "rr", "vvr", sile)
 map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
 map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
 -- map("n", "<M-S-p>", [[<cmd>call setreg('p', getreg('+'), 'l')<cr>"pp]], nore) -- linewise paste
@@ -230,16 +249,15 @@ map("n", "<leader>c", utils.operatorfunc_keys("change_all", "<leader>c"), {}) --
 map("v", "*", '"z<M-y>/<C-R>z<CR>', {}) -- Search for the current selection
 map("n", "<M-s>", utils.operatorfunc_keys("search_for", "*"), {}) -- Search textobject
 
--- Select last pasted/yanked text
-map("v", "+", "`[v`]", nore)
--- TODO: operator mode map
-
 -- Search and Replace from registers
 -- map("n", "<leader>C", [[:%s/<C-R>//g<Left><Left>]], {}) -- Search and replace register
 map("n", "<leader>r+", [[:%s/<C-R>+//g<Left><Left>]], {}) -- Search and replace the current yank
 map("n", "<leader>r/", [[:%s/<C-R>///g<Left><Left>]], {}) -- Search and replace last search
 map("n", "<leader>r.", [[:%s/<C-R>.//g<Left><Left>]], {}) -- Search and replace last insert
 map("n", "+", [[/<C-R>+<CR>]], {}) -- Search for the current yank register
+
+-- Select last changed/yanked text
+sel_map("+", "`[o`]")
 
 -- Search and replace
 map("n", "<leader>sr", [[:%s///g<Left><Left><Left>]], {})
@@ -282,7 +300,7 @@ map("n", "gco", "o-<esc>gccA<BS>", sile)
 -- comment and copy
 map("v", "gy", '"z<M-y>gvgc`>"zp`[', sile)
 map("n", "gy", utils.operatorfuncV_keys("comment_copy", "gy"), sile)
--- map("v", "gjc", "gc", sile) -- Don't know how to implement this
+map("n", "gyy", "Vgy", sile)
 
 -- Select Jupyter Cell
 -- Change to onoremap
@@ -338,17 +356,17 @@ map("n", "go", "i<CR><ESC>k:sil! keepp s/\v +$//<CR>:noh<CR>j^", nore)
 -- Quick activate macro
 map("n", "Q", "@q", nore)
 
--- Use reselect as an operator
-map("o", "gv", ":normal gv<CR>", {})
-
 -- Reselect visual linewise
 map("n", "gV", "'<V'>", nore)
 map("v", "gV", "<esc>'<V'>", nore)
-map("o", "gV", ":normal gV<CR>", nore)
 -- Reselect visual block wise
 map("n", "g<C-v>", "'<C-v>'>", nore)
 map("v", "g<C-v>", "<esc>'<C-v>'>", nore)
-map("o", "g<C-v>", ":normal g<C-v><CR>", nore)
+
+-- Use reselect as an operator
+op_from "gv"
+op_from "gV"
+op_from "g<C-v>"
 
 local function undo_brkpt(key)
   -- map("i", key, key .. "<c-g>u", nore)
@@ -442,10 +460,8 @@ map("o", "ie", ":<c-u>normal! mzggVG<cr>`z", nore)
 map("v", "ie", "gg0oG$", nore)
 
 -- Operator for current line
-map("x", "il", "g_o^", nore)
-map("o", "il", ":normal vil<CR>", nore)
-map("x", "al", "$o0", nore)
-map("o", "al", ":normal val<CR>", nore)
+-- sel_map("il", "g_o^")
+-- sel_map("al", "$o0")
 
 -- Make change line (cc) preserve indentation
 map("n", "cc", "^cg_", sile)

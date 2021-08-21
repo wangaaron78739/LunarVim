@@ -188,6 +188,7 @@ O = {
       },
       hint_scheme = "String",
       hi_parameter = "Search",
+      toggle_key = "<M-space>", -- TODO: Can I add this to C-Space as well?
     },
     git_blame = { active = enable_plugins_by_default },
     gitlinker = {
