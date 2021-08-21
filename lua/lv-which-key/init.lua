@@ -46,6 +46,9 @@ local opts = {
 -- TODO create entire treesitter section
 
 -- TODO support vim-sandwich in the which-key menus
+function telescope_cmd(name)
+  return "<cmd>lua require('lv-telescope.functions')." .. name .. "()<cr>"
+end
 
 local mappings = {
   -- [" "] = { "<cmd> lua require('telescope.builtin').commands()<cr>", "Commands" },
@@ -66,6 +69,7 @@ local mappings = {
     r = { "<cmd>RnvimrToggle<cr>", "Ranger" },
     q = { [[call QuickFixToggle]], "Quick fixes" },
     o = { "<cmd>!open '%:p:h'<CR>", "Open File Explorer" },
+    s = { "<cmd>lua require('lv-telescope.functions').file_browser()<cr>", "Telescope browser" },
     v = { "<cmd>Vista nvim_lsp<cr>", "Vista" },
     -- ["v"] = {"<cmd>Vista<CR>", "Vista"},
     m = { "<cmd>MinimapToggle<cr>", "Minimap" },
@@ -196,6 +200,8 @@ local mappings = {
     k = { "<cmd> lua require('telescope.builtin').keymaps()<cr>", "Keymappings" },
     o = { "<cmd>TodoTelescope<cr>", "TODOs" },
     q = { "<cmd> lua require('telescope.builtin').quickfix()<cr>", "Quickfix" },
+    ["*"] = { "<cmd> lua require('lv-telescope.functions').grep_string()<cr>", "cword" },
+    ["/"] = { "<cmd> lua require('lv-telescope.functions').grep_last_search()<cr>", "Last Search" },
     i = "for (object)",
     r = "and Replace",
   },
@@ -238,7 +244,7 @@ for k, v in pairs(O.plugin_which_keys) do
   mappings[k] = v
 end
 if O.plugin.symbol_outline.active then
-  mappings["o"]["s"] = { "<cmd>SymbolsOutline<cr>", "Symbols Sidebar" }
+  mappings["o"]["S"] = { "<cmd>SymbolsOutline<cr>", "Symbols Sidebar" }
 end
 if O.plugin.todo_comments.active then
   mappings["o"]["T"] = { "<cmd>TodoTrouble<cr>", "Todos Sidebar" }
@@ -307,26 +313,23 @@ end
 local wk = require "which-key"
 wk.register(mappings, opts)
 
---     local visualOpts = {
---         mode = "v", -- Visual mode
---         prefix = "<leader>",
---         buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
---         silent = true, -- use `silent` when creating keymaps
---         noremap = true, -- use `noremap` when creating keymaps
---         nowait = false -- use `nowait` when creating keymaps
---     }
---     local visualMappings = {
---         ["/"] = {"<cmd>CommentToggle<cr>", "Comment"},
---         r = {
---             name = "Replace",
---             f = {
---                 "<cmd>lua require('spectre').open_visual({path = vim.fn.expand('%')})<cr>",
---                 "File"
---             },
---             p = {"<cmd>lua require('spectre').open_visual()<cr>", "Project"}
---         }
---     }
---     wk.register(visualMappings, visualOpts)
+local visualOpts = {
+  mode = "v", -- Visual mode
+  prefix = "<leader>",
+  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+  silent = true, -- use `silent` when creating keymaps
+  noremap = true, -- use `noremap` when creating keymaps
+  nowait = false, -- use `nowait` when creating keymaps
+}
+local visualMappings = {
+  -- ["/"] = { "<cmd>CommentToggle<cr>", "Comment" },
+  r = {
+    name = "Replace",
+    f = { "<cmd>lua require('spectre').open_visual({path = vim.fn.expand('%')})<cr>", "File" },
+    p = { "<cmd>lua require('spectre').open_visual()<cr>", "Project" },
+  },
+}
+wk.register(visualMappings, visualOpts)
 
 if O.plugin.surround.active then
   local ops = { mode = "o" }
