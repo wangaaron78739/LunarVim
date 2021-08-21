@@ -144,7 +144,7 @@ O = {
       active = enable_plugins_by_default,
       -- Manual mode doesn't automatically change your root directory, so you have
       -- the option to manually do so using `:ProjectRoot` command.
-      -- manual_mode = false,
+      manual_mode = false,
 
       -- When set to false, you will get a message when project.nvim changes your
       -- directory.
