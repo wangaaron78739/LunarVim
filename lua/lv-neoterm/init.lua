@@ -5,6 +5,7 @@ function M.config()
   vim.g.neoterm_default_mod = "vertical"
   vim.g.neoterm_autoinsert = 1
   vim.g.neoterm_autoscroll = 1
+  vim.g.neoterm_shell = O.termshell
   vim.g.neoterm_bracketed_paste = 1
   vim.g.neoterm_repl_python = { "ipython" }
   vim.g.neoterm_repl_lua = { "croissant" }
@@ -26,7 +27,7 @@ end
 function M.keymaps()
   vim.cmd [[ command -nargs=+ Tmem :lua require("lv-neoterm").Tmem("<args>") ]]
 
-  vim.g.neoterm_automap_keys = "<leader>te"
+  vim.g.neoterm_automap_keys = "<leader>xx"
   -- Use gt to send to terminal
   remap("n", "<M-t>", ":T ", {})
   remap("n", "<M-S-t>", ":Tmem ", {})

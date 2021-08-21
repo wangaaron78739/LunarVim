@@ -16,6 +16,7 @@ end
 ---  SETTINGS  ---
 -- https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim
 opt.shell = O.shell
+-- opt.shell = O.termshell
 opt.inccommand = O.inc_subs -- Incremental substitution style
 opt.backspace = "indent,eol,start"
 opt.backup = false -- creates a backup file
