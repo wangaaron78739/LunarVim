@@ -244,16 +244,16 @@ function M.inline_text_input(opts)
   local cls = M.to_cmd(close_win)
   map(buf, "i", "<CR>", fin, {})
   map(buf, "n", "<CR>", fin, {})
-  -- map(buf, "i", "<ESC>", "<NOP>", { noremap = true })
-  -- map(buf, "i", "<ESC><ESC>", "<ESC>", { noremap = true })
+  map(buf, "i", "<ESC>", "<NOP>", { noremap = true })
+  map(buf, "i", "<ESC><ESC>", "<ESC>", { noremap = true })
   map(buf, "n", "<ESC>", cls, {})
   map(buf, "n", "o", "<nop>", { noremap = true })
   map(buf, "n", "O", "<nop>", { noremap = true })
   vim.cmd(
-    string.format([[autocmd InsertCharPre <buffer> lua require("lv-utils").mini_window_setwidth(%d)]], opts.initwidth)
-  )
-  vim.cmd(
-    string.format([[autocmd InsertLeave <buffer> lua require("lv-utils").mini_window_setwidth(%d)]], opts.initwidth)
+    string.format(
+      [[autocmd InsertCharPre,InsertLeave <buffer> lua require("lv-utils").mini_window_setwidth(%d)]],
+      opts.initwidth
+    )
   )
 end
 
