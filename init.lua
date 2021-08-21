@@ -37,6 +37,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 -- Source the config files
+_G.utils = require "lv-utils"
 require "config"
 require "keymappings"
 require "settings"
