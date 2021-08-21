@@ -1,4 +1,4 @@
--- TODO figure out why this don't work
+-- Signs
 vim.fn.sign_define(
   "LspDiagnosticsSignError",
   { texthl = "LspDiagnosticsSignError", text = "", numhl = "LspDiagnosticsSignError" }
@@ -16,8 +16,7 @@ vim.fn.sign_define(
   { texthl = "LspDiagnosticsSignInformation", text = "", numhl = "LspDiagnosticsSignInformation" }
 )
 
--- Set Default Prefix.
--- Note: You can set a prefix per lsp server in the lv-globals.lua file
+-- Handlers
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics,
   O.lsp.diagnostics
@@ -60,6 +59,7 @@ vim.lsp.protocol.CompletionItemKind = {
   "   (TypeParameter)",
 }
 
+-- Lsp autocommands
 require("lv-utils").define_augroups {
   _general_lsp = {
     { "FileType", "lspinfo", "nnoremap <silent> <buffer> q :q<CR>" },
@@ -73,6 +73,7 @@ require("lv-utils").define_augroups {
   -- },
 }
 
+-- Formatting keymaps
 noremap("n", "gm", [[<cmd>lua require("lsp.functions").format_range_operator()<CR>]])
 -- noremap("n", "=", [[<cmd>lua require("lsp.functions").format_range_operator()<CR>]])
 noremap("v", "gm", "<cmd>lua vim.lsp.buf.range_formatting()<cr>")
