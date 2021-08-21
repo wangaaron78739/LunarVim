@@ -266,7 +266,10 @@ if O.plugin.zen.active then
   }
 end
 if O.plugin.telescope_project.active then
-  mappings["p"] = { "<cmd>lua require'telescope'.extensions.project.project{}<CR>", "Projects" }
+  mappings["pp"] = { "<cmd>lua require'telescope'.extensions.project.project{}<CR>", "Projects" }
+end
+if O.plugin.project_nvim.active then
+  mappings["pr"] = { "<cmd>ProjectRoot<CR>", "Projects" }
 end
 if O.plugin.spectre.active then
   mappings["rf"] = { "<cmd>lua require('spectre').open_file_search()<cr>", "Current File" }
