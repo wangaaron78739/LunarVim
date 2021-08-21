@@ -1,7 +1,6 @@
 local M = {}
 
 function M.config()
-  -- TODO: move this to a separate file
   vim.cmd [[ autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * silent! TroubleRefresh ]]
 
   require("trouble").setup {

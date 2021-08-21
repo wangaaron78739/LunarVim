@@ -1,6 +1,5 @@
 local M = {}
 function M.config()
-  -- TODO: lsp.<server>.setup(coq.lsp_ensure_capabilities(<stuff...>))
   -- TODO: reintegrate tabout
   vim.g.coq_settings = {
     ["keymap.jump_to_mark"] = "<c-n>",
