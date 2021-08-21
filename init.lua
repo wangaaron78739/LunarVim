@@ -45,7 +45,6 @@ require "plugins"
 require "theme"
 
 -- 'Mandatory' plugin configs
-require "lv-utils"
 require "lv-galaxyline"
 require "lv-which-key"
 require "lv-treesitter"
