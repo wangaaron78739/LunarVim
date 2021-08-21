@@ -94,6 +94,11 @@ return require("packer").startup(function(use)
   --   disable = not O.plugin.tabnine.active,
   -- disable = not O.plugin.compe.active,
   -- }
+  -- VSCode style snippets
+  use { "hrsh7th/vim-vsnip", event = "InsertEnter" }
+  -- use {"hrsh7th/vim-vsnip-integ", event = "InsertEnter", after = "vim-vsnip"}
+  use { "rafamadriz/friendly-snippets", event = "InsertEnter" }
+
   -- Autopairs
   use {
     "windwp/nvim-autopairs",
@@ -103,11 +108,6 @@ return require("packer").startup(function(use)
     -- after = { "nvim-compe", "telescope.nvim" },
     after = "telescope.nvim",
   }
-
-  -- VSCode style snippets
-  use { "hrsh7th/vim-vsnip", event = "InsertEnter" }
-  -- use {"hrsh7th/vim-vsnip-integ", event = "InsertEnter", after = "vim-vsnip"}
-  use { "rafamadriz/friendly-snippets", event = "InsertEnter" }
 
   -- Treesitter
   use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
