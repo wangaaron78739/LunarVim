@@ -168,7 +168,6 @@ O = {
     codi = { active = enable_plugins_by_default },
     telescope_fzy = { active = enable_plugins_by_default },
     sanegx = { active = enable_plugins_by_default },
-    snap = { active = enable_plugins_by_default },
     ranger = { active = enable_plugins_by_default },
     todo_comments = { active = enable_plugins_by_default },
     lsp_colors = { active = enable_plugins_by_default },
@@ -407,7 +406,6 @@ vim.cmd('let &titleold="' .. TERMINAL .. '"')
 
 -- After changing plugin config it is recommended to run :PackerCompile
 local disable_plugins = {
-  "snap",
   "fzf",
   "tabnine",
   "tmux_navigator",

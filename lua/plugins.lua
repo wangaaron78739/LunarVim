@@ -50,15 +50,6 @@ return require("packer").startup(function(use)
     end,
     -- cmd = "Telescope"
   }
-  -- Snap
-  use {
-    "camspiers/snap",
-    rocks = "fzy",
-    config = function()
-      require("lv-snap").config()
-    end,
-    disable = not O.plugin.snap.active,
-  }
 
   -- Autocomplete
   -- TODO: replace with hrsh7th/nvim-cmp
