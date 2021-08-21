@@ -1,5 +1,6 @@
 local M = {}
 M.setup = function()
+  local prefix = "<leader>r"
   require("spectre").setup {
     find_engine = {
       -- rg is map with finder_cmd
@@ -42,27 +43,27 @@ M.setup = function()
         desc = "goto current file",
       },
       ["send_to_qf"] = {
-        map = "<Blash>q",
+        map = prefix .. "q",
         cmd = "<cmd>lua require('spectre.actions').send_to_qf()<CR>",
         desc = "send all item to quickfix",
       },
       ["replace_cmd"] = {
-        map = "<Bslash>c",
+        map = prefix .. "c",
         cmd = "<cmd>lua require('spectre.actions').replace_cmd()<CR>",
         desc = "input replace vim command",
       },
       ["show_option_menu"] = {
-        map = "<Bslash>o",
+        map = prefix .. "o",
         cmd = "<cmd>lua require('spectre').show_options()<CR>",
         desc = "show option",
       },
       ["run_replace"] = {
-        map = "<Bslash>R",
+        map = prefix .. "r",
         cmd = "<cmd>lua require('spectre.actions').run_replace()<CR>",
         desc = "replace all",
       },
       ["change_view_mode"] = {
-        map = "<Bslash>v",
+        map = prefix .. "v",
         cmd = "<cmd>lua require('spectre').change_view()<CR>",
         desc = "change result view mode",
       },
