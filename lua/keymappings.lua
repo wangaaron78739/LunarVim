@@ -179,7 +179,7 @@ map("v", "<M-y>", "y", nore)
 
 -- Paste over textobject
 map("n", "r", utils.operatorfunc_keys("paste_over", "p"), sile)
-map("n", "rr", "vvr", sile)
+-- map("n", "rr", "vvr", sile)
 map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
 map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
 -- map("n", "<M-S-p>", [[<cmd>call setreg('p', getreg('+'), 'l')<cr>"pp]], nore) -- linewise paste
@@ -300,7 +300,7 @@ map("n", "gco", "o-<esc>gccA<BS>", sile)
 -- comment and copy
 map("v", "gy", '"z<M-y>gvgc`>"zp`[', sile)
 map("n", "gy", utils.operatorfuncV_keys("comment_copy", "gy"), sile)
-map("n", "gyy", "Vgy", sile)
+-- map("n", "gyy", "Vgy", sile)
 
 -- Select Jupyter Cell
 -- Change to onoremap
