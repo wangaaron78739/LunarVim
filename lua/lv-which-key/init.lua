@@ -48,18 +48,12 @@ local opts = {
 -- TODO support vim-sandwich in the which-key menus
 
 local mappings = {
-  -- [" "] = { "<cmd>Telescope commands<cr>", "Commands" },
-  [" "] = {
-    O.plugin.snap.active and "<cmd>Snap buffers<cr>" or "<cmd>Telescope buffers<cr>",
-    "Buffers",
-  },
+  -- [" "] = { "<cmd> lua require('telescope.builtin').commands()<cr>", "Commands" },
+  [" "] = { "<cmd> lua require('telescope.builtin').buffers()<cr>", "Buffers" },
   [";"] = { "<cmd>Dashboard<CR>", "Dashboard" },
-  ["/"] = { "<cmd>Telescope live_grep<cr>", "Global search" },
+  ["/"] = { "<cmd> lua require('telescope.builtin').live_grep()<cr>", "Global search" },
   -- ["/"] = { "<cmd>lua require('spectre').open()<cr>", "Global search" },
-  f = {
-    O.plugin.snap.active and "<cmd>Snap find_files<cr>" or "<cmd>Telescope find_files <CR>",
-    "Find File",
-  },
+  f = { "<cmd> lua require('telescope.builtin').find_files() <CR>", "Find File" },
   -- k = { "<cmd>lua require('lv-kakmode').enter()<cr>", "Kakoune" },
   j = { "]", "Jump next (])" },
   k = { "[", "Jump prev ([)" },
@@ -73,7 +67,7 @@ local mappings = {
     q = { [[call QuickFixToggle]], "Quick fixes" },
     o = { "<cmd>!open '%:p:h'<CR>", "Open File Explorer" },
     v = { "<cmd>Vista nvim_lsp<cr>", "Vista" },
-    -- ["v"] = {":Vista<CR>", "Vista"},
+    -- ["v"] = {"<cmd>Vista<CR>", "Vista"},
     m = { "<cmd>MinimapToggle<cr>", "Minimap" },
     b = { "<cmd>lua _G.ftopen('broot')<CR>", "Broot" },
     p = { "<cmd>lua _G.ftopen('python')<CR>", "Python" },
@@ -89,7 +83,7 @@ local mappings = {
     r = { "<cmd>TREPLSetTerm<CR> ", "Neoterm set repl..." },
     l = { "<cmd>Tls<CR>", "Neoterm list" },
     s = "Slime Line",
-    M = { ":Tmap ", "Neoterm map a command" },
+    M = { "<cmd>Tmap ", "Neoterm map a command" },
     b = { "<cmd>lua _G.ftopen('broot')<CR>", "Broot" },
     p = { "<cmd>lua _G.ftopen('python')<CR>", "Python" },
     T = { "<cmd>lua _G.ftopen('top')<CR>", "Top" },
@@ -109,13 +103,10 @@ local mappings = {
   },
   b = {
     name = "Buffers",
-    j = {
-      O.plugin.snap.active and "<cmd>Snap buffers<cr>" or "<cmd>Telescope buffers<cr>",
-      "Jump to ",
-    },
+    j = { "<cmd> lua require('telescope.builtin').buffers()<cr>", "Jump to " },
     w = { "<cmd>w<CR>", "Write" },
     a = { "<cmd>wa<CR>", "Write All" },
-    c = { ":bdelete!<CR>", "Close" },
+    c = { "<cmd>bdelete!<CR>", "Close" },
     -- f = { "<cmd>Neoformat<cr>", "Format" },
     f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
     -- n = { "<cmd>tabnew<CR>", "New" },
@@ -127,14 +118,8 @@ local mappings = {
     -- },
     h = { "<cmd>BufferLineCloseLeft<cr>", "close all buffers to the left" },
     l = { "<cmd>BufferLineCloseRight<cr>", "close all BufferLines to the right" },
-    D = {
-      "<cmd>BufferLineSortByDirectory<cr>",
-      "sort BufferLines automatically by directory",
-    },
-    L = {
-      "<cmd>BufferLineSortByExtension<cr>",
-      "sort BufferLines automatically by language",
-    },
+    D = { "<cmd>BufferLineSortByDirectory<cr>", "sort BufferLines automatically by directory" },
+    L = { "<cmd>BufferLineSortByExtension<cr>", "sort BufferLines automatically by language" },
     t = { "<cmd>vnew term://" .. O.termshell .. "<CR>", "Terminal" },
   },
   -- " Available Debug Adapters:
@@ -173,17 +158,11 @@ local mappings = {
     r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
     R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
     s = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
-    u = {
-      "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
-      "Undo Stage Hunk",
-    },
-    o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
-    b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-    c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
-    C = {
-      "<cmd>Telescope git_bcommits<cr>",
-      "Checkout commit(for current file)",
-    },
+    u = { "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", "Undo Stage Hunk" },
+    o = { "<cmd> lua require('telescope.builtin').git_status()<cr>", "Open changed file" },
+    b = { "<cmd> lua require('telescope.builtin').git_branches()<cr>", "Checkout branch" },
+    c = { "<cmd> lua require('telescope.builtin').git_commits()<cr>", "Checkout commit" },
+    C = { "<cmd> lua require('telescope.builtin').git_bcommits()<cr>", "Checkout commit(for current file)" },
   },
   l = {
     name = "LSP",
@@ -193,36 +172,30 @@ local mappings = {
     -- TODO: What is the replacement for this?
     -- f = { "<cmd>Lspsaga lsp_finder<cr>", "LSP Finder" },
     -- p = { "<cmd>Lspsaga preview_definition<cr>", "Preview Definition" },
-    r = { "<cmd>Telescope lsp_references<cr>", "References" },
+    r = { "<cmd> lua require('telescope.builtin').lsp_references()<cr>", "References" },
     t = { "<cmd>lua vim.lsp.buf.type_definition() <cr>", "Type Definition" },
     s = { "<cmd>lua vim.lsp.buf.signature_help() <cr>", "Signature Help" },
-    T = { ":TSConfigInfo<cr>", "Info" },
+    T = { "<cmd>TSConfigInfo<cr>", "Info" },
     f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
   },
   s = {
     name = "Search",
-    b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-    c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
-    s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
-    S = { "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "Workspace Symbols" },
-    d = { "<cmd>Telescope lsp_document_diagnostics<cr>", "Document Diagnostics" },
-    D = { "<cmd>Telescope lsp_workspace_diagnostics<cr>", "Workspace Diagnostics" },
-    m = { "<cmd>Telescope lsp_implementations<cr>", "Workspace Diagnostics" },
-    h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
-    -- m = {"<cmd>Telescope marks<cr>", "Marks"},
-    M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-    R = {
-      O.plugin.snap.active and "<cmd>Snap oldfiles<cr>" or "<cmd>Telescope oldfiles<cr>",
-      "Open Recent File",
-    },
+    b = { "<cmd> lua require('telescope.builtin').git_branches()<cr>", "Checkout branch" },
+    c = { "<cmd> lua require('telescope.builtin').colorscheme()<cr>", "Colorscheme" },
+    s = { "<cmd> lua require('telescope.builtin').lsp_document_symbols()<cr>", "Document Symbols" },
+    S = { "<cmd> lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>", "Workspace Symbols" },
+    d = { "<cmd> lua require('telescope.builtin').lsp_document_diagnostics()<cr>", "Document Diagnostics" },
+    D = { "<cmd> lua require('telescope.builtin').lsp_workspace_diagnostics()<cr>", "Workspace Diagnostics" },
+    m = { "<cmd> lua require('telescope.builtin').lsp_implementations()<cr>", "Workspace Diagnostics" },
+    h = { "<cmd> lua require('telescope.builtin').help_tags()<cr>", "Find Help" },
+    -- m = {"<cmd> lua require('telescope.builtin').marks()<cr>", "Marks"},
+    M = { "<cmd> lua require('telescope.builtin').man_pages()<cr>", "Man Pages" },
+    R = { "<cmd> lua require('telescope.builtin').oldfiles()<cr>", "Open Recent File" },
     -- R = { "<cmd>Telesope registers<cr>", "Registers" },
-    t = {
-      O.plugin.snap.active and "<cmd>Snap live_grep<cr>" or "<cmd>Telescope live_grep<cr>",
-      "Text",
-    },
-    k = { "<cmd>Telescope keymaps<cr>", "Keymappings" },
+    t = { "<cmd> lua require('telescope.builtin').live_grep()<cr>", "Text" },
+    k = { "<cmd> lua require('telescope.builtin').keymaps()<cr>", "Keymappings" },
     o = { "<cmd>TodoTelescope<cr>", "TODOs" },
-    q = { "<cmd>Telescope quickfix<cr>", "Quickfix" },
+    q = { "<cmd> lua require('telescope.builtin').quickfix()<cr>", "Quickfix" },
     i = "for (object)",
     r = "and Replace",
   },
@@ -248,7 +221,7 @@ local mappings = {
     name = "Packer",
     c = { "<cmd>PackerCompile<cr>", "Compile" },
     i = { "<cmd>PackerInstall<cr>", "Install" },
-    r = { ":luafile %<cr>", "Reload" },
+    r = { "<cmd>luafile %<cr>", "Reload" },
     s = { "<cmd>PackerSync<cr>", "Sync" },
     u = { "<cmd>PackerUpdate<cr>", "Update" },
   },
@@ -271,20 +244,11 @@ if O.plugin.todo_comments.active then
   mappings["o"]["T"] = { "<cmd>TodoTrouble<cr>", "Todos Sidebar" }
 end
 if O.plugin.trouble.active then
-  mappings["d"]["t"] = { "<cmd>TroubleToggle<cr>", "Trouble" }
-  mappings["d"]["d"] = {
-    "<cmd>TroubleToggle lsp_document_diagnostics<cr>",
-    "Document",
-  }
-  mappings["d"]["w"] = {
-    "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>",
-    "Workspace",
-  }
+  mappings["d"]["t"] = { "<cmd>TroubleToggle<cr>", "Trouble Toggle" }
+  mappings["d"]["d"] = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document" }
+  mappings["d"]["w"] = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace" }
   mappings["d"]["r"] = { "<cmd>TroubleToggle lsp_references<cr>", "References" }
-  mappings["d"]["D"] = {
-    "<cmd>TroubleToggle lsp_definitions<cr>",
-    "Definitions",
-  }
+  mappings["d"]["D"] = { "<cmd>TroubleToggle lsp_definitions<cr>", "Definitions" }
   mappings["d"]["q"] = { "<cmd>TroubleToggle quickfix<cr>", "Quick Fixes" }
   mappings["d"]["L"] = { "<cmd>TroubleToggle loclist<cr>", "Location List" }
   mappings["d"]["o"] = { "<cmd>TroubleToggle todo<cr>", "TODOs" }
@@ -305,10 +269,7 @@ if O.plugin.telescope_project.active then
   mappings["p"] = { "<cmd>lua require'telescope'.extensions.project.project{}<CR>", "Projects" }
 end
 if O.plugin.spectre.active then
-  mappings["rf"] = {
-    "<cmd>lua require('spectre').open_file_search()<cr>",
-    "Current File",
-  }
+  mappings["rf"] = { "<cmd>lua require('spectre').open_file_search()<cr>", "Current File" }
   mappings["rp"] = { "<cmd>lua require('spectre').open()<cr>", "Project" }
 end
 if O.plugin.lazygit.active then
@@ -329,20 +290,14 @@ end
 if O.lushmode then
   mappings["L"] = {
     name = "+Lush",
-    l = { ":Lushify<cr>", "Lushify" },
-    x = {
-      ":lua require('lush').export_to_buffer(require('lush_theme.cool_name'))",
-      "Lush Export",
-    },
-    t = { ":LushRunTutorial<cr>", "Lush Tutorial" },
-    q = { ":LushRunQuickstart<cr>", "Lush Quickstart" },
+    l = { "<cmd>Lushify<cr>", "Lushify" },
+    x = { "<cmd>lua require('lush').export_to_buffer(require('lush_theme.cool_name'))", "Lush Export" },
+    t = { "<cmd>LushRunTutorial<cr>", "Lush Tutorial" },
+    q = { "<cmd>LushRunQuickstart<cr>", "Lush Quickstart" },
   }
 end
 if O.plugin.magma.active then
-  mappings["to"] = {
-    "<CMD>MagmaShowOutput<CR>",
-    "Magma Output",
-  }
+  mappings["to"] = { "<CMD>MagmaShowOutput<CR>", "Magma Output" }
   mappings["tm"] = { "<CMD>MagmaInit<CR>", "Magma Init" }
 end
 
