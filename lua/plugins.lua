@@ -372,9 +372,13 @@ return require("packer").startup(function(use)
   -- Use fzy for telescope
   use {
     "nvim-telescope/telescope-fzy-native.nvim",
-    event = "BufRead",
-    after = "telescope.nvim",
     disable = not O.plugin.telescope_fzy.active,
+  }
+  -- Use fzf for telescope
+  use {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    run = "make",
+    disable = not O.plugin.telescope_fzf.active,
   }
   -- Use project for telescope
   use {

@@ -167,6 +167,7 @@ O = {
     markdown_preview = { active = enable_plugins_by_default },
     codi = { active = enable_plugins_by_default },
     telescope_fzy = { active = enable_plugins_by_default },
+    telescope_fzf = { active = enable_plugins_by_default },
     sanegx = { active = enable_plugins_by_default },
     ranger = { active = enable_plugins_by_default },
     todo_comments = { active = enable_plugins_by_default },
