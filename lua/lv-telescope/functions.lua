@@ -1,9 +1,29 @@
 -- local action_mt = require "telescope.actions.mt"
 -- local action_set = require "telescope.actions.set"
 local action_state = require "telescope.actions.state"
+local actions = require "telescope.actions"
 local themes = require "telescope.themes"
 
 local M = {}
+
+M.commands = {}
+M.commands.rg = {
+  "rg",
+  "--color=never",
+  "--no-config",
+  "--no-heading",
+  "--with-filename",
+  "--line-number",
+  "--column",
+  "--smart-case",
+  "--ignore",
+  "--hidden",
+}
+M.commands.fd = {}
+for i, v in ipairs(M.commands.rg) do
+  M.commands.fd[i] = v
+end
+table.insert(M.commands.fd, "--files")
 
 M.set_prompt_to_entry_value = function(prompt_bufnr)
   local entry = action_state.get_selected_entry()
@@ -57,11 +77,11 @@ function M.edit_dotfiles()
   }
 end
 
-function M.edit_zsh()
+function M.edit_fish()
   require("telescope.builtin").find_files {
     shorten_path = false,
-    cwd = "~/.config/zsh/",
-    prompt = "~ zsh ~",
+    cwd = "~/.config/fish/",
+    prompt = "~ fish ~",
     hidden = true,
 
     layout_strategy = "vertical",
@@ -88,22 +108,12 @@ M.git_branches = function()
 end
 
 function M.lsp_code_actions()
-  local opts = themes.get_dropdown {
+  require("telescope.builtin").lsp_code_actions(themes.get_dropdown {
     winblend = 10,
     border = true,
     previewer = false,
     shorten_path = false,
-  }
-
-  require("telescope.builtin").lsp_code_actions(opts)
-end
-
-function M.fd()
-  require("telescope.builtin").fd()
-end
-
-function M.builtin()
-  require("telescope.builtin").builtin()
+  })
 end
 
 --[[
@@ -149,12 +159,6 @@ function M.grep_last_search(opts)
   opts.search = register
 
   require("telescope.builtin").grep_string(opts)
-end
-
-function M.my_plugins()
-  require("telescope.builtin").find_files {
-    cwd = "~/plugins/",
-  }
 end
 
 function M.installed_plugins()
@@ -273,13 +277,15 @@ function M.git_commits()
 end
 
 function M.search_only_certain_files()
+  local cmd = {}
+  for i, v in ipairs(M.commands.fd) do
+    cmd[i] = v
+  end
+  table.insert(cmd, "--type")
+  table.insert(cmd, vim.fn.input "Type: ")
+  local fd = table.insert()
   require("telescope.builtin").find_files {
-    find_command = {
-      "rg",
-      "--files",
-      "--type",
-      vim.fn.input "Type: ",
-    },
+    find_command = cmd,
   }
 end
 

@@ -4,28 +4,30 @@ local actions = require "telescope.actions"
 local functions = require "lv-telescope.functions"
 -- Global remapping
 ------------------------------
-local rg = {
-  "rg",
-  "--color=never",
-  "--no-config",
-  "--no-heading",
-  "--with-filename",
-  "--line-number",
-  "--column",
-  "--smart-case",
-  "--ignore",
-  "--hidden",
-}
-local fd = {}
-for i, v in ipairs(rg) do
-  fd[i] = v
+TelescopeMapArgs = TelescopeMapArgs or {}
+local map_tele = function(mode, key, f, options, buffer)
+  local map_key = vim.api.nvim_replace_termcodes(key .. f, true, true, true)
+
+  TelescopeMapArgs[map_key] = options or {}
+
+  local rhs = string.format("<cmd>lua require('telescope')['%s'](TelescopeMapArgs['%s'])<CR>", f, map_key)
+
+  local map_options = {
+    noremap = true,
+    silent = true,
+  }
+
+  if not buffer then
+    vim.api.nvim_set_keymap(mode, key, rhs, map_options)
+  else
+    vim.api.nvim_buf_set_keymap(0, mode, key, rhs, map_options)
+  end
 end
-table.insert(fd, "--files")
 
 require("telescope").setup {
   defaults = {
-    find_command = fd,
-    vimgrep_arguments = rg,
+    find_command = functions.commands.fd,
+    vimgrep_arguments = functions.commands.rg,
     prompt_prefix = " ",
     selection_caret = " ",
     entry_prefix = "  ",
@@ -113,24 +115,3 @@ _G.telescopes = functions
 -- require'telescope'.load_extension('fzy_native')
 require("telescope").load_extension "fzf"
 -- require'telescope'.load_extension('project')
-
-TelescopeMapArgs = TelescopeMapArgs or {}
-
-local map_tele = function(mode, key, f, options, buffer)
-  local map_key = vim.api.nvim_replace_termcodes(key .. f, true, true, true)
-
-  TelescopeMapArgs[map_key] = options or {}
-
-  local rhs = string.format("<cmd>lua require('telescope')['%s'](TelescopeMapArgs['%s'])<CR>", f, map_key)
-
-  local map_options = {
-    noremap = true,
-    silent = true,
-  }
-
-  if not buffer then
-    vim.api.nvim_set_keymap(mode, key, rhs, map_options)
-  else
-    vim.api.nvim_buf_set_keymap(0, mode, key, rhs, map_options)
-  end
-end
