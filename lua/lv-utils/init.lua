@@ -1,22 +1,30 @@
 local M = {}
 
-function M.dump_table(o)
-  if type(o) == "table" then
-    local s = "{ "
-    for k, v in pairs(o) do
-      if type(k) ~= "number" then
-        k = '"' .. k .. '"'
-      end
-      s = s .. "[" .. k .. "] = " .. M.dump_table(v) .. ","
-    end
-    return s .. "} "
-  else
-    return tostring(o)
+function M.dump(...)
+  local objects, v = {}, nil
+  for i = 1, select("#", ...) do
+    v = select(i, ...)
+    table.insert(objects, vim.inspect(v))
   end
+
+  print(table.concat(objects, "\n"))
+  return ...
+end
+function M.dump_text(...)
+  local objects, v = {}, nil
+  for i = 1, select("#", ...) do
+    v = select(i, ...)
+    table.insert(objects, vim.inspect(v))
+  end
+
+  local lines = vim.split(table.concat(objects, "\n"), "\n")
+  local lnum = vim.api.nvim_win_get_cursor(0)[1]
+  vim.fn.append(lnum, lines)
+  return ...
 end
 
 function M.reload_lv_config()
-  -- FIXME: breaks things
+  -- FIXME: Reloading config breaks things
   vim.cmd "source ~/.config/nvim/lv-config.lua"
   vim.cmd "source ~/.config/nvim/lua/plugins.lua"
   vim.cmd ":PackerCompile"
