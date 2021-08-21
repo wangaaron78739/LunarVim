@@ -46,15 +46,15 @@ local opts = {
 -- TODO create entire treesitter section
 
 -- TODO support vim-sandwich in the which-key menus
-function telescope_cmd(name)
+local function telescope_cmd(name)
   return "<cmd>lua require('lv-telescope.functions')." .. name .. "()<cr>"
 end
 
 local mappings = {
-  -- [" "] = { "<cmd> lua require('telescope.builtin').commands()<cr>", "Commands" },
-  [" "] = { "<cmd> lua require('telescope.builtin').buffers()<cr>", "Buffers" },
+  -- [" "] = { telescope_cmd("commands"), "Commands" },
+  [" "] = { telescope_cmd "buffers", "Buffers" },
   [";"] = { "<cmd>Dashboard<CR>", "Dashboard" },
-  ["/"] = { "<cmd> lua require('telescope.builtin').live_grep()<cr>", "Global search" },
+  ["/"] = { telescope_cmd "live_grep", "Global search" },
   -- ["/"] = { "<cmd>lua require('spectre').open()<cr>", "Global search" },
   f = { "<cmd> lua require('telescope.builtin').find_files() <CR>", "Find File" },
   -- k = { "<cmd>lua require('lv-kakmode').enter()<cr>", "Kakoune" },
@@ -107,7 +107,7 @@ local mappings = {
   },
   b = {
     name = "Buffers",
-    j = { "<cmd> lua require('telescope.builtin').buffers()<cr>", "Jump to " },
+    j = { telescope_cmd "buffers", "Jump to " },
     w = { "<cmd>w<CR>", "Write" },
     a = { "<cmd>wa<CR>", "Write All" },
     c = { "<cmd>bdelete!<CR>", "Close" },
@@ -163,10 +163,10 @@ local mappings = {
     R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
     s = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
     u = { "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", "Undo Stage Hunk" },
-    o = { "<cmd> lua require('telescope.builtin').git_status()<cr>", "Open changed file" },
-    b = { "<cmd> lua require('telescope.builtin').git_branches()<cr>", "Checkout branch" },
-    c = { "<cmd> lua require('telescope.builtin').git_commits()<cr>", "Checkout commit" },
-    C = { "<cmd> lua require('telescope.builtin').git_bcommits()<cr>", "Checkout commit(for current file)" },
+    o = { telescope_cmd "git_status", "Open changed file" },
+    b = { telescope_cmd "git_branches", "Checkout branch" },
+    c = { telescope_cmd "git_commits", "Checkout commit" },
+    C = { telescope_cmd "git_bcommits", "Checkout commit(for current file)" },
   },
   l = {
     name = "LSP",
@@ -176,7 +176,7 @@ local mappings = {
     -- TODO: What is the replacement for this?
     -- f = { "<cmd>Lspsaga lsp_finder<cr>", "LSP Finder" },
     -- p = { "<cmd>Lspsaga preview_definition<cr>", "Preview Definition" },
-    r = { "<cmd> lua require('telescope.builtin').lsp_references()<cr>", "References" },
+    r = { telescope_cmd "lsp_references", "References" },
     t = { "<cmd>lua vim.lsp.buf.type_definition() <cr>", "Type Definition" },
     s = { "<cmd>lua vim.lsp.buf.signature_help() <cr>", "Signature Help" },
     T = { "<cmd>TSConfigInfo<cr>", "Info" },
@@ -184,22 +184,22 @@ local mappings = {
   },
   s = {
     name = "Search",
-    b = { "<cmd> lua require('telescope.builtin').git_branches()<cr>", "Checkout branch" },
-    c = { "<cmd> lua require('telescope.builtin').colorscheme()<cr>", "Colorscheme" },
-    s = { "<cmd> lua require('telescope.builtin').lsp_document_symbols()<cr>", "Document Symbols" },
-    S = { "<cmd> lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>", "Workspace Symbols" },
-    d = { "<cmd> lua require('telescope.builtin').lsp_document_diagnostics()<cr>", "Document Diagnostics" },
-    D = { "<cmd> lua require('telescope.builtin').lsp_workspace_diagnostics()<cr>", "Workspace Diagnostics" },
-    m = { "<cmd> lua require('telescope.builtin').lsp_implementations()<cr>", "Workspace Diagnostics" },
-    h = { "<cmd> lua require('telescope.builtin').help_tags()<cr>", "Find Help" },
-    -- m = {"<cmd> lua require('telescope.builtin').marks()<cr>", "Marks"},
-    M = { "<cmd> lua require('telescope.builtin').man_pages()<cr>", "Man Pages" },
-    R = { "<cmd> lua require('telescope.builtin').oldfiles()<cr>", "Open Recent File" },
+    b = { telescope_cmd "git_branches", "Checkout branch" },
+    c = { telescope_cmd "colorscheme", "Colorscheme" },
+    s = { telescope_cmd "lsp_document_symbols", "Document Symbols" },
+    S = { telescope_cmd "lsp_dynamic_workspace_symbols", "Workspace Symbols" },
+    d = { telescope_cmd "lsp_document_diagnostics", "Document Diagnostics" },
+    D = { telescope_cmd "lsp_workspace_diagnostics", "Workspace Diagnostics" },
+    m = { telescope_cmd "lsp_implementations", "Workspace Diagnostics" },
+    h = { telescope_cmd "help_tags", "Find Help" },
+    -- m = {telescope_cmd("marks"), "Marks"},
+    M = { telescope_cmd "man_pages", "Man Pages" },
+    R = { telescope_cmd "oldfiles", "Open Recent File" },
     -- R = { "<cmd>Telesope registers<cr>", "Registers" },
-    t = { "<cmd> lua require('telescope.builtin').live_grep()<cr>", "Text" },
-    k = { "<cmd> lua require('telescope.builtin').keymaps()<cr>", "Keymappings" },
+    t = { telescope_cmd "live_grep", "Text" },
+    k = { telescope_cmd "keymaps", "Keymappings" },
     o = { "<cmd>TodoTelescope<cr>", "TODOs" },
-    q = { "<cmd> lua require('telescope.builtin').quickfix()<cr>", "Quickfix" },
+    q = { telescope_cmd "quickfix", "Quickfix" },
     ["*"] = { "<cmd> lua require('lv-telescope.functions').grep_string()<cr>", "cword" },
     ["/"] = { "<cmd> lua require('lv-telescope.functions').grep_last_search()<cr>", "Last Search" },
     i = "for (object)",
