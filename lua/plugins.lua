@@ -183,11 +183,12 @@ return require("packer").startup(function(use)
 
   -- Better motions
   use {
-    "phaazon/hop.nvim",
-    cmd = { "HopChar2", "HopChar1", "HopWord", "HopLine", "HopPattern" },
+    "IndianBoy42/hop.nvim",
     config = function()
       require("lv-hop").config()
     end,
+    cmd = { "HopChar2", "HopChar1", "HopWord", "HopLine", "HopPattern" },
+    module = "hop",
     disable = not O.plugin.hop,
   }
   -- Enhanced increment/decrement
