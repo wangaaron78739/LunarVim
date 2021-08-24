@@ -225,6 +225,7 @@ local mappings = {
     l = { "<cmd>lua require('lsp.functions').diag_line()<CR>", "Line Diagnostics" },
     c = { "<cmd>lua require('lsp.functions').diag_cursor()<CR>", "Cursor Diagnostics" },
     v = {
+      -- TODO: make this not move the cursor
       utils.operatorfunc_scaffold("show_diagnostics", require("lsp.functions").range_diagnostics),
       "Range Diagnostics",
     },
