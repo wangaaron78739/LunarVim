@@ -1,4 +1,5 @@
 local M = {}
+-- TODO: reduce nested lookups for performance (\w+\.)?(\w+\.)?\w+\.\w+\(
 
 -- Location information about the last message printed. The format is
 -- `(did print, buffer number, line number)`.
