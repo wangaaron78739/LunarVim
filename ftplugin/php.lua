@@ -2,19 +2,17 @@ if require("lv-utils").check_lsp_client_active "intelephense" then
   return
 end
 
-require("lsp.functions").lspconfig "intelephense" {
+require("lsp.config").lspconfig  "intelephense" {
   cmd = {
     DATA_PATH .. "/lspinstall/php/node_modules/.bin/intelephense",
     "--stdio",
   },
   on_attach = require("lsp.functions").common_on_attach,
   handlers = {
-    ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = O.lang.php.diagnostics.virtual_text,
-      signs = O.lang.php.diagnostics.signs,
-      underline = O.lang.php.diagnostics.underline,
-      update_in_insert = true,
-    }),
+    ["textDocument/publishDiagnostics"] = O.lang.php.diagnostics and vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics,
+      O.lang.php.diagnostics
+    ),
   },
   filetypes = O.lang.php.filetypes,
   settings = {

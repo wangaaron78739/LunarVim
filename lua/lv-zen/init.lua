@@ -64,7 +64,7 @@ M.config = function()
   }
 end
 M.keymaps = function()
-  if O.plugin.zen.active then
+  if O.plugin.zen then
     silemap("n", "zz", "<cmd>TZFocus<CR>")
     silemap("n", "zm", "<cmd>TZMinimalist<CR>")
   end

@@ -2,16 +2,14 @@ vim.opt_local.wrap = true
 vim.opt_local.spell = true
 
 if not require("lv-utils").check_lsp_client_active "texlab" then
-  require("lsp.functions").lspconfig "texlab" {
+  require("lsp.config").lspconfig  "texlab" {
     cmd = { DATA_PATH .. "/lspinstall/latex/texlab" },
     on_attach = require("lsp.functions").common_on_attach,
     handlers = {
-      ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-        virtual_text = O.lang.latex.diagnostics.virtual_text,
-        signs = O.lang.latex.diagnostics.signs,
-        underline = O.lang.latex.diagnostics.underline,
-        update_in_insert = true,
-      }),
+      ["textDocument/publishDiagnostics"] = O.lang.latex.diagnostics and vim.lsp.with(
+        vim.lsp.diagnostic.on_publish_diagnostics,
+        O.lang.latex.diagnostics
+      ),
     },
     -- filetypes = O.lang.latex.filetypes,
     settings = {

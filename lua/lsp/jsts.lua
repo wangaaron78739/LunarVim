@@ -22,7 +22,7 @@ local function tsserver_on_attach(client, bufnr)
     eslint_config_fallback = nil,
     eslint_enable_diagnostics = true,
     -- formatting
-    enable_formatting = O.lang.tsserver.autoformat,
+    enable_formatting = not not O.lang.tsserver.formatter,
     formatter = O.lang.tsserver.formatter,
     formatter_config_fallback = nil,
     -- parentheses completion
@@ -54,7 +54,7 @@ M.setup = function()
   -- require'completion'.on_attach(client)
   -- require'illuminate'.on_attach(client)
   -- end
-  require("lsp.functions").lspconfig("tsserver") {
+  require("lsp.config").lspconfig  "tsserver" {
     cmd = {
       DATA_PATH .. "/lspinstall/typescript/node_modules/.bin/typescript-language-server",
       "--stdio",
@@ -73,12 +73,10 @@ M.setup = function()
     root_dir = require("lspconfig/util").root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
     settings = { documentFormatting = true },
     handlers = {
-      ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-        virtual_text = O.lang.tsserver.diagnostics.virtual_text,
-        signs = O.lang.tsserver.diagnostics.signs,
-        underline = O.lang.tsserver.diagnostics.underline,
-        update_in_insert = true,
-      }),
+      ["textDocument/publishDiagnostics"] = O.lang.tsserver.diagnostics and vim.lsp.with(
+        vim.lsp.diagnostic.on_publish_diagnostics,
+        O.lang.tsserver.diagnostics
+      ),
     },
     flags = O.lsp.flags,
   }

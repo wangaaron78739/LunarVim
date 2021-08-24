@@ -2,7 +2,7 @@ if require("lv-utils").check_lsp_client_active "elmls" then
   return
 end
 
-require("lsp.functions").lspconfig "elmls" {
+require("lsp.config").lspconfig  "elmls" {
   cmd = { DATA_PATH .. "/lspinstall/elm/node_modules/.bin/elm-language-server" },
   init_options = {
     elmAnalyseTrigger = "change",

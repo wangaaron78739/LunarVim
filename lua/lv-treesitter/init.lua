@@ -115,11 +115,11 @@ require("nvim-treesitter.configs").setup {
   ensure_installed = O.treesitter.ensure_installed, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   ignore_install = O.treesitter.ignore_install,
   matchup = {
-    enable = O.plugin.matchup.active,
+    enable = O.plugin.matchup,
     -- disable = { "c", "ruby" },  -- list of language that will be disabled
   },
   pairs = {
-    enable = O.plugin.ts_matchup.active,
+    enable = O.plugin.ts_matchup,
     -- disable = {}, -- list of languages to disable
     highlight_pair_events = { "CursorMoved" }, -- e.g. {"CursorMoved"}, -- when to highlight the pairs, use {} to deactivate highlighting
     highlight_self = false, -- whether to highlight also the part of the pair under cursor (or only the partner)
@@ -138,14 +138,14 @@ require("nvim-treesitter.configs").setup {
     disable = { "latex" },
   },
   context_commentstring = {
-    enable = O.plugin.ts_context_commentstring.active,
+    enable = O.plugin.ts_context_commentstring,
     config = { css = "// %s" },
     enable_autocmd = false,
   },
   -- indent = {enable = true, disable = {"python", "html", "javascript"}},
   -- TODO seems to be broken
   indent = { enable = { "javascriptreact" } },
-  autotag = { enable = O.plugin.ts_autotag.active },
+  autotag = { enable = O.plugin.ts_autotag },
   textobjects = {
     swap = {
       enable = O.plugin.ts_textobjects,
@@ -162,7 +162,7 @@ require("nvim-treesitter.configs").setup {
     keymaps = { ["."] = "textsubjects-smart", [";"] = "textsubjects-container-outer" },
   },
   playground = {
-    enable = O.plugin.ts_playground.active,
+    enable = O.plugin.ts_playground,
     disable = {},
     updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
     persist_queries = false, -- Whether the query persists across vim sessions
@@ -180,7 +180,7 @@ require("nvim-treesitter.configs").setup {
     },
   },
   rainbow = {
-    enable = O.plugin.ts_rainbow.active,
+    enable = O.plugin.ts_rainbow,
     extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
     max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
   },

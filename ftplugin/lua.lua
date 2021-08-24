@@ -3,7 +3,7 @@ local sumneko_root_path = DATA_PATH .. "/lspinstall/lua"
 local sumneko_binary = sumneko_root_path .. "/sumneko-lua-language-server"
 
 if not require("lv-utils").check_lsp_client_active "sumneko_lua" then
-  require("lsp.functions").lspconfig "sumneko_lua" {
+  require("lsp.config").lspconfig  "sumneko_lua" {
     cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
     on_attach = require("lsp.functions").common_on_attach,
     settings = {
@@ -16,7 +16,7 @@ if not require("lv-utils").check_lsp_client_active "sumneko_lua" then
         },
         diagnostics = {
           -- Get the language server to recognize the `vim` global
-          globals = { "vim" },
+          globals = { "vim", "O" },
         },
         workspace = {
           -- Make the server aware of Neovim runtime files

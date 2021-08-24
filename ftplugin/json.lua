@@ -3,7 +3,7 @@ if require("lv-utils").check_lsp_client_active "jsonls" then
 end
 
 -- npm install -g vscode-json-languageserver
-require("lsp.functions").lspconfig "jsonls" {
+require("lsp.config").lspconfig "jsonls" {
   cmd = {
     "node",
     DATA_PATH .. "/lspinstall/json/vscode-json/json-language-features/server/dist/node/jsonServerMain.js",
@@ -21,15 +21,3 @@ require("lsp.functions").lspconfig "jsonls" {
 
   flags = O.lsp.flags,
 }
-
-if O.lang.json.autoformat then
-  require("lv-utils").define_augroups {
-    _json_format = {
-      {
-        "BufWritePre",
-        "*.json",
-        "lua vim.lsp.buf.formatting_sync(nil, 1000)",
-      },
-    },
-  }
-end

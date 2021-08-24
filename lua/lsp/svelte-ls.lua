@@ -1,5 +1,5 @@
 -- TODO what is a svelte filetype
-require("lsp.functions").lspconfig("svelte") {
+require("lsp.config").lspconfig ("svelte") {
   cmd = {
     DATA_PATH .. "/lspinstall/svelte/node_modules/.bin/svelteserver",
     "--stdio",

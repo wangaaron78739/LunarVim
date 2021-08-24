@@ -75,7 +75,7 @@ map("i", "<C-s>", "<cmd>write<cr>", sile)
 -- map("i", "<C-v>", "<C-R>+", sile)
 
 -- better window movement -- tmux_navigator supplies these if installed
-if not O.plugin.tmux_navigator.active then
+if not O.plugin.tmux_navigator then
   map("n", "<C-h>", "<C-w>h", sile)
   map("n", "<C-j>", "<C-w>j", sile)
   map("n", "<C-k>", "<C-w>k", sile)
@@ -170,7 +170,7 @@ map("v", "Y", "myY`y", nore) -- copy linewise
 map("v", "<M-y>", "y", nore)
 
 -- -- Original paste for when 'nvim-anywise-reg.lua' is installed
--- if O.plugin.anywise_reg.active then
+-- if O.plugin.anywise_reg then
 --   map("n", "<M-p>", "p", nore)
 --   map("n", "<M-S-P>", "P", nore)
 --   map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste

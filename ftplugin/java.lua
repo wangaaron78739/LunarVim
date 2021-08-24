@@ -28,7 +28,7 @@ local on_attach = function(client, bufr)
   require("lsp.functions").common_on_attach(client, bufr)
 end
 
-require("lsp.functions").lspconfig "jdtls" {
+require("lsp.config").lspconfig  "jdtls" {
   on_attach = on_attach,
   cmd = { DATA_PATH .. "/lspinstall/java/jdtls.sh" },
   filetypes = { "java" },

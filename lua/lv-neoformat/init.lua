@@ -1,6 +1,6 @@
 local M = {}
 
-if not O.plugin.neoformat.active then
+if not O.plugin.neoformat then
   return M
 end
 

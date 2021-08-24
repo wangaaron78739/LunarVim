@@ -1,6 +1,6 @@
 if not require("lv-utils").check_lsp_client_active "cssls" then
   -- npm install -g vscode-css-languageserver-bin
-  require("lsp.functions").lspconfig "cssls" {
+  require("lsp.config").lspconfig  "cssls" {
     cmd = {
       "node",
       DATA_PATH .. "/lspinstall/css/vscode-css/css-language-features/server/dist/node/cssServerMain.js",

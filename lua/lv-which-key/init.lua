@@ -243,13 +243,13 @@ local mappings = {
 for k, v in pairs(O.plugin_which_keys) do
   mappings[k] = v
 end
-if O.plugin.symbol_outline.active then
+if O.plugin.symbol_outline then
   mappings["o"]["S"] = { "<cmd>SymbolsOutline<cr>", "Symbols Sidebar" }
 end
-if O.plugin.todo_comments.active then
+if O.plugin.todo_comments then
   mappings["o"]["T"] = { "<cmd>TodoTrouble<cr>", "Todos Sidebar" }
 end
-if O.plugin.trouble.active then
+if O.plugin.trouble then
   mappings["d"]["t"] = { "<cmd>TroubleToggle<cr>", "Trouble Toggle" }
   mappings["d"]["d"] = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document" }
   mappings["d"]["w"] = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace" }
@@ -259,29 +259,29 @@ if O.plugin.trouble.active then
   mappings["d"]["L"] = { "<cmd>TroubleToggle loclist<cr>", "Location List" }
   mappings["d"]["o"] = { "<cmd>TroubleToggle todo<cr>", "TODOs" }
 end
-if O.plugin.gitlinker.active then
+if O.plugin.gitlinker then
   mappings["gy"] = "Gitlink"
 end
-if O.plugin.zen.active then
-  mappings["z"] = {
-    name = "Zen",
-    -- z  = {"<cmd>ZenMode<CR>", "ZenMode"},
-    z = { "<cmd>TZAtaraxis<CR>", "Ataraxis" },
-    f = { "<cmd>TZFocus<CR>", "Focus" },
-    m = { "<cmd>TZMinimalist<CR>", "Minimalist" },
-  }
+mappings["z"] = { name = "Zen" }
+if O.plugin.zen then
+  mappings["zz"] = { "<cmd>TZAtaraxis<CR>", "Ataraxis" }
+  mappings["zf"] = { "<cmd>TZFocus<CR>", "Focus" }
+  mappings["zm"] = { "<cmd>TZMinimalist<CR>", "Minimalist" }
 end
-if O.plugin.telescope_project.active then
+if O.plugin.twilight then
+  mappings["zt"] = { "<cmd>Twilight<CR>", "Twilight" }
+end
+if O.plugin.telescope_project then
   mappings["pp"] = { "<cmd>lua require'telescope'.extensions.project.project{}<CR>", "Projects" }
 end
-if O.plugin.project_nvim.active then
+if O.plugin.project_nvim then
   mappings["pr"] = { "<cmd>ProjectRoot<CR>", "Projects" }
 end
-if O.plugin.spectre.active then
+if O.plugin.spectre then
   mappings["rf"] = { "<cmd>lua require('spectre').open_file_search()<cr>", "Current File" }
   mappings["rp"] = { "<cmd>lua require('spectre').open()<cr>", "Project" }
 end
-if O.plugin.lazygit.active then
+if O.plugin.lazygit then
   mappings["gg"] = { "<cmd>LazyGit<CR>", "LazyGit" }
 end
 if O.lang.latex.active then
@@ -305,7 +305,7 @@ if O.lushmode then
     q = { "<cmd>LushRunQuickstart<cr>", "Lush Quickstart" },
   }
 end
-if O.plugin.magma.active then
+if O.plugin.magma then
   mappings["to"] = { "<CMD>MagmaShowOutput<CR>", "Magma Output" }
   mappings["tm"] = { "<CMD>MagmaInit<CR>", "Magma Init" }
 end
@@ -331,11 +331,12 @@ local visualMappings = {
 }
 wk.register(visualMappings, visualOpts)
 
-if O.plugin.surround.active then
+-- TODO: move to plugin config files?
+if O.plugin.surround then
   local ops = { mode = "o" }
   wk.register({ ["s"] = "Surround", ["S"] = "Surround Rest", ["ss"] = "Line" }, ops)
 end
-if O.plugin.lightspeed.active then
+if O.plugin.lightspeed then
   local ops = { mode = "o" }
   wk.register({ ["z"] = "Light speed", ["Z"] = "Light speed bwd" }, ops)
 end

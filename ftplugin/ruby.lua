@@ -3,25 +3,15 @@ if require("lv-utils").check_lsp_client_active "solargraph" then
 end
 
 -- If you are using rvm, make sure to change below configuration
-require("lsp.functions").lspconfig "solargraph" {
+require("lsp.config").lspconfig  "solargraph" {
   cmd = { DATA_PATH .. "/lspinstall/ruby/solargraph/solargraph", "stdio" },
   on_attach = require("lsp.functions").common_on_attach,
   handlers = {
-    ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = O.lang.ruby.diagnostics.virtual_text,
-      signs = O.lang.ruby.diagnostics.signs,
-      underline = O.lang.ruby.diagnostics.underline,
-      update_in_insert = true,
-    }),
+    ["textDocument/publishDiagnostics"] = O.lang.ruby.diagnostics and vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics,
+      O.lang.ruby.diagnostics
+    ),
   },
   filetypes = O.lang.ruby.filetypes,
   flags = O.lsp.flags,
 }
-
-if O.lang.ruby.autoformat then
-  require("lv-utils").define_augroups {
-    _ruby_format = {
-      { "BufWritePre", "*.rb", "lua vim.lsp.buf.formatting_sync(nil,1000)" },
-    },
-  }
-end

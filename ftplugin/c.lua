@@ -13,33 +13,18 @@ end
 table.insert(clangd_flags, "--header-insertion=" .. O.lang.clang.header_insertion)
 
 local extensions = { "hpp", "h", "cpp", "c", "cc" }
-if O.lang.clang.autoformat then
-  local autocmds = {}
-  for _, extension in ipairs(extensions) do
-    table.insert(autocmds, {
-      "BufWritePre",
-      "*." .. extension,
-      "lua vim.lsp.buf.formatting_sync(nil,1000)",
-    })
-  end
-  require("lv-utils").define_augroups {
-    _cpp = autocmds,
-  }
-end
 
-require("lsp.functions").lspconfig "clangd" {
+require("lsp.config").lspconfig  "clangd" {
   cmd = {
     DATA_PATH .. "/lspinstall/cpp/clangd/bin/clangd",
     unpack(clangd_flags),
   },
   on_attach = require("lsp.functions").common_on_attach,
   handlers = {
-    ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = O.lang.clang.diagnostics.virtual_text,
-      signs = O.lang.clang.diagnostics.signs,
-      underline = O.lang.clang.diagnostics.underline,
-      update_in_insert = true,
-    }),
+    ["textDocument/publishDiagnostics"] = O.lang.clang.diagnostics and vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics,
+      O.lang.clang.diagnostics
+    ),
   },
   flags = O.lsp.flags,
 }

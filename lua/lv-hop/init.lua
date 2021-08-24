@@ -5,7 +5,7 @@ M.config = function()
 end
 
 M.keymaps = function()
-  if O.plugin.hop.active then
+  if O.plugin.hop then
     -- silemap("n", "<M-s>", ":HopChar2<cr>")
     -- silemap("n", "<M-f>", ":HopChar1<cr>")
     silemap("n", "<M-f>", "<cmd>HopWord<cr>")

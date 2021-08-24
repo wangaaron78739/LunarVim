@@ -10,7 +10,7 @@ local M = {}
 -- end
 M.setup = function()
   if not require("lv-utils").check_lsp_client_active "tsserver" then
-    require("lsp.functions").lspconfig("tsserver") {
+    require("lsp.config").lspconfig  "tsserver" {
       cmd = {
         DATA_PATH .. "/lspinstall/typescript/node_modules/.bin/typescript-language-server",
         "--stdio",
@@ -29,12 +29,10 @@ M.setup = function()
       root_dir = require("lspconfig/util").root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
       settings = { documentFormatting = false },
       handlers = {
-        ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-          virtual_text = O.lang.tsserver.diagnostics.virtual_text,
-          signs = O.lang.tsserver.diagnostics.signs,
-          underline = O.lang.tsserver.diagnostics.underline,
-          update_in_insert = true,
-        }),
+        ["textDocument/publishDiagnostics"] = O.lang.tsserver.diagnostics and vim.lsp.with(
+          vim.lsp.diagnostic.on_publish_diagnostics,
+          O.lang.tsserver.diagnostics
+        ),
       },
       flags = O.lsp.flags,
     }

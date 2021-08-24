@@ -1,17 +1,5 @@
 local M = {}
 
-M.coq = require "coq"()
-M.coq_lsp = M.coq.lsp_ensure_capabilities
-M.setup = function(lspconfig)
-  return function(obj)
-    -- TODO: inject flags and on_attach here
-    lspconfig.setup(M.coq_lsp(obj))
-  end
-end
-M.lspconfig = function(name)
-  return M.setup(require("lspconfig")[name])
-end
-
 -- Location information about the last message printed. The format is
 -- `(did print, buffer number, line number)`.
 local last_echo = { false, -1, -1 }

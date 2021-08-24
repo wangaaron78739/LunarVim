@@ -13,7 +13,7 @@ local codeLens = {
   underline = true,
   severity_sort = true,
 }
-local diagnostics = {
+local default_diagnostics = {
   virtual_text = { spacing = 0, prefix = "", severity_limit = "Warning" },
   signs = true,
   underline = true,
@@ -63,7 +63,7 @@ O = {
     -- none, single, double, rounded, solid, shadow, array(fullcustom)
     border = "rounded",
     rename_border = "none",
-    diagnostics = diagnostics,
+    diagnostics = default_diagnostics,
     codeLens = codeLens,
     flags = {
       debounce_text_changes = 150,
@@ -113,38 +113,39 @@ O = {
   database = { save_location = "~/.config/nvim/.db", auto_execute = 1 },
   plugin_which_keys = {},
   plugin = {
-    hop = { active = enable_plugins_by_default },
-    dial = { active = enable_plugins_by_default },
-    dashboard = { active = enable_plugins_by_default },
-    matchup = { active = enable_plugins_by_default },
-    colorizer = { active = enable_plugins_by_default },
+    hop = {},
+    twilight = {},
+    notify = {},
+    dial = {},
+    dashboard = {},
+    matchup = {},
+    colorizer = {},
     numb = {
-      active = enable_plugins_by_default,
       show_numbers = true, -- Enable 'number' for the window while peeking
       show_cursorline = true, -- Enable 'cursorline' for the window while peeking
     },
-    zen = { active = enable_plugins_by_default },
-    ts_playground = { active = enable_plugins_by_default },
-    ts_context_commentstring = { active = enable_plugins_by_default },
-    ts_textobjects = { active = enable_plugins_by_default },
-    ts_autotag = { active = enable_plugins_by_default },
-    ts_textsubjects = { active = enable_plugins_by_default },
-    ts_rainbow = { active = enable_plugins_by_default },
-    ts_context = { active = enable_plugins_by_default },
-    ts_hintobjects = { active = enable_plugins_by_default },
-    ts_matchup = { active = enable_plugins_by_default },
-    indent_line = { active = enable_plugins_by_default },
-    symbol_outline = { active = enable_plugins_by_default },
-    debug = { active = enable_plugins_by_default },
-    bqf = { active = enable_plugins_by_default },
-    trouble = { active = enable_plugins_by_default },
-    floatterm = { active = enable_plugins_by_default },
-    spectre = { active = enable_plugins_by_default },
+    zen = {},
+    ts_playground = {},
+    ts_context_commentstring = {},
+    ts_textobjects = {},
+    ts_autotag = {},
+    ts_textsubjects = {},
+    ts_textunits = {},
+    ts_rainbow = {},
+    ts_context = {},
+    ts_hintobjects = {},
+    ts_matchup = {},
+    indent_line = {},
+    symbol_outline = {},
+    debug = {},
+    bqf = {},
+    trouble = {},
+    floatterm = {},
+    spectre = {},
     project_nvim = {
-      active = enable_plugins_by_default,
       -- Manual mode doesn't automatically change your root directory, so you have
       -- the option to manually do so using `:ProjectRoot` command.
-      manual_mode = false,
+      manual_mode = true,
 
       -- When set to false, you will get a message when project.nvim changes your
       -- directory.
@@ -164,16 +165,16 @@ O = {
       -- eg: { "efm", ... }
       -- ignore_lsp = {},
     },
-    markdown_preview = { active = enable_plugins_by_default },
-    codi = { active = enable_plugins_by_default },
-    telescope_fzy = { active = enable_plugins_by_default },
-    telescope_fzf = { active = enable_plugins_by_default },
-    sanegx = { active = enable_plugins_by_default },
-    ranger = { active = enable_plugins_by_default },
-    todo_comments = { active = enable_plugins_by_default },
-    lsp_colors = { active = enable_plugins_by_default },
+    markdown_preview = {},
+    codi = {},
+    telescope_fzy = {},
+    telescope_frecency = {},
+    telescope_fzf = {},
+    sanegx = {},
+    ranger = {},
+    todo_comments = {},
+    lsp_colors = {},
     lsp_signature = {
-      active = enable_plugins_by_default,
       doc_lines = 2, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
       -- Apply indentation for wrapped lines
       use_lspsaga = false, -- set to true if you want to use lspsaga popup
@@ -184,16 +185,13 @@ O = {
       max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
       max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
       bind = true,
-      handler_opts = {
-        border = "rounded", -- double, single, shadow, none
-      },
+      handler_opts = { border = "rounded" },
       hint_scheme = "String",
       hi_parameter = "Search",
-      toggle_key = "<M-space>", -- TODO: Can I add this to C-Space as well?
+      toggle_key = "<C-S-space>", -- TODO: Can I add this to C-Space as well?
     },
-    git_blame = { active = enable_plugins_by_default },
+    git_blame = {},
     gitlinker = {
-      active = enable_plugins_by_default,
       opts = {
         -- Manual mode doesn't automatically change your root directory, so you have
         -- the option to manually do so using `:ProjectRoot` command.
@@ -218,35 +216,35 @@ O = {
         -- ignore_lsp = {},
       },
     },
-    lazygit = { active = enable_plugins_by_default },
-    octo = { active = enable_plugins_by_default },
-    lush = { active = enable_plugins_by_default },
-    diffview = { active = enable_plugins_by_default },
-    bracey = { active = enable_plugins_by_default },
-    telescope_project = { active = enable_plugins_by_default },
-    gist = { active = enable_plugins_by_default },
-    dap_install = { active = enable_plugins_by_default },
-    visual_multi = { active = enable_plugins_by_default },
-    lightspeed = { active = enable_plugins_by_default }, -- Uses lightspeed.nvim
+    lazygit = {},
+    octo = {},
+    lush = {},
+    diffview = {},
+    bracey = {},
+    telescope_project = {},
+    gist = {},
+    dap_install = {},
+    visual_multi = {},
+    lightspeed = {}, -- Uses lightspeed.nvim
     quickscope = {
-      active = enable_plugins_by_default,
       -- event = "BufRead"
       -- on_keys = { "f", "F", "t", "T" }, -- Comment this line to have it always visible
     },
-    surround = { active = enable_plugins_by_default }, -- Uses vim-sandwhich
-    fzf = { active = enable_plugins_by_default },
-    slime = { active = enable_plugins_by_default, target = "kitty" },
-    magma = { active = enable_plugins_by_default },
-    neoterm = { active = enable_plugins_by_default },
-    bullets = { active = enable_plugins_by_default },
-    vista = { active = enable_plugins_by_default },
-    startuptime = { active = enable_plugins_by_default },
-    tabnine = { active = enable_plugins_by_default },
-    tmux_navigator = { active = enable_plugins_by_default },
-    flutter_tools = { active = enable_plugins_by_default },
-    editorconfig = { active = enable_plugins_by_default },
+    surround = {}, -- Uses vim-sandwhich
+    fzf = {},
+    slime = { target = "kitty" },
+    magma = {},
+    neoterm = {
+      automap_keys = "xx",
+    },
+    bullets = {},
+    vista = {},
+    startuptime = {},
+    tabnine = {},
+    tmux_navigator = {},
+    flutter_tools = {},
+    editorconfig = {},
     anywise_reg = {
-      active = enable_plugins_by_default,
       operators = { "y", "d" }, -- putting 'c' breaks it (wrong insert mode cursor)
       registers = { "+", "a" },
       textobjects = {
@@ -257,18 +255,17 @@ O = {
       paste_keys = { ["p"] = "p", ["P"] = "P" },
       register_print_cmd = false,
     },
-    doge = { active = enable_plugins_by_default },
-    undotree = { active = enable_plugins_by_default },
-    ts_iswap = { active = enable_plugins_by_default },
-    coq = { active = enable_plugins_by_default },
-    compe = { active = enable_plugins_by_default },
-    neoformat = { active = enable_plugins_by_default },
+    doge = {},
+    undotree = {},
+    ts_iswap = { autoswap = true },
+    coq = {},
+    compe = {},
+    neoformat = {},
   },
-  custom_plugins = {},
   lang = {
     python = {
       isort = false,
-      diagnostics = diagnostics,
+
       analysis = {
         type_checking = "basic", -- off
         auto_search_paths = true,
@@ -276,23 +273,15 @@ O = {
       },
       formatter = "black",
     },
-    dart = {
-      sdk_path = "/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot",
-    },
-    lua = {
-      diagnostics = diagnostics,
-    },
-    sh = {
-      diagnostics = diagnostics,
-    },
+    dart = { sdk_path = "/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot" },
+    lua = {},
+    sh = {},
     tsserver = {
-      diagnostics = diagnostics,
+
       linter = "eslint",
       formatter = "prettier",
     },
-    json = {
-      diagnostics = diagnostics,
-    },
+    json = {},
     tailwindcss = {
       active = false,
       filetypes = {
@@ -306,50 +295,32 @@ O = {
       },
     },
     -- Used for js, ts, jsreact and tsreact -- I assume they are all similar enough
-    javascript = {
-      diagnostics = diagnostics,
-    },
+    javascript = {},
     clang = {
-      diagnostics = diagnostics,
+
       cross_file_rename = true,
       header_insertion = "never",
     },
-    ruby = {
-      diagnostics = diagnostics,
-      filetypes = { "rb", "erb", "rakefile", "ruby" },
-    },
-    go = {
-      diagnostics = diagnostics,
-    },
-    elixir = {
-      diagnostics = diagnostics,
-    },
-    vim = {
-      diagnostics = diagnostics,
-    },
-    yaml = {
-      diagnostics = diagnostics,
-    },
-    terraform = {
-      diagnostics = diagnostics,
-    },
+    ruby = { filetypes = { "rb", "erb", "rakefile", "ruby" } },
+    go = {},
+    elixir = {},
+    vim = {},
+    yaml = {},
+    terraform = {},
     rust = {
       rust_tools = { active = true },
       linter = "",
-      diagnostics = diagnostics,
     },
-    svelte = {
-      diagnostics = diagnostics,
-    },
+    svelte = {},
     php = {
-      diagnostics = diagnostics,
+
       format = { braces = "psr12" },
       environment = { php_version = "7.4" },
       filetypes = { "php", "phtml" },
     },
     latex = {
       vimtex = { active = true },
-      diagnostics = diagnostics,
+
       filetypes = { "tex", "bib" },
       aux_directory = ".",
       bibtex_formatter = "texlab",
@@ -367,37 +338,16 @@ O = {
       latex_formatter = "latexindent",
       latexindent = { modify_line_breaks = false },
     },
-    kotlin = {
-      diagnostics = diagnostics,
-    },
-    html = {
-      diagnostics = diagnostics,
-    },
-    elm = {
-      diagnostics = diagnostics,
-    },
-    emmet = {
-      diagnostics = diagnostics,
-      active = false,
-    },
-    graphql = {
-      diagnostics = diagnostics,
-    },
-    docker = {
-      diagnostics = diagnostics,
-    },
-    cmake = {
-      diagnostics = diagnostics,
-    },
-    java = {
-      diagnostics = diagnostics,
-    },
-    zig = {
-      diagnostics = diagnostics,
-    },
-    julia = {
-      diagnostics = diagnostics,
-    },
+    kotlin = {},
+    html = {},
+    elm = {},
+    emmet = { active = false },
+    graphql = {},
+    docker = {},
+    cmake = {},
+    java = {},
+    zig = {},
+    julia = {},
   },
   dashboard = {
     footer = { "Anshuman Medhi -- IndianBoy42 (amedhi@connect.ust.hk)" },
@@ -417,7 +367,7 @@ local disable_plugins = {
   "bullets",
 }
 for _, v in ipairs(disable_plugins) do
-  O.plugin[v].active = false
+  O.plugin[v] = false
 end
 
 require("lv-utils").set_guifont(11)

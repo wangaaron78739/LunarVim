@@ -50,7 +50,7 @@ M.config = function()
     },
   }
 
-  if O.plugin.tabnine.active then
+  if O.plugin.tabnine then
     -- vim.g["compe.source.tabnine"] = 1
     opt.source.tabnine = { kind = " ", priority = 200, max_reslts = 6 }
   end
