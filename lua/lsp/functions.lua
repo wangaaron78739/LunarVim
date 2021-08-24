@@ -108,6 +108,34 @@ M.format_range_operator = function()
   vim.api.nvim_feedkeys("g@", "n", false)
 end
 
+-- TODO: Wait for vim.lsp.diagnostic.show_diagnostics to be public
+M.range_diagnostics = function(opts, buf_nr, start, finish)
+  start = start or vim.api.nvim_buf_get_mark(0, "[")
+  finish = finish or vim.api.nvim_buf_get_mark(0, "]")
+
+  opts = opts or {}
+  opts.focus_id = "position_diagnostics"
+  buf_nr = buf_nr or vim.api.nvim_get_current_buf()
+  local match_position_predicate = function(diag)
+    if finish[1] < diag.range["start"].line then
+      return false
+    else
+      return start[1] <= diag.range["end"].line
+    end
+    return ((finish[1] >= diag.range["start"].line) and (start[1] <= diag.range["end"].line))
+  end
+  local range_diagnostics = vim.lsp.diagnostic.get(buf_nr, nil, match_position_predicate)
+  -- if opts.severity then
+  --   range_diagnostics = filter_to_severity_limit(opts.severity, range_diagnostics)
+  -- elseif opts.severity_limit then
+  --   range_diagnostics = filter_by_severity_limit(opts.severity_limit, range_diagnostics)
+  -- end
+  table.sort(range_diagnostics, function(a, b)
+    return a.severity < b.severity
+  end)
+  return vim.lsp.diagnostic.show_diagnostics(opts, range_diagnostics)
+end
+
 -- Preview definitions and things
 local function preview_location_callback(_, _, result)
   if result == nil or vim.tbl_isempty(result) then
