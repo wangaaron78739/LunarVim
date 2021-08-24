@@ -38,10 +38,13 @@ return require("packer").startup(function(use)
     end,
     disable = not O.plugin.notify,
   }
+
   -- Lsp Configs
   use { "neovim/nvim-lspconfig" }
   use {
     "kabouzeid/nvim-lspinstall",
+    -- https://github.com/williamboman/nvim-lsp-installer
+    -- https://github.com/alexaandru/nvim-lspupdate.git
     config = function()
       require "lv-lspinstall"
     end,
@@ -70,6 +73,7 @@ return require("packer").startup(function(use)
     config = function()
       require("lv-coq").config()
     end,
+    run = ":COQdeps",
     disable = not O.plugin.coq,
   }
   use {
@@ -399,6 +403,16 @@ return require("packer").startup(function(use)
     requires = "telescope.nvim",
     disable = not O.plugin.telescope_project,
   }
+  -- Telescope sort by frecency
+  use { "tami5/sql.nvim" }
+  use {
+    "nvim-telescope/telescope-frecency.nvim",
+    config = function()
+      -- require("telescope").load_extension "frecency"
+    end,
+    disable = not O.plugin.telescope_frecency,
+  }
+  use { "nvim-telescope/telescope-hop.nvim", requires = "telescope.nvim" }
   -- Sane gx for netrw_gx bug
   use {
     "felipec/vim-sanegx",
@@ -489,7 +503,11 @@ return require("packer").startup(function(use)
   -- Rust tools
   use {
     "simrat39/rust-tools.nvim",
+    config = function()
+      require("lv-rust-tools").setup()
+    end,
     -- TODO: use lazy loading maybe?
+    -- ft = rust
     disable = not O.lang.rust.rust_tools.active,
   }
 
@@ -531,10 +549,6 @@ return require("packer").startup(function(use)
 
   -- Json querying
   use { "gennaro-tedesco/nvim-jqx", ft = "json" }
-
-  -------------------------------------------------------------------
-  -------------------------------------------------------------------
-  -- amedhi plugins
 
   -- LSP get function signature
   use {
@@ -773,6 +787,14 @@ return require("packer").startup(function(use)
   use {
     "RRethy/nvim-treesitter-textsubjects",
     disable = not O.plugin.ts_textsubjects,
+    use {
+      "David-Kunz/treesitter-unit",
+      config = function()
+        vim.api.nvim_set_keymap("v", "x", '<cmd>lua require"treesitter-unit".select()<CR>', { noremap = true })
+        vim.api.nvim_set_keymap("o", "x", '<cmd><c-u>lua require"treesitter-unit".select()<CR>', { noremap = true })
+      end,
+      disable = not O.plugin.ts_textunits,
+    },
   }
   use {
     "mfussenegger/nvim-ts-hint-textobject",
@@ -787,6 +809,9 @@ return require("packer").startup(function(use)
   }
   use {
     "mizlan/iswap.nvim",
+    config = function()
+      require("iswap").setup(O.plugin.ts_iswap)
+    end,
     cmd = { "ISwap", "ISwapWith" },
     disable = not O.plugin.ts_iswap,
   }
@@ -894,6 +919,7 @@ return require("packer").startup(function(use)
 
   -- use { "~/code/glow.nvim", run = ":GlowInstall" }
 
+  -- Command line autocomplete
   use {
     "gelguy/wilder.nvim",
     config = function()
@@ -901,6 +927,7 @@ return require("packer").startup(function(use)
     end,
   }
 
+  -- Primeagens refactoring plugin
   use {
     "ThePrimeagen/refactoring.nvim",
     config = function()
@@ -908,6 +935,35 @@ return require("packer").startup(function(use)
     end,
   }
 
+  -- Lua development helper
+  use {
+    "bfredl/nvim-luadev",
+    cmd = "Luadev",
+    config = function()
+      silemap("n", "<leader>xx", "<Plug>(Luadev-RunLine)")
+      silemap("n", "<leader>x", "<Plug>(Luadev-Run)")
+      silemap("v", "<leader>x", "<Plug>(Luadev-Run)")
+      silemap("n", "<leader>xw", "<Plug>(Luadev-RunWord)")
+      silemap("n", "<leader>x<space>", "<Plug>(Luadev-Complete)")
+    end,
+    ft = "lua",
+  }
+  use {
+    "rafcamlet/nvim-luapad",
+    cmd = { "Luapad", "LuaRun" },
+    ft = "lua",
+  }
+
+  -- Lowlight code outside the current context
+  use {
+    "folke/twilight.nvim",
+    config = function()
+      require("twilight").setup {}
+    end,
+    disable = not O.plugin.twilight,
+  }
+
+  -- Colorschemes/Themes
   -- Lush - Create Color Schemes
   use {
     "rktjmp/lush.nvim",
@@ -917,8 +973,26 @@ return require("packer").startup(function(use)
   -- Colorbuddy colorscheme helper
   use { "tjdevries/colorbuddy.vim", module = "colorbuddy" }
   -- Colorschemes -- https://github.com/folke/lsp-colors.nvim
-  use { "Yagua/nebulous.nvim" }
+  use {
+    "Yagua/nebulous.nvim",
+    config = function()
+      vim.g.nb_style = "night"
+    end,
+  }
   use { "christianchiarulli/nvcode-color-schemes.vim", opt = true }
+  use {
+    "Pocco81/Catppuccino.nvim",
+    config = function()
+      require("catppuccino").setup {
+        colorscheme = "catppuccino", -- neon_latte
+        integrations = setmetatable({}, { -- Return always true
+          __index = function(tbl, key)
+            return tbl[key] or true
+          end,
+        }),
+      }
+    end,
+  }
   -- use "RishabhRD/nvim-rdark"
   -- use "marko-cerovac/material.nvim"
   -- use "Shatur/neovim-ayu"
@@ -975,4 +1049,21 @@ return require("packer").startup(function(use)
   -- https://github.com/tversteeg/registers.nvim -- which-key provides this
   -- https://github.com/jbyuki/nabla.nvim
   -- https://github.com/justinmk/vim-dirvish -- netrw/nvim-tree alternative
+
+  local metatable = {
+    __newindex = function(table, repo, options)
+      options[1] = table[1] .. "/" .. repo
+      use(options)
+    end,
+  }
+  local plugins_table = setmetatable({}, {
+    __index = function(table, user)
+      return setmetatable({ user }, metatable)
+    end,
+  })
+  -- plugins_table.gelguy["wilder.nvim"] = {
+  --   config = function()
+  --     require("lv-wilder").config()
+  --   end,
+  -- }
 end)

@@ -192,6 +192,7 @@ function M.help_tags()
 end
 
 function M.find_files()
+  -- require("telescope").extensions.frecency.frecency()
   require("telescope.builtin").fd {
     -- find_command = { "fd", "--hidden", "--follow", "--type f" },
     file_ignore_patterns = { "node_modules", ".pyc" },

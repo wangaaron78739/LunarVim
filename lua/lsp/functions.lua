@@ -254,6 +254,7 @@ M.rename = function()
     enter = vim.lsp.buf.rename,
     init_cword = true,
     at_begin = true,
+    minwidth = true,
   }
 end
 

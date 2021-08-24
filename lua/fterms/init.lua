@@ -38,14 +38,15 @@ M.python = popup "ipython"
 M.spt = popup "spt"
 M.top = popup "btm"
 
-function _G.ftopen(name)
-  M[name]:open()
-end
-
 function M.setup()
   vim.api.nvim_set_keymap("n", "<M-i>", '<CMD>lua require("FTerm").toggle()<CR>', {})
   vim.api.nvim_set_keymap("t", "<M-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', {})
   -- map("t", "<Esc>", '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', nore)
+
+  function _G.ftopen(name)
+    M[name]:open()
+  end
+
   vim.cmd [[
     command! -nargs=1 Ftopen call v:lua.ftopen('<args>')
   ]]

@@ -24,7 +24,8 @@ local map_tele = function(mode, key, f, options, buffer)
   end
 end
 
-require("telescope").setup {
+local telescope = require "telescope"
+telescope.setup {
   defaults = {
     find_command = functions.commands.fd,
     vimgrep_arguments = functions.commands.rg,
@@ -61,6 +62,7 @@ require("telescope").setup {
     buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
     mappings = {
       i = {
+        ["<C-h>"] = telescope.extensions.hop.hop,
         ["<C-x>"] = actions.delete_buffer,
         ["<C-s>"] = actions.select_horizontal,
         ["<C-v>"] = actions.select_vertical,
@@ -106,12 +108,19 @@ require("telescope").setup {
       -- the default case_mode is "smart_case"
     },
     "cmake",
+    extensions = {
+      hop = {
+        keys = { "a", "s", "d", "f", "h", "j", "k", "l" },
+      },
+    },
   },
 }
 
-require("telescope").setup {}
+-- telescope.setup {}
 
 _G.telescopes = functions
 -- require'telescope'.load_extension('fzy_native')
-require("telescope").load_extension "fzf"
+telescope.load_extension "fzf"
+telescope.load_extension "hop"
+-- telescope.load_extension "frecency"
 -- require'telescope'.load_extension('project')
