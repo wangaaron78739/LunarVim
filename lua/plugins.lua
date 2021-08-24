@@ -27,6 +27,17 @@ return require("packer").startup(function(use)
   -- Packer can manage itself as an optional plugin
   use "wbthomason/packer.nvim"
 
+  use {
+    "rcarriga/nvim-notify",
+    config = function()
+      vim.notify = function(msg, lvl, opts)
+        opts.timeout = opts.timemout or O.notify.timeout
+        return require "notify"(msg, lvl, opts)
+      end
+      -- vim.notify = require "notify"
+    end,
+    disable = not O.plugin.notify,
+  }
   -- Lsp Configs
   use { "neovim/nvim-lspconfig" }
   use {

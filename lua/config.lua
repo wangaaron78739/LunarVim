@@ -55,6 +55,9 @@ O = {
   leader_key = "space",
   local_leader_key = ",",
   vnsip_dir = CONFIG_PATH .. "/snippets",
+  notify = {
+    timeout = 2000, -- 5000 default
+  },
   breakpoint_sign = { text = "🛑", texthl = "LspDiagnosticsSignError", linehl = "", numhl = "" },
   lsp = {
     document_highlight = true,
