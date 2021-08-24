@@ -116,12 +116,10 @@ end
 
 _G.lv_utils_operatorfuncs = {}
 -- wrapper for making operators easily
-function M.operatorfunc_scaffold(name, lines, operatorfunc)
+function M.operatorfunc_scaffold(name, operatorfunc)
   local old_func = vim.go.operatorfunc
 
   _G.lv_utils_operatorfuncs[name] = function()
-    M.operatorfunc_helper_select(lines)
-
     operatorfunc()
 
     M.post_operatorfunc(old_func)
@@ -135,14 +133,16 @@ end
 
 -- keys linewise
 function M.operatorfuncV_keys(name, verbkeys)
-  return M.operatorfunc_scaffold(name, true, function()
+  return M.operatorfunc_scaffold(name, function()
+    M.operatorfunc_helper_select(true)
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(verbkeys, true, true, true), "m", false)
   end)
 end
 
 -- charwise linewise
 function M.operatorfunc_keys(name, verbkeys)
-  return M.operatorfunc_scaffold(name, false, function()
+  return M.operatorfunc_scaffold(name, function()
+    M.operatorfunc_helper_select(false)
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(verbkeys, true, true, true), "m", false)
   end)
 end

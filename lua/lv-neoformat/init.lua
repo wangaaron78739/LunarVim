@@ -44,7 +44,8 @@ M.config = function()
 end
 
 M.keymaps = function()
-  local format_range_operator = require("lv-utils").operatorfunc_scaffold("format_range", true, function()
+  local format_range_operator = require("lv-utils").operatorfunc_scaffold("format_range", function()
+    M.operatorfunc_helper_select(true)
     vim.cmd "Neoformat"
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, true, true), "n", false) -- Exit visual mode
   end)
