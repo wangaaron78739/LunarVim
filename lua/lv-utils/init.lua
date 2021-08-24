@@ -70,26 +70,46 @@ function M.command(name, fn)
   vim.cmd("command! " .. name .. " " .. fn)
 end
 
+M.cmd_call = setmetatable({}, {
+  __index = function(tbl, key)
+    return function(args)
+      return "<cmd>call v:lua." .. key .. "(" .. args .. ")<cr>"
+    end
+  end,
+})
+
 _G.lv_utils_functions = {}
 local to_cmd_counter = 0
-function M.to_cmd(luafunction, opts)
-  if opts == nil then
-    opts = ""
+function M.to_cmd(luafunction, args)
+  -- TODO: serialize opts if table
+  if args == nil then
+    args = ""
   end
   local name = "fn" .. to_cmd_counter
   to_cmd_counter = to_cmd_counter + 1
   _G.lv_utils_functions[name] = luafunction
-  return "<cmd>call v:lua.lv_utils_functions." .. name .. "(" .. opts .. ")<cr>"
+  return "<cmd>call v:lua.lv_utils_functions." .. name .. "(" .. args .. ")<cr>"
 end
 
 vim.cmd [[
-  function! QuickFixToggle()
+augroup quickfix
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* call OpenQuickFixList()
+augroup END
+
+function OpenQuickFixList()
+    vert cwindow
+    wincmd p
+    wincmd =
+endfunction
+
+function! QuickFixToggle()
     if empty(filter(getwininfo(), 'v:val.quickfix'))
-      copen
+        copen
     else
-      cclose
+        cclose
     endif
-  endfunction
+endfunction
 ]]
 
 function M.operatorfunc_helper_select(lines)
@@ -260,6 +280,27 @@ end
 function M.syn_group()
   local s = vim.fn.synID(vim.fn.line ".", vim.fn.col ".", 1)
   print(vim.fn.synIDattr(s, "name") .. " -> " .. vim.fn.synIDattr(vim.fn.synIDtrans(s), "name"))
+end
+
+M.cmd_require = function(name)
+  return setmetatable({}, {
+    __index = function(tbl, key)
+      return "<cmd>lua require('" .. name .. "')." .. key .. "()<cr>"
+    end,
+  })
+end
+
+M.cmd_require_args = function(name)
+  return setmetatable({}, {
+    __index = function(tbl, key)
+      return function(args)
+        if args == nil then
+          args = ""
+        end
+        return "<cmd>lua require('" .. name .. "')." .. key .. "(" .. args .. ")<cr>"
+      end
+    end,
+  })
 end
 
 return M
