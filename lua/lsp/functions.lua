@@ -109,6 +109,7 @@ M.format_range_operator = function()
 end
 
 -- TODO: Wait for vim.lsp.diagnostic.show_diagnostics to be public
+local util = require "vim.lsp.util"
 M.range_diagnostics = function(opts, buf_nr, start, finish)
   start = start or vim.api.nvim_buf_get_mark(0, "[")
   finish = finish or vim.api.nvim_buf_get_mark(0, "]")
@@ -124,16 +125,51 @@ M.range_diagnostics = function(opts, buf_nr, start, finish)
     end
     return ((finish[1] >= diag.range["start"].line) and (start[1] <= diag.range["end"].line))
   end
-  local range_diagnostics = vim.lsp.diagnostic.get(buf_nr, nil, match_position_predicate)
+  local diagnostics = vim.lsp.diagnostic.get(buf_nr, nil, match_position_predicate)
   -- if opts.severity then
   --   range_diagnostics = filter_to_severity_limit(opts.severity, range_diagnostics)
   -- elseif opts.severity_limit then
   --   range_diagnostics = filter_by_severity_limit(opts.severity_limit, range_diagnostics)
   -- end
-  table.sort(range_diagnostics, function(a, b)
+  table.sort(diagnostics, function(a, b)
     return a.severity < b.severity
   end)
-  return vim.lsp.diagnostic.show_diagnostics(opts, range_diagnostics)
+
+  -- vim.lsp.diagnostic.show_diagnostics
+  -- return vim.lsp.diagnostic.show_diagnostics(opts, range_diagnostics)
+  if vim.tbl_isempty(diagnostics) then
+    return
+  end
+  local lines = {}
+  local highlights = {}
+  local show_header = vim.F.if_nil(opts.show_header, true)
+  if show_header then
+    table.insert(lines, "Diagnostics:")
+    table.insert(highlights, { 0, "Bold" })
+  end
+
+  for i, diagnostic in ipairs(diagnostics) do
+    local prefix = string.format("%d. ", i)
+    local hiname = vim.lsp.diagnostic._get_floating_severity_highlight_name(diagnostic.severity)
+    assert(hiname, "unknown severity: " .. tostring(diagnostic.severity))
+
+    local message_lines = vim.split(diagnostic.message, "\n", true)
+    table.insert(lines, prefix .. message_lines[1])
+    table.insert(highlights, { #prefix, hiname })
+    for j = 2, #message_lines do
+      table.insert(lines, string.rep(" ", #prefix) .. message_lines[j])
+      table.insert(highlights, { 0, hiname })
+    end
+  end
+
+  local popup_bufnr, winnr = util.open_floating_preview(lines, "plaintext", opts)
+  for i, hi in ipairs(highlights) do
+    local prefixlen, hiname = unpack(hi)
+    -- Start highlight after the prefix
+    vim.api.nvim_buf_add_highlight(popup_bufnr, -1, hiname, i - 1, prefixlen, -1)
+  end
+
+  return popup_bufnr, winnr
 end
 
 -- Preview definitions and things
