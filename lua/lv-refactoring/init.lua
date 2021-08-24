@@ -24,27 +24,52 @@ end
 function M.setup()
   local refactor = require "refactoring"
   refactor.setup()
+  local wk = require "which-key"
 
-  noremap(
-    "v",
-    "<Leader>re",
-    [[<Cmd>lua require('refactoring').refactor('Extract Function')<CR><ESC>]],
-    { noremap = true, silent = true, expr = false }
-  )
-  noremap("n", "<Leader>re", require("lv-utils").operatorfunc_keys("extract_function", "<leader>re"), {})
-  noremap(
-    "v",
-    "<Leader>rv",
-    [[<Cmd>lua require('refactoring').refactor('Extract Variable')<CR><ESC>]],
-    { noremap = true, silent = true, expr = false }
-  )
-  noremap("n", "<Leader>re", require("lv-utils").operatorfunc_keys("extract_variable", "<leader>rf"), {})
-  noremap(
-    "v",
-    "<Leader>rf",
-    [[<Cmd>lua require('lv-refactoring').telescope_refactors()<CR>]],
-    { noremap = true, silent = true, expr = false }
-  )
+  local norm = {
+    mode = "n",
+    prefix = "<leader>r",
+    buffer = nil,
+    silent = true,
+    noremap = true,
+    nowait = false,
+  }
+
+  local visu = {
+    mode = "v",
+    prefix = "<leader>r",
+    buffer = nil,
+    silent = true,
+    noremap = true,
+    nowait = false,
+  }
+  local function helper(name)
+    return {
+      string.format([[<cmd>lua require('refactoring').refactor('%s')<CR><ESC>]], name),
+      name,
+    }
+  end
+  wk.register({
+    e = helper "Extract Function",
+    v = helper "Extract Variable",
+    i = helper "Inline Variable",
+    -- TODO: use popfix to get a code_actions style popup
+    f = {
+      [[<cmd>lua require('lv-refactoring').telescope_refactors()<CR>]],
+      "Refactors",
+    },
+  }, visu)
+
+  wk.register({
+    e = {
+      require("lv-utils").operatorfunc_keys("extract_function", "<leader>re"),
+      "Extract function",
+    },
+    v = {
+      require("lv-utils").operatorfunc_keys("extract_variable", "<leader>rv"),
+      "Extract variable",
+    },
+  }, norm)
 end
 
 return M

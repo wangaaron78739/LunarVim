@@ -204,6 +204,15 @@ require("nvim-treesitter.configs").setup {
       },
     },
   },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "<M-,>",
+      node_incremental = ",",
+      node_decremental = "<M-,>",
+      scope_incremental = "grc",
+    },
+  },
 }
 
 vim.opt.foldmethod = "expr"

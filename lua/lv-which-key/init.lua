@@ -1,4 +1,6 @@
-require("which-key").setup {
+local utils = require "lv-utils"
+local wk = require "which-key"
+wk.setup {
   plugins = {
     marks = true, -- shows a list of your marks on ' and `
     registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
@@ -56,10 +58,10 @@ local mappings = {
   [";"] = { "<cmd>Dashboard<CR>", "Dashboard" },
   ["/"] = { telescope_cmd "live_grep", "Global search" },
   -- ["/"] = { "<cmd>lua require('spectre').open()<cr>", "Global search" },
-  f = { "<cmd> lua require('telescope.builtin').find_files() <CR>", "Find File" },
+  f = { telescope_cmd "find_files", "Find File" },
   -- k = { "<cmd>lua require('lv-kakmode').enter()<cr>", "Kakoune" },
-  j = { "]", "Jump next (])" },
-  k = { "[", "Jump prev ([)" },
+  j = "Jump next (])",
+  k = "Jump prev ([)",
   -- w = { "<cmd>up<CR>", "Write" },
   w = { "<cmd>w<CR>", "Write" },
   o = {
@@ -69,30 +71,29 @@ local mappings = {
     r = { "<cmd>RnvimrToggle<cr>", "Ranger" },
     q = { [[call QuickFixToggle]], "Quick fixes" },
     o = { "<cmd>!open '%:p:h'<CR>", "Open File Explorer" },
-    s = { "<cmd>lua require('lv-telescope.functions').file_browser()<cr>", "Telescope browser" },
+    F = { telescope_cmd "file_browser", "Telescope browser" },
     v = { "<cmd>Vista nvim_lsp<cr>", "Vista" },
     -- ["v"] = {"<cmd>Vista<CR>", "Vista"},
     m = { "<cmd>MinimapToggle<cr>", "Minimap" },
-    b = { "<cmd>lua _G.ftopen('broot')<CR>", "Broot" },
-    p = { "<cmd>lua _G.ftopen('python')<CR>", "Python" },
-    M = { "<cmd>lua _G.ftopen('top')<CR>", "System Monitor" },
-    S = { "<cmd>lua _G.ftopen('spt')<CR>", "Spotify" },
-    t = { "<cmd>lua _G.ftopen('right')<CR>", "Terminal" },
+    b = { "<cmd>call v:lua.ftopen('broot')<CR>", "Broot" },
+    p = { "<cmd>call v:lua.ftopen('python')<CR>", "Python" },
+    M = { "<cmd>call v:lua.ftopen('top')<CR>", "System Monitor" },
+    S = { "<cmd>call v:lua.ftopen('spt')<CR>", "Spotify" },
+    t = { "<cmd>call v:lua.ftopen('right')<CR>", "Terminal" },
   },
   t = {
     name = "Terminals",
-    e = "Neoterm automap",
     -- TODO: Slime commands or replace slime with neoterm
     t = { "<cmd>Ttoggle<CR>", "Neoterm" },
     r = { "<cmd>TREPLSetTerm<CR> ", "Neoterm set repl..." },
     l = { "<cmd>Tls<CR>", "Neoterm list" },
     s = "Slime Line",
     M = { "<cmd>Tmap ", "Neoterm map a command" },
-    b = { "<cmd>lua _G.ftopen('broot')<CR>", "Broot" },
-    p = { "<cmd>lua _G.ftopen('python')<CR>", "Python" },
-    T = { "<cmd>lua _G.ftopen('top')<CR>", "Top" },
-    S = { "<cmd>lua _G.ftopen('spt')<CR>", "Spotify" },
-    -- t = { "<cmd>lua _G.ftopen('right')<CR>", "Terminal" },
+    b = { "<cmd>call v:lua.ftopen('broot')<CR>", "Broot" },
+    p = { "<cmd>call v:lua.ftopen('python')<CR>", "Python" },
+    T = { "<cmd>call v:lua.ftopen('top')<CR>", "Top" },
+    S = { "<cmd>call v:lua.ftopen('spt')<CR>", "Spotify" },
+    -- t = { "<cmd>call v:lua.ftopen('right')<CR>", "Terminal" },
     -- t = { "<cmd>lua require'FTerm'.toggle()<CR>", "Terminal" },
   },
   T = {
@@ -126,15 +127,15 @@ local mappings = {
     L = { "<cmd>BufferLineSortByExtension<cr>", "sort BufferLines automatically by language" },
     t = { "<cmd>vnew term://" .. O.termshell .. "<CR>", "Terminal" },
   },
-  -- " Available Debug Adapters:
-  -- "   https://microsoft.github.io/debug-adapter-protocol/implementors/adapters/
-  -- "
-  -- " Adapter configuration and installation instructions:
-  -- "   https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
-  -- "
-  -- " Debug Adapter protocol:
-  -- "   https://microsoft.github.io/debug-adapter-protocol/
   D = {
+    -- " Available Debug Adapters:
+    -- "   https://microsoft.github.io/debug-adapter-protocol/implementors/adapters/
+    -- "
+    -- " Adapter configuration and installation instructions:
+    -- "   https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
+    -- "
+    -- " Debug Adapter protocol:
+    -- "   https://microsoft.github.io/debug-adapter-protocol/
     name = "Debug",
     t = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
     b = { "<cmd>lua require'dap'.step_back()<cr>", "Step Back" },
@@ -152,7 +153,7 @@ local mappings = {
   },
   g = {
     name = "Git",
-    g = { "<cmd>lua _G.ftopen('gitui')<CR>", "Gitui" },
+    g = { "<cmd>call v:lua.ftopen('gitui')<CR>", "Gitui" },
     m = { "<cmd>!smerge '%:p:h'<CR>", "Sublime Merge" },
     j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
     k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
@@ -200,18 +201,18 @@ local mappings = {
     k = { telescope_cmd "keymaps", "Keymappings" },
     o = { "<cmd>TodoTelescope<cr>", "TODOs" },
     q = { telescope_cmd "quickfix", "Quickfix" },
-    ["*"] = { "<cmd> lua require('lv-telescope.functions').grep_string()<cr>", "cword" },
-    ["/"] = { "<cmd> lua require('lv-telescope.functions').grep_last_search()<cr>", "Last Search" },
+    ["*"] = { telescope_cmd "grep_string", "cword" },
+    ["/"] = { telescope_cmd "grep_last_search", "Last Search" },
     i = "for (object)",
-    r = "and Replace",
+    r = { [[:%s///g<Left><Left><Left>]], "and Replace" },
   },
   r = {
     name = "Replace/Refactor",
     n = { "<cmd>lua require('lsp.functions').rename()<CR>", "Rename" },
     t = "Rename TS",
-    ["/"] = "Last search",
-    ["+"] = "Last yank",
-    ["."] = "Last insert",
+    ["/"] = { [[:%s/<C-R>+//g<Left><Left>]], "Last search" },
+    ["+"] = { [[:%s/<C-R>///g<Left><Left>]], "Last yank" },
+    ["."] = { [[:%s/<C-R>.//g<Left><Left>]], "Last insert" },
     -- r = { [[<cmd>lua require("lv-utils").change_all_operator()<CR>]], "@Replace" },
     d = { "<cmd>DogeGenerate<cr>", "DogeGen" },
   },
@@ -222,6 +223,11 @@ local mappings = {
     k = { [[<cmd>lua require("lsp.functions").diag_prev()<cr>]], "Previous" },
     i = { "<cmd>lua require('lsp.functions').toggle_diagnostics()<CR>", "Toggle Inline" },
     l = { "<cmd>lua require('lsp.functions').diag_line()<CR>", "Line Diagnostics" },
+    c = { "<cmd>lua require('lsp.functions').diag_cursor()<CR>", "Cursor Diagnostics" },
+    v = {
+      utils.operatorfunc_scaffold("show_diagnostics", require("lsp.functions").range_diagnostics),
+      "Range Diagnostics",
+    },
   },
   P = {
     name = "Packer",
@@ -296,6 +302,9 @@ if O.lang.latex.active then
     o = { "<cmd>VimtexCompileOutput<cr>", "Compile Output Latex" },
   }
 end
+if O.plugin.neoterm then
+  mappings[O.plugin.neoterm.automap_keys] = "Neoterm AutoMap"
+end
 if O.lushmode then
   mappings["L"] = {
     name = "+Lush",
@@ -310,7 +319,6 @@ if O.plugin.magma then
   mappings["tm"] = { "<CMD>MagmaInit<CR>", "Magma Init" }
 end
 
-local wk = require "which-key"
 wk.register(mappings, opts)
 
 local visualOpts = {
@@ -324,10 +332,12 @@ local visualOpts = {
 local visualMappings = {
   -- ["/"] = { "<cmd>CommentToggle<cr>", "Comment" },
   r = {
-    name = "Replace",
+    name = "Replace/Refactor",
     f = { "<cmd>lua require('spectre').open_visual({path = vim.fn.expand('%')})<cr>", "File" },
     p = { "<cmd>lua require('spectre').open_visual()<cr>", "Project" },
   },
+  -- dv = { "<cmd>lua require ('lsp.functions').range_diagnostics()<cr>", "Range Diagnostics" },
+  dv = { utils.cmd_require("lsp.functions").range_diagnostics, "Range Diagnostics" },
 }
 wk.register(visualMappings, visualOpts)
 

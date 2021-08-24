@@ -27,7 +27,7 @@ end
 function M.keymaps()
   vim.cmd [[ command -nargs=+ Tmem :lua require("lv-neoterm").Tmem("<args>") ]]
 
-  vim.g.neoterm_automap_keys = "<leader>xx"
+  vim.g.neoterm_automap_keys = "<leader>" .. O.plugin.neoterm.automap_keys
   -- Use gt to send to terminal
   remap("n", "<M-t>", ":T ", {})
   remap("n", "<M-S-t>", ":Tmem ", {})

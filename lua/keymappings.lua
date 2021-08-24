@@ -118,16 +118,16 @@ map("x", "J", ":move '>+1<CR>gv=gv", nore)
 -- better indenting
 map("n", "<", "<<", { silent = true, noremap = true, nowait = true })
 map("n", ">", ">>", { silent = true, noremap = true, nowait = true })
-map("n", "<<", "<nop>", { silent = true, noremap = true, nowait = true })
-map("n", ">>", "<nop>", { silent = true, noremap = true, nowait = true })
+map("n", "<<", "<<<<", { silent = true, noremap = true, nowait = true })
+map("n", ">>", "<<<<", { silent = true, noremap = true, nowait = true })
 map("n", "g<", "<", nore)
 map("n", "g>", ">", nore)
 map("v", "<", "<gv", nore)
 map("v", ">", ">gv", nore)
 
 -- I hate escape
-map("i", "jk", "<ESC>", nore)
-map("i", "kj", "<ESC>", nore)
+map("i", "jk", "<ESC>", sile)
+map("i", "kj", "<ESC>", sile)
 -- map("v", "jk", "<ESC>", nore)
 -- map("v", "kj", "<ESC>", nore)
 
@@ -249,18 +249,9 @@ map("n", "<leader>c", utils.operatorfunc_keys("change_all", "<leader>c"), {}) --
 map("v", "*", '"z<M-y>/<C-R>z<CR>', {}) -- Search for the current selection
 map("n", "<M-s>", utils.operatorfunc_keys("search_for", "*"), {}) -- Search textobject
 
--- Search and Replace from registers
--- map("n", "<leader>C", [[:%s/<C-R>//g<Left><Left>]], {}) -- Search and replace register
-map("n", "<leader>r+", [[:%s/<C-R>+//g<Left><Left>]], {}) -- Search and replace the current yank
-map("n", "<leader>r/", [[:%s/<C-R>///g<Left><Left>]], {}) -- Search and replace last search
-map("n", "<leader>r.", [[:%s/<C-R>.//g<Left><Left>]], {}) -- Search and replace last insert
-map("n", "+", [[/<C-R>+<CR>]], {}) -- Search for the current yank register
-
 -- Select last changed/yanked text
+map("n", "+", [[/<C-R>+<CR>]], {}) -- Search for the current yank register
 sel_map("+", "`[o`]")
-
--- Search and replace
-map("n", "<leader>sr", [[:%s///g<Left><Left><Left>]], {})
 
 -- Start search and replace from search
 map("c", "<M-r>", [[<cr>:%s/<C-R>///g<Left><Left>]], {})
@@ -268,6 +259,9 @@ map("c", "<M-r>", [[<cr>:%s/<C-R>///g<Left><Left>]], {})
 -- Continue the search and keep selecting (equivalent ish to doing `gn` in normal)
 map("v", "n", "<esc>ngn", {})
 map("v", "N", "<esc>NgN", {})
+-- Select the current/next search match
+map("v", "gn", "<esc>gn", {})
+map("v", "gN", "<esc>NNgN", {}) -- current/prev
 
 -- Double Escape key clears search and spelling highlights
 -- map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell | call minimap#vim#ClearColorSearch()<ESC>", nore)
@@ -403,12 +397,6 @@ map("n", "<M-v>", utils.operatorfunc_keys("multiselect", "<M-n>"), sile)
 -- Multi select all
 map("n", "<M-S-v>", utils.operatorfunc_keys("multiselect_all", "<M-S-a>"), sile)
 
--- go to beginning and end of text object
--- map("n", "[[", "vmo<esc>", sile)
--- map("n", "]]", "vm<esc>", sile)
-map("n", "[[", utils.operatorfunc_keys("gotobeg", "o<esc>"), sile)
-map("n", "]]", utils.operatorfunc_keys("gotoend", "<esc>"), sile)
-
 -- Keymaps for easier access to 'ci' and 'di'
 local function quick_inside(key)
   map("o", key, "i" .. key, {})
@@ -470,10 +458,16 @@ map("n", "cc", "^cg_", sile)
 map("n", "j", [[(v:count > 1 ? "m'" . v:count : '') . 'j']], expr)
 map("n", "k", [[(v:count > 1 ? "m'" . v:count : '') . 'k']], expr)
 
+-- Plugin keymaps
 require("lv-hop").keymaps()
 require("lv-zen").keymaps()
 require("lv-dial").keymaps()
 require("lv-neoterm").keymaps()
 
+-- Terminal pass through escape key
 map("t", "<ESC>", "<ESC>", nore)
 map("t", "<ESC><ESC>", [[<C-\><C-n>]], nore)
+
+-- Leader shortcut for ][ jumping
+map("n", "<leader>j", "]", {})
+map("n", "<leader>k", "[", {})
