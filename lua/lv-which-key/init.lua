@@ -40,7 +40,7 @@ local opts = {
   mode = "n", -- NORMAL mode
   prefix = "<leader>",
   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
+  -- silent = true, -- use `silent` when creating keymaps
   noremap = true, -- use `noremap` when creating keymaps
   nowait = false, -- use `nowait` when creating keymaps
 }
@@ -279,9 +279,11 @@ if O.plugin.twilight then
   mappings["zt"] = { "<cmd>Twilight<CR>", "Twilight" }
 end
 if O.plugin.telescope_project then
+  mappings["p"] = { "Projects" }
   mappings["pp"] = { "<cmd>lua require'telescope'.extensions.project.project{}<CR>", "Projects" }
 end
 if O.plugin.project_nvim then
+  mappings["p"] = { "Projects" }
   mappings["pr"] = { "<cmd>ProjectRoot<CR>", "Projects" }
 end
 if O.plugin.spectre then
@@ -326,7 +328,7 @@ local visualOpts = {
   mode = "v", -- Visual mode
   prefix = "<leader>",
   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
+  -- silent = true, -- use `silent` when creating keymaps
   noremap = true, -- use `noremap` when creating keymaps
   nowait = false, -- use `nowait` when creating keymaps
 }

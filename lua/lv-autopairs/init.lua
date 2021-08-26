@@ -5,11 +5,12 @@ local npairs = require "nvim-autopairs"
 local Rule = require "nvim-autopairs.rule"
 
 -- if package.loaded["compe"] then
--- require("nvim-autopairs.completion.compe").setup {
---   map_cr = true, --  map <CR> on insert mode
---   map_complete = true, -- it will auto insert `(` after select function or method item
--- }
--- end
+if O.plugin.cmp then
+  require("nvim-autopairs.completion.cmp").setup {
+    map_cr = true, --  map <CR> on insert mode
+    map_complete = true, -- it will auto insert `(` after select function or method item
+  }
+end
 
 npairs.setup {
   check_ts = true,

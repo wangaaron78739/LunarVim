@@ -65,54 +65,72 @@ return require("packer").startup(function(use)
     -- cmd = "Telescope"
   }
 
-  -- Autocomplete
-  -- TODO: replace with hrsh7th/nvim-cmp
+  -- -- Coq_nvim based Autocomplete and snippets
+  -- use {
+  --   "ms-jpq/coq_nvim",
+  --   branch = "coq",
+  --   config = function()
+  --     require("lv-coq").config()
+  --   end,
+  --   run = ":COQdeps",
+  --   disable = not O.plugin.coq,
+  -- }
+  -- use {
+  --   "ms-jpq/coq.artifacts",
+  --   branch = "artifacts",
+  --   after = "coq_nvim",
+  --   disable = not O.plugin.coq,
+  -- }
+
+  -- Nvim cmp based completions and snippets
   use {
-    "ms-jpq/coq_nvim",
-    branch = "coq",
+    "hrsh7th/nvim-cmp",
     config = function()
-      require("lv-coq").config()
+      require("lv-cmp").setup()
     end,
-    run = ":COQdeps",
-    disable = not O.plugin.coq,
+    -- event = "InsertEnter",
+    disable = not O.plugin.cmp,
   }
   use {
-    "ms-jpq/coq.artifacts",
-    branch = "artifacts",
-    after = "coq_nvim",
-    disable = not O.plugin.coq,
+    "onsails/lspkind-nvim",
+    config = function()
+      require("lspkind").init(O.plugin.cmp.lspkind)
+    end,
   }
-  -- use {
-  --   "hrsh7th/nvim-compe",
-  --   "hrsh7th/nvim-cmp",
-  --   config = function()
-  --     require("lv-compe").config()
-  --     require("lv-cmp").config()
-  --   end,
-  --   -- event = "InsertEnter",
-  -- disable = not O.plugin.compe,
-  -- }
-  -- -- Tabout
-  -- use {
-  --   "abecodes/tabout.nvim",
-  --   config = function()
-  --   end,
-  --   after = { "nvim-compe" }, -- if a completion plugin is using tabs load it before
-  -- disable = not O.plugin.compe,
-  -- }
-  -- -- Tabnine
-  -- use {
-  --   "tzachar/compe-tabnine",
-  --   run = "./install.sh",
-  --   after = "nvim-compe",
-  --   -- event = "InsertEnter",
-  --   disable = not O.plugin.tabnine,
-  -- disable = not O.plugin.compe,
-  -- }
+  use { "hrsh7th/cmp-buffer", disable = not O.plugin.cmp }
+  use { "hrsh7th/cmp-path", disable = not O.plugin.cmp }
+  use { "kdheepak/cmp-latex-symbols", disable = not O.plugin.cmp }
+  use { "hrsh7th/cmp-nvim-lsp", disable = not O.plugin.cmp }
+  -- Tabout
+  use {
+    "abecodes/tabout.nvim",
+    after = { "nvim-cmp" }, -- if a completion plugin is using tabs load it before
+    disable = not O.plugin.cmp,
+  }
   -- VSCode style snippets
-  use { "hrsh7th/vim-vsnip", event = "InsertEnter" }
-  -- use {"hrsh7th/vim-vsnip-integ", event = "InsertEnter", after = "vim-vsnip"}
-  use { "rafamadriz/friendly-snippets", event = "InsertEnter" }
+  use {
+    "L3MON4D3/LuaSnip",
+    config = function()
+      require("lv-luasnips").setup()
+    end,
+    disable = not O.plugin.cmp or not O.plugin.luasnip,
+  }
+  use {
+    "saadparwaiz1/cmp_luasnip",
+    disable = not O.plugin.cmp or not O.plugin.luasnip,
+  }
+  -- Common set of snippets
+  use { "rafamadriz/friendly-snippets", disable = not O.plugin.cmp }
+  -- Tabnine
+  -- use { "tzachar/cmp-tabnine", disable = not O.plugin.cmp }
+  -- Auto activating snippets -- TODO: port my snippets from vscode
+  -- use {
+  --   "SirVer/ultisnips",
+  --   setup = function()
+  --     vim.g.UltiSnipsExpandTrigger = "<f5>"
+  --   end,
+  -- }
+  -- use { "quangnguyen30192/cmp-nvim-ultisnips", disable = not O.plugin.cmp }
 
   -- Autopairs
   use {
@@ -121,7 +139,7 @@ return require("packer").startup(function(use)
       require "lv-autopairs"
     end,
     -- after = { "nvim-compe", "telescope.nvim" },
-    after = "telescope.nvim",
+    after = "nvim-cmp",
   }
 
   -- Treesitter
@@ -632,14 +650,6 @@ return require("packer").startup(function(use)
   -- use {"skywind3000/asyncrun.vim"}
   -- Build cmake projects from neovim
   -- use {"Shatur95/neovim-cmake"}
-
-  -- Auto activating snippets
-  -- use {
-  --   "SirVer/ultisnips",
-  --   setup = function()
-  --     vim.g.UltiSnipsExpandTrigger = "<f5>"
-  --   end,
-  -- } -- TODO: port my snippets from vscode
 
   -- Send to terminal
   use {

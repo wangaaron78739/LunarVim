@@ -3,10 +3,8 @@ DATA_PATH = vim.fn.stdpath "data"
 CACHE_PATH = vim.fn.stdpath "cache"
 PLUGIN_PATH = DATA_PATH .. "site/pack/*/start/*"
 TERMINAL = vim.fn.expand "$TERMINAL"
-
 local enable_plugins_by_default = true
 -- TODO: switch between neoformat and lsp autoformat smartly
-
 local codeLens = {
   virtual_text = { spacing = 0, prefix = "" },
   signs = true,
@@ -20,7 +18,6 @@ local default_diagnostics = {
   severity_sort = true,
   update_in_insert = true,
 }
-
 -- TODO: Cleanup this config struct
 O = {
   format_on_save = true,
@@ -149,21 +146,17 @@ O = {
       -- Manual mode doesn't automatically change your root directory, so you have
       -- the option to manually do so using `:ProjectRoot` command.
       manual_mode = true,
-
       -- When set to false, you will get a message when project.nvim changes your
       -- directory.
       silent_chdir = false,
-
       -- Methods of detecting the root directory. **"lsp"** uses the native neovim
       -- lsp, while **"pattern"** uses vim-rooter like glob pattern matching. Here
       -- order matters: if one is not detected, the other is used as fallback. You
       -- can also delete or rearangne the detection methods.
       -- detection_methods = { "lsp", "pattern" },
-
       -- All the patterns used to detect root dir, when **"pattern"** is in
       -- detection_methods
       -- patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
-
       -- Table of lsp clients to ignore by name
       -- eg: { "efm", ... }
       -- ignore_lsp = {},
@@ -199,21 +192,17 @@ O = {
         -- Manual mode doesn't automatically change your root directory, so you have
         -- the option to manually do so using `:ProjectRoot` command.
         -- manual_mode = false,
-
         -- When set to false, you will get a message when project.nvim changes your
         -- directory.
         silent_chdir = false,
-
         -- Methods of detecting the root directory. **"lsp"** uses the native neovim
         -- lsp, while **"pattern"** uses vim-rooter like glob pattern matching. Here
         -- order matters: if one is not detected, the other is used as fallback. You
         -- can also delete or rearangne the detection methods.
         -- detection_methods = { "lsp", "pattern" },
-
         -- All the patterns used to detect root dir, when **"pattern"** is in
         -- detection_methods
         -- patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
-
         -- Table of lsp clients to ignore by name
         -- eg: { "efm", ... }
         -- ignore_lsp = {},
@@ -262,13 +251,44 @@ O = {
     undotree = {},
     ts_iswap = { autoswap = true },
     coq = {},
-    compe = {},
+    cmp = {
+      lspkind = {
+        with_text = true,
+        -- symbol_map = {
+        --   Text = "",
+        --   Method = "",
+        --   Function = "",
+        --   Constructor = "",
+        --   Field = "ﰠ",
+        --   Variable = "",
+        --   Class = "ﴯ",
+        --   Interface = "",
+        --   Module = "",
+        --   Property = "ﰠ",
+        --   Unit = "塞",
+        --   Value = "",
+        --   Enum = "",
+        --   Keyword = "",
+        --   Snippet = "",
+        --   Color = "",
+        --   File = "",
+        --   Reference = "",
+        --   Folder = "",
+        --   EnumMember = "",
+        --   Constant = "",
+        --   Struct = "פּ",
+        --   Event = "",
+        --   Operator = "",
+        --   TypeParameter = "",
+        -- },
+      },
+    },
+    luasnip = {},
     neoformat = {},
   },
   lang = {
     python = {
       isort = false,
-
       analysis = {
         type_checking = "basic", -- off
         auto_search_paths = true,
@@ -280,7 +300,6 @@ O = {
     lua = {},
     sh = {},
     tsserver = {
-
       linter = "eslint",
       formatter = "prettier",
     },
@@ -300,7 +319,6 @@ O = {
     -- Used for js, ts, jsreact and tsreact -- I assume they are all similar enough
     javascript = {},
     clang = {
-
       cross_file_rename = true,
       header_insertion = "never",
     },
@@ -316,14 +334,12 @@ O = {
     },
     svelte = {},
     php = {
-
       format = { braces = "psr12" },
       environment = { php_version = "7.4" },
       filetypes = { "php", "phtml" },
     },
     latex = {
       vimtex = { active = true },
-
       filetypes = { "tex", "bib" },
       aux_directory = ".",
       bibtex_formatter = "texlab",
@@ -356,9 +372,7 @@ O = {
     footer = { "Anshuman Medhi -- IndianBoy42 (amedhi@connect.ust.hk)" },
   },
 }
-
 vim.cmd('let &titleold="' .. TERMINAL .. '"')
-
 -- After changing plugin config it is recommended to run :PackerCompile
 local disable_plugins = {
   "fzf",
@@ -368,9 +382,9 @@ local disable_plugins = {
   "anywise_reg",
   "quickscope",
   "bullets",
+  "coq",
 }
 for _, v in ipairs(disable_plugins) do
   O.plugin[v] = false
 end
-
 require("lv-utils").set_guifont(11)
