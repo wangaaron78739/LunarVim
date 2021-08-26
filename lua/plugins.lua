@@ -97,10 +97,11 @@ return require("packer").startup(function(use)
       require("lspkind").init(O.plugin.cmp.lspkind)
     end,
   }
-  use { "hrsh7th/cmp-buffer", disable = not O.plugin.cmp }
-  use { "hrsh7th/cmp-path", disable = not O.plugin.cmp }
-  use { "kdheepak/cmp-latex-symbols", disable = not O.plugin.cmp }
-  use { "hrsh7th/cmp-nvim-lsp", disable = not O.plugin.cmp }
+  use { "hrsh7th/cmp-buffer", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
+  use { "hrsh7th/cmp-path", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
+  use { "kdheepak/cmp-latex-symbols", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
+  use { "hrsh7th/cmp-nvim-lsp", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
+  use { "hrsh7th/cmp-calc", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   -- Tabout
   use {
     "abecodes/tabout.nvim",
@@ -117,12 +118,19 @@ return require("packer").startup(function(use)
   }
   use {
     "saadparwaiz1/cmp_luasnip",
+    requires = { "L3MON4D3/LuaSnip", "hrsh7th/nvim-cmp" },
     disable = not O.plugin.cmp or not O.plugin.luasnip,
   }
   -- Common set of snippets
-  use { "rafamadriz/friendly-snippets", disable = not O.plugin.cmp }
+  use { "rafamadriz/friendly-snippets", disable = not O.plugin.luasnip }
   -- Tabnine
-  -- use { "tzachar/cmp-tabnine", disable = not O.plugin.cmp }
+  use {
+    "tzachar/cmp-tabnine",
+    run = "./install.sh",
+    requires = "hrsh7th/nvim-cmp",
+    disable = not O.plugin.cmp or not O.plugin.tabnine,
+  }
+
   -- Auto activating snippets -- TODO: port my snippets from vscode
   -- use {
   --   "SirVer/ultisnips",

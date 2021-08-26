@@ -74,6 +74,8 @@ function M.setup()
       { name = "latex_symbols" },
       { name = "luasnip" },
       { name = "nvim_lsp" },
+      { name = "calc" },
+      -- { name = "cmp_tabnine" },
     },
 
     formatting = {
