@@ -73,14 +73,6 @@ require("lv-utils").define_augroups {
   -- },
 }
 
--- Formatting keymaps
-noremap("n", "gm", [[<cmd>lua require("lsp.functions").format_range_operator()<CR>]])
--- noremap("n", "=", [[<cmd>lua require("lsp.functions").format_range_operator()<CR>]])
-noremap("v", "gm", "<cmd>lua vim.lsp.buf.range_formatting()<cr>")
--- noremap("v", "=", "<cmd>lua vim.lsp.buf.range_formatting()<cr>")
-noremap("n", "gf", "<cmd>lua vim.lsp.buf.formatting()<cr>")
--- noremap("n", "==", "<cmd>lua vim.lsp.buf.formatting()<cr>")
-
 -- -- TODO: enable this in a ftplugin maybe
 -- if O.lang.emmet.active then
 --   require "lsp.emmet-ls"

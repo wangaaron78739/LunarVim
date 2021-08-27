@@ -819,8 +819,8 @@ return require("packer").startup(function(use)
     config = function()
       require("tsht").config.hint_keys = O.treesitter.hint_labels -- Requires https://github.com/mfussenegger/nvim-ts-hint-textobject/pull/2
 
-      silemap("o", "m", [[:<C-U>lua require('tsht').nodes()<CR>]])
-      silemap("v", "m", [[:lua require('tsht').nodes()<CR>]])
+      mappings.sile("o", "m", [[:<C-U>lua require('tsht').nodes()<CR>]])
+      mappings.sile("v", "m", [[:lua require('tsht').nodes()<CR>]])
     end,
     event = "BufRead",
     disable = not O.plugin.ts_hintobjects,
@@ -867,16 +867,6 @@ return require("packer").startup(function(use)
     run = ":call doge#install()",
     cmd = "DogeGenerate",
     disable = not O.plugin.doge,
-  }
-
-  -- Autoformat everything
-  use {
-    "sbdchd/neoformat",
-    config = function()
-      require("lv-neoformat").config()
-    end,
-    cmd = "Neoformat",
-    disable = not O.plugin.neoformat,
   }
 
   -- Null ls, for hooking local plugins into lsp
@@ -951,6 +941,7 @@ return require("packer").startup(function(use)
     config = function()
       require("lv-refactoring").setup()
     end,
+    disable = not O.plugin.primeagen_refactoring,
   }
 
   -- Lua development helper
@@ -958,11 +949,11 @@ return require("packer").startup(function(use)
     "bfredl/nvim-luadev",
     cmd = "Luadev",
     config = function()
-      silemap("n", "<leader>xx", "<Plug>(Luadev-RunLine)")
-      silemap("n", "<leader>x", "<Plug>(Luadev-Run)")
-      silemap("v", "<leader>x", "<Plug>(Luadev-Run)")
-      silemap("n", "<leader>xw", "<Plug>(Luadev-RunWord)")
-      silemap("n", "<leader>x<space>", "<Plug>(Luadev-Complete)")
+      mappings.sile("n", "<leader>xx", "<Plug>(Luadev-RunLine)")
+      mappings.sile("n", "<leader>x", "<Plug>(Luadev-Run)")
+      mappings.sile("v", "<leader>x", "<Plug>(Luadev-Run)")
+      mappings.sile("n", "<leader>xw", "<Plug>(Luadev-RunWord)")
+      mappings.sile("n", "<leader>x<space>", "<Plug>(Luadev-Complete)")
     end,
     ft = "lua",
   }

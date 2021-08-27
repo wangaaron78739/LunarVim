@@ -1,12 +1,12 @@
 local M = {}
 function M.ftplugin()
-  noremap("n", "<leader>lm", "<Cmd>RustExpandMacro<CR>", { buffer = true })
-  noremap("n", "<leader>lH", "<Cmd>RustToggleInlayHints<CR>", { buffer = true })
-  noremap("n", "<leader>le", "<Cmd>RustRunnables<CR>", { buffer = true })
-  noremap("n", "<leader>lh", "<Cmd>RustHoverActions<CR>", { buffer = true })
-  noremap("v", "<leader>lh", "<Cmd>RustHoverRange<CR>", { buffer = true })
-  noremap("v", "gh", "<cmd>RustHoverRange<CR>", { buffer = true })
-  noremap("n", "gj", "<cmd>RustJoinLines<CR>", { buffer = true })
+  mappings.nore("n", "<leader>lm", "<Cmd>RustExpandMacro<CR>", { buffer = true })
+  mappings.nore("n", "<leader>lH", "<Cmd>RustToggleInlayHints<CR>", { buffer = true })
+  mappings.nore("n", "<leader>le", "<Cmd>RustRunnables<CR>", { buffer = true })
+  mappings.nore("n", "<leader>lh", "<Cmd>RustHoverActions<CR>", { buffer = true })
+  mappings.nore("v", "<leader>lh", "<Cmd>RustHoverRange<CR>", { buffer = true })
+  mappings.nore("v", "gh", "<cmd>RustHoverRange<CR>", { buffer = true })
+  mappings.nore("n", "gj", "<cmd>RustJoinLines<CR>", { buffer = true })
 
   -- require("lv-utils").define_augroups {
   --   _rust_hover_range = {

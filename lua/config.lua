@@ -4,7 +4,6 @@ CACHE_PATH = vim.fn.stdpath "cache"
 PLUGIN_PATH = DATA_PATH .. "site/pack/*/start/*"
 TERMINAL = vim.fn.expand "$TERMINAL"
 local enable_plugins_by_default = true
--- TODO: switch between neoformat and lsp autoformat smartly
 local codeLens = {
   virtual_text = { spacing = 0, prefix = "" },
   signs = true,
@@ -111,7 +110,6 @@ O = {
     hint_labels = { "a", "s", "d", "f", "h", "j", "k", "l" },
   },
   database = { save_location = "~/.config/nvim/.db", auto_execute = 1 },
-  plugin_which_keys = {},
   plugin = {
     hop = {},
     twilight = {},
@@ -284,7 +282,7 @@ O = {
       },
     },
     luasnip = {},
-    neoformat = {},
+    primeagen_refactoring = {},
   },
   lang = {
     python = {
@@ -383,6 +381,7 @@ local disable_plugins = {
   "quickscope",
   "bullets",
   "coq",
+  "primeagen_refactoring",
 }
 for _, v in ipairs(disable_plugins) do
   O.plugin[v] = false

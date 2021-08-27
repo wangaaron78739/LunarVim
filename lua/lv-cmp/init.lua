@@ -77,7 +77,7 @@ function M.setup()
       { name = "calc" },
       -- { name = "cmp_tabnine" },
     },
-
+  
     formatting = {
       format = function(entry, vim_item)
         -- fancy icons and a name of kind

@@ -1,4 +1,6 @@
 vim.opt.shadafile = "NONE"
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 if vim.g.started_by_firenvim then
 end
@@ -37,16 +39,16 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 -- Source the config files
-_G.utils = require "lv-utils"
 require "config"
-require "keymappings"
+_G.utils = require "lv-utils"
+_G.mappings = require "keymappings"
 require "settings"
 require "plugins"
 require "theme"
 
 -- 'Mandatory' plugin configs
+mappings.setup()
 require "lv-galaxyline"
-require "lv-which-key"
 require "lv-treesitter"
 require "lsp"
 

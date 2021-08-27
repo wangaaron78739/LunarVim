@@ -66,17 +66,9 @@ function M.define_aucmd(name, aucmd)
   M.define_augroups { [name] = { aucmd } }
 end
 
-function M.command(name, fn)
+function M.new_command(name, fn)
   vim.cmd("command! " .. name .. " " .. fn)
 end
-
-M.cmd_call = setmetatable({}, {
-  __index = function(tbl, key)
-    return function(args)
-      return "<cmd>call v:lua." .. key .. "(" .. args .. ")<cr>"
-    end
-  end,
-})
 
 _G.lv_utils_functions = {}
 local to_cmd_counter = 0
@@ -91,6 +83,13 @@ function M.to_cmd(luafunction, args)
   return "<cmd>call v:lua.lv_utils_functions." .. name .. "(" .. args .. ")<cr>"
 end
 
+function M.quickfix_toggle()
+  if vim.fn.empty(vim.fn.filter(vim.fn.getwininfo(), "v:val.quickfix")) then
+    vim.cmd "copen"
+  else
+    vim.cmd "cclose"
+  end
+end
 vim.cmd [[
 augroup quickfix
     autocmd!
@@ -101,14 +100,6 @@ function OpenQuickFixList()
     vert cwindow
     wincmd p
     wincmd =
-endfunction
-
-function! QuickFixToggle()
-    if empty(filter(getwininfo(), 'v:val.quickfix'))
-        copen
-    else
-        cclose
-    endif
 endfunction
 ]]
 
@@ -282,25 +273,52 @@ function M.syn_group()
   print(vim.fn.synIDattr(s, "name") .. " -> " .. vim.fn.synIDattr(vim.fn.synIDtrans(s), "name"))
 end
 
-M.cmd_require = function(name)
-  return setmetatable({}, {
-    __index = function(tbl, key)
+M.cmd = setmetatable({
+  lua = function(arg)
+    return "<cmd>lua " .. arg .. "<cr>"
+  end,
+  call = function(arg)
+    return "<cmd>call " .. arg .. "<cr>"
+  end,
+  from = M.to_cmd,
+  op = M.operatorfunc_scaffold,
+  require = function(name)
+    local make = function(tbl, key)
       return "<cmd>lua require('" .. name .. "')." .. key .. "()<cr>"
-    end,
-  })
-end
-
-M.cmd_require_args = function(name)
-  return setmetatable({}, {
+    end
+    return setmetatable({}, {
+      __index = make,
+      __call = make,
+    })
+  end,
+  lsp = setmetatable({}, {
     __index = function(tbl, key)
-      return function(args)
-        if args == nil then
-          args = ""
-        end
-        return "<cmd>lua require('" .. name .. "')." .. key .. "(" .. args .. ")<cr>"
-      end
+      return "<cmd>lua vim.lsp.buf." .. key .. "()<cr>"
     end,
-  })
-end
+    __call = function(tbl, key)
+      return "<cmd>lua vim.lsp.buf." .. key .. "<cr>"
+    end,
+  }),
+  diag = setmetatable({}, {
+    __index = function(tbl, key)
+      return "<cmd>lua vim.lsp.diagnostic." .. key .. "()<cr>"
+    end,
+    __call = function(tbl, key)
+      return "<cmd>lua vim.lsp.diagnostic." .. key .. "<cr>"
+    end,
+  }),
+  telescope = setmetatable({}, {
+    __index = function(tbl, key)
+      return "<cmd>lua require'lv-telescope.functions'." .. key .. "()<cr>"
+    end,
+    __call = function(tbl, key)
+      return "<cmd>lua require'lv-telescope.functions'." .. key .. "<cr>"
+    end,
+  }),
+}, {
+  __call = function(tbl, arg)
+    return "<cmd>" .. arg .. "<cr>"
+  end,
+})
 
 return M
