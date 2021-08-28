@@ -1,4 +1,5 @@
 " Vim sandwhich bindings for LaTeX
+PackerLoad vim-sandwich
 scriptencoding utf-8
 if !exists('s:local_recipes')
   let s:local_recipes = [

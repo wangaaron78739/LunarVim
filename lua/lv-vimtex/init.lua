@@ -26,18 +26,15 @@ M.config = function()
     },
   }
 
-  local augroups = {
-    -- {'User', 'VimtexEventQuit', 'call vimtex#compiler#clean(0)'},
-    -- {'FileType', 'tex', 'call vimtex#compiler#compile()'}, -- FIXME: This doesn't work for some reason (not continuous)
-    { "FileType", "tex", "setlocal wrap" },
-    { "FileType", "tex", "setlocal spell" },
-  }
-  if vim.g.vimtex_compiler_method == "tectonic" then
-    table.insert(augroups, { "BufWritePost", "*.tex", "VimtexCompile" })
-    -- table.insert(augroups, {"CursorHold", '*.tex', 'VimtexCompile'})
-  end
-
-  require("lv-utils").define_augroups { _vimtex_event = augroups }
+  -- local augroups = {
+  --   -- {'User', 'VimtexEventQuit', 'call vimtex#compiler#clean(0)'},
+  --   -- {'FileType', 'tex', 'call vimtex#compiler#compile()'}, -- FIXME: This doesn't work for some reason (not continuous)
+  -- }
+  -- if vim.g.vimtex_compiler_method == "tectonic" then
+  --   table.insert(augroups, { "BufWritePost", "*.tex", "VimtexCompile" })
+  --   -- table.insert(augroups, {"CursorHold", '*.tex', 'VimtexCompile'})
+  -- end
+  -- require("lv-utils").define_augroups { _vimtex_event = augroups }
 end
 
 return M
