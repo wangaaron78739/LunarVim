@@ -69,15 +69,15 @@ function M.setup()
 
     -- You should specify your *installed* sources.
     sources = {
+      { name = "luasnip" },
+      { name = "nvim_lsp" },
       { name = "buffer" },
       { name = "path" },
       { name = "latex_symbols" },
-      { name = "luasnip" },
-      { name = "nvim_lsp" },
       { name = "calc" },
       -- { name = "cmp_tabnine" },
     },
-  
+
     formatting = {
       format = function(entry, vim_item)
         -- fancy icons and a name of kind
@@ -87,7 +87,8 @@ function M.setup()
           buffer = "   [Buffer]",
           path = "   [Path]",
           nvim_lsp = "   [LSP]",
-          luasnip = "   [Snippet]",
+          -- luasnip = "   [Snippet]",
+          luasnip = "",
           nvim_lua = "[Lua]",
           latex_symbols = "[Latex]",
           calc = "   [Calc]",
