@@ -25,18 +25,18 @@ function M.config()
       formatters.json_tool,
       formatters.nixfmt,
 
-      -- Diagnostics
-      -- diagnostics.chktex, -- vimtex?
-      diagnostics.eslint,
-      diagnostics.flake8,
-      -- diagnostics.pylint,
-      diagnostics.hadolint,
-      -- diagnostics.luacheck,
-      -- diagnostics.selene,
-      diagnostics.write_good,
-      diagnostics.vale,
-      -- diagnostics.misspell,
-      diagnostics.markdownlint,
+      -- -- Diagnostics
+      -- -- diagnostics.chktex, -- vimtex?
+      -- diagnostics.eslint,
+      -- diagnostics.flake8,
+      -- -- diagnostics.pylint,
+      -- diagnostics.hadolint,
+      -- -- diagnostics.luacheck,
+      -- -- diagnostics.selene,
+      -- diagnostics.write_good,
+      -- diagnostics.vale,
+      -- -- diagnostics.misspell,
+      -- diagnostics.markdownlint,
 
       -- Code Actions
       -- code_actions.gitsigns, -- TODO: reenable when I can lower the priority
