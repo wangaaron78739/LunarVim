@@ -2,6 +2,7 @@ if require("lv-utils").check_lsp_client_active "jsonls" then
   return
 end
 
+local formatting = vim.lsp.buf.range_formatting
 -- npm install -g vscode-json-languageserver
 require("lsp.config").lspconfig "jsonls" {
   cmd = {
@@ -14,7 +15,7 @@ require("lsp.config").lspconfig "jsonls" {
   commands = {
     Format = {
       function()
-        vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line "$", 0 })
+        formatting({}, { 0, 0 }, { vim.fn.line "$", 0 })
       end,
     },
   },

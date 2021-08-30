@@ -109,7 +109,7 @@ local mode_indicator = {
         -- mode_text = mode_name
       end
 
-      vim.api.nvim_command("hi GalaxyViMode guifg=" .. mode_color[mode_name])
+      vim.cmd("hi GalaxyViMode guifg=" .. mode_color[mode_name])
       return "▊"
     end,
     separator_highlight = "StatusLineSeparator",
@@ -117,11 +117,12 @@ local mode_indicator = {
     -- highlight = {colors.red, colors.bg}
   },
 }
-table.insert(gls.left, mode_indicator)
+local ins = table.insert
+ins(gls.left, mode_indicator)
 -- print(vim.fn.getbufvar(0, 'ts'))
-vim.fn.getbufvar(0, "ts")
+-- vim.fn.getbufvar(0, "ts") -- vim.b.ts
 
-table.insert(gls.left, {
+ins(gls.left, {
   GitIcon = {
     provider = function()
       return "  "
@@ -133,7 +134,7 @@ table.insert(gls.left, {
   },
 })
 
-table.insert(gls.left, {
+ins(gls.left, {
   GitBranch = {
     provider = "GitBranch",
     condition = condition.check_git_workspace,
@@ -143,7 +144,7 @@ table.insert(gls.left, {
   },
 })
 
-table.insert(gls.left, {
+ins(gls.left, {
   DiffAdd = {
     provider = "DiffAdd",
     condition = condition.hide_in_width,
@@ -152,7 +153,7 @@ table.insert(gls.left, {
   },
 })
 
-table.insert(gls.left, {
+ins(gls.left, {
   DiffModified = {
     provider = "DiffModified",
     condition = condition.hide_in_width,
@@ -161,7 +162,7 @@ table.insert(gls.left, {
   },
 })
 
-table.insert(gls.left, {
+ins(gls.left, {
   DiffRemove = {
     provider = "DiffRemove",
     condition = condition.hide_in_width,
@@ -169,7 +170,7 @@ table.insert(gls.left, {
     highlight = "StatusLineGitDelete",
   },
 })
-table.insert(gls.left, {
+ins(gls.left, {
   FileIcon = {
     provider = "FileIcon",
     condition = condition.hide_in_width,
@@ -178,7 +179,7 @@ table.insert(gls.left, {
     -- highlight = { colors.purple, colors.bg },
   },
 })
-table.insert(gls.left, {
+ins(gls.left, {
   FileName = {
     -- provider = 'FileName',
     provider = function(modified_icon, readonly_icon)
@@ -203,7 +204,7 @@ table.insert(gls.left, {
     -- highlight = { colors.purple, colors.bg },
   },
 })
---[[ table.insert(gls.left, {
+--[[ ins(gls.left, {
   VistaPlugin = {
     provider = "VistaPlugin",
     condition = condition.hide_in_width,
@@ -212,7 +213,7 @@ table.insert(gls.left, {
   },
 }) ]]
 
-table.insert(gls.left, {
+ins(gls.left, {
   Filler = {
     provider = function()
       return " "
@@ -228,9 +229,9 @@ function os.capture(cmd, raw)
   if raw then
     return s
   end
-  s = string.gsub(s, "^%s+", "")
-  s = string.gsub(s, "%s+$", "")
-  s = string.gsub(s, "[\n\r]+", " ")
+  s = s:gsub("^%s+", "")
+  s = s:gsub("%s+$", "")
+  s = s:gsub("[\n\r]+", " ")
   return s
 end
 -- cleanup virtual env
@@ -258,7 +259,7 @@ local PythonEnv = function()
   end
   return ""
 end
-table.insert(gls.left, {
+ins(gls.left, {
   VirtualEnv = {
     provider = PythonEnv,
     highlight = "StatusLineTreeSitter",
@@ -266,14 +267,14 @@ table.insert(gls.left, {
   },
 })
 
-table.insert(gls.right, {
+ins(gls.right, {
   DiagnosticError = {
     provider = "DiagnosticError",
     icon = "  ",
     highlight = "StatusLineLspDiagnosticsError",
   },
 })
-table.insert(gls.right, {
+ins(gls.right, {
   DiagnosticWarn = {
     provider = "DiagnosticWarn",
     icon = "  ",
@@ -282,7 +283,7 @@ table.insert(gls.right, {
   },
 })
 
-table.insert(gls.right, {
+ins(gls.right, {
   DiagnosticInfo = {
     provider = "DiagnosticInfo",
     icon = "  ",
@@ -291,7 +292,7 @@ table.insert(gls.right, {
   },
 })
 
-table.insert(gls.right, {
+ins(gls.right, {
   DiagnosticHint = {
     provider = "DiagnosticHint",
     icon = "  ",
@@ -300,7 +301,7 @@ table.insert(gls.right, {
   },
 })
 
-table.insert(gls.right, {
+ins(gls.right, {
   TreesitterIcon = {
     provider = function()
       if next(vim.treesitter.highlighter.active) ~= nil then
@@ -343,7 +344,7 @@ local get_lsp_client = function(msg)
   end
 end
 
-table.insert(gls.right, {
+ins(gls.right, {
   ShowLspClient = {
     provider = get_lsp_client,
     condition = function()
@@ -358,7 +359,7 @@ table.insert(gls.right, {
   },
 })
 
-table.insert(gls.right, {
+ins(gls.right, {
   LineInfo = {
     provider = "LineColumn",
     separator = "  ",
@@ -367,7 +368,7 @@ table.insert(gls.right, {
   },
 })
 
--- table.insert(gls.right, {
+-- ins(gls.right, {
 --   PerCent = {
 --     provider = "LinePercent",
 --     separator = " ",
@@ -376,7 +377,7 @@ table.insert(gls.right, {
 --   },
 -- })
 
-table.insert(gls.right, {
+ins(gls.right, {
   Tabstop = {
     provider = function()
       return "SW:" .. vim.api.nvim_buf_get_option(0, "shiftwidth") .. " "
@@ -388,7 +389,7 @@ table.insert(gls.right, {
   },
 })
 
-table.insert(gls.right, {
+ins(gls.right, {
   BufferType = {
     provider = "FileTypeName",
     condition = condition.hide_in_width,
@@ -398,7 +399,7 @@ table.insert(gls.right, {
   },
 })
 
--- table.insert(gls.right, {
+-- ins(gls.right, {
 --   FileEncode = {
 --     provider = "FileEncode",
 --     condition = condition.hide_in_width,
@@ -408,7 +409,7 @@ table.insert(gls.right, {
 --   },
 -- })
 
-table.insert(gls.right, {
+ins(gls.right, {
   Space = {
     provider = function()
       return " "
@@ -419,9 +420,9 @@ table.insert(gls.right, {
   },
 })
 
-table.insert(gls.right, mode_indicator)
+ins(gls.right, mode_indicator)
 
-table.insert(gls.short_line_left, {
+ins(gls.short_line_left, {
   BufferType = {
     provider = "FileTypeName",
     separator = " ",
@@ -430,7 +431,7 @@ table.insert(gls.short_line_left, {
   },
 })
 
-table.insert(gls.short_line_left, {
+ins(gls.short_line_left, {
   SFileName = {
     provider = "SFileName",
     condition = condition.buffer_not_empty,
@@ -439,4 +440,4 @@ table.insert(gls.short_line_left, {
   },
 })
 
--- table.insert(gls.short_line_right[1] = {BufferIcon = {provider = 'BufferIcon', highlight = {colors.grey, colors.bg}}})
+-- ins(gls.short_line_right[1] = {BufferIcon = {provider = 'BufferIcon', highlight = {colors.grey, colors.bg}}})

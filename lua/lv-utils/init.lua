@@ -77,10 +77,12 @@ function M.to_cmd(luafunction, args)
   if args == nil then
     args = ""
   end
-  local name = "fn" .. to_cmd_counter
+  -- TODO: deduplicate functions?
+  -- local name = "fn" .. to_cmd_counter
   to_cmd_counter = to_cmd_counter + 1
+  local name = to_cmd_counter
   _G.lv_utils_functions[name] = luafunction
-  return "<cmd>call v:lua.lv_utils_functions." .. name .. "(" .. args .. ")<cr>"
+  return "<cmd>lua lv_utils_functions[" .. name .. "](" .. args .. ")<cr>"
 end
 
 function M.quickfix_toggle()

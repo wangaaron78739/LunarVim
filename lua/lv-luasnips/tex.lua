@@ -15,6 +15,7 @@ local n = require("luasnip.extras").nonempty
 local dl = require("luasnip.extras").dynamic_lambda
 local pa = ls.parser.parse_snippet
 local types = require "luasnip.util.types"
+local nl = t { "", "" }
 
 local rec_ls
 rec_ls = function()
@@ -32,6 +33,15 @@ local function re(arg)
   return { trig = arg, regTrig = true }
 end
 
+local function fmt(fn, ipairs)
+  if ipairs == nil then
+    ipairs = {}
+  end
+  return f(function(args)
+    return string.format(unpack(fn(args[1].captures, args[1].trigger, args)))
+  end, ipairs)
+end
+
 return {
   snips = {
     s("ls", {
@@ -45,20 +55,6 @@ return {
     s("\\lemma ", { t "\\begin{lemma}\n", i(0), t "\n\\end{lemma}" }),
     s("\\proof ", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
     s("\\claim ", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
-    -- The last entry of args passed to the user-function is the surrounding snippet.
-    s(
-      { trig = "a%d", regTrig = true },
-      f(function(args)
-        return "Triggered with " .. args[1].trigger .. "."
-      end, {})
-    ),
-    -- It's possible to use capture-groups inside regex-triggers.
-    s(
-      { trig = "b(%d)", regTrig = true },
-      f(function(args)
-        return "Captured Text: " .. args[1].captures[1] .. "."
-      end, {})
-    ),
   },
   auto = {
     s("$", { t "\\(", i(0), t "\\)" }),
@@ -67,19 +63,22 @@ return {
     s("\\bf ", { t "\\textbf{", i(0), t "}" }),
     s("\\eq ", { t "\\begin{equation}\n", i(0), t "\n\\end{equation}" }),
     s("\\ali ", { t "\\begin{equation}\n", i(0), t "\n\\end{equation}" }),
-    s(re "%s..e", {
-      f(function(args)
-        return string.format([[\begin{%s}]], args[1].captures[1])
-      end, {}),
+    -- s(re [[e_(%w+) ]], {
+    s(re [[(%w+)%.%.e]], {
+      fmt(function(cap)
+        return { [[\begin{%s}]], cap[1] }
+      end),
+      nl,
       i(0),
-      f(function(args)
-        return string.format([[\end{%s}]], args[1].captures[1])
-      end, {}),
+      nl,
+      fmt(function(cap)
+        return { [[\end{%s}]], cap[1] }
+      end),
     }),
     s("--", { t "\\item " }),
     -- The last entry of args passed to the user-function is the surrounding snippet.
     s(
-      { trig = [[hello(\w) ]], regTrig = true },
+      re [[hello(%w+) ]],
       f(function(args)
         return "Triggered with " .. args[1].trigger .. "."
       end, {})

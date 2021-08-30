@@ -8,6 +8,9 @@ cmd "filetype plugin on"
 cmd "set iskeyword+=-"
 cmd "set sessionoptions+=globals"
 cmd "set whichwrap+=<,>,[,],h,l"
+if vim.g.nvui then
+  cmd "NvuiFrameless v:false"
+end
 if O.transparent_window then
   cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
   cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"

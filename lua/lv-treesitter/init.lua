@@ -89,26 +89,27 @@ if status then
   local normal = { mode = "n" } -- Normal mode
   local visual = { mode = "v" } -- Visual mode
   local operators = { mode = "o" } -- Operator mode
-  wk.register(textobj_sel_keymaps, operators)
-  wk.register({
+  local register = wk.register
+  register(textobj_sel_keymaps, operators)
+  register({
     ["m"] = "Hint Objects",
     ["."] = "Textsubject",
     [";"] = "Textsubject-big",
   }, operators)
-  wk.register(textobj_swap_keymaps, normal)
-  wk.register({
+  register(textobj_swap_keymaps, normal)
+  register({
     [textobj_prefixes["swap"]] = "Swap",
     -- [textobj_prefixes["goto_next"]] = "Jump [",
     -- [textobj_prefixes["goto_previous"]] = "Jump ]"
   }, normal)
-  wk.register(textobj_move_keymaps["goto_next_start"], normal)
-  wk.register(textobj_move_keymaps["goto_next_end"], normal)
-  wk.register(textobj_move_keymaps["goto_previous_start"], normal)
-  wk.register(textobj_move_keymaps["goto_previous_end"], normal)
-  wk.register(textobj_move_keymaps["sel_previous_outer"], visual)
-  wk.register(textobj_move_keymaps["sel_previous_inner"], visual)
-  wk.register(textobj_move_keymaps["sel_next_outer"], visual)
-  wk.register(textobj_move_keymaps["sel_next_inner"], visual)
+  register(textobj_move_keymaps["goto_next_start"], normal)
+  register(textobj_move_keymaps["goto_next_end"], normal)
+  register(textobj_move_keymaps["goto_previous_start"], normal)
+  register(textobj_move_keymaps["goto_previous_end"], normal)
+  register(textobj_move_keymaps["sel_previous_outer"], visual)
+  register(textobj_move_keymaps["sel_previous_inner"], visual)
+  register(textobj_move_keymaps["sel_next_outer"], visual)
+  register(textobj_move_keymaps["sel_next_inner"], visual)
 end
 
 require("nvim-treesitter.configs").setup {

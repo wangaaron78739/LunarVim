@@ -4,7 +4,7 @@ function M.config()
   local diagnostics_format = "[#{c}] #{m} (#{s})"
   local formatters = null.builtins.formatting
   local diagnostics = null.builtins.diagnostics
-  local code_actions = null.builtins.code_actions
+  -- local code_actions = null.builtins.code_actions
 
   null.config {
     diagnostics_format = diagnostics_format,
@@ -32,7 +32,7 @@ function M.config()
       -- -- diagnostics.pylint,
       -- diagnostics.hadolint,
       -- -- diagnostics.luacheck,
-      -- -- diagnostics.selene,
+      diagnostics.selene, -- lua linter
       -- diagnostics.write_good,
       -- diagnostics.vale,
       -- -- diagnostics.misspell,

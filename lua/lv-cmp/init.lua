@@ -37,11 +37,11 @@ function M.setup()
       ["<C-e>"] = cmp.mapping.close(),
       ["<tab>"] = cmp.mapping(function(fallback)
         if vim.fn.pumvisible() == 1 then
-          vim.fn.feedkeys(t "<C-n>", "n")
+          vim.api.nvim_feedkeys(t "<C-n>", "n", false)
         elseif luasnip.expand_or_jumpable() then
-          vim.fn.feedkeys(t "<Plug>luasnip-expand-or-jump", "")
+          vim.api.nvim_feedkeys(t "<Plug>luasnip-expand-or-jump", "", false)
         elseif check_back_space() then
-          vim.fn.feedkeys(t "<tab>", "n")
+          vim.api.nvim_feedkeys(t "<tab>", "n", false)
         else
           fallback()
         end
@@ -51,9 +51,9 @@ function M.setup()
       }),
       ["<S-tab>"] = cmp.mapping(function(fallback)
         if vim.fn.pumvisible() == 1 then
-          vim.fn.feedkeys(t "<C-p>", "n")
+          vim.api.nvim_feedkeys(t "<C-p>", "n", false)
         elseif luasnip.jumpable(-1) then
-          vim.fn.feedkeys(t "<Plug>luasnip-jump-prev", "")
+          vim.api.nvim_feedkeys(t "<Plug>luasnip-jump-prev", "", false)
         else
           fallback()
         end

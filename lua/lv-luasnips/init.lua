@@ -27,11 +27,26 @@ function M.setup()
   local m = require("luasnip.extras").match
   local n = require("luasnip.extras").nonempty
   local dl = require("luasnip.extras").dynamic_lambda
-  local lsp = ls.parser.parse_snippet
+  local pa = ls.parser.parse_snippet
   local types = require "luasnip.util.types"
+  local nl = t { "", "" }
+  local nlt = function(line)
+    return t { "", line }
+  end
+  local tnl = function(line)
+    return t { line, "" }
+  end
 
   ls.snippets = {
     tex = require("lv-luasnips.tex").snips,
+    lua = {
+      s("localM", {
+        tnl [[local M = {}]],
+        t "M.",
+        i(0),
+        nlt [[return M]],
+      }),
+    },
   }
 
   -- TODO: port Latex auto snippets
@@ -42,8 +57,9 @@ function M.setup()
     tex = require("lv-luasnips.tex").auto,
   }
 
-  vim.api.nvim_set_keymap("i", "<C-E>", "<Plug>luasnip-next-choice", {})
-  vim.api.nvim_set_keymap("s", "<C-E>", "<Plug>luasnip-next-choice", {})
+  local map = vim.api.nvim_set_keymap
+  map("i", "<C-E>", "<Plug>luasnip-next-choice", {})
+  map("s", "<C-E>", "<Plug>luasnip-next-choice", {})
 
   require("luasnip/loaders/from_vscode").lazy_load()
 end

@@ -1,8 +1,8 @@
 local M = {}
 
-local utils = require "lv-utils"
 local map = vim.api.nvim_set_keymap
 M.map = map
+M.buf = vim.api.nvim_buf_set_keymap
 local sile = { silent = true }
 local nore = { noremap = true, silent = true }
 local expr = { noremap = true, silent = true, expr = true }
@@ -21,7 +21,7 @@ local function sel_map(lhs, rhs, opts)
   if opts == nil then
     opts = nore
   end
-  map("v", lhs, rhs, opts)
+  map("x", lhs, rhs, opts)
   op_from(lhs, rhs, opts)
 end
 M.sel_map = sel_map
@@ -61,7 +61,7 @@ function M.N_repeat()
     feedkeys(custom_N_repeat)
   end
 end
-function nN_repeatable(nN)
+local function nN_repeatable(nN)
   custom_n_repeat = nN[1]
   custom_N_repeat = nN[2]
 end
@@ -122,6 +122,9 @@ function M.init()
   }
 end
 
+local operatorfunc_scaffold = require("lv-utils").operatorfunc_scaffold
+local operatorfunc_keys = require("lv-utils").operatorfunc_keys
+local operatorfuncV_keys = require("lv-utils").operatorfuncV_keys
 function M.setup()
   M.init()
   local wk = require "which-key"
@@ -172,9 +175,9 @@ function M.setup()
 ]]
 
   -- <ctrl-s> to Save
-  map("n", "<C-s>", "<cmd>write<cr>", sile)
-  map("v", "<C-s>", "<cmd>write<cr>", sile)
-  map("i", "<C-s>", "<cmd>write<cr>", sile)
+  map("n", "<C-s>", cmd "write", sile)
+  map("x", "<C-s>", cmd "write", sile)
+  map("i", "<C-s>", cmd "write", sile)
   -- map("i", "<C-v>", "<C-R>+", sile)
 
   -- better window movement -- tmux_navigator supplies these if installed
@@ -225,24 +228,24 @@ function M.setup()
   map("n", ">>", ">>>>", { silent = true, noremap = true, nowait = true })
   map("n", "g<", "<", nore)
   map("n", "g>", ">", nore)
-  map("v", "<", "<gv", nore)
-  map("v", ">", ">gv", nore)
+  map("x", "<", "<gv", nore)
+  map("x", ">", ">gv", nore)
 
   -- I hate escape
   map("i", "jk", "<ESC>", sile)
   map("i", "kj", "<ESC>", sile)
-  -- map("v", "jk", "<ESC>", nore)
-  -- map("v", "kj", "<ESC>", nore)
+  -- map("x", "jk", "<ESC>", nore)
+  -- map("x", "kj", "<ESC>", nore)
 
   -- Tab switch buffer
   -- map('n', '<TAB>', ':bnext<cr>', nore)
   -- map('n', '<S-TAB>', ':bprevious<cr>', nore)
-  map("n", "<TAB>", "<cmd>b#<cr>", nore)
-  map("n", "<S-TAB>", "<cmd>bnext<cr>", nore)
+  map("n", "<TAB>", cmd "b#", nore)
+  map("n", "<S-TAB>", cmd "bnext", nore)
 
   -- Preserve register on pasting in visual mode
-  map("v", "p", "pgvy", nore)
-  map("v", "P", "p", nore) -- for normal p behaviour
+  map("x", "p", "pgvy", nore)
+  map("x", "P", "p", nore) -- for normal p behaviour
 
   -- Add meta version that doesn't affect the clipboard
   local function noclobber_meta(m, c)
@@ -264,13 +267,13 @@ function M.setup()
   noclobber_meta("n", "d")
   noclobber_meta("n", "D")
   noclobber_default("n", "c")
-  noclobber_default("v", "c")
-  noclobber_default("v", "C")
+  noclobber_default("x", "c")
+  noclobber_default("x", "C")
 
   -- Preserve cursor on yank in visual mode
-  map("v", "y", "myy`y", nore)
-  map("v", "Y", "myY`y", nore) -- copy linewise
-  map("v", "<M-y>", "y", nore)
+  map("x", "y", "myy`y", nore)
+  map("x", "Y", "myY`y", nore) -- copy linewise
+  map("x", "<M-y>", "y", nore)
 
   -- -- Original paste for when 'nvim-anywise-reg.lua' is installed
   -- if O.plugin.anywise_reg then
@@ -281,7 +284,7 @@ function M.setup()
   -- else
 
   -- Paste over textobject
-  map("n", "r", utils.operatorfunc_keys("paste_over", "p"), sile)
+  map("n", "r", operatorfunc_keys("paste_over", "p"), sile)
   -- map("n", "rr", "vvr", sile)
   map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
   map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
@@ -291,42 +294,42 @@ function M.setup()
     -- Select next/previous text object
     map("n", "<M-w>", "wviw", sile)
     map("n", "<M-b>", "bviwo", sile)
-    map("v", "<M-w>", "eowo", sile)
-    map("v", "<M-b>", "oboge", sile)
-    -- map("v", "<M-w>", "<Esc>wviw", sile)
-    -- map("v", "<M-b>", "<Esc>bviwo", sile)
+    map("x", "<M-w>", "eowo", sile)
+    map("x", "<M-b>", "oboge", sile)
+    -- map("x", "<M-w>", "<Esc>wviw", sile)
+    -- map("x", "<M-b>", "<Esc>bviwo", sile)
     map("n", "<M-S-W>", "WviW", sile)
     map("n", "<M-S-B>", "BviWo", sile)
-    map("v", "<M-S-W>", "EOWO", sile)
-    map("v", "<M-S-B>", "OBOGE", sile)
-    --[[ map("v", "<M-S-W>", "<Esc>WviW", sile)
-map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
+    map("x", "<M-S-W>", "EOWO", sile)
+    map("x", "<M-S-B>", "OBOGE", sile)
+    --[[ map("x", "<M-S-W>", "<Esc>WviW", sile)
+map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     map("n", "<M-)>", "f(va(", sile)
     map("n", "<M-(>", "F)va)o", sile)
-    map("v", "<M-)>", "<Esc>f(vi(", sile)
-    map("v", "<M-(>", "<Esc>F)vi)", sile)
+    map("x", "<M-)>", "<Esc>f(vi(", sile)
+    map("x", "<M-(>", "<Esc>F)vi)", sile)
     -- map("n", "<M-j>", "jV", sile)
     -- map("n", "<M-k>", "kV", sile)
-    -- map("v", "<M-j>", "<Esc>jV", sile)
-    -- map("v", "<M-k>", "<Esc>kV", sile)
+    -- map("x", "<M-j>", "<Esc>jV", sile)
+    -- map("x", "<M-k>", "<Esc>kV", sile)
   end
 
   -- Start selecting
-  map("v", "<M-l>", "l", sile)
+  map("x", "<M-l>", "l", sile)
   map("n", "<M-l>", "<c-v>l", sile)
-  map("v", "<M-h>", "h", sile)
+  map("x", "<M-h>", "h", sile)
   map("n", "<M-h>", "<c-v>h", sile)
 
   -- Charwise visual select line
-  map("v", "v", "^og_", nore)
-  map("v", "V", "0o$", nore)
+  map("x", "v", "^og_", nore)
+  map("x", "V", "0o$", nore)
 
   -- move along visual lines, not numbered ones
   -- without interferring with {count}<down|up>
   map("n", "<up>", "v:count == 0 ? 'gk' : '<up>'", expr)
-  map("v", "<up>", "v:count == 0 ? 'gk' : '<up>'", expr)
+  map("x", "<up>", "v:count == 0 ? 'gk' : '<up>'", expr)
   map("n", "<down>", "v:count == 0 ? 'gj' : '<down>'", expr)
-  map("v", "<down>", "v:count == 0 ? 'gj' : '<down>'", expr)
+  map("x", "<down>", "v:count == 0 ? 'gj' : '<down>'", expr)
 
   -- Better nav for omnicomplete
   map("i", "<c-j>", '("\\<C-n>")', expr)
@@ -375,8 +378,8 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("n", "[d", diag_prev, nore)
 
   -- Search for the current selection
-  map("v", "*", '"z<M-y>/<C-R>z<cr>', {}) -- Search for the current selection
-  map("n", "<M-s>", utils.operatorfunc_keys("search_for", "*"), {}) -- Search textobject
+  map("x", "*", '"z<M-y>/<C-R>z<cr>', {}) -- Search for the current selection
+  map("n", "<M-s>", operatorfunc_keys("search_for", "*"), {}) -- Search textobject
 
   -- Select last changed/yanked text
   map("n", "+", [[/<C-R>+<cr>]], {}) -- Search for the current yank register
@@ -386,11 +389,11 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("c", "<M-r>", [[<cr>:%s/<C-R>///g<Left><Left>]], {})
 
   -- Continue the search and keep selecting (equivalent ish to doing `gn` in normal)
-  map("v", "n", "<esc>ngn", {})
-  map("v", "N", "<esc>NgN", {})
+  map("x", "n", "<esc>ngn", nore)
+  map("x", "N", "<esc>NgN", nore)
   -- Select the current/next search match
-  map("v", "gn", "<esc>gn", {})
-  map("v", "gN", "<esc>NNgN", {}) -- current/prev
+  map("x", "gn", "<esc>gn", nore)
+  map("x", "gN", "<esc>NNgN", nore) -- current/prev
 
   -- Double Escape key clears search and spelling highlights
   -- map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell | call minimap#vim#ClearColorSearch()<ESC>", nore)
@@ -421,13 +424,13 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("n", "gco", "o-<esc>gccA<BS>", sile)
 
   -- comment and copy
-  map("v", "gy", '"z<M-y>gvgc`>"zp`[', sile)
-  map("n", "gy", utils.operatorfuncV_keys("comment_copy", "gy"), sile)
+  map("x", "gy", '"z<M-y>gvgc`>"zp`[', sile)
+  map("n", "gy", operatorfuncV_keys("comment_copy", "gy"), sile)
   -- map("n", "gyy", "Vgy", sile)
 
   -- Select Jupyter Cell
   -- Change to onoremap
-  map("v", "ic", [[/#+\s*%+<cr>oN]], nore)
+  map("x", "ic", [[/#+\s*%+<cr>oN]], nore)
 
   -- Spell checking
   map("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u]]", nore)
@@ -437,37 +440,37 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
 
   -- Slightly easier commands
   map("n", ";", ":", {})
-  map("v", ";", ":", {})
+  map("x", ";", ":", {})
   -- map('c', ';', "<cr>", sile)
 
   -- Add semicolon
   map("i", ";;", "<esc>mzA;", nore)
 
   -- lsp keys
-  map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", sile)
-  map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", sile)
-  map("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", sile)
-  map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", sile)
-  map("n", "gK", "<cmd>lua vim.lsp.codelens.run()<cr>", sile)
-  -- map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<cr>", sile)
+  map("n", "gd", luacmd "vim.lsp.buf.definition()", sile)
+  map("n", "gD", luacmd "vim.lsp.buf.declaration()", sile)
+  map("n", "gr", luacmd "vim.lsp.buf.references()", sile)
+  map("n", "gi", luacmd "vim.lsp.buf.implementation()", sile)
+  map("n", "gK", luacmd "vim.lsp.codelens.run()", sile)
+  -- map("n", "<C-k>", luacmd "vim.lsp.buf.signature_help()", sile)
   -- Preview variants
-  map("n", "gpd", [[<cmd>lua require("lsp.functions").preview_location_at("definition")<cr>]], sile)
-  map("n", "gpD", [[<cmd>lua require("lsp.functions").preview_location_at("declaration")<cr>]], sile)
-  map("n", "gpr", [[<cmd>lua require("lsp.functions").preview_location_at("references")<cr>]], sile)
-  map("n", "gpi", [[<cmd>lua require("lsp.functions").preview_location_at("implementation")<cr>]], sile)
+  map("n", "gpd", luacmd [[require("lsp.functions").preview_location_at("definition")]], sile)
+  map("n", "gpD", luacmd [[require("lsp.functions").preview_location_at("declaration")]], sile)
+  map("n", "gpr", luacmd [[require("lsp.functions").preview_location_at("references")]], sile)
+  map("n", "gpi", luacmd [[require("lsp.functions").preview_location_at("implementation")]], sile)
   -- Hover
-  -- map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", sile)
-  map("n", "gh", "<cmd>lua vim.lsp.buf.hover()<cr>", sile)
-  map("n", "K", "<cmd>lua vim.lsp.buf.code_action()<cr>", {})
+  -- map("n", "K", luacmd "vim.lsp.buf.hover()", sile)
+  map("n", "gh", luacmd "vim.lsp.buf.hover()", sile)
+  map("n", "K", luacmd "vim.lsp.buf.code_action()", {})
   map("v", "K", "<esc><cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>", {})
 
   -- Formatting keymaps
-  map("n", "gm", [[<cmd>lua require("lsp.functions").format_range_operator()<CR>]], sile)
-  -- map("n", "=", [[<cmd>lua require("lsp.functions").format_range_operator()<CR>]], sile)
-  map("v", "gm", "<cmd>lua vim.lsp.buf.range_formatting()<cr>", sile)
-  -- map("v", "=", "<cmd>lua vim.lsp.buf.range_formatting()<cr>", sile)
-  map("n", "gf", "<cmd>lua vim.lsp.buf.formatting()<cr>", sile)
-  -- map("n", "==", "<cmd>lua vim.lsp.buf.formatting()<cr>", sile)
+  map("n", "gm", luacmd [[require("lsp.functions").format_range_operator()]], sile)
+  -- map("n", "=", luacmd [[require("lsp.functions").format_range_operator()]], sile)
+  map("x", "gm", luacmd "vim.lsp.buf.range_formatting()", sile)
+  -- map("x", "=", luacmd "vim.lsp.buf.range_formatting()", sile)
+  map("n", "gf", luacmd "vim.lsp.buf.formatting()", sile)
+  -- map("n", "==", luacmd "vim.lsp.buf.formatting()", sile)
 
   -- TODO: Use more standard regex syntax
   -- map("n", "/", "/\v", nore)
@@ -484,10 +487,10 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
 
   -- Reselect visual linewise
   map("n", "gV", "'<V'>", nore)
-  map("v", "gV", "<esc>'<V'>", nore)
+  map("x", "gV", "<esc>'<V'>", nore)
   -- Reselect visual block wise
   map("n", "g<C-v>", "'<C-v>'>", nore)
-  map("v", "g<C-v>", "<esc>'<C-v>'>", nore)
+  map("x", "g<C-v>", "<esc>'<C-v>'>", nore)
 
   -- Use reselect as an operator
   op_from "gv"
@@ -518,16 +521,16 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("n", "U", "<C-R>", nore)
 
   -- Go to multi insert from Visual mode
-  map("v", "I", "<M-a>i", sile)
-  map("v", "A", "<M-a>a", sile)
+  map("x", "I", "<M-a>i", sile)
+  map("x", "A", "<M-a>a", sile)
 
   -- Select all matching regex search
   -- map("n", "<M-S-/>", "<M-/><M-a>", {})
 
   -- Multi select object
-  map("n", "<M-v>", utils.operatorfunc_keys("multiselect", "<M-n>"), sile)
+  map("n", "<M-v>", operatorfunc_keys("multiselect", "<M-n>"), sile)
   -- Multi select all
-  map("n", "<M-S-v>", utils.operatorfunc_keys("multiselect_all", "<M-S-a>"), sile)
+  map("n", "<M-S-v>", operatorfunc_keys("multiselect_all", "<M-S-a>"), sile)
 
   -- Keymaps for easier access to 'ci' and 'di'
   local function quick_inside(key)
@@ -577,7 +580,7 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
 
   -- Select whole file
   map("o", "ie", "<cmd><c-u>normal! mzggVG<cr>`z", nore)
-  map("v", "ie", "gg0oG$", nore)
+  map("x", "ie", "gg0oG$", nore)
 
   -- Operator for current line
   -- sel_map("il", "g_o^")
@@ -626,7 +629,7 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
   -- TODO create entire treesitter section
 
   -- TODO support vim-sandwich in the which-key menus
-  local mappings = {
+  local leaderMappings = {
     -- [" "] = { telescope_fn(.commands), "Commands" },
     [" "] = { telescope_fn.buffers, "Buffers" },
     [";"] = { cmd "Dashboard", "Dashboard" },
@@ -641,7 +644,7 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
       f = { cmd "NvimTreeToggle", "File Sidebar" },
       u = { cmd "UndotreeToggle", "Undo tree" },
       r = { cmd "RnvimrToggle", "Ranger" },
-      q = { luacmd "utils.quickfix_toggle()", "Quick fixes" },
+      q = { luareq("lv-utils").quickfix_toggle, "Quick fixes" },
       o = { cmd "!open '%:p:h'", "Open File Explorer" },
       F = { telescope_fn.file_browser, "Telescope browser" },
       v = { cmd "Vista nvim_lsp", "Vista" },
@@ -780,7 +783,6 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
       ["/"] = { [[:%s/<C-R>+//g<Left><Left>]], "Last search" },
       ["+"] = { [[:%s/<C-R>///g<Left><Left>]], "Last yank" },
       ["."] = { [[:%s/<C-R>.//g<Left><Left>]], "Last insert" },
-      -- r = { luareq'lv-utils'.change_all_operator , "@Replace" },
       d = { cmd "DogeGenerate", "DogeGen" },
     },
     d = {
@@ -792,7 +794,7 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
       c = { lsputil.diag_cursor, "Cursor Diagnostics" },
       v = {
         -- TODO: make this not move the cursor
-        utils.operatorfunc_scaffold("show_diagnostics", require("lsp.functions").range_diagnostics),
+        operatorfunc_scaffold("show_diagnostics", require("lsp.functions").range_diagnostics),
         "Range Diagnostics",
       },
     },
@@ -812,7 +814,7 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
     -- m = "Multi",
     m = "which_key_ignore",
     c = {
-      utils.operatorfunc_keys("change_all", "<leader>c"),
+      operatorfunc_keys("change_all", "<leader>c"),
       "Change all",
     },
   }
@@ -827,54 +829,55 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
     },
   }
 
+  -- TODO: move these to different modules?
   if O.plugin.symbol_outline then
-    mappings["o"]["S"] = { cmd "SymbolsOutline", "Symbols Sidebar" }
+    leaderMappings["o"]["S"] = { cmd "SymbolsOutline", "Symbols Sidebar" }
   end
   if O.plugin.todo_comments then
-    mappings["o"]["T"] = { cmd "TodoTrouble", "Todos Sidebar" }
+    leaderMappings["o"]["T"] = { cmd "TodoTrouble", "Todos Sidebar" }
   end
   if O.plugin.trouble then
-    mappings["dt"] = { cmd "TroubleToggle", "Trouble Toggle" }
-    mappings["dd"] = { cmd "TroubleToggle lsp_document_diagnostics", "Document" }
-    mappings["dw"] = { cmd "TroubleToggle lsp_workspace_diagnostics", "Workspace" }
-    mappings["dr"] = { cmd "TroubleToggle lsp_references", "References" }
-    mappings["dD"] = { cmd "TroubleToggle lsp_definitions", "Definitions" }
-    mappings["dq"] = { cmd "TroubleToggle quickfix", "Quick Fixes" }
-    mappings["dL"] = { cmd "TroubleToggle loclist", "Location List" }
-    mappings["do"] = { cmd "TroubleToggle todo", "TODOs" }
+    leaderMappings["dt"] = { cmd "TroubleToggle", "Trouble Toggle" }
+    leaderMappings["dd"] = { cmd "TroubleToggle lsp_document_diagnostics", "Document" }
+    leaderMappings["dw"] = { cmd "TroubleToggle lsp_workspace_diagnostics", "Workspace" }
+    leaderMappings["dr"] = { cmd "TroubleToggle lsp_references", "References" }
+    leaderMappings["dD"] = { cmd "TroubleToggle lsp_definitions", "Definitions" }
+    leaderMappings["dq"] = { cmd "TroubleToggle quickfix", "Quick Fixes" }
+    leaderMappings["dL"] = { cmd "TroubleToggle loclist", "Location List" }
+    leaderMappings["do"] = { cmd "TroubleToggle todo", "TODOs" }
   end
   if O.plugin.gitlinker then
-    mappings["gy"] = "Gitlink"
+    leaderMappings["gy"] = "Gitlink"
   end
-  mappings["z"] = { name = "Zen" }
+  leaderMappings["z"] = { name = "Zen" }
   if O.plugin.zen then
-    mappings["zz"] = { cmd "TZAtaraxis", "Ataraxis" }
-    mappings["zf"] = { cmd "TZFocus", "Focus" }
-    mappings["zm"] = { cmd "TZMinimalist", "Minimalist" }
+    leaderMappings["zz"] = { cmd "TZAtaraxis", "Ataraxis" }
+    leaderMappings["zf"] = { cmd "TZFocus", "Focus" }
+    leaderMappings["zm"] = { cmd "TZMinimalist", "Minimalist" }
   end
   if O.plugin.twilight then
-    mappings["zt"] = { cmd "Twilight", "Twilight" }
+    leaderMappings["zt"] = { cmd "Twilight", "Twilight" }
   end
   if O.plugin.telescope_project then
-    mappings["p"] = { "Projects" }
-    mappings["pp"] = { luareq "telescope" "extensions.project.project{}", "Projects" }
+    leaderMappings["p"] = { "Projects" }
+    leaderMappings["pp"] = { luareq "telescope" "extensions.project.project{}", "Projects" }
   end
   if O.plugin.project_nvim then
-    mappings["p"] = { "Projects" }
-    mappings["pr"] = { cmd "ProjectRoot", "Projects" }
+    leaderMappings["p"] = { "Projects" }
+    leaderMappings["pr"] = { cmd "ProjectRoot", "Projects" }
   end
   if O.plugin.spectre then
     local spectre = luareq "spectre"
-    mappings["rf"] = { spectre.open_file_search, "Current File" }
-    mappings["rp"] = { spectre.open, "Project" }
+    leaderMappings["rf"] = { spectre.open_file_search, "Current File" }
+    leaderMappings["rp"] = { spectre.open, "Project" }
     visualMappings["rf"] = { spectre "open_visual({path = vim.fn.expand('%')})", "Current File" }
     visualMappings["rp"] = { spectre.open_visual, "Project" }
   end
   if O.plugin.lazygit then
-    mappings["gg"] = { cmd "LazyGit", "LazyGit" }
+    leaderMappings["gg"] = { cmd "LazyGit", "LazyGit" }
   end
   if O.lang.latex.active then
-    mappings["L"] = {
+    leaderMappings["L"] = {
       name = "Latex",
       f = { cmd "call vimtex#fzf#run()", "Fzf Find" },
       i = { cmd "VimtexInfo", "Project Information" },
@@ -886,10 +889,10 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
     }
   end
   if O.plugin.neoterm then
-    mappings[O.plugin.neoterm.automap_keys] = "Neoterm AutoMap"
+    leaderMappings[O.plugin.neoterm.automap_keys] = "Neoterm AutoMap"
   end
   if O.lushmode then
-    mappings["L"] = {
+    leaderMappings["L"] = {
       name = "+Lush",
       l = { cmd "Lushify", "Lushify" },
       x = { luacmd "require('lush').export_to_buffer(require('lush_theme.cool_name'))", "Lush Export" },
@@ -898,11 +901,11 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
     }
   end
   if O.plugin.magma then
-    mappings["to"] = { cmd "MagmaShowOutput", "Magma Output" }
-    mappings["tm"] = { cmd "MagmaInit", "Magma Init" }
+    leaderMappings["to"] = { cmd "MagmaShowOutput", "Magma Output" }
+    leaderMappings["tm"] = { cmd "MagmaInit", "Magma Init" }
   end
 
-  wk.register(mappings, opts)
+  wk.register(leaderMappings, opts)
   wk.register(visualMappings, visualOpts)
 
   -- TODO: move to plugin config files?
@@ -924,3 +927,8 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
 end
 
 return M
+-- return setmetatable(M, {
+--   __call = function(tbl, ...)
+--     return map(unpack(...))
+--   end,
+-- })

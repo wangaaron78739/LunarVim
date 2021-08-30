@@ -49,7 +49,7 @@ function M.config()
     input = { "af" },
   }
 
-  vim.api.nvim_command [[
+  vim.cmd [[
       xmap is <Plug>(textobj-sandwich-query-i)
       xmap as <Plug>(textobj-sandwich-query-a)
       omap is <Plug>(textobj-sandwich-query-i)

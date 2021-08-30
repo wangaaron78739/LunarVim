@@ -1,4 +1,9 @@
 local M = {}
+local api = vim.api
+local cmd = vim.cmd
+local vfn = vim.fn
+local lsp = vim.lsp
+local diags = lsp.diagnostic
 -- TODO: reduce nested lookups for performance (\w+\.)?(\w+\.)?\w+\.\w+\(
 
 -- Location information about the last message printed. The format is
@@ -17,29 +22,29 @@ local error_hlgroup = "ErrorMsg"
 local short_line_limit = 20
 
 -- Prints the first diagnostic for the current line.
--- Bind to CursorMoved to update live: vim.cmd [[autocmd CursorMoved * :lua require("lsp.functions").echo_diagnostic()]]
+-- Bind to CursorMoved to update live: cmd [[autocmd CursorMoved * :lua require("lsp.functions").echo_diagnostic()]]
 M.echo_diagnostic = function()
   if echo_timer then
     echo_timer:stop()
   end
 
   echo_timer = vim.defer_fn(function()
-    local line = vim.fn.line "." - 1
-    local bufnr = vim.api.nvim_win_get_buf(0)
+    local line = vfn.line "." - 1
+    local bufnr = api.nvim_win_get_buf(0)
 
     if last_echo[1] and last_echo[2] == bufnr and last_echo[3] == line then
       return
     end
 
-    local diags = vim.lsp.diagnostic.get_line_diagnostics(bufnr, line, { severity_limit = "Warning" })
+    local ldiags = diags.get_line_diagnostics(bufnr, line, { severity_limit = "Warning" })
 
-    if #diags == 0 then
+    if #ldiags == 0 then
       -- If we previously echo'd a message, clear it out by echoing an empty
       -- message.
       if last_echo[1] then
         last_echo = { false, -1, -1 }
 
-        vim.api.nvim_command 'echo ""'
+        vim.cmd 'echo ""'
       end
 
       return
@@ -47,8 +52,8 @@ M.echo_diagnostic = function()
 
     last_echo = { true, bufnr, line }
 
-    local diag = diags[1]
-    local width = vim.api.nvim_get_option "columns" - 15
+    local diag = ldiags[1]
+    local width = api.nvim_get_option "columns" - 15
     local lines = vim.split(diag.message, "\n")
     local message = lines[1]
     local lineindex = 2
@@ -71,7 +76,7 @@ M.echo_diagnostic = function()
     local kind = "warning"
     local hlgroup = warning_hlgroup
 
-    if diag.severity == vim.lsp.protocol.DiagnosticSeverity.Error then
+    if diag.severity == lsp.protocol.DiagnosticSeverity.Error then
       kind = "error"
       hlgroup = error_hlgroup
     end
@@ -81,43 +86,47 @@ M.echo_diagnostic = function()
       { message },
     }
 
-    vim.api.nvim_echo(chunks, false, {})
+    api.nvim_echo(chunks, false, {})
   end, echo_timeout)
 end
 M.simple_echo_diagnostic = function()
-  local line_diagnostics = vim.lsp.diagnostic.get_line_diagnostics()
+  local line_diagnostics = diags.get_line_diagnostics()
   if vim.tbl_isempty(line_diagnostics) then
-    vim.cmd [[echo ""]]
+    cmd [[echo ""]]
     return
   end
-  for i, diagnostic in ipairs(line_diagnostics) do
-    vim.cmd("echo '" .. diagnostic.message .. "'")
+  for _, diagnostic in ipairs(line_diagnostics) do
+    cmd("echo '" .. diagnostic.message .. "'")
   end
 end
 
+local getmark = api.nvim_buf_get_mark
+local range_formatting = lsp.buf.range_formatting
+local feedkeys = api.nvim_feedkeys
 -- Format a range using LSP
 M.format_range_operator = function()
   local old_func = vim.go.operatorfunc
   _G.op_func_formatting = function()
-    local start = vim.api.nvim_buf_get_mark(0, "[")
-    local finish = vim.api.nvim_buf_get_mark(0, "]")
-    vim.lsp.buf.range_formatting({}, start, finish)
+    local start = getmark(0, "[")
+    local finish = getmark(0, "]")
+    range_formatting({}, start, finish)
     vim.go.operatorfunc = old_func
     _G.op_func_formatting = nil
   end
   vim.go.operatorfunc = "v:lua.op_func_formatting"
-  vim.api.nvim_feedkeys("g@", "n", false)
+  feedkeys("g@", "n", false)
 end
 
--- TODO: Wait for vim.lsp.diagnostic.show_diagnostics to be public
-local util = require "vim.lsp.util"
+-- TODO: Wait for diags.show_diagnostics to be public
+local lsputil = require "vim.lsp.util"
+local if_nil = vim.F.if_nil
 M.range_diagnostics = function(opts, buf_nr, start, finish)
-  start = start or vim.api.nvim_buf_get_mark(0, "[")
-  finish = finish or vim.api.nvim_buf_get_mark(0, "]")
+  start = start or getmark(0, "[")
+  finish = finish or getmark(0, "]")
 
   opts = opts or {}
   opts.focus_id = "position_diagnostics"
-  buf_nr = buf_nr or vim.api.nvim_get_current_buf()
+  buf_nr = buf_nr or api.nvim_get_current_buf()
   local match_position_predicate = function(diag)
     if finish[1] < diag.range["start"].line then
       return false
@@ -126,7 +135,7 @@ M.range_diagnostics = function(opts, buf_nr, start, finish)
     end
     return ((finish[1] >= diag.range["start"].line) and (start[1] <= diag.range["end"].line))
   end
-  local diagnostics = vim.lsp.diagnostic.get(buf_nr, nil, match_position_predicate)
+  local diagnostics = diags.get(buf_nr, nil, match_position_predicate)
   -- if opts.severity then
   --   range_diagnostics = filter_to_severity_limit(opts.severity, range_diagnostics)
   -- elseif opts.severity_limit then
@@ -136,38 +145,39 @@ M.range_diagnostics = function(opts, buf_nr, start, finish)
     return a.severity < b.severity
   end)
 
-  -- vim.lsp.diagnostic.show_diagnostics
-  -- return vim.lsp.diagnostic.show_diagnostics(opts, range_diagnostics)
+  -- diags.show_diagnostics
+  -- return diags.show_diagnostics(opts, range_diagnostics)
   if vim.tbl_isempty(diagnostics) then
     return
   end
   local lines = {}
   local highlights = {}
-  local show_header = vim.F.if_nil(opts.show_header, true)
+  local show_header = if_nil(opts.show_header, true)
+  local ins = table.insert
   if show_header then
-    table.insert(lines, "Diagnostics:")
-    table.insert(highlights, { 0, "Bold" })
+    ins(lines, "Diagnostics:")
+    ins(highlights, { 0, "Bold" })
   end
 
   for i, diagnostic in ipairs(diagnostics) do
     local prefix = string.format("%d. ", i)
-    local hiname = vim.lsp.diagnostic._get_floating_severity_highlight_name(diagnostic.severity)
+    local hiname = diags._get_floating_severity_highlight_name(diagnostic.severity)
     assert(hiname, "unknown severity: " .. tostring(diagnostic.severity))
 
     local message_lines = vim.split(diagnostic.message, "\n", true)
-    table.insert(lines, prefix .. message_lines[1])
-    table.insert(highlights, { #prefix, hiname })
+    ins(lines, prefix .. message_lines[1])
+    ins(highlights, { #prefix, hiname })
     for j = 2, #message_lines do
-      table.insert(lines, string.rep(" ", #prefix) .. message_lines[j])
-      table.insert(highlights, { 0, hiname })
+      ins(lines, string.rep(" ", #prefix) .. message_lines[j])
+      ins(highlights, { 0, hiname })
     end
   end
 
-  local popup_bufnr, winnr = util.open_floating_preview(lines, "plaintext", opts)
+  local popup_bufnr, winnr = lsputil.open_floating_preview(lines, "plaintext", opts)
   for i, hi in ipairs(highlights) do
     local prefixlen, hiname = unpack(hi)
     -- Start highlight after the prefix
-    vim.api.nvim_buf_add_highlight(popup_bufnr, -1, hiname, i - 1, prefixlen, -1)
+    api.nvim_buf_add_highlight(popup_bufnr, -1, hiname, i - 1, prefixlen, -1)
   end
 
   return popup_bufnr, winnr
@@ -178,29 +188,29 @@ local function preview_location_callback(_, _, result)
   if result == nil or vim.tbl_isempty(result) then
     return nil
   end
-  vim.lsp.util.preview_location(result[1], {
+  lsp.util.preview_location(result[1], {
     border = O.lsp.border,
   })
 end
 
 M.preview_location_at = function(name)
-  local params = vim.lsp.util.make_position_params()
-  return vim.lsp.buf_request(0, "textDocument/" .. name, params, preview_location_callback)
+  local params = lsp.util.make_position_params()
+  return lsp.buf_request(0, "textDocument/" .. name, params, preview_location_callback)
 end
 
 M.toggle_diagnostics = function()
   vim.b.lsp_diagnostics_hide = not vim.b.lsp_diagnostics_hide
   if vim.b.lsp_diagnostics_hide then
-    vim.lsp.diagnostic.enable()
+    diags.enable()
   else
-    vim.lsp.diagnostic.disable()
+    diags.disable()
   end
 end
 
 -- TODO: Implement codeLens handlers
 M.show_codelens = function()
-  -- vim.cmd [[ autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh() ]]
-  -- vim.api.nvim_exec(
+  -- cmd [[ autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh() ]]
+  -- cmd(
   --   [[
   --   augroup lsp_codelens_refresh
   --     autocmd! * <buffer>
@@ -210,15 +220,16 @@ M.show_codelens = function()
   --   false
   -- )
 
-  local clients = vim.lsp.buf_get_clients(0)
+  local clients = lsp.buf_get_clients(0)
+  local codelens = lsp.codelens
   for k, v in pairs(clients) do
-    vim.lsp.codelens.display(vim.lsp.codelens.get(0, k), 0, k, O.lsp.codeLens)
-    -- vim.lsp.codelens.display(nil, 0, k, O.lsp.codeLens)
+    codelens.display(codelens.get(0, k), 0, k, O.lsp.codeLens)
+    -- lsp.codelens.display(nil, 0, k, O.lsp.codeLens)
   end
 end
 
 -- TODO: what is this?
--- vim.cmd 'command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()'
+-- cmd 'command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()'
 
 -- Jump between diagnostics
 local popup_diagnostics_opts = {
@@ -226,16 +237,16 @@ local popup_diagnostics_opts = {
   border = O.lsp.border,
 }
 M.diag_line = function()
-  vim.lsp.diagnostic.show_line_diagnostics(popup_diagnostics_opts)
+  diags.show_line_diagnostics(popup_diagnostics_opts)
 end
 M.diag_cursor = function()
-  vim.lsp.diagnostic.show_cursor_diagnostics(popup_diagnostics_opts)
+  diags.show_cursor_diagnostics(popup_diagnostics_opts)
 end
 M.diag_next = function()
-  vim.lsp.diagnostic.goto_next { popup_opts = popup_diagnostics_opts }
+  diags.goto_next { popup_opts = popup_diagnostics_opts }
 end
 M.diag_prev = function()
-  vim.lsp.diagnostic.goto_prev { popup_opts = popup_diagnostics_opts }
+  diags.goto_prev { popup_opts = popup_diagnostics_opts }
 end
 
 M.common_on_attach = function(client, bufnr)
@@ -243,7 +254,7 @@ M.common_on_attach = function(client, bufnr)
   if O.lsp.document_highlight then
     -- Set autocommands conditional on server_capabilities
     if client.resolved_capabilities.document_highlight then
-      vim.api.nvim_exec(
+      cmd(
         [[
         augroup lsp_document_highlight
           autocmd! * <buffer>
@@ -258,7 +269,7 @@ M.common_on_attach = function(client, bufnr)
 
   if O.lsp.live_codelens then
     if client.resolved_capabilities.code_lens then
-      vim.api.nvim_exec(
+      cmd(
         [[
         augroup lsp_codelens_refresh
           autocmd! * <buffer>
@@ -273,7 +284,7 @@ M.common_on_attach = function(client, bufnr)
   if O.lsp.autoecho_line_diagnostics then
     -- if client.resolved_capabilities.document_highlight then
     -- autocmd CursorHoldI <buffer> lua vim.lsp.buf.signature_help()
-    vim.api.nvim_exec(
+    cmd(
       [[ augroup lsp_au
         autocmd! * <buffer>
         autocmd CursorHold <buffer> lua require("lsp.functions").echo_diagnostic()
@@ -288,7 +299,7 @@ end
 M.rename = function()
   require("lv-utils").inline_text_input {
     border = O.lsp.rename_border,
-    enter = vim.lsp.buf.rename,
+    enter = lsp.buf.rename,
     init_cword = true,
     at_begin = true,
     minwidth = true,

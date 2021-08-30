@@ -31,10 +31,10 @@ return require("packer").startup(function(use)
   use {
     "rcarriga/nvim-notify",
     config = function()
-      vim.notify = function(msg, lvl, opts)
-        opts.timeout = opts.timemout or O.notify.timeout
-        return require "notify"(msg, lvl, opts)
-      end
+      -- vim.notify = function(msg, lvl, opts)
+      --   opts.timeout = opts.timemout or O.notify.timeout
+      --   return require "notify"(msg, lvl, opts)
+      -- end
       -- vim.notify = require "notify"
     end,
     disable = not O.plugin.notify,
@@ -49,6 +49,7 @@ return require("packer").startup(function(use)
     config = function()
       require "lv-lspinstall"
     end,
+    -- run = ":LspInstall rust julia latex python" -- TODO: try this
     cmd = "LspInstall",
   }
 
@@ -63,8 +64,13 @@ return require("packer").startup(function(use)
     config = function()
       require "lv-telescope"
     end,
-    -- cmd = "Telescope"
   }
+
+  -- Treesitter
+  use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
+
+  -- whichkey
+  use { "folke/which-key.nvim" }
 
   -- -- Coq_nvim based Autocomplete and snippets
   -- use {
@@ -151,9 +157,6 @@ return require("packer").startup(function(use)
     after = "nvim-cmp",
   }
 
-  -- Treesitter
-  use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
-
   use {
     "kyazdani42/nvim-tree.lua",
     cmd = "NvimTreeToggle",
@@ -169,9 +172,6 @@ return require("packer").startup(function(use)
     end,
     event = "BufRead",
   }
-
-  -- whichkey
-  use { "folke/which-key.nvim" }
 
   -- Comments
   use {
@@ -806,15 +806,15 @@ return require("packer").startup(function(use)
   use {
     "RRethy/nvim-treesitter-textsubjects",
     disable = not O.plugin.ts_textsubjects,
-    use {
-      "David-Kunz/treesitter-unit",
-      config = function()
-        vim.api.nvim_set_keymap("v", "x", '<cmd>lua require"treesitter-unit".select()<CR>', { noremap = true })
-        vim.api.nvim_set_keymap("o", "x", '<cmd><c-u>lua require"treesitter-unit".select()<CR>', { noremap = true })
-      end,
-      disable = not O.plugin.ts_textunits,
-    },
   }
+  -- use {
+  --   "David-Kunz/treesitter-unit",
+  --   config = function()
+  --     vim.api.nvim_set_keymap("v", "x", '<cmd>lua require"treesitter-unit".select()<CR>', { noremap = true })
+  --     vim.api.nvim_set_keymap("o", "x", '<cmd><c-u>lua require"treesitter-unit".select()<CR>', { noremap = true })
+  --   end,
+  --   disable = not O.plugin.ts_textunits,
+  -- }
   use {
     "mfussenegger/nvim-ts-hint-textobject",
     config = function()
@@ -950,11 +950,12 @@ return require("packer").startup(function(use)
     "bfredl/nvim-luadev",
     cmd = "Luadev",
     config = function()
-      mappings.sile("n", "<leader>xx", "<Plug>(Luadev-RunLine)")
-      mappings.sile("n", "<leader>x", "<Plug>(Luadev-Run)")
-      mappings.sile("v", "<leader>x", "<Plug>(Luadev-Run)")
-      mappings.sile("n", "<leader>xw", "<Plug>(Luadev-RunWord)")
-      mappings.sile("n", "<leader>x<space>", "<Plug>(Luadev-Complete)")
+      local sile = require("keymappings").sile
+      sile("n", "<leader>xx", "<Plug>(Luadev-RunLine)")
+      sile("n", "<leader>x", "<Plug>(Luadev-Run)")
+      sile("v", "<leader>x", "<Plug>(Luadev-Run)")
+      sile("n", "<leader>xw", "<Plug>(Luadev-RunWord)")
+      sile("n", "<leader>x<space>", "<Plug>(Luadev-Complete)")
     end,
     ft = "lua",
   }
@@ -1001,6 +1002,13 @@ return require("packer").startup(function(use)
           end,
         }),
       }
+    end,
+  }
+
+  use {
+    "jbyuki/nabla.nvim",
+    config = function()
+      mappings.sile("n", "<leader>xn", utils.cmd.require("nabla").action)
     end,
   }
   -- use "RishabhRD/nvim-rdark"
@@ -1060,17 +1068,17 @@ return require("packer").startup(function(use)
   -- https://github.com/jbyuki/nabla.nvim
   -- https://github.com/justinmk/vim-dirvish -- netrw/nvim-tree alternative
 
-  local metatable = {
-    __newindex = function(table, repo, options)
-      options[1] = table[1] .. "/" .. repo
-      use(options)
-    end,
-  }
-  local plugins_table = setmetatable({}, {
-    __index = function(table, user)
-      return setmetatable({ user }, metatable)
-    end,
-  })
+  -- local metatable = {
+  --   __newindex = function(table, repo, options)
+  --     options[1] = table[1] .. "/" .. repo
+  --     use(options)
+  --   end,
+  -- }
+  -- local plugins_table = setmetatable({}, {
+  --   __index = function(table, user)
+  --     return setmetatable({ user }, metatable)
+  --   end,
+  -- })
   -- plugins_table.gelguy["wilder.nvim"] = {
   --   config = function()
   --     require("lv-wilder").config()

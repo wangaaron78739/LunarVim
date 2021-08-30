@@ -14,10 +14,11 @@ M.config = function()
   enum_cyclic("Boolean", { "True", "False" })
 end
 
+local map_ = vim.api.nvim_set_keymap
 M.keymaps = function()
   local map = function(from, to)
-    vim.api.nvim_set_keymap("n", from, to, { silent = true })
-    vim.api.nvim_set_keymap("v", from, to, { silent = true })
+    map_("n", from, to, { silent = true })
+    map_("v", from, to, { silent = true })
   end
   map("<C-a>", "<Plug>(dial-increment)")
   map("g<C-a>", "<Plug>(dial-increment-additional)")

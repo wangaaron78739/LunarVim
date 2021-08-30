@@ -5,6 +5,12 @@ local functions = require "lv-telescope.functions"
 -- Global remapping
 ------------------------------
 TelescopeMapArgs = TelescopeMapArgs or {}
+local map_ = vim.api.nvim_set_keymap
+local map_b = vim.api.nvim_buf_set_keymap
+local map_options = {
+  noremap = true,
+  silent = true,
+}
 local map_tele = function(mode, key, f, options, buffer)
   local map_key = vim.api.nvim_replace_termcodes(key .. f, true, true, true)
 
@@ -12,15 +18,10 @@ local map_tele = function(mode, key, f, options, buffer)
 
   local rhs = string.format("<cmd>lua require('telescope')['%s'](TelescopeMapArgs['%s'])<CR>", f, map_key)
 
-  local map_options = {
-    noremap = true,
-    silent = true,
-  }
-
   if not buffer then
-    vim.api.nvim_set_keymap(mode, key, rhs, map_options)
+    map_(mode, key, rhs, map_options)
   else
-    vim.api.nvim_buf_set_keymap(0, mode, key, rhs, map_options)
+    map_b(0, mode, key, rhs, map_options)
   end
 end
 

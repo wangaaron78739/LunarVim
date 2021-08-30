@@ -1,37 +1,38 @@
 -- Signs
-vim.fn.sign_define(
+local sign_define = vim.fn.sign_define
+sign_define(
   "LspDiagnosticsSignError",
   { texthl = "LspDiagnosticsSignError", text = "", numhl = "LspDiagnosticsSignError" }
 )
-vim.fn.sign_define(
+sign_define(
   "LspDiagnosticsSignWarning",
   { texthl = "LspDiagnosticsSignWarning", text = "", numhl = "LspDiagnosticsSignWarning" }
 )
-vim.fn.sign_define(
+sign_define(
   "LspDiagnosticsSignHint",
   { texthl = "LspDiagnosticsSignHint", text = "", numhl = "LspDiagnosticsSignHint" }
 )
-vim.fn.sign_define(
+sign_define(
   "LspDiagnosticsSignInformation",
   { texthl = "LspDiagnosticsSignInformation", text = "", numhl = "LspDiagnosticsSignInformation" }
 )
 
 -- Handlers
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics,
-  O.lsp.diagnostics
-)
-vim.lsp.handlers["textDocument/codeLens"] = vim.lsp.with(vim.lsp.codelens.on_codelens, O.lsp.codeLens)
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+local lsp = vim.lsp
+local handlers = vim.lsp.handlers
+local lspwith = vim.lsp.with
+handlers["textDocument/publishDiagnostics"] = lspwith(vim.lsp.diagnostic.on_publish_diagnostics, O.lsp.diagnostics)
+handlers["textDocument/codeLens"] = lspwith(vim.lsp.codelens.on_codelens, O.lsp.codeLens)
+handlers["textDocument/hover"] = lspwith(handlers.hover, {
   border = O.lsp.border,
 })
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+handlers["textDocument/signatureHelp"] = lspwith(handlers.signature_help, {
   border = O.lsp.border,
   focusable = false,
 })
 
 -- symbols for autocomplete
-vim.lsp.protocol.CompletionItemKind = {
+lsp.protocol.CompletionItemKind = {
   "   (Text) ",
   "   (Method)",
   "   (Function)",

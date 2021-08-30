@@ -65,8 +65,9 @@ M.config = function()
 end
 M.keymaps = function()
   if O.plugin.zen then
-    mappings.sile("n", "zz", "<cmd>TZFocus<CR>")
-    mappings.sile("n", "zm", "<cmd>TZMinimalist<CR>")
+    local sile = require("keymappings").sile
+    sile("n", "zz", "<cmd>TZFocus<CR>")
+    sile("n", "zm", "<cmd>TZMinimalist<CR>")
   end
 end
 return M
