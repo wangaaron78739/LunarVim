@@ -36,6 +36,37 @@ function M.expr(mode, from, to)
   map(mode, from, to, expr)
 end
 
+-- Custom nN repeats
+local custom_n_repeat = nil
+local custom_N_repeat = nil
+local feedkeys_ = vim.api.nvim_feedkeys
+local termcode = vim.api.nvim_replace_termcodes
+local feedkeys = function(keys, o)
+  if o == nil then
+    o = "m"
+  end
+  feedkeys_(termcode(keys, true, true, true), o, false)
+end
+function M.n_repeat()
+  if custom_n_repeat == nil then
+    feedkeys("n", "n")
+  else
+    feedkeys(custom_n_repeat)
+  end
+end
+function M.N_repeat()
+  if custom_N_repeat == nil then
+    feedkeys("N", "n")
+  else
+    feedkeys(custom_N_repeat)
+  end
+end
+function nN_repeatable(nN)
+  custom_n_repeat = nN[1]
+  custom_N_repeat = nN[2]
+end
+M.nN_repeatable = nN_repeatable
+
 function M.init()
   -- Set leader keys
   if O.leader_key == " " or O.leader_key == "space" then
@@ -97,6 +128,7 @@ function M.setup()
 
   -- Helper functions
   local cmd = require("lv-utils").cmd
+  local to_cmd = cmd.from
   local luacmd = cmd.lua
   local luareq = cmd.require
   local dap_fn = luareq "dap"
@@ -104,6 +136,19 @@ function M.setup()
   local telescope_fn = luareq "lv-telescope.functions"
   local lspbuf = cmd.lsp
   local lsputil = luareq "lsp.functions"
+
+  -- custom_n_repeat
+  map("n", "n", luareq("keymappings").n_repeat, nore)
+  map("n", "N", luareq("keymappings").N_repeat, nore)
+  map(
+    "n",
+    "/",
+    to_cmd(function()
+      nN_repeatable { nil, nil }
+      feedkeys("/", "n")
+    end),
+    nore
+  )
 
   -- Command mode typos of wq
   vim.cmd [[
@@ -290,14 +335,44 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("i", "<S-TAB>", '("\\<C-p>")', expr)
 
   -- QuickFix
-  map("n", "]q", "<cmd>cnext<cr>", nore)
-  map("n", "[q", "<cmd>cprev<cr>", nore)
-  -- map("n", "<C-M-j>", "<cmd>cnext<cr>", nore)
-  -- map("n", "<C-M-k>", "<cmd>cprev<cr>", nore)
+  -- map("n", "]q", cmd "cnext", nore)
+  -- map("n", "[q", cmd "cprev", nore)
+  local quickfix_nN = { cmd "cnext", cmd "cprev" }
+  map(
+    "n",
+    "]q",
+    to_cmd(function()
+      nN_repeatable(quickfix_nN)
+      vim.cmd [[cnext]]
+    end),
+    nore
+  )
+  map(
+    "n",
+    "[q",
+    to_cmd(function()
+      nN_repeatable(quickfix_nN)
+      vim.cmd [[cprev]]
+    end),
+    nore
+  )
+  -- map("n", "<C-M-j>", cmd "cnext", nore)
+  -- map("n", "<C-M-k>", cmd "cprev", nore)
 
   -- Diagnostics jumps
-  map("n", "]d", [[<cmd>lua require("lsp.functions").diag_next()<cr>]], nore)
-  map("n", "[d", [[<cmd>lua require("lsp.functions").diag_prev()<cr>]], nore)
+  -- map("n", "]d", lsputil.diag_next, nore)
+  -- map("n", "[d", lsputil.diag_prev, nore)
+  local diag_nN = { lsputil.diag_next, lsputil.diag_prev }
+  local diag_next = to_cmd(function()
+    nN_repeatable(diag_nN)
+    require("lsp.functions").diag_next()
+  end)
+  local diag_prev = to_cmd(function()
+    nN_repeatable(diag_nN)
+    require("lsp.functions").diag_prev()
+  end)
+  map("n", "]d", diag_next, nore)
+  map("n", "[d", diag_prev, nore)
 
   -- Search for the current selection
   map("v", "*", '"z<M-y>/<C-R>z<cr>', {}) -- Search for the current selection
@@ -647,7 +722,7 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
       name = "Git",
       g = { luacmd "ftopen('gitui')", "Gitui" },
       m = { cmd "!smerge '%:p:h'", "Sublime Merge" },
-      j = { gitsigns_fn.next_hunk, "Next Hunk" },
+      j = { gitsigns_fn.next_hunk, "Next Hunk" }, -- TODO: make nN repeatable
       k = { gitsigns_fn.prev_hunk, "Prev Hunk" },
       l = { gitsigns_fn.blame_line, "Blame" },
       L = { cmd "GitBlameToggle", "Blame Toggle" },
@@ -710,8 +785,8 @@ map("v", "<M-S-B>", "<Esc>BviWo", sile) ]]
     },
     d = {
       name = "Diagnostics",
-      j = { lsputil.diag_next, "Next" },
-      k = { lsputil.diag_prev, "Previous" },
+      j = { diag_next, "Next" },
+      k = { diag_prev, "Previous" },
       i = { lsputil.toggle_diagnostics, "Toggle Inline" },
       l = { lsputil.diag_line, "Line Diagnostics" },
       c = { lsputil.diag_cursor, "Cursor Diagnostics" },
