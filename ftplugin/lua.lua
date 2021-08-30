@@ -3,7 +3,7 @@ local sumneko_root_path = DATA_PATH .. "/lspinstall/lua"
 local sumneko_binary = sumneko_root_path .. "/sumneko-lua-language-server"
 
 if not require("lv-utils").check_lsp_client_active "sumneko_lua" then
-  require("lsp.config").lspconfig  "sumneko_lua" {
+  require("lsp.config").lspconfig "sumneko_lua" {
     cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
     on_attach = require("lsp.functions").common_on_attach,
     settings = {
@@ -35,6 +35,7 @@ end
 
 vim.cmd "setl ts=2 sw=2"
 
+-- mappings.buf(0, "x", "is", "?[[<cr>o/]]<cr>", {})
 require("lv-sandwich").add_recipe {
   buns = { "[[", "]]" },
   quoteescape = true,
