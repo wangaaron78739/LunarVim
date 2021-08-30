@@ -1,9 +1,11 @@
-vim.opt.shadafile = "NONE"
+-- vim.opt.shadafile = "NONE"
 --------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------
 
-if vim.g.started_by_firenvim then
-end
+require "impatient"
+
+-- if vim.g.started_by_firenvim then
+-- end
 
 -- Disable builtin plugins
 local disabled_built_ins = {
@@ -40,8 +42,8 @@ end
 
 -- Source the config files
 require "config"
-_G.utils = require "lv-utils"
-_G.mappings = require "keymappings"
+utils = require "lv-utils"
+mappings = require "keymappings"
 require "settings"
 require "plugins"
 require "theme"
@@ -54,4 +56,4 @@ require "lsp"
 
 --------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------
-vim.opt.shadafile = ""
+-- vim.opt.shadafile = ""

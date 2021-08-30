@@ -26,6 +26,7 @@ packer.init {
 return require("packer").startup(function(use)
   -- Packer can manage itself as an optional plugin
   use "wbthomason/packer.nvim"
+  use "lewis6991/impatient.nvim" -- Will be merged in https://github.com/neovim/neovim/pull/15436
 
   use {
     "rcarriga/nvim-notify",
