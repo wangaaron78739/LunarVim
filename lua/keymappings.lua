@@ -99,11 +99,11 @@ function M.N_repeat()
     feedkeys(custom_N_repeat)
   end
 end
-local function nN_repeatable(nN)
+local function register_nN_repeat(nN)
   custom_n_repeat = nN[1]
   custom_N_repeat = nN[2]
 end
-M.nN_repeatable = nN_repeatable
+M.register_nN_repeat = register_nN_repeat
 
 function M.init()
   -- Set leader keys
@@ -185,7 +185,7 @@ function M.setup()
     "n",
     "/",
     to_cmd(function()
-      nN_repeatable { nil, nil }
+      register_nN_repeat { nil, nil }
       feedkeys("/", "n")
     end),
     nore
@@ -383,7 +383,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     "n",
     "]q",
     to_cmd(function()
-      nN_repeatable(quickfix_nN)
+      register_nN_repeat(quickfix_nN)
       vim.cmd [[cnext]]
     end),
     nore
@@ -392,7 +392,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     "n",
     "[q",
     to_cmd(function()
-      nN_repeatable(quickfix_nN)
+      register_nN_repeat(quickfix_nN)
       vim.cmd [[cprev]]
     end),
     nore
@@ -405,11 +405,11 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   -- map("n", "[d", lsputil.diag_prev, nore)
   local diag_nN = { lsputil.diag_next, lsputil.diag_prev }
   local diag_next = to_cmd(function()
-    nN_repeatable(diag_nN)
+    register_nN_repeat(diag_nN)
     require("lsp.functions").diag_next()
   end)
   local diag_prev = to_cmd(function()
-    nN_repeatable(diag_nN)
+    register_nN_repeat(diag_nN)
     require("lsp.functions").diag_prev()
   end)
   map("n", "]d", diag_next, nore)

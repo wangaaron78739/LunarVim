@@ -35,40 +35,55 @@ local textobj_move_keymaps = {
   goto_next_end = {},
   goto_previous_start = {},
   goto_previous_end = {},
-  sel_next_outer = {},
-  sel_next_inner = {},
-  sel_previous_outer = {},
-  sel_previous_inner = {},
 }
+textobj_move_wrap = true
 for obj, suffix in pairs(textobj_suffixes) do
+  local cmd = require("lv-utils").cmd
+  local function goto_next(obj)
+    local wobj = "@" .. obj
+    if not textobj_move_wrap then
+      return wobj
+    end
+    return {
+      cmd.from(function()
+        require("keymappings").register_nN_repeat {
+          [[<cmd>lua require("nvim-treesitter.textobjects.move").goto_next_start("]] .. wobj .. [[")<cr>]],
+          [[<cmd>lua require("nvim-treesitter.textobjects.move").goto_previous_start("]] .. wobj .. [[")<cr>]],
+        }
+        require("nvim-treesitter.textobjects.move").goto_next_start(wobj)
+      end),
+      wobj,
+    }
+  end
+  local function goto_prev(obj)
+    local wobj = "@" .. obj
+    if not textobj_move_wrap then
+      return wobj
+    end
+    return {
+      cmd.from(function()
+        require("keymappings").register_nN_repeat {
+          [[<cmd>lua require("nvim-treesitter.textobjects.move").goto_next_start("]] .. wobj .. [[")<cr>]],
+          [[<cmd>lua require("nvim-treesitter.textobjects.move").goto_previous_start("]] .. wobj .. [[")<cr>]],
+        }
+        require("nvim-treesitter.textobjects.move").goto_previous_start(wobj)
+      end),
+      wobj,
+    }
+  end
+  local luareq = cmd.require
+
   if textobj_prefixes["goto_next"] ~= nil then
-    textobj_move_keymaps["goto_next_start"][textobj_prefixes["goto_next"] .. suffix[1]] = "@" .. obj .. ".outer"
-    textobj_move_keymaps["goto_next_end"][textobj_prefixes["goto_next"] .. suffix[2]] = "@" .. obj .. ".outer"
+    textobj_move_keymaps["goto_next_start"][textobj_prefixes["goto_next"] .. suffix[1]] = goto_next(obj .. ".inner")
+    textobj_move_keymaps["goto_next_start"][textobj_prefixes["goto_next"] .. suffix[2]] = goto_next(obj .. ".outer")
   end
   if textobj_prefixes["goto_previous"] ~= nil then
-    textobj_move_keymaps["goto_previous_start"][textobj_prefixes["goto_previous"] .. suffix[2]] = "@" .. obj .. ".outer"
-    textobj_move_keymaps["goto_previous_end"][textobj_prefixes["goto_previous"] .. suffix[1]] = "@" .. obj .. ".outer"
-  end
-
-  if textobj_prefixes["sel_next"] ~= nil then
-    textobj_move_keymaps["sel_next_outer"][textobj_prefixes["sel_next"] .. suffix[1]] = {
-      ":lua require('nvim-treesitter.textobjects.move').goto_next_start('@" .. obj .. ".outer')<cr>va" .. suffix[1],
-      "@" .. obj .. ".outer",
-    }
-    textobj_move_keymaps["sel_next_inner"][textobj_prefixes["sel_next"] .. suffix[2]] = {
-      ":lua require('nvim-treesitter.textobjects.move').goto_next_start('@" .. obj .. ".inner')<cr>vi" .. suffix[1],
-      "@" .. obj .. ".inner",
-    }
-  end
-  if textobj_prefixes["sel_previous"] ~= nil then
-    textobj_move_keymaps["sel_previous_outer"][textobj_prefixes["sel_previous"] .. suffix[1]] = {
-      ":lua require('nvim-treesitter.textobjects.move').goto_previous_start('@" .. obj .. ".outer')<cr>va" .. suffix[1],
-      "@" .. obj .. ".outer",
-    }
-    textobj_move_keymaps["sel_previous_inner"][textobj_prefixes["sel_previous"] .. suffix[2]] = {
-      ":lua require('nvim-treesitter.textobjects.move').goto_previous_start('@" .. obj .. ".inner')<cr>vi" .. suffix[1],
-      "@" .. obj .. ".inner",
-    }
+    textobj_move_keymaps["goto_previous_start"][textobj_prefixes["goto_previous"] .. suffix[1]] = goto_prev(
+      obj .. ".inner"
+    )
+    textobj_move_keymaps["goto_previous_start"][textobj_prefixes["goto_previous"] .. suffix[2]] = goto_prev(
+      obj .. ".outer"
+    )
   end
 
   if textobj_prefixes["inner"] ~= nil then
@@ -106,10 +121,12 @@ if status then
   register(textobj_move_keymaps["goto_next_end"], normal)
   register(textobj_move_keymaps["goto_previous_start"], normal)
   register(textobj_move_keymaps["goto_previous_end"], normal)
-  register(textobj_move_keymaps["sel_previous_outer"], visual)
-  register(textobj_move_keymaps["sel_previous_inner"], visual)
-  register(textobj_move_keymaps["sel_next_outer"], visual)
-  register(textobj_move_keymaps["sel_next_inner"], visual)
+  if textobj_move_wrap then
+    textobj_move_keymaps["goto_next_start"] = nil
+    textobj_move_keymaps["goto_next_end"] = nil
+    textobj_move_keymaps["goto_previous_start"] = nil
+    textobj_move_keymaps["goto_previous_end"] = nil
+  end
 end
 
 require("nvim-treesitter.configs").setup {
