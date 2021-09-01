@@ -2,7 +2,16 @@
 --------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------
 
-require "impatient"
+-- Install packer first
+local fn = vim.fn
+local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+if fn.empty(fn.glob(install_path)) > 0 then
+  vim.cmd("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
+  vim.cmd "packadd packer.nvim"
+  vim.cmd ":qa"
+end
+
+pcall(require, "impatient")
 
 -- if vim.g.started_by_firenvim then
 -- end
@@ -30,14 +39,6 @@ local disabled_built_ins = {
 }
 for _, plugin in pairs(disabled_built_ins) do
   vim.g["loaded_" .. plugin] = 1
-end
-
--- Install packer first
-local fn = vim.fn
-local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-  vim.cmd("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
-  vim.cmd "packadd packer.nvim"
 end
 
 -- Source the config files
