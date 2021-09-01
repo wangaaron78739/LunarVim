@@ -42,6 +42,7 @@ return require("packer").startup(function(use)
 
   -- Lsp Configs
   use { "neovim/nvim-lspconfig" }
+  -- use "williamboman/nvim-lsp-installer"
   use {
     "kabouzeid/nvim-lspinstall",
     -- https://github.com/williamboman/nvim-lsp-installer
@@ -49,7 +50,6 @@ return require("packer").startup(function(use)
     config = function()
       require "lv-lspinstall"
     end,
-    -- run = ":LspInstall rust julia latex python" -- TODO: try this
     cmd = "LspInstall",
   }
 
