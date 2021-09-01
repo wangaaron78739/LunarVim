@@ -14,9 +14,8 @@ installnodeubuntu() {
 	sudo apt install npm
 }
 
-moveoldnvim() {
-	echo "Not installing LunarVim"
-	echo "Please move your ~/.config/nvim folder before installing"
+confignotfound() {
+	echo "LunarVim not installed"
 	exit
 }
 
@@ -79,12 +78,8 @@ installpacker() {
 
 cloneconfig() {
 	echo "Cloning LunarVim configuration"
-	git clone https://github.com/wangaaron78739/LunarVim.git ~/.config/nvim
-	# mv $HOME/.config/nvim/init.lua $HOME/.config/nvim/init.lua.tmp
-	# mv $HOME/.config/nvim/utils/init.lua $HOME/.config/nvim/init.lua
+	# git clone https://github.com/wangaaron78739/LunarVim.git ~/.config/nvim
 	nvim -u $HOME/.config/nvim/init.lua +PackerInstall
-	# rm $HOME/.config/nvim/init.lua
-	# mv $HOME/.config/nvim/init.lua.tmp $HOME/.config/nvim/init.lua
 }
 
 asktoinstallnode() {
@@ -146,7 +141,7 @@ installextrapackages() {
 echo 'Installing LunarVim'
 
 # move old nvim directory if it exists
-[ -d "$HOME/.config/nvim" ] && moveoldnvim
+[ -d "$HOME/.config/nvim" ] || confignotfound
 
 # install pip
 which pip3 >/dev/null && echo "pip installed, moving on..." || asktoinstallpip
