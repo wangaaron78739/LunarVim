@@ -11,16 +11,15 @@ yadm-save message="update nvim config": fix-head
     cd ~  && yadm add ~/.config/nvim 
     yadm commit -m "{{message}}"
 
-# TODO: install in an isolated virutal environment? (use pipx)
+# TODO: install in an isolated virtual environment? (use pipx)
 # Install dependencies # TODO: there are some dependencies not included here
 install:
     sudo apt install libjpeg8-dev zlib1g-dev libxtst-dev 
     # pipx install --force ranger-fm
     # pipx inject ranger-fm pynvim ueberzug
     pipx install --force neovim-remote
-    # pip3 install pynvim --user
+    pip3 install pynvim --user
     npm install -g tree-sitter-cli
-    cargo install stylua
     {{nvim}} # Run once to install packer and stuff
     {{nvim}} +PackerSync # Run again to install the plugins
 
