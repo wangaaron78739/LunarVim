@@ -37,7 +37,6 @@ mapper_meta = {
   __call = mapper_call,
 }
 local mapper = setmetatable({ {}, "n" }, mapper_meta)
-mapper.il = "yw"
 
 M.map = map
 M.buf = bufmap
