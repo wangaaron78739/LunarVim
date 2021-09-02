@@ -143,6 +143,8 @@ return require("packer").startup(function(use)
   --   "SirVer/ultisnips",
   --   setup = function()
   --     vim.g.UltiSnipsExpandTrigger = "<f5>"
+  --     vim.g.UltiSnipsJumpForwardTrigger="<c-j>"
+  --     vim.g.UltiSnipsJumpBackwardTrigger="<c-k>"
   --   end,
   -- }
   -- use { "quangnguyen30192/cmp-nvim-ultisnips", disable = not O.plugin.cmp }

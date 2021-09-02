@@ -42,6 +42,10 @@ local function fmt(fn, ipairs)
   end, ipairs)
 end
 
+local mainnotestemplate = {
+  t "test"
+}
+
 return {
   snips = {
     s("ls", {
@@ -55,6 +59,7 @@ return {
     s("\\lemma ", { t "\\begin{lemma}\n", i(0), t "\n\\end{lemma}" }),
     s("\\proof ", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
     s("\\claim ", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
+    s("mainnotestemplate", mainnotestemplate)
   },
   auto = {
     s("$", { t "\\(", i(0), t "\\)" }),
