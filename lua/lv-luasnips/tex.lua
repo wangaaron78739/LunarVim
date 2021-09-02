@@ -80,6 +80,22 @@ local ff = function(str)
   end, {})
 end
 
+local trig_fns = {
+  "sin",
+  "cos",
+  "tan",
+  "cot",
+  "csc",
+  "sec",
+}
+local fns = {
+  "min",
+  "max",
+  "argmin",
+  "argmax",
+  "log",
+  "exp",
+}
 local autosyms = {
   "alpha",
   "beta",
@@ -131,13 +147,10 @@ local autosyms = {
   "Omega",
   "nabla",
   "infty",
+  "iff",
 }
-local autosyms_math = {}
-local autosyms_open = {}
-for j, v in ipairs(autosyms) do
-  autosyms_math[j] = ms(v, t("\\" .. v))
-  autosyms_open[j] = nms(v, t("$\\" .. v .. "$"))
-end
+list_extend(autosyms, trig_fns)
+list_extend(autosyms, fns)
 local symmaps_table = {
   ["..."] = "dots",
   ["=>"] = "implies",
@@ -151,16 +164,23 @@ local symmaps_table = {
   ["<<"] = "ll",
   ["xx"] = "times",
   ["**"] = "cdot",
+  ["->"] = "to",
+  ["|->"] = "mapsto",
+  ["!>"] = "mapsto",
+  ["<>"] = "mapsto",
+  ["||"] = "mid",
+  ["+-"] = "pm",
+  ["-+"] = "mp",
 }
 
 local auto = {
   s("$", { t "\\(", i(0), t "\\)" }),
   s("\\(", { t "\\( ", i(0), t " \\" }),
-  s("\\it ", { t "\\textit{", i(0), t "}" }),
-  s("\\bf ", { t "\\textbf{", i(0), t "}" }),
+  s("\\it{", { t "\\textit{", i(0), t "}" }),
+  s("\\bf{", { t "\\textbf{", i(0), t "}" }),
   s("\\eq ", { t "\\begin{equation}\n", i(0), t "\n\\end{equation}" }),
   s("\\ali ", { t "\\begin{equation}\n", i(0), t "\n\\end{equation}" }),
-  s("--", { t "\\item " }),
+  s("--", { t "\\item" }),
   s(re [[(%w+)%.%.e]], {
     -- ff "\begin{{{c1}}}",
     fmt(function(cap)
@@ -182,11 +202,41 @@ local auto = {
   -- TODO: whitespace before and after operators
   -- TODO: fraction
   -- TODO: line 203 and below
+  ms(re [[(%w[ ,%)%]%}])to]], { sub(1), t "\\to" }),
+  ms(re [[([%w%^]+),%.]], { t "\\vec{", sub(1), t "}" }),
+  ms(re [[([%w%^]+)%.,]], { t "\\vec{", sub(1), t "}" }),
+  ms(re [[([%w%^]+)~]], { t "\\tilde{", sub(1), t "}" }),
+  ms(re [[([%w%^]+)%. ]], { t "\\dot{", sub(1), t "} " }),
+  ms(re [[([%w%^]+)%.%.]], { t "\\ddot{", sub(1), t "}" }),
+  ms(re [[([%w%^]+)^bar]], { t "\\overline{", sub(1), t "}" }),
+  ms("bar", { t "\\overline{", i(0), t "}" }),
+  ms(re [[([%w%^]+)^hat]], { t "\\hat{", sub(1), t "}" }),
+  ms("hat", { t "\\hat{", i(0), t "}" }),
+  -- TODO: bmatrix et al
+  ms("part", { t "\\frac{\\partial ", i(1), t "}{\\partial ", i(0), t "}" }),
+  ms("//", { t "\\frac{", i(1), t "}{", i(0), t "}" }),
+  ms(re "(%b{})/", { t "\\frac", sub(1), t "{", i(0), t "}" }),
+  ms("inn", t "\\in"),
+  ms("notin", t "\\not\\in"),
 }
+
+-- Derived snippets
+local autosyms_math = {}
+local autosyms_open = {}
+for j, v in ipairs(autosyms) do -- FIXME: deal with already existing backslash (can use frontier set?)
+  -- local lhs = "([^%\\])" .. v
+  -- local lhs = "([%p])" .. v
+  local lhs = v
+  autosyms_math[j] = ms(re(lhs), t("\\" .. v))
+  autosyms_open[j] = nms(re(lhs), t("$\\" .. v .. "$"))
+end
 list_extend(auto, autosyms_math)
 list_extend(auto, autosyms_open)
 for k, v in pairs(symmaps_table) do
   list_extend(auto, { ms(k, t("\\" .. v)) })
+end
+for _, v in ipairs(trig_fns) do
+  list_extend(auto, { ms(re([[ar?c?]] .. v), t("\\arc\\" .. v)) })
 end
 
 local snips = {
