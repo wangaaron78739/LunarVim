@@ -43,4 +43,3 @@ npairs.add_rules {
   -- Rule("\\left[", " \\right]", "tex"),
 }
 
-utils.dump(MPairs.state.rules)
