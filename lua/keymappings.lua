@@ -323,6 +323,7 @@ function M.setup()
 
   -- Paste over textobject
   map("n", "r", operatorfunc_keys("paste_over", "p"), sile)
+  map("n", "R", "r$", sile)
   -- map("n", "rr", "vvr", sile)
   map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
   map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
@@ -416,7 +417,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("n", "[d", diag_prev, nore)
 
   -- Search for the current selection
-  map("x", "*", '"z<M-y>/<C-R>z<cr>', {}) -- Search for the current selection
+  map("x", "*", '"z<M-y>/<C-R>z<cr>', nore) -- Search for the current selection
   map("n", "<M-s>", operatorfunc_keys("search_for", "*"), {}) -- Search textobject
 
   -- Select last changed/yanked text
