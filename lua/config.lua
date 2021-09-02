@@ -340,21 +340,34 @@ O = {
     latex = {
       vimtex = { active = true },
       filetypes = { "tex", "bib" },
-      aux_directory = ".",
-      bibtex_formatter = "texlab",
-      build = {
-        -- TODO: Use tectonic here
-        args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
-        executable = "latexmk",
-        forward_search_after = false,
-        on_save = false,
+      texlab = {
+        aux_directory = ".",
+        bibtex_formatter = "texlab",
+        build = {
+          -- TODO: Use tectonic here
+          executable = "tectonic",
+          args = {
+            -- Input
+            "%f",
+            -- Flags
+            "--synctex",
+            "--keep-logs",
+            "--keep-intermediates",
+            -- Options
+            -- OPTIONAL: If you want a custom out directory,
+            -- uncomment the following line.
+            --"--outdir out",
+          },
+          forwardSearchAfter = false,
+          onSave = true,
+        },
+        chktex = { on_edit = true, on_open_and_save = true },
+        diagnostics_delay = vim.opt.updatetime,
+        formatter_line_length = 80,
+        forward_search = { args = {}, executable = "" },
+        latexFormatter = "latexindent",
+        latexindent = { modify_line_breaks = false },
       },
-      chktex = { on_edit = true, on_open_and_save = true },
-      diagnostics_delay = vim.opt.updatetime,
-      formatter_line_length = 80,
-      forward_search = { args = {}, executable = "" },
-      latex_formatter = "latexindent",
-      latexindent = { modify_line_breaks = false },
     },
     kotlin = {},
     html = {},
