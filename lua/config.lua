@@ -183,6 +183,7 @@ O = {
       hint_scheme = "String",
       hi_parameter = "Search",
       toggle_key = "<C-S-space>", -- TODO: Can I add this to C-Space as well?
+      zindex = 1,
     },
     git_blame = {},
     gitlinker = {
