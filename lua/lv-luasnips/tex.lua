@@ -186,7 +186,6 @@ local auto = {
 list_extend(auto, autosyms_math)
 list_extend(auto, autosyms_open)
 for k, v in pairs(symmaps_table) do
-  utils.dump { k, v }
   list_extend(auto, { ms(k, t("\\" .. v)) })
 end
 
