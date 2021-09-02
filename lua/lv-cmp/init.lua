@@ -65,6 +65,10 @@ function M.setup()
         behavior = cmp.ConfirmBehavior.Insert,
         select = true,
       },
+      ["<C-h>"] = cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Insert,
+        select = true,
+      },
     },
 
     -- You should specify your *installed* sources.

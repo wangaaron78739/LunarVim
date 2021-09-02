@@ -171,15 +171,20 @@ local symmaps_table = {
   ["||"] = "mid",
   ["+-"] = "pm",
   ["-+"] = "mp",
+  ["AA"] = "forall",
+  ["EE"] = "exists",
 }
 
 local auto = {
-  s("$", { t "\\(", i(0), t "\\)" }),
-  s("\\(", { t "\\( ", i(0), t " \\" }),
-  s("\\it{", { t "\\textit{", i(0), t "}" }),
-  s("\\bf{", { t "\\textbf{", i(0), t "}" }),
-  s("\\eq ", { t "\\begin{equation}\n", i(0), t "\n\\end{equation}" }),
-  s("\\ali ", { t "\\begin{equation}\n", i(0), t "\n\\end{equation}" }),
+  ms("cases ", { t "\\begin{cases}", i(0), t "\\end{cases}" }),
+  s("\\eq ", { t "\\begin{equation}", i(0), t "\\end{equation}" }),
+  s("\\ali ", { t "\\begin{equation}", i(0), t "\\end{equation}" }),
+  pa("$", "\\($0\\)"),
+  pa("\\(", "\\( $0 \\"),
+  pa("it{", "\\textit{$0"),
+  pa("bf{", "\\textbf{$0"),
+  ms("sq", { t "\\sqrt{", i(0), t "}" }),
+  ms("__", { t "_{", i(0), t "}" }),
   s("--", { t "\\item" }),
   s(re [[(%w+)%.%.e]], {
     -- ff "\begin{{{c1}}}",
@@ -216,8 +221,30 @@ local auto = {
   ms("part", { t "\\frac{\\partial ", i(1), t "}{\\partial ", i(0), t "}" }),
   ms("//", { t "\\frac{", i(1), t "}{", i(0), t "}" }),
   ms(re "(%b{})/", { t "\\frac", sub(1), t "{", i(0), t "}" }),
+  ms(re "(%\\?%w+)/", { t "\\frac{", sub(1), t "}{", i(0), t "}" }),
   ms("inn", t "\\in"),
   ms("notin", t "\\not\\in"),
+  ms("sr", t "^2"),
+  ms("cb", t "^3"),
+  -- ms(
+  --   re [[([A-Za-z])([A-Za-z])([A-Za-z])]],
+  --   f(function(arg)
+  --     local cap = arg[1].captures
+  --     if cap[2] == cap[3] then
+  --       return string.format("%s_%s", cap[1], cap[2])
+  --     else
+  --       return arg[1].trigger
+  --     end
+  --   end, {})
+  -- ),
+  ms("dint", {
+    t "\\int_{",
+    i(1, "\\infty"),
+    t "}^{",
+    i(2, "\\infty"),
+    t "}",
+  }),
+  -- TODO: binomial
 }
 
 -- Derived snippets
@@ -240,10 +267,10 @@ for _, v in ipairs(trig_fns) do
 end
 
 local snips = {
-  s("\\theorem ", { t "\\begin{theorem}\n", i(0), t "\n\\end{theorem}" }),
-  s("\\lemma ", { t "\\begin{lemma}\n", i(0), t "\n\\end{lemma}" }),
-  s("\\proof ", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
-  s("\\claim ", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
+  s("theorem", { t "\\begin{theorem}\n", i(0), t "\n\\end{theorem}" }),
+  s("lemma", { t "\\begin{lemma}\n", i(0), t "\n\\end{lemma}" }),
+  s("proof", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
+  s("claim", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
 }
 return {
   snips = snips,
