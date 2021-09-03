@@ -2,9 +2,9 @@ local M = {}
 function M.preconf()
   vim.g.VM_maps = nil
   vim.g.VM_maps = {
-    ["Find Under"] = "<M-n>",
+    ["Find Under"] = "<M-d>",
     ["Select All"] = "<M-a>",
-    ["Find Subword Under"] = "<M-n>",
+    ["Find Subword Under"] = "<M-d>",
     ["Add Cursor Down"] = "<M-j>",
     ["Add Cursor Up"] = "<M-k>",
     ["Select Cursor Down"] = "<M-S-j>",

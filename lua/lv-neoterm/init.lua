@@ -11,9 +11,9 @@ function M.config()
   vim.g.neoterm_repl_lua = { "croissant" }
   --vim.g.neoterm_repl_python = "['conda activate venv', 'clear', 'ipython']"
 
-  remap("n", "<M-x>", "<Plug>(neoterm-repl-send)", { silent = true })
-  remap("n", "<M-x><M-x>", "<Plug>(neoterm-repl-send-line)", { silent = true })
-  remap("x", "<M-x>", "<Plug>(neoterm-repl-send)", { silent = true })
+  -- remap("n", "<M-x>", "<Plug>(neoterm-repl-send)", { silent = true })
+  -- remap("n", "<M-x><M-x>", "<Plug>(neoterm-repl-send-line)", { silent = true })
+  -- remap("x", "<M-x>", "<Plug>(neoterm-repl-send)", { silent = true })
   -- remap("n", "gt","<Plug>(neoterm-repl-send)", { silent = true })
   -- remap("v", "gt","<Plug>(neoterm-repl-send-line)", { silent = true })
   -- remap("n", "gtt","<Plug>(neoterm-repl-send)", { silent = true })

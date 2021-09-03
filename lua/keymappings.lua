@@ -284,7 +284,7 @@ function M.setup()
   -- else
 
   -- Paste over textobject
-  map("n", "r", operatorfunc_keys("paste_over", "p"), sile)
+  map("n", "R", operatorfunc_keys("paste_over", "p"), sile)
   -- map("n", "rr", "vvr", sile)
   map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
   map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
