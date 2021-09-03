@@ -617,7 +617,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("n", "C-o", "<NOP>", {})
 
   -- Select whole file
-  map("o", "ie", "<cmd><c-u>normal! mzggVG<cr>`z", nore)
+  map("o", "ie", "<cmd>normal! mzggVG<cr>`z", nore)
   map("x", "ie", "gg0oG$", nore)
 
   -- Operator for current line
