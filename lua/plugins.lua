@@ -25,6 +25,8 @@ packer.init {
 
 local use_rock = packer.use_rocks
 return packer.startup(function(use)
+  -- local BufRead
+  local BufRead = "BufRead"
   -- Packer can manage itself as an optional plugin
   use "wbthomason/packer.nvim"
   use "lewis6991/impatient.nvim" -- Will be merged in https://github.com/neovim/neovim/pull/15436
@@ -141,15 +143,6 @@ return packer.startup(function(use)
     disable = not O.plugin.cmp or not O.plugin.tabnine,
   }
 
-  -- Auto activating snippets -- TODO: port my snippets from vscode
-  -- use {
-  --   "SirVer/ultisnips",
-  --   setup = function()
-  --     vim.g.UltiSnipsExpandTrigger = "<f5>"
-  --   end,
-  -- }
-  -- use { "quangnguyen30192/cmp-nvim-ultisnips", disable = not O.plugin.cmp }
-
   -- Autopairs
   use {
     "windwp/nvim-autopairs",
@@ -173,7 +166,7 @@ return packer.startup(function(use)
     config = function()
       require("lv-gitsigns").config()
     end,
-    event = "BufRead",
+    event = BufRead,
   }
 
   -- Comments
@@ -187,9 +180,7 @@ return packer.startup(function(use)
         end,
       }
     end,
-    event = "BufRead",
-    -- event = "BufWinEnter",
-    keys = { "gc", "gcc" },
+    event = BufRead,
   }
 
   -- Icons
@@ -212,7 +203,7 @@ return packer.startup(function(use)
     --         config = function()
     --             require 'lv-barbar'.config()
     --         end,
-    -- event = "BufRead",
+    -- event = BufRead,
   }
 
   -- Better motions
@@ -228,10 +219,11 @@ return packer.startup(function(use)
   -- Enhanced increment/decrement
   use {
     "monaqa/dial.nvim",
-    event = "BufRead",
+    event = BufRead,
     config = function()
       require("lv-dial").config()
     end,
+    module = "dial",
     disable = not O.plugin.dial,
   }
   -- Dashboard
@@ -248,8 +240,6 @@ return packer.startup(function(use)
   use {
     "Pocco81/TrueZen.nvim",
     cmd = { "TZAtaraxis", "TZMinimalist", "TZFocus" },
-    -- "folke/zen-mode.nvim",
-    -- cmd = "ZenMode",
     config = function()
       require("lv-zen").config()
     end,
@@ -277,7 +267,7 @@ return packer.startup(function(use)
   }
   use {
     "theHamsta/nvim-treesitter-pairs",
-    event = "BufRead",
+    event = BufRead,
     disable = not O.plugin.ts_matchup,
   }
 
@@ -292,7 +282,7 @@ return packer.startup(function(use)
 
   use {
     "nacro90/numb.nvim",
-    event = "BufRead",
+    event = BufRead,
     config = function()
       require("numb").setup(O.plugin.numb)
     end,
@@ -308,7 +298,7 @@ return packer.startup(function(use)
 
   use {
     "lukas-reineke/indent-blankline.nvim",
-    event = "InsertEnter",
+    event = BufRead,
     setup = function()
       vim.g.indentLine_enabled = 1
       vim.g.indent_blankline_char = "▏"
@@ -330,7 +320,7 @@ return packer.startup(function(use)
   -- comments in context
   use {
     "JoosepAlviste/nvim-ts-context-commentstring",
-    event = "BufRead",
+    event = BufRead,
     disable = not O.plugin.ts_context_commentstring,
   }
 
@@ -369,7 +359,7 @@ return packer.startup(function(use)
   -- Better quickfix
   use {
     "kevinhwang91/nvim-bqf",
-    event = "BufRead",
+    event = "QuickFixCmdPre",
     -- cmd = "copen",
     disable = not O.plugin.bqf,
   }
@@ -385,7 +375,7 @@ return packer.startup(function(use)
   -- Search & Replace
   use {
     "windwp/nvim-spectre",
-    event = "BufRead", -- TODO: load on command
+    event = BufRead, -- TODO: load on command
     config = function()
       require("lv-spectre").setup()
     end,
@@ -399,6 +389,7 @@ return packer.startup(function(use)
 
       require("telescope").load_extension "projects"
     end,
+    cmd = "ProjectRoot",
     disable = not O.plugin.project_nvim,
   }
   -- Markdown preview
@@ -429,7 +420,7 @@ return packer.startup(function(use)
   -- Use project for telescope
   use {
     "nvim-telescope/telescope-project.nvim",
-    event = "BufRead",
+    event = BufRead,
     requires = "telescope.nvim",
     disable = not O.plugin.telescope_project,
   }
@@ -446,13 +437,13 @@ return packer.startup(function(use)
   -- Sane gx for netrw_gx bug
   use {
     "felipec/vim-sanegx",
-    event = "BufRead",
+    event = BufRead,
     disable = not O.plugin.sanegx,
   }
   -- Highlight TODO comments
   use {
     "folke/todo-comments.nvim",
-    event = "BufRead",
+    event = BufRead,
     config = function()
       require("todo-comments").setup()
     end,
@@ -461,7 +452,7 @@ return packer.startup(function(use)
   -- LSP Colors
   use {
     "folke/lsp-colors.nvim",
-    event = "BufRead",
+    event = BufRead,
     disable = not O.plugin.lsp_colors,
   }
   -- Git Blame
@@ -475,7 +466,7 @@ return packer.startup(function(use)
   }
   use {
     "ruifm/gitlinker.nvim",
-    event = "BufRead",
+    event = BufRead,
     config = function()
       require("gitlinker").setup(O.plugin.gitlinker)
     end,
@@ -491,7 +482,7 @@ return packer.startup(function(use)
   -- Diffview
   use {
     "sindrets/diffview.nvim",
-    event = "BufRead",
+    event = BufRead,
     -- ft = 'diff'?
     disable = not O.plugin.diffview,
   }
@@ -505,7 +496,7 @@ return packer.startup(function(use)
   -- HTML preview
   use {
     "turbio/bracey.vim",
-    -- event = "BufRead",
+    -- event = BufRead,
     ft = "html",
     run = "npm install --prefix server",
     disable = not O.plugin.bracey,
@@ -537,7 +528,7 @@ return packer.startup(function(use)
       require("lv-rust-tools").setup()
     end,
     -- TODO: use lazy loading maybe?
-    -- ft = rust
+    ft = "rust",
     disable = not O.lang.rust.rust_tools.active,
   }
 
@@ -593,7 +584,7 @@ return packer.startup(function(use)
     config = function()
       vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
     end,
-    event = "BufRead",
+    event = BufRead,
   }
 
   use { "RishabhRD/popfix" }
@@ -616,7 +607,7 @@ return packer.startup(function(use)
   -- See jumpable characters
   use {
     "unblevable/quick-scope",
-    event = "BufRead",
+    event = BufRead,
     setup = function()
       vim.g.qs_highlight_on_keys = O.plugin.quickscope.on_keys
     end,
@@ -638,7 +629,7 @@ return packer.startup(function(use)
     setup = function()
       require("lv-visual-multi").preconf()
     end,
-    event = "BufRead",
+    event = BufRead,
     disable = not O.plugin.visual_multi,
   }
 
@@ -651,7 +642,7 @@ return packer.startup(function(use)
     config = function()
       require("lv-sandwich").config()
     end,
-    event = "BufRead",
+    event = BufRead,
     disable = not O.plugin.surround,
   }
 
@@ -681,7 +672,7 @@ return packer.startup(function(use)
     },
     disable = not O.plugin.slime,
   }
-  -- https://github.com/dccsillag/magma-nvim might be better
+  -- Send to terminal/repl
   use {
     "dccsillag/magma-nvim",
     config = function()
@@ -723,7 +714,7 @@ return packer.startup(function(use)
   }
 
   -- Repeat plugin commands
-  use { "tpope/vim-repeat", event = "BufRead" }
+  use { "tpope/vim-repeat", event = BufRead }
 
   -- Smart abbreviations, substitutions and case renaming
   use {
@@ -741,7 +732,7 @@ return packer.startup(function(use)
   -- https://github.com/tpope/vim-rsi
 
   -- Detect indentation from file
-  -- use { "zsugabubus/crazy8.nvim", event = "BufRead" }
+  -- use { "zsugabubus/crazy8.nvim", event = BufRead }
 
   -- mkdir -- FIXME: Goes into a infinite loop and freezes neovim
   use {
@@ -827,7 +818,7 @@ return packer.startup(function(use)
       mappings.sile("o", "m", [[:<C-U>lua require('tsht').nodes()<CR>]])
       mappings.sile("v", "m", [[:lua require('tsht').nodes()<CR>]])
     end,
-    event = "BufRead",
+    event = BufRead,
     disable = not O.plugin.ts_hintobjects,
   }
   use {
@@ -841,7 +832,7 @@ return packer.startup(function(use)
   use { "tommcdo/vim-exchange" } -- TODO: may not actually need a whole plugin for this
   use { -- TODO: check if this lazy load is ok
     "windwp/nvim-ts-autotag",
-    event = "BufRead",
+    event = BufRead,
     disable = not O.plugin.ts_autotag,
   }
   use {
@@ -887,7 +878,7 @@ return packer.startup(function(use)
   use {
     "IndianBoy42/nvim-anywise-reg.lua",
     -- AckslD/nvim-anywise-reg.lua
-    event = "BufRead",
+    event = BufRead,
     config = function()
       require("anywise_reg").setup(O.plugin.anywise_reg)
     end,
@@ -897,7 +888,7 @@ return packer.startup(function(use)
   -- Editorconfig support
   use {
     "editorconfig/editorconfig-vim",
-    event = "BufRead",
+    event = BufRead,
     config = function()
       require "lv-editorconfig"
     end,
@@ -925,6 +916,7 @@ return packer.startup(function(use)
       vim.g.splitjoin_split_mapping = "gs"
       vim.g.splitjoin_join_mapping = "gj"
     end,
+    keys = { "gs", "gj" },
   }
 
   use { "Iron-E/nvim-libmodal" }
@@ -938,6 +930,7 @@ return packer.startup(function(use)
     config = function()
       require("lv-wilder").config()
     end,
+    event = "CmdlineEnter",
   }
 
   -- Primeagens refactoring plugin
@@ -975,6 +968,7 @@ return packer.startup(function(use)
     config = function()
       require("twilight").setup {}
     end,
+    cmd = "Twilight",
     disable = not O.plugin.twilight,
   }
 
@@ -982,7 +976,7 @@ return packer.startup(function(use)
   -- Lush - Create Color Schemes
   use {
     "rktjmp/lush.nvim",
-    -- cmd = {"LushRunQuickstart", "LushRunTutorial", "Lushify"},
+    cmd = { "LushRunQuickstart", "LushRunTutorial", "Lushify" },
     disable = not O.plugin.lush,
   }
   -- Colorbuddy colorscheme helper
@@ -1014,6 +1008,7 @@ return packer.startup(function(use)
     config = function()
       mappings.sile("n", "<leader>xn", utils.cmd.require("nabla").action)
     end,
+    keys = "<leader>xn",
   }
   -- use {
   --   "sainnhe/sonokai",
