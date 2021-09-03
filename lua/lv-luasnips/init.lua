@@ -41,7 +41,7 @@ function M.setup()
   end
 
   ls.snippets = {
-    tex = require("lv-luasnips.tex").snips,
+    -- tex = require("lv-luasnips.tex").snips,
     lua = {
       s("localM", {
         tnl [[local M = {}]],
@@ -57,7 +57,6 @@ function M.setup()
     all = {
       s("xxx", { t "autosnippet" }),
     },
-    tex = require("lv-luasnips.tex").auto,
   }
 
   local map = vim.api.nvim_set_keymap

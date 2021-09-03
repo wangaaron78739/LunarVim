@@ -30,3 +30,13 @@ map(0, "v", "k", "gk", { noremap = true })
 --     { "CursorHold,CursorHoldI", "*", ":lua vim.lsp.buf.formatting()" },
 --   },
 -- }
+require("cmp").setup.buffer {
+  sources = {
+    { name = "luasnip" },
+    -- { name = "nvim_lsp" },
+    -- { name = "buffer" },
+  },
+}
+
+require("luasnip").snippets.tex = require("lv-luasnips.tex").snips
+require("luasnip").autosnippets.tex = require("lv-luasnips.tex").auto

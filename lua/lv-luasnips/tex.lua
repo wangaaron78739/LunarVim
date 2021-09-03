@@ -45,9 +45,9 @@ local function fmt(fn, ipairs)
     return string.format(unpack(fn(args[1].captures, args[1].trigger, args)))
   end, ipairs)
 end
-local sub = function(ix)
+local sub = function(j)
   return f(function(args)
-    return string.format("%s", args[1].captures[ix])
+    return string.format("%s", args[1].captures[j])
   end, {})
 end
 local con = function(fn)
@@ -69,15 +69,6 @@ local ms = function(lhs, rhs)
 end
 local nms = function(lhs, rhs)
   return s(lhs, rhs, nonmathmode)
-end
-local ff = function(str)
-  return f(function(args)
-    local c1 = args[1].captures[1]
-    local c2 = args[1].captures[2]
-    local c3 = args[1].captures[3]
-    local c4 = args[1].captures[4]
-    return L(str)
-  end, {})
 end
 
 local trig_fns = {
@@ -173,31 +164,53 @@ local symmaps_table = {
   ["-+"] = "mp",
   ["AA"] = "forall",
   ["EE"] = "exists",
+  ["RR"] = "R",
+  ["NN"] = "N",
+  ["ZZ"] = "Z",
+  ["CC"] = "C",
+  ["OO"] = "Op",
 }
+local pairsubs = setmetatable({ -- Autopairs will complete the closing for most of these
+  ["{"] = "", -- "}",
+  ["["] = "", -- "]",
+  ["("] = "", -- ")",
+  ["\\{"] = "\\", -- "\\}",
+  ["\\["] = "\\", -- "\\]",
+  ["\\("] = "\\", -- "\\)",
+}, {
+  __index = function(tbl, key)
+    return key
+  end,
+})
+local pairsub = function(j)
+  return f(function(args)
+    return string.format("%s", pairsubs[args[1].captures[j]])
+  end, {})
+end
+
+local nw = function(k)
+  return { trig = k, wordTrig = false }
+end
 
 local auto = {
-  ms("cases ", { t "\\begin{cases}", i(0), t "\\end{cases}" }),
-  s("\\eq ", { t "\\begin{equation}", i(0), t "\\end{equation}" }),
-  s("\\ali ", { t "\\begin{equation}", i(0), t "\\end{equation}" }),
+  ms("cases ", { t { "\\begin{cases}", "" }, i(0), t { "", "\\end{cases}" } }),
+  s("\\eq ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
+  s("\\ali ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
   pa("$", "\\($0\\)"),
-  pa("\\(", "\\( $0 \\"),
-  pa("it{", "\\textit{$0"),
-  pa("bf{", "\\textbf{$0"),
+  -- pa("\\(", "\\( $0 \\"),
+  nms("bf{", { t "\\textbf{", i(0) }),
+  nms("it{", { t "\\textit{", i(0) }),
   ms("sq", { t "\\sqrt{", i(0), t "}" }),
-  ms("__", { t "_{", i(0), t "}" }),
+  ms("st ", { t "\\text{s.t.}" }),
+  ms("let", { t "\\textbf{let}" }),
+  ms("if", { t "\\textbf{if}" }),
+  ms("otherwise", { t "\\textbf{otherwise}" }),
+  ms("else", { t "\\textbf{else}" }),
+  ms("bf{", { t "\\mathbf{", i(0) }),
+  ms("bb{", { t "\\mathbb{", i(0) }),
+  ms("cal{", { t "\\mathcal{", i(0) }),
+  ms(nw "__", { t "_{", i(0), t "}" }),
   s("--", { t "\\item" }),
-  s(re [[(%w+)%.%.e]], {
-    -- ff "\begin{{{c1}}}",
-    fmt(function(cap)
-      return { [[\begin{%s}]], cap[1] }
-    end),
-    nl,
-    i(0),
-    nl,
-    fmt(function(cap)
-      return { [[\end{%s}]], cap[1] }
-    end),
-  }),
   ms(re [[(%S) ([%^_])]], { sub(1), sub(2) }), -- Remove extra ws sub/superscript
   ms(re [[([A-Za-z%}%]%)])(%d)]], { sub(1), t "_", sub(2) }), -- Auto subscript
   ms(re [[([A-Za-z%}%]%)]) ?_(%d%d)]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
@@ -226,25 +239,36 @@ local auto = {
   ms("notin", t "\\not\\in"),
   ms("sr", t "^2"),
   ms("cb", t "^3"),
-  -- ms(
-  --   re [[([A-Za-z])([A-Za-z])([A-Za-z])]],
-  --   f(function(arg)
-  --     local cap = arg[1].captures
-  --     if cap[2] == cap[3] then
-  --       return string.format("%s_%s", cap[1], cap[2])
-  --     else
-  --       return arg[1].trigger
-  --     end
-  --   end, {})
-  -- ),
-  ms("dint", {
-    t "\\int_{",
-    i(1, "\\infty"),
-    t "}^{",
-    i(2, "\\infty"),
-    t "}",
-  }),
+  ms(
+    re [[([A-Za-z])([A-Za-z])([A-Za-z])]],
+    f(function(arg)
+      local cap = arg[1].captures
+      if cap[2] == cap[3] then
+        return string.format("%s_%s", cap[1], cap[2])
+      else
+        return arg[1].trigger
+      end
+    end, {})
+  ),
+  ms("dint", { t "\\int_{", i(1, "\\infty"), t "}^{", i(2, "\\infty"), t "}" }),
   -- TODO: binomial
+  ms(re "big(%S+) ", { t "\\big", sub(1), t " ", i(0), t " \\big", pairsub(1) }),
+  ms(re "Big(%S+) ", { t "\\Big", sub(1), t " ", i(0), t " \\Big", pairsub(1) }),
+  ms(re "bigg(%S+) ", { t "\\bigg", sub(1), t " ", i(0), t " \\bigg", pairsub(1) }),
+  ms(re "Bigg(%S+) ", { t "\\Bigg", sub(1), t " ", i(0), t " \\Bigg", pairsub(1) }),
+  ms(re "lr(%S+) ", { t "\\left", sub(1), t " ", i(0), t " \\right", pairsub(1) }),
+  ms("\\{", { t "\\{", i(0), t " \\" }),
+  s(nw "\\(", { t "\\(", i(0), t " \\" }),
+  s(nw "\\[", { t { "\\[", "" }, i(0), t { "", "\\" } }),
+  ms("\\|", { t "\\|", i(0), t " \\|" }),
+  ms("\\langle ", { t "\\langle ", i(0), t " \\rangle" }),
+  ms("\\lceil ", { t "\\lceil ", i(0), t " \\rceil" }),
+  ms("\\lfloor ", { t "\\lfloor ", i(0), t " \\rfloor" }),
+  ms("l<", { t "\\langle" }),
+  ms("r>", { t "\\rangle" }),
+  ms("lcl", { t "\\lceil" }),
+  ms("rcl", { t "\\rceil" }),
+  ms("rfl", { t "\\rfloor" }),
 }
 
 -- Derived snippets
@@ -267,10 +291,10 @@ for _, v in ipairs(trig_fns) do
 end
 
 local snips = {
-  s("theorem", { t "\\begin{theorem}\n", i(0), t "\n\\end{theorem}" }),
-  s("lemma", { t "\\begin{lemma}\n", i(0), t "\n\\end{lemma}" }),
-  s("proof", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
-  s("claim", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
+  s("theorem", { t { "\\begin{theorem}", "" }, i(0), t { "", "\\end{theorem}" } }),
+  s("lemma", { t { "\\begin{lemma}", "" }, i(0), t { "", "\\end{lemma}" } }),
+  s("proof", { t { "\\begin{proof}", "" }, i(0), t { "", "\\end{proof}" } }),
+  s("claim", { t { "\\begin{claim}", "" }, i(0), t { "", "\\end{claim}" } }),
 }
 return {
   snips = snips,
