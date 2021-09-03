@@ -587,6 +587,7 @@ return packer.startup(function(use)
       require("lsp_signature").setup(O.plugin.lsp_signature)
     end,
   }
+  -- TODO: https://github.com/nvim-lua/lsp-status.nvim
   use {
     "kosayoda/nvim-lightbulb",
     config = function()
@@ -853,7 +854,7 @@ return packer.startup(function(use)
 
   -- Startup profiler
   use {
-    "tweekmonster/startuptime.vim",
+    "dstein64/vim-startuptime",
     cmd = "StartupTime",
     disable = not O.plugin.startuptime,
   }
@@ -998,7 +999,7 @@ return packer.startup(function(use)
     "Pocco81/Catppuccino.nvim",
     config = function()
       require("catppuccino").setup {
-        colorscheme = "catppuccino", -- neon_latte
+        colorscheme = "dark_catppuccino", -- neon_latte
         integrations = setmetatable({}, { -- Return always true
           __index = function(tbl, key)
             return tbl[key] or true
@@ -1014,6 +1015,13 @@ return packer.startup(function(use)
       mappings.sile("n", "<leader>xn", utils.cmd.require("nabla").action)
     end,
   }
+  -- use {
+  --   "sainnhe/sonokai",
+  --   config = function()
+  --     vim.g.sonokai_style = "atlantis" -- andromeda
+  --   end,
+  -- }
+  -- use "tanvirtin/monokai.nvim"
   -- use "RishabhRD/nvim-rdark"
   -- use "marko-cerovac/material.nvim"
   -- use "Shatur/neovim-ayu"
