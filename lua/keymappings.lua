@@ -180,15 +180,14 @@ function M.setup()
   -- custom_n_repeat
   map("n", "n", luareq("keymappings").n_repeat, nore)
   map("n", "N", luareq("keymappings").N_repeat, nore)
-  map(
-    "n",
-    "/",
-    to_cmd(function()
+  local fwdrepeat = function(k)
+    return to_cmd(function()
       register_nN_repeat { nil, nil }
-      feedkeys("/", "n")
-    end),
-    nore
-  )
+      feedkeys(k, "n")
+    end)
+  end
+  map("n", "/", fwdrepeat "/", nore)
+  map("n", "*", fwdrepeat "*", nore)
 
   -- Command mode typos of wq
   vim.cmd [[
