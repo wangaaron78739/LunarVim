@@ -22,6 +22,7 @@ function M.config()
   -- vim.tbl_extend(recipes, vim.g["sandwich#recipes"])
   recipes = vim.g["sandwich#recipes"]
 
+  local add_recipe = M.add_recipe
   -- TODO: use inline_text_input for sandwich function
   --   M.add_recipe {
   --     buns = { "lua require('lv-sandwich').fname()", '")"' },
@@ -30,23 +31,38 @@ function M.config()
   --     action = { "add" },
   --     input = { "f" },
   --   }
-  M.add_recipe {
+  add_recipe {
     external = { "ic", "ac" },
     noremap = false,
     kind = { "delete", "replace", "query" },
     input = { "c" },
   }
-  M.add_recipe {
+  add_recipe {
     external = { "ii", "ai" },
     noremap = false,
     kind = { "delete", "replace", "query" },
     input = { "i" },
   }
-  M.add_recipe {
+  add_recipe {
     external = { "if", "af" },
     noremap = false,
     kind = { "delete", "replace", "query" },
     input = { "af" },
+  }
+
+  add_recipe {
+    buns = { [[']], [[']] },
+    quoteescape = true,
+    expand_range = false,
+    nesting = false,
+    input = { "q" },
+  }
+  add_recipe {
+    buns = { [["]], [["]] },
+    quoteescape = true,
+    expand_range = false,
+    nesting = false,
+    input = { "Q" },
   }
 
   vim.cmd [[
