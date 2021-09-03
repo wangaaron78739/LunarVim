@@ -188,6 +188,7 @@ function M.setup()
   end
   map("n", "/", fwdrepeat "/", nore)
   map("n", "*", fwdrepeat "*", nore)
+  map("n", "#", fwdrepeat "#", nore)
 
   -- Command mode typos of wq
   vim.cmd [[
