@@ -15,6 +15,7 @@ local n = require("luasnip.extras").nonempty
 local dl = require("luasnip.extras").dynamic_lambda
 local pa = ls.parser.parse_snippet
 local types = require "luasnip.util.types"
+local templates = require "lv-luasnips.templates"
 local nl = t { "", "" }
 
 local rec_ls
@@ -42,32 +43,26 @@ local function fmt(fn, ipairs)
   end, ipairs)
 end
 
-local mainnotestemplate = {
-  t "test"
-}
-
 return {
   snips = {
-    s("ls", {
-      t { "\\begin{itemize}", "\t\\item " },
-      i(1),
-      d(2, rec_ls, {}),
-      t { "", "\\end{itemize}" },
-      i(0),
-    }),
-    s("\\theorem ", { t "\\begin{theorem}\n", i(0), t "\n\\end{theorem}" }),
-    s("\\lemma ", { t "\\begin{lemma}\n", i(0), t "\n\\end{lemma}" }),
-    s("\\proof ", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
-    s("\\claim ", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
-    s("mainnotestemplate", mainnotestemplate)
+    -- s("\\theorem ", { t "\\begin{theorem}", i(0), t "\n\\end{theorem}" }),
+    -- s("\\lemma ", { t {"\\begin{lemma}",""}, i(0), t "\n\\end{lemma}" }),
+    -- s("\\proof ", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
+    -- s("\\claim ", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
+    -- pa("\\table ", templates.tex.table),
+    -- pa("\\fig", templates.tex.fig),
+    -- s("mainnotestemplate", templates.tex.mainnotestemplate),
   },
   auto = {
     s("$", { t "\\(", i(0), t "\\)" }),
     s("\\(", { t "\\( ", i(0), t " \\" }),
     s("\\it ", { t "\\textit{", i(0), t "}" }),
     s("\\bf ", { t "\\textbf{", i(0), t "}" }),
-    s("\\eq ", { t "\\begin{equation}\n", i(0), t "\n\\end{equation}" }),
-    s("\\ali ", { t "\\begin{equation}\n", i(0), t "\n\\end{equation}" }),
+    s("\\eq ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
+    s("\\ali ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
+    s("\\desc ", { t { "\\begin{description}", "\t\\item[" }, i(1), t { "]" }, i(0), t { "", "\\end{description}" } }),
+    -- s("\\pack ", { t {} }),
+
     -- s(re [[e_(%w+) ]], {
     s(re [[(%w+)%.%.e]], {
       fmt(function(cap)
@@ -95,5 +90,9 @@ return {
         return "Captured Text: " .. args[1].captures[1] .. "."
       end, {})
     ),
+
+    s("... ", { t "\\ldots" }, mathmode),
+    s("bmat ", { t "\\begin{bmatrix} ", i(1), t { " \\end{bmatrix}" }, i(0) }),
+    s("pmat ", { t "\\begin{pmatrix} ", i(1), t { " \\end{pmatrix}" }, i(0) }),
   },
 }
