@@ -151,6 +151,7 @@ return packer.startup(function(use)
     end,
     -- after = { "nvim-compe", "telescope.nvim" },
     after = "nvim-cmp",
+    event = "InsertEnter",
   }
 
   use {
