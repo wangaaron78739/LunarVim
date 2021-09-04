@@ -1,5 +1,6 @@
 local F = require "F"
 local L = require("pl.utils").string_lambda
+local templates = require "lv-luasnips.templates"
 
 -- some shorthands...
 local ls = require "luasnip"
@@ -143,7 +144,7 @@ local autosyms = {
 list_extend(autosyms, trig_fns)
 list_extend(autosyms, fns)
 local symmaps_table = {
-  ["..."] = "dots",
+  ["..."] = "ldots", -- dots
   ["=>"] = "implies",
   ["=<"] = "impliedby",
   [">="] = "geq",
@@ -196,6 +197,7 @@ local auto = {
   ms("cases ", { t { "\\begin{cases}", "" }, i(0), t { "", "\\end{cases}" } }),
   s("\\eq ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
   s("\\ali ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
+  s("\\desc ", { t { "\\begin{description}", "\t\\item[" }, i(1), t { "]" }, i(0), t { "", "\\end{description}" } }),
   pa("$", "\\($0\\)"),
   -- pa("\\(", "\\( $0 \\"),
   nms("bf{", { t "\\textbf{", i(0) }),
@@ -290,12 +292,25 @@ for _, v in ipairs(trig_fns) do
   list_extend(auto, { ms(re([[ar?c?]] .. v), t("\\arc\\" .. v)) })
 end
 
-local snips = {
-  s("theorem", { t { "\\begin{theorem}", "" }, i(0), t { "", "\\end{theorem}" } }),
-  s("lemma", { t { "\\begin{lemma}", "" }, i(0), t { "", "\\end{lemma}" } }),
-  s("proof", { t { "\\begin{proof}", "" }, i(0), t { "", "\\end{proof}" } }),
-  s("claim", { t { "\\begin{claim}", "" }, i(0), t { "", "\\end{claim}" } }),
+local theorems = {
+  "theorem",
+  "definition",
+  "lemma",
+  "proof",
+  "claim",
+  "fact",
+  "corollary",
 }
+local snips = {}
+for _, v in pairs(theorems) do
+  list_extend(snips, {
+    s(v, { t { "\\begin{" .. v .. "}", "" }, i(0), t { "", "\\end{" .. v .. "}" } }),
+  })
+end
+for k, v in pairs(templates.tex) do
+  list_extend(snips, { pa(k, v) })
+end
+
 return {
   snips = snips,
   auto = auto,

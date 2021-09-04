@@ -34,7 +34,7 @@ require("cmp").setup.buffer {
   sources = {
     { name = "luasnip" },
     -- { name = "nvim_lsp" },
-    -- { name = "buffer" },
+    { name = "buffer" },
   },
 }
 
