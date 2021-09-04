@@ -47,7 +47,7 @@ utils = require "lv-utils"
 mappings = require "keymappings"
 require "settings"
 require "plugins"
-require "theme"
+require "theme"()
 
 -- 'Mandatory' plugin configs
 mappings.setup()

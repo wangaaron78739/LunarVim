@@ -7,12 +7,8 @@ M.config = function()
   vim.g.vimtex_quickfix_mode = 0
   vim.g.tex_conceal = "abdmgs"
 
-  -- vim.g.vimtex_compiler_method = "tectonic"
-  vim.g.vimtex_compiler_method = "tectonic"
-  vim.g.vimtex_compiler_generic =
-    { -- Tectonic does not do continuous compilation, so this may work as a custom continuous version
-      cmd = "watchexec -e tex -- tectonic --synctex --keep-logs *.tex",
-    }
+  vim.g.vimtex_compiler_method = O.lang.latex.vimtex.compiler
+  vim.g.vimtex_compiler_generic = { cmd = "watchexec -e tex -- tectonic --synctex --keep-logs *.tex" }
   vim.g.vimtex_compiler_tectonic = {
     ["options"] = { "--synctex", "--keep-logs" },
   }

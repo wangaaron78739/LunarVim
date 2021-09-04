@@ -661,7 +661,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("n", "<leader>j", "]", {})
   map("n", "<leader>k", "[", {})
 
-  local opts = {
+  local leaderOpts = {
     mode = "n", -- NORMAL mode
     prefix = "<leader>",
     buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
@@ -726,10 +726,11 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       name = "Toggle Opts",
       w = { cmd "setlocal wrap!", "Wrap" },
       s = { cmd "setlocal spell!", "Spellcheck" },
-      c = { cmd "setlocal cursorcolumn!", "Cursor column" },
+      C = { cmd "setlocal cursorcolumn!", "Cursor column" },
       g = { cmd "setlocal signcolumn!", "Cursor column" },
       l = { cmd "setlocal cursorline!", "Cursor line" },
       h = { cmd "setlocal hlsearch", "hlsearch" },
+      c = { luacmd "utils.conceal_toggle()", "Conceal" },
       f = { cmd "FocusToggle", "Split focus" },
       -- TODO: Toggle comment visibility
     },
@@ -966,7 +967,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     leaderMappings["tm"] = { cmd "MagmaInit", "Magma Init" }
   end
 
-  wk.register(leaderMappings, opts)
+  wk.register(leaderMappings, leaderOpts)
   wk.register(visualMappings, visualOpts)
 
   -- TODO: move to plugin config files?
