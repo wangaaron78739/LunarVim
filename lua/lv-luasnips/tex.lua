@@ -34,10 +34,6 @@ rec_ls = function()
   })
 end
 
-local function re(arg)
-  return { trig = arg, regTrig = true }
-end
-
 local function fmt(fn, ipairs)
   if ipairs == nil then
     ipairs = {}
@@ -140,6 +136,7 @@ local autosyms = {
   "nabla",
   "infty",
   "iff",
+  "to",
 }
 list_extend(autosyms, trig_fns)
 list_extend(autosyms, fns)
@@ -170,6 +167,7 @@ local symmaps_table = {
   ["ZZ"] = "Z",
   ["CC"] = "C",
   ["OO"] = "Op",
+  ["inf"] = "infty",
 }
 local pairsubs = setmetatable({ -- Autopairs will complete the closing for most of these
   ["{"] = "", -- "}",
@@ -192,6 +190,12 @@ end
 local nw = function(k)
   return { trig = k, wordTrig = false }
 end
+local function re(arg)
+  return { trig = arg, regTrig = true }
+end
+local function renw(arg)
+  return { trig = arg, regTrig = true, wordTrig = false }
+end
 
 local auto = {
   ms("cases ", { t { "\\begin{cases}", "" }, i(0), t { "", "\\end{cases}" } }),
@@ -211,8 +215,14 @@ local auto = {
   ms("bf{", { t "\\mathbf{", i(0) }),
   ms("bb{", { t "\\mathbb{", i(0) }),
   ms("cal{", { t "\\mathcal{", i(0) }),
-  ms(nw "__", { t "_{", i(0), t "}" }),
-  s("--", { t "\\item" }),
+  ms(renw "^^", { t "_{", i(0), t "}" }),
+  ms(renw "__([^%s_])", { t "_{", sub(1), i(0), t "}" }),
+  ms(nw "__ ", t "\\,"),
+  ms(nw "____", t "\\quad"),
+  ms(nw "\\,\\, ", t "\\quad"),
+  ms(nw "\\quad\\, ", t "\\qquad"),
+  ms(nw "\\quad\\quad ", t "\\qquad"),
+  s("--",  t "\\item" ),
   ms(re [[(%S) ([%^_])]], { sub(1), sub(2) }), -- Remove extra ws sub/superscript
   ms(re [[([A-Za-z%}%]%)])(%d)]], { sub(1), t "_", sub(2) }), -- Auto subscript
   ms(re [[([A-Za-z%}%]%)]) ?_(%d%d)]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
@@ -222,7 +232,7 @@ local auto = {
   -- TODO: whitespace before and after operators
   -- TODO: fraction
   -- TODO: line 203 and below
-  ms(re [[(%w[ ,%)%]%}])to]], { sub(1), t "\\to" }),
+  -- ms(re [[(%w[ ,%)%]%}])to]], { sub(1), t "\\to" }),
   ms(re [[([%w%^]+),%.]], { t "\\vec{", sub(1), t "}" }),
   ms(re [[([%w%^]+)%.,]], { t "\\vec{", sub(1), t "}" }),
   ms(re [[([%w%^]+)~]], { t "\\tilde{", sub(1), t "}" }),
@@ -233,7 +243,6 @@ local auto = {
   ms(re [[([%w%^]+)^hat]], { t "\\hat{", sub(1), t "}" }),
   ms("hat", { t "\\hat{", i(0), t "}" }),
   -- TODO: bmatrix et al
-  ms("part", { t "\\frac{\\partial ", i(1), t "}{\\partial ", i(0), t "}" }),
   ms("//", { t "\\frac{", i(1), t "}{", i(0), t "}" }),
   ms(re "(%b{})/", { t "\\frac", sub(1), t "{", i(0), t "}" }),
   ms(re "(%\\?%w+)/", { t "\\frac{", sub(1), t "}{", i(0), t "}" }),
@@ -252,20 +261,20 @@ local auto = {
       end
     end, {})
   ),
-  ms("dint", { t "\\int_{", i(1, "\\infty"), t "}^{", i(2, "\\infty"), t "}" }),
+  ms("dint", { t "\\int_{", i(1, "-\\infty"), t "}^{", i(2, "\\infty"), t "}" }),
   -- TODO: binomial
   ms(re "big(%S+) ", { t "\\big", sub(1), t " ", i(0), t " \\big", pairsub(1) }),
   ms(re "Big(%S+) ", { t "\\Big", sub(1), t " ", i(0), t " \\Big", pairsub(1) }),
   ms(re "bigg(%S+) ", { t "\\bigg", sub(1), t " ", i(0), t " \\bigg", pairsub(1) }),
   ms(re "Bigg(%S+) ", { t "\\Bigg", sub(1), t " ", i(0), t " \\Bigg", pairsub(1) }),
   ms(re "lr(%S+) ", { t "\\left", sub(1), t " ", i(0), t " \\right", pairsub(1) }),
-  ms("\\{", { t "\\{", i(0), t " \\" }),
-  s(nw "\\(", { t "\\(", i(0), t " \\" }),
-  s(nw "\\[", { t { "\\[", "" }, i(0), t { "", "\\" } }),
-  ms("\\|", { t "\\|", i(0), t " \\|" }),
-  ms("\\langle ", { t "\\langle ", i(0), t " \\rangle" }),
-  ms("\\lceil ", { t "\\lceil ", i(0), t " \\rceil" }),
-  ms("\\lfloor ", { t "\\lfloor ", i(0), t " \\rfloor" }),
+  -- ms("\\{", { t "\\{", i(0), t " \\" }),
+  -- s(nw "\\(", { t "\\(", i(0), t " \\" }),
+  -- s(nw "\\[", { t { "\\[", "" }, i(0), t { "", "\\" } }),
+  -- ms("\\|", { t "\\|", i(0), t " \\|" }),
+  -- ms("\\langle ", { t "\\langle ", i(0), t " \\rangle" }),
+  -- ms("\\lceil ", { t "\\lceil ", i(0), t " \\rceil" }),
+  -- ms("\\lfloor ", { t "\\lfloor ", i(0), t " \\rfloor" }),
   ms("l<", { t "\\langle" }),
   ms("r>", { t "\\rangle" }),
   ms("lcl", { t "\\lceil" }),
@@ -301,7 +310,9 @@ local theorems = {
   "fact",
   "corollary",
 }
-local snips = {}
+local snips = {
+  ms("partfrac", { t "\\frac{\\partial ", i(1), t "}{\\partial ", i(0), t "}" }),
+}
 for _, v in pairs(theorems) do
   list_extend(snips, {
     s(v, { t { "\\begin{" .. v .. "}", "" }, i(0), t { "", "\\end{" .. v .. "}" } }),
