@@ -25,23 +25,47 @@ require("nvim-treesitter.configs").setup { autopairs = { enable = true } }
 
 local ts_conds = require "nvim-autopairs.ts-conds"
 
-local add = npairs.add_rule
 -- press % => %% is only inside comment or string
--- npairs.add_rules {
-add(R("%", "%", "lua"):with_pair(ts_conds.is_ts_node { "string", "comment" }))
-add(R("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node { "function" }))
-add(R("if ", " then end", "lua"))
--- TODO: maybe should just make this into a luasnip autosnippet
-add(R("\\left(", " \\right)", "tex"))
-add(R("\\left[", " \\right]", "tex"))
-add(R("\\left{", " \\right}", "tex"))
-add(R("\\left|", " \\right|", "tex"))
-add(R("\\left\\|", " \\right\\|", "tex"))
-add(R("\\(", " \\)", "tex"))
-add(R("\\[", " \\]", "tex"))
-add(R("\\{", " \\}", "tex"))
-add(R("\\|", " \\|", "tex"))
---add( R("\\begin", "\\end", "tex"):use_regex(true),)
--- }
+local texmods = {
+  ["\\left"] = "\\right",
+  ["\\big"] = "\\big",
+  ["\\bigg"] = "\\bigg",
+  ["\\Big"] = "\\Big",
+  ["\\Bigg"] = "\\Bigg",
+}
+local texpairs = {
+  ["\\("] = "\\)",
+  ["\\["] = "\n\\]",
+  ["\\{"] = "\\}",
+  ["|"] = "|",
+  ["\\|"] = "\\|",
+  ["\\langle "] = "\\rangle",
+  ["\\lceil "] = "\\rceil",
+  ["\\lfloor "] = "\\rfloor",
+}
+local basicpairs = {
+  ["("] = ")",
+  ["["] = "]",
+  ["{"] = "}",
+}
+npairs.add_rules {
+  R("%", "%", "lua"):with_pair(ts_conds.is_ts_node { "string", "comment" }),
+  R("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node { "function" }),
+  R("if ", " then end", "lua"),
+  R("for ", " in", "lua"),
+  R("in ", " do", "lua"),
+  R("do ", " end", "lua"),
+}
+for lm, rm in pairs(texmods) do
+  for lp, rp in pairs(texpairs) do
+    npairs.add_rule(R(lm .. lp, " " .. rm .. rp))
+  end
+  for lp, rp in pairs(basicpairs) do
+    npairs.add_rule(R(lm .. lp, " " .. rm .. rp))
+  end
+end
+for lp, rp in pairs(texpairs) do
+  npairs.add_rule(R(lp, " " .. rp))
+end
 
 -- lua utils.dump(MPairs.state.rules)
