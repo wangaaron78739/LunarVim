@@ -117,6 +117,9 @@ return packer.startup(function(use)
   -- Tabout
   use {
     "abecodes/tabout.nvim",
+    config = function ()
+      require'lv-tabout'.config()
+    end,
     after = { "nvim-cmp" }, -- if a completion plugin is using tabs load it before
     disable = not O.plugin.cmp,
   }
@@ -917,7 +920,7 @@ return packer.startup(function(use)
   use { "Iron-E/nvim-libmodal" }
   -- use { "Iron-E/nvim-tabmode", after = "nvim-libmodal" }
 
-  -- use { "~/code/glow.nvim", run = ":GlowInstall" }
+  use { "ellisonleao/glow.nvim", run = ":GlowInstall", cmd = "Glow" }
 
   -- Command line autocomplete
   use {
@@ -982,16 +985,40 @@ return packer.startup(function(use)
     config = function()
       local focus = require "focus"
 
-      focus.winhighlight = O.plugin.splitfocus.winhighlight
-      focus.hybridnumber = O.plugin.hybridnumber
-      focus.relativenumber = O.relative_number
-      focus.number = O.number
-      focus.signcolumn = O.plugin.signcolumn
-      focus.cursorline = O.cursorline
+      local conf = O.plugin.splitfocus
+      focus.winhighlight = conf.winhighlight
+      focus.hybridnumber = conf.hybridnumber
+      focus.relativenumber = conf.relative_number == nil and O.relative_number or conf.relative_number
+      focus.number = conf.number == nil and O.number or conf.number
+      focus.cursorline = conf.cursorline == nil and O.cursorline or conf.cursorline
+      focus.signcolumn = conf.signcolumn
     end,
     cmd = { "FocusEnable", "FocusToggle", "FocusSplitNicely" },
     module = "focus",
     disable = not O.plugin.splitfocus,
+  }
+
+  use { "jbyuki/nabla.nvim", module = "nabla" }
+
+  use {
+    "vhyrro/neorg",
+    config = function()
+      require("neorg").setup {
+        -- Tell Neorg what modules to load
+        load = {
+          ["core.defaults"] = {}, -- Load all the default modules
+          ["core.norg.concealer"] = {}, -- Allows for use of icons
+          ["core.norg.dirman"] = { -- Manage your directories with Neorg
+            config = {
+              workspaces = {
+                my_workspace = "~/neorg",
+              },
+            },
+          },
+        },
+      }
+    end,
+    requires = "nvim-lua/plenary.nvim",
   }
 
   -- Colorschemes/Themes
@@ -1014,24 +1041,23 @@ return packer.startup(function(use)
   use {
     "Pocco81/Catppuccino.nvim",
     config = function()
+      local trues = setmetatable({}, { -- Return always true
+        __index = function(tbl, key)
+          return true
+        end,
+      })
       require("catppuccino").setup {
         colorscheme = "dark_catppuccino", -- neon_latte
-        integrations = setmetatable({}, { -- Return always true
-          __index = function(tbl, key)
-            return tbl[key] or true
-          end,
-        }),
+        integrations = trues,
       }
     end,
   }
-
-  use {
-    "jbyuki/nabla.nvim",
-    config = function()
-      mappings.sile("n", "<leader>xn", utils.cmd.require("nabla").action)
-    end,
-    keys = "<leader>xn",
-  }
+  use "mcchrish/zenbones.nvim"
+  use "plan9-for-vimspace/acme-colors"
+  use "preservim/vim-colors-pencil"
+  use "YorickPeterse/vim-paper"
+  use "ajgrf/parchment"
+  use "pgdouyon/vim-yin-yang"
   -- use {
   --   "sainnhe/sonokai",
   --   config = function()
@@ -1071,7 +1097,21 @@ return packer.startup(function(use)
   --     vim.g.neon_transparent = true
   --   end,
   -- }
-  -- use { "adisen99/codeschool.nvim", requires = { "rktjmp/lush.nvim" } }
+  -- use {
+  --   "adisen99/codeschool.nvim",
+  --   config = function()
+  -- local trues = setmetatable({}, { -- Return always true
+  --   __index = function(tbl, key)
+  --     return  true
+  --   end,
+  -- })
+  --     require("codeschool").setup {
+  --       plugins = trues,
+  --       langs = trues,
+  --     }
+  --   end,
+  --   requires = { "rktjmp/lush.nvim" },
+  -- }
 
   -- -- Explore tar archives
   -- use { "vim-scripts/tar.vim" }

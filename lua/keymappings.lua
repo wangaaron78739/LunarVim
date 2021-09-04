@@ -228,14 +228,18 @@ function M.setup()
   -- map("n", "<ScrollWheelDown>", "<C-x>", sile)
   map("n", "<C-ScrollWheelUp>", "<C-a>", sile)
   map("n", "<C-ScrollWheelDown>", "<C-x>", sile)
+  map("n", "<C-S-ScrollWheelUp>", cmd "FontUp", sile)
+  map("n", "<C-S-ScrollWheelDown>", cmd "FontDown", sile)
 
   -- better window movement -- tmux_navigator supplies these if installed
   if not O.plugin.tmux_navigator then
     if O.plugin.splitfocus then
+      -- FIXME: this automatically reenables Focus mode
       map("n", "<C-h>", luacmd "require('focus').split_command('h')", sile)
       map("n", "<C-j>", luacmd "require('focus').split_command('j')", sile)
       map("n", "<C-k>", luacmd "require('focus').split_command('k')", sile)
       map("n", "<C-l>", luacmd "require('focus').split_command('l')", sile)
+      map("n", "<C-w>v", luacmd "require('focus').split_nicely()", sile)
     else
       map("n", "<C-h>", "<C-w>h", sile)
       map("n", "<C-j>", "<C-w>j", sile)
@@ -699,7 +703,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       f = { cmd "NvimTreeToggle", "File Sidebar" },
       u = { cmd "UndotreeToggle", "Undo tree" },
       r = { cmd "RnvimrToggle", "Ranger" },
-      q = { luareq("lv-utils").quickfix_toggle, "Quick fixes" },
+      q = { luacmd "utils.quickfix_toggle()", "Quick fixes" },
       o = { cmd "!open '%:p:h'", "Open File Explorer" },
       F = { telescope_fn.file_browser, "Telescope browser" },
       v = { cmd "Vista nvim_lsp", "Vista" },
@@ -882,7 +886,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
 
   local visualMappings = {
     -- ["/"] = { cmd "CommentToggle", "Comment" },
-    dv = { lsputil.range_diagnostics, "Range Diagnostics" },
+    d = { lsputil.range_diagnostics, "Range Diagnostics" },
     r = { name = "Replace/Refactor" },
     c = {
       [["z<M-y>:%s/<C-r>z//g<Left><Left>]],
@@ -938,21 +942,12 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   if O.plugin.lazygit then
     leaderMappings["gg"] = { cmd "LazyGit", "LazyGit" }
   end
-  if O.lang.latex.active then
-    leaderMappings["L"] = {
-      name = "Latex",
-      f = { cmd "call vimtex#fzf#run()", "Fzf Find" },
-      i = { cmd "VimtexInfo", "Project Information" },
-      s = { cmd "VimtexStop", "Stop Project Compilation" },
-      t = { cmd "VimtexTocToggle", "Toggle Table Of Content" },
-      v = { cmd "VimtexView", "View PDF" },
-      c = { cmd "VimtexCompile", "Compile Project Latex" },
-      o = { cmd "VimtexCompileOutput", "Compile Output Latex" },
-    }
-  end
   if O.plugin.neoterm then
     leaderMappings[O.plugin.neoterm.automap_keys] = "Neoterm AutoMap"
   end
+  -- if O.plugin.nabla then
+  leaderMappings["<leader>xn"] = { luareq("nabla").action, "Nabla" }
+  -- end
   if O.lushmode then
     leaderMappings["L"] = {
       name = "+Lush",

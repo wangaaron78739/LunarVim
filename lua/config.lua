@@ -183,6 +183,7 @@ O = {
       hi_parameter = "Search",
       toggle_key = "<C-S-space>", -- TODO: Can I add this to C-Space as well?
       zindex = 1,
+      check_client_handlers = false,
     },
     git_blame = {},
     gitlinker = {
@@ -287,7 +288,7 @@ O = {
       -- width =
       -- treewidth =
       -- height =
-      winhighlight = true,
+      winhighlight = false,
       hybridnumber = false,
       signcolumn = true,
       -- cursorline = O.cursorline,
@@ -345,14 +346,21 @@ O = {
       environment = { php_version = "7.4" },
       filetypes = { "php", "phtml" },
     },
+    markdown = {
+      conceal = 2,
+      theme = "Paper",
+      fontsize = 13,
+    },
     latex = {
-      vimtex = { active = true },
+      conceal = 2,
+      theme = "Paper",
+      fontsize = 13,
+      vimtex = { active = true, compiler = "tectonic" },
       filetypes = { "tex", "bib" },
       texlab = {
         aux_directory = ".",
         bibtex_formatter = "texlab",
         build = {
-          -- TODO: Use tectonic here
           executable = "tectonic",
           args = {
             -- Input
@@ -410,4 +418,3 @@ local disable_plugins = {
 for _, v in ipairs(disable_plugins) do
   O.plugin[v] = false
 end
-require("lv-utils").set_guifont(11)

@@ -92,6 +92,16 @@ function M.quickfix_toggle()
     vim.cmd "cclose"
   end
 end
+function M.conceal_toggle(n)
+  if n == nil then
+    n = 2
+  end
+  if vim.opt_local.conceallevel._value == 0 then
+    vim.opt_local.conceallevel = n
+  else
+    vim.opt_local.conceallevel = 0
+  end
+end
 vim.cmd [[
 augroup quickfix
     autocmd!
@@ -161,13 +171,18 @@ function M.operatorfunc_keys(name, verbkeys)
 end
 
 -- the font used in graphical neovim applications
-function M.set_guifont(size)
-  vim.opt.guifont = "FiraCode Nerd Font:h" .. size
+function M.set_guifont(size, font)
+  if font == nil then
+    font = vim.g.guifontface
+  end
+  vim.opt.guifont = font .. ":h" .. size
+  vim.g.guifontface = font
   vim.g.guifontsize = size
 end
-function M.mod_guifont(diff)
+function M.mod_guifont(diff, font)
   local size = vim.g.guifontsize
-  M.set_guifont(size + diff)
+  M.set_guifont(size + diff, font)
+  print(vim.opt.guifont._value)
 end
 vim.cmd [[
   command! FontUp lua require("lv-utils").mod_guifont(1)

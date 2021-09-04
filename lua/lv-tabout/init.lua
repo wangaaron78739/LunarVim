@@ -2,8 +2,8 @@ local M = {}
 function M.config()
   local pairs = { "''", '""', "``", "()", "{}", "[]" }
   local opts = {
-    tabkey = "", -- key to trigger tabout
-    backwards_tabkey = "", -- key to trigger tabout
+    tabkey = "<tab>", -- key to trigger tabout
+    backwards_tabkey = "<S-tab>", -- key to trigger tabout
     act_as_tab = true, -- shift content if tab out is not possible
     completion = true, -- if the tabkey is used in a completion pum
     tabouts = {},
@@ -11,7 +11,7 @@ function M.config()
     exclude = {}, -- tabout will ignore these filetypes
   }
   for i, v in ipairs(pairs) do
-    table.insert(opts.tabouts, { open = v[0], close = v[1] })
+    opts.tabouts = vim.list_extend(opts.tabouts, { { open = v:sub(1, 1), close = v:sub(2) } })
   end
   require("tabout").setup(opts)
 end

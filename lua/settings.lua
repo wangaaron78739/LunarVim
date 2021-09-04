@@ -92,21 +92,12 @@ require("lv-utils").define_augroups {
     -- { "VimLeavePre", "*", "set title set titleold=" },
   },
   _packer_compile = { { "User", "PackerComplete", "++once PackerCompile" } },
-  _buffer_bindings = {
-    { "FileType", "dashboard", "nnoremap <silent> <buffer> q :q<CR>" },
-  },
-  _terminal_insert = {
-    -- { "BufEnter", "*", [[if &buftype == 'terminal' | :startinsert | endif]] },
-    { "BufEnter", "term://*", "startinsert" },
-  },
-  _auto_reload = {
-    -- will check for external file changes on cursor hold
-    { "CursorHold", "*", "silent! checktime" },
-  },
-  _auto_resize = {
-    -- will cause split windows to be resized evenly if main window is resized
-    { "VimResized", "*", "wincmd =" },
-  },
+  _buffer_bindings = { { "FileType", "dashboard", "nnoremap <silent> <buffer> q :q<CR>" } },
+  _terminal_insert = { { "BufEnter", "term://*", "startinsert" } },
+  -- will check for external file changes on cursor hold
+  _auto_reload = { { "CursorHold", "*", "silent! checktime" } },
+  -- will cause split windows to be resized evenly if main window is resized
+  _auto_resize = { { "VimResized", "*", "wincmd =" } },
   _mode_switching = {
     -- will switch between absolute and relative line numbers depending on mode
     {
@@ -123,6 +114,8 @@ require("lv-utils").define_augroups {
     -- { "FocusLost", "*", [[silent! call feedkeys("\<C-\>\<C-n>")]] },
     -- { "TabLeave,BufLeave", "*", [[if &buftype == '' | :stopinsert | endif]] }, -- FIXME: This breaks compe
   },
+  -- Add position to jump list on cursorhold
+  _hold_jumplist = { { "CursorHold", "*", "normal m'" } },
 }
 
 if O.format_on_save then
@@ -136,3 +129,4 @@ end
 -- neovide settings
 -- vim.g.neovide_cursor_vfx_mode = "pixiedust"
 -- vim.g.neovide_refresh_rate=120
+require("lv-utils").set_guifont(10, "FiraCode Nerd Font")
