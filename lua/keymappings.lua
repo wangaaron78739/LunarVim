@@ -217,6 +217,18 @@ function M.setup()
   map("i", "<C-s>", cmd "write", sile)
   -- map("i", "<C-v>", "<C-R>+", sile)
 
+  vim.o.mousetime = 0
+  -- map("n", "<2-ScrollWheelUp>", "<nop>", sile)
+  -- map("n", "<2-ScrollWheelDown>", "<nop>", sile)
+  -- map("n", "<3-ScrollWheelUp>", "<nop>", sile)
+  -- map("n", "<3-ScrollWheelDown>", "<nop>", sile)
+  -- map("n", "<4-ScrollWheelUp>", "<nop>", sile)
+  -- map("n", "<4-ScrollWheelDown>", "<nop>", sile)
+  -- map("n", "<ScrollWheelUp>", "<C-a>", sile)
+  -- map("n", "<ScrollWheelDown>", "<C-x>", sile)
+  map("n", "<C-ScrollWheelUp>", "<C-a>", sile)
+  map("n", "<C-ScrollWheelDown>", "<C-x>", sile)
+
   -- better window movement -- tmux_navigator supplies these if installed
   if not O.plugin.tmux_navigator then
     map("n", "<C-h>", "<C-w>h", sile)
