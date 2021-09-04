@@ -10,13 +10,6 @@ local codeLens = {
   underline = true,
   severity_sort = true,
 }
-local default_diagnostics = {
-  virtual_text = { spacing = 0, prefix = "", severity_limit = "Warning" },
-  signs = true,
-  underline = true,
-  severity_sort = true,
-  update_in_insert = true,
-}
 -- TODO: Cleanup this config struct
 O = {
   format_on_save = true,
@@ -62,7 +55,13 @@ O = {
     -- none, single, double, rounded, solid, shadow, array(fullcustom)
     border = "rounded",
     rename_border = "none",
-    diagnostics = default_diagnostics,
+    diagnostics = {
+      virtual_text = { spacing = 4, prefix = "", severity_limit = "Warning" },
+      signs = true,
+      underline = true,
+      severity_sort = true,
+      update_in_insert = false, -- FIXME: fucks around with the rendering
+    },
     codeLens = codeLens,
     flags = {
       debounce_text_changes = 150,
