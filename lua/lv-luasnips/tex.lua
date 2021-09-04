@@ -1,5 +1,5 @@
-local F = require "F"
-local L = require("pl.utils").string_lambda
+-- local F = require "F"
+-- local L = require("pl.utils").string_lambda
 
 -- some shorthands...
 local ls = require "luasnip"
@@ -180,6 +180,7 @@ local auto = {
   ms("cases ", { t "\\begin{cases}", i(0), t "\\end{cases}" }),
   s("\\eq ", { t "\\begin{equation}", i(0), t "\\end{equation}" }),
   s("\\ali ", { t "\\begin{equation}", i(0), t "\\end{equation}" }),
+  s("\\desc ", { t { "\\begin{description}", "\t\\item[" }, i(1), t { "]" }, i(0), t { "", "\\end{description}" } }),
   pa("$", "\\($0\\)"),
   pa("\\(", "\\( $0 \\"),
   pa("it{", "\\textit{$0"),
@@ -246,6 +247,17 @@ local auto = {
     t "}",
   }),
   -- TODO: binomial
+
+  s("... ", { t "\\ldots" }, mathmode),
+  s("bmat ", { t "\\begin{bmatrix} ", i(1), t { " \\end{bmatrix}" }, i(0) }),
+  s("pmat ", { t "\\begin{pmatrix} ", i(1), t { " \\end{pmatrix}" }, i(0) }),
+}
+
+local snips = {
+  s("theorem", { t "\\begin{theorem}\n", i(0), t "\n\\end{theorem}" }),
+  s("lemma", { t "\\begin{lemma}\n", i(0), t "\n\\end{lemma}" }),
+  s("proof", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
+  s("claim", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
 }
 
 -- Derived snippets
@@ -267,64 +279,11 @@ for _, v in ipairs(trig_fns) do
   list_extend(auto, { ms(re([[ar?c?]] .. v), t("\\arc\\" .. v)) })
 end
 
-local snips = {
-  s("theorem", { t "\\begin{theorem}\n", i(0), t "\n\\end{theorem}" }),
-  s("lemma", { t "\\begin{lemma}\n", i(0), t "\n\\end{lemma}" }),
-  s("proof", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
-  s("claim", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
-}
+for k, v in pairs(templates.tex) do
+  list_extend(snips, { pa(k, v) })
+end
+
 return {
   snips = snips,
   auto = auto,
-  snips = {
-    -- s("\\theorem ", { t "\\begin{theorem}", i(0), t "\n\\end{theorem}" }),
-    -- s("\\lemma ", { t {"\\begin{lemma}",""}, i(0), t "\n\\end{lemma}" }),
-    -- s("\\proof ", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
-    -- s("\\claim ", { t "\\begin{proof}\n", i(0), t "\n\\end{proof}" }),
-    -- pa("\\table ", templates.tex.table),
-    -- pa("\\fig", templates.tex.fig),
-    -- s("mainnotestemplate", templates.tex.mainnotestemplate),
-  },
-  auto = {
-    s("$", { t "\\(", i(0), t "\\)" }),
-    s("\\(", { t "\\( ", i(0), t " \\" }),
-    s("\\it ", { t "\\textit{", i(0), t "}" }),
-    s("\\bf ", { t "\\textbf{", i(0), t "}" }),
-    s("\\eq ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
-    s("\\ali ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
-    s("\\desc ", { t { "\\begin{description}", "\t\\item[" }, i(1), t { "]" }, i(0), t { "", "\\end{description}" } }),
-    -- s("\\pack ", { t {} }),
-
-    -- s(re [[e_(%w+) ]], {
-    s(re [[(%w+)%.%.e]], {
-      fmt(function(cap)
-        return { [[\begin{%s}]], cap[1] }
-      end),
-      nl,
-      i(0),
-      nl,
-      fmt(function(cap)
-        return { [[\end{%s}]], cap[1] }
-      end),
-    }),
-    s("--", { t "\\item " }),
-    -- The last entry of args passed to the user-function is the surrounding snippet.
-    s(
-      re [[hello(%w+) ]],
-      f(function(args)
-        return "Triggered with " .. args[1].trigger .. "."
-      end, {})
-    ),
-    -- It's possible to use capture-groups inside regex-triggers.
-    s(
-      { trig = "b(%d)", regTrig = true },
-      f(function(args)
-        return "Captured Text: " .. args[1].captures[1] .. "."
-      end, {})
-    ),
-
-    s("... ", { t "\\ldots" }, mathmode),
-    s("bmat ", { t "\\begin{bmatrix} ", i(1), t { " \\end{bmatrix}" }, i(0) }),
-    s("pmat ", { t "\\begin{pmatrix} ", i(1), t { " \\end{pmatrix}" }, i(0) }),
-  },
 }
