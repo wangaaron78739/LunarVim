@@ -23,10 +23,13 @@ packer.init {
 -- vim.cmd "autocmd BufWritePost plugins.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
 -- vim.cmd "autocmd BufWritePost lv-config.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
 
-return require("packer").startup(function(use)
+local use_rock = packer.use_rocks
+return packer.startup(function(use)
   -- Packer can manage itself as an optional plugin
   use "wbthomason/packer.nvim"
   use "lewis6991/impatient.nvim" -- Will be merged in https://github.com/neovim/neovim/pull/15436
+
+  use_rock { "f-strings", "penlight" }
 
   use {
     "rcarriga/nvim-notify",

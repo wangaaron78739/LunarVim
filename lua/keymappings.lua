@@ -1,8 +1,45 @@
 local M = {}
-
 local map = vim.api.nvim_set_keymap
+local bufmap = vim.api.nvim_buf_set_keymap
+
+local mapper_meta = nil
+local mapper_newindex = function(tbl, lhs, rhs)
+  if tbl[1].buffer then
+    bufmap(tbl[2], lhs, rhs, tbl[1])
+  else
+    map(tbl[2], lhs, rhs, tbl[1])
+  end
+end
+local mapper_call = function(tbl, mode)
+  if mode == nil then
+    mode = tbl[2]
+  end
+  return function(args)
+    if args == nil then
+      args = tbl[1]
+    end
+    return setmetatable({ args, mode }, mapper_meta)
+  end
+end
+local mapper_index = function(tbl, flag)
+  if #flag == 1 then
+    return setmetatable({ tbl[1], flag }, mapper_meta)
+  else
+    return setmetatable({
+      vim.tbl_extend("force", { [flag] = true }, tbl[1]),
+      tbl[2],
+    }, mapper_meta)
+  end
+end
+mapper_meta = {
+  __index = mapper_index,
+  __newindex = mapper_newindex,
+  __call = mapper_call,
+}
+local mapper = setmetatable({ {}, "n" }, mapper_meta)
+
 M.map = map
-M.buf = vim.api.nvim_buf_set_keymap
+M.buf = bufmap
 local sile = { silent = true }
 local nore = { noremap = true, silent = true }
 local expr = { noremap = true, silent = true, expr = true }
@@ -61,11 +98,11 @@ function M.N_repeat()
     feedkeys(custom_N_repeat)
   end
 end
-local function nN_repeatable(nN)
+local function register_nN_repeat(nN)
   custom_n_repeat = nN[1]
   custom_N_repeat = nN[2]
 end
-M.nN_repeatable = nN_repeatable
+M.register_nN_repeat = register_nN_repeat
 
 function M.init()
   -- Set leader keys
@@ -147,7 +184,7 @@ function M.setup()
     "n",
     "/",
     to_cmd(function()
-      nN_repeatable { nil, nil }
+      register_nN_repeat { nil, nil }
       feedkeys("/", "n")
     end),
     nore
@@ -345,7 +382,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     "n",
     "]q",
     to_cmd(function()
-      nN_repeatable(quickfix_nN)
+      register_nN_repeat(quickfix_nN)
       vim.cmd [[cnext]]
     end),
     nore
@@ -354,7 +391,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     "n",
     "[q",
     to_cmd(function()
-      nN_repeatable(quickfix_nN)
+      register_nN_repeat(quickfix_nN)
       vim.cmd [[cprev]]
     end),
     nore
@@ -367,18 +404,18 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   -- map("n", "[d", lsputil.diag_prev, nore)
   local diag_nN = { lsputil.diag_next, lsputil.diag_prev }
   local diag_next = to_cmd(function()
-    nN_repeatable(diag_nN)
+    register_nN_repeat(diag_nN)
     require("lsp.functions").diag_next()
   end)
   local diag_prev = to_cmd(function()
-    nN_repeatable(diag_nN)
+    register_nN_repeat(diag_nN)
     require("lsp.functions").diag_prev()
   end)
   map("n", "]d", diag_next, nore)
   map("n", "[d", diag_prev, nore)
 
   -- Search for the current selection
-  map("x", "*", '"z<M-y>/<C-R>z<cr>', {}) -- Search for the current selection
+  map("x", "*", '"z<M-y>/<C-R>z<cr>', nore) -- Search for the current selection
   map("n", "<M-s>", operatorfunc_keys("search_for", "*"), {}) -- Search textobject
 
   -- Select last changed/yanked text

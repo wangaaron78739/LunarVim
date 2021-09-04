@@ -12,6 +12,9 @@ function M.setup()
     ext_prio_increase = 1,
   }
 
+  mappings.sile("i", "<C-j>", "<Plug>luasnip-expand-or-jump")
+  mappings.sile("i", "<C-k>", "<Plug>luasnip-jump-prev")
+
   -- some shorthands...
   local ls = require "luasnip"
   local s = ls.snippet

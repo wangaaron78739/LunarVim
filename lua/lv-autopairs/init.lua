@@ -2,7 +2,7 @@
 --   return
 -- end
 local npairs = require "nvim-autopairs"
-local Rule = require "nvim-autopairs.rule"
+local R = require "nvim-autopairs.rule"
 
 -- if package.loaded["compe"] then
 if O.plugin.cmp then
@@ -27,6 +27,19 @@ local ts_conds = require "nvim-autopairs.ts-conds"
 
 -- press % => %% is only inside comment or string
 npairs.add_rules {
-  Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node { "string", "comment" }),
-  Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node { "function" }),
+  R("%", "%", "lua"):with_pair(ts_conds.is_ts_node { "string", "comment" }),
+  R("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node { "function" }),
+  -- TODO: maybe should just make this into a luasnip autosnippet
+  R("\\left(", " \\right)", "tex"),
+  R("\\left[", " \\right]", "tex"),
+  R("\\left{", " \\right}", "tex"),
+  R("\\left|", " \\right|", "tex"),
+  R("\\left\\|", " \\right\\|", "tex"),
+  R("\\(", " \\)", "tex"),
+  R("\\[", " \\]", "tex"),
+  R("\\{", " \\}", "tex"),
+  R("\\|", " \\|", "tex"),
+  -- R("\\begin", "\\end", "tex"):use_regex(true),
+  -- Rule("\\left[", " \\right]", "tex"),
 }
+

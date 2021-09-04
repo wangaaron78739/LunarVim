@@ -13,30 +13,7 @@ if not require("lv-utils").check_lsp_client_active "texlab" then
     },
     -- filetypes = O.lang.latex.filetypes,
     settings = {
-      texlab = {
-        auxDirectory = O.lang.latex.aux_directory,
-        bibtexFormatter = O.lang.latex.bibtex_formatter,
-        build = {
-          args = O.lang.latex.build.args,
-          executable = O.lang.latex.build.executable,
-          forwardSearchAfter = O.lang.latex.build.forward_search_after,
-          onSave = O.lang.latex.build.on_save,
-        },
-        chktex = {
-          onEdit = O.lang.latex.chktex.on_edit,
-          onOpenAndSave = O.lang.latex.chktex.on_open_and_save,
-        },
-        diagnosticsDelay = O.lang.latex.diagnostics_delay,
-        formatterLineLength = O.lang.latex.formatter_line_length,
-        forwardSearch = {
-          args = O.lang.latex.forward_search.args,
-          executable = O.lang.latex.forward_search.executable,
-        },
-        latexFormatter = O.lang.latex.latex_formatter,
-        latexindent = {
-          modifyLineBreaks = O.lang.latex.latexindent.modify_line_breaks,
-        },
-      },
+      texlab = O.lang.latex.texlab,
     },
     flags = O.lsp.flags,
   }
@@ -47,3 +24,9 @@ map(0, "n", "j", "gj", { noremap = true })
 map(0, "n", "j", "gj", { noremap = true })
 map(0, "v", "k", "gk", { noremap = true })
 map(0, "v", "k", "gk", { noremap = true })
+
+-- require("lv-utils").define_augroups {
+--   _general_lsp = {
+--     { "CursorHold,CursorHoldI", "*", ":lua vim.lsp.buf.formatting()" },
+--   },
+-- }
