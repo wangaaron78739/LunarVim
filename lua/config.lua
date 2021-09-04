@@ -284,6 +284,15 @@ O = {
     },
     luasnip = {},
     primeagen_refactoring = {},
+    splitfocus = {
+      -- width =
+      -- treewidth =
+      -- height =
+      winhighlight = true,
+      hybridnumber = false,
+      signcolumn = true,
+      -- cursorline = O.cursorline,
+    },
   },
   lang = {
     python = {
@@ -396,6 +405,8 @@ local disable_plugins = {
   "bullets",
   "coq",
   "primeagen_refactoring",
+  "ts_textunits",
+  "ranger",
 }
 for _, v in ipairs(disable_plugins) do
   O.plugin[v] = false

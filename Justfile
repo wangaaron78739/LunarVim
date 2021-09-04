@@ -46,6 +46,7 @@ plugins:
 # Update Plugins using Packer
 update-plugins:
     {{nvim}} lua/plugins.lua +PackerSync
+    {{nvim}} lua/plugins.lua 
 
 # Profile startup time
 startup:

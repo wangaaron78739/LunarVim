@@ -231,10 +231,17 @@ function M.setup()
 
   -- better window movement -- tmux_navigator supplies these if installed
   if not O.plugin.tmux_navigator then
-    map("n", "<C-h>", "<C-w>h", sile)
-    map("n", "<C-j>", "<C-w>j", sile)
-    map("n", "<C-k>", "<C-w>k", sile)
-    map("n", "<C-l>", "<C-w>l", sile)
+    if O.plugin.splitfocus then
+      map("n", "<C-h>", luacmd "require('focus').split_command('h')", sile)
+      map("n", "<C-j>", luacmd "require('focus').split_command('j')", sile)
+      map("n", "<C-k>", luacmd "require('focus').split_command('k')", sile)
+      map("n", "<C-l>", luacmd "require('focus').split_command('l')", sile)
+    else
+      map("n", "<C-h>", "<C-w>h", sile)
+      map("n", "<C-j>", "<C-w>j", sile)
+      map("n", "<C-k>", "<C-w>k", sile)
+      map("n", "<C-l>", "<C-w>l", sile)
+    end
   end
   -- TODO fix this
   -- Terminal window navigation
@@ -688,6 +695,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     W = { cmd "noau w", "Write (noau)" }, -- w = { cmd "noau up", "Write" },
     o = {
       name = "Toggle window",
+      s = { cmd "FocusSplitNicely", "Nice split" },
       f = { cmd "NvimTreeToggle", "File Sidebar" },
       u = { cmd "UndotreeToggle", "Undo tree" },
       r = { cmd "RnvimrToggle", "Ranger" },
@@ -722,6 +730,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       g = { cmd "setlocal signcolumn!", "Cursor column" },
       l = { cmd "setlocal cursorline!", "Cursor line" },
       h = { cmd "setlocal hlsearch", "hlsearch" },
+      f = { cmd "FocusToggle", "Split focus" },
       -- TODO: Toggle comment visibility
     },
     b = {
@@ -729,7 +738,8 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       j = { telescope_fn.buffers, "Jump to " },
       w = { cmd "w", "Write" },
       a = { cmd "wa", "Write All" },
-      c = { cmd "bdelete!", "Close" },
+      c = { cmd "Bdelete!", "Close" },
+      C = { cmd "bdelete!", "Close" },
       f = { lspbuf.formatting, "Format" },
       -- n = { cmd "tabnew", "New" },
       n = { cmd "enew", "New" },
@@ -822,6 +832,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       ["/"] = { telescope_fn.grep_last_search, "Last Search" },
       i = "for (object)",
       r = { [[:%s///g<Left><Left><Left>]], "and Replace" },
+      [" "] = { telescope_fn.resume, "Re" },
     },
     r = {
       name = "Replace/Refactor",
@@ -865,6 +876,8 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       "Change all",
     },
   }
+  map("n", "<M-S-s>", operatorfunc_keys("separate", "<leader>s"), sile)
+  map("x", "<M-S-s>", "<leader>s", sile)
 
   local visualMappings = {
     -- ["/"] = { cmd "CommentToggle", "Comment" },
@@ -874,6 +887,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       [["z<M-y>:%s/<C-r>z//g<Left><Left>]],
       "Change all",
     },
+    s = { 'ygvc<CR><C-r>"<CR><ESC>', "separate" },
   }
 
   -- TODO: move these to different modules?

@@ -77,22 +77,22 @@ return packer.startup(function(use)
   -- whichkey
   use { "folke/which-key.nvim" }
 
-  -- -- Coq_nvim based Autocomplete and snippets
-  -- use {
-  --   "ms-jpq/coq_nvim",
-  --   branch = "coq",
-  --   config = function()
-  --     require("lv-coq").config()
-  --   end,
-  --   run = ":COQdeps",
-  --   disable = not O.plugin.coq,
-  -- }
-  -- use {
-  --   "ms-jpq/coq.artifacts",
-  --   branch = "artifacts",
-  --   after = "coq_nvim",
-  --   disable = not O.plugin.coq,
-  -- }
+  -- Coq_nvim based Autocomplete and snippets
+  use {
+    "ms-jpq/coq_nvim",
+    branch = "coq",
+    config = function()
+      require("lv-coq").config()
+    end,
+    run = ":COQdeps",
+    disable = not O.plugin.coq,
+  }
+  use {
+    "ms-jpq/coq.artifacts",
+    branch = "artifacts",
+    after = "coq_nvim",
+    disable = not O.plugin.coq,
+  }
 
   -- Nvim cmp based completions and snippets
   use {
@@ -206,6 +206,7 @@ return packer.startup(function(use)
     --         end,
     -- event = BufRead,
   }
+  use { "famiu/bufdelete.nvim", cmd = { "Bdelete", "Bwipeout" } }
 
   -- Better motions
   use {
@@ -237,25 +238,16 @@ return packer.startup(function(use)
     end,
     disable = not O.plugin.dashboard,
   }
-  -- Zen Mode
-  use {
-    "Pocco81/TrueZen.nvim",
-    cmd = { "TZAtaraxis", "TZMinimalist", "TZFocus" },
-    config = function()
-      require("lv-zen").config()
-    end,
-    disable = not O.plugin.zen,
-  }
 
   -- Ranger
-  -- use {
-  --   "kevinhwang91/rnvimr",
-  --   -- cmd = "RnvimrToggle",
-  --   config = function()
-  --     require("lv-rnvimr").config()
-  --   end,
-  --   disable = not O.plugin.ranger,
-  -- }
+  use {
+    "kevinhwang91/rnvimr",
+    -- cmd = "RnvimrToggle",
+    config = function()
+      require("lv-rnvimr").config()
+    end,
+    disable = not O.plugin.ranger,
+  }
 
   -- matchup
   use {
@@ -656,6 +648,8 @@ return packer.startup(function(use)
   -- Build cmake projects from neovim
   -- use {"Shatur95/neovim-cmake"}
 
+  -- https://github.com/CRAG666/code_runner.nvim
+  -- https://github.com/michaelb/sniprun
   -- Send to terminal
   use {
     "jpalardy/vim-slime",
@@ -803,14 +797,14 @@ return packer.startup(function(use)
     "RRethy/nvim-treesitter-textsubjects",
     disable = not O.plugin.ts_textsubjects,
   }
-  -- use {
-  --   "David-Kunz/treesitter-unit",
-  --   config = function()
-  --     vim.api.nvim_set_keymap("v", "x", '<cmd>lua require"treesitter-unit".select()<CR>', { noremap = true })
-  --     vim.api.nvim_set_keymap("o", "x", '<cmd><c-u>lua require"treesitter-unit".select()<CR>', { noremap = true })
-  --   end,
-  --   disable = not O.plugin.ts_textunits,
-  -- }
+  use {
+    "David-Kunz/treesitter-unit",
+    config = function()
+      vim.api.nvim_set_keymap("v", "x", '<cmd>lua require"treesitter-unit".select()<CR>', { noremap = true })
+      vim.api.nvim_set_keymap("o", "x", '<cmd><c-u>lua require"treesitter-unit".select()<CR>', { noremap = true })
+    end,
+    disable = not O.plugin.ts_textunits,
+  }
   use {
     "mfussenegger/nvim-ts-hint-textobject",
     config = function()
@@ -972,6 +966,32 @@ return packer.startup(function(use)
     end,
     cmd = "Twilight",
     disable = not O.plugin.twilight,
+  }
+  -- Zen Mode
+  use {
+    "Pocco81/TrueZen.nvim",
+    cmd = { "TZAtaraxis", "TZMinimalist", "TZFocus" },
+    config = function()
+      require("lv-zen").config()
+    end,
+    disable = not O.plugin.zen,
+  }
+  -- Auto split management
+  use {
+    "beauwilliams/focus.nvim",
+    config = function()
+      local focus = require "focus"
+
+      focus.winhighlight = O.plugin.splitfocus.winhighlight
+      focus.hybridnumber = O.plugin.hybridnumber
+      focus.relativenumber = O.relative_number
+      focus.number = O.number
+      focus.signcolumn = O.plugin.signcolumn
+      focus.cursorline = O.cursorline
+    end,
+    cmd = { "FocusEnable", "FocusToggle", "FocusSplitNicely" },
+    module = "focus",
+    disable = not O.plugin.splitfocus,
   }
 
   -- Colorschemes/Themes
