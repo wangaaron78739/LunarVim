@@ -11,7 +11,10 @@ if fn.empty(fn.glob(install_path)) > 0 then
   vim.cmd ":qa"
 end
 
-pcall(require, "impatient")
+local impatient_ok, impatient = pcall(require, "impatient")
+-- if impatient_ok then
+--   impatient.enable_profile()
+-- end
 
 -- if vim.g.started_by_firenvim then
 -- end
