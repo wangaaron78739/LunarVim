@@ -15,6 +15,7 @@ yadm-save message="update nvim config": fix-head
 # Install dependencies # TODO: there are some dependencies not included here
 install:
     sudo apt install libjpeg8-dev zlib1g-dev libxtst-dev 
+    cargo install selene stylua 
     # pipx install --force ranger-fm
     # pipx inject ranger-fm pynvim ueberzug
     pipx install --force neovim-remote
