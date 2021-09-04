@@ -248,15 +248,12 @@ function M.setup()
   map("n", resize_prefix .. "Right>", cmd "vertical resize +2", sile)
 
   -- Move current line / block with Alt-j/k ala vscode.
-  map("n", "<C-M-j>", "<cmd>m .+1<cr>==", nore)
-  map("n", "<C-M-k>", "<cmd>m .-2<cr>==", nore)
-  map("i", "<M-j>", "<Esc>:m .+1<cr>==gi", nore)
-  map("i", "<M-k>", "<Esc>:m .-2<cr>==gi", nore)
-  map("x", "<M-j>", "<cmd>m '>+1<cr>gv-gv", nore)
-  map("x", "<M-k>", "<cmd>m '<-2<cr>gv-gv", nore)
-  -- Move selected line / block of text in visual mode
-  map("x", "K", "<cmd>move '<-2<cr>gv=gv", nore)
-  map("x", "J", "<cmd>move '>+1<cr>gv=gv", nore)
+  map("n", "<C-M-j>", "<cmd>move .+1<cr>==", nore)
+  map("n", "<C-M-k>", "<cmd>move .-2<cr>==", nore)
+  map("i", "<M-j>", "<Esc>:move .+1<cr>==gi", nore)
+  map("i", "<M-k>", "<Esc>:move .-2<cr>==gi", nore)
+  map("x", "<M-j>", ":move '>+1<cr>gv-gv", nore)
+  map("x", "<M-k>", ":move '<-2<cr>gv-gv", nore)
 
   -- better indenting
   map("n", "<", "<<", { silent = true, noremap = true, nowait = true })
