@@ -931,6 +931,7 @@ return packer.startup(function(use)
     config = function()
       require("lv-wilder").config()
     end,
+    run = ":UpdateRemotePlugins",
     event = "CmdlineEnter",
   }
 
