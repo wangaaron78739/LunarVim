@@ -1069,7 +1069,7 @@ return packer.startup(function(use)
   -- use "tomasiser/vim-code-dark"
   -- use "glepnir/zephyr-nvim"
   -- use "Th3Whit3Wolf/onebuddy" -- require('colorbuddy').colorscheme('onebuddy')
-  -- use "ishan9299/modus-theme-vim"
+  use "ishan9299/modus-theme-vim"
   -- use "Th3Whit3Wolf/one-nvim"
   -- use "ray-x/aurora"
   -- use "tanvirtin/nvim-monokai"
