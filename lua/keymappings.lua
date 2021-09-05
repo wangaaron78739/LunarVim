@@ -706,6 +706,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       f = { cmd "NvimTreeToggle", "File Sidebar" },
       u = { cmd "UndotreeToggle", "Undo tree" },
       r = { cmd "RnvimrToggle", "Ranger" },
+      g = { cmd "Glow", "Glow MD" },
       q = { luacmd "utils.quickfix_toggle()", "Quick fixes" },
       o = { cmd "!open '%:p:h'", "Open File Explorer" },
       F = { telescope_fn.file_browser, "Telescope browser" },
