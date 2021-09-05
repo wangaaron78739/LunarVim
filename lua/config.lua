@@ -291,6 +291,8 @@ O = {
       winhighlight = false,
       hybridnumber = false,
       signcolumn = true,
+      relative_number = false,
+      number = false
       -- cursorline = O.cursorline,
     },
   },
