@@ -23,8 +23,8 @@ packer.init {
 -- vim.cmd "autocmd BufWritePost plugins.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
 -- vim.cmd "autocmd BufWritePost lv-config.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
 
-local use_rock = packer.use_rocks
 return packer.startup(function(use)
+  local use_rock = packer.use_rocks
   -- local BufRead
   local BufRead = "BufRead"
   -- Packer can manage itself as an optional plugin
@@ -117,6 +117,7 @@ return packer.startup(function(use)
       require("lv-tabout").config()
     end,
     after = { "nvim-cmp" }, -- if a completion plugin is using tabs load it before
+    event = "InsertEnter",
     disable = not O.plugin.cmp,
   }
   -- VSCode style snippets
@@ -181,6 +182,17 @@ return packer.startup(function(use)
       }
     end,
     event = BufRead,
+  }
+
+  -- Create pretty comment frames
+  use {
+    "s1n7ax/nvim-comment-frame",
+    config = function()
+      require("nvim-comment-frame").setup {
+        keymap = "gcf",
+        multiline_keymap = "gC",
+      }
+    end,
   }
 
   -- Icons
@@ -523,6 +535,7 @@ return packer.startup(function(use)
     ft = "rust",
     disable = not O.lang.rust.rust_tools.active,
   }
+  use "saecki/crates.nvim"
 
   -- Elixir
   use { "elixir-editors/vim-elixir", ft = { "elixir", "eelixir", "euphoria3" } }
@@ -769,16 +782,24 @@ return packer.startup(function(use)
   } ]]
 
   -- Code Minimap
+  -- use {
+  --   "wfxr/minimap.vim",
+  --   cmd = "MinimapToggle",
+  --   run = "cargo install --locked code-minimap",
+  --   config = function()
+  --     table.insert(vim.g.minimap_block_filetypes, "dashboard")
+  --     vim.g.minimap_width = 5 -- Like a scrollbar
+  --     -- vim.g.minimap_highlight_search = true
+  --     -- vim.g.minimap_highlight_range = true
+  --   end,
+  -- }
   use {
-    "wfxr/minimap.vim",
-    event = "BufWinEnter",
-    run = "cargo install --locked code-minimap",
-    config = function()
-      table.insert(vim.g.minimap_block_filetypes, "dashboard")
-      vim.g.minimap_width = 2 -- Like a scrollbar
-      -- vim.g.minimap_highlight_search = true
-      -- vim.g.minimap_highlight_range = true
+    "rinx/nvim-minimap",
+    setup = function()
+      vim.g["minimap#window#width"] = 5
+      vim.g["minimap#window#height"] = 10000
     end,
+    cmd = "MinimapToggle",
   }
 
   -- Session Management
@@ -1026,6 +1047,8 @@ return packer.startup(function(use)
     requires = "nvim-lua/plenary.nvim",
   }
 
+  -- TODO: http://neovimcraft.com/plugin/chipsenkbeil/distant.nvim/index.html
+
   -- Colorschemes/Themes
   -- Lush - Create Color Schemes
   use {
@@ -1157,4 +1180,6 @@ return packer.startup(function(use)
   --     require("lv-wilder").config()
   --   end,
   -- }
+
+  use { "seandewar/nvimesweeper", cmd = "Nvimesweeper" }
 end)

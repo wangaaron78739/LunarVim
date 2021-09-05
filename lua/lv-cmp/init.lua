@@ -79,6 +79,7 @@ function M.setup()
       { name = "path" },
       -- { name = "latex_symbols" },
       { name = "calc" },
+      { name = "crates" }, -- TODO: only in rust projects
       -- { name = "cmp_tabnine" },
     },
 

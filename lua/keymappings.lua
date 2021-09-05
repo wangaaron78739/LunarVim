@@ -188,10 +188,10 @@ function M.setup()
   end
   map("n", "/", srchrpt "/", nore)
   map("n", "?", srchrpt "?", nore)
-  map("n", "*", srchrpt("viw*", "m"), nore)
+  map("n", "*", srchrpt("viw*", "m"), nore) -- Swap g* and *
   map("n", "#", srchrpt("viw#", "m"), nore)
-  -- map("n", "*", "*", nore)
-  -- map("n", "#", "#", nore)
+  map("n", "g*", srchrpt "*", nore)
+  map("n", "g#", srchrpt "#", nore)
 
   -- Command mode typos of wq
   vim.cmd [[
@@ -717,7 +717,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       F = { telescope_fn.file_browser, "Telescope browser" },
       v = { cmd "Vista nvim_lsp", "Vista" },
       -- ["v"] = {cmd "Vista", "Vista"},
-      m = { cmd "MinimapToggle", "Minimap" },
+      m = { vim.g.goneovim and cmd "GonvimMiniMap" or cmd "MinimapToggle", "Minimap" },
       b = { luacmd "ftopen('broot')", "Broot" },
       p = { luacmd "ftopen('python')", "Python" },
       t = { luacmd "ftopen('top')", "System Monitor" },
@@ -951,9 +951,11 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   if O.plugin.spectre then
     local spectre = luareq "spectre"
     leaderMappings["rf"] = { spectre.open_file_search, "Current File" }
+    leaderMappings["/"][1] = spectre.open
     leaderMappings["rp"] = { spectre.open, "Project" }
     visualMappings["rf"] = { spectre "open_visual({path = vim.fn.expand('%')})", "Current File" }
     visualMappings["rp"] = { spectre.open_visual, "Project" }
+    -- TODO: other spectre maps like '<leader>r'
   end
   if O.plugin.lazygit then
     leaderMappings["gg"] = { cmd "LazyGit", "LazyGit" }
