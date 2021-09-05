@@ -15,11 +15,10 @@ yadm-save message="update nvim config": fix-head
 # Install dependencies # TODO: there are some dependencies not included here
 install:
     sudo apt install libjpeg8-dev zlib1g-dev libxtst-dev 
+    sudo apt install python3.9
     cargo install selene stylua 
-    # pipx install --force ranger-fm
-    # pipx inject ranger-fm pynvim ueberzug
     pipx install --force neovim-remote
-    pip3 install pynvim --user
+    python3.9 -m pip install pynvim ueberzug --user
     npm install -g tree-sitter-cli
     {{nvim}} # Run once to install packer and stuff
     {{nvim}} +PackerSync # Run again to install the plugins
