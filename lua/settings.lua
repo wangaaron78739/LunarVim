@@ -114,8 +114,8 @@ require("lv-utils").define_augroups {
     -- { "FocusLost", "*", [[silent! call feedkeys("\<C-\>\<C-n>")]] },
     -- { "TabLeave,BufLeave", "*", [[if &buftype == '' | :stopinsert | endif]] }, -- FIXME: This breaks compe
   },
-  -- Add position to jump list on cursorhold
-  _hold_jumplist = { { "CursorHold", "*", "normal m'" } },
+  -- Add position to jump list on cursorhold -- FIXME: slightly buggy
+  -- _hold_jumplist = { { "CursorHold", "*", "normal m'" } },
 }
 
 if O.format_on_save then
