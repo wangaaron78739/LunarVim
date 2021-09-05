@@ -296,6 +296,16 @@ function M.syn_group()
   print(vim.fn.synIDattr(s, "name") .. " -> " .. vim.fn.synIDattr(vim.fn.synIDtrans(s), "name"))
 end
 
+local function luafn(prefix)
+  return setmetatable({}, {
+    __index = function(tbl, key)
+      return "<cmd>lua " .. prefix .. "." .. key .. "()<cr>"
+    end,
+    __call = function(tbl, key)
+      return "<cmd>lua " .. prefix .. "." .. key .. "<cr>"
+    end,
+  })
+end
 M.cmd = setmetatable({
   lua = function(arg)
     return "<cmd>lua " .. arg .. "<cr>"
@@ -306,38 +316,12 @@ M.cmd = setmetatable({
   from = M.to_cmd,
   op = M.operatorfunc_scaffold,
   require = function(name)
-    local make = function(tbl, key)
-      return "<cmd>lua require('" .. name .. "')." .. key .. "()<cr>"
-    end
-    return setmetatable({}, {
-      __index = make,
-      __call = make,
-    })
+    return luafn("require'" .. name .. "')")
   end,
-  lsp = setmetatable({}, {
-    __index = function(tbl, key)
-      return "<cmd>lua vim.lsp.buf." .. key .. "()<cr>"
-    end,
-    __call = function(tbl, key)
-      return "<cmd>lua vim.lsp.buf." .. key .. "<cr>"
-    end,
-  }),
-  diag = setmetatable({}, {
-    __index = function(tbl, key)
-      return "<cmd>lua vim.lsp.diagnostic." .. key .. "()<cr>"
-    end,
-    __call = function(tbl, key)
-      return "<cmd>lua vim.lsp.diagnostic." .. key .. "<cr>"
-    end,
-  }),
-  telescope = setmetatable({}, {
-    __index = function(tbl, key)
-      return "<cmd>lua require'lv-telescope.functions'." .. key .. "()<cr>"
-    end,
-    __call = function(tbl, key)
-      return "<cmd>lua require'lv-telescope.functions'." .. key .. "<cr>"
-    end,
-  }),
+  lsp = luafn "vim.lsp.buf",
+  diag = luafn "vim.lsp.diagnostic",
+  -- telescopes = luafn "telescopes",
+  telescopes = luafn "require'lv-telescope.functions'",
 }, {
   __call = function(tbl, arg)
     return "<cmd>" .. arg .. "<cr>"
