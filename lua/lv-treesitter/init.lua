@@ -206,7 +206,7 @@ require("nvim-treesitter.configs").setup {
     smart_rename = {
       enable = true,
       keymaps = {
-        smart_rename = "<leader>rt",
+        smart_rename = "<leader>rt", -- TODO: use my mini window UI for this
       },
     },
     highlight_definitions = { enable = true },

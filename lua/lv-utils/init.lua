@@ -1,5 +1,11 @@
 local M = {}
 
+local feedkeys = vim.api.nvim_feedkeys
+local termcodes = vim.api.nvim_replace_termcodes
+local t = function(k)
+  return termcodes(k, true, true, true)
+end
+
 function M.dump(...)
   local objects, v = {}, nil
   for i = 1, select("#", ...) do
@@ -150,7 +156,7 @@ function M.operatorfunc_scaffold(name, operatorfunc)
 
   return M.to_cmd(function()
     vim.go.operatorfunc = "v:lua.lv_utils_operatorfuncs." .. name
-    vim.api.nvim_feedkeys("g@", "n", false)
+    feedkeys("g@", "n", false)
   end)
 end
 
@@ -158,7 +164,7 @@ end
 function M.operatorfuncV_keys(name, verbkeys)
   return M.operatorfunc_scaffold(name, function()
     M.operatorfunc_helper_select(true)
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(verbkeys, true, true, true), "m", false)
+    feedkeys(t(verbkeys), "m", false)
   end)
 end
 
@@ -166,7 +172,7 @@ end
 function M.operatorfunc_keys(name, verbkeys)
   return M.operatorfunc_scaffold(name, function()
     M.operatorfunc_helper_select(false)
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(verbkeys, true, true, true), "m", false)
+    feedkeys(t(verbkeys), "m", false)
   end)
 end
 
@@ -251,7 +257,7 @@ function M.inline_text_input(opts)
   end
 
   local function close_win()
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, true, true), "n", false)
+    feedkeys(t "<esc>", "n", false)
     vim.api.nvim_win_close(win, true)
     vim.api.nvim_buf_delete(buf, { force = true })
     if escape then
