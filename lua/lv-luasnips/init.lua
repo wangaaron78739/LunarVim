@@ -52,13 +52,6 @@ function M.setup()
     },
   }
 
-  -- TODO: port Latex auto snippets
-  ls.autosnippets = {
-    all = {
-      s("xxx", { t "autosnippet" }),
-    },
-  }
-
   local map = vim.api.nvim_set_keymap
   map("i", "<C-E>", "<Plug>luasnip-next-choice", {})
   map("s", "<C-E>", "<Plug>luasnip-next-choice", {})

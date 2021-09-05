@@ -113,8 +113,8 @@ return packer.startup(function(use)
   -- Tabout
   use {
     "abecodes/tabout.nvim",
-    config = function ()
-      require'lv-tabout'.config()
+    config = function()
+      require("lv-tabout").config()
     end,
     after = { "nvim-cmp" }, -- if a completion plugin is using tabs load it before
     disable = not O.plugin.cmp,
