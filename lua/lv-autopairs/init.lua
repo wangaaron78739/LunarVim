@@ -51,10 +51,10 @@ local basicpairs = {
 npairs.add_rules {
   R("%", "%", "lua"):with_pair(ts_conds.is_ts_node { "string", "comment" }),
   R("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node { "function" }),
-  R("if ", " then end", "lua"),
-  R("for ", " in", "lua"),
-  R("in ", " do", "lua"),
-  R("do ", " end", "lua"),
+  R("if ", " then end", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
+  R("for ", " in", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
+  R("in ", " do", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
+  R("do ", " end", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
 }
 for lm, rm in pairs(texmods) do
   for lp, rp in pairs(texpairs) do
