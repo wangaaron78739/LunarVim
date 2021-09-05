@@ -36,11 +36,7 @@ return packer.startup(function(use)
   use {
     "rcarriga/nvim-notify",
     config = function()
-      -- vim.notify = function(msg, lvl, opts)
-      --   opts.timeout = opts.timemout or O.notify.timeout
-      --   return require "notify"(msg, lvl, opts)
-      -- end
-      -- vim.notify = require "notify"
+      require("lv-notify").config()
     end,
     disable = not O.plugin.notify,
   }

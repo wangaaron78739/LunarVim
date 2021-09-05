@@ -964,6 +964,9 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     leaderMappings["to"] = { cmd "MagmaShowOutput", "Magma Output" }
     leaderMappings["tm"] = { cmd "MagmaInit", "Magma Init" }
   end
+  if O.plugin.notify then
+    leaderMappings["mm"] = { cmd "Message", "Notifications" }
+  end
 
   wk.register(leaderMappings, leaderOpts)
   wk.register(visualMappings, visualOpts)
