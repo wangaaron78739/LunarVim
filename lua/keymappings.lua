@@ -230,6 +230,9 @@ function M.setup()
   map("n", "<C-ScrollWheelDown>", "<C-x>", sile)
   map("n", "<C-S-ScrollWheelUp>", cmd "FontUp", sile)
   map("n", "<C-S-ScrollWheelDown>", cmd "FontDown", sile)
+  map("n", "<C-->", cmd "FontDown", sile)
+  -- map("n", "<C-S-=>", cmd "FontUp", sile)
+  map("n", "<C-+>", cmd "FontUp", sile)
 
   -- better window movement -- tmux_navigator supplies these if installed
   if not O.plugin.tmux_navigator then
