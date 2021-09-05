@@ -15,4 +15,13 @@ end
 if conf.fontsize then
   utils.set_guifont(conf.fontsize)
 end
--- {'FileType', 'markdown', 'set guifont "FiraCode Nerd Font:h15"'},
+
+-- You should specify your *installed* sources.
+sources = {
+  { name = "luasnip" },
+  { name = "nvim_lsp" },
+  { name = "buffer" },
+  { name = "latex_symbols" },
+  { name = "calc" },
+  -- { name = "cmp_tabnine" },
+}

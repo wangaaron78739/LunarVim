@@ -77,7 +77,7 @@ function M.setup()
       { name = "nvim_lsp" },
       { name = "buffer" },
       { name = "path" },
-      { name = "latex_symbols" },
+      -- { name = "latex_symbols" },
       { name = "calc" },
       -- { name = "cmp_tabnine" },
     },
