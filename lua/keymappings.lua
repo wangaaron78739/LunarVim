@@ -180,16 +180,18 @@ function M.setup()
   -- custom_n_repeat
   map("n", "n", luareq("keymappings").n_repeat, nore)
   map("n", "N", luareq("keymappings").N_repeat, nore)
-  local srchrpt = function(k)
+  local srchrpt = function(k, op)
     return to_cmd(function()
       register_nN_repeat { nil, nil }
-      feedkeys(k, "n")
+      feedkeys(k, op or "n")
     end)
   end
   map("n", "/", srchrpt "/", nore)
   map("n", "?", srchrpt "?", nore)
-  map("n", "*", srchrpt "*", nore)
-  map("n", "#", srchrpt "#", nore)
+  map("n", "*", srchrpt("viw*", "m"), nore)
+  map("n", "#", srchrpt("viw#", "m"), nore)
+  -- map("n", "*", "*", nore)
+  -- map("n", "#", "#", nore)
 
   -- Command mode typos of wq
   vim.cmd [[
@@ -441,7 +443,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
 
   -- Search for the current selection
   map("x", "*", srchrpt '"zy/<C-R>z<cr>', nore) -- Search for the current selection
-  map("n", "<leader>*", operatorfunc_keys("search_for", "*"), {}) -- Search textobject
+  map("n", "<leader>*", operatorfunc_keys("searchbwd_for", "*"), {}) -- Search textobject
   map("x", "#", srchrpt '"zy?<C-R>z<cr>', nore) -- Backwards
   map("n", "<leader>#", operatorfunc_keys("search_for", "#"), {})
 
@@ -824,7 +826,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     },
     p = {
       name = "Projects",
-      s = {cmd "SearchSession", "Sessions"}
+      s = { cmd "SearchSession", "Sessions" },
     },
     s = {
       name = "Search",
