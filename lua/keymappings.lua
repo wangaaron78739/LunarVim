@@ -180,15 +180,16 @@ function M.setup()
   -- custom_n_repeat
   map("n", "n", luareq("keymappings").n_repeat, nore)
   map("n", "N", luareq("keymappings").N_repeat, nore)
-  local fwdrepeat = function(k)
+  local srchrpt = function(k)
     return to_cmd(function()
       register_nN_repeat { nil, nil }
       feedkeys(k, "n")
     end)
   end
-  map("n", "/", fwdrepeat "/", nore)
-  map("n", "*", fwdrepeat "*", nore)
-  map("n", "#", fwdrepeat "#", nore)
+  map("n", "/", srchrpt "/", nore)
+  map("n", "?", srchrpt "?", nore)
+  map("n", "*", srchrpt "*", nore)
+  map("n", "#", srchrpt "#", nore)
 
   -- Command mode typos of wq
   vim.cmd [[
@@ -376,10 +377,10 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   end
 
   -- Start selecting
-  map("x", "<M-l>", "l", sile)
   map("n", "<M-l>", "<c-v>l", sile)
-  map("x", "<M-h>", "h", sile)
+  map("x", "<M-l>", "l", sile)
   map("n", "<M-h>", "<c-v>h", sile)
+  map("x", "<M-h>", "h", sile)
 
   -- Charwise visual select line
   map("x", "v", "^og_", nore)
@@ -439,8 +440,10 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("n", "[d", diag_prev, nore)
 
   -- Search for the current selection
-  map("x", "*", '"z<M-y>/<C-R>z<cr>', nore) -- Search for the current selection
-  map("n", "<M-s>", operatorfunc_keys("search_for", "*"), {}) -- Search textobject
+  map("x", "*", srchrpt '"zy/<C-R>z<cr>', nore) -- Search for the current selection
+  map("n", "<leader>*", operatorfunc_keys("search_for", "*"), {}) -- Search textobject
+  map("x", "#", srchrpt '"zy?<C-R>z<cr>', nore) -- Backwards
+  map("n", "<leader>#", operatorfunc_keys("search_for", "#"), {})
 
   -- Select last changed/yanked text
   map("n", "+", [[/<C-R>+<cr>]], {}) -- Search for the current yank register
@@ -819,6 +822,10 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       T = { cmd "TSConfigInfo", "Info" },
       f = { lspbuf.formatting, "Format" },
     },
+    p = {
+      name = "Projects",
+      s = {cmd "SearchSession", "Sessions"}
+    },
     s = {
       name = "Search",
       b = { telescope_fn.git_branches, "Checkout branch" },
@@ -837,20 +844,23 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       k = { telescope_fn.keymaps, "Keymappings" },
       o = { cmd "TodoTelescope", "TODOs" },
       q = { telescope_fn.quickfix, "Quickfix" },
-      ["*"] = { telescope_fn.grep_string, "cword" },
+      ["*"] = { telescope_fn.grep_string, "Curr word" },
       ["/"] = { telescope_fn.grep_last_search, "Last Search" },
+      -- ["+"] = { telescope_fn.grep_last_yank, "Last Yank" },
+      -- ["."] = { [[:%s/<C-R>.//g<Left><Left>]], "Last insert" },
       i = "for (object)",
-      r = { [[:%s///g<Left><Left><Left>]], "and Replace" },
-      [" "] = { telescope_fn.resume, "Re" },
+      [" "] = { telescope_fn.resume, "Redo" },
     },
     r = {
       name = "Replace/Refactor",
       n = { lsputil.rename, "Rename" },
       t = "Rename TS",
+      ["*"] = { [["zyiw:%s/<C-R>z//g<Left><Left>]], "Curr word" },
       ["/"] = { [[:%s/<C-R>+//g<Left><Left>]], "Last search" },
       ["+"] = { [[:%s/<C-R>///g<Left><Left>]], "Last yank" },
       ["."] = { [[:%s/<C-R>.//g<Left><Left>]], "Last insert" },
       d = { cmd "DogeGenerate", "DogeGen" },
+      s = { [[:%s///g<Left><Left><Left>]], "From Search" },
     },
     d = {
       name = "Diagnostics",
@@ -891,7 +901,9 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   local visualMappings = {
     -- ["/"] = { cmd "CommentToggle", "Comment" },
     d = { lsputil.range_diagnostics, "Range Diagnostics" },
-    r = { name = "Replace/Refactor" },
+    r = {
+      name = "Replace/Refactor",
+    },
     c = {
       [["z<M-y>:%s/<C-r>z//g<Left><Left>]],
       "Change all",
@@ -929,11 +941,9 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     leaderMappings["zt"] = { cmd "Twilight", "Twilight" }
   end
   if O.plugin.telescope_project then
-    leaderMappings["p"] = { "Projects" }
     leaderMappings["pp"] = { luareq "telescope" "extensions.project.project{}", "Projects" }
   end
   if O.plugin.project_nvim then
-    leaderMappings["p"] = { "Projects" }
     leaderMappings["pr"] = { cmd "ProjectRoot", "Projects" }
   end
   if O.plugin.spectre then
