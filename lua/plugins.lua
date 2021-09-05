@@ -783,7 +783,16 @@ return packer.startup(function(use)
 
   -- Session Management
   use { "rmagatti/auto-session" }
-  use { "rmagatti/session-lens" }
+  use {
+    "rmagatti/session-lens",
+    requires = { "rmagatti/auto-session", "nvim-telescope/telescope.nvim" },
+    config = function()
+      require("session-lens").setup {--[[your custom config--]]
+      }
+      require("telescope").load_extension "session-lens"
+    end,
+    cmd = "SearchSession",
+  }
   -- https://github.com/tpope/vim-obsession
 
   -- treesitter extensions
