@@ -1,11 +1,5 @@
-if require("lv-utils").check_lsp_client_active "omnisharp" then
-  return
-end
-
 -- C# language server (csharp/OmniSharp) setup
-require("lsp.config").lspconfig  "omnisharp" {
-  on_attach = require("lsp.functions").common_on_attach,
+require("lsp.config").lspconfig "omnisharp" {
   root_dir = require("lspconfig").util.root_pattern(".sln", ".git"),
   cmd = { DATA_PATH .. "/lspinstall/csharp/omnisharp/run", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
-  flags = O.lsp.flags,
 }

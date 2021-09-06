@@ -1,4 +1,37 @@
-local conf = O.lang.latex
+-- TODO: inline these variables
+local conf = {
+  conceal = 2,
+  theme = O.lighttheme,
+  fontsize = O.bigfontsize,
+  filetypes = { "tex", "bib" },
+  texlab = {
+    aux_directory = ".",
+    bibtex_formatter = "texlab",
+    build = {
+      executable = "tectonic",
+      args = {
+        -- Input
+        "%f",
+        -- Flags
+        "--synctex",
+        "--keep-logs",
+        "--keep-intermediates",
+        -- Options
+        -- OPTIONAL: If you want a custom out directory,
+        -- uncomment the following line.
+        --"--outdir out",
+      },
+      forwardSearchAfter = false,
+      onSave = true,
+    },
+    chktex = { on_edit = true, on_open_and_save = true },
+    diagnostics_delay = vim.opt.updatetime,
+    formatter_line_length = 80,
+    forward_search = { args = {}, executable = "" },
+    latexFormatter = "latexindent",
+    latexindent = { modify_line_breaks = false },
+  },
+}
 vim.opt_local.wrap = true
 vim.opt_local.spell = true
 local map = vim.api.nvim_buf_set_keymap
@@ -12,7 +45,6 @@ map(0, "n", "<C-b>", "ysiwmb", { silent = true })
 map(0, "n", "<C-t>", "ysiwmb", { silent = true })
 map(0, "i", "<C-b>", "<cmd>normal ysiwmb<cr>", { silent = true })
 map(0, "i", "<C-t>", "<cmd>normal ysiwmb<cr>", { silent = true })
-
 
 vim.opt_local.conceallevel = conf.conceal
 -- vim.opt_local.background = "light"
@@ -29,23 +61,13 @@ if conf.fontsize then
   utils.set_guifont(conf.fontsize)
 end
 
-if not require("lv-utils").check_lsp_client_active "texlab" then
-  require("lsp.config").lspconfig "texlab" {
-    cmd = { DATA_PATH .. "/lspinstall/latex/texlab" },
-    on_attach = require("lsp.functions").common_on_attach,
-    handlers = {
-      ["textDocument/publishDiagnostics"] = conf.diagnostics and vim.lsp.with(
-        vim.lsp.diagnostic.on_publish_diagnostics,
-        conf.diagnostics
-      ),
-    },
-    -- filetypes = latexconf.filetypes,
-    settings = {
-      texlab = conf.texlab,
-    },
-    flags = O.lsp.flags,
-  }
-end
+require("lsp.config").lspconfig "texlab" {
+  cmd = { DATA_PATH .. "/lspinstall/latex/texlab" },
+  filetypes = conf.filetypes,
+  settings = {
+    texlab = conf.texlab,
+  },
+}
 
 -- require("lv-utils").define_augroups {
 --   _general_lsp = {

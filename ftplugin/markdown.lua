@@ -1,4 +1,8 @@
-local conf = O.lang.markdown
+local conf = {
+  conceal = 2,
+  theme = O.lighttheme,
+  fontsize = O.bigfontsize,
+}
 vim.opt_local.wrap = true
 vim.opt_local.spell = true
 vim.opt_local.conceallevel = conf.conceal
@@ -17,7 +21,7 @@ if conf.fontsize then
 end
 
 -- You should specify your *installed* sources.
-sources = {
+require("cmp").setup.buffer {
   { name = "luasnip" },
   { name = "nvim_lsp" },
   { name = "buffer" },

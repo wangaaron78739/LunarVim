@@ -156,7 +156,7 @@ M.config = function()
   -- file_browser = {description = {' File Browser'}, command = 'Telescope find_files'},
 
   -- vim.g.dashboard_session_directory = CACHE_PATH..'/session'
-  vim.g.dashboard_custom_footer = O.dashboard.footer
+  vim.g.dashboard_custom_footer = "Anshuman Medhi -- IndianBoy42 (amedhi@connect.ust.hk)"
 end
 
 M.preconf = function()

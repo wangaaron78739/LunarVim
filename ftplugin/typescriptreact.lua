@@ -1,3 +1,4 @@
 require("lsp.tsserver-ls").setup()
 
-vim.cmd "setl ts=2 sw=2"
+vim.opt_local.tabstop = 2
+vim.opt_local.shiftwidth = 2

@@ -1,11 +1,11 @@
 local M = {}
 local nore = require("keymappings").nore
 function M.ftplugin()
-  nore("n", "<leader>lm", "<Cmd>RustExpandMacro<CR>", { buffer = true })
-  nore("n", "<leader>lH", "<Cmd>RustToggleInlayHints<CR>", { buffer = true })
-  nore("n", "<leader>le", "<Cmd>RustRunnables<CR>", { buffer = true })
-  nore("n", "<leader>lh", "<Cmd>RustHoverActions<CR>", { buffer = true })
-  nore("v", "<leader>lh", "<Cmd>RustHoverRange<CR>", { buffer = true })
+  nore("n", "<localleader>m", "<Cmd>RustExpandMacro<CR>", { buffer = true })
+  nore("n", "<localleader>H", "<Cmd>RustToggleInlayHints<CR>", { buffer = true })
+  nore("n", "<localleader>e", "<Cmd>RustRunnables<CR>", { buffer = true })
+  nore("n", "<localleader>h", "<Cmd>RustHoverActions<CR>", { buffer = true })
+  nore("v", "<localleader>h", "<Cmd>RustHoverRange<CR>", { buffer = true })
   nore("v", "gh", "<cmd>RustHoverRange<CR>", { buffer = true })
   nore("n", "gj", "<cmd>RustJoinLines<CR>", { buffer = true })
 
@@ -43,7 +43,7 @@ function M.setup()
     -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
     server = require("lsp.config").conf_with {
       cmd = { DATA_PATH .. "/lspinstall/rust/rust-analyzer" },
-      on_attach = require("lsp.functions").common_on_attach,
+
       settings = {
         ["rust-analyzer"] = {
           checkOnSave = {

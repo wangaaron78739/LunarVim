@@ -16,6 +16,10 @@ O = {
   format_on_save_timeout = 500,
   auto_close_tree = 0,
   fold_columns = "0",
+  theme = "Nebulous",
+  lighttheme = "Paper",
+  fontsize = 10,
+  bigfontsize = 13,
   auto_complete = true,
   colorcolumn = "99999",
   clipboard = "unnamedplus",
@@ -295,111 +299,8 @@ O = {
       number = false,
       -- cursorline = O.cursorline,
     },
-  },
-  lang = {
-    python = {
-      isort = false,
-      analysis = {
-        type_checking = "basic", -- off
-        auto_search_paths = true,
-        use_library_code_types = true,
-      },
-      formatter = "black",
-    },
-    dart = { sdk_path = "/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot" },
-    lua = {},
-    sh = {},
-    tsserver = {
-      linter = "eslint",
-      formatter = "prettier",
-    },
-    json = {},
-    tailwindcss = {
-      active = false,
-      filetypes = {
-        "html",
-        "css",
-        "scss",
-        "javascript",
-        "javascriptreact",
-        "typescript",
-        "typescriptreact",
-      },
-    },
-    -- Used for js, ts, jsreact and tsreact -- I assume they are all similar enough
-    javascript = {},
-    clang = {
-      cross_file_rename = true,
-      header_insertion = "never",
-    },
-    ruby = { filetypes = { "rb", "erb", "rakefile", "ruby" } },
-    go = {},
-    elixir = {},
-    vim = {},
-    yaml = {},
-    terraform = {},
-    rust = {
-      rust_tools = { active = true },
-      linter = "",
-    },
-    svelte = {},
-    php = {
-      format = { braces = "psr12" },
-      environment = { php_version = "7.4" },
-      filetypes = { "php", "phtml" },
-    },
-    markdown = {
-      conceal = 2,
-      theme = "Paper",
-      fontsize = 13,
-    },
-    latex = {
-      conceal = 2,
-      theme = "Paper",
-      fontsize = 13,
-      vimtex = { active = true, compiler = "tectonic" },
-      filetypes = { "tex", "bib" },
-      texlab = {
-        aux_directory = ".",
-        bibtex_formatter = "texlab",
-        build = {
-          executable = "tectonic",
-          args = {
-            -- Input
-            "%f",
-            -- Flags
-            "--synctex",
-            "--keep-logs",
-            "--keep-intermediates",
-            -- Options
-            -- OPTIONAL: If you want a custom out directory,
-            -- uncomment the following line.
-            --"--outdir out",
-          },
-          forwardSearchAfter = false,
-          onSave = true,
-        },
-        chktex = { on_edit = true, on_open_and_save = true },
-        diagnostics_delay = vim.opt.updatetime,
-        formatter_line_length = 80,
-        forward_search = { args = {}, executable = "" },
-        latexFormatter = "latexindent",
-        latexindent = { modify_line_breaks = false },
-      },
-    },
-    kotlin = {},
-    html = {},
-    elm = {},
-    emmet = { active = false },
-    graphql = {},
-    docker = {},
-    cmake = {},
-    java = {},
-    zig = {},
-    julia = {},
-  },
-  dashboard = {
-    footer = { "Anshuman Medhi -- IndianBoy42 (amedhi@connect.ust.hk)" },
+    rust_tools = {},
+    vimtex = {},
   },
 }
 vim.cmd('let &titleold="' .. TERMINAL .. '"')

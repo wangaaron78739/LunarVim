@@ -1,22 +1,17 @@
--- npm i -g pyright
-require("lsp.config").lspconfig  "pyright" {
+require("lsp.config").lspconfig "pyright" {
   cmd = {
     DATA_PATH .. "/lspinstall/python/node_modules/.bin/pyright-langserver",
     "--stdio",
   },
-  on_attach = require("lsp.functions").common_on_attach,
-  handlers = {
-    ["textDocument/publishDiagnostics"] = O.lang.python.diagnostics and vim.lsp.with(
-      vim.lsp.diagnostic.on_publish_diagnostics,
-      O.lang.python.diagnostics
-    ),
-  },
   settings = {
     python = {
-      analysis = O.lang.python.analysis,
+      analysis = {
+        type_checking = "basic", -- off
+        auto_search_paths = true,
+        use_library_code_types = true,
+      },
     },
   },
-  flags = O.lsp.flags,
 }
 
 if O.plugin.debug and O.plugin.dap_install then

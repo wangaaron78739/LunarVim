@@ -5,6 +5,4 @@ require("lsp.config").lspconfig "angularls" {
     DATA_PATH .. "/lspinstall/angular/node_modules/@angular/language-server/bin/ngserver",
     "--stdio",
   },
-  on_attach = require("lsp.functions").common_on_attach,
-  flags = O.lsp.flags,
 }

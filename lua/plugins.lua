@@ -518,14 +518,13 @@ return packer.startup(function(use)
   -- LANGUAGE SPECIFIC GOES HERE
 
   -- Latex
-  -- TODO what filetypes should this be active for?
   use {
     "lervag/vimtex",
     ft = "tex",
     config = function()
       require("lv-vimtex").config()
     end,
-    disable = not O.lang.latex.vimtex.active,
+    disable = not O.plugin.vimtex,
   }
 
   -- Rust tools
@@ -536,7 +535,7 @@ return packer.startup(function(use)
     end,
     -- TODO: use lazy loading maybe?
     ft = "rust",
-    disable = not O.lang.rust.rust_tools.active,
+    disable = not O.plugin.rust_tools,
   }
   use "saecki/crates.nvim"
 
@@ -976,11 +975,11 @@ return packer.startup(function(use)
     cmd = "Luadev",
     config = function()
       local sile = require("keymappings").sile
-      sile("n", "<leader>xx", "<Plug>(Luadev-RunLine)")
-      sile("n", "<leader>x", "<Plug>(Luadev-Run)")
-      sile("v", "<leader>x", "<Plug>(Luadev-Run)")
-      sile("n", "<leader>xw", "<Plug>(Luadev-RunWord)")
-      sile("n", "<leader>x<space>", "<Plug>(Luadev-Complete)")
+      sile("n", "gxx", "<Plug>(Luadev-RunLine)")
+      sile("n", "gx", "<Plug>(Luadev-Run)")
+      sile("v", "gx", "<Plug>(Luadev-Run)")
+      sile("n", "gxw", "<Plug>(Luadev-RunWord)")
+      sile("n", "gx<space>", "<Plug>(Luadev-Complete)")
     end,
     ft = "lua",
   }

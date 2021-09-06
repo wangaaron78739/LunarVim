@@ -1,7 +1,3 @@
-if require("lv-utils").check_lsp_client_active "jsonls" then
-  return
-end
-
 local formatting = vim.lsp.buf.range_formatting
 -- npm install -g vscode-json-languageserver
 require("lsp.config").lspconfig "jsonls" {
@@ -10,7 +6,6 @@ require("lsp.config").lspconfig "jsonls" {
     DATA_PATH .. "/lspinstall/json/vscode-json/json-language-features/server/dist/node/jsonServerMain.js",
     "--stdio",
   },
-  on_attach = require("lsp.functions").common_on_attach,
 
   commands = {
     Format = {
@@ -19,6 +14,4 @@ require("lsp.config").lspconfig "jsonls" {
       end,
     },
   },
-
-  flags = O.lsp.flags,
 }

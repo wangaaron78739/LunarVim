@@ -129,4 +129,4 @@ end
 -- neovide settings
 -- vim.g.neovide_cursor_vfx_mode = "pixiedust"
 -- vim.g.neovide_refresh_rate=120
-require("lv-utils").set_guifont(10, "FiraCode Nerd Font")
+require("lv-utils").set_guifont(O.fontsize, "FiraCode Nerd Font")
