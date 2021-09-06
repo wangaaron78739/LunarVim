@@ -159,6 +159,10 @@ M.config = function()
   vim.g.dashboard_custom_footer = O.dashboard.footer
 end
 
+M.preconf = function()
+  vim.g.session_enable = false
+end
+
 require("lv-utils").define_augroups {
   _dashboard = {
     -- seems to be nobuflisted that makes my stuff disapear will do more testing

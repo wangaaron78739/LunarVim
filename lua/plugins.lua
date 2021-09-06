@@ -244,6 +244,9 @@ return packer.startup(function(use)
     "ChristianChiarulli/dashboard-nvim",
     event = "BufWinEnter",
     cmd = { "Dashboard", "DashboardNewFile", "DashboardJumpMarks" },
+    setup = function ()
+      require("lv-dashboard").preconf()
+    end,
     config = function()
       require("lv-dashboard").config()
     end,
