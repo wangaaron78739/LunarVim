@@ -14,7 +14,7 @@ function efm.generic_setup(ft)
     -- end
 
     -- if O.lang[ft].efm.active == true then
-    require("lsp.config").lspconfig ("efm") {
+    require("lsp.config").lspconfig "efm" {
       cmd = {
         DATA_PATH .. "/lspinstall/efm/efm-langserver",
         "-c",

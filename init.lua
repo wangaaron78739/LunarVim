@@ -16,9 +16,6 @@ local impatient_ok, impatient = pcall(require, "impatient")
 --   impatient.enable_profile()
 -- end
 
--- if vim.g.started_by_firenvim then
--- end
-
 -- Disable builtin plugins
 local disabled_built_ins = {
   "netrw",

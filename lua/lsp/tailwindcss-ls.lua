@@ -1,5 +1,5 @@
 -- TODO what is a tailwindcss filetype
-require("lsp.config").lspconfig ("tailwindcss") {
+require("lsp.config").lspconfig "tailwindcss" {
   cmd = {
     "node",
     DATA_PATH .. "/lspinstall/tailwindcss/tailwindcss-intellisense/extension/dist/server/tailwindServer.js",
