@@ -1,6 +1,19 @@
 local conf = O.lang.latex
 vim.opt_local.wrap = true
 vim.opt_local.spell = true
+local map = vim.api.nvim_buf_set_keymap
+map(0, "n", "j", "gj", { noremap = true, silent = true })
+map(0, "n", "j", "gj", { noremap = true, silent = true })
+map(0, "v", "k", "gk", { noremap = true, silent = true })
+map(0, "v", "k", "gk", { noremap = true, silent = true })
+map(0, "v", "<C-b>", "Smb", { silent = true })
+map(0, "v", "<C-t>", "Smi", { silent = true })
+map(0, "n", "<C-b>", "ysiwmb", { silent = true })
+map(0, "n", "<C-t>", "ysiwmb", { silent = true })
+map(0, "i", "<C-b>", "<cmd>normal ysiwmb<cr>", { silent = true })
+map(0, "i", "<C-t>", "<cmd>normal ysiwmb<cr>", { silent = true })
+
+
 vim.opt_local.conceallevel = conf.conceal
 -- vim.opt_local.background = "light"
 if conf.theme then
@@ -34,12 +47,6 @@ if not require("lv-utils").check_lsp_client_active "texlab" then
   }
 end
 
-local map = vim.api.nvim_buf_set_keymap
-map(0, "n", "j", "gj", { noremap = true })
-map(0, "n", "j", "gj", { noremap = true })
-map(0, "v", "k", "gk", { noremap = true })
-map(0, "v", "k", "gk", { noremap = true })
-
 -- require("lv-utils").define_augroups {
 --   _general_lsp = {
 --     { "CursorHold,CursorHoldI", "*", ":lua vim.lsp.buf.formatting()" },
@@ -57,6 +64,7 @@ require("cmp").setup.buffer {
 require("luasnip").snippets.tex = require("lv-luasnips.tex").snips
 require("luasnip").autosnippets.tex = require("lv-luasnips.tex").auto
 
+-- Localleader
 local wk = require "which-key"
 local leaderOpts = {
   mode = "n", -- NORMAL mode
@@ -75,12 +83,13 @@ wk.register({
   t = { cmd "VimtexTocToggle", "Toggle Table Of Content" },
   v = { cmd "VimtexView", "View PDF" },
   c = { "<leader>Tc", "Toggle Conceal" },
-  b = { cmd "VimtexCompile", "Compile Project Latex" },
-  o = { cmd "VimtexCompileOutput", "Compile Output Latex" },
+  b = { cmd "VimtexCompile", "Compile" },
+  o = { cmd "VimtexCompileOutput", "Compile Output" },
+  e = { cmd "VimtexErrors", "Errors" },
   l = { cmd "TexlabBuild", "Texlab Build" },
   n = { cmd.require("nabla").action, "Nabla" },
 }, leaderOpts)
 
-require("lv-utils").define_augroups { _vimtex_event = {
-  { "InsertLeave", "*.tex", "VimtexCompile" },
-} }
+-- require("lv-utils").define_augroups { _vimtex_event = {
+--   { "InsertLeave", "*.tex", "VimtexCompile" },
+-- } }

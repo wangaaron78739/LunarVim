@@ -158,6 +158,7 @@ local preamble = [[
 \usepackage{fancyhdr}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{setspace}
+\usepackage{subfiles}
 
 \usepackage{amsthm}
 
@@ -166,8 +167,7 @@ local preamble = [[
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Op}{\mathcal{O}}
-\providecommand{\C}{\mathbb{C}}
-\newcommand{\iprod}[2]{\left\langle {#1},{#2} \right\rangle}
+\newcommand{\iprod}[1]{\left\langle {#1} \right\rangle}
 \DeclareMathOperator*{\argmin}{argmin}
 \DeclareMathOperator*{\argmax}{argmax}
 \newcommand{\sspan}{\operatorname{span}}
@@ -210,10 +210,12 @@ local docinfo = [[
 \title{${1:Homework}}
 \author{${2:Anshuman Medhi}}
 
+% Sections
 \renewcommand{\thesection}{\arabic{section}.}
 % \renewcommand{\thesubsection}{\quad\alph{subsection}.}
 \renewcommand{\thesubsection}{\thesection\alph{subsection})}
 
+% Header/footer
 \pagestyle{fancy}
 \fancyhf{}
 \makeatletter
@@ -240,10 +242,19 @@ local docinfo = [[
 
 %\listoffigures
 
+$0
+
 \end{document}
 ]]
+
 local main = preamble .. notestheorems .. docinfo
 local hw = preamble .. hwktheorems .. docinfo
+local sub = [[\documentclass[${1:../main.tex}]{subfiles}
+
+\begin{document}
+\section{$2}
+\end{document}
+]]
 local essay = preamble .. notestheorems .. docinfo
 
 return {
@@ -254,118 +265,6 @@ return {
 	\caption{${2:caption}}
 	\label{tab:${3:label}}
 	\begin{tabular}{${5:c}}\usepackage{thmtools}
-\usepackage[framemethod=TikZ]{mdframed}
-
-\theoremstyle{definition}
-\mdfdefinestyle{mdbluebox}{%
-	roundcorner = 10pt,
-	linewidth=1pt,
-	skipabove=12pt,
-	innerbottommargin=9pt,
-	skipbelow=2pt,
-	nobreak=true,
-	linecolor=blue,
-	backgroundcolor=TealBlue!5,
-}
-\declaretheoremstyle[
-	headfont=\sffamily\bfseries\color{MidnightBlue},
-	mdframed={style=mdbluebox},
-	headpunct={\\\\[3pt]},
-	postheadspace={0pt}
-]{thmbluebox}
-
-\mdfdefinestyle{mdredbox}{%
-	linewidth=0.5pt,
-	skipabove=12pt,
-	frametitleaboveskip=5pt,
-	frametitlebelowskip=0pt,
-	skipbelow=2pt,
-	frametitlefont=\bfseries,
-	innertopmargin=4pt,
-	innerbottommargin=8pt,
-	nobreak=true,
-	linecolor=RawSienna,
-	backgroundcolor=Salmon!5,
-}
-\declaretheoremstyle[
-	headfont=\bfseries\color{RawSienna},
-	mdframed={style=mdredbox},
-	headpunct={\\\\[3pt]},
-	postheadspace={0pt},
-]{thmredbox}
-
-\mdfdefinestyle{mdblackbox}{%
-	linewidth=0.5pt,
-	skipabove=12pt,
-	frametitleaboveskip=5pt,
-	frametitlebelowskip=0pt,
-	skipbelow=2pt,
-	frametitlefont=\bfseries,
-	innertopmargin=4pt,
-	innerbottommargin=8pt,
-	nobreak=true,
-	linecolor=black,
-	backgroundcolor=RedViolet!5!gray!5,
-}
-\declaretheoremstyle[
-	mdframed={style=mdblackbox},
-	headpunct={\\\\[3pt]},
-	postheadspace={0pt},
-]{thmblackbox}
-\declaretheorem[%
-style=thmbluebox,name=Theorem,numberwithin=section]{theorem}
-\declaretheorem[style=thmbluebox,name=Lemma,sibling=theorem]{lemma}
-\declaretheorem[style=thmbluebox,name=Proposition,sibling=theorem]{proposition}
-\declaretheorem[style=thmbluebox,name=Corollary,sibling=theorem]{corollary}
-\declaretheorem[style=thmredbox,name=Example,sibling=theorem]{example}
-\declaretheorem[style=thmblackbox,name=Algorithm,sibling=theorem]{algo}
-
-\mdfdefinestyle{mdgreenbox}{%
-	skipabove=8pt,
-	linewidth=2pt,
-	rightline=false,
-	leftline=true,
-	topline=false,
-	bottomline=false,
-	linecolor=ForestGreen,
-	backgroundcolor=ForestGreen!5,
-}
-\declaretheoremstyle[
-	headfont=\bfseries\sffamily\color{ForestGreen!70!black},
-	bodyfont=\normalfont,
-	spaceabove=2pt,
-	spacebelow=1pt,
-	mdframed={style=mdgreenbox},
-	headpunct={ --- },
-]{thmgreenbox}
-
-%\mdfdefinestyle{mdblackbox}{%
-%	skipabove=8pt,
-%	linewidth=3pt,
-%	rightline=false,
-%	leftline=true,
-%	topline=false,
-%	bottomline=false,
-%	linecolor=black,
-%	backgroundcolor=RedViolet!5!gray!5,
-%}
-%\declaretheoremstyle[
-%	headfont=\bfseries,
-%	bodyfont=\normalfont\small,
-%	spaceabove=0pt,
-%	spacebelow=0pt,
-%	mdframed={style=mdblackbox}
-%]{thmblackbox}
-
-\theoremstyle{theorem}
-\declaretheorem[name=Remark,sibling=theorem,style=thmgreenbox]{remark}
-
-\theoremstyle{definition}
-\newtheorem{claim}[theorem]{Claim}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{fact}[theorem]{Fact}
-
-\newcommand{\vocab}[1]{\textbf{\color{blue} #1}}
 	$0${5/((?<=.)c|l|r)|./(?1: & )/g}
 	\end{tabular}
 \end{table}
@@ -379,6 +278,8 @@ style=thmbluebox,name=Theorem,numberwithin=section]{theorem}
 \end{figure}
     ]],
     ["maintemplate"] = main,
+    ["essaytemplate"] = essay,
+    ["subtemplate"] = sub,
     ["hwktemplate"] = hw,
     --     ["subnotestemplate"]=[[
     -- \documentclass[../main/main.tex]{subfiles}

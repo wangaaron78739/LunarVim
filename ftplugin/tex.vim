@@ -25,6 +25,8 @@ if !exists('s:local_recipes')
         \   {'__filetype__': 'tex', 'buns': ['\bigl|',        '\bigr|'],         'nesting': 1, 'input': [ 'M|' ], 'action': ['add']},
         \   {'__filetype__': 'tex', 'buns': ['\bigl\{',       '\bigr\}'],        'nesting': 1, 'input': [ 'M{' ], 'action': ['add'], 'indentkeys-': '{,},0{,0}'},
         \   {'__filetype__': 'tex', 'buns': ['\bigl\langle ', '\bigr\rangle '],  'nesting': 1, 'input': [ 'M<' ], 'action': ['add']},
+        \   {'__filetype__': 'tex', 'buns': ['\textbf{', '}'],  'nesting': 1, 'input': [ 'mb' ], 'action': ['add']},
+        \   {'__filetype__': 'tex', 'buns': ['\textit{', '}'],  'nesting': 1, 'input': [ 'mi' ], 'action': ['add']},
         \   {
         \     '__filetype__': 'tex',
         \     'buns'    : ['\begingroup', '\endgroup'],

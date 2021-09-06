@@ -21,6 +21,7 @@ local pa = ls.parser.parse_snippet
 local types = require "luasnip.util.types"
 local nl = t { "", "" }
 local list_extend = vim.list_extend
+local tbl_extend = vim.tbl_extend
 
 local rec_ls
 rec_ls = function()
@@ -67,6 +68,15 @@ end
 local nms = function(lhs, rhs)
   return s(lhs, rhs, nonmathmode)
 end
+local nw = function(k)
+  return { trig = k, wordTrig = false }
+end
+local function re(arg)
+  return { trig = arg, regTrig = true }
+end
+local function renw(arg)
+  return { trig = arg, regTrig = true, wordTrig = false }
+end
 
 local trig_fns = {
   "sin",
@@ -76,15 +86,8 @@ local trig_fns = {
   "csc",
   "sec",
 }
-local fns = {
-  "min",
-  "max",
-  "argmin",
-  "argmax",
-  "log",
-  "exp",
-}
-local autosyms = {
+
+local both_maps = {
   "alpha",
   "beta",
   "gamma",
@@ -136,14 +139,21 @@ local autosyms = {
   "nabla",
   "infty",
   "iff",
-  "to",
-}
-list_extend(autosyms, trig_fns)
-list_extend(autosyms, fns)
-local symmaps_table = {
-  ["..."] = "ldots", -- dots
+  ["..."] = "ldots",
   ["=>"] = "implies",
   ["=<"] = "impliedby",
+  ["->"] = "to",
+  ["|->"] = "mapsto",
+  ["!>"] = "mapsto",
+  ["<>"] = "mapsto",
+}
+for k, v in pairs(both_maps) do -- FIXME: deal with already existing backslash (can use frontier set?)
+  local lhs = ("number" == type(k)) and v or k
+  utils.dump(lhs, v)
+end
+
+local math_maps = {
+  -- TODO: Move some of these to both
   [">="] = "geq",
   ["<="] = "leq",
   ["!="] = "neq",
@@ -153,10 +163,6 @@ local symmaps_table = {
   ["<<"] = "ll",
   ["xx"] = "times",
   ["**"] = "cdot",
-  ["->"] = "to",
-  ["|->"] = "mapsto",
-  ["!>"] = "mapsto",
-  ["<>"] = "mapsto",
   ["||"] = "mid",
   ["+-"] = "pm",
   ["-+"] = "mp",
@@ -166,9 +172,20 @@ local symmaps_table = {
   ["NN"] = "N",
   ["ZZ"] = "Z",
   ["CC"] = "C",
+  ["QQ"] = "Q",
   ["OO"] = "Op",
-  ["inf"] = "infty",
+  ["to"] = "to",
+  "argmin",
+  "argmax",
+  ["part"] = "partial",
+  ["inf"] = "infty", -- FIXME: why below here doesn't trigger? WHY DOES IT TRIGGER NOW!?
+  "min",
+  "max",
+  "log",
+  "exp",
 }
+list_extend(math_maps, trig_fns)
+utils.dump(math_maps)
 local pairsubs = setmetatable({ -- Autopairs will complete the closing for most of these
   ["{"] = "", -- "}",
   ["["] = "", -- "]",
@@ -187,17 +204,31 @@ local pairsub = function(j)
   end, {})
 end
 
-local nw = function(k)
-  return { trig = k, wordTrig = false }
-end
-local function re(arg)
-  return { trig = arg, regTrig = true }
-end
-local function renw(arg)
-  return { trig = arg, regTrig = true, wordTrig = false }
+local auto = {}
+local snips = {}
+
+----------------------------------------------------------------------
+--                     Auto expanding Snippets                      --
+----------------------------------------------------------------------
+-- Derived snippets
+for k, v in pairs(both_maps) do -- FIXME: deal with already existing backslash (can use frontier set?)
+  local lhs = ("number" == type(k)) and v or k
+  -- local lhs = "([^%\\])" .. v
+  -- local lhs = "([%p])" .. v
+  list_extend(auto, { ms(lhs, t("\\" .. v)) })
+  list_extend(auto, { nms(lhs .. " ", t("$\\" .. v .. "$ ")) })
 end
 
-local auto = {
+for k, v in pairs(math_maps) do
+  local lhs = ("number" == type(k)) and v or k
+  list_extend(auto, { ms(lhs, t("\\" .. v)) })
+end
+for k, v in pairs(trig_fns) do
+  local lhs = ("number" == type(k)) and v or k
+  list_extend(auto, { ms(re([[ar?c?]] .. lhs), t("\\arc\\" .. v)) })
+end
+
+list_extend(auto, {
   ms("cases ", { t { "\\begin{cases}", "" }, i(0), t { "", "\\end{cases}" } }),
   s("\\eq ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
   s("\\ali ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
@@ -206,14 +237,14 @@ local auto = {
   -- pa("\\(", "\\( $0 \\"),
   nms("bf{", { t "\\textbf{", i(0) }),
   nms("it{", { t "\\textit{", i(0) }),
-  ms("sq", { t "\\sqrt{", i(0), t "}" }),
-  ms("st ", { t "\\text{s.t.}" }),
-  ms("let", { t "\\textbf{let}" }),
-  ms("if", { t "\\textbf{if}" }),
-  ms("otherwise", { t "\\textbf{otherwise}" }),
-  ms("else", { t "\\textbf{else}" }),
   ms("bf{", { t "\\mathbf{", i(0) }),
   ms("bb{", { t "\\mathbb{", i(0) }),
+  ms("sq ", { t "\\sqrt{", i(0), t "}" }),
+  ms("st  ", { t "\\text{s.t.}" }),
+  ms("let ", { t "\\textbf{let }" }),
+  ms("if ", { t "\\textbf{if }" }),
+  ms("otherwise ", { t "\\textbf{ otherwise }" }),
+  ms("else ", { t "\\textbf{ else }" }),
   ms("cal{", { t "\\mathcal{", i(0) }),
   ms(renw "^^", { t "_{", i(0), t "}" }),
   ms(renw "__([^%s_])", { t "_{", sub(1), i(0), t "}" }),
@@ -222,12 +253,12 @@ local auto = {
   ms(nw "\\,\\, ", t "\\quad"),
   ms(nw "\\quad\\, ", t "\\qquad"),
   ms(nw "\\quad\\quad ", t "\\qquad"),
-  s("--",  t "\\item" ),
+  s("--", t "\\item"),
   ms(re [[(%S) ([%^_])]], { sub(1), sub(2) }), -- Remove extra ws sub/superscript
   ms(re [[([A-Za-z%}%]%)])(%d)]], { sub(1), t "_", sub(2) }), -- Auto subscript
   ms(re [[([A-Za-z%}%]%)]) ?_(%d%d)]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
   ms(re [[([A-Za-z%}%]%)]) ?%^ ?(%d%d)]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
-  ms(re [[([A-Za-z%}%]%)]) ?%^([%+%-]? ?[%w]) ]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
+  ms(re [[([A-Za-z%}%]%)]) ?%^([%+%-] ?[%w]) ]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
   ms(re [[([A-Za-z%}%]%)]) ?%^([%+%-]? ?%\%w+) ]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
   -- TODO: whitespace before and after operators
   -- TODO: fraction
@@ -261,7 +292,9 @@ local auto = {
       end
     end, {})
   ),
-  ms("dint", { t "\\int_{", i(1, "-\\infty"), t "}^{", i(2, "\\infty"), t "}" }),
+  ms("dint ", { t "\\int_{", i(1, "-\\infty"), t "}^{", i(2, "\\infty"), t "}" }),
+  ms("sum ", { t "\\sum\\limits_{", i(1, "i=0"), t "}^{", i(2, "n"), t "}" }),
+  ms("sumi ", { t "\\sum_{", i(1, "i=0"), t "}^{", i(2, "n"), t "}" }),
   -- TODO: binomial
   ms(re "big(%S+) ", { t "\\big", sub(1), t " ", i(0), t " \\big", pairsub(1) }),
   ms(re "Big(%S+) ", { t "\\Big", sub(1), t " ", i(0), t " \\Big", pairsub(1) }),
@@ -280,27 +313,12 @@ local auto = {
   ms("lcl", { t "\\lceil" }),
   ms("rcl", { t "\\rceil" }),
   ms("rfl", { t "\\rfloor" }),
-}
+  -- ms("|", { t "|", i(0), t "|" }),
+})
 
--- Derived snippets
-local autosyms_math = {}
-local autosyms_open = {}
-for j, v in ipairs(autosyms) do -- FIXME: deal with already existing backslash (can use frontier set?)
-  -- local lhs = "([^%\\])" .. v
-  -- local lhs = "([%p])" .. v
-  local lhs = v
-  autosyms_math[j] = ms(re(lhs), t("\\" .. v))
-  autosyms_open[j] = nms(re(lhs), t("$\\" .. v .. "$"))
-end
-list_extend(auto, autosyms_math)
-list_extend(auto, autosyms_open)
-for k, v in pairs(symmaps_table) do
-  list_extend(auto, { ms(k, t("\\" .. v)) })
-end
-for _, v in ipairs(trig_fns) do
-  list_extend(auto, { ms(re([[ar?c?]] .. v), t("\\arc\\" .. v)) })
-end
-
+----------------------------------------------------------------------
+--                         Manual Snippets:                         --
+----------------------------------------------------------------------
 local theorems = {
   "theorem",
   "definition",
@@ -310,9 +328,9 @@ local theorems = {
   "fact",
   "corollary",
 }
-local snips = {
+list_extend(snips, {
   ms("partfrac", { t "\\frac{\\partial ", i(1), t "}{\\partial ", i(0), t "}" }),
-}
+})
 for _, v in pairs(theorems) do
   list_extend(snips, {
     s(v, { t { "\\begin{" .. v .. "}", "" }, i(0), t { "", "\\end{" .. v .. "}" } }),
@@ -325,4 +343,5 @@ end
 return {
   snips = snips,
   auto = auto,
+  math_maps = math_maps,
 }
