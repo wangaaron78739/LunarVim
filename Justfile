@@ -52,6 +52,8 @@ startup:
     {{nvim}} +PackerCompile +'StartupTime -- lua/plugins.lua'
 
 stylua:
+    #!/usr/bin/env bash
+    shopt -s globstar
     stylua **.lua
 
 # Fetch new changes 
