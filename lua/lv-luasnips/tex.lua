@@ -153,7 +153,7 @@ local autosyms = {
 list_extend(autosyms, trig_fns)
 list_extend(autosyms, fns)
 local symmaps_table = {
-  ["..."] = "dots",
+  ["..."] = "ldots",
   ["=>"] = "implies",
   ["=<"] = "impliedby",
   [">="] = "geq",
@@ -174,13 +174,48 @@ local symmaps_table = {
   ["-+"] = "mp",
   ["AA"] = "forall",
   ["EE"] = "exists",
+
+  ["RR"] = "R",
+  ["QQ"] = "Q",
+  ["ZZ"] = "Z",
+  ["NN"] = "N",
+  ["CC"] = "C",
+
+  ["ooo"] = "infty",
+}
+
+local tex_pairs = {
+  [" "] = { "(", ")" },
+  ["("] = { "(", "" },
+  ["["] = { "[", "" },
+  ["{"] = { "\\{", "\\" },
+  ["|"] = { "|", "|" },
+  ["<"] = { "<", ">" },
+  ["a"] = { "\\langle", "\\rangle" },
+}
+
+local tex_env = {
+  nonmathmode = {
+    ["cases"] = "cases",
+    ["\\eq"] = "equation",
+    ["\\it"] = { name = "itemize", body = { t "\t\\item ", i(1) } },
+    ["\\en"] = { name = "enumerate", body = { t "\t\\item ", i(1) } },
+    ["\\desc"] = { name = "description", body = { t "\t\\item[", i(1), t "]", i(2) } },
+  },
+  mathmode = {
+    ["bmat"] = "bmatrix",
+    ["pmat"] = "pmatrix",
+  },
+}
+
+local tex_operators = {
+  ["dint"] = { operator = "\\int", low = { i(1, "\\infty") }, upp = { i(2, "\\infty") } },
+  ["sum"] = { operator = "\\sum", low = { i(1, "n"), t "=", i(2, "0") }, upp = { i(3, "\\infty") } },
+  ["prod"] = { operator = "\\prod", low = { i(1, "n"), t "=", i(2, "1") }, upp = { i(3, "\\infty") } },
+  ["lim"] = { operator = "\\lim", low = { i(1, "n"), t "\\to", i(2, "\\infty") }, upp = {} },
 }
 
 local auto = {
-  ms("cases ", { t "\\begin{cases}", i(0), t "\\end{cases}" }),
-  s("\\eq ", { t "\\begin{equation}", i(0), t "\\end{equation}" }),
-  s("\\ali ", { t "\\begin{equation}", i(0), t "\\end{equation}" }),
-  s("\\desc ", { t { "\\begin{description}", "\t\\item[" }, i(1), t { "]" }, i(0), t { "", "\\end{description}" } }),
   pa("$", "\\($0\\)"),
   pa("\\(", "\\( $0 \\"),
   pa("it{", "\\textit{$0"),
@@ -215,15 +250,15 @@ local auto = {
   ms(re [[([%w%^]+)~]], { t "\\tilde{", sub(1), t "}" }),
   ms(re [[([%w%^]+)%. ]], { t "\\dot{", sub(1), t "} " }),
   ms(re [[([%w%^]+)%.%.]], { t "\\ddot{", sub(1), t "}" }),
-  ms(re [[([%w%^]+)^bar]], { t "\\overline{", sub(1), t "}" }),
+  ms(re [[([%w^]+)bar]], { t "\\overline{", sub(1), t "}" }),
   ms("bar", { t "\\overline{", i(0), t "}" }),
-  ms(re [[([%w%^]+)^hat]], { t "\\hat{", sub(1), t "}" }),
+  ms(re [[([%w%^]+)hat]], { t "\\hat{", sub(1), t "}" }),
   ms("hat", { t "\\hat{", i(0), t "}" }),
   -- TODO: bmatrix et al
   ms("part", { t "\\frac{\\partial ", i(1), t "}{\\partial ", i(0), t "}" }),
-  ms("//", { t "\\frac{", i(1), t "}{", i(0), t "}" }),
-  ms(re "(%b{})/", { t "\\frac", sub(1), t "{", i(0), t "}" }),
-  ms(re "(%\\?%w+)/", { t "\\frac{", sub(1), t "}{", i(0), t "}" }),
+  ms("//", { t "\\frac{", i(1), t "}{", i(1), t "}", i(0) }),
+  ms(re "(%b{})/", { t "\\frac", sub(1), t "{", i(1), t "}", i(0) }),
+  ms(re "(%\\?%w+)/", { t "\\frac{", sub(1), t "}{", i(1), t "}", i(0) }),
   ms("inn", t "\\in"),
   ms("notin", t "\\not\\in"),
   ms("sr", t "^2"),
@@ -239,18 +274,13 @@ local auto = {
   --     end
   --   end, {})
   -- ),
-  ms("dint", {
-    t "\\int_{",
-    i(1, "\\infty"),
-    t "}^{",
-    i(2, "\\infty"),
-    t "}",
-  }),
+
   -- TODO: binomial
 
-  s("... ", { t "\\ldots" }, mathmode),
-  s("bmat ", { t "\\begin{bmatrix} ", i(1), t { " \\end{bmatrix}" }, i(0) }),
-  s("pmat ", { t "\\begin{pmatrix} ", i(1), t { " \\end{pmatrix}" }, i(0) }),
+  ms("norm", { t "\\|", i(1), t "\\|", i(0) }),
+  nms("mk", { t "\\(", i(1), t "\\)", i(0) }),
+  nms("dm", { t { "\\[", "" }, i(1), t { "", "\\]" }, i(0) }),
+  ms(re [[([%w%^]+)td]], { sub(1), t "^{", i(1), t "}", i(0) }),
 }
 
 local snips = {
@@ -268,15 +298,56 @@ for j, v in ipairs(autosyms) do -- FIXME: deal with already existing backslash (
   -- local lhs = "([%p])" .. v
   local lhs = v
   autosyms_math[j] = ms(re(lhs), t("\\" .. v))
-  autosyms_open[j] = nms(re(lhs), t("$\\" .. v .. "$"))
+  -- autosyms_open[j] = nms(re(lhs), t("$\\" .. v .. "$"))
 end
 list_extend(auto, autosyms_math)
 list_extend(auto, autosyms_open)
+
 for k, v in pairs(symmaps_table) do
   list_extend(auto, { ms(k, t("\\" .. v)) })
 end
+
 for _, v in ipairs(trig_fns) do
   list_extend(auto, { ms(re([[ar?c?]] .. v), t("\\arc\\" .. v)) })
+end
+
+for k, v in pairs(tex_pairs) do
+  list_extend(auto, { ms("lr" .. k, { t("\\left" .. v[1]), i(1), t("\\right" .. v[2]), i(0) }) })
+end
+
+for k, v in pairs(tex_operators) do
+  local snip = { t(v.operator .. "\\limits_{") }
+  for _, _v in ipairs(v.low) do
+    list_extend(snip, { _v })
+  end
+  list_extend(snip, { t "}^{" })
+  for _, _v in ipairs(v.upp) do
+    list_extend(snip, { _v })
+  end
+  list_extend(snip, { t "}", i(0) })
+  list_extend(auto, { ms(k, snip) })
+end
+
+local tex_env_snip = function(name, body)
+  local snip = { t { "\\begin{" .. name .. "} ", "" } }
+  list_extend(snip, body)
+  list_extend(snip, { t { "", "\\end{" .. name .. "}" }, i(0) })
+  return snip
+end
+
+for k, v in pairs(tex_env.nonmathmode) do
+  if type(v) == "string" then
+    list_extend(auto, { nms(k, tex_env_snip(v, { i(1) })) })
+  else
+    list_extend(auto, { nms(k, tex_env_snip(v.name, v.body)) })
+  end
+end
+for k, v in pairs(tex_env.mathmode) do
+  if type(v) == "string" then
+    list_extend(auto, { ms(k, tex_env_snip(v, { i(1) })) })
+  else
+    list_extend(auto, { ms(k, tex_env_snip(v.name, v.body)) })
+  end
 end
 
 for k, v in pairs(templates.tex) do

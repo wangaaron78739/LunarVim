@@ -1,127 +1,4 @@
-
-return {
-
-  tex = {
-    ["\\tab "] = [[
-\begin{table}[${1:htpb}]
-	\centering
-	\caption{${2:caption}}
-	\label{tab:${3:label}}
-	\begin{tabular}{${5:c}}
-	$0${5/((?<=.)c|l|r)|./(?1: & )/g}
-	\end{tabular}
-\end{table}
-    ]],
-    ["\\fig "] = [[
-\begin{figure}[${1:htpb}]
-	\centering
-	${2:\includegraphics[width=0.8\textwidth]{$3}}
-	\caption{${4:$3}}
-	\label{fig:${5:${3/\W+/-/g}}}
-\end{figure}
-    ]],
-    ["hwtemplate"]=[[
-\documentclass[12pt]{article}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
-\usepackage{xcolor}
-\usepackage{textcomp}
-\usepackage[hyphens,spaces,obeyspaces]{url}
-\usepackage{listings}
-\lstset{language=C++,
-	basicstyle=\ttfamily,
-	keywordstyle=\color{blue}\ttfamily,
-	stringstyle=\color{red}\ttfamily,
-	commentstyle=\color{green}\ttfamily,
-	morecomment=[l][\color{magenta}]{\#}
-}
-
-\usepackage{bm}
-\usepackage{amsmath,amsthm,amssymb,amsfonts}
-\usepackage{mathtools}
-
-\usepackage{blkarray}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{fancyhdr}
-\usepackage[a4paper, margin=1in]{geometry}
-\usepackage{multicol}
-\usepackage{enumerate}
-\usepackage{enumitem}
-\setlist{nolistsep}
-\usepackage{graphicx}
-\usepackage{gensymb}
-\usepackage{subcaption}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-% \usepackage[noend]{algpseudocode}
-\graphicspath{ {./images/} }
-\usepackage[super]{nth}
-
-\newtheorem{theorem}{Theorem}
-\newtheorem{corollary}{Corollary}[theorem]
-\newtheorem{definition}{Definition}
-\newtheorem{lemma}{Lemma}
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
-\newtheorem*{question}{Question}
-\newtheorem*{answer}{Answer}
-
-\newcommand{\NN}{\mathbb{N}}
-\newcommand{\ZZ}{\mathbb{Z}}
-\newcommand{\RR}{\mathbb{R}}
-\newcommand{\CC}{\mathbb{C}}
-\newcommand{\QQ}{\mathbb{Q}}
-
-\newcommand\Ccancel[2][black]{\renewcommand\CancelColor{\color{#1}}\cancel{#2}}
-\newcommand{\x}{\bm{x}}
-\newcommand{\y}{\bm{y}}
-\newcommand{\mat}[1]{\mathbf{#1}}
-\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
-\newcommand{\sspan}{\operatorname{span}}
-\DeclareMathOperator*{\argmax}{arg\,max}
-\DeclareMathOperator*{\argmin}{arg\,min}
-\DeclareMathOperator*{\arccosh}{arccosh}
-\newcommand{\iprod}[2]{\left\langle{#1},{#2}\right\rangle }
-
-\newcommand{\PreserveBackslash}[1]{\let\temp=\\\#1\let\\\=\temp}
-\newcolumntype{C}[1]{>{\PreserveBackslash\centering}p{#1}}
-\newcolumntype{R}[1]{>{\PreserveBackslash\raggedleft}p{#1}}
-\newcolumntype{L}[1]{>{\PreserveBackslash\raggedright}p{#1}}
-
-\algdef{SE}[SUBALG]{Indent}{EndIndent}{}{\algorithmicend\ }%
-\algtext*{Indent}
-\algtext*{EndIndent}
-
-
-\pagestyle{fancy}
-% \fancyhf{}
-\rhead{SID: 20477053}
-\chead{Name: Aaron Si-yuan Wang}
-\lhead{${1:CourseCode} - ${3:ShortTitle}}
-\cfoot{\thepage}
-\title{
-{\LARGE $1 - ${2:CourseName}} \\\\
-\textbf{\LARGE ${4:LongTitle}} \\\\
-% \textbf{}
-}
-\author{ 
-\begin{tabular}{R{0.3\textwidth}L{0.4\textwidth}}
-\normalsize\textbf{Name:} & \normalsize WANG, Aaron Si-yuan \\\\
-\normalsize\textbf{Student ID:} & \normalsize20477053 \\\\
-\end{tabular}
-}
-
-\date{}
-
-\begin{document}
-\maketitle\thispagestyle{fancy}
-$5
-\end{document}
-    ]],
-    ["mainnotestemplate"] = [[
+local preamble = [[
 \documentclass[12pt]{article}
 \usepackage[usenames,svgnames,dvipsnames]{xcolor}
 \usepackage{tikz}
@@ -311,7 +188,56 @@ style=thmbluebox,name=Theorem,numberwithin=section]{theorem}
 \newcolumntype{L}[1]{>{\PreserveBackslash\raggedright}p{#1}}
 
 \newcommand{\bful}[1]{\underline{\textbf{#1}}}
+]]
 
+return {
+
+  tex = {
+    ["\\tab "] = [[
+\begin{table}[${1:htpb}]
+	\centering
+	\caption{${2:caption}}
+	\label{tab:${3:label}}
+	\begin{tabular}{${5:c}}
+	$0${5/((?<=.)c|l|r)|./(?1: & )/g}
+	\end{tabular}
+\end{table}
+    ]],
+    ["\\fig "] = [[
+\begin{figure}[${1:htpb}]
+	\centering
+	${2:\includegraphics[width=0.8\textwidth]{$3}}
+	\caption{${4:$3}}
+	\label{fig:${5:${3/\W+/-/g}}}
+\end{figure}
+    ]],
+    ["hwtemplate"] = preamble .. [[
+\pagestyle{fancy}
+% \fancyhf{}
+\rhead{SID: 20477053}
+\chead{Name: Aaron Si-yuan Wang}
+\lhead{${1:CourseCode} - ${3:ShortTitle}}
+\cfoot{\thepage}
+\title{
+{\LARGE $1 - ${2:CourseName}} \\\\
+\textbf{\LARGE ${4:LongTitle}} \\\\
+% \textbf{}
+}
+\author{ 
+\begin{tabular}{R{0.3\textwidth}L{0.4\textwidth}}
+\normalsize\textbf{Name:} & \normalsize WANG, Aaron Si-yuan \\\\
+\normalsize\textbf{Student ID:} & \normalsize20477053 \\\\
+\end{tabular}
+}
+
+\date{}
+
+\begin{document}
+\maketitle\thispagestyle{fancy}
+$5
+\end{document}
+    ]],
+    ["mainnotestemplate"] = preamble .. [[
 \pagestyle{fancy}
 \renewcommand{\sectionmark}[1]{\markright{#1}}
 \fancyhf{}
@@ -338,15 +264,15 @@ $5
 \printindex
 \end{document}
 ]],
---     ["subnotestemplate"]=[[
--- \documentclass[../main/main.tex]{subfiles}
--- 
--- \begin{document}
--- 
--- \section{`d=$(date +%e); case $d in 1?) d=${d}th ;; *1) d=${d}st ;; *2) d=${d}nd ;; *3) d=${d}rd ;; *) d=${d}th ;; esac; date +"%B $d, %Y"`}
--- \subsection{${1:Topic}}
--- $0
--- \end{document}
---     ]]
+    --     ["subnotestemplate"]=[[
+    -- \documentclass[../main/main.tex]{subfiles}
+    --
+    -- \begin{document}
+    --
+    -- \section{`d=$(date +%e); case $d in 1?) d=${d}th ;; *1) d=${d}st ;; *2) d=${d}nd ;; *3) d=${d}rd ;; *) d=${d}th ;; esac; date +"%B $d, %Y"`}
+    -- \subsection{${1:Topic}}
+    -- $0
+    -- \end{document}
+    --     ]]
   },
 }

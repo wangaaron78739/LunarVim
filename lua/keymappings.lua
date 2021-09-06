@@ -252,11 +252,11 @@ function M.setup()
   map("n", "<C-M-k>", "<cmd>m .-2<cr>==", nore)
   map("i", "<M-j>", "<Esc>:m .+1<cr>==gi", nore)
   map("i", "<M-k>", "<Esc>:m .-2<cr>==gi", nore)
-  map("x", "<M-j>", "<cmd>m '>+1<cr>gv-gv", nore)
-  map("x", "<M-k>", "<cmd>m '<-2<cr>gv-gv", nore)
+  -- map("x", "<M-j>", "<cmd>m '>+1<cr>gv-gv", nore)
+  -- map("x", "<M-k>", "<cmd>m '<-2<cr>gv-gv", nore)
   -- Move selected line / block of text in visual mode
-  map("x", "K", "<cmd>move '<-2<cr>gv=gv", nore)
-  map("x", "J", "<cmd>move '>+1<cr>gv=gv", nore)
+  map("x", "<C-j>", ":move '>+1<CR>gv-gv", { noremap = true, silent = true })
+  map("x", "<C-k>", ":move '<-2<CR>gv-gv", { noremap = true, silent = true })
 
   -- better indenting
   map("n", "<", "<<", { silent = true, noremap = true, nowait = true })
@@ -269,8 +269,8 @@ function M.setup()
   map("x", ">", ">gv", nore)
 
   -- I hate escape
-  map("i", "jk", "<ESC>", sile)
-  map("i", "kj", "<ESC>", sile)
+  -- map("i", "jk", "<ESC>", sile)
+  -- map("i", "kj", "<ESC>", sile)
   -- map("x", "jk", "<ESC>", nore)
   -- map("x", "kj", "<ESC>", nore)
 
@@ -279,7 +279,6 @@ function M.setup()
   -- map('n', '<S-TAB>', ':bprevious<cr>', nore)
   map("n", "<TAB>", cmd "b#", nore)
   map("n", "<S-TAB>", cmd "bnext", nore)
-
   -- Preserve register on pasting in visual mode
   map("x", "p", "pgvy", nore)
   map("x", "P", "p", nore) -- for normal p behaviour
@@ -476,8 +475,8 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("i", "<C-/>", "<C-\\><C-n><cmd>CommentToggle<cr>", nore)
 
   -- Slightly easier commands
-  map("n", ";", ":", {})
-  map("x", ";", ":", {})
+  -- map("n", ";", ":", {})
+  -- map("x", ";", ":", {})
   -- map('c', ';', "<cr>", sile)
 
   -- Add semicolon
@@ -496,10 +495,9 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("n", "gpr", luacmd [[require("lsp.functions").preview_location_at("references")]], sile)
   map("n", "gpi", luacmd [[require("lsp.functions").preview_location_at("implementation")]], sile)
   -- Hover
-  -- map("n", "K", luacmd "vim.lsp.buf.hover()", sile)
   map("n", "gh", luacmd "vim.lsp.buf.hover()", sile)
-  map("n", "K", luacmd "vim.lsp.buf.code_action()", {})
-  map("v", "K", "<esc><cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>", {})
+  map("n", "L", luacmd "vim.lsp.buf.code_action()", {})
+  map("v", "L", "<esc><cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>", {})
 
   -- Formatting keymaps
   map("n", "gm", luacmd [[require("lsp.functions").format_range_operator()]], sile)

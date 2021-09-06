@@ -25,6 +25,13 @@ map(0, "n", "j", "gj", { noremap = true })
 map(0, "v", "k", "gk", { noremap = true })
 map(0, "v", "k", "gk", { noremap = true })
 
+require("cmp").setup.buffer {
+  sources = {
+    { name = "luasnip" },
+    { name = "buffer" },
+  },
+}
+
 -- require("lv-utils").define_augroups {
 --   _general_lsp = {
 --     { "CursorHold,CursorHoldI", "*", ":lua vim.lsp.buf.formatting()" },
