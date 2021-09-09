@@ -185,7 +185,17 @@ local math_maps = {
   "exp",
 }
 list_extend(math_maps, trig_fns)
-utils.dump(math_maps)
+local intlike = {
+  ["dint"] = { operator = "\\int", low = { i(1, "\\infty") }, upp = { i(2, "\\infty") } },
+  ["dintr"] = { operator = "\\int", low = { i(1, "0") }, upp = { i(2, "\\infty") } },
+  ["sum"] = { operator = "\\sum", low = { i(1, "n=0") }, upp = { i(3, "\\infty") } },
+  ["sumi"] = { operator = "\\sum", low = { i(1, "i=0") }, upp = { i(3, "n") } },
+  ["sumin"] = { operator = "\\sum", low = { i(1, "n \\in \\N") }, upp = { i(3, "\\infty") } },
+  ["prod"] = { operator = "\\prod", low = { i(1, "n=0") }, upp = { i(3, "\\infty") } },
+  ["prodi"] = { operator = "\\prod", low = { i(1, "i=0") }, upp = { i(3, "n") } },
+  ["lim"] = { operator = "\\lim", low = { i(1, "n"), t "\\to", i(2, "\\infty") }, upp = {} },
+  ["lim0"] = { operator = "\\lim", low = { i(1, "n"), t "\\to", i(2, "0") }, upp = {} },
+}
 local pairsubs = setmetatable({ -- Autopairs will complete the closing for most of these
   ["{"] = "", -- "}",
   ["["] = "", -- "]",
@@ -231,7 +241,10 @@ end
 list_extend(auto, {
   ms("cases ", { t { "\\begin{cases}", "" }, i(0), t { "", "\\end{cases}" } }),
   s("\\eq ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
-  s("\\ali ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
+  ms("matt ", { t { "\\begin{matrix}", "" }, i(0), t { "", "\\end{matrix}" } }),
+  ms("bmat ", { t { "\\begin{bmatrix}", "" }, i(0), t { "", "\\end{bmatrix}" } }),
+  ms("pmat ", { t { "\\begin{pmatrix}", "" }, i(0), t { "", "\\end{pmatrix}" } }),
+  s("\\ali ", { t { "\\begin{align*}", "" }, i(0), t { "", "\\end{align*}" } }),
   s("\\desc ", { t { "\\begin{description}", "\t\\item[" }, i(1), t { "]" }, i(0), t { "", "\\end{description}" } }),
   pa("$", "\\($0\\)"),
   -- pa("\\(", "\\( $0 \\"),
@@ -246,8 +259,8 @@ list_extend(auto, {
   ms("otherwise ", { t "\\textbf{ otherwise }" }),
   ms("else ", { t "\\textbf{ else }" }),
   ms("cal{", { t "\\mathcal{", i(0) }),
-  ms(renw "^^", { t "_{", i(0), t "}" }),
   ms(renw "__([^%s_])", { t "_{", sub(1), i(0), t "}" }),
+  ms(renw "%^%^([^%s_])", { t "^{", sub(1), i(0), t "}" }),
   ms(nw "__ ", t "\\,"),
   ms(nw "____", t "\\quad"),
   ms(nw "\\,\\, ", t "\\quad"),
@@ -292,9 +305,6 @@ list_extend(auto, {
       end
     end, {})
   ),
-  ms("dint ", { t "\\int_{", i(1, "-\\infty"), t "}^{", i(2, "\\infty"), t "}" }),
-  ms("sum ", { t "\\sum\\limits_{", i(1, "i=0"), t "}^{", i(2, "n"), t "}" }),
-  ms("sumi ", { t "\\sum_{", i(1, "i=0"), t "}^{", i(2, "n"), t "}" }),
   -- TODO: binomial
   ms(re "big(%S+) ", { t "\\big", sub(1), t " ", i(0), t " \\big", pairsub(1) }),
   ms(re "Big(%S+) ", { t "\\Big", sub(1), t " ", i(0), t " \\Big", pairsub(1) }),
@@ -315,6 +325,14 @@ list_extend(auto, {
   ms("rfl", { t "\\rfloor" }),
   -- ms("|", { t "|", i(0), t "|" }),
 })
+for k, v in pairs(intlike) do
+  local snip = { t(v.operator .. "\\limits_{") }
+  list_extend(snip, v.low)
+  list_extend(snip, { t "}^{" })
+  list_extend(snip, v.upp)
+  list_extend(snip, { t "}", i(0) })
+  list_extend(auto, { ms(k .. " ", snip) })
+end
 
 ----------------------------------------------------------------------
 --                         Manual Snippets:                         --
