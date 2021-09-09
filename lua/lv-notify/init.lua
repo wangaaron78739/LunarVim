@@ -27,6 +27,8 @@ M.config = function()
   notify.setup(O.notify)
 
   -- vim.notify = notify
-  vim.notify = notify
+  if not vim.g.neovide then -- TODO: neovide can't animate
+    vim.notify = notify
+  end
 end
 return M

@@ -174,7 +174,6 @@ O = {
     lsp_signature = {
       doc_lines = 2, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
       -- Apply indentation for wrapped lines
-      use_lspsaga = false, -- set to true if you want to use lspsaga popup
       floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
       fix_pos = true, -- set to true, the floating window will not auto-close until finish all parameters
       hint_enable = true, -- virtual hint enable

@@ -297,6 +297,8 @@ function M.setup()
   -- I hate escape
   map("i", "jk", "<ESC>", sile)
   map("i", "kj", "<ESC>", sile)
+  -- map("n", "jk", "<ESC>", sile)
+  -- map("n", "kj", "<ESC>", sile)
   -- map("x", "jk", "<ESC>", nore)
   -- map("x", "kj", "<ESC>", nore)
 
