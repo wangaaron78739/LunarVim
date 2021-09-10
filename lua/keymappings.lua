@@ -238,7 +238,7 @@ function M.setup()
   map("n", "<C-+>", cmd "FontUp", sile)
 
   -- More convenient incr/decr
-  map("n", "+", "<C-a>", sile)
+  map("n", "+", "<C-a>", sile) -- recursive so we get dial.nvim
   map("n", "-", "<C-x>", sile)
   map("x", "+", "g<C-a>", sile)
   map("x", "-", "g<C-x>", sile)
@@ -471,7 +471,8 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
 
   -- Double Escape key clears search and spelling highlights
   -- map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell | call minimap#vim#ClearColorSearch()<ESC>", nore)
-  map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell<cr>", nore)
+  -- map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell", nore)
+  map("n", "<Plug>ClearHighLights", cmd "nohls", nore)
   map("n", "<ESC>", "<Plug>ClearHighLights", sile)
 
   -- Map `cp` to `xp` (transpose two adjacent chars)
@@ -624,11 +625,12 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   quick_inside "["
   quick_around "]"
   quick_inside "("
-  quick_around "]"
+  quick_around ")"
   quick_inside "{"
-  quick_around "]"
+  quick_around "}"
   quick_inside '"'
   quick_inside "'"
+  quick_inside "q"
   map("n", "<M-.>", "v.", {})
   map("n", "<M-;>", "v;", {})
   -- map("n", "r", '"_ci', {})
@@ -638,7 +640,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("n", "<M-BS>", "x", nore)
 
   -- "better" end and beginning of line
-  map("o", "H", "^", {}) -- do ^ first then 0
+  map("o", "H", "^", {})
   map("o", "L", "$", {})
   -- map("n", "H", "^", {})
   map("n", "H", [[col('.') == match(getline('.'),'\S')+1 ? '0' : '^']], expr) -- do ^ first then 0
@@ -647,14 +649,14 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   -- map("n", "m-/", "")
 
   -- Free keys
-  map("n", "C-q", "<NOP>", {})
-  map("n", "C-n", "<NOP>", {})
-  map("n", "C-p", "<NOP>", {})
-  map("n", "C-o", "<NOP>", {})
+  map("n", "<C-q>", "<NOP>", {})
+  map("n", "<C-n>", "<NOP>", {})
+  map("n", "<C-p>", "<NOP>", {})
+  map("n", "<C-o>", "<NOP>", {})
 
   -- Select whole file
-  map("o", "ie", "<cmd>normal! mzggVG<cr>`z", nore)
-  map("x", "ie", "gg0oG$", nore)
+  -- map("o", "ie", "<cmd>normal! mzggVG<cr>`z", nore)
+  sel_map("iG", "gg0oG$", nore)
 
   -- Operator for current line
   -- sel_map("il", "g_o^")
