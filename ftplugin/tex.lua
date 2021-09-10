@@ -35,10 +35,7 @@ local conf = {
 vim.opt_local.wrap = true
 vim.opt_local.spell = true
 local map = vim.api.nvim_buf_set_keymap
-map(0, "n", "j", "gj", { noremap = true, silent = true })
-map(0, "n", "j", "gj", { noremap = true, silent = true })
-map(0, "v", "k", "gk", { noremap = true, silent = true })
-map(0, "v", "k", "gk", { noremap = true, silent = true })
+require("keymappings").wrapjk()
 map(0, "v", "<C-b>", "Smb", { silent = true })
 map(0, "v", "<C-t>", "Smi", { silent = true })
 map(0, "n", "<C-b>", "ysiwmb", { silent = true })

@@ -658,8 +658,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("n", "cc", "^cg_", sile)
 
   -- add j and k with count to jumplist
-  map("n", "j", [[(v:count > 1 ? "m'" . v:count : '') . 'j']], expr)
-  map("n", "k", [[(v:count > 1 ? "m'" . v:count : '') . 'k']], expr)
+  M.countjk()
 
   -- Plugin keymaps
   require("lv-hop").keymaps()
@@ -1004,6 +1003,16 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   -- TODO: register all g prefix keys in whichkey
 
   -- FIXME: duplicate entries for some of the operators
+end
+
+local mincount = 5
+function M.wrapjk()
+  map("n", "j", [[v:count ? (v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'j' : 'gj']], expr)
+  map("n", "k", [[v:count ? (v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'k' : 'gk']], expr)
+end
+function M.countjk()
+  map("n", "j", [[(v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'j']], expr)
+  map("n", "k", [[(v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'k']], expr)
 end
 
 return M
