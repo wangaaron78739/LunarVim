@@ -105,7 +105,7 @@ O = {
       ["conditional"] = { "i", "I" },
       ["call"] = { "c", "C" },
       ["loop"] = { "l", "L" },
-      ["statement"] = { "s", "S" },
+      ["statement"] = { "e", "E" },
       ["comment"] = { "/", "?" },
     },
     -- The below is for treesitter hint textobjects plugin
