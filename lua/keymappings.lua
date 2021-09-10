@@ -833,7 +833,6 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     },
     p = {
       name = "Projects",
-      s = { cmd "SearchSession", "Sessions" },
     },
     s = {
       name = "Search",
@@ -859,6 +858,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       -- ["."] = { [[:%s/<C-R>.//g<Left><Left>]], "Last insert" },
       i = "for (object)",
       [" "] = { telescope_fn.resume, "Redo" },
+      p = { cmd "SearchSession", "Sessions" },
     },
     r = {
       name = "Replace/Refactor",
