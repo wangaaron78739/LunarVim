@@ -658,7 +658,6 @@ return packer.startup(function(use)
     config = function()
       require("lv-sandwich").config()
     end,
-    event = BufRead,
     disable = not O.plugin.surround,
   }
 

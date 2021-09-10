@@ -1,13 +1,13 @@
 local M = {}
 
 local recipes = {}
-function M.add_recipe(recipe)
-  vim.list_extend(recipes, { recipe })
-  vim.g["sandwich#recipes"] = recipes
-end
-function M.add_recipes(recipes_)
+local function add_recipes(recipes_)
   vim.list_extend(recipes, recipes_)
   vim.g["sandwich#recipes"] = recipes
+end
+M.add_recipes = add_recipes
+function M.add_recipe(recipe)
+  add_recipes { recipe }
 end
 
 function M.preconf()
@@ -31,46 +31,59 @@ function M.config()
   --     action = { "add" },
   --     input = { "f" },
   --   }
-  add_recipe {
-    external = { "ic", "ac" },
-    noremap = false,
-    kind = { "delete", "replace", "query" },
-    input = { "c" },
-  }
-  add_recipe {
-    external = { "ii", "ai" },
-    noremap = false,
-    kind = { "delete", "replace", "query" },
-    input = { "i" },
-  }
-  add_recipe {
-    external = { "if", "af" },
-    noremap = false,
-    kind = { "delete", "replace", "query" },
-    input = { "af" },
+  add_recipes {
+    {
+      external = { "ic", "ac" },
+      noremap = false,
+      kind = { "delete", "replace", "query" },
+      input = { "c" },
+    },
+    {
+      external = { "ii", "ai" },
+      noremap = false,
+      kind = { "delete", "replace", "query" },
+      input = { "i" },
+    },
+    {
+      external = { "if", "af" },
+      noremap = false,
+      kind = { "delete", "replace", "query" },
+      input = { "af" },
+    },
+    -- {
+    --   buns = { [[']], [[']] },
+    --   quoteescape = true,
+    --   expand_range = false,
+    --   nesting = false,
+    --   input = { "q" },
+    -- },
+    -- {
+    --   buns = { [["]], [["]] },
+    --   quoteescape = true,
+    --   expand_range = false,
+    --   nesting = false,
+    --   input = { "Q" },
+    -- },
+    {
+      buns = { "['`\"]", "['`\"]" },
+      kind = { "delete", "replace", "query" },
+      quoteescape = true,
+      expand_range = false,
+      nesting = false,
+      input = { "q" },
+      regex = 1,
+    },
   }
 
-  add_recipe {
-    buns = { [[']], [[']] },
-    quoteescape = true,
-    expand_range = false,
-    nesting = false,
-    input = { "q" },
-  }
-  add_recipe {
-    buns = { [["]], [["]] },
-    quoteescape = true,
-    expand_range = false,
-    nesting = false,
-    input = { "Q" },
-  }
-
-  vim.cmd [[
-      xmap is <Plug>(textobj-sandwich-query-i)
-      xmap as <Plug>(textobj-sandwich-query-a)
-      omap is <Plug>(textobj-sandwich-query-i)
-      omap as <Plug>(textobj-sandwich-query-a)
-  ]]
+  local map = mappings.sile
+  map("x", "is", "<Plug>(textobj-sandwich-query-i)")
+  map("x", "as", "<Plug>(textobj-sandwich-query-a)")
+  map("o", "is", "<Plug>(textobj-sandwich-query-i)")
+  map("o", "as", "<Plug>(textobj-sandwich-query-a)")
+  map("x", "iq", "isq")
+  map("x", "aq", "asq")
+  map("o", "iq", "isq")
+  map("o", "aq", "asq")
 end
 
 function M.fname()
