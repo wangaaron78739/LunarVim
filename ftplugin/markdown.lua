@@ -1,6 +1,6 @@
 local conf = {
   conceal = 2,
-  theme = O.lighttheme,
+  -- theme = O.lighttheme,
   fontsize = O.bigfontsize,
 }
 vim.opt_local.wrap = true

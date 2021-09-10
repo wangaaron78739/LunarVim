@@ -347,6 +347,12 @@ return packer.startup(function(use)
       require("lv-trouble").config()
     end,
   }
+  -- Vista viewer (symbols)
+  use {
+    "liuchengxu/vista.vim",
+    disable = not O.plugin.vista,
+    cmd = "Vista",
+  }
   -- Debugging
   use {
     "mfussenegger/nvim-dap",
@@ -433,12 +439,13 @@ return packer.startup(function(use)
     disable = not O.plugin.telescope_project,
   }
   -- Telescope sort by frecency
-  use { "tami5/sql.nvim" }
-  use {
+  use { "tami5/sqlite.lua" }
+  use { -- FIXME: load_extension doesn't work
     "nvim-telescope/telescope-frecency.nvim",
     config = function()
       -- require("telescope").load_extension "frecency"
     end,
+    requires = { "tami5/sqlite.lua" },
     disable = not O.plugin.telescope_frecency,
   }
   use { "nvim-telescope/telescope-hop.nvim", requires = "telescope.nvim" }
@@ -593,6 +600,7 @@ return packer.startup(function(use)
       vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
     end,
     event = BufRead,
+    disable = not O.plugin.lightbulb,
   }
 
   use { "RishabhRD/popfix" }
@@ -741,7 +749,7 @@ return packer.startup(function(use)
   -- Readline bindings
   -- https://github.com/tpope/vim-rsi
 
-  -- Detect indentation from file
+  -- Detect indentation from file -- SLOW AF
   -- use { "zsugabubus/crazy8.nvim", event = BufRead }
 
   -- mkdir -- FIXME: Goes into a infinite loop and freezes neovim
@@ -755,13 +763,6 @@ return packer.startup(function(use)
   -- Sudo write files
   use { "lambdalisue/suda.vim", cmd = { "SudaWrite", "SudaRead" } }
 
-  -- Vista viewer
-  use {
-    "liuchengxu/vista.vim",
-    disable = not O.plugin.vista,
-    cmd = "Vista",
-  }
-
   -- Helper for lists
   -- FIXME: fucks up coq_nvim handling of <CR>
   use {
@@ -771,18 +772,13 @@ return packer.startup(function(use)
   }
 
   -- 'smooth' scrolling
-  --[[ use {
+  use {
     "karb94/neoscroll.nvim",
-    require("neoscroll").setup {
-      -- All these keys will be mapped to their corresponding default scrolling animation
-      mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
-      hide_cursor = false, -- Hide cursor while scrolling
-      stop_eof = false, -- Stop at <EOF> when scrolling downwards
-      respect_scrolloff = true, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-      cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-      easing_function = "sine",        -- Default easing function
-    },
-  } ]]
+    config = function()
+      require("neoscroll").setup(O.plugin.neoscroll)
+    end,
+    disable = not O.plugin.neoscroll,
+  }
 
   -- Code Minimap
   -- use {
@@ -1048,7 +1044,13 @@ return packer.startup(function(use)
       }
     end,
     requires = "nvim-lua/plenary.nvim",
+    disable = not O.plugin.neorg,
   }
+
+  -- TODO: add and configure these packages
+  -- Git
+  -- use {'tpope/vim-fugitive', opt = true}
+  -- use {'tpope/vim-rhubarb'}
 
   -- TODO: http://neovimcraft.com/plugin/chipsenkbeil/distant.nvim/index.html
 
@@ -1144,14 +1146,6 @@ return packer.startup(function(use)
   --   requires = { "rktjmp/lush.nvim" },
   -- }
 
-  -- -- Explore tar archives
-  -- use { "vim-scripts/tar.vim" }
-
-  -- TODO: add and configure these packages
-  -- Git
-  -- use {'tpope/vim-fugitive', opt = true}
-  -- use {'tpope/vim-rhubarb'}
-
   -- https://github.com/rockerBOO/awesome-neovim -- collection
 
   -- alt nvim ide
@@ -1160,11 +1154,10 @@ return packer.startup(function(use)
   -- https://github.com/NTBBloodbath/doom-nvim
   -- https://github.com/MenkeTechnologies/zpwr#zpwr-features
 
+  -- Plugins
   -- https://github.com/kevinhwang91/nvim-hlslens
-  -- https://github.com/gcmt/wildfire.vim -- ts hint textobjects seems okay for this
+  -- use { "vim-scripts/tar.vim" }
   -- https://github.com/neomake/neomake
-  -- https://github.com/tversteeg/registers.nvim -- which-key provides this
-  -- https://github.com/jbyuki/nabla.nvim
   -- https://github.com/justinmk/vim-dirvish -- netrw/nvim-tree alternative
 
   -- local metatable = {

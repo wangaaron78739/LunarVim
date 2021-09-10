@@ -237,6 +237,12 @@ function M.setup()
   -- map("n", "<C-S-=>", cmd "FontUp", sile)
   map("n", "<C-+>", cmd "FontUp", sile)
 
+  -- More convenient incr/decr
+  map("n", "+", "<C-a>", sile)
+  map("n", "-", "<C-x>", sile)
+  map("x", "+", "g<C-a>", sile)
+  map("x", "-", "g<C-x>", sile)
+
   -- better window movement -- tmux_navigator supplies these if installed
   if not O.plugin.tmux_navigator then
     if O.plugin.splitfocus then

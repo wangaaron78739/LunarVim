@@ -1,15 +1,9 @@
-CONFIG_PATH = vim.fn.stdpath "config"
-DATA_PATH = vim.fn.stdpath "data"
-CACHE_PATH = vim.fn.stdpath "cache"
-PLUGIN_PATH = DATA_PATH .. "site/pack/*/start/*"
-TERMINAL = vim.fn.expand "$TERMINAL"
-local enable_plugins_by_default = true
-local codeLens = {
-  virtual_text = { spacing = 0, prefix = "" },
-  signs = true,
-  underline = true,
-  severity_sort = true,
-}
+_G.CONFIG_PATH = vim.fn.stdpath "config"
+_G.DATA_PATH = vim.fn.stdpath "data"
+_G.CACHE_PATH = vim.fn.stdpath "cache"
+_G.PLUGIN_PATH = DATA_PATH .. "site/pack/*/start/*"
+_G.TERMINAL = vim.fn.expand "$TERMINAL"
+
 -- TODO: Cleanup this config struct
 O = {
   format_on_save = true,
@@ -47,7 +41,7 @@ O = {
   transparent_window = false,
   leader_key = "space",
   local_leader_key = ",",
-  vnsip_dir = CONFIG_PATH .. "/snippets",
+  signcolumn = "number", -- "yes" for always
   notify = {
     timeout = 2000, -- 5000 default
   },
@@ -66,7 +60,12 @@ O = {
       severity_sort = true,
       update_in_insert = false, -- FIXME: fucks around with the rendering
     },
-    codeLens = codeLens,
+    codeLens = {
+      virtual_text = { spacing = 0, prefix = "" },
+      signs = true,
+      underline = true,
+      severity_sort = true,
+    },
     flags = {
       debounce_text_changes = 150,
     },
@@ -293,13 +292,22 @@ O = {
       -- height =
       winhighlight = false,
       hybridnumber = false,
-      signcolumn = true,
+      -- signcolumn = "number",
       relative_number = false,
       number = false,
       -- cursorline = O.cursorline,
     },
     rust_tools = {},
     vimtex = {},
+    -- neoscroll = {
+    --   -- All these keys will be mapped to their corresponding default scrolling animation
+    --   mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
+    --   hide_cursor = false, -- Hide cursor while scrolling
+    --   stop_eof = false, -- Stop at <EOF> when scrolling downwards
+    --   respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+    --   cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+    --   easing_function = "sine", -- Default easing function
+    -- },
   },
 }
 vim.cmd('let &titleold="' .. TERMINAL .. '"')
