@@ -45,8 +45,6 @@ opt.termguicolors = true -- set term gui colors (most terminals support this)
 opt.timeoutlen = O.timeoutlen -- time to wait for a mapped sequence to complete (in milliseconds)
 opt.title = true -- set the title of window to the value of the titlestring
 opt.titlestring = "%<%F%=%l/%L - nvim" -- what the title of the window will be set to
-opt.undodir = CACHE_PATH .. "/undo" -- set an undo directory
-opt.undofile = true -- enable persisten undo
 opt.updatetime = 300 -- faster completion
 opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 opt.expandtab = true -- convert tabs to spaces
@@ -77,6 +75,14 @@ opt.sidescrolloff = 10
 opt.listchars = { extends = ">", precedes = "<", trail = "_" }
 opt.background = "dark"
 vim.g.python3_host_prog = O.python_interp
+
+-- opt.undodir = CACHE_PATH .. "/undo" -- set an undo directory
+local undodir = "/tmp/.undodir_" .. vim.env.USER
+if not vim.fn.isdirectory(undodir) then
+  vim.fn.mkdir(undodir, "", 0700)
+end
+opt.undodir = undodir
+opt.undofile = true -- enable persistent undo
 
 -- Default autocommands
 require("lv-utils").define_augroups {
