@@ -954,7 +954,7 @@ return packer.startup(function(use)
       require("lv-wilder").config()
     end,
     run = ":UpdateRemotePlugins",
-    event = "CmdlineEnter",
+    -- event = "CmdlineEnter",
   }
 
   -- Primeagens refactoring plugin

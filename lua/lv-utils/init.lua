@@ -344,4 +344,17 @@ M.cmd = setmetatable({
   end,
 })
 
+M.fn = setmetatable({}, {
+  __index = function(_, key)
+    return setmetatable({ key }, {
+      __index = function(tbl, key2)
+        return M.fn[tbl[1] .. "#" .. key2]
+      end,
+      __call = function(tbl, ...)
+        vim.fn[tbl[1]](...)
+      end,
+    })
+  end,
+})
+
 return M
