@@ -1026,6 +1026,25 @@ return packer.startup(function(use)
   use { "jbyuki/nabla.nvim", module = "nabla" }
 
   use {
+    "tpope/vim-eunuch",
+    event = "BufRead",
+    cmd = {
+      "Delete",
+      "Unlink",
+      "Move",
+      "Rename",
+      "Chmod",
+      "Mkdir",
+      "Cfind",
+      "Clocate",
+      "Lfind",
+      "Wall",
+      "SudoWrite",
+      "SudoEdit",
+    },
+  }
+
+  use {
     "vhyrro/neorg",
     config = function()
       require("neorg").setup {
