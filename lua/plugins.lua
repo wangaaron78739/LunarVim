@@ -23,6 +23,7 @@ packer.init {
 -- vim.cmd "autocmd BufWritePost plugins.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
 -- vim.cmd "autocmd BufWritePost lv-config.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
 
+
 local use_rock = packer.use_rocks
 return packer.startup(function(use)
   -- Packer can manage itself as an optional plugin
@@ -1016,6 +1017,10 @@ return packer.startup(function(use)
       mappings.sile("n", "<leader>xn", utils.cmd.require("nabla").action)
     end,
   }
+
+  use "beauwilliams/focus.nvim"
+  use { "tpope/vim-eunuch" }
+
   -- use "RishabhRD/nvim-rdark"
   -- use "marko-cerovac/material.nvim"
   -- use "Shatur/neovim-ayu"

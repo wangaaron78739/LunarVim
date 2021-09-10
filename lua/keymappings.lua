@@ -219,10 +219,14 @@ function M.setup()
 
   -- better window movement -- tmux_navigator supplies these if installed
   if not O.plugin.tmux_navigator then
-    map("n", "<C-h>", "<C-w>h", sile)
-    map("n", "<C-j>", "<C-w>j", sile)
-    map("n", "<C-k>", "<C-w>k", sile)
-    map("n", "<C-l>", "<C-w>l", sile)
+    -- map("n", "<C-h>", "<C-w>h", sile)
+    -- map("n", "<C-j>", "<C-w>j", sile)
+    -- map("n", "<C-k>", "<C-w>k", sile)
+    -- map("n", "<C-l>", "<C-w>l", sile)
+    map("n", "<C-h>", cmd "FocusSplitLeft", sile)
+    map("n", "<C-j>", cmd "FocusSplitDown", sile)
+    map("n", "<C-k>", cmd "FocusSplitUp", sile)
+    map("n", "<C-l>", cmd "FocusSplitRight", sile)
   end
   -- TODO fix this
   -- Terminal window navigation
@@ -250,8 +254,8 @@ function M.setup()
   -- Move current line / block with Alt-j/k ala vscode.
   map("n", "<C-M-j>", "<cmd>m .+1<cr>==", nore)
   map("n", "<C-M-k>", "<cmd>m .-2<cr>==", nore)
-  map("i", "<M-j>", "<Esc>:m .+1<cr>==gi", nore)
-  map("i", "<M-k>", "<Esc>:m .-2<cr>==gi", nore)
+  -- map("i", "<M-j>", "<Esc>:m .+1<cr>==gi", nore)
+  -- map("i", "<M-k>", "<Esc>:m .-2<cr>==gi", nore)
   -- map("x", "<M-j>", "<cmd>m '>+1<cr>gv-gv", nore)
   -- map("x", "<M-k>", "<cmd>m '<-2<cr>gv-gv", nore)
   -- Move selected line / block of text in visual mode
@@ -911,12 +915,12 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   if O.plugin.lazygit then
     leaderMappings["gg"] = { cmd "LazyGit", "LazyGit" }
   end
-  if O.lang.latex.active then
+  if O.lang.latex.vimtex.active then
     leaderMappings["L"] = {
       name = "Latex",
       f = { cmd "call vimtex#fzf#run()", "Fzf Find" },
       i = { cmd "VimtexInfo", "Project Information" },
-      s = { cmd "VimtexStop", "Stop Project Compilation" },
+      s = { cmd "VimtexToggleMain", "Toggle Main File" },
       t = { cmd "VimtexTocToggle", "Toggle Table Of Content" },
       v = { cmd "VimtexView", "View PDF" },
       c = { cmd "VimtexCompile", "Compile Project Latex" },

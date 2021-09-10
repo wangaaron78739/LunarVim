@@ -174,6 +174,7 @@ local symmaps_table = {
   ["-+"] = "mp",
   ["AA"] = "forall",
   ["EE"] = "exists",
+  ["qq"] = "quad",
 
   ["RR"] = "R",
   ["QQ"] = "Q",
@@ -220,6 +221,7 @@ local auto = {
   pa("\\(", "\\( $0 \\"),
   pa("it{", "\\textit{$0"),
   pa("bf{", "\\textbf{$0"),
+  ms("tt ", { t "\\text{", i(0), t "}" }),
   ms("sq", { t "\\sqrt{", i(0), t "}" }),
   ms("__", { t "_{", i(0), t "}" }),
   s("--", { t "\\item" }),
@@ -261,8 +263,8 @@ local auto = {
   ms(re "(%\\?%w+)/", { t "\\frac{", sub(1), t "}{", i(1), t "}", i(0) }),
   ms("inn", t "\\in"),
   ms("notin", t "\\not\\in"),
-  ms("sr", t "^2"),
-  ms("cb", t "^3"),
+  ms(re [[([%w^]+)sr]], { sub(1), t "^2", i(0) }),
+  ms(re [[([%w^]+)cb]], { sub(1), t "^3", i(0) }),
   -- ms(
   --   re [[([A-Za-z])([A-Za-z])([A-Za-z])]],
   --   f(function(arg)
@@ -278,9 +280,10 @@ local auto = {
   -- TODO: binomial
 
   ms("norm", { t "\\|", i(1), t "\\|", i(0) }),
-  nms("mk", { t "\\(", i(1), t "\\)", i(0) }),
+  nms("mk", { t "$", i(1), t "$", i(0) }),
   nms("dm", { t { "\\[", "" }, i(1), t { "", "\\]" }, i(0) }),
   ms(re [[([%w%^]+)td]], { sub(1), t "^{", i(1), t "}", i(0) }),
+  ms(re [[([%w%^]+)__]], { sub(1), t "_{", i(1), t "}", i(0) }),
 }
 
 local snips = {
