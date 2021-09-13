@@ -42,9 +42,9 @@ require("keymappings").wrapjk()
 map(0, "v", "<C-b>", "Smb", { silent = true })
 map(0, "v", "<C-t>", "Smi", { silent = true })
 map(0, "n", "<C-b>", "ysiwmb", { silent = true })
-map(0, "n", "<C-t>", "ysiwmb", { silent = true })
+map(0, "n", "<C-t>", "ysiwmi", { silent = true })
 map(0, "i", "<C-b>", "<cmd>normal ysiwmb<cr>", { silent = true })
-map(0, "i", "<C-t>", "<cmd>normal ysiwmb<cr>", { silent = true })
+map(0, "i", "<C-t>", "<cmd>normal ysiwmi<cr>", { silent = true })
 
 require("lv-lightspeed").au_unconceal(conf.conceal)
 -- vim.opt_local.background = "light"

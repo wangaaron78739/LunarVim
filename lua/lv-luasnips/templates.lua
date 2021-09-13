@@ -163,7 +163,7 @@ local preamble = [[
 \usepackage{amsthm}
 
 \newcommand{\R}{\mathbb{R}}
-\providecommand{\C}{\mathbb{C}}
+\newcommand{\CC}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Op}{\mathcal{O}}
