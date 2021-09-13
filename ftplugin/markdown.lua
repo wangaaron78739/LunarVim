@@ -5,7 +5,9 @@ local conf = {
 }
 vim.opt_local.wrap = true
 vim.opt_local.spell = true
-vim.opt_local.conceallevel = conf.conceal
+vim.opt.number = false
+vim.opt.relativenumber = false
+require("lv-lightspeed").au_unconceal(conf.conceal)
 -- vim.opt_local.background = conf.background
 if conf.theme then
   vim.cmd(conf.theme)

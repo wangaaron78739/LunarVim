@@ -34,6 +34,9 @@ local conf = {
 }
 vim.opt_local.wrap = true
 vim.opt_local.spell = true
+vim.opt.number = false
+vim.opt.relativenumber = false
+
 local map = vim.api.nvim_buf_set_keymap
 require("keymappings").wrapjk()
 map(0, "v", "<C-b>", "Smb", { silent = true })
@@ -43,7 +46,7 @@ map(0, "n", "<C-t>", "ysiwmb", { silent = true })
 map(0, "i", "<C-b>", "<cmd>normal ysiwmb<cr>", { silent = true })
 map(0, "i", "<C-t>", "<cmd>normal ysiwmb<cr>", { silent = true })
 
-vim.opt_local.conceallevel = conf.conceal
+require("lv-lightspeed").au_unconceal(conf.conceal)
 -- vim.opt_local.background = "light"
 if conf.theme then
   vim.cmd(conf.theme)
