@@ -113,6 +113,7 @@ wk.register({
   e = { cmd "VimtexErrors", "Errors" },
   l = { cmd "TexlabBuild", "Texlab Build" },
   n = { cmd.require("nabla").action, "Nabla" },
+  m = { cmd "VimtexToggleMain", "Toggle Main File" },
 }, leaderOpts)
 
 -- require("lv-utils").define_augroups { _vimtex_event = {
