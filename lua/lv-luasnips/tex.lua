@@ -240,6 +240,7 @@ for k, v in pairs(trig_fns) do
 end
 
 list_extend(auto, {
+  s("---- ", { t { "\\hline", "" } }),
   ms("cases ", { t { "\\begin{cases}", "" }, i(0), t { "", "\\end{cases}" } }),
   s("\\eq ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
   ms("matt ", { t { "\\begin{matrix}", "" }, i(0), t { "", "\\end{matrix}" } }),
@@ -272,7 +273,7 @@ list_extend(auto, {
   ms(re [[([A-Za-z%}%]%)])(%d)]], { sub(1), t "_", sub(2) }), -- Auto subscript
   ms(re [[([A-Za-z%}%]%)]) ?_(%d%d)]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
   ms(re [[([A-Za-z%}%]%)]) ?%^ ?(%d%d)]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
-  ms(re [[([A-Za-z%}%]%)]) ?%^([%+%-] ?[%w]) ]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
+  ms(re [[([A-Za-z%}%]%)]) ?%^([%+%-] ?[%d%%w]) ]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
   ms(re [[([A-Za-z%}%]%)]) ?%^([%+%-]? ?%\%w+) ]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
   -- TODO: whitespace before and after operators
   -- TODO: fraction

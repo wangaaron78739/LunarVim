@@ -720,6 +720,8 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   local leaderMappings = {
     -- [" "] = { telescope_fn(.commands), "Commands" },
     [" "] = { telescope_fn.buffers, "Buffers" },
+    ["*"] = "Search obj",
+    ["#"] = "Search(bwd) obj",
     [";"] = { cmd "Dashboard", "Dashboard" },
     ["/"] = { telescope_fn.live_grep, "Global search" },
     f = { telescope_fn.find_files, "Find File" },

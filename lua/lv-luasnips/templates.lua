@@ -211,9 +211,9 @@ local docinfo = [[
 \author{${2:Anshuman Medhi}}
 
 % Sections
-\renewcommand{\thesection}{\arabic{section}.}
+% \renewcommand{\thesection}{\arabic{section}.}
 % \renewcommand{\thesubsection}{\quad\alph{subsection}.}
-\renewcommand{\thesubsection}{\thesection\alph{subsection})}
+% \renewcommand{\thesubsection}{\thesection\alph{subsection})}
 
 % Header/footer
 \pagestyle{fancy}
@@ -264,7 +264,7 @@ return {
 	\centering
 	\caption{${2:caption}}
 	\label{tab:${3:label}}
-	\begin{tabular}{${5:c}}\usepackage{thmtools}
+	\begin{tabular}{${5:c}}
 	$0${5/((?<=.)c|l|r)|./(?1: & )/g}
 	\end{tabular}
 \end{table}

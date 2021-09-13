@@ -25,7 +25,7 @@ M.recipes = {
   },
   {
     __filetype__ = "tex",
-    buns = { "\\{", "\\}" },
+    buns = { "\\[", "\\]" },
     nesting = 1,
     input = { "\\[" },
     ["indentkeys-"] = "{,},0{,0}",
