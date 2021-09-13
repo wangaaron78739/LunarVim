@@ -498,8 +498,21 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("n", "gcO", "O-<esc>gccA<BS>", sile)
   map("n", "gco", "o-<esc>gccA<BS>", sile)
 
+  -- Select last pasted
+  map("n", "gp", "`[v`]", sile)
+  map("x", "gp", "<esc>gp", sile)
+  map("n", "gP", "`[V`]", sile)
+  map("x", "gP", "<esc>gP", sile)
+  map("n", "g<C-p>", "`[<C-v>`]", sile)
+  map("x", "g<C-p>", "<esc>g<C-p>", sile)
+  -- Use reselect as an operator
+  op_from "gp"
+  op_from "gP"
+  op_from "g<C-p>"
+
   -- comment and copy
-  map("x", "gy", '"z<M-y>gvgc`>"zp`[', sile)
+  -- map("x", "gy", '"z<M-y>gvgc`>"zp`[', sile)
+  map("x", "gy", '"z<M-y>mz`<"zPgpgc`z', sile)
   map("n", "gy", operatorfuncV_keys("comment_copy", "gy"), sile)
   -- map("n", "gyy", "Vgy", sile)
 
@@ -551,8 +564,8 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   -- map("n", "/", "/\v", nore)
 
   -- Open a new line in normal mode
-  map("n", "<cr>", "o<esc>", nore)
-  map("n", "<M-cr>", "O<esc>", nore)
+  map("n", "<M-cr>", "o<esc>", nore)
+  map("n", "<M-S-cr>", "O<esc>", nore)
 
   -- Split line
   map("n", "go", "i<cr><ESC>k<cmd>sil! keepp s/\v +$//<cr><cmd>noh<cr>j^", nore)
@@ -562,10 +575,10 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
 
   -- Reselect visual linewise
   map("n", "gV", "'<V'>", nore)
-  map("x", "gV", "<esc>'<V'>", nore)
+  map("x", "gV", "<esc>gV", sile)
   -- Reselect visual block wise
   map("n", "g<C-v>", "'<C-v>'>", nore)
-  map("x", "g<C-v>", "<esc>'<C-v>'>", nore)
+  map("x", "g<C-v>", "<esc>g<C-v>", sile)
 
   -- Use reselect as an operator
   op_from "gv"
