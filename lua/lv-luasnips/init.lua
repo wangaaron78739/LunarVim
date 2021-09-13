@@ -2,10 +2,10 @@ local M = {}
 function M.setup()
   require("luasnip").config.set_config {
     history = true,
-    updateevents = "TextChanged,TextChangedP,TextChangedI",
     enable_autosnippets = true,
-    region_check_events = "CursorMoved,CursorHold,InsertEnter",
-    delete_check_events = "TextChangedI,TextChangedP,TextChanged",
+    -- updateevents = "TextChanged,TextChangedP,TextChangedI",
+    -- region_check_events = "CursorMoved,CursorHold,InsertEnter",
+    -- delete_check_events = "TextChangedI,TextChangedP,TextChanged",
     -- treesitter-hl has 100, use something higher (default is 200).
     ext_base_prio = 300,
     -- minimal increase in priority.

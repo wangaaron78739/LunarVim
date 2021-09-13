@@ -191,7 +191,7 @@ local intlike = {
   ["dintr"] = { operator = "\\int", low = { i(1, "0") }, upp = { i(2, "\\infty") } },
   ["sum"] = { operator = "\\sum", low = { i(1, "n=0") }, upp = { i(3, "\\infty") } },
   ["sumi"] = { operator = "\\sum", low = { i(1, "i=0") }, upp = { i(3, "n") } },
-  ["sumin"] = { operator = "\\sum", low = { i(1, "n \\in \\N") }, upp = { i(3, "\\infty") } },
+  ["sumin"] = { operator = "\\sum", low = { i(1, "n \\in \\N") }, upp = {} },
   ["prod"] = { operator = "\\prod", low = { i(1, "n=0") }, upp = { i(3, "\\infty") } },
   ["prodi"] = { operator = "\\prod", low = { i(1, "i=0") }, upp = { i(3, "n") } },
   ["lim"] = { operator = "\\lim", low = { i(1, "n"), t "\\to", i(2, "\\infty") }, upp = {} },
