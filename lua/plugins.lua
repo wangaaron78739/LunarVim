@@ -241,7 +241,7 @@ return packer.startup(function(use)
   }
   -- Dashboard
   use {
-    "ChristianChiarulli/dashboard-nvim",
+    "glepnir/dashboard-nvim",
     event = "BufWinEnter",
     cmd = { "Dashboard", "DashboardNewFile", "DashboardJumpMarks" },
     setup = function()
@@ -252,6 +252,7 @@ return packer.startup(function(use)
     end,
     disable = not O.plugin.dashboard,
   }
+  -- TODO: try https://github.com/goolord/alpha-nvim
 
   -- Ranger
   use {

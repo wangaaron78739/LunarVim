@@ -4,7 +4,7 @@
 vim.cmd [[
 command! Zenbones colorscheme zenbones
 command! LightMelya colorscheme light_melya
-command! Nebulous colorscheme nebulous
+command! Nebulous lua require'theme'.nebulous()
 command! DarkCatppuccino colorscheme dark_catppuccino
 command! Acme colorscheme acme
 command! Pencil colorscheme pencil
@@ -22,7 +22,12 @@ require("lv-utils").define_augroups {
   },
 }
 
-local M = {}
+local M = {
+  nebulous = function()
+    require("nebulous").setup() -- This doesnt trigger the augroups
+    vim.cmd "colorscheme nebulous"
+  end,
+}
 
 vim.cmd [[command! Writing lua vim.cmd(O.lighttheme)]]
 
