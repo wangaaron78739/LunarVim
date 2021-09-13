@@ -56,7 +56,7 @@ opt.cursorline = O.cursorline -- highlight the current line
 opt.number = O.number -- set numbered lines
 opt.relativenumber = O.relative_number -- set relative numbered lines
 opt.numberwidth = O.number_width -- set number column width to 2 {default 4}
-opt.signcolumn = O.signcolumn --
+opt.signcolumn = (O.signcolumn == "number" and not (O.number or O.relative_number)) and "yes" or O.signcolumn --
 opt.wrap = O.wrap_lines -- display lines as one long line
 opt.linebreak = true -- dont linebreak in the middle of words
 opt.spell = O.spell

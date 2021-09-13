@@ -1,7 +1,7 @@
 _G.CONFIG_PATH = vim.fn.stdpath "config"
 _G.DATA_PATH = vim.fn.stdpath "data"
 _G.CACHE_PATH = vim.fn.stdpath "cache"
-_G.PLUGIN_PATH = DATA_PATH .. "site/pack/*/start/*"
+_G.PLUGIN_PATH = _G.DATA_PATH .. "site/pack/*/start/*"
 _G.TERMINAL = vim.fn.expand "$TERMINAL"
 
 -- TODO: Cleanup this config struct
@@ -21,8 +21,8 @@ O = {
   wrap_lines = false,
   spell = false,
   spelllang = "en",
-  number = true,
-  relative_number = true,
+  number = false,
+  relative_number = false,
   number_width = 2,
   shift_width = 4,
   tab_stop = 4,
