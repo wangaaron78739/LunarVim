@@ -11,6 +11,7 @@ command! Pencil colorscheme pencil
 command! Paper colorscheme paper
 command! Parchment colorscheme parchment
 command! ModusOperandi colorscheme modus-operandi
+command! Writing lua vim.cmd(O.lighttheme)
 ]]
 
 require("lv-utils").define_augroups {
@@ -28,8 +29,6 @@ local M = {
     vim.cmd "colorscheme nebulous"
   end,
 }
-
-vim.cmd [[command! Writing lua vim.cmd(O.lighttheme)]]
 
 return setmetatable(M, {
   __call = function(table)
