@@ -669,8 +669,11 @@ return packer.startup(function(use)
   -- Build cmake projects from neovim
   -- use {"Shatur95/neovim-cmake"}
 
+  -- TODO: try these
   -- https://github.com/CRAG666/code_runner.nvim
+  -- use { "IndianBoy42/code_runner.nvim", config = function() end }
   -- https://github.com/michaelb/sniprun
+
   -- Send to terminal
   use {
     "jpalardy/vim-slime",
