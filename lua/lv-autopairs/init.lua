@@ -28,7 +28,7 @@ local ts_conds = require "nvim-autopairs.ts-conds"
 npairs.add_rules {
   R("%", "%", "lua"):with_pair(ts_conds.is_ts_node { "string", "comment" }),
   R("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node { "function" }),
-  R("if ", " then end", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
+  R("if ", " then\nend", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
   R("for ", " in", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
   R("in ", " do", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
   R("do ", " end", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
@@ -65,7 +65,8 @@ for lm, rm in pairs(texmods) do
   end
 end
 for lp, rp in pairs(texpairs) do
-  npairs.add_rule(R(lp, " " .. rp, "tex"))
+  -- npairs.add_rule(R(lp, " " .. rp, "tex"))
+  npairs.add_rule(R(lp, rp, "tex"))
 end
 
 -- lua utils.dump(MPairs.state.rules)

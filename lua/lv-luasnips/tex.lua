@@ -256,11 +256,11 @@ list_extend(auto, {
   ms("bb{", { t "\\mathbb{", i(0) }),
   ms("tt{", { t "\\text{", i(0) }),
   ms("rt{", { t "\\sqrt{", i(0) }),
-  ms("st ", { t "\\text{s.t.}" }),
-  ms("let ", { t "\\textbf{let }" }),
-  ms("if ", { t "\\textbf{if }" }),
-  ms("otherwise ", { t "\\textbf{ otherwise }" }),
-  ms("else ", { t "\\textbf{ else }" }),
+  ms("st ", { t "\\text{s.t. } " }),
+  ms("let ", { t "\\textbf{let } " }),
+  ms("if ", { t "\\textbf{if } " }),
+  ms("otherwise ", { t "\\textbf{ otherwise } " }),
+  ms("else ", { t "\\textbf{ else } " }),
   ms("cal{", { t "\\mathcal{", i(0) }),
   ms(renw "__([^%s_])", { t "_{", sub(1), i(0), t "}" }),
   ms(renw "%^%^([^%s_])", { t "^{", sub(1), i(0), t "}" }),
@@ -273,11 +273,12 @@ list_extend(auto, {
   ms(re [[(%S) ([%^_])]], { sub(1), sub(2) }), -- Remove extra ws sub/superscript
   ms(re [[([A-Za-z%}%]%)])(%d)]], { sub(1), t "_", sub(2) }), -- Auto subscript
   ms(re [[([A-Za-z%}%]%)]) ?_(%d%d)]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
+  ms(re [[([A-Za-z%}%]%)]) ?_([%+%-] ?[%d%w])]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape superscript
+  ms(re [[([A-Za-z%}%]%)]) ?_([%+%-]? ?%\%w+) ]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape superscript
   ms(re [[([A-Za-z%}%]%)]) ?%^ ?(%d%d)]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
-  ms(re [[([A-Za-z%}%]%)]) ?%^([%+%-] ?[%d%%w]) ]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
+  ms(re [[([A-Za-z%}%]%)]) ?%^([%+%-] ?[%d%w])]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
   ms(re [[([A-Za-z%}%]%)]) ?%^([%+%-]? ?%\%w+) ]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
   -- TODO: whitespace before and after operators
-  -- TODO: fraction
   -- TODO: line 203 and below
   -- ms(re [[(%w[ ,%)%]%}])to]], { sub(1), t "\\to" }),
   ms(re [[([%w%^]+),%.]], { t "\\vec{", sub(1), t "}" }),

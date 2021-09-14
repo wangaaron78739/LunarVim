@@ -86,8 +86,10 @@ require("cmp").setup.buffer {
 require("luasnip").snippets.tex = require("lv-luasnips.tex").snips
 require("luasnip").autosnippets.tex = require("lv-luasnips.tex").auto
 
-utils.fn.sandwich.util.insertlocal(require("lv-sandwich.tex").recipes)
-vim.b.sandwich_tex_marks_recipes = vim.fn.deepcopy(require("lv-sandwich.tex").marks_recipes)
+local sandwichtex = require "lv-sandwich.tex"
+require("lv-sandwich").add_local_recipes(sandwichtex.recipes)
+vim.b.sandwich_tex_marks_recipes = vim.fn.deepcopy(sandwichtex.marks_recipes) -- TODO: idk what this does
+sandwichtex.mark_recipe_fn()
 
 -- Localleader
 local wk = require "which-key"

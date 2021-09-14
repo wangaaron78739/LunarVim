@@ -190,8 +190,21 @@ M.recipes = {
   },
 }
 
--- xnoremap <silent><expr> <Plug>(textobj-sandwich-filetype-tex-marks-i) textobj#sandwich#auto('x', 'i', {'synchro': 0}, b:sandwich_tex_marks_recipes)
--- xnoremap <silent><expr> <Plug>(textobj-sandwich-filetype-tex-marks-a) textobj#sandwich#auto('x', 'a', {'synchro': 0}, b:sandwich_tex_marks_recipes)
+M.mark_recipe_fn = function()
+  local map = vim.api.nvim_set_keymap
+  map(
+    "x",
+    "<Plug>(textobj-sandwich-filetype-tex-marks-i)",
+    "textobj#sandwich#auto('x', 'i', {'synchro': 0}, b:sandwich_tex_marks_recipes)",
+    { silent = true, expr = true }
+  )
+  map(
+    "x",
+    "<Plug>(textobj-sandwich-filetype-tex-marks-a)",
+    "textobj#sandwich#auto('x', 'a', {'synchro': 0}, b:sandwich_tex_marks_recipes)",
+    { silent = true, expr = true }
+  )
+end
 M.marks_recipes = {
   {
     buns = { "\\%([[(]\\|\\{\\)", "\\%([])]\\|\\}\\)" },
