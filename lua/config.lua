@@ -309,6 +309,10 @@ O = {
     --   cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
     --   easing_function = "sine", -- Default easing function
     -- },
+    gesture = {
+      lmb = true,
+      rmb = false,
+    },
   },
 }
 vim.cmd('let &titleold="' .. TERMINAL .. '"')

@@ -686,6 +686,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   require("lv-zen").keymaps()
   require("lv-dial").keymaps()
   require("lv-neoterm").keymaps()
+  require("lv-gestures").keymaps()
 
   -- Terminal pass through escape key
   map("t", "<ESC>", "<ESC>", nore)

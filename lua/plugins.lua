@@ -1067,6 +1067,15 @@ return packer.startup(function(use)
     disable = not O.plugin.neorg,
   }
 
+  use {
+    "notomo/gesture.nvim",
+    config = function()
+      require("lv-gestures").config()
+    end,
+    module = "gesture",
+    disable = not O.plugin.gesture,
+  }
+
   -- TODO: add and configure these packages
   -- Git
   -- use {'tpope/vim-fugitive', opt = true}
