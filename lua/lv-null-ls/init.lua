@@ -29,7 +29,7 @@ function M.config()
       formatters.shfmt,
       formatters.black, -- yapf, autopep8
       formatters.isort,
-      formatters.clang_format,
+      -- formatters.clang_format,
       -- formatters.uncrustify,
       formatters.cmake_format,
       formatters.elm_format,
