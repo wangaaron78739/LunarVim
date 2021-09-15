@@ -316,7 +316,7 @@ M.cmd = setmetatable({
   from = M.to_cmd,
   op = M.operatorfunc_scaffold,
   require = function(name)
-    return luafn("require'" .. name .. "')")
+    return luafn("require'" .. name .. "'")
   end,
   lsp = luafn "vim.lsp.buf",
   diag = luafn "vim.lsp.diagnostic",

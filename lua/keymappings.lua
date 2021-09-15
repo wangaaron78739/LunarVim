@@ -168,7 +168,7 @@ function M.setup()
 
   -- Helper functions
   local cmd = require("lv-utils").cmd
-  local to_cmd = cmd.from
+  local from_fn = cmd.from
   local luacmd = cmd.lua
   local luareq = cmd.require
   local dap_fn = luareq "dap"
@@ -181,7 +181,7 @@ function M.setup()
   map("n", "n", luareq("keymappings").n_repeat, nore)
   map("n", "N", luareq("keymappings").N_repeat, nore)
   local srchrpt = function(k, op)
-    return to_cmd(function()
+    return from_fn(function()
       register_nN_repeat { nil, nil }
       feedkeys(k, op or "n")
     end)
@@ -416,7 +416,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map(
     "n",
     "]q",
-    to_cmd(function()
+    from_fn(function()
       register_nN_repeat(quickfix_nN)
       vim.cmd [[cnext]]
     end),
@@ -425,7 +425,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map(
     "n",
     "[q",
-    to_cmd(function()
+    from_fn(function()
       register_nN_repeat(quickfix_nN)
       vim.cmd [[cprev]]
     end),
@@ -438,11 +438,11 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   -- map("n", "]d", lsputil.diag_next, nore)
   -- map("n", "[d", lsputil.diag_prev, nore)
   local diag_nN = { lsputil.diag_next, lsputil.diag_prev }
-  local diag_next = to_cmd(function()
+  local diag_next = from_fn(function()
     register_nN_repeat(diag_nN)
     require("lsp.functions").diag_next()
   end)
-  local diag_prev = to_cmd(function()
+  local diag_prev = from_fn(function()
     register_nN_repeat(diag_nN)
     require("lsp.functions").diag_prev()
   end)
@@ -715,9 +715,9 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     nowait = false, -- use `nowait` when creating keymaps
   }
 
-  -- TODO create entire treesitter section
+  -- TODO: create entire treesitter section
 
-  -- TODO support vim-sandwich in the which-key menus
+  -- TODO: support vim-sandwich in the which-key menus
   local leaderMappings = {
     -- [" "] = { telescope_fn(.commands), "Commands" },
     [" "] = { telescope_fn.buffers, "Buffers" },

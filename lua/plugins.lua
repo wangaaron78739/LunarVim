@@ -251,7 +251,7 @@ return packer.startup(function(use)
     end,
     disable = not O.plugin.dashboard,
   }
-  -- TODO: try https://github.com/goolord/alpha-nvim
+  -- TODO: try https://github.com/goolord/alpha-nvim (new dashboard plugin)
 
   -- Ranger
   use {
@@ -334,6 +334,9 @@ return packer.startup(function(use)
   -- Symbol Outline
   use {
     "simrat39/symbols-outline.nvim",
+    setup = function()
+      require("lv-symbols-outline").preconf()
+    end,
     cmd = "SymbolsOutline",
     disable = not O.plugin.symbol_outline,
   }
@@ -355,7 +358,6 @@ return packer.startup(function(use)
   -- Debugging
   use {
     "mfussenegger/nvim-dap",
-    -- TODO: load on command
     config = function()
       require "lv-dap"
     end,
@@ -388,7 +390,7 @@ return packer.startup(function(use)
   -- Search & Replace
   use {
     "windwp/nvim-spectre",
-    event = BufRead, -- TODO: load on command
+    module = "spectre",
     config = function()
       require("lv-spectre").setup()
     end,
@@ -540,7 +542,6 @@ return packer.startup(function(use)
     config = function()
       require("lv-rust-tools").setup()
     end,
-    -- TODO: use lazy loading maybe?
     ft = "rust",
     disable = not O.plugin.rust_tools,
   }
@@ -592,13 +593,16 @@ return packer.startup(function(use)
       require("lsp_signature").setup(O.plugin.lsp_signature)
     end,
   }
-  -- TODO: https://github.com/nvim-lua/lsp-status.nvim
+  -- TODO: https://github.com/nvim-lua/lsp-status.nvim (lsp info in the status bar)
+  -- Also try some treesitter based statusbar plugins??
+
+  -- Code action lightbulb
   use {
     "kosayoda/nvim-lightbulb",
     config = function()
       vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
     end,
-    event = BufRead,
+    event = { "CursorHold", "CursorHoldI" },
     disable = not O.plugin.lightbulb,
   }
 
@@ -669,7 +673,7 @@ return packer.startup(function(use)
   -- Build cmake projects from neovim
   -- use {"Shatur95/neovim-cmake"}
 
-  -- TODO: try these
+  -- TODO: try these code running plugins
   -- https://github.com/CRAG666/code_runner.nvim
   -- use { "IndianBoy42/code_runner.nvim", config = function() end }
   -- https://github.com/michaelb/sniprun
@@ -771,6 +775,8 @@ return packer.startup(function(use)
     ft = { "txt", "markdown" }, -- TODO: what filetypes?
     disable = not O.plugin.bullets,
   }
+  -- Render latex math as ASCII (FIXME: doesn't seem to work??)
+  use { "jbyuki/nabla.nvim", module = "nabla" }
 
   -- 'smooth' scrolling
   use {
@@ -854,7 +860,7 @@ return packer.startup(function(use)
     disable = not O.plugin.ts_iswap,
   }
   use { "tommcdo/vim-exchange" } -- TODO: may not actually need a whole plugin for this
-  use { -- TODO: check if this lazy load is ok
+  use {
     "windwp/nvim-ts-autotag",
     event = BufRead,
     disable = not O.plugin.ts_autotag,
@@ -1024,8 +1030,7 @@ return packer.startup(function(use)
     disable = not O.plugin.splitfocus,
   }
 
-  use { "jbyuki/nabla.nvim", module = "nabla" }
-
+  -- Unix style vim commands
   use {
     "tpope/vim-eunuch",
     event = "BufRead",
@@ -1045,6 +1050,7 @@ return packer.startup(function(use)
     },
   }
 
+  -- Orgmode clone
   use {
     "vhyrro/neorg",
     config = function()
@@ -1082,6 +1088,7 @@ return packer.startup(function(use)
   -- use {'tpope/vim-rhubarb'}
 
   -- TODO: http://neovimcraft.com/plugin/chipsenkbeil/distant.nvim/index.html
+  -- TODO: https://github.com/jbyuki/instant.nvim (collaborative editing)
 
   -- Colorschemes/Themes
   -- Lush - Create Color Schemes

@@ -7,8 +7,8 @@ end
 M.keymaps = function()
   if O.plugin.hop then
     local sile = require("keymappings").sile
-    sile("n", "<M-f>", "<cmd>lua require('hop').hint_words()<cr>")
-    sile("n", "<M-S-f>", "<cmd>lua require('hop').hint_lines()<cr>")
+    sile("n", "]h", "<cmd>lua require('hop').hint_words()<cr>")
+    sile("n", "]H", "<cmd>lua require('hop').hint_lines()<cr>")
   end
 end
 
