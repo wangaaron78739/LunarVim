@@ -15,15 +15,15 @@ M.config = function()
 end
 
 M.keymaps = function()
-  local map_ = vim.api.nvim_set_keymap
-  local map = function(from, to)
-    map_("n", from, to, { silent = true })
-    map_("v", from, to, { silent = true })
+  local map = vim.api.nvim_set_keymap
+  local dialmap = function(from, to)
+    map("n", from, to, { silent = true })
+    map("v", from, to, { silent = true })
   end
-  map("<C-a>", "<Plug>(dial-increment)")
-  map("g<C-a>", "<Plug>(dial-increment-additional)")
-  map("<C-x>", "<Plug>(dial-decrement)")
-  map("g<C-x>", "<Plug>(dial-decrement-additional)")
+  dialmap("<C-a>", "<Plug>(dial-increment)")
+  dialmap("g<C-a>", "<Plug>(dial-increment-additional)")
+  dialmap("<C-x>", "<Plug>(dial-decrement)")
+  dialmap("g<C-x>", "<Plug>(dial-decrement-additional)")
 end
 
 return M

@@ -75,7 +75,7 @@ require("lsp.config").lspconfig "texlab" {
 --   },
 -- }
 
-require("cmp").setup.buffer {
+require("lv-cmp").sources {
   sources = {
     { name = "luasnip" },
     -- { name = "nvim_lsp" },
@@ -92,18 +92,8 @@ vim.b.sandwich_tex_marks_recipes = vim.fn.deepcopy(sandwichtex.marks_recipes) --
 sandwichtex.mark_recipe_fn()
 
 -- Localleader
-local wk = require "which-key"
-local leaderOpts = {
-  mode = "n", -- NORMAL mode
-  prefix = "<localleader>",
-  buffer = 0, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = false,
-  -- silent = true, -- use `silent` when creating keymaps
-  noremap = false, -- use `noremap` when creating keymaps
-  nowait = false, -- use `nowait` when creating keymaps
-}
 local cmd = require("lv-utils").cmd
-wk.register({
+mappings.localleader {
   f = { cmd "call vimtex#fzf#run()", "Fzf Find" },
   i = { cmd "VimtexInfo", "Project Information" },
   s = { cmd "VimtexStop", "Stop Project Compilation" },
@@ -116,7 +106,7 @@ wk.register({
   l = { cmd "TexlabBuild", "Texlab Build" },
   n = { cmd.require("nabla").action, "Nabla" },
   m = { cmd "VimtexToggleMain", "Toggle Main File" },
-}, leaderOpts)
+}
 
 -- require("lv-utils").define_augroups { _vimtex_event = {
 --   { "InsertLeave", "*.tex", "VimtexCompile" },

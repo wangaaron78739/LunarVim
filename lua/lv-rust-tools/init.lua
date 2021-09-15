@@ -1,11 +1,12 @@
 local M = {}
 local nore = require("keymappings").nore
 function M.ftplugin()
-  nore("n", "<localleader>m", "<Cmd>RustExpandMacro<CR>", { buffer = true })
-  nore("n", "<localleader>H", "<Cmd>RustToggleInlayHints<CR>", { buffer = true })
-  nore("n", "<localleader>e", "<Cmd>RustRunnables<CR>", { buffer = true })
-  nore("n", "<localleader>h", "<Cmd>RustHoverActions<CR>", { buffer = true })
-  nore("v", "<localleader>h", "<Cmd>RustHoverRange<CR>", { buffer = true })
+  mappings.localleader {
+    ["m"] = { "<Cmd>RustExpandMacro<CR>", "Expand Macro" },
+    ["H"] = { "<Cmd>RustToggleInlayHints<CR>", "Toggle Inlay Hitns" },
+    ["e"] = { "<Cmd>RustRunnables<CR>", "Runnables" },
+    ["h"] = { "<Cmd>RustHoverActions<CR>", "Hover Actions" },
+  }
   nore("v", "gh", "<cmd>RustHoverRange<CR>", { buffer = true })
   nore("n", "gj", "<cmd>RustJoinLines<CR>", { buffer = true })
 
@@ -56,5 +57,10 @@ function M.setup()
   }
 
   require("rust-tools").setup(opts)
+end
+
+function M.crates_setup()
+  -- vim.cmd [[autocmd FileType toml lua require("lv-cmp").add_sources { { name = "crates" } }]]
+  vim.cmd [[autocmd BufRead Cargo.toml lua require("lv-cmp").add_sources { { name = "crates" } }]]
 end
 return M

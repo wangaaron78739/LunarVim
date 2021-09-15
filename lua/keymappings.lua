@@ -5,7 +5,7 @@ local bufmap = vim.api.nvim_buf_set_keymap
 local mapper_meta = nil
 local mapper_newindex = function(tbl, lhs, rhs)
   if tbl[1].buffer then
-    bufmap(tbl[2], lhs, rhs, tbl[1])
+    bufmap(tbl[1].buffer, tbl[2], lhs, rhs, tbl[1])
   else
     map(tbl[2], lhs, rhs, tbl[1])
   end
@@ -353,6 +353,9 @@ function M.setup()
   --   map("n", "<M-C-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
   --   map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
   -- else
+
+  --  TODO: Subline Comments
+  -- map("x", "gC", operatorfunc_keys("subline_comment", "I/* <ESC>`>a */<ESC>"))
 
   -- Paste over textobject
   map("n", "r", operatorfunc_keys("paste_over", "p"), sile)
@@ -705,7 +708,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     noremap = true, -- use `noremap` when creating keymaps
     nowait = false, -- use `nowait` when creating keymaps
   }
-  local visualOpts = {
+  local vLeaderOpts = {
     mode = "v", -- Visual mode
     prefix = "<leader>",
     buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
@@ -925,7 +928,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("n", "<M-S-s>", operatorfunc_keys("separate", "<leader>s"), sile)
   map("x", "<M-S-s>", "<leader>s", sile)
 
-  local visualMappings = {
+  local vLeaderMappings = {
     -- ["/"] = { cmd "CommentToggle", "Comment" },
     d = { lsputil.range_diagnostics, "Range Diagnostics" },
     r = {
@@ -978,8 +981,8 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     leaderMappings["rf"] = { spectre.open_file_search, "Current File" }
     leaderMappings["/"][1] = spectre.open
     leaderMappings["rp"] = { spectre.open, "Project" }
-    visualMappings["rf"] = { spectre "open_visual({path = vim.fn.expand('%')})", "Current File" }
-    visualMappings["rp"] = { spectre.open_visual, "Project" }
+    vLeaderMappings["rf"] = { spectre "open_visual({path = vim.fn.expand('%')})", "Current File" }
+    vLeaderMappings["rp"] = { spectre.open_visual, "Project" }
     -- TODO: other spectre maps like '<leader>r'
   end
   if O.plugin.lazygit then
@@ -1009,7 +1012,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   end
 
   wk.register(leaderMappings, leaderOpts)
-  wk.register(visualMappings, visualOpts)
+  wk.register(vLeaderMappings, vLeaderOpts)
 
   -- TODO: move to plugin config files?
   if O.plugin.surround then
@@ -1037,6 +1040,37 @@ end
 function M.countjk()
   map("n", "j", [[(v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'j']], expr)
   map("n", "k", [[(v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'k']], expr)
+end
+
+M.wkopts = {
+  mode = "n", -- NORMAL mode
+  silent = true,
+  noremap = false,
+  nowait = false,
+}
+M.whichkey = function(maps, opts)
+  if opts == nil then
+    opts = {}
+  end
+  require("which-key").register(maps, vim.tbl_extend("keep", opts, M.wkopts))
+end
+M.localleader = function(maps, opts)
+  if opts == nil then
+    opts = {}
+  end
+  require("which-key").register(
+    maps,
+    vim.tbl_extend("keep", opts, {
+      prefix = "<localleader>",
+      buffer = 0,
+    })
+  )
+end
+M.vlocalleader = function(maps, opts)
+  if opts == nil then
+    opts = {}
+  end
+  M.localleader(maps, vim.tbl_extend("keep", opts, { mode = "v" }))
 end
 
 return M

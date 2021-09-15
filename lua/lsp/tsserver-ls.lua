@@ -37,11 +37,14 @@ local function on_attach(client, bufnr)
   -- required to fix code action ranges
   ts_utils.setup_client(client)
 
-  -- TODO: keymap these? (localleader)
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", {silent = true})
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "qq", ":TSLspFixCurrent<CR>", {silent = true})
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", {silent = true})
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", {silent = true})
+  mappings.localleader({
+    ["o"] = { "<cmd>TSLspOrganize<CR>", "Organize" },
+    ["f"] = { "<cmd>TSLspFixCurrent<CR>", "Fix" },
+    ["r"] = { "<cmd>TSLspRenameFile<CR>", "Rename File" },
+    ["i"] = { "<cmd>TSLspImportAll<CR>", "Import All" },
+  }, {
+    buffer = bufnr,
+  })
 end
 
 -- npm install -g typescript typescript-language-server

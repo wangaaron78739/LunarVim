@@ -29,8 +29,8 @@ function M.keymaps()
 
   vim.g.neoterm_automap_keys = "<leader>" .. O.plugin.neoterm.automap_keys
   -- Use gt to send to terminal
-  remap("n", "<M-t>", ":T ", {})
-  remap("n", "<M-S-t>", ":Tmem ", {})
+  remap("n", "<M-t>", ":Tmem ", {})
+  remap("n", "<M-S-t>", ":T ", {})
 end
 
 return M

@@ -23,7 +23,7 @@ if conf.fontsize then
 end
 
 -- You should specify your *installed* sources.
-require("cmp").setup.buffer {
+require("cmp").sources {
   { name = "luasnip" },
   { name = "nvim_lsp" },
   { name = "buffer" },

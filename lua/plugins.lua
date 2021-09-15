@@ -545,7 +545,22 @@ return packer.startup(function(use)
     ft = "rust",
     disable = not O.plugin.rust_tools,
   }
-  use "saecki/crates.nvim"
+  use {
+    "saecki/crates.nvim",
+    config = function()
+      require("lv-rust-tools").crates_setup()
+    end,
+    event = "BufRead Cargo.toml",
+  }
+
+  -- TODO: configure package-info.nvim
+  use {
+    "vuki656/package-info.nvim",
+    config = function()
+      require("lv-package-info").setup()
+    end,
+    event = "BufRead package.json",
+  }
 
   -- Elixir
   use { "elixir-editors/vim-elixir", ft = { "elixir", "eelixir", "euphoria3" } }
@@ -845,8 +860,9 @@ return packer.startup(function(use)
     config = function()
       require("tsht").config.hint_keys = O.treesitter.hint_labels -- Requires https://github.com/mfussenegger/nvim-ts-hint-textobject/pull/2
 
-      mappings.sile("o", "m", [[:<C-U>lua require('tsht').nodes()<CR>]])
-      mappings.sile("v", "m", [[:lua require('tsht').nodes()<CR>]])
+      -- mappings.sile("o", "m", [[:<C-U>lua require('tsht').nodes()<CR>]])
+      mappings.sile("o", "m", [[<cmd>lua require('tsht').nodes()<CR>]])
+      mappings.sile("v", "m", [[<cmd>lua require('tsht').nodes()<CR>]])
     end,
     event = BufRead,
     disable = not O.plugin.ts_hintobjects,
@@ -1088,7 +1104,24 @@ return packer.startup(function(use)
   -- use {'tpope/vim-rhubarb'}
 
   -- TODO: http://neovimcraft.com/plugin/chipsenkbeil/distant.nvim/index.html
+  use {
+    "chipsenkbeil/distant.nvim",
+    config = function()
+      require("lv-distant").config()
+    end,
+    cmd = "DistantLaunch",
+  }
   -- TODO: https://github.com/jbyuki/instant.nvim (collaborative editing)
+  use {
+    "jbyuki/instant.nvim",
+    cmd = {
+      "InstantStartServer",
+      "InstantStartSingle",
+      "InstalJoinSingle",
+      "InstantStartSession",
+      "InstantJoinSession",
+    },
+  }
 
   -- Colorschemes/Themes
   -- Lush - Create Color Schemes

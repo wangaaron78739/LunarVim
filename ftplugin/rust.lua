@@ -35,20 +35,3 @@ else
     },
   }
 end
-
--- You should specify your *installed* sources.
--- utils.define_augroups {
---   __crates_toml = {
---     {'FileType', "toml", ""},
---   },
--- }
--- require("cmp").setup.buffer {
---   { name = "luasnip" },
---   { name = "nvim_lsp" },
---   { name = "buffer" },
---   { name = "path" },
---   -- { name = "latex_symbols" },
---   { name = "calc" },
---   -- { name = "cmp_tabnine" },
---   { name = "crates" },
--- }

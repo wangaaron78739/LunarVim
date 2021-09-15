@@ -7,9 +7,12 @@ function M.preconf()
   -- let g:slime_default_config = {"socket_name": "default", "target_pane": "1"}
 end
 function M.config()
-  local remap = vim.api.nvim_set_keymap
-  -- remap("n", "<leader>xs", ":MagmaEvaluateOperator<CR>", { expr = true, silent = true })
-  remap("v", "<leader>ts", ":<C-u>SlimeSend<CR>", { silent = true })
-  remap("n", "<leader>tss", "<cmd>SlimeSendCurrentLine<CR>", { silent = true })
+  -- local map = vim.api.nvim_set_keymap
+  -- map("v", "<leader>ts", "<cmd>SlimeSend<cr>", { silent = true })
+  -- map("n", "<leader>tss", "<cmd>SlimeSendCurrentLine<cr>", { silent = true })
+  mappings.whichkey {
+    ["<leader>ts"] = "<cmd>SlimeSend<cr>",
+    ["<leader>tss"] = "<cmd>SlimeSendCurrentLine<cr>",
+  }
 end
 return M
