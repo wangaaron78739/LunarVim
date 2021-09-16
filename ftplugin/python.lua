@@ -14,10 +14,10 @@ require("lsp.config").lspconfig "pyright" {
   },
 }
 
-if O.plugin.debug and O.plugin.dap_install then
-  local dap_install = require "dap-install"
-  dap_install.config("python_dbg", {})
-end
+-- if O.plugin.debug and O.plugin.dap_install then
+--   local dap_install = require "dap-install"
+--   dap_install.config("python_dbg", {})
+-- end
 
 require("lv-sandwich").add_recipe {
   buns = { [["""]], [["""]] },
