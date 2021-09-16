@@ -383,7 +383,7 @@ return packer.startup(function(use)
     "numToStr/FTerm.nvim",
     event = "BufWinEnter",
     config = function()
-      require("fterms").setup()
+      require("lv-terms").fterm()
     end,
     disable = not O.plugin.floatterm,
   }
@@ -688,67 +688,91 @@ return packer.startup(function(use)
   -- Build cmake projects from neovim
   -- use {"Shatur95/neovim-cmake"}
 
-  -- TODO: try these code running plugins
-  -- https://github.com/CRAG666/code_runner.nvim
-  -- use { "IndianBoy42/code_runner.nvim", config = function() end }
-  -- https://github.com/michaelb/sniprun
-
-  -- Send to terminal
-  use {
-    "jpalardy/vim-slime",
-    setup = function()
-      require("lv-slime").preconf()
-    end,
-    config = function()
-      require("lv-slime").config()
-    end,
-    cmd = {
-      "SlimeSend",
-      "SlimeSend1",
-      "SlimeSendCurrentLine",
-      "SlimeConfig",
-    },
-    disable = not O.plugin.slime,
-  }
-  -- Send to terminal/repl
+  -- Send to jupyter
   use {
     "dccsillag/magma-nvim",
     config = function()
-      require("lv-magma").config()
+      require("lv-terms").magma()
     end,
     setup = function()
-      require("lv-magma").setup()
+      vim.g.magma_automatically_open_output = not not O.plugin.magma.automatically_open_output
     end,
     run = ":UpdateRemotePlugins",
     -- python3.9 -m pip install cairosvg pnglatex jupyter_client ipython ueberzug pillow
-    ft = { "python", "julia" },
-    keys = { "gx", "gxx" },
-    cmd = {
-      "MagmaEvaluateOperator",
-      "MagmaEvaluateVisual",
-      "MagmaEvaluateLine",
-    },
+    cmd = "MagmaStart", -- see lv-terms
     disable = not O.plugin.magma,
   }
-
   -- Better neovim terminal
   use {
     "kassio/neoterm",
     config = function()
-      require("lv-neoterm").config()
+      require("lv-terms").neoterm()
     end,
     cmd = {
       "T",
       "Tmap",
+      "Tmem",
       "Tnew",
       "Ttoggle",
       "Topen",
-      "TREPLSendLine",
-      "TREPLSendSelection",
-      "TREPLSendFile",
     },
-    keys = { "<M-x>", "<M-x><M-x>" },
+    keys = {
+      "<Plug>(neoterm-repl-send)",
+      "<Plug>(neoterm-repl-send-line)",
+      "<Plug>(neoterm-repl-send)",
+    },
     disable = not O.plugin.neoterm,
+  }
+  -- Lua development helper
+  use {
+    "bfredl/nvim-luadev",
+    config = function()
+      require("lv-terms").luadev()
+    end,
+    cmd = "LuadevStart", -- see lv-terms
+    disable = not O.plugin.luadev,
+  }
+  use {
+    "rafcamlet/nvim-luapad",
+    cmd = { "Luapad", "LuaRun" },
+    disable = not O.plugin.luapad,
+  }
+  -- TODO: try these code running plugins
+  -- https://github.com/CRAG666/code_runner.nvim
+  use {
+    "IndianBoy42/code_runner.nvim",
+    config = function()
+      require("lv-terms").coderunner()
+    end,
+    cmd = { "CRFileType", "CRProjects", "RunCode", "RunFile", "RunProject" },
+    disable = not O.plugin.coderunner,
+  }
+  use {
+    "michaelb/sniprun",
+    run = "bash install.sh",
+    config = function()
+      require("lv-terms").sniprun()
+    end,
+    cmd = { "SnipRun", "SnipInfo" },
+    disable = not O.plugin.sniprun,
+  }
+  use {
+    "IndianBoy42/kitty-runner.nvim",
+    config = function()
+      require("kitty-runner").setup {
+        use_keymaps = false, --use keymaps
+      }
+    end,
+    cmd = {
+      "KittyOpen",
+      "KittyOpenLocal",
+      "KittyReRunCommand",
+      "KittySendLines",
+      "KittyRunCommand",
+      "KittyClearRunner",
+      "KittyKillRunner",
+    },
+    disable = not O.plugin.kittyrunner,
   }
 
   -- Repeat plugin commands
@@ -772,7 +796,7 @@ return packer.startup(function(use)
   -- Detect indentation from file -- SLOW AF
   -- use { "zsugabubus/crazy8.nvim", event = BufRead }
 
-  -- mkdir -- FIXME: Goes into a infinite loop and freezes neovim
+  -- mkdir
   use {
     "jghauser/mkdir.nvim",
     config = function()
@@ -987,26 +1011,6 @@ return packer.startup(function(use)
       require("lv-refactoring").setup()
     end,
     disable = not O.plugin.primeagen_refactoring,
-  }
-
-  -- Lua development helper
-  use {
-    "bfredl/nvim-luadev",
-    cmd = "Luadev",
-    config = function()
-      local sile = require("keymappings").sile
-      sile("n", "gxx", "<Plug>(Luadev-RunLine)")
-      sile("n", "gx", "<Plug>(Luadev-Run)")
-      sile("v", "gx", "<Plug>(Luadev-Run)")
-      sile("n", "gxw", "<Plug>(Luadev-RunWord)")
-      sile("n", "gx<space>", "<Plug>(Luadev-Complete)")
-    end,
-    ft = "lua",
-  }
-  use {
-    "rafcamlet/nvim-luapad",
-    cmd = { "Luapad", "LuaRun" },
-    ft = "lua",
   }
 
   -- Lowlight code outside the current context

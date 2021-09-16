@@ -338,8 +338,8 @@ function M.setup()
   noclobber_meta("n", "d")
   noclobber_meta("n", "D")
   noclobber_default("n", "c")
+  noclobber_default("n", "C")
   noclobber_default("x", "c")
-  noclobber_default("x", "C")
 
   -- Preserve cursor on yank in visual mode
   map("x", "y", "myy`y", nore)
@@ -688,7 +688,6 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   require("lv-hop").keymaps()
   require("lv-zen").keymaps()
   require("lv-dial").keymaps()
-  require("lv-neoterm").keymaps()
   require("lv-gestures").keymaps()
 
   -- Terminal pass through escape key
@@ -731,6 +730,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     f = { telescope_fn.find_files, "Find File" },
     j = "Jump next (])",
     k = "Jump prev ([)",
+    x = "Execute/Send",
     w = { cmd "w", "Write" }, -- w = { cmd "up", "Write" },
     W = { cmd "noau w", "Write (noau)" }, -- w = { cmd "noau up", "Write" },
     o = {
@@ -754,12 +754,6 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     },
     t = {
       name = "Terminals",
-      -- TODO: Slime commands or replace slime with neoterm
-      t = { cmd "Ttoggle", "Neoterm" },
-      r = { cmd "TREPLSetTerm ", "Neoterm set repl..." },
-      l = { cmd "Tls", "Neoterm list" },
-      s = "Slime Line",
-      M = { ":Tmap ", "Neoterm map a command" },
       -- t = {luacmd "ftopen('right')", "Terminal" },
       -- t = { luareq'FTerm'.toggle , "Terminal" },
     },
@@ -988,9 +982,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   if O.plugin.lazygit then
     leaderMappings["gg"] = { cmd "LazyGit", "LazyGit" }
   end
-  if O.plugin.neoterm then
-    leaderMappings[O.plugin.neoterm.automap_keys] = "Neoterm AutoMap"
-  end
+  require("lv-terms").keymaps(leaderMappings, vLeaderMappings)
   -- if O.plugin.nabla then
   leaderMappings["<leader>xn"] = { luareq("nabla").action, "Nabla" }
   -- end
@@ -1002,10 +994,6 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       t = { cmd "LushRunTutorial", "Lush Tutorial" },
       q = { cmd "LushRunQuickstart", "Lush Quickstart" },
     }
-  end
-  if O.plugin.magma then
-    leaderMappings["to"] = { cmd "MagmaShowOutput", "Magma Output" }
-    leaderMappings["tm"] = { cmd "MagmaInit", "Magma Init" }
   end
   if O.plugin.notify then
     leaderMappings["mm"] = { cmd "Message", "Notifications" }

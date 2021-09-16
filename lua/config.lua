@@ -166,7 +166,6 @@ O = {
     telescope_fzy = {},
     telescope_frecency = {},
     telescope_fzf = {},
-    sanegx = {},
     ranger = {},
     todo_comments = {},
     lsp_colors = {},
@@ -225,11 +224,8 @@ O = {
     },
     surround = {}, -- Uses vim-sandwhich
     fzf = {},
-    slime = { target = "kitty" },
     magma = {},
-    neoterm = {
-      automap_keys = "xx",
-    },
+    neoterm = {},
     bullets = {},
     vista = {},
     startuptime = {},
@@ -285,6 +281,8 @@ O = {
       },
     },
     luasnip = {},
+    luadev = {},
+    luapad = {},
     primeagen_refactoring = {},
     splitfocus = {
       -- width =
@@ -313,6 +311,9 @@ O = {
       lmb = true,
       rmb = false,
     },
+    coderunner = {},
+    sniprun = {},
+    kittyrunner = {},
   },
 }
 vim.cmd('let &titleold="' .. TERMINAL .. '"')

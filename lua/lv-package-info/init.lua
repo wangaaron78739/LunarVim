@@ -10,11 +10,11 @@ end
 M.ftplugin = function()
   local packinfo = utils.cmd.require "package-info"
   mappings.localleader {
-    s = packinfo.show,
-    d = packinfo.delete,
-    c = packinfo.change_version,
-    i = packinfo.install,
-    R = packinfo.reinstall,
+    s = { packinfo.show, "Show" },
+    d = { packinfo.delete, "Delete" },
+    c = { packinfo.change_version, "Change Version" },
+    i = { packinfo.install, "Install" },
+    R = { packinfo.reinstall, "Reinstall" },
   }
 end
 return M

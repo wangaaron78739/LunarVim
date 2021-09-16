@@ -128,6 +128,7 @@ M.range_diagnostics = function(opts, buf_nr, start, finish)
   opts.focus_id = "position_diagnostics"
   buf_nr = buf_nr or api.nvim_get_current_buf()
   local match_position_predicate = function(diag)
+    -- FIXME: this is wrong sometimes?
     if finish[1] < diag.range["start"].line then
       return false
     else

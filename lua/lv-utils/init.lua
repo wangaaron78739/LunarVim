@@ -75,6 +75,9 @@ end
 function M.new_command(name, fn)
   vim.cmd("command! " .. name .. " " .. fn)
 end
+function M.command_from_fn(name, fn)
+  vim.cmd([[command -nargs=+ ]] .. name .. [[ :]] .. fn .. [[("<args>")]])
+end
 
 _G.lv_utils_functions = {}
 local to_cmd_counter = 0
