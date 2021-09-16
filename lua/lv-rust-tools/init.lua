@@ -59,8 +59,25 @@ function M.setup()
   require("rust-tools").setup(opts)
 end
 
+function M.crates_ftplugin()
+  require("lv-cmp").add_sources { { name = "crates" } }
+  local prefix = "<cmd>lua require'crates'."
+  mappings.localleader {
+    ["t"] = { prefix .. "toggle()<cr>", "Toggle" },
+    ["r"] = { prefix .. "reload()<cr>", "Reload" },
+    ["u"] = { prefix .. "update_crate()<cr>", "Update Crate" },
+    ["a"] = { prefix .. "update_all_crates()<cr>", "Update All" },
+    ["U"] = { prefix .. "upgrade_crate()<cr>", "Upgrade Crate" },
+    ["A"] = { prefix .. "upgrade_all_crates()<cr>", "Upgrade All" },
+    ["<localleader>"] = { prefix .. "show_versions_popup()<cr>", "Versions" },
+  }
+  mappings.vlocalleader {
+    ["u"] = { ":lua require('crates').update_crates()<cr>", "Update" },
+    ["U"] = { ":lua require('crates').upgrade_crates()<cr>", "Upgrade" },
+  }
+end
 function M.crates_setup()
   -- vim.cmd [[autocmd FileType toml lua require("lv-cmp").add_sources { { name = "crates" } }]]
-  vim.cmd [[autocmd BufRead Cargo.toml lua require("lv-cmp").add_sources { { name = "crates" } }]]
+  vim.cmd [[autocmd BufRead Cargo.toml lua require("lv-rust-tools").crates_ftplugin()]]
 end
 return M
