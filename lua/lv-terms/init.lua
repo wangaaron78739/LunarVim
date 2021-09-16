@@ -196,6 +196,7 @@ function M.keymaps(leaderMappings, vLeaderMappings)
     map("n", "<leader>xk", "<cmd>KittyReRunCommand<CR>", { silent = true })
     map("n", "<leader>xK", "<cmd>KittyRunCommand<CR>", { silent = true })
     map("n", "<leader>xl", "<cmd>KittySendLines<CR>", { silent = true })
+    map("x", "<leader>xl", "<cmd>KittySendLines<CR>", { silent = true })
   end
 
   if O.plugin.sniprun then

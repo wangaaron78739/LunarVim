@@ -1,5 +1,6 @@
 -- local action_mt = require "telescope.actions.mt"
 -- local action_set = require "telescope.actions.set"
+local extensions = require("telescope").extensions
 local action_state = require "telescope.actions.state"
 local actions = require "telescope.actions"
 local themes = require "telescope.themes"
@@ -288,6 +289,10 @@ function M.search_only_certain_files()
   require("telescope.builtin").find_files {
     find_command = cmd,
   }
+end
+
+function M.projects()
+  extensions.project.project {}
 end
 
 return setmetatable({}, {

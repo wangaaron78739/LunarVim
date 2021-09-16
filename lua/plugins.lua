@@ -815,7 +815,7 @@ return packer.startup(function(use)
     disable = not O.plugin.bullets,
   }
   -- Render latex math as ASCII (FIXME: doesn't seem to work??)
-  use { "jbyuki/nabla.nvim", module = "nabla" }
+  use { "jbyuki/nabla.nvim", module = "nabla", disable = not O.plugin.nabla }
 
   -- 'smooth' scrolling
   use {

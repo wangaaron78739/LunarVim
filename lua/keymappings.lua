@@ -802,6 +802,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       -- "
       -- " Debug Adapter protocol:
       -- "   https://microsoft.github.io/debug-adapter-protocol/
+      -- TODO: can use localleader for this??
       name = "Debug",
       t = { dap_fn.toggle_breakpoint, "Toggle Breakpoint" },
       b = { dap_fn.step_back, "Step Back" },
@@ -848,9 +849,6 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       s = { lspbuf.signature_help, "Signature Help" },
       T = { cmd "TSConfigInfo", "Info" },
       f = { lspbuf.formatting, "Format" },
-    },
-    p = {
-      name = "Projects",
     },
     s = {
       name = "Search",
@@ -903,12 +901,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       },
     },
     P = {
-      name = "Packer",
-      c = { cmd "PackerCompile", "Compile" },
-      i = { cmd "PackerInstall", "Install" },
-      r = { cmd "luafile %", "Reload" },
-      s = { cmd "PackerSync", "Sync" },
-      u = { cmd "PackerUpdate", "Update" },
+      name = "Projects",
     },
     a = {
       name = "Swap",
@@ -928,9 +921,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   local vLeaderMappings = {
     -- ["/"] = { cmd "CommentToggle", "Comment" },
     d = { lsputil.range_diagnostics, "Range Diagnostics" },
-    r = {
-      name = "Replace/Refactor",
-    },
+    r = { name = "Replace/Refactor" },
     c = {
       [["z<M-y>:%s/<C-r>z//g<Left><Left>]],
       "Change all",
@@ -968,10 +959,10 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     leaderMappings["zt"] = { cmd "Twilight", "Twilight" }
   end
   if O.plugin.telescope_project then
-    leaderMappings["pp"] = { luareq "telescope" "extensions.project.project{}", "Projects" }
+    leaderMappings["PP"] = { telescope_fn.projects, "Projects" }
   end
   if O.plugin.project_nvim then
-    leaderMappings["pr"] = { cmd "ProjectRoot", "Projects" }
+    leaderMappings["PR"] = { cmd "ProjectRoot", "Rooter" }
   end
   if O.plugin.spectre then
     local spectre = luareq "spectre"
@@ -986,9 +977,9 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     leaderMappings["gg"] = { cmd "LazyGit", "LazyGit" }
   end
   require("lv-terms").keymaps(leaderMappings, vLeaderMappings)
-  -- if O.plugin.nabla then
-  leaderMappings["<leader>xn"] = { luareq("nabla").action, "Nabla" }
-  -- end
+  if O.plugin.nabla then
+    leaderMappings["xn"] = { luareq("nabla").action, "Nabla" }
+  end
   if O.lushmode then
     leaderMappings["L"] = {
       name = "+Lush",
