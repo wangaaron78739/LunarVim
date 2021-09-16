@@ -2,15 +2,7 @@ local M = {}
 
 local null = require "null-ls"
 
--- local gcc_diagnostics = {
---   method = null.methods.DIAGNOSTICS,
---   filetypes = { "c", "cpp" },
---   name = "gcc-diagnostics",
---   async = true,
---   generator = {
---     fn = function(params, done) end,
---   },
--- }
+local gcc_diagnostics = require "lv-null-ls.gcc"
 
 function M.config()
   local diagnostics_format = "[#{c}] #{m} (#{s})"
