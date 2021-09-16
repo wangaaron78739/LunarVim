@@ -3,7 +3,7 @@ local nore = require("keymappings").nore
 function M.ftplugin()
   mappings.localleader {
     ["m"] = { "<Cmd>RustExpandMacro<CR>", "Expand Macro" },
-    ["H"] = { "<Cmd>RustToggleInlayHints<CR>", "Toggle Inlay Hitns" },
+    ["H"] = { "<Cmd>RustToggleInlayHints<CR>", "Toggle Inlay Hints" },
     ["e"] = { "<Cmd>RustRunnables<CR>", "Runnables" },
     ["h"] = { "<Cmd>RustHoverActions<CR>", "Hover Actions" },
   }

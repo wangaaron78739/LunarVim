@@ -190,6 +190,12 @@ function M.setup()
     }
   end
 
+  -- Free keys
+  map("n", "<C-q>", "<NOP>", {})
+  map("n", "<C-n>", "<NOP>", {})
+  map("n", "<C-p>", "<NOP>", {})
+  map("n", "<C-o>", "<NOP>", {})
+
   -- custom_n_repeat
   map("n", "n", luareq("keymappings").n_repeat, nore)
   map("n", "N", luareq("keymappings").N_repeat, nore)
@@ -453,6 +459,11 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     ["["] = jumps,
   }, M.wkopts)
 
+  -- Close window
+  map("n", "gq", "<C-w>q", nore)
+  map("n", "<c-q>", "<C-w>q", nore)
+  map("n", "<c-w>d", cmd "bdelete!", nore)
+
   -- Search for the current selection
   map("x", "*", srchrpt '"zy/<C-R>z<cr>', nore) -- Search for the current selection
   map("n", "<leader>*", operatorfunc_keys("searchbwd_for", "*"), {}) -- Search textobject
@@ -665,12 +676,6 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
 
   -- map("n", "m-/", "")
 
-  -- Free keys
-  map("n", "<C-q>", "<NOP>", {})
-  map("n", "<C-n>", "<NOP>", {})
-  map("n", "<C-p>", "<NOP>", {})
-  map("n", "<C-o>", "<NOP>", {})
-
   -- Select whole file
   -- map("o", "ie", "<cmd>normal! mzggVG<cr>`z", nore)
   sel_map("iG", "gg0oG$", nore)
@@ -773,7 +778,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       w = { cmd "w", "Write" },
       a = { cmd "wa", "Write All" },
       c = { cmd "Bdelete!", "Close" },
-      C = { cmd "bdelete!", "Close" },
+      d = { cmd "bdelete!", "Close+Win" },
       f = { lspbuf.formatting, "Format" },
       -- n = { cmd "tabnew", "New" },
       n = { cmd "enew", "New" },
