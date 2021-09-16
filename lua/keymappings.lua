@@ -748,8 +748,8 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       -- ["v"] = {cmd "Vista", "Vista"},
       M = { vim.g.goneovim and cmd "GonvimMiniMap" or cmd "MinimapToggle", "Minimap" },
       b = { luacmd "ftopen('broot')", "Broot" },
-      p = { luacmd "ftopen('python')", "Python" },
-      t = { luacmd "ftopen('top')", "System Monitor" },
+      p = { luacmd "ftopen('ipython')", "Python" },
+      t = { luacmd "ftopen('btm')", "System Monitor" },
       S = { luacmd "ftopen('spt')", "Spotify" },
       l = { luacmd "ftopen('right')", "Terminal" },
     },
@@ -814,6 +814,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     g = {
       name = "Git",
       g = { luacmd "ftopen('gitui')", "Gitui" },
+      v = { luacmd "ftopen('verco')", "Verco" },
       m = { cmd "!smerge '%:p:h'", "Sublime Merge" },
       l = { gitsigns_fn.blame_line, "Blame" },
       L = { cmd "GitBlameToggle", "Blame Toggle" },

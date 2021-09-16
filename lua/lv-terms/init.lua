@@ -36,17 +36,16 @@ function M.fterm()
     }
   end
 
-  local fterms = {}
-  fterms.down = under(nil)
-  fterms.right = right(nil)
-  fterms.term = popup(nil)
-  fterms.gitui = popup "gitui"
   -- FIXME: broot unable to open files correctly
-  fterms.broot = popup "broot"
-  fterms.xplr = popup "xplr"
-  fterms.python = popup "ipython"
-  fterms.spt = popup "spt"
-  fterms.top = popup "btm"
+  local fterms = setmetatable({
+    down = under(nil),
+    right = right(nil),
+    term = popup(nil),
+  }, {
+    __index = function(tbl, key)
+      return popup(key)
+    end,
+  })
 
   vim.api.nvim_set_keymap("n", "<M-i>", '<CMD>lua require("FTerm").toggle()<CR>', {})
   vim.api.nvim_set_keymap("t", "<M-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', {})
