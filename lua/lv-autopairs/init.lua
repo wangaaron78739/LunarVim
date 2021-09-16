@@ -28,10 +28,10 @@ local ts_conds = require "nvim-autopairs.ts-conds"
 npairs.add_rules {
   R("%", "%", "lua"):with_pair(ts_conds.is_ts_node { "string", "comment" }),
   R("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node { "function" }),
-  R("if ", " then\nend", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
-  R("for ", " in", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
-  R("in ", " do", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
-  R("do ", " end", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
+  -- R("if ", " then\nend", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
+  -- R("for ", " in", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
+  -- R("in ", " do", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
+  -- R("do ", " end", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
 }
 
 -- press % => %% is only inside comment or string
