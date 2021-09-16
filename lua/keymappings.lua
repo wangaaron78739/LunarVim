@@ -176,6 +176,18 @@ function M.setup()
   local telescope_fn = luareq "lv-telescope.functions"
   local lspbuf = cmd.lsp
   local lsputil = luareq "lsp.functions"
+  local function make_nN_pair(pair)
+    return {
+      from_fn(function()
+        register_nN_repeat(pair)
+        feedkeys(pair[1])
+      end),
+      from_fn(function()
+        register_nN_repeat(pair)
+        feedkeys(pair[2])
+      end),
+    }
+  end
 
   -- custom_n_repeat
   map("n", "n", luareq("keymappings").n_repeat, nore)
@@ -417,42 +429,28 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   -- QuickFix
   -- map("n", "]q", cmd "cnext", nore)
   -- map("n", "[q", cmd "cprev", nore)
-  local quickfix_nN = { cmd "cnext", cmd "cprev" }
-  map(
-    "n",
-    "]q",
-    from_fn(function()
-      register_nN_repeat(quickfix_nN)
-      vim.cmd [[cnext]]
-    end),
-    nore
-  )
-  map(
-    "n",
-    "[q",
-    from_fn(function()
-      register_nN_repeat(quickfix_nN)
-      vim.cmd [[cprev]]
-    end),
-    nore
-  )
-  -- map("n", "<C-M-j>", cmd "cnext", nore)
-  -- map("n", "<C-M-k>", cmd "cprev", nore)
+  local quickfix_nN = make_nN_pair { cmd "cnext", cmd "cprev" }
+  map("n", "]q", quickfix_nN[1], nore)
+  map("n", "[q", quickfix_nN[2], nore)
 
   -- Diagnostics jumps
-  -- map("n", "]d", lsputil.diag_next, nore)
-  -- map("n", "[d", lsputil.diag_prev, nore)
-  local diag_nN = { lsputil.diag_next, lsputil.diag_prev }
-  local diag_next = from_fn(function()
-    register_nN_repeat(diag_nN)
-    require("lsp.functions").diag_next()
-  end)
-  local diag_prev = from_fn(function()
-    register_nN_repeat(diag_nN)
-    require("lsp.functions").diag_prev()
-  end)
-  map("n", "]d", diag_next, nore)
-  map("n", "[d", diag_prev, nore)
+  local diag_nN = make_nN_pair { lsputil.diag_next, lsputil.diag_prev }
+  map("n", "]d", diag_nN[1], nore)
+  map("n", "[d", diag_nN[2], nore)
+
+  local hunk_nN = make_nN_pair { gitsigns_fn.next_hunk, gitsigns_fn.prev_hunk }
+  map("n", "]g", hunk_nN[1], nore)
+  map("n", "[g", hunk_nN[2], nore)
+
+  local jumps = {
+    d = "Diagnostics",
+    q = "QuickFix",
+    g = "Git Hunk",
+  }
+  wk.register({
+    ["]"] = jumps,
+    ["["] = jumps,
+  }, M.wkopts)
 
   -- Search for the current selection
   map("x", "*", srchrpt '"zy/<C-R>z<cr>', nore) -- Search for the current selection
@@ -817,8 +815,6 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       name = "Git",
       g = { luacmd "ftopen('gitui')", "Gitui" },
       m = { cmd "!smerge '%:p:h'", "Sublime Merge" },
-      j = { gitsigns_fn.next_hunk, "Next Hunk" }, -- TODO: make nN repeatable
-      k = { gitsigns_fn.prev_hunk, "Prev Hunk" },
       l = { gitsigns_fn.blame_line, "Blame" },
       L = { cmd "GitBlameToggle", "Blame Toggle" },
       p = { gitsigns_fn.preview_hunk, "Preview Hunk" },
@@ -884,8 +880,6 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     },
     d = {
       name = "Diagnostics",
-      j = { diag_next, "Next" },
-      k = { diag_prev, "Previous" },
       i = { lsputil.toggle_diagnostics, "Toggle Inline" },
       l = { lsputil.diag_line, "Line Diagnostics" },
       c = { lsputil.diag_cursor, "Cursor Diagnostics" },
