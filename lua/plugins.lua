@@ -1036,16 +1036,16 @@ return packer.startup(function(use)
     "beauwilliams/focus.nvim",
     config = function()
       local focus = require "focus"
-
       local conf = O.plugin.splitfocus
-      focus.winhighlight = conf.winhighlight
-      focus.hybridnumber = conf.hybridnumber
-      focus.relativenumber = conf.relative_number == nil and O.relative_number or conf.relative_number
-      focus.number = conf.number == nil and O.number or conf.number
-      focus.cursorline = conf.cursorline == nil and O.cursorline or conf.cursorline
-      focus.signcolumn = conf.signcolumn
+      focus.setup {
+        winhighlight = conf.winhighlight,
+        hybridnumber = conf.hybridnumber,
+        relativenumber = conf.relative_number == nil and O.relative_number or conf.relative_number,
+        number = conf.number == nil and O.number or conf.number,
+        cursorline = conf.cursorline == nil and O.cursorline or conf.cursorline,
+        signcolumn = conf.signcolumn,
+      }
     end,
-    cmd = { "FocusEnable", "FocusToggle", "FocusSplitNicely" },
     module = "focus",
     disable = not O.plugin.splitfocus,
   }

@@ -251,7 +251,9 @@ function M.setup()
       map("n", "<C-j>", luacmd "require('focus').split_command('j')", sile)
       map("n", "<C-k>", luacmd "require('focus').split_command('k')", sile)
       map("n", "<C-l>", luacmd "require('focus').split_command('l')", sile)
-      map("n", "<C-w>v", luacmd "require('focus').split_nicely()", sile)
+      map("n", "<C-w>v", luacmd "require('focus').split_command('l')", sile)
+      map("n", "<C-w>s", luacmd "require('focus').split_nicely()", sile)
+      map("n", "<C-w>e", luacmd "require('focus').focus_equalise()", sile)
     else
       map("n", "<C-h>", "<C-w>h", sile)
       map("n", "<C-j>", "<C-w>j", sile)
@@ -735,7 +737,8 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     W = { cmd "noau w", "Write (noau)" }, -- w = { cmd "noau up", "Write" },
     o = {
       name = "Toggle window",
-      s = { cmd "FocusSplitNicely", "Nice split" },
+      s = { luacmd "require('focus').split_nicely()", "Nice split" },
+      e = { luacmd "require('focus').focus_max_or_equal()", "Max/Equal splits" },
       f = { cmd "NvimTreeToggle", "File Sidebar" },
       u = { cmd "UndotreeToggle", "Undo tree" },
       r = { cmd "RnvimrToggle", "Ranger" },
@@ -745,7 +748,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       F = { telescope_fn.file_browser, "Telescope browser" },
       v = { cmd "Vista nvim_lsp", "Vista" },
       -- ["v"] = {cmd "Vista", "Vista"},
-      m = { vim.g.goneovim and cmd "GonvimMiniMap" or cmd "MinimapToggle", "Minimap" },
+      M = { vim.g.goneovim and cmd "GonvimMiniMap" or cmd "MinimapToggle", "Minimap" },
       b = { luacmd "ftopen('broot')", "Broot" },
       p = { luacmd "ftopen('python')", "Python" },
       t = { luacmd "ftopen('top')", "System Monitor" },
@@ -766,7 +769,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       l = { cmd "setlocal cursorline!", "Cursor line" },
       h = { cmd "setlocal hlsearch", "hlsearch" },
       c = { luacmd "utils.conceal_toggle()", "Conceal" },
-      f = { cmd "FocusToggle", "Split focus" },
+      f = { luacmd "require('focus').toggle()", "Split focus" },
       -- TODO: Toggle comment visibility
     },
     b = {
