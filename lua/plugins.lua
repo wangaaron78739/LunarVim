@@ -1104,8 +1104,15 @@ return packer.startup(function(use)
 
   -- TODO: add and configure these packages
   -- Git
-  -- use {'tpope/vim-fugitive', opt = true}
-  -- use {'tpope/vim-rhubarb'}
+  use {
+    "tpope/vim-fugitive",
+    config = function()
+      require("lv-fugitive").setup()
+    end,
+    cmd = { "G", "Git", "Gdiffsplit", "Gdiff" },
+    disable = not O.plugin.fugitive,
+  }
+  -- use { "tpope/vim-rhubarb" }
 
   -- TODO: http://neovimcraft.com/plugin/chipsenkbeil/distant.nvim/index.html
   use {

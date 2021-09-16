@@ -119,6 +119,7 @@ function M.init()
   else
     map("n", O.local_leader_key, "<NOP>", nore)
     vim.g.maplocalleader = O.local_leader_key
+    map("n", O.local_leader_key, "<cmd>lua require'which-key'.show(',', {mode='n'})<cr>", nore)
   end
 
   local wk = require "which-key"
@@ -827,6 +828,8 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       b = { telescope_fn.git_branches, "Checkout branch" },
       c = { telescope_fn.git_commits, "Checkout commit" },
       C = { telescope_fn.git_bcommits, "Checkout commit(for current file)" },
+      f = { cmd "Git", "Fugitive Status" },
+      -- TODO: what are the important fugitive commands?
     },
     l = {
       name = "LSP",
@@ -1030,7 +1033,7 @@ M.localleader = function(maps, opts)
   if opts == nil then
     opts = {}
   end
-  require("which-key").register(
+  M.whichkey(
     maps,
     vim.tbl_extend("keep", opts, {
       prefix = "<localleader>",

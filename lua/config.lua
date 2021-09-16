@@ -113,6 +113,7 @@ O = {
   },
   database = { save_location = "~/.config/nvim/.db", auto_execute = 1 },
   plugin = {
+    fugitive = {},
     hop = {},
     twilight = {},
     notify = {},

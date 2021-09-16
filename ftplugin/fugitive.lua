@@ -1,0 +1,1 @@
+require("lv-fugitive").ftplugin()
