@@ -755,11 +755,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       S = { luacmd "ftopen('spt')", "Spotify" },
       l = { luacmd "ftopen('right')", "Terminal" },
     },
-    t = {
-      name = "Terminals",
-      -- t = {luacmd "ftopen('right')", "Terminal" },
-      -- t = { luareq'FTerm'.toggle , "Terminal" },
-    },
+    t = { name = "Terminals" },
     T = {
       name = "Toggle Opts",
       w = { cmd "setlocal wrap!", "Wrap" },
@@ -791,7 +787,6 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
       l = { cmd "BufferLineCloseRight", "close all BufferLines to the right" },
       D = { cmd "BufferLineSortByDirectory", "sort BufferLines automatically by directory" },
       L = { cmd "BufferLineSortByExtension", "sort BufferLines automatically by language" },
-      t = { cmd("vnew term://" .. O.termshell .. ""), "Terminal" },
     },
     D = {
       -- " Available Debug Adapters:

@@ -711,7 +711,6 @@ return packer.startup(function(use)
     cmd = {
       "T",
       "Tmap",
-      "Tmem",
       "Tnew",
       "Ttoggle",
       "Topen",
@@ -1046,6 +1045,7 @@ return packer.startup(function(use)
         signcolumn = conf.signcolumn,
       }
     end,
+    cmd = "FocusSplitNicely",
     module = "focus",
     disable = not O.plugin.splitfocus,
   }

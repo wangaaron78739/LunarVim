@@ -76,7 +76,7 @@ function M.fterm()
 end
 
 function M.neoterm()
-  vim.g.neoterm_default_mod = "vertical"
+  vim.g.neoterm_default_mod = "FocusSplitNicely"
   vim.g.neoterm_autoinsert = 1
   vim.g.neoterm_autoscroll = 1
   vim.g.neoterm_shell = O.termshell
@@ -174,39 +174,40 @@ end
 
 function M.keymaps(leaderMappings, vLeaderMappings)
   local cmd = utils.cmd
+  local opts = { silent = true, noremap = true }
   if O.plugin.neoterm then
     vim.cmd [[ command -nargs=+ Tmem :lua require("lv-terms").Tmem("<args>") ]]
 
     vim.g.neoterm_automap_keys = "<leader>x<space>"
     -- Use gt to send to terminal
     map("n", "<leader>t<space>", ":Tmem ", {})
-    map("n", "<leader>tT", ":T ", {})
+    map("n", "<leader>tt", ":T ", {})
     leaderMappings["t<cr>"] = { cmd "Ttoggle", "Neoterm Toggle" }
     leaderMappings["tl"] = { cmd "Tls", "Neoterm list" }
 
-    map("n", "<leader>xm", "<Plug>(neoterm-repl-send)", { silent = true })
-    map("n", "<leader>xn", "<Plug>(neoterm-repl-send-line)", { silent = true })
-    map("x", "<leader>xn", "<Plug>(neoterm-repl-send)", { silent = true })
+    map("n", "<leader>xm", "<Plug>(neoterm-repl-send)", opts)
+    map("n", "<leader>xn", "<Plug>(neoterm-repl-send-line)", opts)
+    map("x", "<leader>xn", "<Plug>(neoterm-repl-send)", opts)
     leaderMappings["x<space>"] = "Neoterm AutoMap"
   end
 
   if O.plugin.kittyrunner then
-    map("n", "<leader>tk", "<cmd>KittyOpen<CR>", { silent = true })
-    map("n", "<leader>tK", "<cmd>KittyOpenLocal<CR>", { silent = true })
-    map("n", "<leader>xk", "<cmd>KittyReRunCommand<CR>", { silent = true })
-    map("n", "<leader>xK", "<cmd>KittyRunCommand<CR>", { silent = true })
-    map("n", "<leader>xl", "<cmd>KittySendLines<CR>", { silent = true })
-    map("x", "<leader>xl", "<cmd>KittySendLines<CR>", { silent = true })
+    map("n", "<leader>tk", "<cmd>KittyOpen<CR>", opts)
+    map("n", "<leader>tK", "<cmd>KittyOpenLocal<CR>", opts)
+    map("n", "<leader>xk", "<cmd>KittyReRunCommand<CR>", opts)
+    map("n", "<leader>xK", "<cmd>KittyRunCommand<CR>", opts)
+    map("n", "<leader>xl", "<cmd>KittySendLines<CR>", opts)
+    map("x", "<leader>xl", "<cmd>KittySendLines<CR>", opts)
   end
 
   if O.plugin.sniprun then
-    map("n", "<leader>tp", "<Plug>SnipClose", {})
-    map("n", "<leader>tP", "<cmd>SnipReset<cr>", {})
-    map("n", "<leader>tC", "<Plug>SnipReplMemoryClean", {})
+    map("n", "<leader>tp", "<Plug>SnipClose", opts)
+    map("n", "<leader>tP", "<cmd>SnipReset<cr>", opts)
+    map("n", "<leader>tC", "<Plug>SnipReplMemoryClean", opts)
 
-    map("v", "<leader>xs", ":SnipRun<cr>", { silent = true })
-    map("n", "<leader>xs", "<Plug>SnipRun", { silent = true })
-    map("n", "<leader>xc", "<Plug>SnipRunOperator", { silent = true })
+    map("v", "<leader>xs", ":SnipRun<cr>", opts)
+    map("n", "<leader>xs", "<Plug>SnipRun", opts)
+    map("n", "<leader>xc", "<Plug>SnipRunOperator", opts)
   end
 
   -- Can use: "!", "&", "gt", "gx"
