@@ -170,12 +170,26 @@ function M.operatorfuncV_keys(name, verbkeys)
     feedkeys(t(verbkeys), "m", false)
   end)
 end
-
--- charwise linewise
+-- keys charwise
 function M.operatorfunc_keys(name, verbkeys)
   return M.operatorfunc_scaffold(name, function()
     M.operatorfunc_helper_select(false)
     feedkeys(t(verbkeys), "m", false)
+  end)
+end
+
+-- cmd linewise
+function M.operatorfunc_Vcmd(name, verbkeys)
+  return M.operatorfunc_scaffold(name, function()
+    M.operatorfunc_helper_select(true)
+    vim.cmd(verbkeys)
+  end)
+end
+-- cmd charwise
+function M.operatorfunc_cmd(name, verbkeys)
+  return M.operatorfunc_scaffold(name, function()
+    M.operatorfunc_helper_select(false)
+    vim.cmd(verbkeys)
   end)
 end
 
@@ -213,6 +227,8 @@ function M.mini_window_setwidth(initwidth)
     end
   end
 end
+-- Use a virtual window for 'inline' text input.
+-- TODO: Could use select mode for this like luasnip?
 function M.inline_text_input(opts)
   local enter = opts.enter
   local escape = opts.escape

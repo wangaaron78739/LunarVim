@@ -16,7 +16,7 @@ gps.setup {
 
 local diagnostics = {
   "diagnostics",
-  sources = { "nvim_lsp" },
+  sources = { "nvim_lsp" }, -- nvim is the new more general
   sections = { "error", "warn", "info", "hint" },
   symbols = { error = "E", warn = "W", info = "I", hint = "H" },
 }
