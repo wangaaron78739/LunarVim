@@ -344,4 +344,50 @@ M.fn = setmetatable({}, {
   end,
 })
 
+-- Meta af autocmd function
+local function make_aucmd(trigger, trigargs, action)
+  vim.cmd("autocmd " .. trigger .. " " .. trigargs .. " " .. action)
+end
+local function make_augrp(tbl, cmds)
+  local grp = tbl[1]
+  vim.cmd("augroup " .. grp)
+  vim.cmd "autocmd!"
+  for trigger, cmd in pairs(cmds) do
+    if type(cmd) == table then
+      local trigargs = cmd[1]
+      local action = cmd[2]
+      make_aucmd(trigger, trigargs, action)
+    else
+      make_aucmd(trigger, "*", cmd)
+    end
+  end
+  vim.cmd "augroup END"
+end
+local augroup_meta = {
+  __call = make_augrp,
+}
+local au
+au = setmetatable({}, {
+  __call = function(_, arg)
+    if type(arg) == "string" then
+      return setmetatable({ arg }, augroup_meta)
+    else
+      for group, cmds in pairs(arg) do
+        make_augrp({ group }, cmds)
+      end
+    end
+  end,
+  __newindex = function(_, trigger, action)
+    make_aucmd(trigger, "*", action)
+  end,
+  __index = function(_, trigger)
+    return setmetatable({}, {
+      __newindex = function(_, trigargs, action)
+        make_aucmd(trigger, trigargs, action)
+      end,
+    })
+  end,
+})
+M.au = au
+
 return M
