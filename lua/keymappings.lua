@@ -465,6 +465,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     d = "Diagnostics",
     q = "QuickFix",
     g = "Git Hunk",
+    u = "Usage",
   }
   wk.register({
     ["]"] = jumps,
@@ -712,11 +713,15 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("t", "<ESC>", "<ESC>", nore)
   map("t", "<ESC><ESC>", [[<C-\><C-n>]], nore)
 
+  local map_jump_next = "j"
+  local map_jump_prev = "k"
+  local map_swap_next = "a"
+  local map_swap_prev = "A"
   -- Leader shortcut for ][ jumping
-  map("n", "<leader>j", "]", {})
-  map("n", "<leader>k", "[", {})
-  map("n", "<leader>a", ")", {})
-  map("n", "<leader>A", "(", {})
+  map("n", "<leader>" .. map_jump_next, "]", {})
+  map("n", "<leader>" .. map_jump_prev, "[", {})
+  map("n", "<leader>" .. map_swap_next, ")", {})
+  map("n", "<leader>" .. map_swap_prev, "(", {})
 
   local leaderOpts = {
     mode = "n", -- NORMAL mode
@@ -748,10 +753,10 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     [";"] = { cmd "Dashboard", "Dashboard" },
     ["/"] = { telescope_fn.live_grep, "Global search" },
     f = { telescope_fn.find_files, "Find File" },
-    j = "Jump next (])",
-    k = "Jump prev ([)",
-    a = "Swap next ())",
-    A = "Swap prev (()",
+    [map_jump_next] = "Jump next (])",
+    [map_jump_prev] = "Jump prev ([)",
+    [map_swap_next] = "Swap next ())",
+    [map_swap_prev] = "Swap prev (()",
     x = "Execute/Send",
     w = { cmd "w", "Write" }, -- w = { cmd "up", "Write" },
     W = { cmd "noau w", "Write (noau)" }, -- w = { cmd "noau up", "Write" },
