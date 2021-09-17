@@ -85,6 +85,7 @@ local feedkeys = function(keys, o)
   feedkeys_(termcode(keys, true, true, true), o, false)
 end
 function M.n_repeat()
+  vim.cmd [[normal! m']]
   if custom_n_repeat == nil then
     feedkeys("n", "n")
   else
@@ -92,6 +93,7 @@ function M.n_repeat()
   end
 end
 function M.N_repeat()
+  vim.cmd [[normal! m']]
   if custom_N_repeat == nil then
     feedkeys("N", "n")
   else
@@ -160,35 +162,38 @@ function M.init()
   }
 end
 
+-- Helper functions
+local cmd = require("lv-utils").cmd
+local from_fn = cmd.from
+local luacmd = cmd.lua
+local luareq = cmd.require
+local dap_fn = luareq "dap"
+local gitsigns_fn = luareq "gitsigns"
+local telescope_fn = luareq "lv-telescope.functions"
+local lspbuf = cmd.lsp
+local lsputil = luareq "lsp.functions"
 local operatorfunc_scaffold = require("lv-utils").operatorfunc_scaffold
 local operatorfunc_keys = require("lv-utils").operatorfunc_keys
 local operatorfuncV_keys = require("lv-utils").operatorfuncV_keys
+local function make_nN_pair(pair)
+  return {
+    from_fn(function()
+      vim.cmd [[normal! m']]
+      register_nN_repeat(pair)
+      feedkeys(pair[1])
+    end),
+    from_fn(function()
+      vim.cmd [[normal! m']]
+      register_nN_repeat(pair)
+      feedkeys(pair[2])
+    end),
+  }
+end
+M.make_nN_pair = make_nN_pair
+
 function M.setup()
   M.init()
   local wk = require "which-key"
-
-  -- Helper functions
-  local cmd = require("lv-utils").cmd
-  local from_fn = cmd.from
-  local luacmd = cmd.lua
-  local luareq = cmd.require
-  local dap_fn = luareq "dap"
-  local gitsigns_fn = luareq "gitsigns"
-  local telescope_fn = luareq "lv-telescope.functions"
-  local lspbuf = cmd.lsp
-  local lsputil = luareq "lsp.functions"
-  local function make_nN_pair(pair)
-    return {
-      from_fn(function()
-        register_nN_repeat(pair)
-        feedkeys(pair[1])
-      end),
-      from_fn(function()
-        register_nN_repeat(pair)
-        feedkeys(pair[2])
-      end),
-    }
-  end
 
   -- Free keys
   map("n", "<C-q>", "<NOP>", {})
@@ -449,6 +454,13 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("n", "]g", hunk_nN[1], nore)
   map("n", "[g", hunk_nN[2], nore)
 
+  local usage_nN = make_nN_pair {
+    luareq("nvim-treesitter-refactor.navigation").goto_next_usage,
+    luareq("nvim-treesitter-refactor.navigation").goto_previous_usage,
+  }
+  map("n", "]u", usage_nN[1], nore)
+  map("n", "[u", usage_nN[2], nore)
+
   local jumps = {
     d = "Diagnostics",
     q = "QuickFix",
@@ -703,6 +715,8 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   -- Leader shortcut for ][ jumping
   map("n", "<leader>j", "]", {})
   map("n", "<leader>k", "[", {})
+  map("n", "<leader>a", ")", {})
+  map("n", "<leader>A", "(", {})
 
   local leaderOpts = {
     mode = "n", -- NORMAL mode
@@ -736,6 +750,8 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     f = { telescope_fn.find_files, "Find File" },
     j = "Jump next (])",
     k = "Jump prev ([)",
+    a = "Swap next ())",
+    A = "Swap prev (()",
     x = "Execute/Send",
     w = { cmd "w", "Write" }, -- w = { cmd "up", "Write" },
     W = { cmd "noau w", "Write (noau)" }, -- w = { cmd "noau up", "Write" },
@@ -901,11 +917,6 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     P = {
       name = "Projects",
     },
-    a = {
-      name = "Swap",
-      [" "] = { cmd "ISwap", "Interactive" },
-      ["w"] = { cmd "ISwapWith", "I. With" },
-    },
     -- m = "Multi",
     m = "which_key_ignore",
     c = {
@@ -915,6 +926,19 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   }
   map("n", "<M-S-s>", operatorfunc_keys("separate", "<leader>s"), sile)
   map("x", "<M-S-s>", "<leader>s", sile)
+
+  M.whichkey {
+    ["("] = {
+      name = "Swap Next",
+      [" "] = { cmd "ISwap", "Interactive" },
+      ["w"] = { cmd "ISwapWith", "I. With" },
+    },
+    [")"] = {
+      name = "Swap Prev",
+      [" "] = { cmd "ISwap", "Interactive" },
+      ["w"] = { cmd "ISwapWith", "I. With" },
+    },
+  }
 
   local vLeaderMappings = {
     -- ["/"] = { cmd "CommentToggle", "Comment" },

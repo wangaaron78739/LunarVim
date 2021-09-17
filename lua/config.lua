@@ -92,7 +92,9 @@ O = {
       sel_previous = "[", -- Select previous
       inner = "i", -- Select inside
       outer = "a", -- Selct around
-      swap = "<leader>a", -- Swap with next
+      -- swap = '<leader>a'
+      swap_next = ")", -- Swap with next
+      swap_prev = "(", -- Swap with previous
     },
     textobj_suffixes = {
       -- Start and End respectively for the goto keys
@@ -104,8 +106,8 @@ O = {
       ["block"] = { "k", "K" },
       ["conditional"] = { "i", "I" },
       ["call"] = { "c", "C" },
-      ["loop"] = { "l", "L" },
-      ["statement"] = { "e", "E" },
+      ["loop"] = { "r", "R" },
+      ["statement"] = { "l", "L" },
       ["comment"] = { "/", "?" },
     },
     -- The below is for treesitter hint textobjects plugin

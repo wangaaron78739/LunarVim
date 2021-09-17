@@ -867,6 +867,10 @@ return packer.startup(function(use)
     disable = not O.plugin.ts_textobjects,
   }
   use {
+    "Jason-M-Chan/ts-textobjects",
+    disable = not O.plugin.ts_textobjects,
+  }
+  use {
     "RRethy/nvim-treesitter-textsubjects",
     disable = not O.plugin.ts_textsubjects,
   }

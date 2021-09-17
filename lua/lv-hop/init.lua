@@ -8,13 +8,18 @@ M.keymaps = function()
   if O.plugin.hop then
     local prefix = "<cmd>lua require('hop')."
     require("which-key").register({
-      ["<leader>hw"] = { prefix .. "hint_words()<cr>", "Hop Words" },
-      ["<leader>hh"] = { prefix .. "hint_lines()<cr>", "Hop Lines" },
-      ["<leader>h*"] = { prefix .. "hint_cword()<cr>", "Hop cword" },
-      ["<leader>hW"] = { prefix .. "hint_cWORD()<cr>", "Hop cWORD" },
-      ["<leader>hl"] = { prefix .. "hint_locals()<cr>", "Hop Locals" },
-      ["<leader>hd"] = { prefix .. "hint_definitions()<cr>", "Hop Defns" },
-      ["<leader>hr"] = { prefix .. "hint_references()<cr>", "Hop Defns" },
+      ["<leader>h"] = {
+        name = "Hop",
+        w = { prefix .. "hint_words()<cr>", "Words" },
+        h = { prefix .. "hint_lines()<cr>", "Lines" },
+        ["*"] = { prefix .. "hint_cword()<cr>", "cword" },
+        W = { prefix .. "hint_cWORD()<cr>", "cWORD" },
+        l = { prefix .. "hint_locals()<cr>", "Locals" },
+        d = { prefix .. "hint_definitions()<cr>", "Definitions" },
+        r = { prefix .. "hint_references()<cr>", "References" },
+        u = { prefix .. "hint_references(nil, '<cword>')<cr>", "Usages" },
+        s = { prefix .. "hint_scopes()<cr>", "Scopes" },
+      },
     }, {
       mode = "n",
       silent = true,
