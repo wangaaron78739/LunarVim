@@ -4,8 +4,54 @@ local eval_line = "xx"
 local eval_op = "x"
 local eval_cell = "x<cr>"
 
-local map = vim.api.nvim_set_keymap
 local bmap = vim.api.nvim_buf_set_keymap
+
+local feedkeys = vim.api.nvim_feedkeys
+local termcodes = vim.api.nvim_replace_termcodes
+function M.Tmem(cmd)
+  vim.cmd("Tmap " .. cmd)
+  feedkeys(termcodes(vim.g.neoterm_automap_keys, true, true, true), "m", false)
+end
+
+function M.sniprun()
+  require("sniprun").setup {
+    -- TODO: customize these displays
+    --# you can combo different display modes as desired
+    display = {
+      "Classic", --# display results in the command-line  area
+      "VirtualTextOk", --# display ok results as virtual text (multiline is shortened)
+
+      -- "VirtualTextErr",          --# display error results as virtual text
+      -- "TempFloatingWindow",      --# display results in a floating window
+      -- "LongTempFloatingWindow",  --# same as above, but only long results. To use with VirtualText__
+      -- "Terminal",                --# display results in a vertical split
+      -- "NvimNotify",              --# display with the nvim-notify plugin
+      -- "Api"                      --# return output to a programming interface
+    },
+
+    --# You can use the same keys to customize whether a sniprun producing
+    --# no output should display nothing or '(no output)'
+    show_no_output = {
+      "Classic",
+      "TempFloatingWindow", --# implies LongTempFloatingWindow, which has no effect on its own
+    },
+
+    --# customize highlight groups (setting this overrides colorscheme)
+    snipruncolors = {
+      SniprunVirtualTextOk = { bg = "#66eeff", fg = "#000000", ctermbg = "Cyan", cterfg = "Black" },
+      SniprunFloatingWinOk = { fg = "#66eeff", ctermfg = "Cyan" },
+      SniprunVirtualTextErr = { bg = "#881515", fg = "#000000", ctermbg = "DarkRed", cterfg = "Black" },
+      SniprunFloatingWinErr = { fg = "#881515", ctermfg = "DarkRed" },
+    },
+
+    --# miscellaneous compatibility/adjustement settings
+    inline_messages = 0, --# inline_message (0/1) is a one-line way to display messages
+    --# to workaround sniprun not being able to display anything
+
+    borders = "single", --# display borders around floating windows
+    --# possible values are 'none', 'single', 'double', or 'shadow'
+  }
+end
 
 function M.fterm()
   local term = require "FTerm.terminal"
@@ -98,8 +144,8 @@ function M.activate_magma()
     ["to"] = { "<cmd>MagmaShowOutput<cr>", "Magma Output" },
     x = "Magma",
   }
-  bmap("n", "<localleader>x", ":MagmaEvaluateOperator<CR>", { expr = true, silent = true })
-  bmap("v", "<localleader>x", "<cmd>MagmaEvaluateVisual<CR>", { silent = true })
+  bmap(0, "n", "<localleader>x", ":MagmaEvaluateOperator<CR>", { expr = true, silent = true })
+  bmap(0, "v", "<localleader>x", "<cmd>MagmaEvaluateVisual<CR>", { silent = true })
 end
 
 function M.luadev()
@@ -112,68 +158,57 @@ function M.activate_luadev()
     ["xx"] = { "<Plug>(Luadev-RunLine)", "Line" },
     ["x"] = { "<Plug>(Luadev-Run)", "Luadev" },
   }
-  map("v", "<localleader>x", "<Plug>(Luadev-Run)", { silent = true })
-  -- map("i", "", "<Plug>(Luadev-Complete)", { silent = true })
-  -- map("n", "<leader>xw", "<Plug>(Luadev-RunWord)", { silent = true })
+  bmap(0, "v", "<localleader>x", "<Plug>(Luadev-Run)", { silent = true })
+  -- bmap(0,"i", "", "<Plug>(Luadev-Complete)", { silent = true })
+  -- bmap(0,"n", "<localleader>xw", "<Plug>(Luadev-RunWord)", { silent = true })
+  bmap(
+    0,
+    "n",
+    "<localleader>x",
+    utils.operatorfunc_cmd("luadev_exec", "<localleader>x"),
+    { silent = true, noremap = true }
+  )
 end
 
-local feedkeys = vim.api.nvim_feedkeys
-local termcodes = vim.api.nvim_replace_termcodes
-function M.Tmem(cmd)
-  vim.cmd("Tmap " .. cmd)
-  feedkeys(termcodes(vim.g.neoterm_automap_keys, true, true, true), "m", false)
-end
-
-function M.sniprun()
-  require("sniprun").setup {
-    -- TODO: customize these displays
-    --# you can combo different display modes as desired
-    display = {
-      "Classic", --# display results in the command-line  area
-      "VirtualTextOk", --# display ok results as virtual text (multiline is shortened)
-
-      -- "VirtualTextErr",          --# display error results as virtual text
-      -- "TempFloatingWindow",      --# display results in a floating window
-      -- "LongTempFloatingWindow",  --# same as above, but only long results. To use with VirtualText__
-      -- "Terminal",                --# display results in a vertical split
-      -- "NvimNotify",              --# display with the nvim-notify plugin
-      -- "Api"                      --# return output to a programming interface
-    },
-
-    --# You can use the same keys to customize whether a sniprun producing
-    --# no output should display nothing or '(no output)'
-    show_no_output = {
-      "Classic",
-      "TempFloatingWindow", --# implies LongTempFloatingWindow, which has no effect on its own
-    },
-
-    --# customize highlight groups (setting this overrides colorscheme)
-    snipruncolors = {
-      SniprunVirtualTextOk = { bg = "#66eeff", fg = "#000000", ctermbg = "Cyan", cterfg = "Black" },
-      SniprunFloatingWinOk = { fg = "#66eeff", ctermfg = "Cyan" },
-      SniprunVirtualTextErr = { bg = "#881515", fg = "#000000", ctermbg = "DarkRed", cterfg = "Black" },
-      SniprunFloatingWinErr = { fg = "#881515", ctermfg = "DarkRed" },
-    },
-
-    --# miscellaneous compatibility/adjustement settings
-    inline_messages = 0, --# inline_message (0/1) is a one-line way to display messages
-    --# to workaround sniprun not being able to display anything
-
-    borders = "single", --# display borders around floating windows
-    --# possible values are 'none', 'single', 'double', or 'shadow'
+function M.kitty()
+  require("kitty-runner").setup {
+    use_keymaps = false, --use keymaps
   }
+  vim.cmd [[ command KittyOpen :lua require("lv-terms").activate_kitty() ]]
+  vim.cmd [[ command KittyOpenLocal :lua require("lv-terms").activate_kitty('<local>') ]]
 end
 
-function M.coderunner()
-  require("code_runner").setup {
-    filetype = { map = "<leader>xf" },
-    project_context = { map = "<leader>xP" },
+function M.activate_kitty(port)
+  port = port or ""
+  local ops = port == "<local>" and {
+    prefix = "<localleader>",
+    buffer = 0,
+  } or {
+    prefix = "<leader>",
+    -- buffer = 0,
   }
+  require("kitty-runner").open_new_runner(port)
+
+  -- Once we start the kitty-runner we override (some) of the neoterm stuff
+  mappings.whichkey({
+    [vim.g.neoterm_automap_keys] = { "<cmd>KittyReRunCommand " .. port .. "<CR>", "Rerun" },
+    tt = { "<cmd>KittyRunCommand " .. port .. "<CR>", "Run new" },
+    ["t<space>"] = { "<cmd>KittyRunCommandOnce" .. port .. "<CR>", "Run once" },
+  }, ops)
+  bmap(0, "x", "<localleader>k", "<cmd>KittySendLines " .. port .. "<CR>", { silent = true, noremap = true })
+  bmap(
+    0,
+    "n",
+    "<localleader>k",
+    utils.operatorfunc_keys("kitty_exec", "<localleader>k"),
+    { silent = true, noremap = true }
+  )
 end
 
 function M.keymaps(leaderMappings, vLeaderMappings)
   local cmd = utils.cmd
   local opts = { silent = true, noremap = true }
+  local map = vim.api.nvim_set_keymap
   if O.plugin.neoterm then
     vim.cmd [[ command -nargs=+ Tmem :lua require("lv-terms").Tmem("<args>") ]]
 
@@ -197,6 +232,7 @@ function M.keymaps(leaderMappings, vLeaderMappings)
     map("n", "<leader>xK", "<cmd>KittyRunCommand<CR>", opts)
     map("n", "<leader>xl", "<cmd>KittySendLines<CR>", opts)
     map("x", "<leader>xl", "<cmd>KittySendLines<CR>", opts)
+    -- TODO: add operator mapping
   end
 
   if O.plugin.sniprun then
@@ -211,4 +247,12 @@ function M.keymaps(leaderMappings, vLeaderMappings)
 
   -- Can use: "!", "&", "gt", "gx"
 end
+
+function M.coderunner()
+  require("code_runner").setup {
+    filetype = { map = "<leader>xf" },
+    project_context = { map = "<leader>xP" },
+  }
+end
+
 return M

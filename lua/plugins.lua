@@ -758,9 +758,7 @@ return packer.startup(function(use)
   use {
     "IndianBoy42/kitty-runner.nvim",
     config = function()
-      require("kitty-runner").setup {
-        use_keymaps = false, --use keymaps
-      }
+      require("lv-terms").kitty()
     end,
     cmd = {
       "KittyOpen",
