@@ -317,10 +317,10 @@ function M.setup()
   map("x", "<M-k>", ":move '<-2<cr>gv-gv", nore)
 
   -- better indenting
-  map("n", "<", "<<", { silent = true, noremap = true, nowait = true })
-  map("n", ">", ">>", { silent = true, noremap = true, nowait = true })
-  map("n", "<<", "<<<<", { silent = true, noremap = true, nowait = true })
-  map("n", ">>", ">>>>", { silent = true, noremap = true, nowait = true })
+  utils.au "_better_indent" {
+    { "FileType", "nnoremap <buffer> <nowait> > >>" },
+    { "FileType", "nnoremap <buffer> <nowait> < <<" },
+  }
   map("n", "g<", "<", nore)
   map("n", "g>", ">", nore)
   map("x", "<", "<gv", nore)
