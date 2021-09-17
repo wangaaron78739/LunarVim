@@ -51,7 +51,6 @@ require "theme"()
 
 -- 'Mandatory' plugin configs
 mappings.setup()
-require "lv-galaxyline"
 require "lv-treesitter"
 require "lsp"
 

@@ -1,4 +1,5 @@
 local M = {}
+local lsp_status = require "lsp-status"
 
 local function diags(conf)
   return conf and conf.diagnostics and vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, conf.diagnostics)
@@ -33,6 +34,8 @@ else
   --                       nvim-cmp + luasnips                        --
   ----------------------------------------------------------------------
   M.conf_with = function(config)
+    -- Set default client capabilities plus window/workDoneProgress
+    config.capabilities = vim.tbl_extend("keep", config.capabilities or {}, lsp_status.capabilities)
     return config
   end
 end

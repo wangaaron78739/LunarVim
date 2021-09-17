@@ -200,11 +200,13 @@ return packer.startup(function(use)
 
   -- Status Line and Bufferline
   use {
-    "glepnir/galaxyline.nvim",
+    "shadmansaleh/lualine.nvim",
     config = function()
-      require "lv-galaxyline"
+      require "lv-lualine"
     end,
   }
+  use "nvim-lua/lsp-status.nvim"
+  use "SmiteshP/nvim-gps"
 
   use {
     "akinsho/nvim-bufferline.lua",
@@ -608,8 +610,6 @@ return packer.startup(function(use)
       require("lsp_signature").setup(O.plugin.lsp_signature)
     end,
   }
-  -- TODO: https://github.com/nvim-lua/lsp-status.nvim (lsp info in the status bar)
-  -- Also try some treesitter based statusbar plugins??
 
   -- Code action lightbulb
   use {
@@ -1146,9 +1146,6 @@ return packer.startup(function(use)
   -- Colorschemes -- https://github.com/folke/lsp-colors.nvim
   use {
     "Yagua/nebulous.nvim",
-    config = function()
-      vim.g.nb_style = "night"
-    end,
   }
   use { "christianchiarulli/nvcode-color-schemes.vim", opt = true }
   use {

@@ -251,6 +251,9 @@ M.diag_prev = function()
 end
 
 M.common_on_attach = function(client, bufnr)
+  local lsp_status = require "lsp-status"
+  lsp_status.on_attach(client)
+
   -- Handle document highlighting
   if O.lsp.document_highlight then
     -- Set autocommands conditional on server_capabilities
