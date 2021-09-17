@@ -1,4 +1,5 @@
--- TODO: Should move the keymappings to keymappings.lua for cleanliness??
+local tsconfig = O.treesitter
+local plugconf = O.plugin
 
 -- Custom parsers
 local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
@@ -31,36 +32,37 @@ local outer_scope_nN = make_nN_pair {
 }
 
 -- Custom text objects
-local textobj_prefixes = O.treesitter.textobj_prefixes
-local textobj_suffixes = O.treesitter.textobj_suffixes
+-- TODO: Should move the keymappings to keymappings.lua for cleanliness??
+local textobj_prefixes = tsconfig.textobj_prefixes
+local textobj_suffixes = tsconfig.textobj_suffixes
 local textobj_sel_keymaps = {
-  as = "Outer Scope",
-  ie = "TS Element",
-  ae = "TS Element",
+  [plugconf.ts_hintobjects.key] = "Hint Objects",
+  ["a" .. textobj_suffixes.scope[1]] = "Outer Scope",
+  ["i" .. textobj_suffixes.element[1]] = "TS Element",
+  ["a" .. textobj_suffixes.element[1]] = "TS Element",
+  ["i" .. textobj_suffixes.subject[1]] = "Textsubject",
+  ["a" .. textobj_suffixes.subject[1]] = "Textsubject-big",
 }
 local textobj_swap_keymaps = {
-  next = { [")e"] = "TS Element" },
-  previous = { ["(e"] = "TS Element" },
+  next = { [textobj_prefixes.swap_next .. textobj_suffixes.element[1]] = "TS Element" },
+  previous = { [textobj_prefixes.swap_prev .. textobj_suffixes.element[1]] = "TS Element" },
 }
 local textobj_move_keymaps = {
-  enable = not not O.plugin.ts_textobjects,
+  enable = not not plugconf.ts_textobjects,
   set_jumps = true, -- whether to set jumps in the jumplist
   goto_next_start = {
-    ["]S"] = { outer_scope_nN[1], "Outer Scope" },
-    ["]s"] = { scope_nN[1], "Scope" },
-    ["]e"] = { element_nN[1], "TS Element" },
-    ["]]"] = { element_nN[1], "TS Element" },
+    [textobj_prefixes.goto_next .. textobj_suffixes.scope[2]] = { outer_scope_nN[1], "Outer Scope" },
+    [textobj_prefixes.goto_next .. textobj_suffixes.scope[1]] = { scope_nN[1], "Scope" },
+    [textobj_prefixes.goto_next .. textobj_suffixes.element[1]] = { element_nN[1], "TS Element" },
   },
   goto_next_end = {},
   goto_previous_start = {
-    ["[s"] = { scope_nN[2], "Scope" },
-    ["[e"] = { element_nN[2], "TS Element" },
-    ["[["] = { element_nN[2], "TS Element" },
+    [textobj_prefixes.goto_next .. textobj_suffixes.scope[1]] = { scope_nN[2], "Scope" },
+    [textobj_prefixes.goto_next .. textobj_suffixes.element[1]] = { element_nN[2], "TS Element" },
   },
   goto_previous_end = {},
 }
 local textobj_move_wrap = true
-local from_fn = require("lv-utils").cmd.from
 for obj, suffix in pairs(textobj_suffixes) do
   local inners = make_nN_pair {
     [[<cmd>lua require("nvim-treesitter.textobjects.move").goto_next_start("@]] .. obj .. [[.inner")<cr>]],
@@ -106,11 +108,7 @@ if status then
   local operators = { mode = "o" } -- Operator mode
   local register = wk.register
   register(textobj_sel_keymaps, operators)
-  register({
-    ["m"] = "Hint Objects",
-    ["."] = "Textsubject",
-    [";"] = "Textsubject-big",
-  }, operators)
+  register({}, operators)
   register(textobj_swap_keymaps.next, normal)
   register(textobj_swap_keymaps.previous, normal)
   register({
@@ -131,14 +129,14 @@ if status then
 end
 
 require("nvim-treesitter.configs").setup {
-  ensure_installed = O.treesitter.ensure_installed, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  ignore_install = O.treesitter.ignore_install,
+  ensure_installed = tsconfig.ensure_installed, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ignore_install = tsconfig.ignore_install,
   matchup = {
-    enable = not not O.plugin.matchup,
+    enable = not not plugconf.matchup,
     -- disable = { "c", "ruby" },  -- list of language that will be disabled
   },
   pairs = {
-    enable = not not O.plugin.ts_matchup,
+    enable = not not plugconf.ts_matchup,
     -- disable = {}, -- list of languages to disable
     highlight_pair_events = { "CursorMoved" }, -- e.g. {"CursorMoved"}, -- when to highlight the pairs, use {} to deactivate highlighting
     highlight_self = false, -- whether to highlight also the part of the pair under cursor (or only the partner)
@@ -152,37 +150,40 @@ require("nvim-treesitter.configs").setup {
     },
   },
   highlight = {
-    enable = not not O.treesitter.active, -- false will disable the whole extension
-    additional_vim_regex_highlighting = O.treesitter.additional_vim_regex_highlighting,
+    enable = not not tsconfig.active, -- false will disable the whole extension
+    additional_vim_regex_highlighting = tsconfig.additional_vim_regex_highlighting,
     disable = { "latex" },
   },
   context_commentstring = {
-    enable = not not O.plugin.ts_context_commentstring,
+    enable = not not plugconf.ts_context_commentstring,
     config = { css = "// %s" },
     enable_autocmd = false,
   },
   -- indent = {enable = true, disable = {"python", "html", "javascript"}},
   -- TODO seems to be broken
   indent = { enable = { "javascriptreact" } },
-  autotag = { enable = not not O.plugin.ts_autotag },
+  autotag = { enable = not not plugconf.ts_autotag },
   textobjects = {
     swap = {
-      enable = not not O.plugin.ts_textobjects,
+      enable = not not plugconf.ts_textobjects,
       swap_next = textobj_swap_keymaps.next,
       swap_previous = textobj_swap_keymaps.previous,
     },
     move = textobj_move_keymaps,
     select = {
-      enable = not not O.plugin.ts_textobjects,
+      enable = not not plugconf.ts_textobjects,
       keymaps = textobj_sel_keymaps,
     },
   },
   textsubjects = {
-    enable = not not O.plugin.ts_textsubjects,
-    keymaps = { ["."] = "textsubjects-smart", [";"] = "textsubjects-container-outer" },
+    enable = not not plugconf.ts_textsubjects,
+    keymaps = {
+      ["i" .. textobj_suffixes.subject[1]] = "textsubjects-smart",
+      ["a" .. textobj_suffixes.subject[1]] = "textsubjects-container-outer",
+    },
   },
   playground = {
-    enable = not not O.plugin.ts_playground,
+    enable = not not plugconf.ts_playground,
     disable = {},
     updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
     persist_queries = false, -- Whether the query persists across vim sessions
@@ -200,7 +201,7 @@ require("nvim-treesitter.configs").setup {
     },
   },
   rainbow = {
-    enable = not not O.plugin.ts_rainbow,
+    enable = not not plugconf.ts_rainbow,
     extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
     max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
   },
@@ -234,21 +235,21 @@ require("nvim-treesitter.configs").setup {
     },
   },
   element_textobject = {
-    enable = not not O.plugin.ts_textobjects,
+    enable = not not plugconf.ts_textobjects,
     keymaps = {
       goto_next_element = "<nop>",
       goto_prev_element = "<nop>",
-      swap_next_element = ")e",
-      swap_prev_element = "(e",
-      inner_element = "ie",
-      an_element = "ae", -- around
+      swap_next_element = textobj_prefixes.swap_next .. textobj_suffixes.element[1],
+      swap_prev_element = textobj_prefixes.swap_prev .. textobj_suffixes.element[1],
+      inner_element = "i" .. textobj_suffixes.element[1],
+      an_element = "a" .. textobj_suffixes.element[1], -- around
     },
   },
   scope_textobject = {
-    enable = not not O.plugin.ts_textobjects,
+    enable = not not plugconf.ts_textobjects,
     keymaps = {
       goto_outer_scope = "<nop>",
-      a_scope = "as",
+      a_scope = "a" .. textobj_suffixes.scope[1],
       goto_next_scope = "<nop>",
       goto_prev_scope = "<nop>",
     },

@@ -108,6 +108,9 @@ O = {
       ["loop"] = { "r", "R" },
       ["statement"] = { "l", "L" },
       ["comment"] = { "/", "?" },
+      ["scope"] = { "s", "S" },
+      ["element"] = { "e", "E" },
+      ["subject"] = { "z", "Z" },
     },
     -- The below is for treesitter hint textobjects plugin
     hint_labels = { "a", "s", "d", "f", "h", "j", "k", "l" },
@@ -135,7 +138,7 @@ O = {
     ts_textunits = {},
     ts_rainbow = {},
     ts_context = {},
-    ts_hintobjects = {},
+    ts_hintobjects = { key = "m" },
     ts_matchup = {},
     indent_line = {},
     symbol_outline = {},
@@ -243,7 +246,7 @@ O = {
         -- TODO: how to auto get all the textobjects in the world
         { "w", "W", "b", "B", "(", "a", "f", "m", "s", "/", "c" },
       },
-      paste_keys = { ["p"] = "p", ["P"] = "P" },
+      paste_keys = { p = "p", P = "P" },
       register_print_cmd = false,
     },
     doge = {},
