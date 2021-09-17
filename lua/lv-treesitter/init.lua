@@ -220,8 +220,8 @@ require("nvim-treesitter.configs").setup {
         goto_definition = "<leader>lnd",
         list_definitions = "<leader>lnD",
         -- list_definitions_toc = "gO",
-        goto_next_usage = "<nop>",
-        goto_previous_usage = "<nop>",
+        goto_next_usage = "<F23>",
+        goto_previous_usage = "<F24>",
       },
     },
   },
@@ -237,8 +237,8 @@ require("nvim-treesitter.configs").setup {
   element_textobject = {
     enable = not not plugconf.ts_textobjects,
     keymaps = {
-      goto_next_element = "<nop>",
-      goto_prev_element = "<nop>",
+      goto_next_element = "<F24>",
+      goto_prev_element = "<F24>",
       swap_next_element = textobj_prefixes.swap_next .. textobj_suffixes.element[1],
       swap_prev_element = textobj_prefixes.swap_prev .. textobj_suffixes.element[1],
       inner_element = "i" .. textobj_suffixes.element[1],
@@ -248,10 +248,10 @@ require("nvim-treesitter.configs").setup {
   scope_textobject = {
     enable = not not plugconf.ts_textobjects,
     keymaps = {
-      goto_outer_scope = "<nop>",
+      goto_outer_scope = "<F24>",
       a_scope = "a" .. textobj_suffixes.scope[1],
-      goto_next_scope = "<nop>",
-      goto_prev_scope = "<nop>",
+      goto_next_scope = "<F24>",
+      goto_prev_scope = "<F24>",
     },
   },
 }
