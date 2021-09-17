@@ -5,7 +5,6 @@ M.config = function()
   hop.setup()
 end
 
-local from_fn = utils.cmd.from
 M.keymaps = function()
   if O.plugin.hop then
     -- TODO: register_nN_repeat here??
@@ -22,6 +21,8 @@ M.keymaps = function()
       u = { prefix .. "hint_references(nil, '<cword>')<cr>", "Usages" },
       s = { prefix .. "hint_scopes()<cr>", "Scopes" },
       t = { prefix .. "hint_textobjects()<cr>", "Textobjects" },
+      b = { "<cmd>lua require'lv-hop.lsp'.hop_symbols()<cr>", "LSP Symbols" },
+      g = { "<cmd>lua require'lv-hop.lsp'.hop_diagnostics()<cr>", "LSP Diagnostics" },
       -- f = { prefix .. "hint_textobjects{query='function'}<cr>", "Functions" },
       -- a = { prefix .. "hint_textobjects{query='parameter'}<cr>", "parameter" },
     }
