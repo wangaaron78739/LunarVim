@@ -1155,13 +1155,45 @@ return packer.startup(function(use)
   use {
     "Pocco81/Catppuccino.nvim",
     config = function()
-      local trues = setmetatable({}, { -- Return always true
+      local trues = setmetatable({
+        native_lsp = {
+          enabled = true,
+          virtual_text = {
+            errors = "italic",
+            hints = "italic",
+            warnings = "italic",
+            information = "italic",
+          },
+          underlines = {
+            errors = "underline",
+            hints = "underline",
+            warnings = "underline",
+            information = "underline",
+          },
+        },
+        nvimtree = {
+          enabled = true,
+          show_root = true,
+        },
+        which_key = true,
+        indent_blankline = {
+          enabled = true,
+          colored_indent_levels = true,
+        },
+      }, { -- Return always true
         __index = function(tbl, key)
           return true
         end,
       })
       require("catppuccino").setup {
         colorscheme = "dark_catppuccino", -- neon_latte
+        styles = {
+          comments = "italic",
+          functions = "NONE",
+          keywords = "italic",
+          strings = "NONE",
+          variables = "NONE",
+        },
         integrations = trues,
       }
     end,
