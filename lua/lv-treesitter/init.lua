@@ -35,14 +35,7 @@ local outer_scope_nN = make_nN_pair {
 -- TODO: Should move the keymappings to keymappings.lua for cleanliness??
 local textobj_prefixes = tsconfig.textobj_prefixes
 local textobj_suffixes = tsconfig.textobj_suffixes
-local textobj_sel_keymaps = {
-  [plugconf.ts_hintobjects.key] = "Hint Objects",
-  ["a" .. textobj_suffixes.scope[1]] = "Outer Scope",
-  ["i" .. textobj_suffixes.element[1]] = "TS Element",
-  ["a" .. textobj_suffixes.element[1]] = "TS Element",
-  ["i" .. textobj_suffixes.subject[1]] = "Textsubject",
-  ["a" .. textobj_suffixes.subject[1]] = "Textsubject-big",
-}
+local textobj_sel_keymaps = {}
 local textobj_swap_keymaps = {
   next = { [textobj_prefixes.swap_next .. textobj_suffixes.element[1]] = "TS Element" },
   previous = { [textobj_prefixes.swap_prev .. textobj_suffixes.element[1]] = "TS Element" },
@@ -108,7 +101,14 @@ if status then
   local operators = { mode = "o" } -- Operator mode
   local register = wk.register
   register(textobj_sel_keymaps, operators)
-  register({}, operators)
+  register({
+    [plugconf.ts_hintobjects.key] = "Hint Objects",
+    ["a" .. textobj_suffixes.scope[1]] = "Outer Scope",
+    ["i" .. textobj_suffixes.element[1]] = "TS Element",
+    ["a" .. textobj_suffixes.element[1]] = "TS Element",
+    ["i" .. textobj_suffixes.subject[1]] = "Textsubject",
+    ["a" .. textobj_suffixes.subject[1]] = "Textsubject-big",
+  }, operators)
   register(textobj_swap_keymaps.next, normal)
   register(textobj_swap_keymaps.previous, normal)
   register({
@@ -220,8 +220,8 @@ require("nvim-treesitter.configs").setup {
         goto_definition = "<leader>lnd",
         list_definitions = "<leader>lnD",
         -- list_definitions_toc = "gO",
-        goto_next_usage = "<F23>",
-        goto_previous_usage = "<F24>",
+        goto_next_usage = "<leader>lnu",
+        goto_previous_usage = "<leader>lnU",
       },
     },
   },
@@ -243,6 +243,7 @@ require("nvim-treesitter.configs").setup {
       swap_prev_element = textobj_prefixes.swap_prev .. textobj_suffixes.element[1],
       inner_element = "i" .. textobj_suffixes.element[1],
       an_element = "a" .. textobj_suffixes.element[1], -- around
+      set_jumps = true,
     },
   },
   scope_textobject = {
@@ -252,6 +253,7 @@ require("nvim-treesitter.configs").setup {
       a_scope = "a" .. textobj_suffixes.scope[1],
       goto_next_scope = "<F24>",
       goto_prev_scope = "<F24>",
+      set_jumps = true,
     },
   },
 }

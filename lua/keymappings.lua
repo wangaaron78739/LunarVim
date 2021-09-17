@@ -85,7 +85,7 @@ local feedkeys = function(keys, o)
   feedkeys_(termcode(keys, true, true, true), o, false)
 end
 function M.n_repeat()
-  vim.cmd [[normal! m']]
+  -- vim.cmd [[normal! m']]
   if custom_n_repeat == nil then
     feedkeys("n", "n")
   else
@@ -93,7 +93,7 @@ function M.n_repeat()
   end
 end
 function M.N_repeat()
-  vim.cmd [[normal! m']]
+  -- vim.cmd [[normal! m']]
   if custom_N_repeat == nil then
     feedkeys("N", "n")
   else
@@ -934,17 +934,19 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("x", "<M-S-s>", "<leader>s", sile)
 
   M.whichkey {
-    ["("] = {
-      name = "Swap Next",
-      [" "] = { cmd "ISwap", "Interactive" },
-      ["w"] = { cmd "ISwapWith", "I. With" },
-    },
-    [")"] = {
+    [O.treesitter.textobj_prefixes.swap_prev] = {
       name = "Swap Prev",
-      [" "] = { cmd "ISwap", "Interactive" },
-      ["w"] = { cmd "ISwapWith", "I. With" },
+      ["("] = { cmd "ISwap", "Interactive" },
+      [")"] = { cmd "ISwapWith", "I. With" },
+    },
+    [O.treesitter.textobj_prefixes.swap_next] = {
+      name = "Swap Next",
+      ["("] = { cmd "ISwap", "Interactive" },
+      [")"] = { cmd "ISwapWith", "I. With" },
     },
   }
+  M.sile("o", O.plugin.ts_hintobjects.key, [[:<C-U>lua require('tsht').nodes()<CR>]])
+  M.sile("v", O.plugin.ts_hintobjects.key, [[:lua require('tsht').nodes()<CR>]])
 
   local vLeaderMappings = {
     -- ["/"] = { cmd "CommentToggle", "Comment" },
