@@ -228,7 +228,7 @@ require("nvim-treesitter.configs").setup {
     enable = true,
     keymaps = {
       init_selection = "<M-,>",
-      node_incremental = ",",
+      node_incremental = "<leader>,",
       node_decremental = "<M-,>",
       scope_incremental = "grc",
     },
