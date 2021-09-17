@@ -48,12 +48,14 @@ local textobj_move_keymaps = {
   goto_next_start = {
     ["]S"] = { outer_scope_nN[1], "Outer Scope" },
     ["]s"] = { scope_nN[1], "Scope" },
-    ["[e"] = { element_nN[1], "TS Element" },
+    ["]e"] = { element_nN[1], "TS Element" },
+    ["]]"] = { element_nN[1], "TS Element" },
   },
   goto_next_end = {},
   goto_previous_start = {
     ["[s"] = { scope_nN[2], "Scope" },
-    ["]e"] = { element_nN[2], "TS Element" },
+    ["[e"] = { element_nN[2], "TS Element" },
+    ["[["] = { element_nN[2], "TS Element" },
   },
   goto_previous_end = {},
 }
@@ -68,10 +70,10 @@ for obj, suffix in pairs(textobj_suffixes) do
     [[<cmd>lua require("nvim-treesitter.textobjects.move").goto_next_start("@]] .. obj .. [[.outer")<cr>]],
     [[<cmd>lua require("nvim-treesitter.textobjects.move").goto_previous_start("]] .. obj .. [[.outer")<cr>]],
   }
-  local inner_next = { inners[1], obj .. "inner" }
-  local inner_prev = { inners[2], obj .. "inner" }
-  local outer_next = { outers[1], obj .. "outer" }
-  local outer_prev = { outers[2], obj .. "outer" }
+  local inner_next = { inners[1], "@" .. obj .. ".inner" }
+  local inner_prev = { inners[2], "@" .. obj .. ".inner" }
+  local outer_next = { outers[1], "@" .. obj .. ".outer" }
+  local outer_prev = { outers[2], "@" .. obj .. ".outer" }
 
   if textobj_prefixes.goto_next ~= nil then
     textobj_move_keymaps.goto_next_start[textobj_prefixes.goto_next .. suffix[1]] = inner_next
