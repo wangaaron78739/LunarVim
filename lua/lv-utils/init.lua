@@ -353,12 +353,25 @@ local function make_augrp(tbl, cmds)
   vim.cmd("augroup " .. grp)
   vim.cmd "autocmd!"
   for trigger, cmd in pairs(cmds) do
-    if type(cmd) == table then
-      local trigargs = cmd[1]
-      local action = cmd[2]
-      make_aucmd(trigger, trigargs, action)
+    if type(trigger) == "number" then
+      if #cmd == 2 then
+        trigger = cmd[1]
+        local action = cmd[2]
+        make_aucmd(trigger, "*", action)
+      else
+        trigger = cmd[1]
+        local trigargs = cmd[2]
+        local action = cmd[3]
+        make_aucmd(trigger, trigargs, action)
+      end
     else
-      make_aucmd(trigger, "*", cmd)
+      if type(cmd) == table then
+        local trigargs = cmd[1]
+        local action = cmd[2]
+        make_aucmd(trigger, trigargs, action)
+      else
+        make_aucmd(trigger, "*", cmd)
+      end
     end
   end
   vim.cmd "augroup END"
