@@ -143,8 +143,8 @@ require("nvim-treesitter.configs").setup {
     goto_right_end = false, -- whether to go to the end of the right partner or the beginning
     -- TODO: call matchup?
     -- fallback_cmd_normal = "call matchit#Match_wrapper('',1,'n')", -- What command to issue when we can't find a pair (e.g. "normal! %")
-    -- fallback_cmd_normal = "normal! <Plug>(matchup-%)", -- What command to issue when we can't find a pair (e.g. "normal! %")
-    fallback_cmd_normal = "call matchup#motion#find_matching_pair(0, 1)", -- What command to issue when we can't find a pair (e.g. "normal! %")
+    -- fallback_cmd_normal = "normal! <Plug>(matchup-%)",
+    fallback_cmd_normal = plugconf.matchup and "call matchup#motion#find_matching_pair(0, 1)" or "normal! %",
     keymaps = {
       goto_partner = "%",
     },

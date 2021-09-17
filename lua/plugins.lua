@@ -269,7 +269,7 @@ return packer.startup(function(use)
   use {
     "andymass/vim-matchup",
     event = "CursorMoved",
-    config = function()
+    setup = function()
       require("lv-matchup").config()
     end,
     disable = not O.plugin.matchup,
