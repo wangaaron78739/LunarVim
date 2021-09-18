@@ -263,12 +263,12 @@ function M.setup()
   map("x", "<C-k>", ":move '<-2<CR>gv-gv", { noremap = true, silent = true })
 
   -- better indenting
-  map("n", "<", "<<", { silent = true, noremap = true, nowait = true })
-  map("n", ">", ">>", { silent = true, noremap = true, nowait = true })
-  map("n", "<<", "<<<<", { silent = true, noremap = true, nowait = true })
-  map("n", ">>", ">>>>", { silent = true, noremap = true, nowait = true })
-  map("n", "g<", "<", nore)
-  map("n", "g>", ">", nore)
+  -- map("n", "<", "<<", { silent = true, noremap = true, nowait = true })
+  -- map("n", ">", ">>", { silent = true, noremap = true, nowait = true })
+  -- map("n", "<<", "<<<<", { silent = true, noremap = true, nowait = true })
+  -- map("n", ">>", ">>>>", { silent = true, noremap = true, nowait = true })
+  -- map("n", "g<", "<", nore)
+  -- map("n", "g>", ">", nore)
   map("x", "<", "<gv", nore)
   map("x", ">", ">gv", nore)
 
@@ -437,7 +437,8 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
 
   -- Double Escape key clears search and spelling highlights
   -- map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell | call minimap#vim#ClearColorSearch()<ESC>", nore)
-  map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell<cr>", nore)
+  -- map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell<cr>", nore)
+  map("n", "<Plug>ClearHighLights", ":nohls<cr>", nore)
   map("n", "<ESC>", "<Plug>ClearHighLights", sile)
 
   -- Map `cp` to `xp` (transpose two adjacent chars)
@@ -959,7 +960,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
 
   local ops = { mode = "n" }
   wk.register({ ["gy"] = "which_key_ignore", ["gyy"] = "which_key_ignore" }, ops)
-
+  wk.register({ ["z="] = { cmd "Telescope spell_suggest", "Spelling Suggestions" } }, ops)
   -- TODO: register all g prefix keys in whichkey
 
   -- FIXME: duplicate entries for some of the operators

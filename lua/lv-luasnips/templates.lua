@@ -211,7 +211,76 @@ return {
 	\label{fig:${5:${3/\W+/-/g}}}
 \end{figure}
     ]],
-    ["hwtemplate"] = preamble .. [[
+    ["hwtemplate"] = [[
+\documentclass[12pt]{article}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage[hyphens,spaces,obeyspaces]{url}
+\usepackage{listings}
+\lstset{language=C++,
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{green}\ttfamily,
+    morecomment=[l][\color{magenta}]{\#}
+}
+
+\usepackage{bm}
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{mathtools}
+\usepackage{hyperref}
+
+\usepackage{blkarray}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\setlist{nolistsep}
+\usepackage{graphicx}
+\usepackage{gensymb}
+\usepackage{subcaption}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+% \usepackage[noend]{algpseudocode}
+\graphicspath{ {./images/} }
+\usepackage[super]{nth}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\E}{\text{\textbf{E}}}
+\newcommand{\Var}{\text{\textbf{Var}}}
+%\newcommand{\Pr}{\text{Pr}}
+
+\newcommand{\x}{\bm{x}}
+\newcommand{\y}{\bm{y}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\\\#1\let\\\\=\temp}
+\newcolumntype{C}[1]{>{\PreserveBackslash\centering}p{#1}}
+\newcolumntype{R}[1]{>{\PreserveBackslash\raggedleft}p{#1}}
+\newcolumntype{L}[1]{>{\PreserveBackslash\raggedright}p{#1}}
+
+\algdef{SE}[SUBALG]{Indent}{EndIndent}{}{\algorithmicend\ }%
+\algtext*{Indent}
+\algtext*{EndIndent}
+
 \pagestyle{fancy}
 % \fancyhf{}
 \rhead{SID: 20477053}

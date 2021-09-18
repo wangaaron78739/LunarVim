@@ -23,7 +23,6 @@ packer.init {
 -- vim.cmd "autocmd BufWritePost plugins.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
 -- vim.cmd "autocmd BufWritePost lv-config.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
 
-
 local use_rock = packer.use_rocks
 return packer.startup(function(use)
   -- Packer can manage itself as an optional plugin
@@ -410,6 +409,9 @@ return packer.startup(function(use)
     run = "cd app && npm install",
     -- "previm/previm",
     ft = "markdown",
+    config = function()
+      require("lv-mkdp").config()
+    end,
     disable = not O.plugin.markdown_preview,
   }
   -- Interactive scratchpad

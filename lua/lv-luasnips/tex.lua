@@ -197,7 +197,6 @@ local tex_pairs = {
 
 local tex_env = {
   nonmathmode = {
-    ["cases"] = "cases",
     ["\\eq"] = "equation",
     ["\\it"] = { name = "itemize", body = { t "\t\\item ", i(1) } },
     ["\\en"] = { name = "enumerate", body = { t "\t\\item ", i(1) } },
@@ -206,6 +205,7 @@ local tex_env = {
   mathmode = {
     ["bmat"] = "bmatrix",
     ["pmat"] = "pmatrix",
+    ["cases"] = "cases",
   },
 }
 
