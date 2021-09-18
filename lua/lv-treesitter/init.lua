@@ -237,24 +237,19 @@ require("nvim-treesitter.configs").setup {
   element_textobject = {
     enable = not not plugconf.ts_textobjects,
     keymaps = {
-      goto_next_element = "<F24>",
-      goto_prev_element = "<F24>",
-      swap_next_element = textobj_prefixes.swap_next .. textobj_suffixes.element[1],
-      swap_prev_element = textobj_prefixes.swap_prev .. textobj_suffixes.element[1],
-      inner_element = "i" .. textobj_suffixes.element[1],
-      an_element = "a" .. textobj_suffixes.element[1], -- around
-      set_jumps = true,
+      [textobj_prefixes.swap_next .. textobj_suffixes.element[1]] = "swap_next_element",
+      [textobj_prefixes.swap_prev .. textobj_suffixes.element[1]] = "swap_prev_element",
+      ["i" .. textobj_suffixes.element[1]] = "inner_element",
+      ["a" .. textobj_suffixes.element[1]] = "an_element", -- around
     },
+    set_jumps = true,
   },
   scope_textobject = {
     enable = not not plugconf.ts_textobjects,
     keymaps = {
-      goto_outer_scope = "<F24>",
-      a_scope = "a" .. textobj_suffixes.scope[1],
-      goto_next_scope = "<F24>",
-      goto_prev_scope = "<F24>",
-      set_jumps = true,
+      ["a" .. textobj_suffixes.scope[1]] = "a_scope",
     },
+    set_jumps = true,
   },
 }
 
