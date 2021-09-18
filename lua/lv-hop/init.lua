@@ -2,7 +2,17 @@ local M = {}
 
 M.config = function()
   local hop = require "hop"
-  hop.setup()
+  hop.setup {
+    keys = O.hint_labels,
+  }
+end
+
+M.current_line_words = function()
+  require("hop").hint_words {
+    opts = {
+      direction = require("hop.constants").HintDirection.CURRENT_LINE,
+    },
+  }
 end
 
 M.keymaps = function()

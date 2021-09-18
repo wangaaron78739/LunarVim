@@ -883,7 +883,11 @@ return packer.startup(function(use)
   use {
     "mfussenegger/nvim-ts-hint-textobject",
     config = function()
-      require("tsht").config.hint_keys = O.treesitter.hint_labels -- Requires https://github.com/mfussenegger/nvim-ts-hint-textobject/pull/2
+      local labels = {}
+      O.hint_labels:gsub(".", function(c)
+        vim.list_extend(labels, { c })
+      end)
+      require("tsht").config.hint_keys = labels -- Requires https://github.com/mfussenegger/nvim-ts-hint-textobject/pull/2
 
       -- mappings.sile("o", "m", [[:<C-U>lua require('tsht').nodes()<CR>]])
     end,

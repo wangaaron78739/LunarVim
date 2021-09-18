@@ -106,17 +106,20 @@ O = {
       ["loop"] = { "r", "R" },
       ["statement"] = { "l", "L" },
       ["comment"] = { "/", "?" },
+    },
+    other_suffixes = {
       ["scope"] = { "s", "S" },
       ["element"] = { "e", "E" },
       ["subject"] = { "z", "Z" },
-    },
-    -- The below is for treesitter hint textobjects plugin
-    hint_labels = { "a", "s", "d", "f", "h", "j", "k", "l" },
+    }
   },
+  -- The below is used for most hint based navigation/selection (hop, hint_textobjects)
+  -- hint_labels = "fdsahjklgvcxznmbyuiorewqtp",
+  hint_labels = "fdsahjklvcxznmewuio",
   database = { save_location = "~/.config/nvim/.db", auto_execute = 1 },
   plugin = {
     fugitive = {},
-    hop = {},
+    hop = { teasing = true },
     twilight = {},
     notify = {},
     dial = {},
