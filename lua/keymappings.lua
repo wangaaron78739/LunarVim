@@ -42,7 +42,8 @@ M.map = map
 M.buf = bufmap
 local sile = { silent = true }
 local nore = { noremap = true, silent = true }
-local expr = { noremap = true, silent = true, expr = true }
+-- local expr = { noremap = true, silent = true, expr = true }
+local expr = { silent = true, expr = true }
 local function op_from(lhs, rhs, opts)
   if opts == nil then
     opts = nore
@@ -291,10 +292,6 @@ function M.setup()
   map("t", "<C-j>", [[<C-\><C-N><C-w>j]], nore)
   map("t", "<C-k>", [[<C-\><C-N><C-w>k]], nore)
   map("t", "<C-l>", [[<C-\><C-N><C-w>l]], nore)
-  map("i", "<C-h>", [[<C-\><C-N><C-w>h]], nore)
-  map("i", "<C-j>", [[<C-\><C-N><C-w>j]], nore)
-  map("i", "<C-k>", [[<C-\><C-N><C-w>k]], nore)
-  map("i", "<C-l>", [[<C-\><C-N><C-w>l]], nore)
   map("t", "<Esc>", [[<C-\><C-n>]], nore)
 
   -- TODO fix this
@@ -432,15 +429,7 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("n", "<down>", "v:count == 0 ? 'gj' : '<down>'", expr)
   map("x", "<down>", "v:count == 0 ? 'gj' : '<down>'", expr)
 
-  -- Better nav for omnicomplete
-  map("i", "<c-j>", '("\\<C-n>")', expr)
-  map("i", "<TAB>", '("\\<C-n>")', expr)
-  map("i", "<c-k>", '("\\<C-p>")', expr)
-  map("i", "<S-TAB>", '("\\<C-p>")', expr)
-
   -- QuickFix
-  -- map("n", "]q", cmd "cnext", nore)
-  -- map("n", "[q", cmd "cprev", nore)
   local quickfix_nN = make_nN_pair { cmd "cnext", cmd "cprev" }
   map("n", "]q", quickfix_nN[1], nore)
   map("n", "[q", quickfix_nN[2], nore)

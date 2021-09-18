@@ -12,9 +12,16 @@ function M.setup()
     ext_prio_increase = 1,
   }
 
-  local map = mappings.sile
-  map("i", "<C-j>", "<Plug>luasnip-expand-or-jump")
-  map("i", "<C-k>", "<Plug>luasnip-jump-prev")
+  local map = vim.api.nvim_set_keymap
+  --  "<Plug>luasnip-expand-or-jump"
+  -- map("i", "<C-h>", "<Plug>luasnip-expand-snippet", { silent = true })
+  -- map("s", "<C-h>", "<Plug>luasnip-expand-snippet", { silent = true })
+  map("i", "<C-j>", "<Plug>luasnip-jump-next", { silent = true })
+  map("s", "<C-j>", "<Plug>luasnip-jump-next", { silent = true })
+  map("i", "<C-k>", "<Plug>luasnip-jump-prev", { silent = true })
+  map("s", "<C-k>", "<Plug>luasnip-jump-prev", { silent = true })
+  map("i", "<C-l>", "<Plug>luasnip-next-choice", { silent = true })
+  map("s", "<C-l>", "<Plug>luasnip-next-choice", { silent = true })
 
   -- some shorthands...
   local ls = require "luasnip"
@@ -52,10 +59,6 @@ function M.setup()
       }),
     },
   }
-
-  local map = vim.api.nvim_set_keymap
-  map("i", "<C-e>", "<Plug>luasnip-next-choice", { silent = true })
-  map("s", "<C-e>", "<Plug>luasnip-next-choice", { silent = true })
 
   require("luasnip/loaders/from_vscode").lazy_load()
 end
