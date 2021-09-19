@@ -17,4 +17,14 @@ M.config = function()
   }
 end
 
+M.au_unconceal = function(level)
+  vim.opt_local.conceallevel = level
+  utils.define_augroups {
+    _lightspeed_unconceal = {
+      { "User", "LightspeedEnter", "setlocal conceallevel=0" },
+      { "User", "LightspeedEnter", "setlocal conceallevel=" .. level },
+    },
+  }
+end
+
 return M

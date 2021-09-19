@@ -1,5 +1,11 @@
 local M = {}
 
+local feedkeys = vim.api.nvim_feedkeys
+local termcodes = vim.api.nvim_replace_termcodes
+local t = function(k)
+  return termcodes(k, true, true, true)
+end
+
 function M.dump(...)
   local objects, v = {}, nil
   for i = 1, select("#", ...) do
@@ -69,6 +75,9 @@ end
 function M.new_command(name, fn)
   vim.cmd("command! " .. name .. " " .. fn)
 end
+function M.command_from_fn(name, fn)
+  vim.cmd([[command -nargs=+ ]] .. name .. [[ :]] .. fn .. [[("<args>")]])
+end
 
 _G.lv_utils_functions = {}
 local to_cmd_counter = 0
@@ -90,6 +99,16 @@ function M.quickfix_toggle()
     vim.cmd "copen"
   else
     vim.cmd "cclose"
+  end
+end
+function M.conceal_toggle(n)
+  if n == nil then
+    n = 2
+  end
+  if vim.opt_local.conceallevel._value == 0 then
+    vim.opt_local.conceallevel = n
+  else
+    vim.opt_local.conceallevel = 0
   end
 end
 vim.cmd [[
@@ -140,7 +159,7 @@ function M.operatorfunc_scaffold(name, operatorfunc)
 
   return M.to_cmd(function()
     vim.go.operatorfunc = "v:lua.lv_utils_operatorfuncs." .. name
-    vim.api.nvim_feedkeys("g@", "n", false)
+    feedkeys("g@", "n", false)
   end)
 end
 
@@ -148,26 +167,45 @@ end
 function M.operatorfuncV_keys(name, verbkeys)
   return M.operatorfunc_scaffold(name, function()
     M.operatorfunc_helper_select(true)
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(verbkeys, true, true, true), "m", false)
+    feedkeys(t(verbkeys), "m", false)
   end)
 end
-
--- charwise linewise
+-- keys charwise
 function M.operatorfunc_keys(name, verbkeys)
   return M.operatorfunc_scaffold(name, function()
     M.operatorfunc_helper_select(false)
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(verbkeys, true, true, true), "m", false)
+    feedkeys(t(verbkeys), "m", false)
+  end)
+end
+
+-- cmd linewise
+function M.operatorfunc_Vcmd(name, verbkeys)
+  return M.operatorfunc_scaffold(name, function()
+    M.operatorfunc_helper_select(true)
+    vim.cmd(verbkeys)
+  end)
+end
+-- cmd charwise
+function M.operatorfunc_cmd(name, verbkeys)
+  return M.operatorfunc_scaffold(name, function()
+    M.operatorfunc_helper_select(false)
+    vim.cmd(verbkeys)
   end)
 end
 
 -- the font used in graphical neovim applications
-function M.set_guifont(size)
-  vim.opt.guifont = "FiraCode Nerd Font:h" .. size
+function M.set_guifont(size, font)
+  if font == nil then
+    font = vim.g.guifontface
+  end
+  vim.opt.guifont = font .. ":h" .. size
+  vim.g.guifontface = font
   vim.g.guifontsize = size
 end
-function M.mod_guifont(diff)
+function M.mod_guifont(diff, font)
   local size = vim.g.guifontsize
-  M.set_guifont(size + diff)
+  M.set_guifont(size + diff, font)
+  print(vim.opt.guifont._value)
 end
 vim.cmd [[
   command! FontUp lua require("lv-utils").mod_guifont(1)
@@ -189,6 +227,8 @@ function M.mini_window_setwidth(initwidth)
     end
   end
 end
+-- Use a virtual window for 'inline' text input.
+-- TODO: Could use select mode for this like luasnip?
 function M.inline_text_input(opts)
   local enter = opts.enter
   local escape = opts.escape
@@ -236,7 +276,7 @@ function M.inline_text_input(opts)
   end
 
   local function close_win()
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, true, true), "n", false)
+    feedkeys(t "<esc>", "n", false)
     vim.api.nvim_win_close(win, true)
     vim.api.nvim_buf_delete(buf, { force = true })
     if escape then
@@ -275,6 +315,16 @@ function M.syn_group()
   print(vim.fn.synIDattr(s, "name") .. " -> " .. vim.fn.synIDattr(vim.fn.synIDtrans(s), "name"))
 end
 
+local function luafn(prefix)
+  return setmetatable({}, {
+    __index = function(tbl, key)
+      return "<cmd>lua " .. prefix .. "." .. key .. "()<cr>"
+    end,
+    __call = function(tbl, key)
+      return "<cmd>lua " .. prefix .. "." .. key .. "<cr>"
+    end,
+  })
+end
 M.cmd = setmetatable({
   lua = function(arg)
     return "<cmd>lua " .. arg .. "<cr>"
@@ -285,42 +335,88 @@ M.cmd = setmetatable({
   from = M.to_cmd,
   op = M.operatorfunc_scaffold,
   require = function(name)
-    local make = function(tbl, key)
-      return "<cmd>lua require('" .. name .. "')." .. key .. "()<cr>"
-    end
-    return setmetatable({}, {
-      __index = make,
-      __call = make,
-    })
+    return luafn("require'" .. name .. "'")
   end,
-  lsp = setmetatable({}, {
-    __index = function(tbl, key)
-      return "<cmd>lua vim.lsp.buf." .. key .. "()<cr>"
-    end,
-    __call = function(tbl, key)
-      return "<cmd>lua vim.lsp.buf." .. key .. "<cr>"
-    end,
-  }),
-  diag = setmetatable({}, {
-    __index = function(tbl, key)
-      return "<cmd>lua vim.lsp.diagnostic." .. key .. "()<cr>"
-    end,
-    __call = function(tbl, key)
-      return "<cmd>lua vim.lsp.diagnostic." .. key .. "<cr>"
-    end,
-  }),
-  telescope = setmetatable({}, {
-    __index = function(tbl, key)
-      return "<cmd>lua require'lv-telescope.functions'." .. key .. "()<cr>"
-    end,
-    __call = function(tbl, key)
-      return "<cmd>lua require'lv-telescope.functions'." .. key .. "<cr>"
-    end,
-  }),
+  lsp = luafn "vim.lsp.buf",
+  diag = luafn "vim.lsp.diagnostic",
+  -- telescopes = luafn "telescopes",
+  telescopes = luafn "require'lv-telescope.functions'",
 }, {
   __call = function(tbl, arg)
     return "<cmd>" .. arg .. "<cr>"
   end,
 })
+
+M.fn = setmetatable({}, {
+  __index = function(_, key)
+    return setmetatable({ key }, {
+      __index = function(tbl, key2)
+        return M.fn[tbl[1] .. "#" .. key2]
+      end,
+      __call = function(tbl, ...)
+        vim.fn[tbl[1]](...)
+      end,
+    })
+  end,
+})
+
+-- Meta af autocmd function
+local function make_aucmd(trigger, trigargs, action)
+  vim.cmd("autocmd " .. trigger .. " " .. trigargs .. " " .. action)
+end
+local function make_augrp(tbl, cmds)
+  local grp = tbl[1]
+  vim.cmd("augroup " .. grp)
+  vim.cmd "autocmd!"
+  for trigger, cmd in pairs(cmds) do
+    if type(trigger) == "number" then
+      if #cmd == 2 then
+        trigger = cmd[1]
+        local action = cmd[2]
+        make_aucmd(trigger, "*", action)
+      else
+        trigger = cmd[1]
+        local trigargs = cmd[2]
+        local action = cmd[3]
+        make_aucmd(trigger, trigargs, action)
+      end
+    else
+      if type(cmd) == table then
+        local trigargs = cmd[1]
+        local action = cmd[2]
+        make_aucmd(trigger, trigargs, action)
+      else
+        make_aucmd(trigger, "*", cmd)
+      end
+    end
+  end
+  vim.cmd "augroup END"
+end
+local augroup_meta = {
+  __call = make_augrp,
+}
+local au
+au = setmetatable({}, {
+  __call = function(_, arg)
+    if type(arg) == "string" then
+      return setmetatable({ arg }, augroup_meta)
+    else
+      for group, cmds in pairs(arg) do
+        make_augrp({ group }, cmds)
+      end
+    end
+  end,
+  __newindex = function(_, trigger, action)
+    make_aucmd(trigger, "*", action)
+  end,
+  __index = function(_, trigger)
+    return setmetatable({}, {
+      __newindex = function(_, trigargs, action)
+        make_aucmd(trigger, trigargs, action)
+      end,
+    })
+  end,
+})
+M.au = au
 
 return M

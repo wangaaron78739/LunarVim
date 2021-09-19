@@ -53,7 +53,7 @@ function M.setup()
     e = helper "Extract Function",
     v = helper "Extract Variable",
     i = helper "Inline Variable",
-    -- TODO: use popfix to get a code_actions style popup
+    -- TODO: use popfix/nui.nvim to get a code_actions style popup
     f = {
       [[<cmd>lua require('lv-refactoring').telescope_refactors()<CR>]],
       "Refactors",

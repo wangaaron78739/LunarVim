@@ -1,15 +1,22 @@
-if require("lv-utils").check_lsp_client_active "rust_analyzer" then
-  return
-end
-
-if O.lang.rust.rust_tools.active then
+if O.plugin.rust_tools then
   require("lv-rust-tools").ftplugin()
 else
-  vim.cmd [[ autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} } ]]
+  ----------------------------------------------------------------------
+  --                           UNSUPPORTED                            --
+  ----------------------------------------------------------------------
+  utils.define_augroups {
+    _rust_inlay_hints = {
+      {
+        "CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost",
+        "*",
+        [[lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} } ]],
+      },
+    },
+  }
 
-  require("lsp.config").lspconfig  "rust_analyzer" {
+  require("lsp.config").lspconfig "rust_analyzer" {
     cmd = { DATA_PATH .. "/lspinstall/rust/rust-analyzer" },
-    on_attach = require("lsp.functions").common_on_attach,
+
     filetypes = { "rust" },
     root_dir = require("lspconfig.util").root_pattern("Cargo.toml", "rust-project.json"),
     settings = {
@@ -26,6 +33,5 @@ else
         },
       },
     },
-    flags = O.lsp.flags,
   }
 end

@@ -1,28 +1,19 @@
-CONFIG_PATH = vim.fn.stdpath "config"
-DATA_PATH = vim.fn.stdpath "data"
-CACHE_PATH = vim.fn.stdpath "cache"
-PLUGIN_PATH = DATA_PATH .. "site/pack/*/start/*"
-TERMINAL = vim.fn.expand "$TERMINAL"
-local enable_plugins_by_default = true
-local codeLens = {
-  virtual_text = { spacing = 0, prefix = "" },
-  signs = true,
-  underline = true,
-  severity_sort = true,
-}
-local default_diagnostics = {
-  virtual_text = { spacing = 0, prefix = "", severity_limit = "Warning" },
-  signs = true,
-  underline = true,
-  severity_sort = true,
-  update_in_insert = true,
-}
+_G.CONFIG_PATH = vim.fn.stdpath "config"
+_G.DATA_PATH = vim.fn.stdpath "data"
+_G.CACHE_PATH = vim.fn.stdpath "cache"
+_G.PLUGIN_PATH = _G.DATA_PATH .. "site/pack/*/start/*"
+_G.TERMINAL = vim.fn.expand "$TERMINAL"
+
 -- TODO: Cleanup this config struct
 O = {
   format_on_save = true,
   format_on_save_timeout = 500,
   auto_close_tree = 0,
   fold_columns = "0",
+  theme = "DarkCatppuccino",
+  lighttheme = "ModusOperandi", -- Paper is good but incompatible with notify.nvim
+  fontsize = 10,
+  bigfontsize = 14,
   auto_complete = true,
   colorcolumn = "99999",
   clipboard = "unnamedplus",
@@ -30,7 +21,7 @@ O = {
   wrap_lines = false,
   spell = false,
   spelllang = "en",
-  number = true,
+  number = false,
   relative_number = true,
   number_width = 2,
   shift_width = 4,
@@ -50,7 +41,7 @@ O = {
   transparent_window = false,
   leader_key = "space",
   local_leader_key = ",",
-  vnsip_dir = CONFIG_PATH .. "/snippets",
+  signcolumn = "number", -- "yes" for always
   notify = {
     timeout = 2000, -- 5000 default
   },
@@ -62,14 +53,24 @@ O = {
     -- none, single, double, rounded, solid, shadow, array(fullcustom)
     border = "rounded",
     rename_border = "none",
-    diagnostics = default_diagnostics,
-    codeLens = codeLens,
+    diagnostics = {
+      virtual_text = { spacing = 4, prefix = "", severity_limit = "Warning" },
+      signs = true,
+      underline = true,
+      severity_sort = true,
+      update_in_insert = false, -- FIXME: fucks around with the rendering
+    },
+    codeLens = {
+      virtual_text = { spacing = 0, prefix = "" },
+      signs = true,
+      underline = true,
+      severity_sort = true,
+    },
     flags = {
       debounce_text_changes = 150,
     },
   },
   python_interp = "/usr/bin/python3.9", -- TODO: make a venv for this
-  -- @usage pass a table with your desired languages
   treesitter = {
     ensure_installed = "all",
     ignore_install = {},
@@ -86,11 +87,11 @@ O = {
       goto_previous = "[", -- Go to previous
       -- goto_next = "<leader>n", -- Select next
       -- goto_previous = "<leader>p", -- Select previous
-      sel_next = "]", -- Select next
-      sel_previous = "[", -- Select previous
       inner = "i", -- Select inside
       outer = "a", -- Selct around
-      swap = "<leader>a", -- Swap with next
+      -- swap = '<leader>a'
+      swap_next = ")", -- Swap with next
+      swap_prev = "(", -- Swap with previous
     },
     textobj_suffixes = {
       -- Start and End respectively for the goto keys
@@ -102,21 +103,28 @@ O = {
       ["block"] = { "k", "K" },
       ["conditional"] = { "i", "I" },
       ["call"] = { "c", "C" },
-      ["loop"] = { "l", "L" },
-      ["statement"] = { "s", "S" },
+      ["loop"] = { "r", "R" },
+      ["statement"] = { "l", "L" },
       ["comment"] = { "/", "?" },
     },
-    -- The below is for treesitter hint textobjects plugin
-    hint_labels = { "a", "s", "d", "f", "h", "j", "k", "l" },
+    other_suffixes = {
+      ["scope"] = { "s", "S" },
+      ["element"] = { "e", "E" },
+      ["subject"] = { "z", "Z" },
+    },
   },
+  -- The below is used for most hint based navigation/selection (hop, hint_textobjects)
+  -- hint_labels = "fdsahjklgvcxznmbyuiorewqtp",
+  hint_labels = "fdsahjklvcxznmewuio",
   database = { save_location = "~/.config/nvim/.db", auto_execute = 1 },
   plugin = {
-    hop = {},
+    fugitive = {},
+    hop = { teasing = true },
     twilight = {},
     notify = {},
     dial = {},
     dashboard = {},
-    matchup = {},
+    -- matchup = {},
     colorizer = {},
     numb = {
       show_numbers = true, -- Enable 'number' for the window while peeking
@@ -131,7 +139,7 @@ O = {
     ts_textunits = {},
     ts_rainbow = {},
     ts_context = {},
-    ts_hintobjects = {},
+    ts_hintobjects = { key = "m" },
     ts_matchup = {},
     indent_line = {},
     symbol_outline = {},
@@ -164,14 +172,12 @@ O = {
     telescope_fzy = {},
     telescope_frecency = {},
     telescope_fzf = {},
-    sanegx = {},
     ranger = {},
     todo_comments = {},
     lsp_colors = {},
     lsp_signature = {
       doc_lines = 2, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
       -- Apply indentation for wrapped lines
-      use_lspsaga = false, -- set to true if you want to use lspsaga popup
       floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
       fix_pos = true, -- set to true, the floating window will not auto-close until finish all parameters
       hint_enable = true, -- virtual hint enable
@@ -184,6 +190,7 @@ O = {
       hi_parameter = "Search",
       toggle_key = "<C-S-space>", -- TODO: Can I add this to C-Space as well?
       zindex = 1,
+      check_client_handlers = false,
     },
     git_blame = {},
     gitlinker = {
@@ -223,11 +230,8 @@ O = {
     },
     surround = {}, -- Uses vim-sandwhich
     fzf = {},
-    slime = { target = "kitty" },
     magma = {},
-    neoterm = {
-      automap_keys = "xx",
-    },
+    neoterm = {},
     bullets = {},
     vista = {},
     startuptime = {},
@@ -243,7 +247,7 @@ O = {
         -- TODO: how to auto get all the textobjects in the world
         { "w", "W", "b", "B", "(", "a", "f", "m", "s", "/", "c" },
       },
-      paste_keys = { ["p"] = "p", ["P"] = "P" },
+      paste_keys = { p = "p", P = "P" },
       register_print_cmd = false,
     },
     doge = {},
@@ -283,105 +287,39 @@ O = {
       },
     },
     luasnip = {},
+    luadev = {},
+    luapad = {},
     primeagen_refactoring = {},
-  },
-  lang = {
-    python = {
-      isort = false,
-      analysis = {
-        type_checking = "basic", -- off
-        auto_search_paths = true,
-        use_library_code_types = true,
-      },
-      formatter = "black",
+    splitfocus = {
+      -- width =
+      -- treewidth =
+      -- height =
+      winhighlight = false,
+      hybridnumber = false,
+      -- signcolumn = "number",
+      signcolumn = false,
+      relative_number = false,
+      number = false,
+      -- cursorline = O.cursorline,
     },
-    dart = { sdk_path = "/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot" },
-    lua = {},
-    sh = {},
-    tsserver = {
-      linter = "eslint",
-      formatter = "prettier",
+    rust_tools = {},
+    vimtex = {},
+    -- neoscroll = {
+    --   -- All these keys will be mapped to their corresponding default scrolling animation
+    --   mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
+    --   hide_cursor = false, -- Hide cursor while scrolling
+    --   stop_eof = false, -- Stop at <EOF> when scrolling downwards
+    --   respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+    --   cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+    --   easing_function = "sine", -- Default easing function
+    -- },
+    gesture = {
+      lmb = true,
+      rmb = false,
     },
-    json = {},
-    tailwindcss = {
-      active = false,
-      filetypes = {
-        "html",
-        "css",
-        "scss",
-        "javascript",
-        "javascriptreact",
-        "typescript",
-        "typescriptreact",
-      },
-    },
-    -- Used for js, ts, jsreact and tsreact -- I assume they are all similar enough
-    javascript = {},
-    clang = {
-      cross_file_rename = true,
-      header_insertion = "never",
-    },
-    ruby = { filetypes = { "rb", "erb", "rakefile", "ruby" } },
-    go = {},
-    elixir = {},
-    vim = {},
-    yaml = {},
-    terraform = {},
-    rust = {
-      rust_tools = { active = true },
-      linter = "",
-    },
-    svelte = {},
-    php = {
-      format = { braces = "psr12" },
-      environment = { php_version = "7.4" },
-      filetypes = { "php", "phtml" },
-    },
-    latex = {
-      vimtex = { active = true },
-      filetypes = { "tex", "bib" },
-      texlab = {
-        aux_directory = ".",
-        bibtex_formatter = "texlab",
-        build = {
-          -- TODO: Use tectonic here
-          executable = "tectonic",
-          args = {
-            -- Input
-            "%f",
-            -- Flags
-            "--synctex",
-            "--keep-logs",
-            "--keep-intermediates",
-            -- Options
-            -- OPTIONAL: If you want a custom out directory,
-            -- uncomment the following line.
-            --"--outdir out",
-          },
-          forwardSearchAfter = false,
-          onSave = true,
-        },
-        chktex = { on_edit = true, on_open_and_save = true },
-        diagnostics_delay = vim.opt.updatetime,
-        formatter_line_length = 80,
-        forward_search = { args = {}, executable = "" },
-        latexFormatter = "latexindent",
-        latexindent = { modify_line_breaks = false },
-      },
-    },
-    kotlin = {},
-    html = {},
-    elm = {},
-    emmet = { active = false },
-    graphql = {},
-    docker = {},
-    cmake = {},
-    java = {},
-    zig = {},
-    julia = {},
-  },
-  dashboard = {
-    footer = { "Anshuman Medhi -- IndianBoy42 (amedhi@connect.ust.hk)" },
+    coderunner = {},
+    sniprun = {},
+    kittyrunner = {},
   },
 }
 vim.cmd('let &titleold="' .. TERMINAL .. '"')
@@ -396,8 +334,9 @@ local disable_plugins = {
   "bullets",
   "coq",
   "primeagen_refactoring",
+  "ts_textunits",
+  "ranger",
 }
 for _, v in ipairs(disable_plugins) do
   O.plugin[v] = false
 end
-require("lv-utils").set_guifont(11)

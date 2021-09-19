@@ -11,9 +11,9 @@ if fn.empty(fn.glob(install_path)) > 0 then
   vim.cmd ":qa"
 end
 
-pcall(require, "impatient")
-
--- if vim.g.started_by_firenvim then
+local impatient_ok, impatient = pcall(require, "impatient")
+-- if impatient_ok then
+--   impatient.enable_profile()
 -- end
 
 -- Disable builtin plugins
@@ -47,11 +47,10 @@ utils = require "lv-utils"
 mappings = require "keymappings"
 require "settings"
 require "plugins"
-require "theme"
+require "theme"()
 
 -- 'Mandatory' plugin configs
 mappings.setup()
-require "lv-galaxyline"
 require "lv-treesitter"
 require "lsp"
 

@@ -1,11 +1,12 @@
 local M = {}
 local nore = require("keymappings").nore
 function M.ftplugin()
-  nore("n", "<leader>lm", "<Cmd>RustExpandMacro<CR>", { buffer = true })
-  nore("n", "<leader>lH", "<Cmd>RustToggleInlayHints<CR>", { buffer = true })
-  nore("n", "<leader>le", "<Cmd>RustRunnables<CR>", { buffer = true })
-  nore("n", "<leader>lh", "<Cmd>RustHoverActions<CR>", { buffer = true })
-  nore("v", "<leader>lh", "<Cmd>RustHoverRange<CR>", { buffer = true })
+  mappings.localleader {
+    ["m"] = { "<Cmd>RustExpandMacro<CR>", "Expand Macro" },
+    ["H"] = { "<Cmd>RustToggleInlayHints<CR>", "Toggle Inlay Hints" },
+    ["e"] = { "<Cmd>RustRunnables<CR>", "Runnables" },
+    ["h"] = { "<Cmd>RustHoverActions<CR>", "Hover Actions" },
+  }
   nore("v", "gh", "<cmd>RustHoverRange<CR>", { buffer = true })
   nore("n", "gj", "<cmd>RustJoinLines<CR>", { buffer = true })
 
@@ -43,7 +44,7 @@ function M.setup()
     -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
     server = require("lsp.config").conf_with {
       cmd = { DATA_PATH .. "/lspinstall/rust/rust-analyzer" },
-      on_attach = require("lsp.functions").common_on_attach,
+
       settings = {
         ["rust-analyzer"] = {
           checkOnSave = {
@@ -56,5 +57,27 @@ function M.setup()
   }
 
   require("rust-tools").setup(opts)
+end
+
+function M.crates_ftplugin()
+  require("lv-cmp").add_sources { { name = "crates" } }
+  local prefix = "<cmd>lua require'crates'."
+  mappings.localleader {
+    ["t"] = { prefix .. "toggle()<cr>", "Toggle" },
+    ["r"] = { prefix .. "reload()<cr>", "Reload" },
+    ["u"] = { prefix .. "update_crate()<cr>", "Update Crate" },
+    ["a"] = { prefix .. "update_all_crates()<cr>", "Update All" },
+    ["U"] = { prefix .. "upgrade_crate()<cr>", "Upgrade Crate" },
+    ["A"] = { prefix .. "upgrade_all_crates()<cr>", "Upgrade All" },
+    ["<localleader>"] = { prefix .. "show_versions_popup()<cr>", "Versions" },
+  }
+  mappings.vlocalleader {
+    ["u"] = { ":lua require('crates').update_crates()<cr>", "Update" },
+    ["U"] = { ":lua require('crates').upgrade_crates()<cr>", "Upgrade" },
+  }
+end
+function M.crates_setup()
+  -- vim.cmd [[autocmd FileType toml lua require("lv-cmp").add_sources { { name = "crates" } }]]
+  vim.cmd [[autocmd BufRead Cargo.toml lua require("lv-rust-tools").crates_ftplugin()]]
 end
 return M

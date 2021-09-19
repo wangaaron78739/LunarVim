@@ -1,4 +1,20 @@
 local M = {}
+local default_sources = {
+  { name = "luasnip" },
+  { name = "nvim_lsp" },
+  { name = "buffer" },
+  { name = "path" },
+  -- { name = "latex_symbols" },
+  { name = "calc" },
+  { name = "crates" }, -- TODO: only in rust projects
+  -- { name = "cmp_tabnine" },
+}
+function M.sources(list)
+  require("cmp").setup.buffer(list)
+end
+function M.add_sources(list)
+  M.sources(vim.list_extend(list, default_sources))
+end
 function M.setup()
   local cmp = require "cmp"
   local luasnip = require "luasnip"
@@ -72,15 +88,7 @@ function M.setup()
     },
 
     -- You should specify your *installed* sources.
-    sources = {
-      { name = "luasnip" },
-      { name = "nvim_lsp" },
-      { name = "buffer" },
-      { name = "path" },
-      { name = "latex_symbols" },
-      { name = "calc" },
-      -- { name = "cmp_tabnine" },
-    },
+    sources = default_sources,
 
     formatting = {
       format = function(entry, vim_item)

@@ -1,7 +1,12 @@
 local M = {}
+
+local null = require "null-ls"
+
+local gcc_diagnostics = require "lv-null-ls.gcc"
+
 function M.config()
-  local null = require "null-ls"
   local diagnostics_format = "[#{c}] #{m} (#{s})"
+
   local formatters = null.builtins.formatting
   local diagnostics = null.builtins.diagnostics
   -- local code_actions = null.builtins.code_actions
@@ -16,7 +21,7 @@ function M.config()
       formatters.shfmt,
       formatters.black, -- yapf, autopep8
       formatters.isort,
-      formatters.clang_format,
+      -- formatters.clang_format,
       -- formatters.uncrustify,
       formatters.cmake_format,
       formatters.elm_format,

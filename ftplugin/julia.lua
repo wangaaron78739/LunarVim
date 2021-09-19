@@ -1,11 +1,7 @@
 vim.opt_local.commentstring = "# %s"
 
-if require("lv-utils").check_lsp_client_active "julials" then
-  return
-end
-
 -- TODO: Check if this really activates correctly
-require("lsp.config").lspconfig  "julials" {
+require("lsp.config").lspconfig "julials" {
   -- on_new_config = function(new_config, new_root_dir)
   --   server_path = "/home/amedhi/.julia/packages/LanguageServer/jiDTR/src/LanguageServer.jl"
   --   cmd = {
@@ -29,5 +25,4 @@ require("lsp.config").lspconfig  "julials" {
   --   }
   --   new_config.cmd = cmd
   -- end,
-  flags = O.lsp.flags,
 }

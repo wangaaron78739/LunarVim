@@ -2,18 +2,26 @@ local M = {}
 function M.setup()
   require("luasnip").config.set_config {
     history = true,
-    updateevents = "TextChanged,TextChangedP,TextChangedI",
     enable_autosnippets = true,
-    region_check_events = "CursorMoved,CursorHold,InsertEnter",
-    delete_check_events = "TextChangedI,TextChangedP,TextChanged",
+    -- updateevents = "TextChanged,TextChangedP,TextChangedI",
+    -- region_check_events = "CursorMoved,CursorHold,InsertEnter",
+    -- delete_check_events = "TextChangedI,TextChangedP,TextChanged",
     -- treesitter-hl has 100, use something higher (default is 200).
     ext_base_prio = 300,
     -- minimal increase in priority.
     ext_prio_increase = 1,
   }
 
-  mappings.sile("i", "<C-j>", "<Plug>luasnip-expand-or-jump")
-  mappings.sile("i", "<C-k>", "<Plug>luasnip-jump-prev")
+  local map = vim.api.nvim_set_keymap
+  --  "<Plug>luasnip-expand-or-jump"
+  -- map("i", "<C-h>", "<Plug>luasnip-expand-snippet", { silent = true })
+  -- map("s", "<C-h>", "<Plug>luasnip-expand-snippet", { silent = true })
+  map("i", "<C-j>", "<Plug>luasnip-jump-next", { silent = true })
+  map("s", "<C-j>", "<Plug>luasnip-jump-next", { silent = true })
+  map("i", "<C-k>", "<Plug>luasnip-jump-prev", { silent = true })
+  map("s", "<C-k>", "<Plug>luasnip-jump-prev", { silent = true })
+  map("i", "<C-l>", "<Plug>luasnip-next-choice", { silent = true })
+  map("s", "<C-l>", "<Plug>luasnip-next-choice", { silent = true })
 
   -- some shorthands...
   local ls = require "luasnip"
@@ -41,7 +49,7 @@ function M.setup()
   end
 
   ls.snippets = {
-    tex = require("lv-luasnips.tex").snips,
+    -- tex = require("lv-luasnips.tex").snips,
     lua = {
       s("localM", {
         tnl [[local M = {}]],
@@ -51,18 +59,6 @@ function M.setup()
       }),
     },
   }
-
-  -- TODO: port Latex auto snippets
-  ls.autosnippets = {
-    all = {
-      s("xxx", { t "autosnippet" }),
-    },
-    tex = require("lv-luasnips.tex").auto,
-  }
-
-  local map = vim.api.nvim_set_keymap
-  map("i", "<C-E>", "<Plug>luasnip-next-choice", {})
-  map("s", "<C-E>", "<Plug>luasnip-next-choice", {})
 
   require("luasnip/loaders/from_vscode").lazy_load()
 end

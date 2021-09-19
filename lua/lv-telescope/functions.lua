@@ -1,5 +1,6 @@
 -- local action_mt = require "telescope.actions.mt"
 -- local action_set = require "telescope.actions.set"
+local extensions = require("telescope").extensions
 local action_state = require "telescope.actions.state"
 local actions = require "telescope.actions"
 local themes = require "telescope.themes"
@@ -119,7 +120,7 @@ end
 --[[
 function M.live_grep()
   require("telescope").extensions.fzf_writer.staged_grep {
-    shorten_path = true,
+    path_display = {"shorten_path"},
     previewer = false,
     fzf_separator = "|>",
   }
@@ -128,21 +129,21 @@ end
 
 function M.grep_prompt()
   require("telescope.builtin").grep_string {
-    shorten_path = true,
+    path_display = { "shorten_path" },
     search = vim.fn.input "Grep String ❯ ",
   }
 end
 
 function M.grep_visual()
   require("telescope.builtin").grep_string {
-    shorten_path = true,
+    path_display = { "shorten_path" },
     search = require("utils").get_visual_selection(),
   }
 end
 
 function M.grep_cWORD()
   require("telescope.builtin").grep_string {
-    shorten_path = true,
+    path_display = { "shorten_path" },
     search = vim.fn.expand "<cWORD>",
   }
 end
@@ -154,7 +155,7 @@ function M.grep_last_search(opts)
   -- -> Subs out the search things
   local register = vim.fn.getreg("/"):gsub("\\<", ""):gsub("\\>", ""):gsub("\\C", "")
 
-  opts.shorten_path = true
+  opts.path_display = { "shorten_path" }
   opts.word_match = "-w"
   opts.search = register
 
@@ -288,6 +289,10 @@ function M.search_only_certain_files()
   require("telescope.builtin").find_files {
     find_command = cmd,
   }
+end
+
+function M.projects()
+  extensions.project.project {}
 end
 
 return setmetatable({}, {

@@ -120,8 +120,8 @@ telescope.setup {
 -- telescope.setup {}
 
 _G.telescopes = functions
--- require'telescope'.load_extension('fzy_native')
+-- telescope.load_extension('fzy_native')
 telescope.load_extension "fzf"
 telescope.load_extension "hop"
 -- telescope.load_extension "frecency"
--- require'telescope'.load_extension('project')
+-- telescope.load_extension('project')
