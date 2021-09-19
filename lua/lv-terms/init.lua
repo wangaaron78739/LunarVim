@@ -161,13 +161,13 @@ function M.activate_luadev()
   bmap(0, "v", "<localleader>x", "<Plug>(Luadev-Run)", { silent = true })
   -- bmap(0,"i", "", "<Plug>(Luadev-Complete)", { silent = true })
   -- bmap(0,"n", "<localleader>xw", "<Plug>(Luadev-RunWord)", { silent = true })
-  bmap(
-    0,
-    "n",
-    "<localleader>x",
-    utils.operatorfunc_cmd("luadev_exec", "<localleader>x"),
-    { silent = true, noremap = true }
-  )
+  -- bmap(
+  --   0,
+  --   "n",
+  --   "<localleader>x",
+  --   utils.operatorfunc_keys("luadev_exec", "<localleader>x"),
+  --   { silent = true, noremap = true }
+  -- )
 end
 
 function M.kitty()

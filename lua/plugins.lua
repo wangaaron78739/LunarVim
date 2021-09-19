@@ -595,6 +595,26 @@ return packer.startup(function(use)
 
   -- Justfile
   use { "NoahTheDuke/vim-just", ft = "just" }
+  use {
+    "IndianBoy42/tree-sitter-just",
+    config = function()
+      require("tree-sitter-just").setup { ["local"] = true }
+      --       local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+      --
+      --       parser_config.just = {
+      --         install_info = {
+      --           -- url = "local-tree-sitter/start/tree-sitter-just", -- local path or git repo
+      --           -- url = "https://github.com/IndianBoy42/tree-sitter-just", -- local path or git repo
+      --           url = "~/.local/share/nvim/site/pack/packer/opt/tree-sitter-just", -- local path or git repo
+      --           files = { "src/parser.c", "src/scanner.cc" },
+      --           branch = "main",
+      --         },
+      --         -- filetype = "just", -- if filetype does not agrees with parser name
+      --         -- used_by = {"bar", "baz"} -- additional filetypes that use this parser
+      --         maintainers = { "@IndianBoy42" },
+      --       }
+    end,
+  }
 
   -- Fish shell
   -- use {"dag/vim-fish", ft = 'fish'} -- Treesitter highlighting is fine

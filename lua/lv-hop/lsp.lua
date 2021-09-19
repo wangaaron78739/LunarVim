@@ -11,7 +11,7 @@ local function lsp_filter_window(node, context, nodes_set)
   if line <= context.bot_line and line >= context.top_line then
     nodes_set[line .. col] = {
       line = line,
-      col = col + 1,
+      col = col,
     }
   end
 end

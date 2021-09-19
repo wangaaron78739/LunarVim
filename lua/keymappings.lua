@@ -626,8 +626,8 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
   map("n", "U", "<C-R>", nore)
 
   -- Go to multi insert from Visual mode
-  map("x", "I", "<M-a>i", sile)
-  map("x", "A", "<M-a>a", sile)
+  map("x", "I", "<M-a>i", {})
+  map("x", "A", "<M-a>a", {})
 
   -- Select all matching regex search
   -- map("n", "<M-S-/>", "<M-/><M-a>", {})
