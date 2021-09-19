@@ -20,8 +20,8 @@ function M.setup()
   map("s", "<C-j>", "<Plug>luasnip-jump-next", { silent = true })
   map("i", "<C-k>", "<Plug>luasnip-jump-prev", { silent = true })
   map("s", "<C-k>", "<Plug>luasnip-jump-prev", { silent = true })
-  map("i", "<C-l>", "<Plug>luasnip-next-choice", { silent = true })
-  map("s", "<C-l>", "<Plug>luasnip-next-choice", { silent = true })
+  map("i", "<C-h>", "<Plug>luasnip-next-choice", { silent = true })
+  map("s", "<C-h>", "<Plug>luasnip-next-choice", { silent = true })
 
   -- some shorthands...
   local ls = require "luasnip"

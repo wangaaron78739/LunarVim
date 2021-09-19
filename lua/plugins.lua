@@ -110,6 +110,8 @@ return packer.startup(function(use)
   use { "kdheepak/cmp-latex-symbols", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "hrsh7th/cmp-nvim-lsp", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "hrsh7th/cmp-calc", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
+  use { "hrsh7th/cmp-nvim-lua", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
+  use { "f3fora/cmp-spell", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   -- Tabout
   use {
     "abecodes/tabout.nvim",

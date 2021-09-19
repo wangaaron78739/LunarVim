@@ -27,6 +27,7 @@ if O.plugin.coq then
   M.coq = require "coq"()
   M.coq_lsp = M.coq.lsp_ensure_capabilities
   M.conf_with = function(config)
+    config.capabilities = M.caps(config.capabilities)
     return M.coq_lsp(config)
   end
 else
@@ -35,7 +36,8 @@ else
   ----------------------------------------------------------------------
   M.conf_with = function(config)
     -- Set default client capabilities plus window/workDoneProgress
-    config.capabilities = vim.tbl_extend("keep", config.capabilities or {}, lsp_status.capabilities)
+    config.capabilities = M.caps(config.capabilities)
+    config.capabilities = require("cmp_nvim_lsp").update_capabilities(config.capabilities)
     return config
   end
 end
@@ -48,8 +50,8 @@ end
 
 M.caps = function(overrides)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  vim.tbl_deep_extend("keep", overrides, capabilities)
-  return capabilities
+  overrides = vim.tbl_extend("error", overrides or {}, lsp_status.capabilities)
+  return vim.tbl_deep_extend("keep", overrides, capabilities)
 end
 
 local function nop() end

@@ -1,4 +1,14 @@
 local M = {}
+local iconmap = {
+  buffer = "   [Buffer]",
+  path = "   [Path]",
+  nvim_lsp = "   [LSP]",
+  -- luasnip = "   [Snippet]",
+  luasnip = "",
+  nvim_lua = "[Lua]",
+  latex_symbols = "[Latex]",
+  calc = "   [Calc]",
+}
 local default_sources = {
   { name = "luasnip" },
   { name = "nvim_lsp" },
@@ -6,7 +16,7 @@ local default_sources = {
   { name = "path" },
   -- { name = "latex_symbols" },
   { name = "calc" },
-  { name = "crates" }, -- TODO: only in rust projects
+  -- { name = "crates" }, -- TODO: only in rust projects
   -- { name = "cmp_tabnine" },
 }
 function M.sources(list)
@@ -35,7 +45,9 @@ function M.setup()
     },
     completion = {
       completeopt = "menu,menuone,noinsert",
+      -- autocomplete = false,
     },
+    -- experimental = { ghost_text = true },
     documentation = {
       border = "single",
       winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
@@ -46,12 +58,13 @@ function M.setup()
     },
 
     mapping = {
-      ["<C-p>"] = cmp.mapping.select_prev_item(),
-      ["<C-n>"] = cmp.mapping.select_next_item(),
-      ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-      ["<C-f>"] = cmp.mapping.scroll_docs(4),
-      ["<C-e>"] = cmp.mapping.close(),
-      ["<tab>"] = cmp.mapping(function(fallback)
+      ["<C-P>"] = cmp.mapping.select_prev_item(),
+      ["<C-N>"] = cmp.mapping.select_next_item(),
+      ["<C-D>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-F>"] = cmp.mapping.scroll_docs(4),
+      ["<C-E>"] = cmp.mapping.close(),
+      ["<C-SPACE>"] = cmp.mapping.complete(),
+      ["<TAB>"] = cmp.mapping(function(fallback)
         if vim.fn.pumvisible() == 1 then
           vim.api.nvim_feedkeys(t "<C-n>", "n", false)
         elseif luasnip.expand_or_jumpable() then
@@ -65,7 +78,7 @@ function M.setup()
         "i",
         "s",
       }),
-      ["<S-tab>"] = cmp.mapping(function(fallback)
+      ["<S-TAB>"] = cmp.mapping(function(fallback)
         if vim.fn.pumvisible() == 1 then
           vim.api.nvim_feedkeys(t "<C-p>", "n", false)
         elseif luasnip.jumpable(-1) then
@@ -81,7 +94,7 @@ function M.setup()
         behavior = cmp.ConfirmBehavior.Insert,
         select = true,
       },
-      ["<C-h>"] = cmp.mapping.confirm {
+      ["<C-L>"] = cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Insert,
         select = true,
       },
@@ -95,16 +108,7 @@ function M.setup()
         -- fancy icons and a name of kind
         vim_item.kind = require("lspkind").presets.default[vim_item.kind] .. " " .. vim_item.kind
         -- set a name for each source
-        vim_item.menu = ({
-          buffer = "   [Buffer]",
-          path = "   [Path]",
-          nvim_lsp = "   [LSP]",
-          -- luasnip = "   [Snippet]",
-          luasnip = "",
-          nvim_lua = "[Lua]",
-          latex_symbols = "[Latex]",
-          calc = "   [Calc]",
-        })[entry.source.name]
+        vim_item.menu = iconmap[entry.source.name]
         return vim_item
       end,
     },

@@ -40,3 +40,5 @@ require("lv-sandwich").add_recipe {
   nesting = false,
   input = { "s" },
 }
+
+require("lv-cmp").add_sources { { name = "nvim_lua" } }
