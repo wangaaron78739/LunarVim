@@ -16,7 +16,9 @@ function M.config()
     sources = {
       -- Formatters
       formatters.stylua,
-      formatters.prettierd,
+      formatters.prettierd.with {
+        command = "npx prettierd",
+      },
       -- formatters.rustfmt,
       formatters.shfmt,
       formatters.black, -- yapf, autopep8
