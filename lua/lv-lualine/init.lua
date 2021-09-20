@@ -105,6 +105,7 @@ require("lualine").setup {
     -- section_separators = { "", "" },
     disabled_filetypes = {},
   },
+  tabline = {},
   sections = {
     lualine_a = { "mode" },
     lualine_b = { filename },
