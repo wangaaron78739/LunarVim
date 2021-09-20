@@ -145,6 +145,7 @@ O = {
     symbol_outline = {},
     debug = {},
     bqf = {},
+    sidebarnvim = {},
     trouble = {},
     floatterm = {},
     spectre = {},

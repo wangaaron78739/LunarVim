@@ -359,6 +359,15 @@ return packer.startup(function(use)
     disable = not O.plugin.vista,
     cmd = "Vista",
   }
+  -- Generic sidebar plugin
+  use {
+    "GustavoKatel/sidebar.nvim",
+    config = function()
+      require("lv-sidebar").config()
+    end,
+    cmd = "SidebarNvimToggle",
+    disable = not O.plugin.sidebarnvim,
+  }
   -- Debugging
   use {
     "mfussenegger/nvim-dap",
