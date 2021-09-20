@@ -1175,7 +1175,7 @@ return packer.startup(function(use)
   -- Colorbuddy colorscheme helper
   use { "tjdevries/colorbuddy.vim", module = "colorbuddy" }
   -- Colorschemes -- https://github.com/folke/lsp-colors.nvim
-  use { "Yagua/nebulous.nvim", }
+  use { "Yagua/nebulous.nvim" }
   use { "christianchiarulli/nvcode-color-schemes.vim", opt = true }
   use {
     "Pocco81/Catppuccino.nvim",

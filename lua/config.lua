@@ -111,7 +111,7 @@ O = {
       ["scope"] = { "s", "S" },
       ["element"] = { "e", "E" },
       ["subject"] = { "z", "Z" },
-    }
+    },
   },
   -- The below is used for most hint based navigation/selection (hop, hint_textobjects)
   -- hint_labels = "fdsahjklgvcxznmbyuiorewqtp",

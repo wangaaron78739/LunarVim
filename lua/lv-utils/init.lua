@@ -460,4 +460,12 @@ mapper_meta = {
 local mapper = setmetatable({ {}, "n" }, mapper_meta)
 M.map = mapper
 
+local cmds = setmetatable({}, {
+  -- TODO: more customization and arguments
+  __newindex = function(tbl, key, val)
+    vim.cmd("command! " .. key .. " " .. val)
+  end,
+})
+M.cmds = cmds
+
 return M
