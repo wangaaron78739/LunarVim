@@ -47,6 +47,7 @@ function M.check_lsp_client_active(name)
   return false
 end
 
+-- TODO: replace this with new interface
 function M.define_augroups(definitions) -- {{{1
   -- Create autocommand groups based on the passed definitions
   --
@@ -418,5 +419,45 @@ au = setmetatable({}, {
   end,
 })
 M.au = au
+
+-- Meta af keybinding function
+local map = vim.api.nvim_set_keymap
+local bufmap = vim.api.nvim_buf_set_keymap
+local mapper_meta = nil
+local mapper_newindex = function(tbl, lhs, rhs)
+  if tbl[1].buffer then
+    bufmap(tbl[1].buffer, tbl[2], lhs, rhs, tbl[1])
+  else
+    map(tbl[2], lhs, rhs, tbl[1])
+  end
+end
+local mapper_call = function(tbl, mode)
+  if mode == nil then
+    mode = tbl[2]
+  end
+  return function(args)
+    if args == nil then
+      args = tbl[1]
+    end
+    return setmetatable({ args, mode }, mapper_meta)
+  end
+end
+local mapper_index = function(tbl, flag)
+  if #flag == 1 then
+    return setmetatable({ tbl[1], flag }, mapper_meta)
+  else
+    return setmetatable({
+      vim.tbl_extend("force", { [flag] = true }, tbl[1]),
+      tbl[2],
+    }, mapper_meta)
+  end
+end
+mapper_meta = {
+  __index = mapper_index,
+  __newindex = mapper_newindex,
+  __call = mapper_call,
+}
+local mapper = setmetatable({ {}, "n" }, mapper_meta)
+M.map = mapper
 
 return M
