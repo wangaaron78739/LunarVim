@@ -502,8 +502,12 @@ return packer.startup(function(use)
   -- Diffview
   use {
     "sindrets/diffview.nvim",
-    event = BufRead,
-    -- ft = 'diff'?
+    config = function()
+      require("lv-diffview").config()
+    end,
+    ft = "diff",
+    module = "diffview",
+    cmd = { "DiffviewOpen", "DiffviewFileHistory" },
     disable = not O.plugin.diffview,
   }
   -- Easily Create Gists
