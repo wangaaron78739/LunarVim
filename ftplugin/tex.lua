@@ -78,9 +78,15 @@ require("lsp.config").lspconfig "texlab" {
 require("lv-cmp").sources {
   sources = {
     { name = "luasnip" },
-    -- { name = "nvim_lsp" },
+    { name = "nvim_lsp" },
     { name = "buffer" },
   },
+}
+
+require("cmp").setup.buffer {
+  -- completion = {
+  --   autocomplete = false,
+  -- },
 }
 
 require("luasnip").snippets.tex = require("lv-luasnips.tex").snips

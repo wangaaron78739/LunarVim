@@ -149,7 +149,6 @@ local both_maps = {
 }
 for k, v in pairs(both_maps) do -- FIXME: deal with already existing backslash (can use frontier set?)
   local lhs = ("number" == type(k)) and v or k
-  utils.dump(lhs, v)
 end
 
 local math_maps = {
