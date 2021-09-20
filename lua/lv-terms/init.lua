@@ -207,42 +207,41 @@ end
 
 function M.keymaps(leaderMappings, vLeaderMappings)
   local cmd = utils.cmd
-  local opts = { silent = true, noremap = true }
   local map = vim.api.nvim_set_keymap
   if O.plugin.neoterm then
     vim.cmd [[ command -nargs=+ Tmem :lua require("lv-terms").Tmem("<args>") ]]
 
-    vim.g.neoterm_automap_keys = "<leader>x<space>"
+    vim.g.neoterm_automap_keys = "<leader>x<cr>"
     -- Use gt to send to terminal
     map("n", "<leader>t<space>", ":Tmem ", {})
     map("n", "<leader>tt", ":T ", {})
     leaderMappings["t<cr>"] = { cmd "Ttoggle", "Neoterm Toggle" }
     leaderMappings["tl"] = { cmd "Tls", "Neoterm list" }
 
-    map("n", "<leader>xm", "<Plug>(neoterm-repl-send)", opts)
-    map("n", "<leader>xn", "<Plug>(neoterm-repl-send-line)", opts)
-    map("x", "<leader>xn", "<Plug>(neoterm-repl-send)", opts)
+    leaderMappings["xm"] = { "<Plug>(neoterm-repl-send)", "Neoterm Send" }
+    leaderMappings["xn"] = { "<Plug>(neoterm-repl-send-line)", "Neoterm Line" }
+    vLeaderMappings["xn"] = { "<Plug>(neoterm-repl-send)", "Neoterm Send" }
     leaderMappings["x<space>"] = "Neoterm AutoMap"
   end
 
   if O.plugin.kittyrunner then
-    map("n", "<leader>tk", "<cmd>KittyOpen<CR>", opts)
-    map("n", "<leader>tK", "<cmd>KittyOpenLocal<CR>", opts)
-    map("n", "<leader>xk", "<cmd>KittyReRunCommand<CR>", opts)
-    map("n", "<leader>xK", "<cmd>KittyRunCommand<CR>", opts)
-    map("n", "<leader>xl", "<cmd>KittySendLines<CR>", opts)
-    map("x", "<leader>xl", "<cmd>KittySendLines<CR>", opts)
+    leaderMappings["tk"] = { "<cmd>KittyOpen<CR>", "Kitty Open" }
+    leaderMappings["tK"] = { "<cmd>KittyOpenLocal<CR>", "Kitty Local" }
+    leaderMappings["xk"] = { "<cmd>KittyReRunCommand<CR>", "Kitty Rerun" }
+    leaderMappings["xK"] = { "<cmd>KittyRunCommand<CR>", "Kitty Run" }
+    leaderMappings["xl"] = { "<cmd>KittySendLines<CR>", "Kitty Send" }
+    vLeaderMappings["xl"] = { "<cmd>KittySendLines<CR>", "Kitty Send" }
     -- TODO: add operator mapping
   end
 
   if O.plugin.sniprun then
-    map("n", "<leader>tp", "<Plug>SnipClose", opts)
-    map("n", "<leader>tP", "<cmd>SnipReset<cr>", opts)
-    map("n", "<leader>tC", "<Plug>SnipReplMemoryClean", opts)
+    leaderMappings["tp"] = { "<Plug>SnipClose", "SnipRun Close" }
+    leaderMappings["tP"] = { "<cmd>SnipReset<cr>", "SnipRun Reset" }
+    leaderMappings["tC"] = { "<Plug>SnipReplMemoryClean", "SnipRun Clean" }
 
-    map("v", "<leader>xs", ":SnipRun<cr>", opts)
-    map("n", "<leader>xs", "<Plug>SnipRun", opts)
-    map("n", "<leader>xc", "<Plug>SnipRunOperator", opts)
+    vLeaderMappings["xs"] = { "<cmd>SnipRun<cr>", "SnipRun" }
+    leaderMappings["xs"] = { "<Plug>SnipRun", "SnipRun Line" }
+    leaderMappings["xc"] = { "<Plug>SnipRun", "SnipRun" }
   end
 
   -- Can use: "!", "&", "gt", "gx"
