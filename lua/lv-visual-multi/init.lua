@@ -17,7 +17,7 @@ function M.preconf()
     ["Start Regex Search"] = "<M-/>",
     ["Visual Regex"] = "/",
     ["Add Cursor At Pos"] = "<M-S-n>", -- TODO: better keymap for this?
-    -- FIXME: Some plugin is conflicting and making this not work, unless i type fast
+    -- FIXME: Which key(?) is conflicting and making this not work, unless i type fast
     ["Find Operator"] = "m",
     ["Visual Find"] = "<M-f>",
     ["Undo"] = "u",

@@ -25,22 +25,22 @@ require("lv-utils").define_augroups {
 
 local M = {
   nebulous = function()
-    --     require("nebulous").setup {
-    --       variant = "night",
-    --       italic = {
-    --         comments = true,
-    --         keywords = false,
-    --         functions = false,
-    --         variables = false,
-    --       },
-    --       custom_colors = { -- FIXME: custom colors not bound
-    --         Conceal = { ctermfg = "223", ctermbg = "235 ", guifg = "#ebdbb2", guibg = "#282828" },
-    --         LspReferenceRead = { cterm = "bold", ctermbg = "red", guibg = "#464646" },
-    --         LspReferenceText = { cterm = "bold", ctermbg = "red", guibg = "#464646" },
-    --         LspReferenceWrite = { cterm = "bold", ctermbg = "red", guibg = "#464646" },
-    --       },
-    --     }
-    vim.cmd "colorscheme nebulous"
+    require("nebulous").setup {
+      variant = "night",
+      italic = {
+        comments = true,
+        keywords = false,
+        functions = false,
+        variables = false,
+      },
+      custom_colors = { -- FIXME: custom colors not bound
+        Conceal = { ctermfg = "223", ctermbg = "235 ", guifg = "#ebdbb2", guibg = "#282828" },
+        LspReferenceRead = { cterm = "bold", ctermbg = "red", guibg = "#464646" },
+        LspReferenceText = { cterm = "bold", ctermbg = "red", guibg = "#464646" },
+        LspReferenceWrite = { cterm = "bold", ctermbg = "red", guibg = "#464646" },
+      },
+    }
+    -- vim.cmd "colorscheme nebulous"
   end,
 }
 

@@ -122,7 +122,7 @@ return packer.startup(function(use)
     event = "InsertEnter",
     disable = not O.plugin.cmp,
   }
-  -- VSCode style snippets
+  -- Snippets plugin
   use {
     "L3MON4D3/LuaSnip",
     config = function()
@@ -1018,7 +1018,12 @@ return packer.startup(function(use)
     keys = { "gs", "gj" },
   }
 
-  use { "Iron-E/nvim-libmodal" }
+  use {
+    "Iron-E/nvim-libmodal",
+    config = function()
+      require("keymappings").libmodal_setup()
+    end,
+  }
   -- use { "Iron-E/nvim-tabmode", after = "nvim-libmodal" }
 
   use { "ellisonleao/glow.nvim", run = ":GlowInstall", cmd = "Glow" }
@@ -1119,6 +1124,7 @@ return packer.startup(function(use)
         },
       }
     end,
+    ft = "norg",
     requires = "nvim-lua/plenary.nvim",
     disable = not O.plugin.neorg,
   }
@@ -1174,9 +1180,7 @@ return packer.startup(function(use)
   -- Colorbuddy colorscheme helper
   use { "tjdevries/colorbuddy.vim", module = "colorbuddy" }
   -- Colorschemes -- https://github.com/folke/lsp-colors.nvim
-  use {
-    "Yagua/nebulous.nvim",
-  }
+  use { "Yagua/nebulous.nvim", }
   use { "christianchiarulli/nvcode-color-schemes.vim", opt = true }
   use {
     "Pocco81/Catppuccino.nvim",
