@@ -89,7 +89,9 @@ function M.fterm()
     term = popup(nil),
   }, {
     __index = function(tbl, key)
-      return popup(key)
+      local new = popup(key)
+      tbl[key] = new
+      return new
     end,
   })
 
@@ -102,7 +104,9 @@ function M.fterm()
   end
 
   vim.cmd [[
-    command! -nargs=1 Ftopen lua ftopen('<args>')
+    command! -nargs=1 FtOpen lua ftopen('<args>')
+    command! -nargs=1 FtRun lua require'FTerm'.run('<args>\n')
+    command! -nargs=1 FtScratch lua require'FTerm'.scratch({cmd='<args>'})
   ]]
 
   require("lv-utils").define_augroups {
@@ -215,6 +219,8 @@ function M.keymaps(leaderMappings, vLeaderMappings)
     -- Use gt to send to terminal
     map("n", "<leader>t<space>", ":Tmem ", {})
     map("n", "<leader>tt", ":T ", {})
+    leaderMappings["t<space>"] = "Tmem ..."
+    leaderMappings["tt"] = "T ..."
     leaderMappings["t<cr>"] = { cmd "Ttoggle", "Neoterm Toggle" }
     leaderMappings["tl"] = { cmd "Tls", "Neoterm list" }
 
@@ -225,13 +231,20 @@ function M.keymaps(leaderMappings, vLeaderMappings)
   end
 
   if O.plugin.kittyrunner then
-    leaderMappings["tk"] = { "<cmd>KittyOpen<CR>", "Kitty Open" }
-    leaderMappings["tK"] = { "<cmd>KittyOpenLocal<CR>", "Kitty Local" }
+    leaderMappings["tko"] = { "<cmd>KittyOpen<CR>", "Kitty Open" }
+    leaderMappings["tkl"] = { "<cmd>KittyOpenLocal<CR>", "Kitty Local" }
     leaderMappings["xk"] = { "<cmd>KittyReRunCommand<CR>", "Kitty Rerun" }
     leaderMappings["xK"] = { "<cmd>KittyRunCommand<CR>", "Kitty Run" }
     leaderMappings["xl"] = { "<cmd>KittySendLines<CR>", "Kitty Send" }
     vLeaderMappings["xl"] = { "<cmd>KittySendLines<CR>", "Kitty Send" }
     -- TODO: add operator mapping
+  end
+
+  if O.plugin.floatterm then
+    map("n", "<leader>tf", ":FtScratch ", {})
+    map("n", "<leader>tF", ":FtRun ", {})
+    leaderMappings["tf"] = "Scratch ..."
+    leaderMappings["tF"] = "(F)Run ..."
   end
 
   if O.plugin.sniprun then
