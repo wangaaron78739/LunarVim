@@ -281,14 +281,14 @@ list_extend(auto, {
   -- TODO: whitespace before and after operators
   -- TODO: line 203 and below
   -- ms(re [[(%w[ ,%)%]%}])to]], { sub(1), t "\\to" }),
-  ms(re [[([%w%^]+),%.]], { t "\\vec{", sub(1), t "}" }),
-  ms(re [[([%w%^]+)%.,]], { t "\\vec{", sub(1), t "}" }),
-  ms(re [[([%w%^]+)~]], { t "\\tilde{", sub(1), t "}" }),
-  ms(re [[([%w%^]+)%. ]], { t "\\dot{", sub(1), t "} " }),
-  ms(re [[([%w%^]+)%.%.]], { t "\\ddot{", sub(1), t "}" }),
-  ms(re [[([%w%^]+)^bar]], { t "\\overline{", sub(1), t "}" }),
+  ms(re [[(%\?[%w%^]+),%.]], { t "\\vec{", sub(1), t "}" }),
+  ms(re [[(%\?[%w%^]+)%.,]], { t "\\vec{", sub(1), t "}" }),
+  ms(re [[(%\?[%w%^]+)%. ]], { t "\\dot{", sub(1), t "} " }),
+  ms(re [[(%\?[%w%^]+)%.%.]], { t "\\ddot{", sub(1), t "}" }),
+  ms(re [[(%\?[%w%^]+)^~]], { t "\\tilde{", sub(1), t "}" }),
+  ms(re [[(%\?[%w%^]+)^bar]], { t "\\overline{", sub(1), t "}" }),
+  ms(re [[(%\?%[%w%^]+)^hat]], { t "\\hat{", sub(1), t "}" }),
   ms("bar", { t "\\overline{", i(0), t "}" }),
-  ms(re [[([%w%^]+)^hat]], { t "\\hat{", sub(1), t "}" }),
   ms("hat", { t "\\hat{", i(0), t "}" }),
   -- TODO: bmatrix et al
   ms("//", { t "\\frac{", i(1), t "}{", i(0), t "}" }),
@@ -361,6 +361,9 @@ end
 for k, v in pairs(templates.tex) do
   list_extend(snips, { pa(k, v) })
 end
+list_extend(snips, {
+  s("subsubsec", { t "subsubsection{", i(0), t "}" }),
+})
 
 return {
   snips = snips,
