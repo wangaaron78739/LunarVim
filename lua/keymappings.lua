@@ -96,7 +96,7 @@ end
 M.buf = bufmap
 local sile = { silent = true }
 local nore = { noremap = true, silent = true }
--- local expr = { noremap = true, silent = true, expr = true }
+local norexpr = { noremap = true, silent = true, expr = true }
 local expr = { silent = true, expr = true }
 local function op_from(lhs, rhs, opts)
   if opts == nil then
@@ -126,6 +126,9 @@ function M.nore(mode, from, to)
 end
 function M.expr(mode, from, to)
   map(mode, from, to, expr)
+end
+function M.norexpr(mode, from, to)
+  map(mode, from, to, norexpr)
 end
 
 function M.init()
@@ -378,10 +381,10 @@ function M.setup()
 
   -- move along visual lines, not numbered ones
   -- without interferring with {count}<down|up>
-  map("n", "<up>", "v:count == 0 ? 'gk' : '<up>'", expr)
-  map("x", "<up>", "v:count == 0 ? 'gk' : '<up>'", expr)
-  map("n", "<down>", "v:count == 0 ? 'gj' : '<down>'", expr)
-  map("x", "<down>", "v:count == 0 ? 'gj' : '<down>'", expr)
+  map("n", "<up>", "v:count == 0 ? 'gk' : '<up>'", norexpr)
+  map("x", "<up>", "v:count == 0 ? 'gk' : '<up>'", norexpr)
+  map("n", "<down>", "v:count == 0 ? 'gj' : '<down>'", norexpr)
+  map("x", "<down>", "v:count == 0 ? 'gj' : '<down>'", norexpr)
 
   local pre_goto_next = O.treesitter.textobj_prefixes.goto_next
   local pre_goto_prev = O.treesitter.textobj_prefixes.goto_previous
@@ -496,8 +499,8 @@ function M.setup()
   -- Spell checking
   map("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u]]", nore)
 
-  -- Vscode style commenting in insert mode
-  map("i", "<C-/>", "<C-\\><C-n><cmd>CommentToggle<cr>", nore)
+  map("i", "<M-a>", cmd "normal! A", nore)
+  map("i", "<M-i>", cmd "normal! I", nore)
 
   -- Slightly easier commands
   map("n", ";", ":", {})
@@ -628,7 +631,8 @@ function M.setup()
   map("o", "H", "^", {})
   map("o", "L", "$", {})
   -- map("n", "H", "^", {})
-  map("n", "H", [[col('.') == match(getline('.'),'\S')+1 ? '0' : '^']], expr) -- do ^ first then 0
+  map("n", "H", "^", sile)
+  map("n", "^", [[col('.') == match(getline('.'),'\S')+1 ? '0' : '^']], norexpr) -- do ^ first then 0
   map("n", "L", "$", {})
 
   -- map("n", "m-/", "")
@@ -1013,12 +1017,12 @@ end
 
 local mincount = 5
 function M.wrapjk()
-  map("n", "j", [[v:count ? (v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'j' : 'gj']], expr)
-  map("n", "k", [[v:count ? (v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'k' : 'gk']], expr)
+  map("n", "j", [[v:count ? (v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'j' : 'gj']], norexpr)
+  map("n", "k", [[v:count ? (v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'k' : 'gk']], norexpr)
 end
 function M.countjk()
-  map("n", "j", [[(v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'j']], expr)
-  map("n", "k", [[(v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'k']], expr)
+  map("n", "j", [[(v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'j']], norexpr)
+  map("n", "k", [[(v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'k']], norexpr)
 end
 
 M.wkopts = {
