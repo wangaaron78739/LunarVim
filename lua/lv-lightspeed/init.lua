@@ -22,7 +22,7 @@ M.au_unconceal = function(level)
   utils.define_augroups {
     _lightspeed_unconceal = {
       { "User", "LightspeedEnter", "setlocal conceallevel=0" },
-      { "User", "LightspeedEnter", "setlocal conceallevel=" .. level },
+      { "User", "LightspeedExit", "setlocal conceallevel=" .. level },
     },
   }
 end
