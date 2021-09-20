@@ -425,9 +425,14 @@ return packer.startup(function(use)
     "iamcco/markdown-preview.nvim",
     run = "cd app && npm install",
     -- "previm/previm",
+    setup = function()
+      require("lv-mkdp").config()
+    end,
     ft = "markdown",
     disable = not O.plugin.markdown_preview,
   }
+  use { "ellisonleao/glow.nvim", run = ":GlowInstall", cmd = "Glow" }
+
   -- Interactive scratchpad
   use {
     "metakirby5/codi.vim",
@@ -1020,8 +1025,6 @@ return packer.startup(function(use)
     end,
   }
   -- use { "Iron-E/nvim-tabmode", after = "nvim-libmodal" }
-
-  use { "ellisonleao/glow.nvim", run = ":GlowInstall", cmd = "Glow" }
 
   -- Command line autocomplete
   use {

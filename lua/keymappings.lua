@@ -450,7 +450,7 @@ function M.setup()
 
   -- Double Escape key clears search and spelling highlights
   -- map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell | call minimap#vim#ClearColorSearch()<ESC>", nore)
-  -- map("n", "<Plug>ClearHighLights", ":nohls | :setlocal nospell", nore)
+  -- map("n", "<Plug>ClearHighLights", cmd "nohls" .. cmd "setlocal nospell", nore)
   map("n", "<Plug>ClearHighLights", cmd "nohls", nore)
   map("n", "<ESC>", "<Plug>ClearHighLights", sile)
 
@@ -470,7 +470,7 @@ function M.setup()
 
   -- Commenting helpers
   map("n", ")gc", "gccjgcc", sile)
-  -- map("n", "(gc", "gcckgcc", sile)
+  map("n", "(gc", "gcckgcc", sile)
   map("n", "gcO", "O-<esc>gccA<BS>", sile)
   map("n", "gco", "o-<esc>gccA<BS>", sile)
 
@@ -992,7 +992,14 @@ function M.setup()
   end
 
   local ops = { mode = "n" }
-  wk.register({ ["gy"] = "which_key_ignore", ["gyy"] = "which_key_ignore" }, ops)
+  wk.register({
+    ["gy"] = "which_key_ignore",
+    ["gyy"] = "which_key_ignore",
+    ["z="] = {
+      telescope_fn.spell_suggest,
+      "Spelling suggestions",
+    },
+  }, ops)
 
   -- TODO: register all g prefix keys in whichkey
 

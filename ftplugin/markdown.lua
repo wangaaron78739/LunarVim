@@ -29,5 +29,10 @@ require("lv-cmp").sources {
   { name = "buffer" },
   { name = "latex_symbols" },
   { name = "calc" },
+  { name = "spell" },
   -- { name = "cmp_tabnine" },
+}
+
+mappings.localleader {
+  p = { "<Plug>MarkdownPreviewToggle", "Preview Toggle" },
 }
