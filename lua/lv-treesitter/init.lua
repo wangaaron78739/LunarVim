@@ -27,7 +27,7 @@ local scope_nN = make_nN_pair {
   '<Cmd>lua require("ts-textobjects/actions").goto_prev_scope()<CR>',
 }
 local outer_scope_nN = make_nN_pair {
-  '<Cmd>lua require("ts-textobjects/actions").goto_outer_scope()<CR>',
+  '<Cmd>lua require("ts-textobjects/actions").incremental_outer_scope()<CR>',
   "<cmd>normal! <C-o><cr>",
 }
 
