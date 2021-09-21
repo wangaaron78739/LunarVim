@@ -321,6 +321,24 @@ O = {
     coderunner = {},
     sniprun = {},
     kittyrunner = {},
+    lsputils = {
+      handlers ={
+      ["textDocument/codeAction"] = { "codeAction", "code_action_handler" },
+      -- ["textDocument/codeLens"] = { "codeLens", "code_lens_handler" },
+      ["textDocument/references"] = { "locations", "references_handler" },
+      ["textDocument/definition"] = { "locations", "definition_handler" },
+      ["textDocument/declaration"] = { "locations", "declaration_handler" },
+      ["textDocument/typeDefinition"] = { "locations", "typeDefinition_handler" },
+      ["textDocument/implementation"] = { "locations", "implementation_handler" },
+      -- ["textDocument/documentSymbol"] = { "symbols", "document_handler" },
+      -- ["workspace/symbol"] = { "symbols", "workspace_handler" },
+      },
+      aus = {
+        _lsputil_codeaction_list = {
+          { "FileType", "lsputil_codeaction_list", "nmap <buffer> K <CR>" },
+        },
+      },
+    },
   },
 }
 vim.cmd('let &titleold="' .. TERMINAL .. '"')
