@@ -70,7 +70,7 @@ O = {
       debounce_text_changes = 150,
     },
   },
-  python_interp = "/usr/bin/python3.9", -- TODO: make a venv for this
+  python_interp = CONFIG_PATH .. "/.venv/bin/python3.9", -- TODO: make a venv for this
   treesitter = {
     ensure_installed = "all",
     ignore_install = {},

@@ -11,14 +11,19 @@ yadm-save message="update nvim config": fix-head
     cd ~  && yadm add ~/.config/nvim 
     yadm commit -m "{{message}}"
 
+venv-install: 
+    sudo apt install python3.9 python3.9-dev python3.9-venv
+    python3.9 -m venv ~/.config/nvim/.venv
+    ~/.config/nvim/.venv/bin/python3.9 -m pip install pynvim ueberzug
+    ~/.config/nvim/.venv/bin/python3.9 -m pip install cairosvg pnglatex jupyter_client ipython ueberzug pillow
+
 # TODO: install in an isolated virtual environment? (use pipx)
 # Install dependencies # TODO: there are some dependencies not included here
 install:
     sudo apt install libjpeg8-dev zlib1g-dev libxtst-dev 
-    sudo apt install python3.9
+    just venv-install
     cargo install selene stylua 
     pipx install --force neovim-remote
-    python3.9 -m pip install pynvim ueberzug --user
     npm install -g tree-sitter-cli
     {{nvim}} # Run once to install packer and stuff
     {{nvim}} +PackerSync # Run again to install the plugins

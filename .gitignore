@@ -20,3 +20,4 @@ nv-settings.lua
 lv-settings.lua
 nvim.log
 .stylua.toml
+.venv
