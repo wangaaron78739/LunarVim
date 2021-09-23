@@ -14,6 +14,8 @@ require("lsp.config").lspconfig "pyright" {
   },
 }
 
+vim.b.lv_magma_kernel = "python3"
+
 -- if O.plugin.debug and O.plugin.dap_install then
 --   local dap_install = require "dap-install"
 --   dap_install.config("python_dbg", {})

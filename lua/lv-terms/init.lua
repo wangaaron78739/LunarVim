@@ -140,16 +140,19 @@ function M.magma()
 end
 
 function M.activate_magma()
-  vim.cmd "MagmaInit"
+  vim.cmd("MagmaInit " .. (vim.b.lv_magma_kernel or ""))
   mappings.localleader {
-    ["xx"] = { "<cmd>MagmaEvaluateLine<CR>", "Line" },
-    ["x<cr>"] = { "<cmd>MagmaReevaluateCell<CR>", "Cell" },
-    ["xd"] = { "<cmd>MagmaDelete<CR>", "MagmaDel" },
-    ["to"] = { "<cmd>MagmaShowOutput<cr>", "Magma Output" },
     x = "Magma",
+    ["xx"] = { "<cmd>MagmaEvaluateLine<CR>", "Run Line" },
+    ["x<cr>"] = { "<cmd>MagmaReevaluateCell<CR>", "Run Cell" },
+    ["xd"] = { "<cmd>MagmaDelete<CR>", "Magma Delete" },
+    t = "Terminal",
+    ["to"] = { "<cmd>MagmaShowOutput<cr>", "Magma Output" },
+    r = { ":MagmaEvaluateOperator<CR>g@", "Magma Run" },
   }
-  bmap(0, "n", "<localleader>x", ":MagmaEvaluateOperator<CR>", { expr = true, silent = true })
-  bmap(0, "v", "<localleader>x", "<cmd>MagmaEvaluateVisual<CR>", { silent = true })
+  mappings.vlocalleader {
+    r = { "<cmd>MagmaEvaluateVisual<CR>", "Magma Run" },
+  }
 end
 
 function M.luadev()
@@ -159,19 +162,15 @@ end
 function M.activate_luadev()
   vim.cmd "Luadev"
   mappings.localleader {
-    ["xx"] = { "<Plug>(Luadev-RunLine)", "Line" },
-    ["x"] = { "<Plug>(Luadev-Run)", "Luadev" },
+    x = "Luadev",
+    xx = { "<Plug>(Luadev-RunLine)", "Run Line" },
+    xw = { "<Plug>(Luadev-RunWord)", "Run Word" },
+    r = { "<Plug>(Luadev-Run)", "Luadev Run" },
   }
-  bmap(0, "v", "<localleader>x", "<Plug>(Luadev-Run)", { silent = true })
+  mappings.vlocalleader {
+    r = { "<Plug>(Luadev-Run)", "Luadev Run" },
+  }
   -- bmap(0,"i", "", "<Plug>(Luadev-Complete)", { silent = true })
-  -- bmap(0,"n", "<localleader>xw", "<Plug>(Luadev-RunWord)", { silent = true })
-  -- bmap(
-  --   0,
-  --   "n",
-  --   "<localleader>x",
-  --   utils.operatorfunc_keys("luadev_exec", "<localleader>x"),
-  --   { silent = true, noremap = true }
-  -- )
 end
 
 function M.kitty()
@@ -216,7 +215,8 @@ function M.keymaps(leaderMappings, vLeaderMappings)
     vim.cmd [[ command -nargs=+ Tmem :lua require("lv-terms").Tmem("<args>") ]]
 
     vim.g.neoterm_automap_keys = "<leader>x<cr>"
-    -- Use gt to send to terminal
+    leaderMappings["x<cr>"] = "Neoterm AutoMap"
+
     map("n", "<leader>t<space>", ":Tmem ", {})
     map("n", "<leader>tt", ":T ", {})
     leaderMappings["t<space>"] = "Tmem ..."
@@ -227,7 +227,6 @@ function M.keymaps(leaderMappings, vLeaderMappings)
     leaderMappings["xm"] = { "<Plug>(neoterm-repl-send)", "Neoterm Send" }
     leaderMappings["xn"] = { "<Plug>(neoterm-repl-send-line)", "Neoterm Line" }
     vLeaderMappings["xn"] = { "<Plug>(neoterm-repl-send)", "Neoterm Send" }
-    leaderMappings["x<space>"] = "Neoterm AutoMap"
   end
 
   if O.plugin.kittyrunner then
