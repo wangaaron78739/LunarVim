@@ -1142,6 +1142,15 @@ return packer.startup(function(use)
   }
   -- use { "tpope/vim-rhubarb" }
 
+  use {
+    "max397574/better-escape.nvim",
+    config = function()
+      require("better_escape").setup(O.plugin.better_escape)
+    end,
+    event = "InsertEnter",
+    disable = not O.plugin.better_escape,
+  }
+
   -- TODO: http://neovimcraft.com/plugin/chipsenkbeil/distant.nvim/index.html
   use {
     "chipsenkbeil/distant.nvim",

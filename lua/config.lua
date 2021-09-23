@@ -119,6 +119,10 @@ O = {
   database = { save_location = "~/.config/nvim/.db", auto_execute = 1 },
   plugin = {
     fugitive = {},
+    better_escape = {
+      mapping = { "jk", "kj" },
+      keys = "<Esc>",
+    },
     hop = { teasing = true },
     twilight = {},
     notify = {},
