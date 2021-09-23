@@ -39,7 +39,7 @@ function M.config()
       -- -- diagnostics.pylint,
       -- diagnostics.hadolint,
       -- -- diagnostics.luacheck,
-      diagnostics.selene, -- lua linter
+      -- diagnostics.selene, -- lua linter
       -- diagnostics.write_good,
       -- diagnostics.vale,
       -- -- diagnostics.misspell,

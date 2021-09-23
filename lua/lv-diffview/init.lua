@@ -2,7 +2,7 @@ local M = {}
 local gitsigns_fn = utils.cmd.require "gitsigns"
 function M.diff_cWORD()
   local f = vim.fn.expand "<cWORD>"
-  require("diffview").open(f)
+  require("diffview").open("-- " .. f)
 end
 M.config = function()
   local cb = require("diffview.config").diffview_callback

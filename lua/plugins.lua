@@ -569,6 +569,7 @@ return packer.startup(function(use)
   }
   use {
     "saecki/crates.nvim",
+    branch = 'main',
     config = function()
       require("lv-rust-tools").crates_setup()
     end,
@@ -1071,8 +1072,6 @@ return packer.startup(function(use)
         signcolumn = conf.signcolumn,
       }
     end,
-    cmd = "FocusSplitNicely",
-    module = "focus",
     disable = not O.plugin.splitfocus,
   }
 
@@ -1314,11 +1313,6 @@ return packer.startup(function(use)
   --     return setmetatable({ user }, metatable)
   --   end,
   -- })
-  -- plugins_table.gelguy["wilder.nvim"] = {
-  --   config = function()
-  --     require("lv-wilder").config()
-  --   end,
-  -- }
 
   use { "seandewar/nvimesweeper", cmd = "Nvimesweeper" }
 end)
