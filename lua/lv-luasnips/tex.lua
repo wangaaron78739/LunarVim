@@ -39,13 +39,13 @@ local function fmt(fn, ipairs)
   if ipairs == nil then
     ipairs = {}
   end
-  return f(function(args)
-    return string.format(unpack(fn(args[1].captures, args[1].trigger, args)))
+  return f(function(_, args)
+    return string.format(unpack(fn(args.captures, args.trigger, args)))
   end, ipairs)
 end
 local sub = function(j)
-  return f(function(args)
-    return string.format("%s", args[1].captures[j])
+  return f(function(_, args)
+    return string.format("%s", args.captures[j])
   end, {})
 end
 local con = function(fn)
@@ -210,8 +210,8 @@ local pairsubs = setmetatable({ -- Autopairs will complete the closing for most 
   end,
 })
 local pairsub = function(j)
-  return f(function(args)
-    return string.format("%s", pairsubs[args[1].captures[j]])
+  return f(function(_, args)
+    return string.format("%s", pairsubs[args.captures[j]])
   end, {})
 end
 
@@ -286,9 +286,10 @@ list_extend(auto, {
   ms(re [[(%\?[%w%^]+)%.%.]], { t "\\ddot{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)^~]], { t "\\tilde{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)^bar]], { t "\\overline{", sub(1), t "}" }),
-  ms(re [[(%\?%[%w%^]+)^hat]], { t "\\hat{", sub(1), t "}" }),
+  ms(re [[(%\?[%w%^]+)^hat]], { t "\\hat{", sub(1), t "}" }),
   ms("bar", { t "\\overline{", i(0), t "}" }),
   ms("hat", { t "\\hat{", i(0), t "}" }),
+  ms("iprod", { t "\\iprod{", i(0), t "}" }),
   -- TODO: bmatrix et al
   ms("//", { t "\\frac{", i(1), t "}{", i(0), t "}" }),
   ms(re "(%b{})/", { t "\\frac", sub(1), t "{", i(0), t "}" }),
@@ -299,12 +300,12 @@ list_extend(auto, {
   ms(re [[([%w^]+)cb]], { sub(1), t "^3", i(0) }),
   ms(
     re [[([A-Za-z])([A-Za-z])([A-Za-z])]],
-    f(function(arg)
-      local cap = arg[1].captures
+    f(function(_, arg)
+      local cap = arg.captures
       if cap[2] == cap[3] then
         return string.format("%s_%s", cap[1], cap[2])
       else
-        return arg[1].trigger
+        return arg.trigger
       end
     end, {})
   ),
