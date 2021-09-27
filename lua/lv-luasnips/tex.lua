@@ -188,6 +188,7 @@ local math_maps = {
 list_extend(math_maps, trig_fns)
 local intlike = {
   ["dint"] = { operator = "\\int", low = { i(1, "\\infty") }, upp = { i(2, "\\infty") } },
+  ["dint1"] = { operator = "\\int", low = { i(1, "\\infty") }, upp = { i(2, "\\infty") } },
   ["dintr"] = { operator = "\\int", low = { i(1, "0") }, upp = { i(2, "\\infty") } },
   ["sum"] = { operator = "\\sum", low = { i(1, "n=0") }, upp = { i(3, "\\infty") } },
   ["sumi"] = { operator = "\\sum", low = { i(1, "i=0") }, upp = { i(3, "n") } },
