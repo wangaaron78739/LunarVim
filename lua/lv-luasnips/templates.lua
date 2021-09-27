@@ -143,7 +143,7 @@ local preamble = [[
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{graphicx}
 \usepackage{longtable}
-\usepackage[table]{xcolor}
+\usepackage[dvipsnames,table,xcdraw]{xcolor}
 \usepackage{hhline}
 \usepackage[ruled,vlined]{algorithm2e}
 \usepackage{listings}
