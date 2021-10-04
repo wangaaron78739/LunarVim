@@ -2,8 +2,8 @@ local M = {}
 function M.config()
   local pairs = { "''", '""', "``", "()", "{}", "[]" }
   local opts = {
-    tabkey = "<tab>", -- key to trigger tabout
-    backwards_tabkey = "<S-tab>", -- key to trigger tabout
+    tabkey = "<C-l>", -- key to trigger tabout
+    backwards_tabkey = "<C-S-l>", -- key to trigger tabout
     act_as_tab = true, -- shift content if tab out is not possible
     completion = true, -- if the tabkey is used in a completion pum
     tabouts = {},

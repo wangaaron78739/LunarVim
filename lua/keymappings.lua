@@ -261,13 +261,13 @@ function M.setup()
   if not O.plugin.tmux_navigator then
     if O.plugin.splitfocus then
       -- FIXME: this automatically reenables Focus mode
-      map("n", "<C-h>", focus_fn "split_command('h')", sile)
-      map("n", "<C-j>", focus_fn "split_command('j')", sile)
-      map("n", "<C-k>", focus_fn "split_command('k')", sile)
-      map("n", "<C-l>", focus_fn "split_command('l')", sile)
-      map("n", "<C-w>v", focus_fn "split_command('l')", sile)
-      map("n", "<C-w>s", focus_fn "split_nicely()", sile)
-      map("n", "<C-w>e", focus_fn "focus_equalise()", sile)
+      map("n", "<C-h>", focus_fn "split_command('h')", nore)
+      map("n", "<C-j>", focus_fn "split_command('j')", nore)
+      map("n", "<C-k>", focus_fn "split_command('k')", nore)
+      map("n", "<C-l>", focus_fn "split_command('l')", nore)
+      map("n", "<C-w>v", focus_fn "split_command('l')", nore)
+      map("n", "<C-w>s", focus_fn "split_nicely()", nore)
+      map("n", "<C-w>e", focus_fn "focus_equalise()", nore)
     else
       map("n", "<C-h>", "<C-w>h", sile)
       map("n", "<C-j>", "<C-w>j", sile)
@@ -355,6 +355,7 @@ function M.setup()
   dont_clobber_by_default("x", "c")
 
   -- Preserve cursor on yank in visual mode
+  -- TODO: use register argument
   map("x", "y", "myy`y", nore)
   map("x", "Y", "myY`y", nore) -- copy linewise
   map("x", "<M-y>", "y", nore)
@@ -363,6 +364,7 @@ function M.setup()
   -- map("x", "gC", operatorfunc_keys("subline_comment", "I/* <ESC>`>a */<ESC>"))
 
   -- Paste over textobject
+  -- TODO: use register argument
   map("n", "r", operatorfunc_keys("paste_over", "p"), sile)
   -- map("n", "R", "r$", sile)
   map("n", "R", "r", nore)
@@ -499,7 +501,7 @@ function M.setup()
   map("x", "ic", [[/#+\s*%+<cr>oN]], nore)
 
   -- Spell checking
-  map("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u]]", nore)
+  -- map("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u]]", nore)
 
   map("i", "<M-a>", cmd "normal! A", nore)
   map("i", "<M-i>", cmd "normal! I", nore)

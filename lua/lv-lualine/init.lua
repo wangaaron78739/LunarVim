@@ -108,10 +108,10 @@ require("lualine").setup {
   tabline = {},
   sections = {
     lualine_a = { "mode" },
-    lualine_b = { filename },
-    lualine_c = { gps_statusline, ts_statusline, lsp_statusline },
+    lualine_b = { filename, gps_statusline },
+    lualine_c = { ts_statusline, lsp_statusline },
     lualine_x = { diff, diagnostics },
-    lualine_y = { filetype, "branch" },
+    lualine_y = { get_lsp_clients, filetype, "branch" },
     lualine_z = { "location" },
   },
   inactive_sections = {

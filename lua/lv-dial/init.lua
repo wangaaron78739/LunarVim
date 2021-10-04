@@ -12,18 +12,19 @@ M.config = function()
 
   enum_cyclic("boolean", { "true", "false" })
   enum_cyclic("Boolean", { "True", "False" })
-end
 
-M.keymaps = function()
   local map = vim.api.nvim_set_keymap
   local dialmap = function(from, to)
     map("n", from, to, { silent = true })
     map("v", from, to, { silent = true })
   end
+  -- 5
   dialmap("<C-a>", "<Plug>(dial-increment)")
   dialmap("g<C-a>", "<Plug>(dial-increment-additional)")
   dialmap("<C-x>", "<Plug>(dial-decrement)")
   dialmap("g<C-x>", "<Plug>(dial-decrement-additional)")
 end
+
+M.keymaps = function() end
 
 return M

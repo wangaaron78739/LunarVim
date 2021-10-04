@@ -119,7 +119,6 @@ return packer.startup(function(use)
       require("lv-tabout").config()
     end,
     after = { "nvim-cmp" }, -- if a completion plugin is using tabs load it before
-    event = "InsertEnter",
     disable = not O.plugin.cmp,
   }
   -- Snippets plugin
@@ -239,7 +238,7 @@ return packer.startup(function(use)
     config = function()
       require("lv-dial").config()
     end,
-    module = "dial",
+    keys = { "<C-a>", "<C-x>", "g<C-a>", "g<C-x>" },
     disable = not O.plugin.dial,
   }
   -- Dashboard
@@ -569,7 +568,7 @@ return packer.startup(function(use)
   }
   use {
     "saecki/crates.nvim",
-    branch = 'main',
+    branch = "main",
     config = function()
       require("lv-rust-tools").crates_setup()
     end,

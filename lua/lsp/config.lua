@@ -50,7 +50,7 @@ end
 
 M.caps = function(overrides)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  overrides = vim.tbl_extend("error", overrides or {}, lsp_status.capabilities)
+  overrides = vim.tbl_deep_extend("keep", overrides or {}, lsp_status.capabilities)
   return vim.tbl_deep_extend("keep", overrides, capabilities)
 end
 

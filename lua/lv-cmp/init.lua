@@ -31,6 +31,7 @@ function M.setup()
   local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
   end
+  local feedkeys = vim.api.nvim_feedkeys
   local check_back_space = function()
     local col = vim.fn.col "." - 1
     return col == 0 or vim.fn.getline("."):sub(col, col):match "%s" ~= nil
@@ -65,9 +66,9 @@ function M.setup()
       ["<C-e>"] = cmp.mapping.close(),
       ["<M-l>"] = cmp.mapping(function(fallback)
         if vim.fn.pumvisible() == 1 then
-          vim.api.nvim_feedkeys(t "<C-l>", "m", false) -- confirm
+          feedkeys(t "<C-l>", "m", false) -- confirm
         else
-          vim.api.nvim_feedkeys(t "<C-space>", "m", false) -- complete
+          feedkeys(t "<C-space>", "m", false) -- complete
         end
       end),
       ["<C-space>"] = cmp.mapping.complete(),
@@ -77,13 +78,14 @@ function M.setup()
       },
       ["<tab>"] = cmp.mapping(function(fallback)
         if vim.fn.pumvisible() == 1 then
-          vim.api.nvim_feedkeys(t "<C-n>", "n", false)
+          feedkeys(t "<C-n>", "n", false)
         elseif luasnip.expand_or_jumpable() then
-          vim.api.nvim_feedkeys(t "<Plug>luasnip-expand-or-jump", "", false)
+          feedkeys(t "<Plug>luasnip-expand-or-jump", "", false)
         elseif check_back_space() then
-          vim.api.nvim_feedkeys(t "<tab>", "n", false)
+          feedkeys(t "<tab>", "n", false)
         else
-          fallback()
+          feedkeys(t "<Plug>(Tabout)", "", false)
+          -- fallback()
         end
       end, {
         "i",
@@ -91,11 +93,12 @@ function M.setup()
       }),
       ["<S-tab>"] = cmp.mapping(function(fallback)
         if vim.fn.pumvisible() == 1 then
-          vim.api.nvim_feedkeys(t "<C-p>", "n", false)
+          feedkeys(t "<C-p>", "n", false)
         elseif luasnip.jumpable(-1) then
-          vim.api.nvim_feedkeys(t "<Plug>luasnip-jump-prev", "", false)
+          feedkeys(t "<Plug>luasnip-jump-prev", "", false)
         else
-          fallback()
+          feedkeys(t "<Plug>(TaboutBack)", "", false)
+          -- fallback()
         end
       end, {
         "i",

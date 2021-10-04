@@ -35,3 +35,10 @@ else
     },
   }
 end
+
+require("lv-sandwich").add_local_recipes {
+  {
+    buns = { "|| {", "}" },
+    input = { "l" },
+  },
+}
