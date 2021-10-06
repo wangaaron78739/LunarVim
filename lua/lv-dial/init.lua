@@ -12,6 +12,10 @@ M.config = function()
 
   enum_cyclic("boolean", { "true", "false" })
   enum_cyclic("Boolean", { "True", "False" })
+  enum_cyclic("ijk", { "i", "j", "k" })
+  enum_cyclic("xyz", { "x", "y", "z", "w" })
+  enum_cyclic("uvw", { "u", "v", "w" })
+  enum_cyclic("abc", { "a", "b", "c", "d", "e" })
 
   local map = vim.api.nvim_set_keymap
   local dialmap = function(from, to)
