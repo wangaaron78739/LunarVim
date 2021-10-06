@@ -184,6 +184,7 @@ local math_maps = {
   "max",
   "log",
   "exp",
+  "perp",
 }
 list_extend(math_maps, trig_fns)
 local intlike = {
@@ -243,11 +244,13 @@ end
 list_extend(auto, {
   s("---- ", { t { "\\hline", "" } }),
   ms("cases ", { t { "\\begin{cases}", "" }, i(0), t { "", "\\end{cases}" } }),
-  s("\\eq ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
+  s("\\eq ", { t { "\\begin{equation*}", "" }, i(0), t { "", "\\end{equation*}" } }),
+  s("\\eqn ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
   ms("matt ", { t { "\\begin{matrix}", "" }, i(0), t { "", "\\end{matrix}" } }),
   ms("bmat ", { t { "\\begin{bmatrix}", "" }, i(0), t { "", "\\end{bmatrix}" } }),
   ms("pmat ", { t { "\\begin{pmatrix}", "" }, i(0), t { "", "\\end{pmatrix}" } }),
   s("\\ali ", { t { "\\begin{align*}", "" }, i(0), t { "", "\\end{align*}" } }),
+  s("\\alin ", { t { "\\begin{align}", "" }, i(0), t { "", "\\end{align}" } }),
   s("\\desc ", { t { "\\begin{description}", "\t\\item[" }, i(1), t { "]" }, i(0), t { "", "\\end{description}" } }),
   pa("$", "\\($0\\)"),
   nms("bf{", { t "\\textbf{", i(0) }),
@@ -345,6 +348,8 @@ end
 local theorems = {
   "theorem",
   "definition",
+  "remark",
+  "problem",
   "lemma",
   "proof",
   "claim",
