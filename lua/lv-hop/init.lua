@@ -15,15 +15,15 @@ M.current_line_words = function()
   }
 end
 
-M.keymaps = function()
+M.keymaps = function(leaderMappings)
   if O.plugin.hop then
     -- TODO: register_nN_repeat here??
     local prefix = "<cmd>lua require('hop')."
     local hops = {
       name = "Hop",
       w = { prefix .. "hint_words()<cr>", "Words" },
-      l = { prefix .. "hint_lines_skip_whitespace()<cr>", "Lines" },
-      L = { prefix .. "hint_lines(nil, true)<cr>", "Lines" },
+      L = { prefix .. "hint_lines_skip_whitespace()<cr>", "Lines" },
+      l = { prefix .. "hint_lines(nil, true)<cr>", "Lines Column" },
       ["*"] = { prefix .. "hint_cword()<cr>", "cword" },
       W = { prefix .. "hint_cWORD()<cr>", "cWORD" },
       h = { prefix .. "hint_locals()<cr>", "Locals" },
@@ -40,11 +40,12 @@ M.keymaps = function()
     for k, v in pairs(O.treesitter.textobj_suffixes) do
       hops[v[1]] = hops[v[1]] or { prefix .. "hint_textobjects{query='" .. k .. "'}<cr>", "@" .. k }
     end
-    require("which-key").register(hops, {
-      mode = "n",
-      prefix = "<leader>h",
-      silent = true,
-    })
+    leaderMappings.h = hops
+    -- require("which-key").register(hops, {
+    --   mode = "n",
+    --   prefix = "<leader>h",
+    --   silent = true,
+    -- })
   end
 end
 

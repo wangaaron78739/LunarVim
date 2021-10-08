@@ -70,4 +70,8 @@ M.config = function()
   }
 end
 
+M.keymaps = function(leaderMappings)
+  leaderMappings["h<TAB>"] = { "<cmd>BufferLinePick<cr>", "Buffers/Tabs" }
+end
+
 return M

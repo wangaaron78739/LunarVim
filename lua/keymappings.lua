@@ -327,6 +327,7 @@ function M.setup()
   map("n", "<S-tab>", cmd "bprev", nore)
 
   -- Preserve register on pasting in visual mode
+  -- TODO: use the correct register
   map("x", "p", "pgvy", nore)
   map("x", "P", "p", nore) -- for normal p behaviour
   map("x", "<M-p>", "pgv", nore) -- Paste and keep selection
@@ -659,7 +660,6 @@ function M.setup()
   M.countjk()
 
   -- Plugin keymaps
-  require("lv-hop").keymaps()
   require("lv-zen").keymaps()
   require("lv-dial").keymaps()
   require("lv-gestures").keymaps()
@@ -843,8 +843,9 @@ function M.setup()
       S = { telescope_fn.lsp_dynamic_workspace_symbols, "Workspace Symbols" },
       d = { telescope_fn.lsp_document_diagnostics, "Document Diagnostics" },
       D = { telescope_fn.lsp_workspace_diagnostics, "Workspace Diagnostics" },
-      m = { telescope_fn.lsp_implementations, "Workspace Diagnostics" },
+      I = { telescope_fn.lsp_implementations, "Implementations" },
       h = { telescope_fn.help_tags, "Find Help" },
+      j = { telescope_fn.jumplist, "Jump List" },
       -- m = {telescope_fn(.marks), "Marks"},
       M = { telescope_fn.man_pages, "Man Pages" },
       R = { telescope_fn.oldfiles, "Open Recent File" },
@@ -860,6 +861,7 @@ function M.setup()
       i = "for (object)",
       [" "] = { telescope_fn.resume, "Redo" },
       p = { cmd "SearchSession", "Sessions" },
+      m = { telescope_fn.marks, "Marks" },
     },
     r = {
       name = "Replace/Refactor",
@@ -969,6 +971,8 @@ function M.setup()
     leaderMappings["gg"] = { cmd "LazyGit", "LazyGit" }
   end
   require("lv-terms").keymaps(leaderMappings, vLeaderMappings)
+  require("lv-hop").keymaps(leaderMappings, vLeaderMappings)
+  require("lv-bufferline").keymaps(leaderMappings, vLeaderMappings)
   if O.plugin.nabla then
     leaderMappings["xn"] = { luareq("nabla").action, "Nabla" }
   end
