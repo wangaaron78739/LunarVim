@@ -17,7 +17,7 @@ function M.config()
       -- Formatters
       formatters.stylua,
       formatters.prettierd.with {
-        command = "npx prettierd",
+        -- command = "npx prettierd",
       },
       -- formatters.rustfmt,
       formatters.shfmt,
