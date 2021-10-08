@@ -657,6 +657,17 @@ return packer.startup(function(use)
       utils.define_augroups(O.plugin.lsputils.aus)
     end,
   }
+  use {
+    "weilbith/nvim-code-action-menu",
+    config = function()
+      utils.define_augroups {
+        _lsputil_codeaction_list = {
+          { "FileType", "code-action-menu-menu", "nmap <buffer> K <CR>" },
+        },
+      }
+    end,
+    cmd = "CodeActionMenu",
+  }
 
   -- See jumpable characters
   use {
