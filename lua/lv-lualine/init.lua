@@ -95,6 +95,13 @@ local get_lsp_clients = function(msg)
   end
 end
 
+local function Qmacro()
+  -- TODO: get contents of dot register?
+  local Q = vim.fn.getreg "q"
+  local dot = vim.fn.getreg "."
+  return "Q=<" .. Q .. ">, •='" .. dot:sub(1, 10) .. "'"
+end
+
 require("lualine").setup {
   options = {
     icons_enabled = true,
@@ -110,7 +117,7 @@ require("lualine").setup {
     lualine_a = { "mode" },
     lualine_b = { filename, gps_statusline },
     lualine_c = { ts_statusline, lsp_statusline },
-    lualine_x = { diff, diagnostics },
+    lualine_x = { Qmacro, diff, diagnostics },
     lualine_y = { get_lsp_clients, filetype, "branch" },
     lualine_z = { "location" },
   },
