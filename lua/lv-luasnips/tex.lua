@@ -271,10 +271,10 @@ list_extend(auto, {
   ms("cal{", { t "\\mathcal{", i(0) }),
   ms(renw "__([^%s_])", { t "_{", sub(1), i(0), t "}" }),
   ms(renw "%^%^([^%s_])", { t "^{", sub(1), i(0), t "}" }),
-  ms(nw "\\quad\\,", t "\\qquad"),
+  ms(nw "\\quad\\quad", t "\\qquad"),
+  ms(nw "\\quad\\,", t "\\qquad "),
   ms(nw "\\,,", t "\\quad"),
   ms(nw ",,", t "\\,"),
-  ms(nw "\\quad\\quad ", t "\\qquad"),
   s("--", t "\\item"),
   ms(re [[(%S) ([%^_])]], { sub(1), sub(2) }), -- Remove extra ws sub/superscript
   ms(re [[([A-Za-z%}%]%)])(%d)]], { sub(1), t "_", sub(2) }), -- Auto subscript
