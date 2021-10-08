@@ -530,8 +530,11 @@ function M.setup()
   -- Hover
   -- map("n", "K", luacmd "vim.lsp.buf.hover()", sile)
   map("n", "gh", luacmd "vim.lsp.buf.hover()", sile)
-  map("n", "K", luacmd "vim.lsp.buf.code_action()", {})
-  map("v", "K", "<esc><cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>", {})
+  local do_code_action = cmd "CodeActionMenu"
+  -- local do_code_action = lspbuf.code_action
+  map("n", "K", do_code_action, {})
+  -- map("v", "K", "<esc><cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>", {})
+  map("v", "K", do_code_action, {})
 
   -- Formatting keymaps
   map("n", "gm", luacmd [[require("lsp.functions").format_range_operator()]], sile)
@@ -821,7 +824,7 @@ function M.setup()
     },
     l = {
       name = "LSP",
-      a = { lspbuf.code_action, "Code Action (K)" },
+      a = { do_code_action, "Code Action (K)" },
       h = { lspbuf.hover, "Code Action (gh)" },
       I = { cmd "LspInfo", "Info" },
       -- TODO: What is the replacement for this?
