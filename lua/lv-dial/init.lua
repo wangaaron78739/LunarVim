@@ -2,6 +2,9 @@ local M = {}
 
 M.config = function()
   local dial = require "dial"
+
+  table.insert(dial.config.searchlist.normal, "markup#markdown#header")
+
   local function enum_cyclic(name, list)
     dial.augends["custom#" .. name] = dial.common.enum_cyclic {
       name = name,
@@ -9,13 +12,23 @@ M.config = function()
     }
     table.insert(dial.config.searchlist.normal, "custom#" .. name)
   end
+  local function enum_cyclic_chars(charstr)
+    local charlist = {}
+    charstr:gsub(".", function(c)
+      vim.list_extend(charlist, { c })
+      return c
+    end)
+
+    enum_cyclic(charstr, charlist)
+  end
 
   enum_cyclic("boolean", { "true", "false" })
   enum_cyclic("Boolean", { "True", "False" })
-  enum_cyclic("ijk", { "i", "j", "k" })
-  enum_cyclic("xyz", { "x", "y", "z", "w" })
-  enum_cyclic("uvw", { "u", "v", "w" })
-  enum_cyclic("abc", { "a", "b", "c", "d", "e" })
+  enum_cyclic "ijk"
+  enum_cyclic "xyz"
+  enum_cyclic "uvw"
+  enum_cyclic "abc"
+  enum_cyclic "nmpqr"
 
   local map = vim.api.nvim_set_keymap
   local dialmap = function(from, to)
