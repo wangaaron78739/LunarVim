@@ -838,6 +838,7 @@ function M.setup()
     },
     s = {
       name = "Search",
+      n = { telescope_fn "notify.notify()", "Notifications" },
       c = { telescope_fn.colorscheme, "Colorscheme" },
       s = { telescope_fn.lsp_document_symbols, "Document Symbols" },
       S = { telescope_fn.lsp_dynamic_workspace_symbols, "Workspace Symbols" },
