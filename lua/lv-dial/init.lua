@@ -24,11 +24,11 @@ M.config = function()
 
   enum_cyclic("boolean", { "true", "false" })
   enum_cyclic("Boolean", { "True", "False" })
-  enum_cyclic "ijk"
-  enum_cyclic "xyz"
-  enum_cyclic "uvw"
-  enum_cyclic "abc"
-  enum_cyclic "nmpqr"
+  enum_cyclic_chars "ijk"
+  enum_cyclic_chars "xyz"
+  enum_cyclic_chars "uvw"
+  enum_cyclic_chars "abc"
+  enum_cyclic_chars "nmpqr"
 
   local map = vim.api.nvim_set_keymap
   local dialmap = function(from, to)
