@@ -485,24 +485,40 @@ M.custom_cursorhold = function(timeout, callback)
     end
   end
   --  Call this function from CursorMoved autocmd
-  return function()
-    if timer == nil then
-      timer = vim.loop.new_timer()
-      timer:start(0, timerperiod, vim.schedule_wrap(cb))
-    end
-    -- Reset counter on CursorMoved
-    counter = 0
-    latch = false
-  end
+  return {
+    insert_enter = function()
+      counter = 0
+      latch = true -- Disable the counter in Insert Mode
+    end,
+    insert_leave = function()
+      counter = 0
+      latch = false -- Reenable the counter in Normal Mode
+    end,
+    cursor_moved = function()
+      if timer == nil then
+        timer = vim.loop.new_timer()
+        timer:start(0, timerperiod, vim.schedule_wrap(cb))
+      end
+      -- Reset counter on CursorMoved
+      counter = 0
+      latch = false
+    end,
+  }
 end
-M.hold_jumplist_handler = (function()
-  local setmark = vim.api.nvim_buf_set_mark
-  local getcurpos = vim.api.nvim_win_get_cursor
+M.hold_jumplist = (function()
+  -- local setmark = vim.api.nvim_buf_set_mark
+  -- local getcurpos = vim.api.nvim_win_get_cursor
+
   return M.custom_cursorhold(1000, function()
     -- local row, col = unpack(getcurpos(0))
     -- setmark(0, "'", row, col)
     vim.cmd "normal m'"
   end)
 end)()
+M.hold_jumplist_aucmd = {
+  { "InsertEnter", "*", "lua require'lv-utils'.hold_jumplist.insert_enter()" },
+  { "InsertLeave", "*", "lua require'lv-utils'.hold_jumplist.insert_leave()" },
+  { "CursorMoved", "*", "lua require'lv-utils'.hold_jumplist.cursor_moved()" },
+}
 
 return M

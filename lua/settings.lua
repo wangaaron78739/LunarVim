@@ -121,10 +121,7 @@ require("lv-utils").define_augroups {
     -- { "TabLeave,BufLeave", "*", [[if &buftype == '' | :stopinsert | endif]] }, -- FIXME: This breaks compe
   },
   -- Add position to jump list on cursorhold -- FIXME: slightly buggy
-  _hold_jumplist = {
-    -- { "CursorHold", "*", "normal m'" },
-    { "CursorMoved", "*", "lua require'lv-utils'.hold_jumplist_handler()" },
-  },
+  _hold_jumplist = require("lv-utils").hold_jumplist_aucmd,
 }
 
 if O.format_on_save then
