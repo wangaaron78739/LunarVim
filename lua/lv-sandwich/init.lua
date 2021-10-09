@@ -98,6 +98,7 @@ function M.config()
   map("x", "aq", "asq")
   map("o", "iq", "isq")
   map("o", "aq", "asq")
+  map("x", "s", "<Plug>(operator-sandwich-add)") --
 end
 
 function M.fname()
