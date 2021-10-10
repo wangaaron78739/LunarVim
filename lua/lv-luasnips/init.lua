@@ -1,15 +1,26 @@
 local M = {}
 function M.setup()
+  local types = require "luasnip.util.types"
+
   require("luasnip").config.set_config {
     history = true,
     enable_autosnippets = true,
-    -- updateevents = "TextChanged,TextChangedP,TextChangedI",
+    updateevents = "TextChanged,TextChangedP,TextChangedI",
     -- region_check_events = "CursorMoved,CursorHold,InsertEnter",
+    region_check_events = "CursorMoved,CursorMovedI,InsertEnter",
     -- delete_check_events = "TextChangedI,TextChangedP,TextChanged",
+    delete_check_events = "InsertLeave,InsertEnter",
     -- treesitter-hl has 100, use something higher (default is 200).
     ext_base_prio = 300,
     -- minimal increase in priority.
     ext_prio_increase = 1,
+
+    ext_opts = {
+      [types.choiceNode] = { active = { virt_text = { { "●", "GlyphPalette2" } } } },
+      [types.insertNode] = { active = { virt_text = { { "●", "GlyphPalette4" } } } },
+    },
+
+    -- parser_nested_assembler = require "lv-luasnips.nested",
   }
 
   local map = vim.api.nvim_set_keymap
@@ -61,5 +72,6 @@ function M.setup()
   }
 
   require("luasnip/loaders/from_vscode").lazy_load()
+  require("lv-luasnips.choice").config()
 end
 return M

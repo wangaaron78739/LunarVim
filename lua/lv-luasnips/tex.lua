@@ -23,18 +23,6 @@ local nl = t { "", "" }
 local list_extend = vim.list_extend
 local tbl_extend = vim.tbl_extend
 
-local rec_ls
-rec_ls = function()
-  return sn(nil, {
-    c(1, {
-      -- important!! Having the sn(...) as the first choice will cause infinite recursion.
-      t { "" },
-      -- The same dynamicNode as in the snippet (also note: self reference).
-      sn(nil, { t { "", "\t\\item " }, i(1), d(2, rec_ls, {}) }),
-    }),
-  })
-end
-
 local function fmt(fn, ipairs)
   if ipairs == nil then
     ipairs = {}
@@ -246,6 +234,9 @@ end
 
 list_extend(auto, {
   s("---- ", { t { "\\hline", "" } }),
+  s("s ", { t "\\section{", i(0), t "}" }),
+  s("ss ", { t "\\subsection{", i(0), t "}" }),
+  s("sss ", { t "\\subsubsection{", i(0), t "}" }),
   ms("cases ", { t { "\\begin{cases}", "" }, i(0), t { "", "\\end{cases}" } }),
   s("\\eq ", { t { "\\begin{equation*}", "" }, i(0), t { "", "\\end{equation*}" } }),
   s("\\eqn ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
@@ -372,6 +363,30 @@ for k, v in pairs(templates.tex) do
 end
 list_extend(snips, {
   s("subsubsec", { t "subsubsection{", i(0), t "}" }),
+})
+
+list_extend(snips, {
+  (function()
+    local rec_ls
+    rec_ls = function()
+      return sn(nil, {
+        c(1, {
+          -- important!! Having the sn(...) as the first choice will cause infinite recursion.
+          t { "" },
+          -- The same dynamicNode as in the snippet (also note: self reference).
+          sn(nil, { t { "", "\t\\item " }, i(1), d(2, rec_ls, {}) }),
+        }),
+      })
+    end
+
+    return s("ls", {
+      t { "\\begin{itemize}", "\t\\item " },
+      i(1),
+      d(2, rec_ls, {}),
+      t { "", "\\end{itemize}" },
+      i(0),
+    })
+  end)(),
 })
 
 return {
