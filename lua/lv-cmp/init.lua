@@ -63,8 +63,9 @@ function M.setup()
       ["<C-n>"] = cmp.mapping.select_next_item(),
       ["<C-d>"] = cmp.mapping.scroll_docs(-4),
       ["<C-f>"] = cmp.mapping.scroll_docs(4),
-      -- ["<C-e>"] = cmp.mapping.close(),
+      ["<C-e>"] = cmp.mapping.close(),
       ["<esc>"] = cmp.mapping.close(),
+      ["<M-h>"] = cmp.mapping.close(),
       ["<M-l>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           feedkeys(t "<C-l>", "m", false) -- confirm

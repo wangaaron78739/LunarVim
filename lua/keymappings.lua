@@ -503,6 +503,10 @@ function M.setup()
   map("x", "gt", ":g/./lua require'Comment'.toggle()<CR><cmd>nohls<CR>", nore)
   map("n", "gt", operatorfunc_keys("toggle_comment", "gt"), sile)
 
+  -- Swap the mark jump keys
+  map("n", "'", "`", nore)
+  map("n", "`", "'", nore)
+
   -- Select Jupyter Cell
   -- Change to onoremap
   map("x", "ic", [[/#+\s*%+<cr>oN]], nore)
@@ -563,6 +567,9 @@ function M.setup()
 
   -- Quick activate macro
   map("n", "Q", "@q", nore)
+  -- Run macro on each line
+  map("x", "<M-q>", ":normal @q<CR>", nore)
+  map("x", ".", ":normal .<CR>", nore)
 
   -- Reselect visual linewise
   map("n", "gV", "'<V'>", nore)
@@ -615,8 +622,8 @@ function M.setup()
   local function quick_inside(key)
     map("o", key, "i" .. key, {})
     map("o", "<M-" .. key .. ">", "a" .. key, {})
-    map("n", "<M-" .. key .. ">", "vi" .. key, {})
-    map("n", "<C-M-" .. key .. ">", "va" .. key, {})
+    -- map("n", "<M-" .. key .. ">", "vi" .. key, {})
+    -- map("n", "<C-M-" .. key .. ">", "va" .. key, {})
   end
   local function quick_around(key)
     map("o", key, "a" .. key, {})
@@ -853,7 +860,6 @@ function M.setup()
       I = { telescope_fn.lsp_implementations, "Implementations" },
       h = { telescope_fn.help_tags, "Find Help" },
       j = { telescope_fn.jumplist, "Jump List" },
-      -- m = {telescope_fn(.marks), "Marks"},
       M = { telescope_fn.man_pages, "Man Pages" },
       R = { telescope_fn.oldfiles, "Open Recent File" },
       -- R = { telescope_fn.registers, "Registers" },
