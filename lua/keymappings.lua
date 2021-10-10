@@ -493,7 +493,7 @@ function M.setup()
 
   -- comment and copy
   -- map("x", "gy", '"z<M-y>gvgc`>"zp`[', sile)
-  map("x", "gy", '"z<M-y>mz`<"zPgpgc`z', sile)
+  map("x", "gy", '"z<M-y>mz`<"zPgPgc`z', sile)
   map("n", "gy", operatorfuncV_keys("comment_copy", "gy"), sile)
   -- map("n", "gyy", "Vgy", sile)
 
