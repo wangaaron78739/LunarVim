@@ -49,8 +49,7 @@ opt.updatetime = 300 -- faster completion
 opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 opt.expandtab = true -- convert tabs to spaces
 opt.shiftwidth = O.shift_width -- the number of spaces inserted for each indentation
-opt.shortmess:append "c"
-opt.shortmess:append "F"
+opt.shortmess = "aocF"
 opt.tabstop = O.tab_stop -- insert 4 spaces for a tab
 opt.cursorline = O.cursorline -- highlight the current line
 opt.number = O.number -- set numbered lines
