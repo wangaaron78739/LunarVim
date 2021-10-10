@@ -63,9 +63,10 @@ function M.setup()
       ["<C-n>"] = cmp.mapping.select_next_item(),
       ["<C-d>"] = cmp.mapping.scroll_docs(-4),
       ["<C-f>"] = cmp.mapping.scroll_docs(4),
-      ["<C-e>"] = cmp.mapping.close(),
+      -- ["<C-e>"] = cmp.mapping.close(),
+      ["<esc>"] = cmp.mapping.close(),
       ["<M-l>"] = cmp.mapping(function(fallback)
-        if vim.fn.pumvisible() == 1 then
+        if cmp.visible() then
           feedkeys(t "<C-l>", "m", false) -- confirm
         else
           feedkeys(t "<C-space>", "m", false) -- complete
@@ -77,8 +78,9 @@ function M.setup()
         select = true,
       },
       ["<tab>"] = cmp.mapping(function(fallback)
-        if vim.fn.pumvisible() == 1 then
-          feedkeys(t "<C-n>", "n", false)
+        if cmp.visible() then
+          -- feedkeys(t "<C-n>", "n", false)
+          cmp.select_next_item()
         elseif luasnip.expand_or_jumpable() then
           feedkeys(t "<Plug>luasnip-expand-or-jump", "", false)
         elseif check_back_space() then
@@ -92,8 +94,9 @@ function M.setup()
         "s",
       }),
       ["<S-tab>"] = cmp.mapping(function(fallback)
-        if vim.fn.pumvisible() == 1 then
-          feedkeys(t "<C-p>", "n", false)
+        if cmp.visible() then
+          -- feedkeys(t "<C-p>", "n", false)
+          cmp.select_prev_item()
         elseif luasnip.jumpable(-1) then
           feedkeys(t "<Plug>luasnip-jump-prev", "", false)
         else
