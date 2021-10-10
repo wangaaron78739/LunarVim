@@ -172,13 +172,38 @@ return packer.startup(function(use)
   }
 
   -- Comments
+  -- use {
+  --   -- "b3nj5m1n/kommentary",
+  --   "terrortylor/nvim-comment",
+  --   config = function()
+  --     require("nvim_comment").setup {
+  --       hook = function()
+  --         require("ts_context_commentstring.internal").update_commentstring()
+  --       end,
+  --     }
+  --   end,
+  --   event = BufRead,
+  -- }
   use {
-    -- "b3nj5m1n/kommentary",
-    "terrortylor/nvim-comment",
+    "numToStr/Comment.nvim",
     config = function()
-      require("nvim_comment").setup {
-        hook = function()
-          require("ts_context_commentstring.internal").update_commentstring()
+      require("Comment").setup {
+        mappings = {
+          ---Includes `gcc`, `gcb`, `gc[count]{motion}` and `gb[count]{motion}`
+          basic = true,
+          ---Includes `g>`, `g<`, `g>[count]{motion}` and `g<[count]{motion}`
+          extra = true,
+        },
+        toggler = {
+          line = "gcc",
+          block = "gCC",
+        },
+        opleader = {
+          line = "gc",
+          block = "gC",
+        },
+        pre_hook = function()
+          return require("ts_context_commentstring.internal").calculate_commentstring()
         end,
       }
     end,

@@ -497,6 +497,12 @@ function M.setup()
   map("n", "gy", operatorfuncV_keys("comment_copy", "gy"), sile)
   -- map("n", "gyy", "Vgy", sile)
 
+  -- Toggle comments
+  -- map("x", "gt", ":normal gcc<CR>", nore)
+  -- map("x", "gt", ":normal :lua require'Comment'.toggle()<C-v><CR><CR>", nore)
+  map("x", "gt", ":g/./lua require'Comment'.toggle()<CR><cmd>nohls<CR>", nore)
+  map("n", "gt", operatorfunc_keys("toggle_comment", "gt"), sile)
+
   -- Select Jupyter Cell
   -- Change to onoremap
   map("x", "ic", [[/#+\s*%+<cr>oN]], nore)
