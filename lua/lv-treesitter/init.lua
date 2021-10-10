@@ -33,6 +33,7 @@ local outer_scope_nN = make_nN_pair {
 
 -- Custom text objects
 -- TODO: Should move the keymappings to keymappings.lua for cleanliness??
+-- TODO: Optimize this
 local textobj_prefixes = tsconfig.textobj_prefixes
 local textobj_suffixes = tsconfig.textobj_suffixes
 local other_suffixes = tsconfig.other_suffixes

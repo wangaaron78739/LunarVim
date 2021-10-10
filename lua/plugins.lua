@@ -6,7 +6,8 @@ end
 packer.init {
   -- compile_path = vim.fn.stdpath('data')..'/site/pack/loader/start/packer.nvim/plugin/packer_compiled.vim',
   -- compile_path = require("packer.util").join_paths(vim.fn.stdpath "config", "plugin", "packer_compiled.vim"),
-  compile_path = require("packer.util").join_paths(vim.fn.stdpath "config", "plugin", "packer_compiled.lua"),
+  -- compile_path = require("packer.util").join_paths(vim.fn.stdpath "config", "plugin", "packer_compiled.lua"),
+  compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
   git = { clone_timeout = 300 },
   display = {
     open_fn = function()
@@ -14,6 +15,7 @@ packer.init {
     end,
   },
   auto_reload_compiled = true,
+  ensure_dependencies = true,
 }
 
 -- vim.cmd "autocmd BufWritePost plugins.lua luafile %" -- Auto compile when there are changes in plugins.lua
@@ -25,8 +27,10 @@ packer.init {
 
 return packer.startup(function(use)
   local use_rock = packer.use_rocks
-  -- local BufRead
-  local BufRead = "BufRead"
+  local BufRead
+  -- local BufRead = "BufRead"
+  -- Format: :%g/^\s*use {\s*$/normal J
+
   -- Packer can manage itself as an optional plugin
   use "wbthomason/packer.nvim"
   use "lewis6991/impatient.nvim" -- Will be merged in https://github.com/neovim/neovim/pull/15436
@@ -66,6 +70,20 @@ return packer.startup(function(use)
       require "lv-telescope"
     end,
   }
+  -- Use fzy for telescope
+  use { "nvim-telescope/telescope-fzy-native.nvim", disable = not O.plugin.telescope_fzy }
+  -- Use fzf for telescope
+  use { "nvim-telescope/telescope-fzf-native.nvim", run = "make", disable = not O.plugin.telescope_fzf }
+  -- Telescope sort by frecency
+  use { -- FIXME: load_extension doesn't work
+    "nvim-telescope/telescope-frecency.nvim",
+    config = function()
+      -- require("telescope").load_extension "frecency"
+    end,
+    requires = { "tami5/sqlite.lua" },
+    disable = not O.plugin.telescope_frecency,
+  }
+  use { "nvim-telescope/telescope-hop.nvim", requires = "telescope.nvim" }
 
   -- Treesitter
   use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
@@ -83,12 +101,7 @@ return packer.startup(function(use)
     run = ":COQdeps",
     disable = not O.plugin.coq,
   }
-  use {
-    "ms-jpq/coq.artifacts",
-    branch = "artifacts",
-    after = "coq_nvim",
-    disable = not O.plugin.coq,
-  }
+  use { "ms-jpq/coq.artifacts", branch = "artifacts", after = "coq_nvim", disable = not O.plugin.coq }
 
   -- Nvim cmp based completions and snippets
   use {
@@ -96,7 +109,6 @@ return packer.startup(function(use)
     config = function()
       require("lv-cmp").setup()
     end,
-    -- event = "InsertEnter",
     disable = not O.plugin.cmp,
   }
   use {
@@ -107,7 +119,7 @@ return packer.startup(function(use)
   }
   use { "hrsh7th/cmp-buffer", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "hrsh7th/cmp-path", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
-  use { "kdheepak/cmp-latex-symbols", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
+  -- use { "kdheepak/cmp-latex-symbols", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "hrsh7th/cmp-nvim-lsp", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "hrsh7th/cmp-calc", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "hrsh7th/cmp-nvim-lua", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
@@ -168,7 +180,6 @@ return packer.startup(function(use)
     config = function()
       require("lv-gitsigns").config()
     end,
-    event = BufRead,
   }
 
   -- Comments
@@ -182,7 +193,7 @@ return packer.startup(function(use)
   --       end,
   --     }
   --   end,
-  --   event = BufRead,
+  --   keys = {"gc", "gC"},
   -- }
   use {
     "numToStr/Comment.nvim",
@@ -194,20 +205,14 @@ return packer.startup(function(use)
           ---Includes `g>`, `g<`, `g>[count]{motion}` and `g<[count]{motion}`
           extra = true,
         },
-        toggler = {
-          line = "gcc",
-          block = "gCC",
-        },
-        opleader = {
-          line = "gc",
-          block = "gC",
-        },
-        pre_hook = function()
-          return require("ts_context_commentstring.internal").calculate_commentstring()
-        end,
+        toggler = { line = "gcc", block = "gCC" },
+        opleader = { line = "gc", block = "gC" },
+        -- pre_hook = function()
+        --   return require("ts_context_commentstring.internal").calculate_commentstring()
+        -- end,
       }
     end,
-    event = BufRead,
+    keys = { "gc", "gC" },
   }
 
   -- Create pretty comment frames
@@ -236,14 +241,11 @@ return packer.startup(function(use)
 
   use {
     "akinsho/nvim-bufferline.lua",
+    --         "romgrk/barbar.nvim",
     config = function()
       require("lv-bufferline").config()
+      --             require 'lv-barbar'.config()
     end,
-    --         "romgrk/barbar.nvim",
-    --         config = function()
-    --             require 'lv-barbar'.config()
-    --         end,
-    -- event = BufRead,
   }
   use { "famiu/bufdelete.nvim", cmd = { "Bdelete", "Bwipeout" } }
 
@@ -281,31 +283,32 @@ return packer.startup(function(use)
   }
   -- TODO: try https://github.com/goolord/alpha-nvim (new dashboard plugin)
 
-  -- Ranger
   use {
-    "kevinhwang91/rnvimr",
-    -- cmd = "RnvimrToggle",
+    "is0n/fm-nvim",
     config = function()
-      require("lv-rnvimr").config()
+      require("fm-nvim").setup {
+        config = {
+          border = "rounded",
+          height = 0.8,
+          width = 0.8,
+        },
+      }
     end,
-    disable = not O.plugin.ranger,
+    cmd = { "Ranger", "Xplr", "Vifm", "Nnn", "Lf" },
   }
 
   -- matchup
   use {
     "andymass/vim-matchup",
-    event = "CursorMoved",
+    event = BufRead,
     setup = function()
       require("lv-matchup").config()
     end,
     disable = not O.plugin.matchup,
   }
-  use {
-    "theHamsta/nvim-treesitter-pairs",
-    event = BufRead,
-    disable = not O.plugin.ts_matchup,
-  }
+  use { "theHamsta/nvim-treesitter-pairs", event = BufRead, disable = not O.plugin.ts_matchup }
 
+  -- Colorizer?
   use {
     "norcalli/nvim-colorizer.lua",
     event = "BufWinEnter",
@@ -314,7 +317,10 @@ return packer.startup(function(use)
     end,
     disable = not O.plugin.colorizer,
   }
+  -- LSP Colors
+  use { "folke/lsp-colors.nvim", event = BufRead, disable = not O.plugin.lsp_colors }
 
+  -- Jump/Peek line number
   use {
     "nacro90/numb.nvim",
     event = BufRead,
@@ -335,19 +341,18 @@ return packer.startup(function(use)
     "lukas-reineke/indent-blankline.nvim",
     event = BufRead,
     setup = function()
-      vim.g.indentLine_enabled = 1
-      vim.g.indent_blankline_char = "▏"
-
-      vim.g.indent_blankline_filetype_exclude = {
-        "help",
-        "terminal",
-        "dashboard",
+      require("indent_blankline").setup {
+        char = "▏",
+        filetype_exclude = {
+          "help",
+          "terminal",
+          "dashboard",
+        },
+        buftype_exclude = { "terminal", "nofile" },
+        char_highlight = "LineNr",
+        show_trailing_blankline_indent = false,
+        show_first_indent_level = false,
       }
-      vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile" }
-
-      vim.g.indent_blankline_char_highlight = "LineNr"
-      vim.g.indent_blankline_show_trailing_blankline_indent = false
-      vim.g.indent_blankline_show_first_indent_level = false
     end,
     disable = not O.plugin.indent_line,
   }
@@ -378,11 +383,7 @@ return packer.startup(function(use)
     end,
   }
   -- Vista viewer (symbols)
-  use {
-    "liuchengxu/vista.vim",
-    disable = not O.plugin.vista,
-    cmd = "Vista",
-  }
+  use { "liuchengxu/vista.vim", disable = not O.plugin.vista, cmd = "Vista" }
   -- Generic sidebar plugin
   use {
     "GustavoKatel/sidebar.nvim",
@@ -418,7 +419,7 @@ return packer.startup(function(use)
   -- Floating terminal
   use {
     "numToStr/FTerm.nvim",
-    event = "BufWinEnter",
+    module = "FTerm",
     config = function()
       require("lv-terms").fterm()
     end,
@@ -458,46 +459,9 @@ return packer.startup(function(use)
   use { "ellisonleao/glow.nvim", run = ":GlowInstall", cmd = "Glow" }
 
   -- Interactive scratchpad
-  use {
-    "metakirby5/codi.vim",
-    cmd = "Codi",
-    disable = not O.plugin.codi,
-  }
-  -- Use fzy for telescope
-  use {
-    "nvim-telescope/telescope-fzy-native.nvim",
-    disable = not O.plugin.telescope_fzy,
-  }
-  -- Use fzf for telescope
-  use {
-    "nvim-telescope/telescope-fzf-native.nvim",
-    run = "make",
-    disable = not O.plugin.telescope_fzf,
-  }
-  -- Use project for telescope
-  use {
-    "nvim-telescope/telescope-project.nvim",
-    event = BufRead,
-    requires = "telescope.nvim",
-    disable = not O.plugin.telescope_project,
-  }
-  -- Telescope sort by frecency
-  use { "tami5/sqlite.lua" }
-  use { -- FIXME: load_extension doesn't work
-    "nvim-telescope/telescope-frecency.nvim",
-    config = function()
-      -- require("telescope").load_extension "frecency"
-    end,
-    requires = { "tami5/sqlite.lua" },
-    disable = not O.plugin.telescope_frecency,
-  }
-  use { "nvim-telescope/telescope-hop.nvim", requires = "telescope.nvim" }
+  use { "metakirby5/codi.vim", cmd = "Codi", disable = not O.plugin.codi }
   -- Sane gx for netrw_gx bug
-  use {
-    "felipec/vim-sanegx",
-    event = BufRead,
-    disable = not O.plugin.sanegx,
-  }
+  use { "felipec/vim-sanegx", keys = "gx", disable = not O.plugin.sanegx }
   -- Highlight TODO comments
   use {
     "folke/todo-comments.nvim",
@@ -506,12 +470,6 @@ return packer.startup(function(use)
       require("todo-comments").setup()
     end,
     disable = not O.plugin.todo_comments,
-  }
-  -- LSP Colors
-  use {
-    "folke/lsp-colors.nvim",
-    event = BufRead,
-    disable = not O.plugin.lsp_colors,
   }
   -- Git Blame
   use {
@@ -524,19 +482,15 @@ return packer.startup(function(use)
   }
   use {
     "ruifm/gitlinker.nvim",
-    event = BufRead,
+    keys = "<leader>gy",
+    requires = "nvim-lua/plenary.nvim",
     config = function()
       require("gitlinker").setup(O.plugin.gitlinker)
     end,
     disable = not O.plugin.gitlinker,
-    requires = "nvim-lua/plenary.nvim",
   }
   -- Octo.nvim
-  use {
-    "pwntester/octo.nvim",
-    cmd = "Octo",
-    disable = not O.plugin.octo,
-  }
+  use { "pwntester/octo.nvim", cmd = "Octo", disable = not O.plugin.octo }
   -- Diffview
   use {
     "sindrets/diffview.nvim",
@@ -549,26 +503,17 @@ return packer.startup(function(use)
     disable = not O.plugin.diffview,
   }
   -- Easily Create Gists
-  use {
-    "mattn/vim-gist",
-    cmd = "Gist",
-    disable = not O.plugin.gist,
-    requires = "mattn/webapi-vim",
-  }
+  use { "mattn/vim-gist", cmd = "Gist", disable = not O.plugin.gist, requires = "mattn/webapi-vim" }
   -- HTML preview
   use {
     "turbio/bracey.vim",
-    -- event = BufRead,
     ft = "html",
     run = "npm install --prefix server",
     disable = not O.plugin.bracey,
   }
 
   -- Tmux navigator
-  use {
-    "christoomey/vim-tmux-navigator",
-    disable = not O.plugin.tmux_navigator,
-  }
+  use { "christoomey/vim-tmux-navigator", disable = not O.plugin.tmux_navigator }
 
   -- LANGUAGE SPECIFIC GOES HERE
 
@@ -786,11 +731,7 @@ return packer.startup(function(use)
     cmd = "LuadevStart", -- see lv-terms
     disable = not O.plugin.luadev,
   }
-  use {
-    "rafcamlet/nvim-luapad",
-    cmd = { "Luapad", "LuaRun" },
-    disable = not O.plugin.luapad,
-  }
+  use { "rafcamlet/nvim-luapad", cmd = { "Luapad", "LuaRun" }, disable = not O.plugin.luapad }
   -- TODO: try these code running plugins
   -- https://github.com/CRAG666/code_runner.nvim
   use {
@@ -828,7 +769,7 @@ return packer.startup(function(use)
   }
 
   -- Repeat plugin commands
-  use { "tpope/vim-repeat", event = BufRead }
+  use { "tpope/vim-repeat", keys = "." }
 
   -- Smart abbreviations, substitutions and case renaming
   use {
@@ -837,16 +778,11 @@ return packer.startup(function(use)
     config = function()
       require "lv-abolish"
     end,
+    disable = not O.plugin.abolish,
   }
 
   -- See more character information in ga
   use { "tpope/vim-characterize", keys = { "ga" } }
-
-  -- Readline bindings
-  -- https://github.com/tpope/vim-rsi
-
-  -- Detect indentation from file -- SLOW AF
-  -- use { "zsugabubus/crazy8.nvim", event = BufRead }
 
   -- mkdir
   use {
@@ -914,19 +850,12 @@ return packer.startup(function(use)
   -- https://github.com/tpope/vim-obsession
 
   -- treesitter extensions
-  use {
-    -- "nvim-treesitter/nvim-treesitter-textobjects",
+  use { -- "nvim-treesitter/nvim-treesitter-textobjects",
     "jacfger/nvim-treesitter-textobjects",
     disable = not O.plugin.ts_textobjects,
   }
-  use {
-    "Jason-M-Chan/ts-textobjects",
-    disable = not O.plugin.ts_textobjects,
-  }
-  use {
-    "RRethy/nvim-treesitter-textsubjects",
-    disable = not O.plugin.ts_textsubjects,
-  }
+  use { "Jason-M-Chan/ts-textobjects", disable = not O.plugin.ts_textobjects }
+  use { "RRethy/nvim-treesitter-textsubjects", disable = not O.plugin.ts_textsubjects }
   use {
     "David-Kunz/treesitter-unit",
     config = function()
@@ -961,29 +890,25 @@ return packer.startup(function(use)
   use {
     "windwp/nvim-ts-autotag",
     event = BufRead,
+    ft = { "html", "php", "tsx", "javascript", "typescript" },
     disable = not O.plugin.ts_autotag,
   }
-  use {
-    "romgrk/nvim-treesitter-context",
-    event = "CursorMoved",
-    disable = not O.plugin.ts_context,
-  }
+  use { "romgrk/nvim-treesitter-context", event = "CursorMoved", disable = not O.plugin.ts_context }
   use { "p00f/nvim-ts-rainbow", disable = not O.plugin.ts_rainbow }
   use { "nvim-treesitter/nvim-treesitter-refactor" }
 
   -- Startup profiler
   use {
     "dstein64/vim-startuptime",
+    setup = function()
+      vim.g.startuptime_exe_args = { "~/.config/nvim/plugins.lua" }
+    end,
     cmd = "StartupTime",
     disable = not O.plugin.startuptime,
   }
 
   -- Visual undo tree
-  use {
-    "mbbill/undotree",
-    cmd = { "UndotreeToggle", "UndotreeShow" },
-    disable = not O.plugin.undotree,
-  }
+  use { "mbbill/undotree", cmd = { "UndotreeToggle", "UndotreeShow" }, disable = not O.plugin.undotree }
 
   -- Vim Doge Documentation Generator
   use {
@@ -1113,7 +1038,6 @@ return packer.startup(function(use)
   -- Unix style vim commands
   use {
     "tpope/vim-eunuch",
-    event = "BufRead",
     cmd = {
       "Delete",
       "Unlink",

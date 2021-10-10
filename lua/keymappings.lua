@@ -1,3 +1,4 @@
+-- TODO: replace all keymaps with nest.nvim or something
 local M = {}
 local map = vim.api.nvim_set_keymap
 local bufmap = vim.api.nvim_buf_set_keymap
@@ -474,8 +475,6 @@ function M.setup()
   map("n", "GB", "<c-i>", nore)
 
   -- Commenting helpers
-  map("n", ")gc", "gccjgcc", sile)
-  map("n", "(gc", "gcckgcc", sile)
   map("n", "gcO", "O-<esc>gccA<BS>", sile)
   map("n", "gco", "o-<esc>gccA<BS>", sile)
 
@@ -717,7 +716,7 @@ function M.setup()
 
   -- TODO: support vim-sandwich in the which-key menus
   local leaderMappings = {
-    -- [" "] = { telescope_fn(.commands), "Commands" },
+    [":"] = { telescope_fn.commands, "Commands" },
     [" "] = { name = "Electric Boogaloo" },
     ["*"] = "Search obj",
     ["#"] = "Search(bwd) obj",
@@ -836,7 +835,6 @@ function M.setup()
       },
       ["<CR>"] = { cmd "Git", "Fugitive Status" },
       [" "] = { ":Git ", "Fugitive ..." },
-      -- TODO: what are the important fugitive commands?
     },
     l = {
       name = "LSP",
