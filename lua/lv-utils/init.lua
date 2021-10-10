@@ -506,13 +506,15 @@ M.custom_cursorhold = function(timeout, callback)
   }
 end
 M.hold_jumplist = (function()
-  -- local setmark = vim.api.nvim_buf_set_mark
-  -- local getcurpos = vim.api.nvim_win_get_cursor
+  local setmark = vim.api.nvim_buf_set_mark
+  local getcurpos = vim.api.nvim_win_get_cursor
 
   return M.custom_cursorhold(1000, function()
     -- local row, col = unpack(getcurpos(0))
     -- setmark(0, "'", row, col)
-    vim.cmd "normal m'"
+    -- utils.dump(row, col)
+    -- FIXME: jank in other modes
+    -- vim.cmd "normal m'"
   end)
 end)()
 M.hold_jumplist_aucmd = {
