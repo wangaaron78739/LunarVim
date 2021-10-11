@@ -2,12 +2,13 @@ local M = {}
 local nore = require("keymappings").nore
 function M.ftplugin()
   mappings.localleader {
-    ["m"] = { "<Cmd>RustExpandMacro<CR>", "Expand Macro" },
-    ["H"] = { "<Cmd>RustToggleInlayHints<CR>", "Toggle Inlay Hints" },
-    ["e"] = { "<Cmd>RustRunnables<CR>", "Runnables" },
-    ["h"] = { "<Cmd>RustHoverActions<CR>", "Hover Actions" },
+    m = { "<Cmd>RustExpandMacro<CR>", "Expand Macro" },
+    H = { "<Cmd>RustToggleInlayHints<CR>", "Toggle Inlay Hints" },
+    e = { "<Cmd>RustRunnables<CR>", "Runnables" },
+    h = { "<Cmd>RustHoverActions<CR>", "Hover Actions" },
   }
-  nore("v", "gh", "<cmd>RustHoverRange<CR>", { buffer = true })
+  nore("x", "gh", "<cmd>RustHoverRange<CR>", { buffer = true })
+  nore("n", "gh", "<cmd>RustHoverActions<CR>", { buffer = true })
   nore("n", "gj", "<cmd>RustJoinLines<CR>", { buffer = true })
 
   -- require("lv-utils").define_augroups {
@@ -17,6 +18,42 @@ function M.ftplugin()
   -- }
 end
 function M.setup()
+  local function postfix_wrap_call(trig, call, requires)
+    return {
+      postfix = trig,
+      body = {
+        call .. "(${receiver})",
+      },
+      requires = requires,
+      scope = "expr",
+    }
+  end
+  local snippets = {
+    ["Arc::new"] = postfix_wrap_call("arc", "Arc::new", "std::sync::Arc"),
+    ["Mutex::new"] = postfix_wrap_call("mutex", "Mutex::new", "std::sync::Mutex"),
+    ["RefCell::new"] = postfix_wrap_call("refcell", "RefCell::new", "std::cell::RefCell"),
+    ["Cell::new"] = postfix_wrap_call("cell", "Cell::new", "std::cell::Cell"),
+    ["Rc::new"] = postfix_wrap_call("rc", "Rc::new", "std::rc::Rc"),
+    ["Box::pin"] = postfix_wrap_call("pin", "Box::pin"),
+    ["thread::spawn"] = {
+      prefix = "spawn",
+      body = {
+        "thread::spawn(move || {",
+        "\t$0",
+        "});",
+      },
+      description = "Spawn a new thread",
+      requires = "std::thread",
+      scope = "expr",
+    },
+    ["channel"] = {
+      prefix = "channel",
+      body = { "let (tx,rx) = mpsc::channel()" },
+      description = "(tx,rx) = channel()",
+      requires = "std::sync::mpsc",
+      scope = "expr",
+    },
+  }
   local opts = {
     tools = { -- rust-tools options
       inlay_hints = {
@@ -37,8 +74,18 @@ function M.setup()
         -- the border that is used for the hover window
         -- see vim.api.nvim_open_win()
         border = O.lsp.border,
+        auto_focus = true,
       },
-      autofocus = true,
+
+      -- dap = function()
+      --   -- Update this path
+      --   local extension_path = "/home/amedhi/.vscode/extensions/vadimcn.vscode-lldb-1.6.7/"
+      --   local codelldb_path = extension_path .. "adapter/codelldb"
+      --   local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+      --   return {
+      --     adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+      --   }
+      -- end,
     },
 
     -- all the opts to send to nvim-lspconfig
@@ -53,6 +100,9 @@ function M.setup()
             enable = true,
             command = "clippy", -- comment out to not use clippy
           },
+          completion = {
+            snippets = snippets,
+          },
         },
       },
     }, -- rust-analyser options
@@ -65,17 +115,17 @@ function M.crates_ftplugin()
   require("lv-cmp").add_sources { { name = "crates" } }
   local prefix = "<cmd>lua require'crates'."
   mappings.localleader {
-    ["t"] = { prefix .. "toggle()<cr>", "Toggle" },
-    ["r"] = { prefix .. "reload()<cr>", "Reload" },
-    ["u"] = { prefix .. "update_crate()<cr>", "Update Crate" },
-    ["a"] = { prefix .. "update_all_crates()<cr>", "Update All" },
-    ["U"] = { prefix .. "upgrade_crate()<cr>", "Upgrade Crate" },
-    ["A"] = { prefix .. "upgrade_all_crates()<cr>", "Upgrade All" },
+    t = { prefix .. "toggle()<cr>", "Toggle" },
+    r = { prefix .. "reload()<cr>", "Reload" },
+    u = { prefix .. "update_crate()<cr>", "Update Crate" },
+    a = { prefix .. "update_all_crates()<cr>", "Update All" },
+    U = { prefix .. "upgrade_crate()<cr>", "Upgrade Crate" },
+    A = { prefix .. "upgrade_all_crates()<cr>", "Upgrade All" },
     ["<localleader>"] = { prefix .. "show_versions_popup()<cr>", "Versions" },
   }
   mappings.vlocalleader {
-    ["u"] = { ":lua require('crates').update_crates()<cr>", "Update" },
-    ["U"] = { ":lua require('crates').upgrade_crates()<cr>", "Upgrade" },
+    u = { ":lua require('crates').update_crates()<cr>", "Update" },
+    U = { ":lua require('crates').upgrade_crates()<cr>", "Upgrade" },
   }
 end
 function M.crates_setup()
