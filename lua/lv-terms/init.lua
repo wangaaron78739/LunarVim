@@ -136,7 +136,7 @@ function M.neoterm()
 end
 
 function M.magma()
-  vim.cmd [[ command MagmaStart :lua require("lv-terms").activate_magma() ]]
+  vim.cmd [[ command! MagmaStart :lua require("lv-terms").activate_magma() ]]
 end
 
 function M.activate_magma()
