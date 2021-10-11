@@ -1,7 +1,10 @@
-local status_ok, dap = pcall(require, "dap")
-if not status_ok then
-  return
+local M = {}
+M.dap = function()
+  local dap = require "dap"
+  vim.fn.sign_define("DapBreakpoint", O.breakpoint_sign)
+  dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
 end
--- require "dap"
-vim.fn.sign_define("DapBreakpoint", O.breakpoint_sign)
-dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
+M.dapui = function()
+  require("dapui").setup {}
+end
+return M

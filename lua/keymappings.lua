@@ -796,6 +796,8 @@ function M.setup()
       -- "   https://microsoft.github.io/debug-adapter-protocol/
       -- TODO: can use localleader for this??
       name = "Debug",
+      U = { luareq("dapui").toggle, "Toggle DAP-UI" },
+      v = { luareq("dapui").eval, "Eval" },
       t = { dap_fn.toggle_breakpoint, "Toggle Breakpoint" },
       b = { dap_fn.step_back, "Step Back" },
       c = { dap_fn.continue, "Continue" },
@@ -936,6 +938,10 @@ function M.setup()
       "Change all",
     },
     s = { 'ygvc<CR><C-r>"<CR><ESC>', "separate" },
+    D = {
+      name = "Debug",
+      v = { luareq("dapui").eval, "Eval" },
+    },
   }
 
   -- TODO: move these to different modules?

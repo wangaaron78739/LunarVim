@@ -397,9 +397,17 @@ return packer.startup(function(use)
   use {
     "mfussenegger/nvim-dap",
     config = function()
-      require "lv-dap"
+      require("lv-dap").dap()
     end,
     module = "dap",
+    disable = not O.plugin.debug,
+  }
+  use {
+    "rcarriga/nvim-dap-ui",
+    config = function()
+      require("lv-dap").dapui()
+    end,
+    module = "dapui",
     disable = not O.plugin.debug,
   }
   -- Debugger installing
