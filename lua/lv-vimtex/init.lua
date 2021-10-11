@@ -6,6 +6,7 @@ M.config = function()
   vim.g.vimtex_view_automatic = 1
   vim.g.vimtex_quickfix_mode = 0
   vim.g.tex_conceal = "abdmgs"
+  vim.g.vimtex_subfile_start_local = 1
 
   vim.g.vimtex_compiler_method = "tectonic"
   vim.g.vimtex_compiler_generic = { cmd = "watchexec -e tex -- tectonic --synctex --keep-logs *.tex" }
