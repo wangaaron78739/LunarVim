@@ -511,7 +511,9 @@ M.hold_jumplist = (function()
   return M.custom_cursorhold(1000, function()
     -- local row, col = unpack(getcurpos(0))
     -- setmark(0, "'", row, col)
-    vim.cmd "normal! m'"
+    if vim.api.nvim_get_mode().mode == "n" then
+      vim.cmd "normal! m'"
+    end
     -- feedkeys("m'", "n", true)
   end)
 end)()
