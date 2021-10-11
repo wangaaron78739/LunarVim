@@ -134,6 +134,7 @@ local both_maps = {
   ["|->"] = "mapsto",
   ["!>"] = "mapsto",
   ["<>"] = "mapsto",
+  "aleph",
 }
 for k, v in pairs(both_maps) do -- FIXME: deal with already existing backslash (can use frontier set?)
   local lhs = ("number" == type(k)) and v or k
@@ -141,7 +142,23 @@ end
 
 local math_maps = {
   -- TODO: Move some of these to both
+  ["c<"] = "subset",
+  ["c<="] = "subseteq",
+  ["c>"] = "supset",
+  ["c>="] = "supseteq",
+  ["inn"] = "in",
+  ["!in"] = "notin",
+  ["!!"] = "neg",
+  ["--"] = "setminus",
+  ["null"] = "emptyset",
+  "cup",
+  "cap",
+  "vee",
+  "wedge",
+  "vdash",
+  "models",
   [">="] = "geq",
+  ["t=="] = "triangeq",
   ["<="] = "leq",
   ["!="] = "neq",
   ["~="] = "approx",
@@ -176,9 +193,12 @@ local math_maps = {
   "log",
   "exp",
   "perp",
+  "because",
+  "therefore",
 }
 list_extend(math_maps, trig_fns)
 local intlike = {
+  -- TODO: improve placeholder
   ["dint"] = { operator = "\\int", low = { i(1, "\\infty") }, upp = { i(2, "\\infty") } },
   ["dint1"] = { operator = "\\int", low = { i(1, "\\infty") }, upp = { i(2, "\\infty") } },
   ["dintr"] = { operator = "\\int", low = { i(1, "0") }, upp = { i(2, "\\infty") } },
@@ -243,6 +263,9 @@ list_extend(auto, {
   ms("matt ", { t { "\\begin{matrix}", "" }, i(0), t { "", "\\end{matrix}" } }),
   ms("bmat ", { t { "\\begin{bmatrix}", "" }, i(0), t { "", "\\end{bmatrix}" } }),
   ms("pmat ", { t { "\\begin{pmatrix}", "" }, i(0), t { "", "\\end{pmatrix}" } }),
+  s("matt ", { t { "\\[\\begin{matrix}", "" }, i(0), t { "", "\\end{matrix}\\]" } }),
+  s("bmat ", { t { "\\[\\begin{bmatrix}", "" }, i(0), t { "", "\\end{bmatrix}\\]" } }),
+  s("pmat ", { t { "\\[\\begin{pmatrix}", "" }, i(0), t { "", "\\end{pmatrix}\\]" } }),
   s("\\ali ", { t { "\\begin{align*}", "" }, i(0), t { "", "\\end{align*}" } }),
   s("\\alin ", { t { "\\begin{align}", "" }, i(0), t { "", "\\end{align}" } }),
   s("\\desc ", { t { "\\begin{description}", "\t\\item[" }, i(1), t { "]" }, i(0), t { "", "\\end{description}" } }),
@@ -253,9 +276,9 @@ list_extend(auto, {
   ms("bb{", { t "\\mathbb{", i(0) }),
   ms("tt{", { t "\\text{", i(0) }),
   ms("rt{", { t "\\sqrt{", i(0) }),
-  ms("st ", { t "\\text{ s.t. } " }),
-  ms("let ", { t "\\textbf{ let } " }),
-  ms("where ", { t "\\textbf{ let } " }),
+  ms("st ", { t "\\text{ s.t. } " }), -- TODO: deduplicate
+  ms("let ", { t "\\textbf{let } " }),
+  ms("where ", { t "\\textbf{ where } " }),
   ms("if ", { t "\\textbf{ if } " }),
   ms("otherwise ", { t "\\textbf{ otherwise } " }),
   ms("else ", { t "\\textbf{ else } " }),
@@ -292,8 +315,6 @@ list_extend(auto, {
   ms("//", { t "\\frac{", i(1), t "}{", i(0), t "}" }),
   ms(re "(%b{})/", { t "\\frac", sub(1), t "{", i(0), t "}" }),
   ms(re "(%\\?%w+)/", { t "\\frac{", sub(1), t "}{", i(0), t "}" }),
-  ms("inn", t "\\in"),
-  ms("notin", t "\\not\\in"),
   ms(re [[([%w^]+)sr]], { sub(1), t "^2", i(0) }),
   ms(re [[([%w^]+)cb]], { sub(1), t "^3", i(0) }),
   ms(
@@ -325,6 +346,7 @@ list_extend(auto, {
   ms("lcl", { t "\\lceil" }),
   ms("rcl", { t "\\rceil" }),
   ms("rfl", { t "\\rfloor" }),
+  ms("&=", { t "&=", i(0), t " \\\\" }), -- TODO: detect align environment?
   -- ms("|", { t "|", i(0), t "|" }),
 })
 for k, v in pairs(intlike) do

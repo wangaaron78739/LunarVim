@@ -253,6 +253,7 @@ local sub = [[\documentclass[${1:../main.tex}]{subfiles}
 
 \begin{document}
 \section{$2}
+$0
 \end{document}
 ]]
 local essay = preamble .. notestheorems .. docinfo
