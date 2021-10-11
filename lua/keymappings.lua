@@ -691,6 +691,9 @@ function M.setup()
   map("n", "<leader>" .. ldr_swap_next, pre_swap_next, {})
   map("n", "<leader>" .. ldr_swap_prev, pre_swap_prev, {})
 
+  map("n", "<leader>m", "<localleader>", {})
+  map("x", "<leader>m", "<localleader>", {})
+
   local leaderOpts = {
     mode = "n", -- NORMAL mode
     prefix = "<leader>",
