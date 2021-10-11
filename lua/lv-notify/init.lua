@@ -26,9 +26,6 @@ M.config = function()
   vim.cmd [[command! Mess :lua require'lv-notify'.print_history()<CR>]]
   notify.setup(O.notify)
 
-  -- vim.notify = notify
-  if not vim.g.neovide then -- TODO: neovide can't animate
-    vim.notify = notify
-  end
+  vim.notify = notify
 end
 return M
