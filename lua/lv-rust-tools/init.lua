@@ -10,6 +10,10 @@ function M.ftplugin()
   nore("x", "gh", "<cmd>RustHoverRange<CR>", { buffer = true })
   nore("n", "gh", "<cmd>RustHoverActions<CR>", { buffer = true })
   nore("n", "gj", "<cmd>RustJoinLines<CR>", { buffer = true })
+  mappings.ftleader {
+    pR = { "<CMD>RustRunnables<CR>", "Rust Run" },
+    pd = { "<CMD>RustDebuggables<CR>", "Rust Debug" },
+  }
 
   -- require("lv-utils").define_augroups {
   --   _rust_hover_range = {
@@ -68,6 +72,21 @@ function M.setup()
         -- default: "=>"
         other_hints_prefix = "∈ ",
         -- other_hints_prefix = ":: ",
+      },
+
+      runnables = {
+        use_telescope = true,
+        layout_config = {
+          width = 0.4,
+          height = 0.4,
+        },
+      },
+      debuggables = {
+        use_telescope = true,
+        layout_config = {
+          width = 0.4,
+          height = 0.4,
+        },
       },
 
       hover_actions = {

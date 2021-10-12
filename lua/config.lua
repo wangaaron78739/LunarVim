@@ -118,6 +118,7 @@ O = {
   hint_labels = "fdsahjklvcxznmewuio",
   database = { save_location = "~/.config/nvim/.db", auto_execute = 1 },
   plugin = {
+    yabs = {},
     fugitive = {},
     better_escape = {
       mapping = { "jk", "kj" },

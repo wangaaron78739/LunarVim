@@ -339,7 +339,8 @@ M.cmd = setmetatable({
     return luafn("require'" .. name .. "'")
   end,
   lsp = luafn "vim.lsp.buf",
-  diag = luafn "vim.lsp.diagnostic",
+  -- diag = luafn "vim.lsp.diagnostic",
+  diag = luafn "vim.diagnostic",
   -- telescopes = luafn "telescopes",
   telescopes = luafn "require'lv-telescope.functions'",
 }, {
@@ -468,7 +469,7 @@ local cmds = setmetatable({}, {
 })
 M.cmds = cmds
 
-M.custom_cursorhold = function(timeout, callback)
+M.timeout_helper = function(timeout, callback)
   local timerperiod = 20
   timeout = (timeout or 1000) / timerperiod
   local timer
@@ -494,7 +495,7 @@ M.custom_cursorhold = function(timeout, callback)
       counter = 0
       latch = false -- Reenable the counter in Normal Mode
     end,
-    cursor_moved = function()
+    reset = function()
       if timer == nil then
         timer = vim.loop.new_timer()
         timer:start(0, timerperiod, vim.schedule_wrap(cb))
@@ -508,7 +509,7 @@ end
 M.hold_jumplist = (function()
   -- local setmark = vim.api.nvim_buf_set_mark
   -- local getcurpos = vim.api.nvim_win_get_cursor
-  return M.custom_cursorhold(1000, function()
+  return M.timeout_helper(1000, function()
     -- local row, col = unpack(getcurpos(0))
     -- setmark(0, "'", row, col)
     if vim.api.nvim_get_mode().mode == "n" then
@@ -520,7 +521,14 @@ end)()
 M.hold_jumplist_aucmd = {
   { "InsertEnter,CmdlineEnter", "*", "lua require'lv-utils'.hold_jumplist.disable()" },
   { "InsertLeave,CmdlineLeave", "*", "lua require'lv-utils'.hold_jumplist.reenable()" },
-  { "CursorMoved", "*", "lua require'lv-utils'.hold_jumplist.cursor_moved()" },
+  { "CursorMoved", "*", "lua require'lv-utils'.hold_jumplist.reset()" },
 }
+
+M.delete_merge = (function()
+  local repeat_set = M.fn["repeat"].set
+  return M.timeout_helper(1000, function()
+    repeat_set("\\<Plug>RepeatDeletes", vim.v.count)
+  end)
+end)()
 
 return M

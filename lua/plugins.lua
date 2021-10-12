@@ -741,7 +741,6 @@ return packer.startup(function(use)
   }
   use { "rafcamlet/nvim-luapad", cmd = { "Luapad", "LuaRun" }, disable = not O.plugin.luapad }
   -- TODO: try these code running plugins
-  -- https://github.com/CRAG666/code_runner.nvim
   use {
     "IndianBoy42/code_runner.nvim",
     config = function()
@@ -749,6 +748,19 @@ return packer.startup(function(use)
     end,
     cmd = { "CRFileType", "CRProjects", "RunCode", "RunFile", "RunProject" },
     disable = not O.plugin.coderunner,
+  }
+  use {
+    "pianocomposer321/yabs.nvim",
+    config = function()
+      require("yabs"):setup {
+        languages = require("lv-yabs").tasks,
+        tasks = require("lv-yabs").global,
+        opts = require("lv-yabs").opts,
+      }
+      require("telescope").load_extension "yabs"
+    end,
+    module = { "yabs", "telescope._extensions.yabs" },
+    disable = not O.plugin.yabs,
   }
   use {
     "michaelb/sniprun",
@@ -777,7 +789,7 @@ return packer.startup(function(use)
   }
 
   -- Repeat plugin commands
-  use { "tpope/vim-repeat", keys = "." }
+  use "tpope/vim-repeat"
 
   -- Smart abbreviations, substitutions and case renaming
   use {

@@ -3,7 +3,8 @@ local api = vim.api
 local cmd = vim.cmd
 local vfn = vim.fn
 local lsp = vim.lsp
-local diags = lsp.diagnostic
+-- local diags = lsp.diagnostic
+local diags = vim.diagnostic
 -- TODO: reduce nested lookups for performance (\w+\.)?(\w+\.)?\w+\.\w+\(
 
 -- Location information about the last message printed. The format is

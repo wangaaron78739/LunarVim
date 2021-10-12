@@ -752,6 +752,7 @@ function M.setup()
       l = { luacmd "ftopen('right')", "Terminal" },
     },
     t = { name = "Terminals" },
+    p = { name = "Project (Tasks)" },
     T = {
       name = "Toggle Opts",
       w = { cmd "setlocal wrap!", "Wrap" },
@@ -993,6 +994,7 @@ function M.setup()
   require("lv-terms").keymaps(leaderMappings, vLeaderMappings)
   require("lv-hop").keymaps(leaderMappings, vLeaderMappings)
   require("lv-bufferline").keymaps(leaderMappings, vLeaderMappings)
+  require("lv-yabs").keymaps(leaderMappings, vLeaderMappings)
   if O.plugin.nabla then
     leaderMappings["xn"] = { luareq("nabla").action, "Nabla" }
   end
@@ -1084,6 +1086,18 @@ M.localleader = function(maps, opts)
     maps,
     vim.tbl_extend("keep", opts, {
       prefix = "<localleader>",
+      buffer = 0,
+    })
+  )
+end
+M.ftleader = function(maps, opts)
+  if opts == nil then
+    opts = {}
+  end
+  M.whichkey(
+    maps,
+    vim.tbl_extend("keep", opts, {
+      prefix = "<leader>",
       buffer = 0,
     })
   )
