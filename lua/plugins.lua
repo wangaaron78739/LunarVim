@@ -629,10 +629,10 @@ return packer.startup(function(use)
   use {
     "RishabhRD/nvim-lsputils",
     config = function()
-      for key, value in pairs(O.plugin.lsputils.handlers) do
-        vim.lsp.handlers[key] = require("lsputil." .. value[1])[value[2]]
-      end
-      utils.define_augroups(O.plugin.lsputils.aus)
+      -- for key, value in pairs(O.plugin.lsputils.handlers) do
+      --   vim.lsp.handlers[key] = require("lsputil." .. value[1])[value[2]]
+      -- end
+      -- utils.define_augroups(O.plugin.lsputils.aus)
     end,
   }
   use {

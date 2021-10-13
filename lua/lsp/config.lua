@@ -6,7 +6,13 @@ local function diags(conf)
 end
 local common_on_attach = require("lsp.functions").common_on_attach
 local inject_conf = function(obj)
-  obj.on_attach = obj.on_attach or common_on_attach
+  local custom_on_attach = obj.on_attach
+  obj.on_attach = function()
+    common_on_attach()
+    if custom_on_attach then
+      custom_on_attach()
+    end
+  end
   obj.flags = obj.flags or O.lsp.flags
 
   if obj.handlers == nil then
@@ -27,6 +33,7 @@ if O.plugin.coq then
   M.coq = require "coq"()
   M.coq_lsp = M.coq.lsp_ensure_capabilities
   M.conf_with = function(config)
+    config = inject_conf(config)
     config.capabilities = M.caps(config.capabilities)
     return M.coq_lsp(config)
   end
@@ -35,6 +42,7 @@ else
   --                       nvim-cmp + luasnips                        --
   ----------------------------------------------------------------------
   M.conf_with = function(config)
+    config = inject_conf(config)
     -- Set default client capabilities plus window/workDoneProgress
     config.capabilities = M.caps(config.capabilities)
     config.capabilities = require("cmp_nvim_lsp").update_capabilities(config.capabilities)
@@ -44,7 +52,7 @@ end
 
 M.setup = function(lspconfig)
   return function(obj)
-    lspconfig.setup(M.conf_with(inject_conf(obj)))
+    lspconfig.setup(M.conf_with(obj))
   end
 end
 

@@ -528,10 +528,10 @@ function M.setup()
   -- lsp keys
   map("n", "gd", luacmd "vim.lsp.buf.definition()", sile)
   map("n", "gD", luacmd "vim.lsp.buf.declaration()", sile)
-  map("n", "gr", luacmd "vim.lsp.buf.references()", sile)
+  -- map("n", "gr", luacmd "vim.lsp.buf.references()", sile)
+  map("n", "gr", telescope_fn.lsp_references, sile)
   map("n", "gi", luacmd "vim.lsp.buf.implementation()", sile)
   map("n", "gK", luacmd "vim.lsp.codelens.run()", sile)
-  -- map("n", "<C-k>", luacmd "vim.lsp.buf.signature_help()", sile)
   -- Preview variants
   map("n", "gpd", luacmd [[require("lsp.functions").preview_location_at("definition")]], sile)
   map("n", "gpD", luacmd [[require("lsp.functions").preview_location_at("declaration")]], sile)
@@ -855,12 +855,14 @@ function M.setup()
     },
     s = {
       name = "Search",
+      [" "] = { telescope_fn.resume, "Redo last" },
       n = { telescope_fn "notify.notify()", "Notifications" },
       c = { telescope_fn.colorscheme, "Colorscheme" },
       s = { telescope_fn.lsp_document_symbols, "Document Symbols" },
       S = { telescope_fn.lsp_dynamic_workspace_symbols, "Workspace Symbols" },
       d = { telescope_fn.lsp_document_diagnostics, "Document Diagnostics" },
       D = { telescope_fn.lsp_workspace_diagnostics, "Workspace Diagnostics" },
+      r = { telescope_fn.lsp_references, "References" },
       I = { telescope_fn.lsp_implementations, "Implementations" },
       h = { telescope_fn.help_tags, "Find Help" },
       j = { telescope_fn.jumplist, "Jump List" },
@@ -868,6 +870,7 @@ function M.setup()
       R = { telescope_fn.oldfiles, "Open Recent File" },
       -- R = { telescope_fn.registers, "Registers" },
       t = { telescope_fn.live_grep, "Text" },
+      b = { telescope_fn.curbuf, "Current Buffer" },
       k = { telescope_fn.keymaps, "Keymappings" },
       o = { cmd "TodoTelescope", "TODOs" },
       q = { telescope_fn.quickfix, "Quickfix" },
@@ -876,7 +879,6 @@ function M.setup()
       -- ["+"] = { telescope_fn.grep_last_yank, "Last Yank" },
       -- ["."] = { [[:%s/<C-R>.//g<Left><Left>]], "Last insert" },
       i = "for (object)",
-      [" "] = { telescope_fn.resume, "Redo" },
       p = { cmd "SearchSession", "Sessions" },
       m = { telescope_fn.marks, "Marks" },
     },
@@ -953,11 +955,12 @@ function M.setup()
     leaderMappings["o"]["T"] = { cmd "TodoTrouble", "Todos Sidebar" }
   end
   if O.plugin.trouble then
-    leaderMappings["dt"] = { cmd "TroubleToggle", "Trouble Toggle" }
+    -- TODO: make sure this is symmetric with <leader>s (telescope search)
+    leaderMappings["d<space>"] = { cmd "TroubleToggle", "Trouble Toggle" }
     leaderMappings["dd"] = { cmd "TroubleToggle lsp_document_diagnostics", "Document" }
-    leaderMappings["dw"] = { cmd "TroubleToggle lsp_workspace_diagnostics", "Workspace" }
+    leaderMappings["dD"] = { cmd "TroubleToggle lsp_workspace_diagnostics", "Workspace" }
     leaderMappings["dr"] = { cmd "TroubleToggle lsp_references", "References" }
-    leaderMappings["dD"] = { cmd "TroubleToggle lsp_definitions", "Definitions" }
+    leaderMappings["ds"] = { cmd "TroubleToggle lsp_definitions", "Definitions" }
     leaderMappings["dq"] = { cmd "TroubleToggle quickfix", "Quick Fixes" }
     leaderMappings["dL"] = { cmd "TroubleToggle loclist", "Location List" }
     leaderMappings["do"] = { cmd "TroubleToggle todo", "TODOs" }

@@ -186,7 +186,7 @@ M.range_diagnostics = function(opts, buf_nr, start, finish)
 end
 
 -- Preview definitions and things
-local function preview_location_callback(_, _, result)
+local function preview_location_callback(_, result)
   if result == nil or vim.tbl_isempty(result) then
     return nil
   end
@@ -278,7 +278,8 @@ M.common_on_attach = function(client, bufnr)
         [[
         augroup lsp_codelens_refresh
           autocmd! * <buffer>
-          autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()
+          autocmd BufEnter,InsertLeave,BufWritePost <buffer> lua vim.lsp.codelens.refresh()
+          autocmd CursorHold * lua vim.lsp.codelens.refresh()
         augroup END
         ]],
         false

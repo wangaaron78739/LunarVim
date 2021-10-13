@@ -109,13 +109,21 @@ M.git_branches = function()
   }
 end
 
+local cursor_menu = themes.get_cursor {
+  -- previewer = true,
+  shorten_path = false,
+  border = true,
+  layout_config = { height = 0.5, width = 0.75 },
+}
 function M.lsp_code_actions()
-  builtins.lsp_code_actions(themes.get_dropdown {
-    winblend = 10,
-    border = true,
-    previewer = false,
-    shorten_path = false,
-  })
+  builtins.lsp_code_actions(cursor_menu)
+end
+
+function M.lsp_references()
+  builtins.lsp_references(cursor_menu)
+end
+function M.lsp_implementations()
+  builtins.lsp_implementations(cursor_menu)
 end
 
 --[[
@@ -178,9 +186,9 @@ function M.project_search()
 end
 
 function M.curbuf()
-  local opts = themes.get_dropdown {
-    winblend = 10,
-    border = true,
+  -- local opts = themes.get_dropdown {
+  local opts = {
+    -- winblend = 10,
     previewer = false,
     shorten_path = false,
   }
@@ -293,6 +301,10 @@ end
 
 function M.projects()
   extensions.project.project {}
+end
+
+function M.yabs()
+  extensions.yabs.tasks {}
 end
 
 return setmetatable(M, {
