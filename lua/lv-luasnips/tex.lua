@@ -22,6 +22,7 @@ local types = require "luasnip.util.types"
 local nl = t { "", "" }
 local list_extend = vim.list_extend
 local tbl_extend = vim.tbl_extend
+local conds = require "luasnip.extras.conditions"
 
 local function fmt(fn, ipairs)
   if ipairs == nil then
@@ -64,6 +65,10 @@ local function re(arg)
 end
 local function renw(arg)
   return { trig = arg, regTrig = true, wordTrig = false }
+end
+local line_begin = { condition = conds.line_begin }
+local function lns(lhs, rhs)
+  return s(lhs, rhs, line_begin)
 end
 
 local trig_fns = {
@@ -254,69 +259,47 @@ end
 
 list_extend(auto, {
   s("---- ", { t { "\\hline", "" } }),
-  s("s ", { t "\\section{", i(0), t "}" }),
-  s("ss ", { t "\\subsection{", i(0), t "}" }),
-  s("sss ", { t "\\subsubsection{", i(0), t "}" }),
+  lns("--", t "\\item"),
+  lns("s ", { t "\\section{", i(0), t "}" }),
+  lns("ss ", { t "\\subsection{", i(0), t "}" }),
+  lns("sss ", { t "\\subsubsection{", i(0), t "}" }),
+  lns("desc ", { t { "\\begin{description}", "\t\\item[" }, i(1), t { "]" }, i(0), t { "", "\\end{description}" } }),
+  lns("ali ", { t { "\\begin{align*}", "" }, i(0), t { "", "\\end{align*}" } }),
+  lns("alin ", { t { "\\begin{align}", "" }, i(0), t { "", "\\end{align}" } }),
+  lns("eq ", { t { "\\begin{equation*}", "" }, i(0), t { "", "\\end{equation*}" } }),
+  lns("eqn ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
+  pa("$", "\\($0\\)"),
   ms("cases ", { t { "\\begin{cases}", "" }, i(0), t { "", "\\end{cases}" } }),
-  s("\\eq ", { t { "\\begin{equation*}", "" }, i(0), t { "", "\\end{equation*}" } }),
-  s("\\eqn ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
   ms("matt ", { t { "\\begin{matrix}", "" }, i(0), t { "", "\\end{matrix}" } }),
   ms("bmat ", { t { "\\begin{bmatrix}", "" }, i(0), t { "", "\\end{bmatrix}" } }),
   ms("pmat ", { t { "\\begin{pmatrix}", "" }, i(0), t { "", "\\end{pmatrix}" } }),
+  ms("\\[ ", { t { "\\begin{bmatrix}", "" }, i(0), t { "", "\\end{bmatrix}" } }),
+  ms("\\( ", { t { "\\begin{pmatrix}", "" }, i(0), t { "", "\\end{pmatrix}" } }),
   s("matt ", { t { "\\[\\begin{matrix}", "" }, i(0), t { "", "\\end{matrix}\\]" } }),
   s("bmat ", { t { "\\[\\begin{bmatrix}", "" }, i(0), t { "", "\\end{bmatrix}\\]" } }),
   s("pmat ", { t { "\\[\\begin{pmatrix}", "" }, i(0), t { "", "\\end{pmatrix}\\]" } }),
-  s("\\ali ", { t { "\\begin{align*}", "" }, i(0), t { "", "\\end{align*}" } }),
-  s("\\alin ", { t { "\\begin{align}", "" }, i(0), t { "", "\\end{align}" } }),
-  s("\\desc ", { t { "\\begin{description}", "\t\\item[" }, i(1), t { "]" }, i(0), t { "", "\\end{description}" } }),
-  pa("$", "\\($0\\)"),
+  -- Simple text modifier commands
   nms("bf{", { t "\\textbf{", i(0) }),
   nms("it{", { t "\\textit{", i(0) }),
-  ms("bf{", { t "\\mathbf{", i(0) }),
+  ms("tt{", { t "\\text{", i(0) }),
+  ms("bm{", { t "\\mathbf{", i(0) }),
   ms("bb{", { t "\\mathbb{", i(0) }),
   ms("tt{", { t "\\text{", i(0) }),
   ms("rt{", { t "\\sqrt{", i(0) }),
+  ms("cal{", { t "\\mathcal{", i(0) }),
+  -- Math inline text
   ms("st ", { t "\\text{ s.t. } " }), -- TODO: deduplicate
   ms("let ", { t "\\textbf{let } " }),
   ms("where ", { t "\\textbf{ where } " }),
   ms("if ", { t "\\textbf{ if } " }),
   ms("otherwise ", { t "\\textbf{ otherwise } " }),
   ms("else ", { t "\\textbf{ else } " }),
-  ms("cal{", { t "\\mathcal{", i(0) }),
-  ms(renw "__([^%s_])", { t "_{", sub(1), i(0), t "}" }),
-  ms(renw "%^%^([^%s_])", { t "^{", sub(1), i(0), t "}" }),
+  -- Math whitespacing
   ms(nw "\\quad\\quad", t "\\qquad"),
   ms(nw "\\quad\\,", t "\\qquad "),
   ms(nw "\\,,", t "\\quad"),
   ms(nw ",,", t "\\,"),
-  s("--", t "\\item"),
-  ms(re [[(%S) ([%^_])]], { sub(1), sub(2) }), -- Remove extra ws sub/superscript
-  ms(re [[([A-Za-z%}%]%)])(%d)]], { sub(1), t "_", sub(2) }), -- Auto subscript
-  ms(re [[([A-Za-z%}%]%)]) ?_(%d%d)]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
-  ms(re [[([A-Za-z%}%]%)]) ?_([%+%-] ?[%d%w])]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape superscript
-  ms(re [[([A-Za-z%}%]%)]) ?_([%+%-]? ?%\%w+) ]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape superscript
-  ms(re [[([A-Za-z%}%]%)]) ?%^ ?(%d%d)]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
-  ms(re [[([A-Za-z%}%]%)]) ?%^([%+%-] ?[%d%w])]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
-  ms(re [[([A-Za-z%}%]%)]) ?%^([%+%-]? ?%\%w+) ]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
-  -- TODO: whitespace before and after operators
-  -- TODO: line 203 and below
-  -- ms(re [[(%w[ ,%)%]%}])to]], { sub(1), t "\\to" }),
-  ms(re [[(%\?[%w%^]+),%.]], { t "\\vec{", sub(1), t "}" }),
-  ms(re [[(%\?[%w%^]+)%.,]], { t "\\vec{", sub(1), t "}" }),
-  ms(re [[(%\?[%w%^]+)%. ]], { t "\\dot{", sub(1), t "} " }),
-  ms(re [[(%\?[%w%^]+)%.%.]], { t "\\ddot{", sub(1), t "}" }),
-  ms(re [[(%\?[%w%^]+)^~]], { t "\\tilde{", sub(1), t "}" }),
-  ms(re [[(%\?[%w%^]+)^bar]], { t "\\overline{", sub(1), t "}" }),
-  ms(re [[(%\?[%w%^]+)^hat]], { t "\\hat{", sub(1), t "}" }),
-  ms("bar", { t "\\overline{", i(0), t "}" }),
-  ms("hat", { t "\\hat{", i(0), t "}" }),
-  ms("iprod", { t "\\iprod{", i(0), t "}" }),
-  -- TODO: bmatrix et al
-  ms("//", { t "\\frac{", i(1), t "}{", i(0), t "}" }),
-  ms(re "(%b{})/", { t "\\frac", sub(1), t "{", i(0), t "}" }),
-  ms(re "(%\\?%w+)/", { t "\\frac{", sub(1), t "}{", i(0), t "}" }),
-  ms(re [[([%w^]+)sr]], { sub(1), t "^2", i(0) }),
-  ms(re [[([%w^]+)cb]], { sub(1), t "^3", i(0) }),
+  -- Subscripting and superscripting
   ms(
     re [[([A-Za-z])([A-Za-z])([A-Za-z])]],
     f(function(_, arg)
@@ -328,7 +311,36 @@ list_extend(auto, {
       end
     end, {})
   ),
+  ms(renw "__([^%s_])", { t "_{", sub(1), i(0), t "}" }),
+  ms(renw "%^%^([^%s_])", { t "^{", sub(1), i(0), t "}" }),
+  ms(renw [[(%S) ([%^_])]], { sub(1), sub(2) }), -- Remove extra ws sub/superscript
+  ms(renw [[([A-Za-z%}%]%)])(%d)]], { sub(1), t "_", sub(2) }), -- Auto subscript
+  ms(renw [[([A-Za-z%}%]%)]) ?_(%d%d)]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
+  ms(renw [[([A-Za-z%}%]%)]) ?_([%+%-] ?[%d%w])]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
+  ms(renw [[([A-Za-z%}%]%)]) ?_([%+%-]? ?%\%w+) ]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
+  ms(renw [[([A-Za-z%}%]%)]) ?%^ ?(%d%d)]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
+  ms(renw [[([A-Za-z%}%]%)]) ?%^([%+%-] ?[%d%w])]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
+  ms(renw [[([A-Za-z%}%]%)]) ?%^([%+%-]? ?%\%w+) ]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
+  -- TODO: whitespace before and after operators
+  -- TODO: line 203 and below
+  -- ms(re [[(%w[ ,%)%]%}])to]], { sub(1), t "\\to" }),
+  -- Math overhead stuff
+  ms(re [[(%\?[%w%^]+),%.]], { t "\\vec{", sub(1), t "}" }),
+  ms(re [[(%\?[%w%^]+)%.,]], { t "\\vec{", sub(1), t "}" }),
+  ms(re [[(%\?[%w%^]+)%. ]], { t "\\dot{", sub(1), t "} " }),
+  ms(re [[(%\?[%w%^]+)%.%.]], { t "\\ddot{", sub(1), t "}" }),
+  ms(re [[(%\?[%w%^]+)^~]], { t "\\tilde{", sub(1), t "}" }),
+  ms(re [[(%\?[%w%^]+)^bar]], { t "\\overline{", sub(1), t "}" }),
+  ms(re [[(%\?[%w%^]+)^hat]], { t "\\hat{", sub(1), t "}" }),
+  ms("bar", { t "\\overline{", i(0), t "}" }),
+  ms("hat", { t "\\hat{", i(0), t "}" }),
+  ms("iprod", { t "\\iprod{", i(0), t "}" }),
+  ms(re "(%b{})/", { t "\\frac", sub(1), t "{", i(0), t "}" }),
+  ms(re "(%\\?%w+)/", { t "\\frac{", sub(1), t "}{", i(0), t "}" }),
+  ms("//", { t "\\frac{", i(1), t "}{", i(0), t "}" }),
   -- TODO: binomial
+  ms(re [[([%w^]+)sr]], { sub(1), t "^2", i(0) }),
+  ms(re [[([%w^]+)cb]], { sub(1), t "^3", i(0) }),
   ms(re "big(%S+) ", { t "\\big", sub(1), t " ", i(0), t " \\big", pairsub(1) }),
   ms(re "Big(%S+) ", { t "\\Big", sub(1), t " ", i(0), t " \\Big", pairsub(1) }),
   ms(re "bigg(%S+) ", { t "\\bigg", sub(1), t " ", i(0), t " \\bigg", pairsub(1) }),
