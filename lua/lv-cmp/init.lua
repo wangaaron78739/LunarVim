@@ -37,6 +37,11 @@ function M.setup()
     return col == 0 or vim.fn.getline("."):sub(col, col):match "%s" ~= nil
   end
 
+  local confirmopts = {
+    behavior = cmp.ConfirmBehavior.Insert,
+    select = true,
+  }
+
   cmp.setup {
     snippet = {
       expand = function(args)
@@ -68,16 +73,15 @@ function M.setup()
       ["<M-h>"] = cmp.mapping.close(),
       ["<M-l>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
-          feedkeys(t "<C-l>", "m", false) -- confirm
+          cmp.confirm(confirmopts)
+          -- feedkeys(t "<C-l>", "m", false) -- confirm
         else
-          feedkeys(t "<C-space>", "m", false) -- complete
+          cmp.complete()
+          -- feedkeys(t "<C-space>", "m", false) -- complete
         end
       end),
       ["<C-space>"] = cmp.mapping.complete(),
-      ["<C-l>"] = cmp.mapping.confirm {
-        behavior = cmp.ConfirmBehavior.Insert,
-        select = true,
-      },
+      ["<C-l>"] = cmp.mapping.confirm(confirmopts),
       ["<tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           -- feedkeys(t "<C-n>", "n", false)

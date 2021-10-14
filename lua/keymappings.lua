@@ -511,7 +511,7 @@ function M.setup()
   map("x", "ic", [[/#+\s*%+<cr>oN]], nore)
 
   -- Spell checking
-  -- map("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u]]", nore)
+  -- map("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", nore)
 
   map("i", "<M-a>", cmd "normal! A", nore)
   map("i", "<M-i>", cmd "normal! I", nore)

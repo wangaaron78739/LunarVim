@@ -7,11 +7,13 @@ end
 local common_on_attach = require("lsp.functions").common_on_attach
 local inject_conf = function(obj)
   local custom_on_attach = obj.on_attach
-  obj.on_attach = function()
-    common_on_attach()
-    if custom_on_attach then
-      custom_on_attach()
+  if custom_on_attach then
+    obj.on_attach = function(client, _bufnr)
+      common_on_attach(client, _bufnr)
+      custom_on_attach(client, _bufnr)
     end
+  else
+    obj.on_attach = common_on_attach
   end
   obj.flags = obj.flags or O.lsp.flags
 

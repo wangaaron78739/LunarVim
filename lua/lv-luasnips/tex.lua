@@ -200,20 +200,35 @@ local math_maps = {
   "perp",
   "because",
   "therefore",
+  "sum",
+  "prod",
+  "int",
+  "lim",
 }
 list_extend(math_maps, trig_fns)
+-- TODO: have a more flexible way of doing this.
+-- snippets triggered by `sum_`
 local intlike = {
-  -- TODO: improve placeholder
-  ["dint"] = { operator = "\\int", low = { i(1, "\\infty") }, upp = { i(2, "\\infty") } },
-  ["dint1"] = { operator = "\\int", low = { i(1, "\\infty") }, upp = { i(2, "\\infty") } },
-  ["dintr"] = { operator = "\\int", low = { i(1, "0") }, upp = { i(2, "\\infty") } },
-  ["sum"] = { operator = "\\sum", low = { i(1, "n=0") }, upp = { i(3, "\\infty") } },
-  ["sumi"] = { operator = "\\sum", low = { i(1, "i=0") }, upp = { i(3, "n") } },
-  ["sumin"] = { operator = "\\sum", low = { i(1, "n \\in \\N") }, upp = {} },
-  ["prod"] = { operator = "\\prod", low = { i(1, "n=0") }, upp = { i(3, "\\infty") } },
-  ["prodi"] = { operator = "\\prod", low = { i(1, "i=0") }, upp = { i(3, "n") } },
-  ["lim"] = { operator = "\\lim", low = { i(1, "n"), t "\\to", i(2, "\\infty") }, upp = {} },
-  ["lim0"] = { operator = "\\lim", low = { i(1, "n"), t "\\to", i(2, "0") }, upp = {} },
+  ["\\int_"] = { operator = "\\int", low = { i(1, "S") } },
+  ["\\int "] = { operator = "\\int", low = { i(1, "-\\infty") }, upp = { i(2, "\\infty") } },
+  ["\\int1 "] = { operator = "\\int", low = { i(1, "0") }, upp = { i(2, "1") } },
+  ["\\intr "] = { operator = "\\int", low = { i(1, "0") }, upp = { i(2, "\\infty") } },
+  ["\\sum_"] = { operator = "\\sum", low = { i(1, "n \\in \\N") } },
+  ["\\sum "] = { operator = "\\sum", low = { i(1, "i"), t "=", i(2, "0") }, upp = { i(3, "n") } },
+  ["\\sumi "] = { operator = "\\sum", low = { i(1, "i"), t "=", i(2, "0") }, upp = { i(3, "\\infty") } },
+  ["\\prod "] = { operator = "\\prod", low = { i(1, "i"), t "=", i(2, "0") }, upp = { i(3, "n") } },
+  ["\\prodi "] = { operator = "\\prod", low = { i(1, "i"), t "=", i(2, "0") }, upp = { i(3, "\\infty") } },
+  -- TODO: improve placeholders
+  -- ["\\sum "] = { operator = "\\sum", low = { i(1, "i=0") }, upp = { i(3, "n") } },
+  -- ["\\sumi "] = { operator = "\\sum", low = { i(1, "n=0") }, upp = { i(3, "\\infty") } },
+  -- ["\\prod "] = { operator = "\\prod", low = { i(1, "n=0") }, upp = { i(3, "\\infty") } },
+  -- ["\\prodi "] = { operator = "\\prod", low = { i(1, "i=0") }, upp = { i(3, "n") } },
+  ["\\lim "] = { operator = "\\lim", low = { i(1, "n"), t "\\to", i(2, "\\infty") } },
+  ["\\lim_"] = { operator = "\\lim", low = { i(1, "n"), t "\\to", i(2, "\\infty") } },
+  ["\\lim0 "] = { operator = "\\lim", low = { i(1, "n"), t "\\to", i(2, "0") } },
+  ["lmt "] = { operator = "", low = { i(1) }, upp = { i(2) } },
+  ["lmt_"] = { operator = "", low = { i(1) } },
+  ["lmt^"] = { operator = "", upp = { i(1) } },
 }
 local pairsubs = setmetatable({ -- Autopairs will complete the closing for most of these
   ["{"] = "", -- "}",
@@ -364,10 +379,13 @@ list_extend(auto, {
 for k, v in pairs(intlike) do
   local snip = { t(v.operator .. "\\limits_{") }
   list_extend(snip, v.low)
-  list_extend(snip, { t "}^{" })
-  list_extend(snip, v.upp)
-  list_extend(snip, { t "}", i(0) })
-  list_extend(auto, { ms(k .. " ", snip) })
+  list_extend(snip, { t "}" })
+  if v.upp then
+    list_extend(snip, { t "^{" })
+    list_extend(snip, v.upp)
+    list_extend(snip, { t "}" })
+  end
+  list_extend(auto, { ms(k, snip) })
 end
 
 ----------------------------------------------------------------------
