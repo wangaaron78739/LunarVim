@@ -1,12 +1,13 @@
 local M = {}
+local texsym, _ = require("nvim-web-devicons").get_icon("main.tex", "tex")
 local iconmap = {
   buffer = "   [Buffer]",
   path = "   [Path]",
   nvim_lsp = "   [LSP]",
-  -- luasnip = "   [Snippet]",
-  luasnip = "",
-  nvim_lua = "[Lua]",
-  latex_symbols = "[Latex]",
+  -- luasnip = "   [Luasnip]",
+  spell = "暈[Spell]",
+  nvim_lua = " [Lua]",
+  latex_symbols = texsym .. " [Latex]",
   calc = "   [Calc]",
 }
 local default_sources = {
