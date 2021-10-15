@@ -6,6 +6,20 @@ local t = function(k)
   return termcodes(k, true, true, true)
 end
 
+function M.else_meta(tbl, fallback)
+  return setmetatable(tbl, { -- Return always true
+    __index = function(tbl, key)
+      return fallback
+    end,
+  })
+end
+function M.else_true(tbl)
+  return M.else_meta(tbl, true)
+end
+function M.else_false(tbl)
+  return M.else_meta(tbl, false)
+end
+
 function M.dump(...)
   local objects, v = {}, nil
   for i = 1, select("#", ...) do

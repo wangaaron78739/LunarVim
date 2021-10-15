@@ -196,13 +196,15 @@ return packer.startup(function(use)
   --   keys = {"gc", "gC"},
   -- }
   use {
-    "numToStr/Comment.nvim",
+    "IndianBoy42/Comment.nvim",
     config = function()
       require("Comment").setup {
         mappings = {
           ---Includes `gcc`, `gcb`, `gc[count]{motion}` and `gb[count]{motion}`
           basic = true,
           ---Includes `g>`, `g<`, `g>[count]{motion}` and `g<[count]{motion}`
+          extended = true,
+          ---Includes gco, gcO, gcA
           extra = true,
         },
         toggler = { line = "gcc", block = "gCC" },
@@ -1163,7 +1165,7 @@ return packer.startup(function(use)
   use {
     "Pocco81/Catppuccino.nvim",
     config = function()
-      local trues = setmetatable({
+      local trues = utils.else_true {
         native_lsp = {
           enabled = true,
           virtual_text = {
@@ -1188,11 +1190,7 @@ return packer.startup(function(use)
           enabled = true,
           colored_indent_levels = true,
         },
-      }, { -- Return always true
-        __index = function(tbl, key)
-          return true
-        end,
-      })
+      }
       require("catppuccino").setup {
         colorscheme = "dark_catppuccino", -- neon_latte
         styles = {

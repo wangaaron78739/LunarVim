@@ -474,9 +474,9 @@ function M.setup()
   map("n", "gb", "<c-o>", nore)
   map("n", "GB", "<c-i>", nore)
 
-  -- Commenting helpers
-  map("n", "gcO", "O-<esc>gccA<BS>", sile)
-  map("n", "gco", "o-<esc>gccA<BS>", sile)
+  -- -- Commenting helpers
+  -- map("n", "gcO", "O-<esc>gccA<BS>", sile)
+  -- map("n", "gco", "o-<esc>gccA<BS>", sile)
 
   -- Select last pasted
   map("n", "gp", "`[v`]", sile)
@@ -629,6 +629,7 @@ function M.setup()
     map("n", "<M-" .. key .. ">", "va" .. key, {})
   end
   quick_inside "w"
+  quick_inside "p"
   quick_inside "W"
   quick_inside "b"
   quick_inside "B"
