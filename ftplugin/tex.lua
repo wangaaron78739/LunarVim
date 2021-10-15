@@ -80,13 +80,8 @@ require("lv-cmp").sources {
     { name = "luasnip" },
     { name = "nvim_lsp" },
     { name = "buffer" },
+    { name = "spell" },
   },
-}
-
-require("cmp").setup.buffer {
-  -- completion = {
-  --   autocomplete = false,
-  -- },
 }
 
 require("luasnip").snippets.tex = require("lv-luasnips.tex").snips
