@@ -1,14 +1,25 @@
 local M = {}
 -- output = buffer, consolation, echo, quickfix, terminal, or none
+local runme = {
+  command = "./%",
+  output = "terminal",
+}
 local runthis = {
   default_task = "run",
   tasks = {
-    run = {
-      command = "./%",
-      output = "terminal",
-    },
+    run = runme,
   },
 }
+local function strip_ext(name)
+  -- TODO:
+  return name
+end
+local function curr_file_name()
+  return strip_ext(vim.fn.expand "%")
+end
+local function get_root_dir()
+  return vim.lsp.buf.list_workspace_folders()[0]
+end
 local tasks = {
   lua = {
     tasks = {
@@ -21,12 +32,25 @@ local tasks = {
   c = {
     default_task = "build_and_run",
     tasks = {
+      -- One file
       build = {
-        command = "gcc main.c -o main",
+        -- command = "gcc main.c -o main",
+        command = function()
+          return "gcc % -o " .. curr_file_name() .. ".o"
+        end,
+        output = "quickfix",
+      },
+      build_release = {
+        -- command = "gcc main.c -o main",
+        command = function()
+          return "gcc -O3 % -o " .. curr_file_name() .. ".o"
+        end,
         output = "quickfix",
       },
       run = {
-        command = "./main",
+        command = function()
+          return "./" .. curr_file_name() .. ".o"
+        end,
         output = "consolation",
       },
       build_and_run = {
@@ -38,6 +62,45 @@ local tasks = {
           })
         end,
         type = "lua",
+      },
+
+      -- cmake
+      cmake_build = {
+        command = function()
+          local root = get_root_dir()
+          return "cmake --build " .. root
+        end,
+        output = "quickfix",
+      },
+      cmake_gen = {
+        command = function()
+          local root = get_root_dir()
+          return "cmake -S " .. root .. "-B " .. root .. "/build"
+        end,
+        output = "quickfix",
+      },
+      cmake_gen_release = {
+        command = function()
+          local root = get_root_dir()
+          return "cmake -S " .. root .. "-B " .. root .. "/build -DCMAKE_BUILD_TYPE=Release"
+        end,
+        output = "quickfix",
+      },
+
+      -- TODO: meson
+
+      -- make
+      make = {
+        command = function()
+          local root = get_root_dir()
+          return "cd " .. root .. " && make"
+        end,
+      },
+      ninja = {
+        command = function()
+          local root = get_root_dir()
+          return "cd " .. root .. " && ninja"
+        end,
       },
     },
   },
@@ -52,8 +115,16 @@ local tasks = {
         command = "cargo build",
         output = "quickfix",
       },
+      build_release = {
+        command = "cargo build --release",
+        output = "quickfix",
+      },
       run = {
         command = "cargo run --release",
+        output = "terminal",
+      },
+      run_debug = {
+        command = "cargo run",
         output = "terminal",
       },
       test = {
@@ -68,13 +139,73 @@ local tasks = {
         command = "cargo test --release",
         output = "buffer",
       },
+      install = {
+        command = "cargo install --path .",
+        output = "terminal",
+      },
+      update_deps = {
+        command = "cargo update",
+        output = "terminal",
+      },
+      publish = {
+        command = "cargo publish",
+        output = "terminal",
+      },
     },
   },
   bash = runthis,
   sh = runthis,
   fish = runthis,
+  python = {
+    tasks = {
+      run = {
+        command = "python %",
+        output = "terminal",
+      },
+      run_interactive = {
+        command = "python -i %",
+        output = "terminal",
+      },
+
+      -- Poetry based projects
+      poetry_install = {
+        command = "poetry install",
+        output = "consolation",
+      },
+      poetry_build = {
+        command = "poetry build",
+        output = "consolation",
+      },
+      poetry_shell = {
+        command = "poetry shell",
+        output = "terminal",
+      },
+      poetry_run = {
+        command = "poetry run python %",
+        output = "terminal",
+      },
+      poetry_run_interactive = {
+        command = "poetry run python -i %",
+        output = "terminal",
+      },
+    },
+  },
 }
-local global = {}
+local global = {
+  run_shell = runme,
+  commit_all = {
+    command = "git commit -a",
+    output = "terminal",
+  },
+  git_push = {
+    command = "git push",
+    output = "terminal",
+  },
+  git_pull = {
+    command = "git pull --no-ff",
+    output = "terminal",
+  },
+}
 local opts = {
   output_types = {
     quickfix = {
