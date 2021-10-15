@@ -28,6 +28,7 @@ function M.dump_text(...)
   vim.fn.append(lnum, lines)
   return ...
 end
+vim.cmd [[command! -nargs=+ Lua lua utils.dump(<args>)]]
 
 function M.reload_lv_config()
   -- FIXME: Reloading config breaks things
