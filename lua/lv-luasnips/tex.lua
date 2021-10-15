@@ -377,9 +377,12 @@ list_extend(auto, {
   -- ms("|", { t "|", i(0), t "|" }),
 })
 for k, v in pairs(intlike) do
-  local snip = { t(v.operator .. "\\limits_{") }
-  list_extend(snip, v.low)
-  list_extend(snip, { t "}" })
+  local snip = { t(v.operator .. "\\limits") }
+  if v.low then
+    list_extend(snip, { t "_{" })
+    list_extend(snip, v.low)
+    list_extend(snip, { t "}" })
+  end
   if v.upp then
     list_extend(snip, { t "^{" })
     list_extend(snip, v.upp)
