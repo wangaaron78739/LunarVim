@@ -1,8 +1,4 @@
 require("lsp.config").lspconfig "pyright" {
-  cmd = {
-    DATA_PATH .. "/lspinstall/python/node_modules/.bin/pyright-langserver",
-    "--stdio",
-  },
   settings = {
     python = {
       analysis = {

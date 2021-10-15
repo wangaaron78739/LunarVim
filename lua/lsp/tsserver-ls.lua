@@ -58,10 +58,6 @@ end
 -- end
 M.setup = function()
   require("lsp.config").lspconfig "tsserver" {
-    cmd = {
-      DATA_PATH .. "/lspinstall/typescript/node_modules/.bin/typescript-language-server",
-      "--stdio",
-    },
     filetypes = {
       "javascript",
       "javascriptreact",

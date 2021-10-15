@@ -49,13 +49,14 @@ return packer.startup(function(use)
   use { "neovim/nvim-lspconfig" }
   -- use "williamboman/nvim-lsp-installer"
   use {
-    "kabouzeid/nvim-lspinstall",
-    -- https://github.com/williamboman/nvim-lsp-installer
+    -- "kabouzeid/nvim-lspinstall",
+    "https://github.com/williamboman/nvim-lsp-installer", -- Use this
     -- https://github.com/alexaandru/nvim-lspupdate.git
     config = function()
       require "lv-lspinstall"
     end,
-    cmd = "LspInstall",
+    cmd = { "LspInstall", "LspInstallInfo", "LspUninstall", "LspUninstallAll", "LspInstallLog", "LspPrintInstalled" },
+    module = "nvim-lsp-installer",
   }
 
   -- Utilities

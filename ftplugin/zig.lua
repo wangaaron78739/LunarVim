@@ -4,7 +4,6 @@
 -- https://github.com/zigtools/zls/wiki/Downloading-and-Building-ZLS
 require("lsp.config").lspconfig "zls" {
   root_dir = require("lspconfig").util.root_pattern(".git", "build.zig", "zls.json"),
-  cmd = { DATA_PATH .. "/lspinstall/zig/zls/zls" },
 }
 
 vim.opt_local.commentstring = [[// %s]]

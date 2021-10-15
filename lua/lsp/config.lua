@@ -1,5 +1,4 @@
 local M = {}
-local lsp_status = require "lsp-status"
 
 local function diags(conf)
   return conf and conf.diagnostics and vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, conf.diagnostics)
@@ -52,14 +51,50 @@ else
   end
 end
 
-M.setup = function(lspconfig)
-  return function(obj)
-    lspconfig.setup(M.conf_with(obj))
+local lsp_installer_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
+if lsp_installer_ok then
+  M.try_install = function(name)
+    local ok, server = require("nvim-lsp-installer.servers").get_server(name)
+    if ok then
+      if not server:is_installed() then
+        server:install()
+        return true
+      end
+    end
+
+    return true
+  end
+else
+  M.try_install = function()
+    print "do :LspInstall manually"
+    return false
+  end
+end
+
+M.setup = function(lspconfig, name)
+  if M.try_install(name) and true then
+    return function(obj)
+      local ok, server = require("nvim-lsp-installer.servers").get_server(name)
+      if ok and server:is_installed() then
+        local installopts = server:get_default_options()
+        local opts = M.conf_with(obj)
+        opts.cmd = installopts.cmd
+        if opts.extra_cmd_args then
+          vim.list_extend(opts.cmd, opts.extra_cmd_args)
+        end
+        server:setup(opts)
+      end
+    end
+  else
+    return function(obj)
+      lspconfig.setup(M.conf_with(obj))
+    end
   end
 end
 
 M.caps = function(overrides)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
+  local lsp_status = require "lsp-status"
   overrides = vim.tbl_deep_extend("keep", overrides or {}, lsp_status.capabilities)
   return vim.tbl_deep_extend("keep", overrides, capabilities)
 end
@@ -74,7 +109,7 @@ M.lspconfig = function(name)
     end
   end
 
-  return M.setup(require("lspconfig")[name])
+  return M.setup(require("lspconfig")[name], name)
 end
 
 return M

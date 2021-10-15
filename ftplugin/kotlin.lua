@@ -7,11 +7,6 @@
 --- 	Note that there is no LICENSE specified yet.
 local util = require "lspconfig/util"
 
-local bin_name = DATA_PATH .. "/lspinstall/kotlin/server/bin/kotlin-language-server"
-if vim.fn.has "win32" == 1 then
-  bin_name = bin_name .. ".bat"
-end
-
 local root_files = {
   "settings.gradle", -- Gradle (multi-project)
   "settings.gradle.kts", -- Gradle (multi-project)
@@ -25,7 +20,6 @@ local fallback_root_files = {
 }
 
 require("lsp.config").lspconfig "kotlin_language_server" {
-  cmd = { bin_name },
   root_dir = function(fname)
     return util.root_pattern(unpack(root_files))(fname) or util.root_pattern(unpack(fallback_root_files))(fname)
   end,

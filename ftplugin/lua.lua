@@ -1,9 +1,5 @@
 -- https://github.com/sumneko/lua-language-server/wiki/Build-and-Run-(Standalone)
-local sumneko_root_path = DATA_PATH .. "/lspinstall/lua"
-local sumneko_binary = sumneko_root_path .. "/sumneko-lua-language-server"
-
 require("lsp.config").lspconfig "sumneko_lua" {
-  cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
   settings = {
     Lua = {
       runtime = {
@@ -14,7 +10,7 @@ require("lsp.config").lspconfig "sumneko_lua" {
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
-        globals = { "vim", "O" },
+        globals = { "vim", "O", "utils", "mappings", "DATA_PATH", "CONFIG_PATH" },
       },
       workspace = {
         -- Make the server aware of Neovim runtime files

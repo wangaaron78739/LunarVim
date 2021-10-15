@@ -62,7 +62,6 @@ if conf.fontsize then
 end
 
 require("lsp.config").lspconfig "texlab" {
-  cmd = { DATA_PATH .. "/lspinstall/latex/texlab" },
   filetypes = conf.filetypes,
   settings = {
     texlab = conf.texlab,

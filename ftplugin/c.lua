@@ -29,11 +29,7 @@ table.insert(clangd_flags, "--cross-file-rename")
 table.insert(clangd_flags, "--header-insertion=never")
 
 require("lsp.config").lspconfig "clangd" {
-  cmd = {
-    DATA_PATH .. "/lspinstall/cpp/clangd/bin/clangd",
-    unpack(clangd_flags),
-  },
-
+  extra_cmd_args = clangd_flags,
   commands = {
     ClangdSwitchSourceHeader = {
       function()

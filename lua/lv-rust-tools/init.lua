@@ -111,8 +111,6 @@ function M.setup()
     -- these override the defaults set by rust-tools.nvim
     -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
     server = require("lsp.config").conf_with {
-      cmd = { DATA_PATH .. "/lspinstall/rust/rust-analyzer" },
-
       settings = {
         ["rust-analyzer"] = {
           checkOnSave = {

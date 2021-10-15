@@ -3,6 +3,7 @@ _G.DATA_PATH = vim.fn.stdpath "data"
 _G.CACHE_PATH = vim.fn.stdpath "cache"
 _G.PLUGIN_PATH = _G.DATA_PATH .. "site/pack/*/start/*"
 _G.TERMINAL = vim.fn.expand "$TERMINAL"
+_G.LSP_INSTALL_PATH = DATA_PATH .. "/lspinstall"
 
 -- TODO: Cleanup this config struct
 O = {
