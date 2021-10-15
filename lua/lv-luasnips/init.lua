@@ -15,7 +15,6 @@ function M.setup()
     -- minimal increase in priority.
     ext_prio_increase = 1,
     store_selection_keys = "<tab>",
-    
 
     ext_opts = {
       [types.choiceNode] = { active = { virt_text = { { "●", "GlyphPalette2" } } } },
@@ -70,14 +69,6 @@ function M.setup()
         i(0),
         nlt [[return M]],
       }),
-      pa(
-        { trig = "if", name = "if" },
-        [[
-if $1 {
-  ${2:$TM_SELECTED_TEXT}
-}
-      ]]
-      ),
       s("link_url", {
         t '<a href="',
         f(function(_, snip)
