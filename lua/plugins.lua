@@ -197,7 +197,7 @@ return packer.startup(function(use)
   --   keys = {"gc", "gC"},
   -- }
   use {
-    "IndianBoy42/Comment.nvim",
+    "numToStr/Comment.nvim",
     config = function()
       require("Comment").setup {
         mappings = {

@@ -136,10 +136,10 @@ function M.neoterm()
 end
 
 function M.magma()
-  vim.cmd [[ command! MagmaStart :lua require("lv-terms").activate_magma() ]]
+  vim.cmd [[ command! -nargs=* MagmaStart :lua require("lv-terms").activate_magma("<args>") ]]
 end
 
-function M.activate_magma()
+function M.activate_magma(kernel)
   vim.cmd("MagmaInit " .. (vim.b.lv_magma_kernel or ""))
   mappings.localleader {
     x = "Magma",
