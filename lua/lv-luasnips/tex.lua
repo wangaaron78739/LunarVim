@@ -186,6 +186,7 @@ local math_maps = {
   ["OO"] = "Op",
   ["to"] = "to",
   ["&&"] = "&",
+  ["%%"] = "%",
   ["\\m"] = "setminus",
   "argmin",
   "because",
@@ -288,13 +289,11 @@ list_extend(auto, {
   ms("matt ", { t { "\\begin{matrix}", "" }, i(0), t { "", "\\end{matrix}" } }),
   ms("bmat ", { t { "\\begin{bmatrix}", "" }, i(0), t { "", "\\end{bmatrix}" } }),
   ms("pmat ", { t { "\\begin{pmatrix}", "" }, i(0), t { "", "\\end{pmatrix}" } }),
-  ms("\\[ ", { t { "\\begin{bmatrix}", "" }, i(0), t { "", "\\end{bmatrix}" } }),
-  ms("\\( ", { t { "\\begin{pmatrix}", "" }, i(0), t { "", "\\end{pmatrix}" } }),
   s("matt ", { t { "\\[\\begin{matrix}", "" }, i(0), t { "", "\\end{matrix}\\]" } }),
   s("bmat ", { t { "\\[\\begin{bmatrix}", "" }, i(0), t { "", "\\end{bmatrix}\\]" } }),
   s("pmat ", { t { "\\[\\begin{pmatrix}", "" }, i(0), t { "", "\\end{pmatrix}\\]" } }),
   -- Simple text modifier commands
-  nms("bf{", { t "\\textbf{", i(0) }),
+  s("bf{", { t "\\textbf{", i(0) }),
   nms("it{", { t "\\textit{", i(0) }),
   ms("tt{", { t "\\text{", i(0) }),
   ms("bm{", { t "\\mathbf{", i(0) }),
@@ -314,28 +313,6 @@ list_extend(auto, {
   ms(nw "\\quad\\,", t "\\qquad "),
   ms(nw "\\,,", t "\\quad"),
   ms(nw ",,", t "\\,"),
-  -- Subscripting and superscripting
-  ms(
-    re [[([A-Za-z])([A-Za-z])([A-Za-z])]],
-    f(function(_, arg)
-      local cap = arg.captures
-      if cap[2] == cap[3] then
-        return string.format("%s_%s", cap[1], cap[2])
-      else
-        return arg.trigger
-      end
-    end, {})
-  ),
-  ms(renw "__([^%s_])", { t "_{", sub(1), i(0), t "}" }),
-  ms(renw "%^%^([^%s_])", { t "^{", sub(1), i(0), t "}" }),
-  ms(renw [[(%S) ([%^_])]], { sub(1), sub(2) }), -- Remove extra ws sub/superscript
-  ms(renw [[([A-Za-z%}%]%)])(%d)]], { sub(1), t "_", sub(2) }), -- Auto subscript
-  ms(renw [[([A-Za-z%}%]%)]) ?_(%d%d)]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
-  ms(renw [[([A-Za-z%}%]%)]) ?_([%+%-] ?[%d%w])]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
-  ms(renw [[([A-Za-z%}%]%)]) ?_([%+%-]? ?%\%w+) ]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
-  ms(renw [[([A-Za-z%}%]%)]) ?%^ ?(%d%d)]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
-  ms(renw [[([A-Za-z%}%]%)]) ?%^([%+%-] ?[%d%w])]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
-  ms(renw [[([A-Za-z%}%]%)]) ?%^([%+%-]? ?%\%w+) ]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
   -- TODO: whitespace before and after operators
   -- TODO: line 203 and below
   -- ms(re [[(%w[ ,%)%]%}])to]], { sub(1), t "\\to" }),
@@ -375,6 +352,28 @@ list_extend(auto, {
   ms("rfl", { t "\\rfloor" }),
   ms("&=", { t "&=", i(0), t " \\\\" }), -- TODO: detect align environment?
   -- ms("|", { t "|", i(0), t "|" }),
+  -- Subscripting and superscripting
+  ms(
+    re [[([A-Za-z])([A-Za-z])([A-Za-z])]],
+    f(function(_, arg)
+      local cap = arg.captures
+      if cap[2] == cap[3] then
+        return string.format("%s_%s", cap[1], cap[2])
+      else
+        return arg.trigger
+      end
+    end, {})
+  ),
+  ms(renw "__([^%s_])", { t "_{", sub(1), i(0), t "}" }),
+  ms(renw "%^%^([^%s_])", { t "^{", sub(1), i(0), t "}" }),
+  ms(renw [[(%S) ([%^_])]], { sub(1), sub(2) }), -- Remove extra ws sub/superscript
+  ms(renw [[([A-Za-z%}%]%)])(%d)]], { sub(1), t "_", sub(2) }), -- Auto subscript
+  ms(renw [[([A-Za-z%}%]%)]) ?_(%d%d)]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
+  ms(renw [[([A-Za-z%}%]%)]) ?_([%+%-] ?[%d%w])]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
+  ms(renw [[([A-Za-z%}%]%)]) ?_([%+%-]? ?%\%w+) ]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
+  ms(renw [[([A-Za-z%}%]%)]) ?%^ ?(%d%d)]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
+  ms(renw [[([A-Za-z%}%]%)]) ?%^([%+%-] ?[%d%w])]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
+  ms(renw [[([A-Za-z%}%]%)]) ?%^([%+%-]? ?%\%w+) ]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
 })
 for k, v in pairs(intlike) do
   local snip = { t(v.operator .. "\\limits") }
