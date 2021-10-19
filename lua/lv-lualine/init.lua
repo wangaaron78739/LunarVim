@@ -66,8 +66,8 @@ end
 local gps_statusline = { gps.get_location, cond = gps.is_available }
 local ts_statusline = require("nvim-treesitter").statusline
 
-local get_lsp_clients = function(msg)
-  msg = msg or "LSP Inactive"
+local get_lsp_clients = function()
+  local msg = "LSP Inactive"
   local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
   local clients = vim.lsp.get_active_clients()
   if next(clients) == nil then
@@ -117,7 +117,7 @@ require("lualine").setup {
     lualine_a = { "mode" },
     lualine_b = { filename, gps_statusline },
     lualine_c = { ts_statusline, lsp_statusline },
-    lualine_x = { Qmacro, diff, diagnostics },
+    lualine_x = { diff, diagnostics },
     lualine_y = { get_lsp_clients, filetype, "branch" },
     lualine_z = { "location" },
   },
