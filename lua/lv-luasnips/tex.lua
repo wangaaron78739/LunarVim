@@ -133,6 +133,7 @@ local both_maps = {
   "infty",
   "iff",
   ["..."] = "ldots",
+   "vdots",
   ["=>"] = "implies",
   ["=<"] = "impliedby",
   ["->"] = "to",
@@ -171,6 +172,9 @@ local math_maps = {
   [">>"] = "gg",
   ["<<"] = "ll",
   ["xx"] = "times",
+  ["ox"] = "otimes",
+  ["o+"] = "oplus",
+  ["o*"] = "circ",
   ["**"] = "cdot",
   ["||"] = "mid",
   ["+-"] = "pm",
@@ -261,7 +265,8 @@ for k, v in pairs(both_maps) do -- FIXME: deal with already existing backslash (
   -- local lhs = "([^%\\])" .. v
   -- local lhs = "([%p])" .. v
   list_extend(auto, { ms(lhs, t("\\" .. v)) })
-  list_extend(auto, { nms(lhs .. " ", t("$\\" .. v .. "$ ")) })
+  -- list_extend(auto, { nms(lhs .. " ", t("$\\" .. v .. "$ ")) })
+  list_extend(auto, { nms(lhs .. " ", t("\\(\\" .. v .. "\\) ")) })
 end
 
 for k, v in pairs(math_maps) do
