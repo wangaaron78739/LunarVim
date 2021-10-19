@@ -18,8 +18,84 @@ local function curr_file_name()
   return strip_ext(vim.fn.expand "%")
 end
 local function get_root_dir()
-  return vim.lsp.buf.list_workspace_folders()[0]
+  return vim.lsp.buf.list_workspace_folders()[1] or vim.fn.getcwd()
 end
+local ctasks = {
+  default_task = "build_and_run",
+  tasks = {
+    -- One file
+    build = {
+      -- command = "gcc main.c -o main",
+      command = function()
+        return "gcc % -o " .. curr_file_name() .. ".o"
+      end,
+      output = "quickfix",
+    },
+    build_release = {
+      -- command = "gcc main.c -o main",
+      command = function()
+        return "gcc -O3 % -o " .. curr_file_name() .. ".o"
+      end,
+      output = "quickfix",
+    },
+    run = {
+      command = function()
+        return "./" .. curr_file_name() .. ".o"
+      end,
+      output = "terminal",
+    },
+    build_and_run = {
+      command = function()
+        require("yabs"):run_task("build", {
+          on_exit = function()
+            require("yabs").languages.c:run_task "run"
+          end,
+        })
+      end,
+      type = "lua",
+    },
+
+    -- cmake
+    cmake_build = {
+      command = function()
+        local root = get_root_dir()
+        return "cmake --build " .. root .. "/build"
+      end,
+      output = "quickfix",
+    },
+    cmake_gen = {
+      command = function()
+        local root = get_root_dir()
+        return "cmake -S " .. root .. "-B " .. root .. "/build"
+      end,
+      output = "quickfix",
+    },
+    cmake_gen_release = {
+      command = function()
+        local root = get_root_dir()
+        return "cmake -S " .. root .. "-B " .. root .. "/build -DCMAKE_BUILD_TYPE=Release"
+      end,
+      output = "quickfix",
+    },
+
+    -- TODO: meson
+
+    -- make
+    make = {
+      command = function()
+        local root = get_root_dir()
+        return "cd " .. root .. " && make"
+      end,
+    },
+    ninja = {
+      command = function()
+        local root = get_root_dir()
+        return "cd " .. root .. " && ninja"
+      end,
+    },
+  },
+}
+
 local tasks = {
   lua = {
     tasks = {
@@ -29,81 +105,10 @@ local tasks = {
       },
     },
   },
-  c = {
-    default_task = "build_and_run",
-    tasks = {
-      -- One file
-      build = {
-        -- command = "gcc main.c -o main",
-        command = function()
-          return "gcc % -o " .. curr_file_name() .. ".o"
-        end,
-        output = "quickfix",
-      },
-      build_release = {
-        -- command = "gcc main.c -o main",
-        command = function()
-          return "gcc -O3 % -o " .. curr_file_name() .. ".o"
-        end,
-        output = "quickfix",
-      },
-      run = {
-        command = function()
-          return "./" .. curr_file_name() .. ".o"
-        end,
-        output = "consolation",
-      },
-      build_and_run = {
-        command = function()
-          require("yabs"):run_task("build", {
-            on_exit = function()
-              require("yabs").languages.c:run_task "run"
-            end,
-          })
-        end,
-        type = "lua",
-      },
-
-      -- cmake
-      cmake_build = {
-        command = function()
-          local root = get_root_dir()
-          return "cmake --build " .. root
-        end,
-        output = "quickfix",
-      },
-      cmake_gen = {
-        command = function()
-          local root = get_root_dir()
-          return "cmake -S " .. root .. "-B " .. root .. "/build"
-        end,
-        output = "quickfix",
-      },
-      cmake_gen_release = {
-        command = function()
-          local root = get_root_dir()
-          return "cmake -S " .. root .. "-B " .. root .. "/build -DCMAKE_BUILD_TYPE=Release"
-        end,
-        output = "quickfix",
-      },
-
-      -- TODO: meson
-
-      -- make
-      make = {
-        command = function()
-          local root = get_root_dir()
-          return "cd " .. root .. " && make"
-        end,
-      },
-      ninja = {
-        command = function()
-          local root = get_root_dir()
-          return "cd " .. root .. " && ninja"
-        end,
-      },
-    },
-  },
+  c = ctasks,
+  cpp = ctasks,
+  h = ctasks,
+  hpp = ctasks,
   rust = {
     default_task = "check",
     tasks = {
@@ -157,6 +162,7 @@ local tasks = {
   sh = runthis,
   fish = runthis,
   python = {
+    default_task = "run",
     tasks = {
       run = {
         command = "python %",
@@ -170,11 +176,11 @@ local tasks = {
       -- Poetry based projects
       poetry_install = {
         command = "poetry install",
-        output = "consolation",
+        output = "terminal",
       },
       poetry_build = {
         command = "poetry build",
-        output = "consolation",
+        output = "terminal",
       },
       poetry_shell = {
         command = "poetry shell",

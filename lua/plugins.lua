@@ -755,12 +755,7 @@ return packer.startup(function(use)
   use {
     "pianocomposer321/yabs.nvim",
     config = function()
-      require("yabs"):setup {
-        languages = require("lv-yabs").tasks,
-        tasks = require("lv-yabs").global,
-        opts = require("lv-yabs").opts,
-      }
-      require("telescope").load_extension "yabs"
+      require("lv-yabs").config()
     end,
     module = { "yabs", "telescope._extensions.yabs" },
     disable = not O.plugin.yabs,
