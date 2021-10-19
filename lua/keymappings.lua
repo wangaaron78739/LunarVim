@@ -566,6 +566,7 @@ function M.setup()
 
   -- Quick activate macro
   map("n", "Q", "@q", nore)
+  map("x", "Q", "@q", nore)
   -- Run macro on each line
   map("x", "<M-q>", ":normal @q<CR>", nore)
   map("x", ".", ":normal .<CR>", nore)
