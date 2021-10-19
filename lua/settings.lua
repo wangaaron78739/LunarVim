@@ -98,7 +98,7 @@ require("lv-utils").define_augroups {
   },
   _packer_compile = { { "User", "PackerComplete", "++once PackerCompile" } },
   _buffer_bindings = { { "FileType", "dashboard", "nnoremap <silent> <buffer> q :q<CR>" } },
-  _terminal_insert = { { "BufEnter", "term://*", "startinsert" } },
+  _terminal_insert = { { "BufEnter", "term://*", "startinsert" }, { "BufLeave", "term://*", "stopinsert" } },
   -- will check for external file changes on cursor hold
   _auto_reload = { { "CursorHold", "*", "silent! checktime" } },
   -- will cause split windows to be resized evenly if main window is resized
