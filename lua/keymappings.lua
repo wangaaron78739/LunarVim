@@ -846,6 +846,7 @@ function M.setup()
       a = { do_code_action, "Code Action (K)" },
       h = { lspbuf.hover, "Code Action (gh)" },
       I = { cmd "LspInfo", "Info" },
+      i = { cmd "LspInstallInfo", "Install Info" },
       -- TODO: What is the replacement for this?
       -- f = { cmd"Lspsaga lsp_finder", "LSP Finder" },
       -- p = { cmd"Lspsaga preview_definition", "Preview Definition" },
