@@ -39,9 +39,21 @@ function M.setup()
   end
 
   local confirmopts = {
-    behavior = cmp.ConfirmBehavior.Insert,
-    select = true,
+    select = false,
   }
+
+  local function double_mapping(invisible, visible)
+    return cmp.mapping(function()
+      if cmp.visible() then
+        visible()
+      else
+        invisible()
+      end
+    end)
+  end
+  local function complete_or(mapping)
+    return double_mapping(cmp.complete, mapping)
+  end
 
   cmp.setup {
     snippet = {
@@ -53,7 +65,9 @@ function M.setup()
       completeopt = "menu,menuone,noinsert",
       -- autocomplete = false,
     },
-    -- experimental = { ghost_text = true },
+    preselect = cmp.PreselectMode.None,
+    -- confirmation = { default_behavior = cmp.ConfirmBehavior.Replace },
+    experimental = { ghost_text = true },
 
     documentation = {
       border = "single",
@@ -65,24 +79,20 @@ function M.setup()
     },
 
     mapping = {
-      ["<C-p>"] = cmp.mapping.select_prev_item(),
-      ["<C-n>"] = cmp.mapping.select_next_item(),
       ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-      ["<C-f>"] = cmp.mapping.scroll_docs(4),
-      ["<C-e>"] = cmp.mapping.close(),
+      ["<C-u>"] = cmp.mapping.scroll_docs(4),
+      -- ["<C-p>"] = cmp.mapping.select_prev_item(),
+      -- ["<C-n>"] = cmp.mapping.select_next_item(),
       ["<esc>"] = cmp.mapping.close(),
+      ["<C-p>"] = complete_or(cmp.select_prev_item),
+      ["<C-n>"] = complete_or(cmp.select_next_item),
       ["<M-h>"] = cmp.mapping.close(),
-      ["<M-l>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.confirm(confirmopts)
-          -- feedkeys(t "<C-l>", "m", false) -- confirm
-        else
-          cmp.complete()
-          -- feedkeys(t "<C-space>", "m", false) -- complete
-        end
-      end),
-      ["<C-space>"] = cmp.mapping.complete(),
-      ["<C-l>"] = cmp.mapping.confirm(confirmopts),
+      ["<M-j>"] = complete_or(cmp.select_prev_item),
+      ["<M-k>"] = complete_or(cmp.select_next_item),
+      ["<M-l>"] = complete_or(cmp.confirm),
+      ["<Left>"] = cmp.mapping.confirm(confirmopts),
+      ["<Right>"] = cmp.mapping.confirm(confirmopts),
+      ["<CR>"] = cmp.mapping.confirm(confirmopts),
       ["<tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           -- feedkeys(t "<C-n>", "n", false)
@@ -113,10 +123,6 @@ function M.setup()
         "i",
         "s",
       }),
-      ["<CR>"] = cmp.mapping.confirm {
-        behavior = cmp.ConfirmBehavior.Insert,
-        select = false,
-      },
     },
 
     -- You should specify your *installed* sources.
