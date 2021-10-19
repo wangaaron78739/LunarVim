@@ -12,7 +12,8 @@ O = {
   auto_close_tree = false,
   fold_columns = "0",
   theme = "DarkCatppuccino",
-  lighttheme = "ModusOperandi", -- Paper is good but incompatible with notify.nvim
+  lighttheme = "Paper", -- Paper is good but incompatible with notify.nvim
+  -- lighttheme = "Zenbones",
   fontsize = 10,
   bigfontsize = 14,
   auto_complete = true,
@@ -45,6 +46,8 @@ O = {
   signcolumn = "number", -- "yes" for always
   notify = {
     timeout = 2000, -- 5000 default
+    stages = "fade_in_slide_out",
+    background_colour = "Normal",
   },
   breakpoint_sign = { text = "🛑", texthl = "LspDiagnosticsSignError", linehl = "", numhl = "" },
   lsp = {

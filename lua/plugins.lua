@@ -628,7 +628,14 @@ return packer.startup(function(use)
     disable = not O.plugin.lightbulb,
   }
 
-  use { "RishabhRD/popfix" }
+  use {
+    "hood/popui.nvim",
+    config = function()
+      vim.g.popui_border_style = O.lsp.border
+      -- vim.ui.select = require "popui.ui-overrider"
+    end,
+    requires = "RishabhRD/popfix",
+  }
   use {
     "RishabhRD/nvim-lsputils",
     config = function()
@@ -637,6 +644,7 @@ return packer.startup(function(use)
       -- end
       -- utils.define_augroups(O.plugin.lsputils.aus)
     end,
+    requires = "RishabhRD/popfix",
   }
   use {
     "weilbith/nvim-code-action-menu",
@@ -1151,6 +1159,7 @@ return packer.startup(function(use)
   use {
     "rktjmp/lush.nvim",
     cmd = { "LushRunQuickstart", "LushRunTutorial", "Lushify" },
+    module = "lush",
     disable = not O.plugin.lush,
   }
   -- Colorbuddy colorscheme helper

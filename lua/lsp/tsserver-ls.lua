@@ -71,6 +71,7 @@ M.setup = function()
     -- This makes sure tsserver is not used for formatting (I prefer prettier)
     settings = { documentFormatting = false },
   }
+  require("lsp.config").lspconfig "eslint" {}
 end
 
 return M

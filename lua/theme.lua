@@ -3,6 +3,7 @@
 -- My fav/common themes
 vim.cmd [[
 command! Zenbones colorscheme zenbones
+command! Nordbones colorscheme nordbones
 command! LightMelya colorscheme light_melya
 command! Nebulous lua require'theme'.nebulous()
 command! DarkCatppuccino colorscheme dark_catppuccino

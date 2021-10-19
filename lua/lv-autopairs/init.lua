@@ -32,8 +32,8 @@ require("nvim-treesitter.configs").setup { autopairs = { enable = true } }
 local ts_conds = require "nvim-autopairs.ts-conds"
 
 npairs.add_rules {
-  R("%", "%", "lua"):with_pair(ts_conds.is_ts_node { "string", "comment" }),
-  R("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node { "function" }),
+  -- R("%", "%", "lua"):with_pair(ts_conds.is_ts_node { "string", "comment" }),
+  -- R("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node { "function" }),
   R("|", "|", "rust"),
   -- R("if ", " then\nend", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
   -- R("for ", " in", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
