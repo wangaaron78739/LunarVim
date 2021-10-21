@@ -62,7 +62,7 @@ O = {
       signs = true,
       underline = true,
       severity_sort = true,
-      update_in_insert = false, -- FIXME: fucks around with the rendering
+      update_in_insert = true, -- FIXME: fucks around with the rendering
     },
     codeLens = {
       virtual_text = { spacing = 0, prefix = "" },

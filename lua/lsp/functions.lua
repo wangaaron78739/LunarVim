@@ -239,16 +239,38 @@ local popup_diagnostics_opts = {
   border = O.lsp.border,
 }
 M.diag_line = function()
-  diags.show_line_diagnostics(popup_diagnostics_opts)
+  if diags.open_float then
+    diags.open_float(0, vim.tbl_deep_extend("keep", { scope = "line" }, popup_diagnostics_opts))
+  else
+    diags.show_line_diagnostics(popup_diagnostics_opts)
+  end
 end
 M.diag_cursor = function()
-  diags.show_cursor_diagnostics(popup_diagnostics_opts)
+  if diags.open_float then
+    diags.open_float(0, vim.tbl_deep_extend("keep", { scope = "cursor" }, popup_diagnostics_opts))
+  else
+    diags.show_cursor_diagnostics(popup_diagnostics_opts)
+  end
+end
+M.diag_buffer = function()
+  if diags.open_float then
+    diags.open_float(0, vim.tbl_deep_extend("keep", { scope = "buffer" }, popup_diagnostics_opts))
+  else
+  end
 end
 M.diag_next = function()
-  diags.goto_next { popup_opts = popup_diagnostics_opts }
+  diags.goto_next {
+    enable_popup = true,
+    popup_opts = popup_diagnostics_opts,
+    float = popup_diagnostics_opts,
+  }
 end
 M.diag_prev = function()
-  diags.goto_prev { popup_opts = popup_diagnostics_opts }
+  diags.goto_prev {
+    enable_popup = true,
+    popup_opts = popup_diagnostics_opts,
+    float = popup_diagnostics_opts,
+  }
 end
 
 M.common_on_attach = function(client, bufnr)
