@@ -18,10 +18,17 @@ venv-install:
     ~/.config/nvim/.venv/bin/python3.9 -m pip install cairosvg pnglatex jupyter_client ipython pillow plotly kaleido
 
 ext-install:
-    cargo install selene stylua 
+    cargo install stylua 
+    pipx install --force black 
+    pipx install --force isort
+    pipx install --force proselint
+    pipx install --force cmakelang
+    pipx install --force flake8
     pipx install --force neovim-remote
     pipx install --force ueberzug
     npm install -g tree-sitter-cli
+    npm install -g markdownlint-cli
+    npm install -g write-good
 
 # TODO: install in an isolated virtual environment? (use pipx)
 # Install dependencies # TODO: there are some dependencies not included here
