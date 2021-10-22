@@ -718,11 +718,11 @@ function M.setup()
 
   -- TODO: support vim-sandwich in the which-key menus
   local leaderMappings = {
-    [":"] = { telescope_fn.commands, "Commands" },
+    [";"] = { telescope_fn.commands, "Commands" },
     [" "] = { name = "Electric Boogaloo" },
     ["*"] = "Search obj",
     ["#"] = "Search(bwd) obj",
-    [";"] = { cmd "Dashboard", "Dashboard" },
+    -- [";"] = { cmd "Dashboard", "Dashboard" },
     ["/"] = { telescope_fn.live_grep, "Global search" },
     f = { telescope_fn.find_files, "Find File" },
     [ldr_goto_next] = "Jump next (])",
@@ -844,16 +844,17 @@ function M.setup()
     l = {
       name = "LSP",
       a = { do_code_action, "Code Action (K)" },
-      h = { lspbuf.hover, "Code Action (gh)" },
-      I = { cmd "LspInfo", "Info" },
-      i = { cmd "LspInstallInfo", "Install Info" },
+      h = { lspbuf.hover, "Hover (gh)" },
+      i = {
+        l = { cmd "LspInfo", "LSP" },
+        n = { cmd "NulllsInfo", "Null-ls" },
+        i = { cmd "LspInstallInfo", "LspInstall" },
+        t = { cmd "TSConfigInfo", "Treesitter" },
+      },
       -- TODO: What is the replacement for this?
       -- f = { cmd"Lspsaga lsp_finder", "LSP Finder" },
       -- p = { cmd"Lspsaga preview_definition", "Preview Definition" },
-      r = { telescope_fn.lsp_references, "References" },
       t = { lspbuf.type_definition, "Type Definition" },
-      s = { lspbuf.signature_help, "Signature Help" },
-      T = { cmd "TSConfigInfo", "Info" },
       f = { lspbuf.formatting, "Format" },
     },
     s = {
@@ -861,6 +862,7 @@ function M.setup()
       [" "] = { telescope_fn.resume, "Redo last" },
       n = { telescope_fn "notify.notify()", "Notifications" },
       c = { telescope_fn.colorscheme, "Colorscheme" },
+      a = { telescope_fn.lsp_code_actions, "Code Actions" },
       s = { telescope_fn.lsp_document_symbols, "Document Symbols" },
       S = { telescope_fn.lsp_dynamic_workspace_symbols, "Workspace Symbols" },
       d = { telescope_fn.lsp_document_diagnostics, "Document Diagnostics" },
