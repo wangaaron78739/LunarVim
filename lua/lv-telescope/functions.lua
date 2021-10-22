@@ -116,7 +116,9 @@ local cursor_menu = themes.get_cursor {
   layout_config = { height = 0.5, width = 0.75 },
 }
 function M.lsp_code_actions()
-  builtins.lsp_code_actions(cursor_menu)
+  builtins.lsp_code_actions(vim.tbl_deep_extend("keep", { layout_config = {
+    width = 0.3,
+  } }, cursor_menu))
 end
 
 function M.lsp_references()
