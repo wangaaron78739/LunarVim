@@ -9,23 +9,24 @@ local builtins = require "telescope.builtin"
 local M = {}
 
 M.commands = {}
-M.commands.rg = {
-  "rg",
-  "--color=never",
-  "--no-config",
-  "--no-heading",
-  "--with-filename",
-  "--line-number",
-  "--column",
-  "--smart-case",
-  "--ignore",
-  "--hidden",
-}
-M.commands.fd = {}
-for i, v in ipairs(M.commands.rg) do
-  M.commands.fd[i] = v
+function rg(ignore, hidden, files)
+  return {
+    "rg",
+    "--color=never",
+    "--no-config",
+    "--no-heading",
+    "--with-filename",
+    "--line-number",
+    "--column",
+    "--smart-case",
+    ignore and "--ignore" or "--no-ignore",
+    hidden and "--hidden" or "--no-hidden",
+    files and "--files" or nil,
+  }
 end
-table.insert(M.commands.fd, "--files")
+M.commands.rg = rg(true, true, false)
+-- M.commands.fd = vim.list_extend(vim.deepcopy(M.commands.rg), { "--files" })
+M.commands.fd = rg(true, true, true)
 
 M.set_prompt_to_entry_value = function(prompt_bufnr)
   local entry = action_state.get_selected_entry()
@@ -203,17 +204,15 @@ function M.help_tags()
   }
 end
 
-function M.find_files()
-  -- require("telescope").extensions.frecency.frecency()
-  builtins.fd {
-    -- find_command = { "fd", "--hidden", "--follow", "--type f" },
-    file_ignore_patterns = { "node_modules", ".pyc" },
+function M.live_grep_all()
+  builtins.find_files {
+    find_command = rg(false, false, false),
   }
 end
 
-function M.search_all_files()
+function M.find_all_files()
   builtins.find_files {
-    find_command = { "rg", "--no-ignore", "--files" },
+    find_command = rg(false, false, true),
   }
 end
 
@@ -289,13 +288,8 @@ function M.git_commits()
   }
 end
 
-function M.search_only_certain_files()
-  local cmd = {}
-  for i, v in ipairs(M.commands.fd) do
-    cmd[i] = v
-  end
-  table.insert(cmd, "--type")
-  table.insert(cmd, vim.fn.input "Type: ")
+function M.find_only_certain_files(ignore)
+  local cmd = vim.tbl_extend(rg(ignore, ignore, true), { "--type", vim.fn.input "Type: " })
   builtins.find_files {
     find_command = cmd,
   }
