@@ -57,6 +57,20 @@ local function lsp_attach_buffers()
   vim.cmd [[do User LspAttachBuffers]]
 end
 
+M.get_cmd = function(name, extra_cmd_args)
+  if lsp_installer_exists then
+    local ok, server = require("nvim-lsp-installer.servers").get_server(name)
+    local installopts = server:get_default_options()
+    local cmd = installopts.cmd
+    if extra_cmd_args then
+      vim.list_extend(cmd, extra_cmd_args)
+    end
+    return cmd
+  else
+  return name -- FIXME: this is basically wrong af
+  end
+end
+
 M.setup = function(lspconfig, name)
   if lsp_installer_exists then
     local ok, server = require("nvim-lsp-installer.servers").get_server(name)
@@ -68,7 +82,7 @@ M.setup = function(lspconfig, name)
       if opts.extra_cmd_args then
         vim.list_extend(opts.cmd, opts.extra_cmd_args)
       end
-      server:setup()
+      server:setup(opts)
       lsp_attach_buffers()
     end
 

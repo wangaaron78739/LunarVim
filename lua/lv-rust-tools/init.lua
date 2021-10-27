@@ -10,6 +10,8 @@ function M.ftplugin()
   nore("x", "gh", "<cmd>RustHoverRange<CR>", { buffer = true })
   nore("n", "gh", "<cmd>RustHoverActions<CR>", { buffer = true })
   nore("n", "gj", "<cmd>RustJoinLines<CR>", { buffer = true })
+  nore("n", "K", "<cmd>RustCodeAction<CR>", { buffer = true })
+  nore("x", "K", "<cmd>RustCodeAction<CR>", { buffer = true })
   mappings.ftleader {
     pR = { "<CMD>RustRunnables<CR>", "Rust Run" },
     pd = { "<CMD>RustDebuggables<CR>", "Rust Debug" },
@@ -111,6 +113,7 @@ function M.setup()
     -- these override the defaults set by rust-tools.nvim
     -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
     server = require("lsp.config").conf_with {
+      cmd = require("lsp.config").get_cmd "rust_analyzer",
       settings = {
         ["rust-analyzer"] = {
           checkOnSave = {
