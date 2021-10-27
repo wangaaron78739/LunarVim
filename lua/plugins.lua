@@ -124,6 +124,7 @@ return packer.startup(function(use)
   use { "hrsh7th/cmp-nvim-lsp", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "hrsh7th/cmp-calc", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "hrsh7th/cmp-nvim-lua", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
+  use { "hrsh7th/cmp-cmdline", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "f3fora/cmp-spell", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   -- Tabout
   use {
@@ -1013,6 +1014,7 @@ return packer.startup(function(use)
       require("lv-wilder").config()
     end,
     run = ":UpdateRemotePlugins",
+    disable = not O.plugin.wilder,
     -- event = "CmdlineEnter",
   }
 

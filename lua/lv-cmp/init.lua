@@ -11,22 +11,31 @@ local iconmap = {
   calc = "   [Calc]",
 }
 local default_sources = {
-  { name = "luasnip" },
-  { name = "nvim_lsp" },
-  { name = "buffer" },
-  { name = "path" },
-  -- { name = "latex_symbols" },
-  { name = "calc" },
-  -- { name = "cmp_tabnine" },
+  {
+    { name = "luasnip" },
+    { name = "nvim_lsp" },
+  },
+  {
+    { name = "buffer" },
+    { name = "path" },
+    -- { name = "latex_symbols" },
+    { name = "calc" },
+    -- { name = "cmp_tabnine" },
+  },
 }
 function M.sources(list)
-  require("cmp").setup.buffer(list)
+  local cmp = require "cmp"
+  cmp.setup.buffer { sources = cmp.config.sources(list) }
+end
+function M.autocomplete(enable)
+  require("cmp").setup.buffer { completion = { autocomplete = enable } }
 end
 function M.add_sources(list)
   M.sources(vim.list_extend(list, default_sources))
 end
 function M.setup()
   local cmp = require "cmp"
+  local lspkind = require "lspkind"
   local luasnip = require "luasnip"
 
   local t = function(str)
@@ -86,12 +95,14 @@ function M.setup()
       ["<esc>"] = cmp.mapping.close(),
       ["<C-p>"] = complete_or(cmp.select_prev_item),
       ["<C-n>"] = complete_or(cmp.select_next_item),
+      ["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
+      ["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
       ["<M-h>"] = cmp.mapping.close(),
       ["<M-j>"] = complete_or(cmp.select_prev_item),
       ["<M-k>"] = complete_or(cmp.select_next_item),
       ["<M-l>"] = complete_or(cmp.confirm),
-      ["<Left>"] = cmp.mapping.confirm(confirmopts),
-      ["<Right>"] = cmp.mapping.confirm(confirmopts),
+      -- ["<Left>"] = cmp.mapping.close(confirmopts),
+      -- ["<Right>"] = cmp.mapping.confirm(confirmopts),
       ["<CR>"] = cmp.mapping.confirm(confirmopts),
       ["<tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
@@ -126,18 +137,37 @@ function M.setup()
     },
 
     -- You should specify your *installed* sources.
-    sources = default_sources,
+    sources = cmp.config.sources(default_sources),
 
     formatting = {
-      format = function(entry, vim_item)
-        -- fancy icons and a name of kind
-        vim_item.kind = require("lspkind").presets.default[vim_item.kind] .. " " .. vim_item.kind
-        -- set a name for each source
-        vim_item.menu = iconmap[entry.source.name]
-        return vim_item
-      end,
+      format = lspkind.cmp_format(O.plugin.cmp.lspkind),
     },
+    -- formatting = {
+    --   format = function(entry, vim_item)
+    --     -- fancy icons and a name of kind
+    --     vim_item.kind = require("lspkind").presets.default[vim_item.kind] .. " " .. vim_item.kind
+    --     -- set a name for each source
+    --     vim_item.menu = iconmap[entry.source.name]
+    --     return vim_item
+    --   end,
+    -- },
   }
+
+  -- Use buffer source for `/`.
+  cmp.setup.cmdline("/", {
+    sources = {
+      { name = "buffer" },
+    },
+  })
+
+  -- Use cmdline & path source for ':'.
+  cmp.setup.cmdline(":", {
+    sources = cmp.config.sources({
+      { name = "path" },
+    }, {
+      { name = "cmdline" },
+    }),
+  })
 end
 
 return M
