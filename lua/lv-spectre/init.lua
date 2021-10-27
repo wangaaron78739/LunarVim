@@ -41,6 +41,11 @@ local maps = {
     cmd = "<cmd>lua require('spectre').change_options('ignore-case')<CR>",
     desc = "toggle ignore case",
   },
+  ["toggle_multiline"] = {
+    map = prefix .. "m",
+    cmd = "<cmd>lua require('spectre').change_options('multiline')<CR>",
+    desc = "toggle search hidden",
+  },
   ["toggle_ignore_hidden"] = {
     map = prefix .. "h",
     cmd = "<cmd>lua require('spectre').change_options('hidden')<CR>",
@@ -76,6 +81,11 @@ M.setup = function()
             value = "--hidden",
             desc = "hidden file",
             icon = "[H]",
+          },
+          ["multiline"] = {
+            value = "--multiline",
+            desc = "multiline search",
+            icon = "[M]",
           },
           -- you can put any option you want here it can toggle with
           -- show_option function
