@@ -33,7 +33,7 @@ M.config = function()
   local map = vim.api.nvim_set_keymap
   local dialmap = function(from, to)
     map("n", from, to, { silent = true })
-    map("v", from, to, { silent = true })
+    map("x", from, to, { silent = true })
   end
   -- 5
   dialmap("<C-a>", "<Plug>(dial-increment)")
