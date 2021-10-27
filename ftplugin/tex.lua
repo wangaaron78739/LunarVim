@@ -74,6 +74,7 @@ require("lsp.config").lspconfig "texlab" {
 --   },
 -- }
 
+require("lv-cmp").autocomplete(false)
 require("lv-cmp").sources {
   { name = "luasnip" },
   { name = "nvim_lsp" },

@@ -134,6 +134,7 @@ local both_maps = {
   "iff",
   "vdots",
   ["..."] = "ldots",
+  [":::"] = "vdots",
   ["=>"] = "implies",
   ["=<"] = "impliedby",
   ["->"] = "to",
@@ -159,12 +160,15 @@ local math_maps = {
   ["null"] = "emptyset",
   "cup",
   "cap",
+  ["bcup"] = "bigcup",
+  ["bcap"] = "bigcap",
   "vee",
   "wedge",
   "vdash",
   "models",
   [">="] = "geq",
-  ["t=="] = "triangeq",
+  ["=="] = "equiv",
+  ["t=="] = "triangleq",
   ["<="] = "leq",
   ["!="] = "neq",
   ["~="] = "approx",
@@ -191,7 +195,6 @@ local math_maps = {
   ["to"] = "to",
   ["&&"] = "&",
   ["%%"] = "%",
-  ["\\m"] = "setminus",
   "argmin",
   "because",
   "therefore",
@@ -207,7 +210,10 @@ local math_maps = {
   "therefore",
   "sum",
   "prod",
+  "iiint",
+  "iint",
   "int",
+  "oint",
   "lim",
 }
 list_extend(math_maps, trig_fns)
@@ -281,9 +287,9 @@ end
 list_extend(auto, {
   s("---- ", { t { "\\hline", "" } }),
   lns("--", t "\\item"),
-  lns("s ", { t "\\section{", i(0), t "}" }),
-  lns("ss ", { t "\\subsection{", i(0), t "}" }),
-  lns("sss ", { t "\\subsubsection{", i(0), t "}" }),
+  lns("s{", { t "\\section{", i(0) }),
+  lns("ss{", { t "\\subsection{", i(0) }),
+  lns("sss{", { t "\\subsubsection{", i(0) }),
   lns("desc ", { t { "\\begin{description}", "\t\\item[" }, i(1), t { "]" }, i(0), t { "", "\\end{description}" } }),
   lns("ali ", { t { "\\begin{align*}", "" }, i(0), t { "", "\\end{align*}" } }),
   lns("alin ", { t { "\\begin{align}", "" }, i(0), t { "", "\\end{align}" } }),
@@ -294,15 +300,18 @@ list_extend(auto, {
   ms("matt ", { t { "\\begin{matrix}", "" }, i(0), t { "", "\\end{matrix}" } }),
   ms("bmat ", { t { "\\begin{bmatrix}", "" }, i(0), t { "", "\\end{bmatrix}" } }),
   ms("pmat ", { t { "\\begin{pmatrix}", "" }, i(0), t { "", "\\end{pmatrix}" } }),
+  ms("vmat ", { t { "\\begin{vmatrix}", "" }, i(0), t { "", "\\end{vmatrix}" } }),
   s("matt ", { t { "\\[\\begin{matrix}", "" }, i(0), t { "", "\\end{matrix}\\]" } }),
   s("bmat ", { t { "\\[\\begin{bmatrix}", "" }, i(0), t { "", "\\end{bmatrix}\\]" } }),
   s("pmat ", { t { "\\[\\begin{pmatrix}", "" }, i(0), t { "", "\\end{pmatrix}\\]" } }),
+  s("vmat ", { t { "\\[\\begin{vmatrix}", "" }, i(0), t { "", "\\end{vmatrix}\\]" } }),
   -- Simple text modifier commands
   -- TODO: extract this
   s("bf{", { t "\\textbf{", i(0) }),
   s("it{", { t "\\textit{", i(0) }),
   ms("bm{", { t "\\mathbf{", i(0) }),
   ms("bb{", { t "\\mathbb{", i(0) }),
+  ms("op{", { t "\\mathop{", i(0) }),
   ms("tt{", { t "\\text{", i(0) }),
   ms("rt{", { t "\\sqrt{", i(0) }),
   ms("cal{", { t "\\mathcal{", i(0) }),
@@ -326,7 +335,7 @@ list_extend(auto, {
   ms(re [[(%\?[%w%^]+)%.,]], { t "\\vec{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)%. ]], { t "\\dot{", sub(1), t "} " }),
   ms(re [[(%\?[%w%^]+)%.%.]], { t "\\ddot{", sub(1), t "}" }),
-  ms(re [[(%\?[%w%^]+)^~]], { t "\\tilde{", sub(1), t "}" }),
+  ms(re [[(%\?[%w%^]+)~]], { t "\\tilde{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)^bar]], { t "\\overline{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)^hat]], { t "\\hat{", sub(1), t "}" }),
   ms("bar", { t "\\overline{", i(0), t "}" }),
@@ -334,6 +343,7 @@ list_extend(auto, {
   ms("iprod", { t "\\iprod{", i(0), t "}" }),
   ms(re "(%b{})/", { t "\\frac", sub(1), t "{", i(0), t "}" }),
   ms(re "(%\\?%w+)/", { t "\\frac{", sub(1), t "}{", i(0), t "}" }),
+  ms(re "(%b{})c/", { t "\\binom", sub(1), t "{", i(0), t "}" }),
   ms("//", { t "\\frac{", i(1), t "}{", i(0), t "}" }),
   -- TODO: binomial
   ms(re [[([%w^]+)sr]], { sub(1), t "^2", i(0) }),
@@ -356,7 +366,9 @@ list_extend(auto, {
   ms("lcl", { t "\\lceil" }),
   ms("rcl", { t "\\rceil" }),
   ms("rfl", { t "\\rfloor" }),
+  -- ms("&", { t "&", i(0), t " \\\\" }), -- TODO: detect align environment?
   ms("&=", { t "&=", i(0), t " \\\\" }), -- TODO: detect align environment?
+  ms(re "&(\\%w+) ", { t "&", sub(1), t " ", i(0), t " \\\\" }), -- TODO: detect align environment?
   -- ms("|", { t "|", i(0), t "|" }),
   -- Subscripting and superscripting
   ms(

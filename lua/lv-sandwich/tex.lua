@@ -8,6 +8,7 @@ M.recipes = {
   { __filetype__ = "tex", buns = { '"`', "\\\"'" }, nesting = 1, input = { 'L"' } },
   { __filetype__ = "tex", buns = { ",,", "``" }, nesting = 1, input = { "l," } },
   { __filetype__ = "tex", buns = { "<<", ">>" }, nesting = 1, input = { "l<" } },
+  { __filetype__ = "tex", buns = { "&", "\\\\" }, nesting = 1, input = { "&" } },
   { __filetype__ = "tex", buns = { "$", "$" }, nesting = 0 },
   {
     __filetype__ = "tex",
@@ -39,7 +40,7 @@ M.recipes = {
   },
   {
     __filetype__ = "tex",
-    buns = { "\\left(", "\\right)" },
+    buns = { "\\left( ", " \\right)" },
     nesting = 1,
     input = { "m(" },
     action = { "add" },
@@ -47,7 +48,7 @@ M.recipes = {
   },
   {
     __filetype__ = "tex",
-    buns = { "\\left[", "\\right]" },
+    buns = { "\\left[ ", " \\right]" },
     nesting = 1,
     input = { "m[" },
     action = { "add" },
@@ -55,14 +56,14 @@ M.recipes = {
   },
   {
     __filetype__ = "tex",
-    buns = { "\\left|", "\\right|" },
+    buns = { "\\left| ", " \\right|" },
     nesting = 1,
     input = { "m|" },
     action = { "add" },
   },
   {
     __filetype__ = "tex",
-    buns = { "\\left\\{", "\\right\\}" },
+    buns = { "\\left\\{ ", " \\right\\}" },
     nesting = 1,
     input = { "m{" },
     action = { "add" },
