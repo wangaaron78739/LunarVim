@@ -58,7 +58,11 @@ function M.setup()
       else
         invisible()
       end
-    end)
+    end, {
+      "i",
+      "s",
+      "c",
+    })
   end
   local function complete_or(mapping)
     return double_mapping(cmp.complete, mapping)
@@ -88,52 +92,75 @@ function M.setup()
     },
 
     mapping = {
-      ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-      ["<C-u>"] = cmp.mapping.scroll_docs(4),
+      ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+      ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
       -- ["<C-p>"] = cmp.mapping.select_prev_item(),
       -- ["<C-n>"] = cmp.mapping.select_next_item(),
-      ["<esc>"] = cmp.mapping.close(),
       ["<C-p>"] = complete_or(cmp.select_prev_item),
       ["<C-n>"] = complete_or(cmp.select_next_item),
-      ["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
-      ["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
-      ["<M-h>"] = cmp.mapping.close(),
-      ["<M-j>"] = complete_or(cmp.select_prev_item),
-      ["<M-k>"] = complete_or(cmp.select_next_item),
+      ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select }, { "i", "c" }),
+      ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select }, { "i", "c" }),
+      ["<M-j>"] = complete_or(cmp.select_next_item),
+      ["<M-k>"] = complete_or(cmp.select_prev_item),
       ["<M-l>"] = complete_or(cmp.confirm),
+      ["<M-h>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
+      ["<esc>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
       -- ["<Left>"] = cmp.mapping.close(confirmopts),
-      -- ["<Right>"] = cmp.mapping.confirm(confirmopts),
-      ["<CR>"] = cmp.mapping.confirm(confirmopts),
-      ["<tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          -- feedkeys(t "<C-n>", "n", false)
-          cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
-          feedkeys(t "<Plug>luasnip-expand-or-jump", "", false)
-        elseif check_back_space() then
-          feedkeys(t "<tab>", "n", false)
-        else
-          feedkeys(t "<Plug>(Tabout)", "", false)
-          -- fallback()
-        end
-      end, {
-        "i",
-        "s",
-      }),
-      ["<S-tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          -- feedkeys(t "<C-p>", "n", false)
-          cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          feedkeys(t "<Plug>luasnip-jump-prev", "", false)
-        else
-          feedkeys(t "<Plug>(TaboutBack)", "", false)
-          -- fallback()
-        end
-      end, {
-        "i",
-        "s",
-      }),
+      ["<Right>"] = cmp.mapping {
+        c = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = false },
+      },
+      ["<CR>"] = cmp.mapping {
+        i = cmp.mapping.confirm(confirmopts),
+        -- c = function(fallback)
+        --   if cmp.visible() then
+        --     cmp.confirm { behavior = cmp.ConfirmBehavior.Replace, select = false }
+        --   else
+        --     fallback()
+        --   end
+        -- end,
+      },
+      ["<tab>"] = cmp.mapping {
+        c = function()
+          if cmp.visible() then
+            cmp.select_next_item { behavior = cmp.SelectBehavior.Insert }
+          else
+            cmp.complete()
+          end
+        end,
+        i = function()
+          if cmp.visible() then
+            -- feedkeys(t "<C-n>", "n", false)
+            cmp.select_next_item()
+          elseif luasnip.expand_or_jumpable() then
+            feedkeys(t "<Plug>luasnip-expand-or-jump", "", false)
+          elseif check_back_space() then
+            feedkeys(t "<tab>", "n", false)
+          else
+            feedkeys(t "<Plug>(Tabout)", "", false)
+            -- fallback()
+          end
+        end,
+      },
+      ["<S-tab>"] = cmp.mapping {
+        c = function()
+          if cmp.visible() then
+            cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }
+          else
+            cmp.complete()
+          end
+        end,
+        i = function()
+          if cmp.visible() then
+            -- feedkeys(t "<C-p>", "n", false)
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            feedkeys(t "<Plug>luasnip-jump-prev", "", false)
+          else
+            feedkeys(t "<Plug>(TaboutBack)", "", false)
+            -- fallback()
+          end
+        end,
+      },
     },
 
     -- You should specify your *installed* sources.
