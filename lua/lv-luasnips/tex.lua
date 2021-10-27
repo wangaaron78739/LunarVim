@@ -309,7 +309,7 @@ list_extend(auto, {
   -- TODO: extract this
   s("bf{", { t "\\textbf{", i(0) }),
   s("it{", { t "\\textit{", i(0) }),
-  ms("bm{", { t "\\mathbf{", i(0) }),
+  ms("bm{", { t "\\bm{", i(0) }),
   ms("bb{", { t "\\mathbb{", i(0) }),
   ms("op{", { t "\\mathop{", i(0) }),
   ms("tt{", { t "\\text{", i(0) }),
