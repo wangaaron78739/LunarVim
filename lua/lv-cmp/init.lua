@@ -25,13 +25,13 @@ local default_sources = {
 }
 function M.sources(list)
   local cmp = require "cmp"
-  cmp.setup.buffer { sources = cmp.config.sources(list) }
+  cmp.setup.buffer { sources = cmp.config.sources(unpack(list)) }
 end
 function M.autocomplete(enable)
   require("cmp").setup.buffer { completion = { autocomplete = enable } }
 end
-function M.add_sources(list)
-  M.sources(vim.list_extend(list, default_sources))
+function M.add_sources(highprio, lowprio)
+  M.sources(vim.list_extend(vim.list_extend({ highprio }, default_sources), { lowprio }))
 end
 function M.setup()
   local cmp = require "cmp"
@@ -76,7 +76,7 @@ function M.setup()
     },
     completion = {
       completeopt = "menu,menuone,noinsert",
-      -- autocomplete = false,
+      -- autocomplete = true,
     },
     preselect = cmp.PreselectMode.None,
     -- confirmation = { default_behavior = cmp.ConfirmBehavior.Replace },
@@ -164,7 +164,7 @@ function M.setup()
     },
 
     -- You should specify your *installed* sources.
-    sources = cmp.config.sources(default_sources),
+    sources = cmp.config.sources(unpack(default_sources)),
 
     formatting = {
       format = lspkind.cmp_format(O.plugin.cmp.lspkind),
