@@ -42,7 +42,7 @@ function M.config()
       -- diagnostics.hadolint,
       diagnostics.cppcheck,
       diagnostics.flake8,
-      diagnostics.pylint,
+      -- diagnostics.pylint,
       -- diagnostics.hadolint,
       -- -- diagnostics.luacheck,
       diagnostics.write_good,

@@ -144,7 +144,7 @@ function M.activate_magma(kernel)
   mappings.localleader {
     x = "Magma",
     ["xx"] = { "<cmd>MagmaEvaluateLine<CR>", "Run Line" },
-    ["x<cr>"] = { "<cmd>MagmaReevaluateCell<CR>", "Run Cell" },
+    ["x,"] = { "<cmd>MagmaReevaluateCell<CR>", "Run Cell" },
     ["xd"] = { "<cmd>MagmaDelete<CR>", "Magma Delete" },
     t = "Terminal",
     ["to"] = { "<cmd>MagmaShowOutput<cr>", "Magma Output" },

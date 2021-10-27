@@ -724,6 +724,7 @@ function M.setup()
     ["#"] = "Search(bwd) obj",
     -- [";"] = { cmd "Dashboard", "Dashboard" },
     ["/"] = { telescope_fn.live_grep, "Global search" },
+    ["?"] = { telescope_fn.live_grep_all, "Global search" },
     f = { telescope_fn.find_files, "Find File" },
     F = { telescope_fn.find_all_files, "Find all Files" },
     [ldr_goto_next] = "Jump next (])",
@@ -848,7 +849,7 @@ function M.setup()
       h = { lspbuf.hover, "Hover (gh)" },
       i = {
         l = { cmd "LspInfo", "LSP" },
-        n = { cmd "NulllsInfo", "Null-ls" },
+        n = { cmd "NullLsInfo", "Null-ls" },
         i = { cmd "LspInstallInfo", "LspInstall" },
         t = { cmd "TSConfigInfo", "Treesitter" },
       },
@@ -993,6 +994,7 @@ function M.setup()
     local spectre = luareq "spectre"
     leaderMappings["rf"] = { spectre.open_file_search, "Current File" }
     leaderMappings["/"][1] = spectre.open
+    -- leaderMappings["?"][1] = spectre.open_no_ignore
     leaderMappings["rp"] = { spectre.open, "Project" }
     vLeaderMappings["rf"] = { spectre "open_visual({path = vim.fn.expand('%')})", "Current File" }
     vLeaderMappings["rp"] = { spectre.open_visual, "Project" }

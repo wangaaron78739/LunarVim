@@ -216,6 +216,7 @@ return packer.startup(function(use)
         -- end,
       }
     end,
+    module = "Comment",
     keys = { "gc", "gC" },
   }
 
@@ -235,7 +236,7 @@ return packer.startup(function(use)
 
   -- Status Line and Bufferline
   use {
-    "shadmansaleh/lualine.nvim",
+    "nvim-lualine/lualine.nvim",
     config = function()
       require "lv-lualine"
     end,

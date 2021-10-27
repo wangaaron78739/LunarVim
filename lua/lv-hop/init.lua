@@ -28,6 +28,7 @@ M.keymaps = function(leaderMappings)
       W = { prefix .. "hint_cWORD()<cr>", "cWORD" },
       h = { prefix .. "hint_locals()<cr>", "Locals" },
       d = { prefix .. "hint_definitions()<cr>", "Definitions" },
+      -- g = { prefix .. "hint_locals()<cr>gd", "Go to Definition of" },
       r = { prefix .. "hint_references()<cr>", "References" },
       u = { prefix .. "hint_references(nil, '<cword>')<cr>", "Usages" },
       s = { prefix .. "hint_scopes()<cr>", "Scopes" },
