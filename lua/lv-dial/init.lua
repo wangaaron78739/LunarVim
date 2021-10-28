@@ -12,18 +12,32 @@ M.config = function()
     }
     table.insert(dial.config.searchlist.normal, "custom#" .. name)
   end
-  local function enum_cyclic_chars(charstr)
+  local function string_to_list(charstr)
     local charlist = {}
     charstr:gsub(".", function(c)
       vim.list_extend(charlist, { c })
       return c
     end)
-
+    return charlist
+  end
+  local function enum_cyclic_chars(charstr)
+    local charlist = string_to_list(charstr)
     enum_cyclic(charstr, charlist)
   end
 
   enum_cyclic("boolean", { "true", "false" })
   enum_cyclic("Boolean", { "True", "False" })
+  local function cycle(v, pre)
+    return {
+      pre .. v,
+      pre .. "{" .. v .. "+1}",
+      pre .. "{" .. v .. "-1}",
+    }
+  end
+  -- for _, v in ipairs(string_to_list "ijkxyzmn") do
+  --   enum_cyclic("_" .. v, cycle(v, "_"))
+  --   enum_cyclic("^" .. v, cycle(v, "^"))
+  -- end
   enum_cyclic_chars "ijk"
   enum_cyclic_chars "xyz"
   enum_cyclic_chars "uvw"
