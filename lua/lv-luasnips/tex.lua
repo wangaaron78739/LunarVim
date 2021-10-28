@@ -370,18 +370,19 @@ list_extend(auto, {
   ms("&=", { t "&=", i(0), t " \\\\" }), -- TODO: detect align environment?
   ms(re "&(\\%w+) ", { t "&", sub(1), t " ", i(0), t " \\\\" }), -- TODO: detect align environment?
   -- ms("|", { t "|", i(0), t "|" }),
+
   -- Subscripting and superscripting
-  ms(
-    re [[([A-Za-z])([A-Za-z])([A-Za-z])]],
-    f(function(_, arg)
-      local cap = arg.captures
-      if cap[2] == cap[3] then
-        return string.format("%s_%s", cap[1], cap[2])
-      else
-        return arg.trigger
-      end
-    end, {})
-  ),
+  -- ms(
+  --   re [[([A-Za-z])([A-Za-z])([A-Za-z])]],
+  --   f(function(_, arg)
+  --     local cap = arg.captures
+  --     if cap[2] == cap[3] then
+  --       return string.format("%s_%s", cap[1], cap[2])
+  --     else
+  --       return arg.trigger
+  --     end
+  --   end, {})
+  -- ),
   ms(renw "__([^%s_])", { t "_{", sub(1), i(0), t "}" }),
   ms(renw "%^%^([^%s_])", { t "^{", sub(1), i(0), t "}" }),
   ms(renw [[(%S) ([%^_])]], { sub(1), sub(2) }), -- Remove extra ws sub/superscript

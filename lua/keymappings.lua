@@ -652,10 +652,12 @@ function M.setup()
   -- "better" end and beginning of line
   map("o", "H", "^", {})
   map("o", "L", "$", {})
+  map("o", "=", "g_", {})
   -- map("n", "H", "^", {})
   map("n", "H", "^", sile)
   map("n", "^", [[col('.') == match(getline('.'),'\S')+1 ? '0' : '^']], norexpr) -- do ^ first then 0
   map("n", "L", "$", {})
+  map("n", "=", "g_", {})
 
   -- map("n", "m-/", "")
 
