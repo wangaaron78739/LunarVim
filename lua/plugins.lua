@@ -34,6 +34,22 @@ return packer.startup(function(use)
   -- Packer can manage itself as an optional plugin
   use "wbthomason/packer.nvim"
   use "lewis6991/impatient.nvim" -- Will be merged in https://github.com/neovim/neovim/pull/15436
+  use {
+    "nathom/filetype.nvim",
+    setup = function()
+      vim.g.did_load_filetypes = 1
+    end,
+    config = function()
+      require("filetype").setup {
+        overrides = {
+          extensions = {
+            kbd = "kmonad",
+            fish = "fish",
+          },
+        },
+      }
+    end,
+  }
 
   use_rock { "f-strings", "penlight" }
 
