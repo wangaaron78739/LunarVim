@@ -102,8 +102,14 @@ function M.setup()
       -- ["<C-n>"] = cmp.mapping.select_next_item(),
       ["<C-p>"] = complete_or(cmp.select_prev_item),
       ["<C-n>"] = complete_or(cmp.select_next_item),
-      ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select }, { "i", "c" }),
-      ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select }, { "i", "c" }),
+      ["<Down>"] = cmp.mapping {
+        i = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
+        c = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+      },
+      ["<Up>"] = cmp.mapping {
+        i = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
+        c = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+      },
       ["<M-j>"] = complete_or(cmp.select_next_item),
       ["<M-k>"] = complete_or(cmp.select_prev_item),
       ["<M-l>"] = complete_or(cmp.confirm),
@@ -184,9 +190,9 @@ function M.setup()
   cmp.setup.cmdline(":", {
     sources = cmp.config.sources({
       { name = "path" },
-      { name = "cmdline_history" },
-    }, {
       { name = "cmdline" },
+    }, {
+      { name = "cmdline_history" },
     }),
   })
 end
