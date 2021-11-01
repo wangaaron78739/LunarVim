@@ -127,10 +127,13 @@ return packer.startup(function(use)
   use { "hrsh7th/cmp-cmdline", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "f3fora/cmp-spell", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "petertriho/cmp-git", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
+  use { "dmitmel/cmp-cmdline-history", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
+  -- https://github.com/davidsierradz/cmp-conventionalcommits
   -- https://github.com/lukas-reineke/cmp-under-comparator
   -- https://github.com/lukas-reineke/cmp-rg
   -- https://github.com/David-Kunz/cmp-npm
   -- https://github.com/hrsh7th/cmp-emoji
+  -- https://github.com/jc-doyle/cmp-pandoc-references
   -- Tabout
   use {
     "abecodes/tabout.nvim",
