@@ -22,7 +22,7 @@ local types = require "luasnip.util.types"
 local nl = t { "", "" }
 local list_extend = vim.list_extend
 local tbl_extend = vim.tbl_extend
-local conds = require "luasnip.extras.conditions"
+local conds = require "luasnip.extras.conditions" or require "luasnip.extras.expand_conditions"
 
 local function fmt(fn, ipairs)
   if ipairs == nil then
@@ -337,6 +337,7 @@ list_extend(auto, {
   ms(re [[(%\?[%w%^]+)%.%.]], { t "\\ddot{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)~]], { t "\\tilde{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)^bar]], { t "\\overline{", sub(1), t "}" }),
+  ms(re [[(%\?[%w%^]+)^_]], { t "\\overline{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)^hat]], { t "\\hat{", sub(1), t "}" }),
   ms("bar", { t "\\overline{", i(0), t "}" }),
   ms("hat", { t "\\hat{", i(0), t "}" }),

@@ -16,13 +16,14 @@ local inject_conf = function(obj)
   end
   obj.flags = obj.flags or O.lsp.flags
 
-  if obj.handlers == nil then
-    if obj.diagnostics then
-      obj.handlers = { ["textDocument/publishDiagnostics"] = diags(obj.diagnostics) }
-    end
-  else
-    obj.handlers["textDocument/publishDiagnostics"] = diags(obj.diagnostics)
-  end
+  -- if obj.handlers == nil then
+  --   if obj.diagnostics then
+  --     obj.handlers = { ["textDocument/publishDiagnostics"] = diags(obj.diagnostics) }
+  --   end
+  -- else
+  --   obj.handlers["textDocument/publishDiagnostics"] = diags(obj.diagnostics)
+  -- end
+
   return obj
 end
 M.inject = inject_conf
@@ -67,7 +68,7 @@ M.get_cmd = function(name, extra_cmd_args)
     end
     return cmd
   else
-  return name -- FIXME: this is basically wrong af
+    return name -- FIXME: this is basically wrong af
   end
 end
 

@@ -50,6 +50,10 @@ function M.setup()
   local confirmopts = {
     select = false,
   }
+  local cmdline_confirm = {
+    behavior = cmp.ConfirmBehavior.Replace,
+    select = false,
+  }
 
   local function double_mapping(invisible, visible)
     return cmp.mapping(function()
@@ -104,32 +108,20 @@ function M.setup()
       ["<M-k>"] = complete_or(cmp.select_prev_item),
       ["<M-l>"] = complete_or(cmp.confirm),
       ["<M-h>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
-      ["<esc>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
+      -- ["<esc>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
       -- ["<Left>"] = cmp.mapping.close(confirmopts),
       ["<Right>"] = cmp.mapping {
-        c = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = false },
+        c = cmp.mapping.confirm(cmdline_confirm),
       },
       ["<CR>"] = cmp.mapping {
         i = cmp.mapping.confirm(confirmopts),
-        -- c = function(fallback)
-        --   if cmp.visible() then
-        --     cmp.confirm { behavior = cmp.ConfirmBehavior.Replace, select = false }
-        --   else
-        --     fallback()
-        --   end
-        -- end,
+        -- c = cmp.mapping.confirm(cmdline_confirm),
       },
       ["<tab>"] = cmp.mapping {
-        c = function()
-          if cmp.visible() then
-            cmp.select_next_item { behavior = cmp.SelectBehavior.Insert }
-          else
-            cmp.complete()
-          end
-        end,
+        c = cmp.mapping.confirm(cmdline_confirm),
+        -- i = cmp.mapping.confirm(confirmopts),
         i = function()
           if cmp.visible() then
-            -- feedkeys(t "<C-n>", "n", false)
             cmp.select_next_item()
           elseif luasnip.expand_or_jumpable() then
             feedkeys(t "<Plug>luasnip-expand-or-jump", "", false)

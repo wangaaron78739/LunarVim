@@ -48,7 +48,7 @@ function M.sniprun()
     inline_messages = 0, --# inline_message (0/1) is a one-line way to display messages
     --# to workaround sniprun not being able to display anything
 
-    borders = "single", --# display borders around floating windows
+    borders = O.lsp.border, --# display borders around floating windows
     --# possible values are 'none', 'single', 'double', or 'shadow'
   }
 end
@@ -136,11 +136,18 @@ function M.neoterm()
 end
 
 function M.magma()
-  vim.cmd [[ command! -nargs=* MagmaStart :lua require("lv-terms").activate_magma("<args>") ]]
+  utils.define_augroups {
+    _magma_start = {
+      -- { "User", "MagmaInitPre", [[lua require("lv-terms").activate_magma("<args>")]] },
+      { "User", "MagmaInitPost", [[lua require("lv-terms").activate_magma("<args>")]] },
+      -- { "User", "MagmaDeinitPre", [[lua require("lv-terms").activate_magma("<args>")]] },
+      -- { "User", "MagmaDeinitPost", [[lua require("lv-terms").activate_magma("<args>")]] },
+    },
+  }
 end
 
 function M.activate_magma(kernel)
-  vim.cmd("MagmaInit " .. (vim.b.lv_magma_kernel or ""))
+  -- vim.cmd("MagmaInit " .. (vim.b.lv_magma_kernel or ""))
   mappings.localleader {
     x = "Magma",
     ["xx"] = { "<cmd>MagmaEvaluateLine<CR>", "Run Line" },
