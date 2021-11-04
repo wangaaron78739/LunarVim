@@ -552,6 +552,21 @@ return packer.startup(function(use)
   -- Tmux navigator
   use { "christoomey/vim-tmux-navigator", disable = not O.plugin.tmux_navigator }
 
+  use {
+    "github/copilot.vim",
+    setup = function()
+      vim.g.copilot_no_tab_map = true
+      vim.g.copilot_enabled = true
+      -- vim.g.copilot_filetypes = { ["*"] = false }
+    end,
+    config = function()
+      local map = vim.api.nvim_set_keymap
+      map("i", O.plugin.copilot.key, [[copilot#Accept("")]], { expr = true, silent = true })
+    end,
+    cmd = "Copilot",
+    disable = not O.plugin.copilot,
+  }
+
   -- LANGUAGE SPECIFIC GOES HERE
 
   -- Latex
