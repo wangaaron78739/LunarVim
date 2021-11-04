@@ -46,6 +46,10 @@ return packer.startup(function(use)
             kbd = "kmonad",
             fish = "fish",
           },
+          literals = {
+            Justfile = "just",
+            justfile = "just",
+          },
         },
       }
     end,
@@ -144,7 +148,7 @@ return packer.startup(function(use)
   use { "f3fora/cmp-spell", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "petertriho/cmp-git", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "dmitmel/cmp-cmdline-history", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
-  -- https://github.com/davidsierradz/cmp-conventionalcommits
+  -- https://github.com/davidsierradz/cmp-conventionalcommis
   -- https://github.com/lukas-reineke/cmp-under-comparator
   -- https://github.com/lukas-reineke/cmp-rg
   -- https://github.com/David-Kunz/cmp-npm
@@ -1016,19 +1020,19 @@ return packer.startup(function(use)
   }
 
   -- Doesn't work?
-  use {
-    "famiu/nvim-reload",
-    cmd = { "Reload", "Restart" },
-    config = function()
-      local reload = require "nvim-reload"
-      reload.modules_reload_external = { "packer" }
-      reload.vim_reload_dirs = { CONFIG_PATH, PLUGIN_PATH }
-      reload.lua_reload_dirs = { CONFIG_PATH, PLUGIN_PATH }
-      reload.post_reload_hook = function()
-        vim.cmd "noh"
-      end
-    end,
-  }
+  -- use {
+  --   "famiu/nvim-reload",
+  --   cmd = { "Reload", "Restart" },
+  --   config = function()
+  --     local reload = require "nvim-reload"
+  --     reload.modules_reload_external = { "packer" }
+  --     reload.vim_reload_dirs = { CONFIG_PATH, PLUGIN_PATH }
+  --     reload.lua_reload_dirs = { CONFIG_PATH, PLUGIN_PATH }
+  --     reload.post_reload_hook = function()
+  --       vim.cmd "noh"
+  --     end
+  --   end,
+  -- }
 
   use {
     "AndrewRadev/splitjoin.vim",

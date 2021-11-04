@@ -215,25 +215,26 @@ function M.setup()
   map("n", "g#", srchrpt "#", nore)
 
   -- Command mode typos of wq
-  vim.cmd [[
-    cnoreabbrev W! w!
-    cnoreabbrev Q! q!
-    cnoreabbrev Qa! qa!
-    cnoreabbrev Qall! qall!
-    cnoreabbrev Wq wq
-    cnoreabbrev Wa wa
-    cnoreabbrev wQ wq
-    cnoreabbrev WQ wq
-    cnoreabbrev Wq wq
-    cnoreabbrev qw wq
-    cnoreabbrev Qw wq
-    cnoreabbrev QW wq
-    cnoreabbrev qW wq
-    cnoreabbrev W w
-    cnoreabbrev Q q
-    cnoreabbrev Qa qa
-    cnoreabbrev Qall qall
-]]
+  --   vim.cmd [[
+  --     cnoreabbrev W! w!
+  --     cnoreabbrev Q! q!
+  --     cnoreabbrev Qa! qa!
+  --     cnoreabbrev Qall! qall!
+  --     cnoreabbrev Wq wq
+  --     cnoreabbrev Wa wa
+  --     cnoreabbrev wQ wq
+  --     cnoreabbrev WQ wq
+  --     cnoreabbrev Wq wq
+  --     cnoreabbrev qw wq
+  --     cnoreabbrev Qw wq
+  --     cnoreabbrev QW wq
+  --     cnoreabbrev qW wq
+  --     cnoreabbrev W w
+  --     cnoreabbrev Q q
+  --     cnoreabbrev Qa qa
+  --     cnoreabbrev Qall qall
+  -- ]]
+  vim.cmd [[cnoremap <C-v> '<,'>]]
 
   vim.o.mousetime = 0
   -- map("n", "<2-ScrollWheelUp>", "<nop>", sile)

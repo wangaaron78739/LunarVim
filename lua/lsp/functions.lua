@@ -230,10 +230,8 @@ M.show_codelens = function()
   end
 end
 
--- TODO: what is this?
--- cmd 'command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()'
-
 -- Jump between diagnostics
+-- TODO: clean up and remove the deprecate functions
 local popup_diagnostics_opts = {
   show_header = false,
   border = O.lsp.border,
