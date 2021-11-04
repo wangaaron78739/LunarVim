@@ -1,10 +1,14 @@
 local M = {}
 local hint_with = require("hop").hint_with
-local hopopts = require("hop").opts
 local window = require "hop.window"
-local function get_command_opts(local_opts)
-  -- In case, local opts are defined, chain opts lookup: [user_local] -> [user_global] -> [default]
-  return local_opts and setmetatable(local_opts, { __index = hopopts }) or hopopts
+-- Allows to override global options with user local overrides.
+local function override_opts(opts)
+  local hopopts = require("hop").opts
+  return setmetatable(opts or {}, {
+    __index = function(_, key)
+      return hopopts[key]
+    end,
+  })
 end
 local function ends_with(str, ending)
   return ending == "" or str:sub(-#ending) == ending
@@ -20,32 +24,44 @@ local function treesitter_filter_window(node, context, nodes_set)
   end
 end
 
+local zero_jump_scores = {
+  __index = function(tbl, key)
+    if "number" == type(key) then
+      return { index = key, score = 0 }
+    end
+    return nil
+  end,
+}
+local wrap_targets = function(targets)
+  return {
+    jump_targets = targets,
+    indirect_jump_targets = setmetatable({}, zero_jump_scores),
+  }
+end
+
 -- TODO: performance of these functions may not be optimal
 local treesitter_locals = function(filter, scope)
   if filter == nil then
-    filter = function(loc)
+    filter = function(_)
       return true
     end
   end
-  return {
-    get_hint_list = function(self, hint_opts)
-      local locals = require "nvim-treesitter.locals"
-      local local_nodes = locals.get_locals()
-      local context = window.get_window_context(hint_opts)
+  return function(hint_opts)
+    local locals = require "nvim-treesitter.locals"
+    local local_nodes = locals.get_locals()
+    local context = window.get_window_context(hint_opts)
 
-      -- Make sure the nodes are unique.
-      local nodes_set = {}
-      local scores_set = {}
-      for _, loc in ipairs(local_nodes) do
-        if filter(loc) then
-          locals.recurse_local_nodes(loc, function(_, node, _, match)
-            treesitter_filter_window(node, context, nodes_set)
-          end)
-        end
+    -- Make sure the nodes are unique.
+    local nodes_set = {}
+    for _, loc in ipairs(local_nodes) do
+      if filter(loc) then
+        locals.recurse_local_nodes(loc, function(_, node, _, match)
+          treesitter_filter_window(node, context, nodes_set)
+        end)
       end
-      return { jump_targets = vim.tbl_values(nodes_set), indirect_jump = {} }
-    end,
-  }
+    end
+    return wrap_targets(vim.tbl_values(nodes_set))
+  end
 end
 
 local treesitter_queries = function(query, inners, outers, queryfile)
@@ -56,45 +72,43 @@ local treesitter_queries = function(query, inners, outers, queryfile)
   if outers == nil then
     outers = true
   end
-  return {
-    get_hint_list = function(self, hint_opts)
-      local context = window.get_window_context(hint_opts)
-      local queries = require "nvim-treesitter.query"
-      local tsutils = require "nvim-treesitter.utils"
-      local nodes_set = {}
-      -- utils.dump(queries.collect_group_results(0, "textobjects"))
+  return function(hint_opts)
+    local context = window.get_window_context(hint_opts)
+    local queries = require "nvim-treesitter.query"
+    local tsutils = require "nvim-treesitter.utils"
+    local nodes_set = {}
+    -- utils.dump(queries.collect_group_results(0, "textobjects"))
 
-      local function extract(match)
-        for _, node in pairs(match) do
-          if inners and node.outer then
-            treesitter_filter_window(node.outer.node, context, nodes_set)
-          end
-          if outers and node.inner then
-            treesitter_filter_window(node.inner.node, context, nodes_set)
-          end
+    local function extract(match)
+      for _, node in pairs(match) do
+        if inners and node.outer then
+          treesitter_filter_window(node.outer.node, context, nodes_set)
+        end
+        if outers and node.inner then
+          treesitter_filter_window(node.inner.node, context, nodes_set)
         end
       end
+    end
 
-      if query == nil then
-        for match in queries.iter_group_results(0, queryfile) do
+    if query == nil then
+      for match in queries.iter_group_results(0, queryfile) do
+        extract(match)
+      end
+    else
+      for match in queries.iter_group_results(0, queryfile) do
+        local insert = tsutils.get_at_path(match, query)
+        if insert then
           extract(match)
         end
-      else
-        for match in queries.iter_group_results(0, queryfile) do
-          local insert = tsutils.get_at_path(match, query)
-          if insert then
-            extract(match)
-          end
-        end
       end
+    end
 
-      return vim.tbl_values(nodes_set)
-    end,
-  }
+    return wrap_targets(vim.tbl_values(nodes_set))
+  end
 end
 -- Treesitter hintings
 function M.hint_locals(filter, opts)
-  hint_with(treesitter_locals(filter), get_command_opts(opts))
+  hint_with(treesitter_locals(filter), override_opts(opts))
 end
 function M.hint_definitions(opts)
   M.hint_locals(function(loc)
@@ -131,7 +145,7 @@ function M.hint_textobjects(query, opts)
   end
   hint_with(
     treesitter_queries(query and query.query, query and query.inners, query and query.outers, query and query.queryfile),
-    get_command_opts(opts)
+    override_opts(opts)
   )
 end
 return M

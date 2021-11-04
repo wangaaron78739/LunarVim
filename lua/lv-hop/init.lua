@@ -15,10 +15,20 @@ M.current_line_words = function()
   }
 end
 
+M.targets = (function()
+  local ts = require "lv-hop.ts"
+  local lsp = require "lv-hop.lsp"
+  return setmetatable(require "hop", {
+    __index = function(_, key)
+      return ts[key] or lsp[key]
+    end,
+  })
+end)()
+
 M.keymaps = function(leaderMappings)
   if O.plugin.hop then
     -- TODO: register_nN_repeat here??
-    local prefix = "<cmd>lua require('hop')."
+    local prefix = "<cmd>lua require('lv-hop').targets."
     local hops = {
       name = "Hop",
       w = { prefix .. "hint_words()<cr>", "Words" },
