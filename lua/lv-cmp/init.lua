@@ -116,9 +116,9 @@ function M.setup()
       ["<M-h>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
       -- ["<esc>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
       -- ["<Left>"] = cmp.mapping.close(confirmopts),
-      ["<Right>"] = cmp.mapping {
-        c = cmp.mapping.confirm(cmdline_confirm),
-      },
+      -- ["<Right>"] = cmp.mapping {
+      --   c = cmp.mapping.confirm(cmdline_confirm),
+      -- },
       ["<CR>"] = cmp.mapping {
         i = cmp.mapping.confirm(confirmopts),
         -- c = cmp.mapping.confirm(cmdline_confirm),
