@@ -22,7 +22,7 @@ local types = require "luasnip.util.types"
 local nl = t { "", "" }
 local list_extend = vim.list_extend
 local tbl_extend = vim.tbl_extend
-local conds = require "luasnip.extras.conditions" or require "luasnip.extras.expand_conditions"
+local conds = require "luasnip.extras.expand_conditions"
 
 local function fmt(fn, ipairs)
   if ipairs == nil then
@@ -133,6 +133,7 @@ local both_maps = {
   "infty",
   "iff",
   "vdots",
+  "ddots",
   ["..."] = "ldots",
   [":::"] = "vdots",
   ["=>"] = "implies",
@@ -195,6 +196,7 @@ local math_maps = {
   ["to"] = "to",
   ["&&"] = "&",
   ["%%"] = "%",
+  ["span"] = "sspan",
   "argmin",
   "because",
   "therefore",
@@ -215,6 +217,8 @@ local math_maps = {
   "int",
   "oint",
   "lim",
+  "rcancel",
+  "Ccancel",
 }
 list_extend(math_maps, trig_fns)
 -- TODO: have a more flexible way of doing this.
@@ -309,6 +313,8 @@ list_extend(auto, {
   -- TODO: extract this
   s("bf{", { t "\\textbf{", i(0) }),
   s("it{", { t "\\textit{", i(0) }),
+  s("em{", { t "\\emph{", i(0) }),
+  s("ul{", { t "\\underline{", i(0) }),
   ms("bm{", { t "\\bm{", i(0) }),
   ms("bb{", { t "\\mathbb{", i(0) }),
   ms("op{", { t "\\mathop{", i(0) }),

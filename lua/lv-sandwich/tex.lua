@@ -137,7 +137,7 @@ M.recipes = {
   },
   {
     __filetype__ = "tex",
-    buns = { "\\mathbf{", "}" },
+    buns = { "\\bm{", "}" },
     nesting = 1,
     input = { "bm" },
     action = { "add" },

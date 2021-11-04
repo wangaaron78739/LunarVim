@@ -209,6 +209,7 @@ local docinfo = [[
 
 \title{${1:Homework}}
 \author{${2:Anshuman Medhi}}
+% \date{}
 
 % Sections
 % \renewcommand{\thesection}{\arabic{section}.}
