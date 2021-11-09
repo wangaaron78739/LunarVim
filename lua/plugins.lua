@@ -41,16 +41,7 @@ return packer.startup(function(use)
     end,
     config = function()
       require("filetype").setup {
-        overrides = {
-          extensions = {
-            kbd = "kmonad",
-            fish = "fish",
-          },
-          literals = {
-            Justfile = "just",
-            justfile = "just",
-          },
-        },
+        overrides = O.filetypes,
       }
     end,
   }
@@ -60,9 +51,16 @@ return packer.startup(function(use)
   use {
     "rcarriga/nvim-notify",
     config = function()
-      require("lv-notify").config()
+      require("lv-ui.notify").config()
     end,
     disable = not O.plugin.notify,
+  }
+  use {
+    "hood/popui.nvim",
+    config = function()
+      require("lv-ui.popui").config()
+    end,
+    requires = "RishabhRD/popfix",
   }
 
   -- Lsp Configs
@@ -342,6 +340,29 @@ return packer.startup(function(use)
   }
   use { "theHamsta/nvim-treesitter-pairs", event = BufRead, disable = not O.plugin.ts_matchup }
 
+  -- Vim Doge Documentation Generator
+  use {
+    "kkoomen/vim-doge",
+    run = ":call doge#install()",
+    cmd = "DogeGenerate",
+    disable = not O.plugin.doge,
+  }
+  use {
+    "nvim-treesitter/nvim-tree-docs",
+    config = function()
+      require("lv-treesitter.docs").config()
+    end,
+  }
+  -- use {
+  --   "danymat/neogen",
+  --   config = function()
+  --     require("neogen").setup {
+  --       enabled = true,
+  --     }
+  --   end,
+  --   requires = "nvim-treesitter/nvim-treesitter",
+  -- }
+
   -- Colorizer?
   use {
     "norcalli/nvim-colorizer.lua",
@@ -375,17 +396,47 @@ return packer.startup(function(use)
     "lukas-reineke/indent-blankline.nvim",
     event = BufRead,
     setup = function()
+      vim.cmd [[highlight IndentBlanklineIndent6 guifg=#000000 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent5 guifg=#000000 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent4 guifg=#000000 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent3 guifg=#000000 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent2 guifg=#000000 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent1 guifg=#000000 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent5 guifg=#E06C75 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent4 guifg=#E5C07B gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
+      -- vim.cmd [[highlight IndentBlanklineIndent2 guifg=#56B6C2 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent2 guifg=#61AFEF gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent1 guifg=#C678DD gui=nocombine]]
+      -- vim.cmd [[highlight IndentBlanklineIndent1 guibg=#1f1f1f gui=nocombine]]
+      -- vim.cmd [[highlight IndentBlanklineIndent2 guibg=#1a1a1a gui=nocombine]]
+
+      -- vim.opt.list = true
+      -- vim.opt.listchars:append "space:⋅"
+      -- vim.opt.listchars:append "eol:↴"
+
       require("indent_blankline").setup {
         char = "▏",
-        filetype_exclude = {
-          "help",
-          "terminal",
-          "dashboard",
-        },
+        filetype_exclude = { "help", "terminal", "dashboard" },
         buftype_exclude = { "terminal", "nofile" },
         char_highlight = "LineNr",
         show_trailing_blankline_indent = false,
-        show_first_indent_level = false,
+        -- show_first_indent_level = false,
+        space_char_blankline = " ",
+        show_current_context = true,
+        show_current_context_start = true,
+        char_highlight_list = {
+          "IndentBlanklineIndent1",
+          "IndentBlanklineIndent2",
+          "IndentBlanklineIndent3",
+          "IndentBlanklineIndent4",
+          "IndentBlanklineIndent5",
+          "IndentBlanklineIndent6",
+        },
+        -- space_char_highlight_list = {
+        --   "IndentBlanklineIndent1",
+        --   "IndentBlanklineIndent2",
+        -- },
       }
     end,
     disable = not O.plugin.indent_line,
@@ -407,7 +458,7 @@ return packer.startup(function(use)
     cmd = "SymbolsOutline",
     disable = not O.plugin.symbol_outline,
   }
-  -- diagnostics
+  -- Diagnostics
   use {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
@@ -461,7 +512,7 @@ return packer.startup(function(use)
   -- Floating terminal
   use {
     "numToStr/FTerm.nvim",
-    module = "FTerm",
+    event = "BufRead",
     config = function()
       require("lv-terms").fterm()
     end,
@@ -502,8 +553,6 @@ return packer.startup(function(use)
 
   -- Interactive scratchpad
   use { "metakirby5/codi.vim", cmd = "Codi", disable = not O.plugin.codi }
-  -- Sane gx for netrw_gx bug
-  use { "felipec/vim-sanegx", keys = "gx", disable = not O.plugin.sanegx }
   -- Highlight TODO comments
   use {
     "folke/todo-comments.nvim",
@@ -545,11 +594,16 @@ return packer.startup(function(use)
     disable = not O.plugin.diffview,
   }
   -- Easily Create Gists
-  use { "mattn/vim-gist", cmd = "Gist", disable = not O.plugin.gist, requires = "mattn/webapi-vim" }
+  use {
+    "mattn/vim-gist",
+    cmd = "Gist",
+    disable = not O.plugin.gist,
+    requires = "mattn/webapi-vim",
+  }
   -- HTML preview
   use {
     "turbio/bracey.vim",
-    ft = "html",
+    cmd = "Bracey",
     run = "npm install --prefix server",
     disable = not O.plugin.bracey,
   }
@@ -674,24 +728,7 @@ return packer.startup(function(use)
     disable = not O.plugin.lightbulb,
   }
 
-  use {
-    "hood/popui.nvim",
-    config = function()
-      vim.g.popui_border_style = O.lsp.border
-      -- vim.ui.select = require "popui.ui-overrider"
-    end,
-    requires = "RishabhRD/popfix",
-  }
-  use {
-    "RishabhRD/nvim-lsputils",
-    config = function()
-      -- for key, value in pairs(O.plugin.lsputils.handlers) do
-      --   vim.lsp.handlers[key] = require("lsputil." .. value[1])[value[2]]
-      -- end
-      -- utils.define_augroups(O.plugin.lsputils.aus)
-    end,
-    requires = "RishabhRD/popfix",
-  }
+  -- Code action Menu
   use {
     "weilbith/nvim-code-action-menu",
     config = function()
@@ -757,17 +794,15 @@ return packer.startup(function(use)
   -- Send to jupyter
   use {
     "dccsillag/magma-nvim",
-    config = function()
-      require("lv-terms").magma()
-    end,
     setup = function()
-      vim.g.magma_automatically_open_output = not not O.plugin.magma.automatically_open_output
+      require("lv-terms").magma()
     end,
     run = ":UpdateRemotePlugins",
     -- python3.9 -m pip install cairosvg pnglatex jupyter_client ipython ueberzug pillow
     -- cmd = "MagmaStart", -- see lv-terms
     disable = not O.plugin.magma,
   }
+  -- use {"jupyter-ascending"}
   -- Better neovim terminal
   use {
     "kassio/neoterm",
@@ -981,14 +1016,6 @@ return packer.startup(function(use)
 
   -- Visual undo tree
   use { "mbbill/undotree", cmd = { "UndotreeToggle", "UndotreeShow" }, disable = not O.plugin.undotree }
-
-  -- Vim Doge Documentation Generator
-  use {
-    "kkoomen/vim-doge",
-    run = ":call doge#install()",
-    cmd = "DogeGenerate",
-    disable = not O.plugin.doge,
-  }
 
   -- Null ls, for hooking local plugins into lsp
   use {
@@ -1213,7 +1240,7 @@ return packer.startup(function(use)
   use { "tjdevries/colorbuddy.vim", module = "colorbuddy" }
   -- Colorschemes -- https://github.com/folke/lsp-colors.nvim
   use { "Yagua/nebulous.nvim" }
-  use { "christianchiarulli/nvcode-color-schemes.vim", opt = true }
+  -- use { "christianchiarulli/nvcode-color-schemes.vim", opt = true }
   use {
     "Pocco81/Catppuccino.nvim",
     config = function()
@@ -1256,12 +1283,12 @@ return packer.startup(function(use)
       }
     end,
   }
-  use "mcchrish/zenbones.nvim"
-  use "plan9-for-vimspace/acme-colors"
-  use "preservim/vim-colors-pencil"
+  -- use "mcchrish/zenbones.nvim"
+  -- use "plan9-for-vimspace/acme-colors"
+  -- use "preservim/vim-colors-pencil"
   use "YorickPeterse/vim-paper"
-  use "ajgrf/parchment"
-  use "pgdouyon/vim-yin-yang"
+  -- use "ajgrf/parchment"
+  -- use "pgdouyon/vim-yin-yang"
   -- use {
   --   "sainnhe/sonokai",
   --   config = function()
@@ -1277,7 +1304,7 @@ return packer.startup(function(use)
   -- use "tomasiser/vim-code-dark"
   -- use "glepnir/zephyr-nvim"
   -- use "Th3Whit3Wolf/onebuddy" -- require('colorbuddy').colorscheme('onebuddy')
-  use "ishan9299/modus-theme-vim"
+  -- use "ishan9299/modus-theme-vim"
   -- use "Th3Whit3Wolf/one-nvim"
   -- use "ray-x/aurora"
   -- use "tanvirtin/nvim-monokai"
@@ -1344,4 +1371,6 @@ return packer.startup(function(use)
   -- })
 
   use { "seandewar/nvimesweeper", cmd = "Nvimesweeper" }
+
+  -- stabilize.nvim
 end)

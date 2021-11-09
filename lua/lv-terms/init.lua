@@ -136,6 +136,7 @@ function M.neoterm()
 end
 
 function M.magma()
+  vim.g.magma_automatically_open_output = false
   utils.define_augroups {
     _magma_start = {
       -- { "User", "MagmaInitPre", [[lua require("lv-terms").activate_magma("<args>")]] },

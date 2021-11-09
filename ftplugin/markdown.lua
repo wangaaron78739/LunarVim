@@ -35,4 +35,13 @@ require("lv-cmp").sources {
 
 mappings.localleader {
   p = { "<Plug>MarkdownPreviewToggle", "Preview Toggle" },
+  g = { "<CMD>Glow<CR>", "Glow" },
+}
+
+require("lv-sandwich").add_local_recipe {
+  buns = { "```", "```" },
+  quoteescape = true,
+  expand_range = false,
+  nesting = false,
+  input = { "c" },
 }

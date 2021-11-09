@@ -1,5 +1,9 @@
 local M = {}
-local conf = O.plugin.gesture
+local conf = {
+  lmb = true,
+  rmb = false,
+}
+
 M.keymaps = function()
   if conf then
     local map = vim.api.nvim_set_keymap

@@ -74,6 +74,16 @@ O = {
       debounce_text_changes = 150,
     },
   },
+  filetypes = {
+    extensions = {
+      kbd = "kmonad",
+      fish = "fish",
+    },
+    literals = {
+      Justfile = "just",
+      justfile = "just",
+    },
+  },
   python_interp = CONFIG_PATH .. "/.venv/bin/python3.9", -- TODO: make a venv for this
   treesitter = {
     ensure_installed = "all",
@@ -125,42 +135,42 @@ O = {
     copilot = {
       key = "<M-n>",
     },
-    yabs = {},
-    fugitive = {},
+    yabs = true,
+    fugitive = true,
     better_escape = {
       mapping = { "jk", "kj" },
       keys = "<Esc>",
     },
     hop = { teasing = true },
-    twilight = {},
-    notify = {},
-    dial = {},
-    dashboard = {},
-    -- matchup = {},
-    colorizer = {},
+    twilight = true,
+    notify = true,
+    dial = true,
+    dashboard = true,
+    -- matchup = true,
+    colorizer = true,
     numb = {
       show_numbers = true, -- Enable 'number' for the window while peeking
       show_cursorline = true, -- Enable 'cursorline' for the window while peeking
     },
-    zen = {},
-    ts_playground = {},
-    ts_context_commentstring = {},
-    ts_textobjects = {},
-    ts_autotag = {},
-    ts_textsubjects = {},
-    ts_textunits = {},
-    ts_rainbow = {},
-    ts_context = {},
+    zen = true,
+    ts_playground = true,
+    ts_context_commentstring = true,
+    ts_textobjects = true,
+    ts_autotag = true,
+    ts_textsubjects = true,
+    ts_textunits = true,
+    ts_rainbow = true,
+    ts_context = true,
     ts_hintobjects = { key = "m" },
-    ts_matchup = {},
-    indent_line = {},
-    symbol_outline = {},
-    debug = {},
-    bqf = {},
-    sidebarnvim = {},
-    trouble = {},
-    floatterm = {},
-    spectre = {},
+    ts_matchup = true,
+    indent_line = true,
+    symbol_outline = true,
+    debug = true,
+    bqf = true,
+    sidebarnvim = true,
+    trouble = true,
+    floatterm = true,
+    spectre = true,
     project_nvim = {
       -- Manual mode doesn't automatically change your root directory, so you have
       -- the option to manually do so using `:ProjectRoot` command.
@@ -178,16 +188,16 @@ O = {
       -- patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
       -- Table of lsp clients to ignore by name
       -- eg: { "efm", ... }
-      -- ignore_lsp = {},
+      -- ignore_lsp = true,
     },
-    markdown_preview = {},
-    codi = {},
-    telescope_fzy = {},
-    telescope_frecency = {},
-    telescope_fzf = {},
-    ranger = {},
-    todo_comments = {},
-    lsp_colors = {},
+    markdown_preview = true,
+    codi = true,
+    telescope_fzy = true,
+    telescope_frecency = true,
+    telescope_fzf = true,
+    ranger = true,
+    todo_comments = true,
+    lsp_colors = true,
     lsp_signature = {
       doc_lines = 2, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
       -- Apply indentation for wrapped lines
@@ -205,7 +215,7 @@ O = {
       zindex = 1,
       check_client_handlers = false,
     },
-    git_blame = {},
+    git_blame = true,
     gitlinker = {
       opts = {
         -- Manual mode doesn't automatically change your root directory, so you have
@@ -224,34 +234,34 @@ O = {
         -- patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
         -- Table of lsp clients to ignore by name
         -- eg: { "efm", ... }
-        -- ignore_lsp = {},
+        -- ignore_lsp = true,
       },
     },
-    lazygit = {},
-    octo = {},
-    lush = {},
-    diffview = {},
-    bracey = {},
-    telescope_project = {},
-    gist = {},
-    dap_install = {},
-    visual_multi = {},
-    lightspeed = {}, -- Uses lightspeed.nvim
+    lazygit = true,
+    octo = true,
+    lush = true,
+    diffview = true,
+    bracey = true,
+    telescope_project = true,
+    gist = true,
+    dap_install = true,
+    visual_multi = true,
+    lightspeed = true, -- Uses lightspeed.nvim
     quickscope = {
       -- event = "BufRead"
       -- on_keys = { "f", "F", "t", "T" }, -- Comment this line to have it always visible
     },
-    surround = {}, -- Uses vim-sandwhich
-    fzf = {},
-    magma = {},
-    neoterm = {},
-    bullets = {},
-    vista = {},
-    startuptime = {},
-    tabnine = {},
-    tmux_navigator = {},
-    flutter_tools = {},
-    editorconfig = {},
+    surround = true, -- Uses vim-sandwhich
+    fzf = true,
+    magma = true,
+    neoterm = true,
+    bullets = true,
+    vista = true,
+    startuptime = true,
+    tabnine = true,
+    tmux_navigator = true,
+    flutter_tools = true,
+    editorconfig = true,
     anywise_reg = {
       operators = { "y", "d" }, -- putting 'c' breaks it (wrong insert mode cursor)
       registers = { "+", "a" },
@@ -263,10 +273,10 @@ O = {
       paste_keys = { p = "p", P = "P" },
       register_print_cmd = false,
     },
-    doge = {},
-    undotree = {},
+    doge = true,
+    undotree = true,
     ts_iswap = { autoswap = true },
-    coq = {},
+    coq = true,
     cmp = {
       lspkind = {
         with_text = false,
@@ -299,10 +309,10 @@ O = {
         -- },
       },
     },
-    luasnip = {},
-    luadev = {},
-    luapad = {},
-    primeagen_refactoring = {},
+    luasnip = true,
+    luadev = true,
+    luapad = true,
+    primeagen_refactoring = true,
     splitfocus = {
       -- width =
       -- treewidth =
@@ -315,8 +325,8 @@ O = {
       number = false,
       -- cursorline = O.cursorline,
     },
-    rust_tools = {},
-    vimtex = {},
+    rust_tools = true,
+    vimtex = true,
     -- neoscroll = {
     --   -- All these keys will be mapped to their corresponding default scrolling animation
     --   mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
@@ -326,13 +336,10 @@ O = {
     --   cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
     --   easing_function = "sine", -- Default easing function
     -- },
-    gesture = {
-      lmb = true,
-      rmb = false,
-    },
-    coderunner = {},
-    sniprun = {},
-    kittyrunner = {},
+    gesture = true,
+    coderunner = true,
+    sniprun = true,
+    kittyrunner = true,
     lsputils = {
       handlers = {
         ["textDocument/codeAction"] = { "codeAction", "code_action_handler" },
@@ -364,7 +371,6 @@ local disable_plugins = {
   "quickscope",
   "bullets",
   "coq",
-  "primeagen_refactoring",
   "ts_textunits",
   "ranger",
 }

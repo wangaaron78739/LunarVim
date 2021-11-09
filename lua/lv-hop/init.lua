@@ -1,5 +1,6 @@
 local M = {}
 
+local hint_with = require("hop").hint_with
 M.config = function()
   local hop = require "hop"
   hop.setup {
@@ -14,13 +15,30 @@ M.current_line_words = function()
     },
   }
 end
+local override_opts = require("lv-hop.utils").override_opts
 
 M.targets = (function()
   local ts = require "lv-hop.ts"
   local lsp = require "lv-hop.lsp"
+  local jump_target = require "hop.jump_target"
+  local overrides = {
+    hint_cWORD = function(opts)
+      opts = override_opts(opts)
+      local pat = vim.fn.expand "<cWORD>"
+      hint_with(jump_target.jump_targets_by_scanning_lines(jump_target.regex_by_searching(pat, true)), opts)
+    end,
+    hint_cword = function(opts)
+      opts = override_opts(opts)
+      local pat = vim.fn.expand "<cword>"
+      hint_with(
+        hint_with(jump_target.jump_targets_by_scanning_lines(jump_target.regex_by_searching(pat, true)), opts),
+        opts
+      )
+    end,
+  }
   return setmetatable(require "hop", {
     __index = function(_, key)
-      return ts[key] or lsp[key]
+      return overrides[key] or ts[key] or lsp[key]
     end,
   })
 end)()

@@ -744,8 +744,7 @@ function M.setup()
       e = { focus_fn.focus_max_or_equal, "Max/Equal splits" },
       f = { cmd "NvimTreeToggle", "File Sidebar" },
       u = { cmd "UndotreeToggle", "Undo tree" },
-      r = { cmd "RnvimrToggle", "Ranger" },
-      g = { cmd "Glow", "Glow MD" },
+      r = { cmd "Ranger", "Ranger" },
       q = { luacmd "utils.quickfix_toggle()", "Quick fixes" },
       E = { cmd "!open '%:p:h'", "Open File Explorer" },
       F = { telescope_fn.file_browser, "Telescope browser" },
@@ -925,8 +924,6 @@ function M.setup()
       "Change all",
     },
   }
-  map("n", "<M-S-s>", operatorfunc_keys("separate", "<leader>s"), sile)
-  map("x", "<M-S-s>", "<leader>s", sile)
 
   M.whichkey {
     [O.treesitter.textobj_prefixes.swap_prev] = {

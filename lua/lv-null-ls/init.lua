@@ -2,7 +2,7 @@ local M = {}
 
 local null = require "null-ls"
 
-local gcc_diagnostics = require "lv-null-ls.gcc"
+-- local gcc_diagnostics = require "lv-null-ls.gcc"
 
 function M.config()
   local diagnostics_format = "[#{c}] #{m} (#{s})"
@@ -11,15 +11,14 @@ function M.config()
   local diagnostics = null.builtins.diagnostics
   local code_actions = null.builtins.code_actions
   local hover = null.builtins.hover
+  local compl = null.builtins.completion
 
   null.config {
     diagnostics_format = diagnostics_format,
     sources = {
       -- Formatters
       formatters.stylua,
-      formatters.prettierd.with {
-        -- command = "npx prettierd",
-      },
+      formatters.prettierd,
       -- formatters.rustfmt,
       formatters.shfmt,
       formatters.black, -- yapf, autopep8
@@ -32,7 +31,6 @@ function M.config()
       formatters.fnlfmt,
       -- formatters.json_tool,
       formatters.nixfmt,
-      formatters.yamllint,
 
       -- -- Diagnostics
       -- -- diagnostics.chktex, -- vimtex?
@@ -50,15 +48,18 @@ function M.config()
       -- diagnostics.vale, -- lets install vale-linter
       -- -- diagnostics.misspell,
       diagnostics.markdownlint,
+      diagnostics.yamllint,
 
       -- Code Actions
       -- code_actions.gitsigns, -- TODO: reenable when I can lower the priority
       code_actions.proselint,
 
       -- Hover Info
-      hover.dictionary.with {
-        filetypes = { "txt", "markdown", "tex" },
-      },
+      hover.dictionary,
+      -- hover.dictionary.with {
+      --   generator = {},
+      --   filetypes = { "txt", "markdown", "tex" },
+      -- },
     },
   }
   require("lspconfig")["null-ls"].setup {}

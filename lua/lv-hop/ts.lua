@@ -1,15 +1,10 @@
 local M = {}
 local hint_with = require("hop").hint_with
 local window = require "hop.window"
--- Allows to override global options with user local overrides.
-local function override_opts(opts)
-  local hopopts = require("hop").opts
-  return setmetatable(opts or {}, {
-    __index = function(_, key)
-      return hopopts[key]
-    end,
-  })
-end
+
+local wrap_targets = require("lv-hop.utils").wrap_targets
+local override_opts = require("lv-hop.utils").override_opts
+
 local function ends_with(str, ending)
   return ending == "" or str:sub(-#ending) == ending
 end
@@ -19,24 +14,10 @@ local function treesitter_filter_window(node, context, nodes_set)
   if line <= context.bot_line and line >= context.top_line then
     nodes_set[start] = {
       line = line,
-      col = col + 1,
+      column = col + 1,
+      window = 0,
     }
   end
-end
-
-local zero_jump_scores = {
-  __index = function(tbl, key)
-    if "number" == type(key) then
-      return { index = key, score = 0 }
-    end
-    return nil
-  end,
-}
-local wrap_targets = function(targets)
-  return {
-    jump_targets = targets,
-    indirect_jump_targets = setmetatable({}, zero_jump_scores),
-  }
 end
 
 -- TODO: performance of these functions may not be optimal
@@ -49,7 +30,7 @@ local treesitter_locals = function(filter, scope)
   return function(hint_opts)
     local locals = require "nvim-treesitter.locals"
     local local_nodes = locals.get_locals()
-    local context = window.get_window_context(hint_opts)
+    local context = window.get_window_context()
 
     -- Make sure the nodes are unique.
     local nodes_set = {}
@@ -73,7 +54,7 @@ local treesitter_queries = function(query, inners, outers, queryfile)
     outers = true
   end
   return function(hint_opts)
-    local context = window.get_window_context(hint_opts)
+    local context = window.get_window_context()
     local queries = require "nvim-treesitter.query"
     local tsutils = require "nvim-treesitter.utils"
     local nodes_set = {}
