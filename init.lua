@@ -51,8 +51,10 @@ require "theme"()
 
 -- 'Mandatory' plugin configs
 mappings.setup()
+-- if not vim.g.kitty_scrollback then
 require "lv-treesitter"
 require "lsp"
+-- end
 
 require "packer_compiled"
 --------------------------------------------------------------------------------------------------

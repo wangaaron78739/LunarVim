@@ -78,6 +78,7 @@ O = {
     extensions = {
       kbd = "kmonad",
       fish = "fish",
+      just = "just",
     },
     literals = {
       Justfile = "just",

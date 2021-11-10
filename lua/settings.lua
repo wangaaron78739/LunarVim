@@ -135,3 +135,8 @@ end
 -- vim.g.neovide_cursor_vfx_mode = "pixiedust"
 -- vim.g.neovide_refresh_rate=120
 require("lv-utils").set_guifont(O.fontsize, "FiraCode Nerd Font")
+
+if vim.g.kitty_scrollback then
+  opt.signcolumn = "no"
+  -- opt.virtualedit = "all"
+end

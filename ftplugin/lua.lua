@@ -37,6 +37,13 @@ require("lv-sandwich").add_local_recipe {
   input = { "F" },
 }
 require("lv-sandwich").add_local_recipe {
+  buns = { "if then", "end" },
+  quoteescape = true,
+  expand_range = false,
+  nesting = false,
+  input = { "I" },
+}
+require("lv-sandwich").add_local_recipe {
   buns = { "[[", "]]" },
   quoteescape = true,
   expand_range = false,
