@@ -53,6 +53,7 @@ function M.config()
       -- Code Actions
       -- code_actions.gitsigns, -- TODO: reenable when I can lower the priority
       code_actions.proselint,
+      code_actions.refactoring,
 
       -- Hover Info
       hover.dictionary,

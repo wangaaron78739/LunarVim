@@ -7,12 +7,13 @@ local function telescope_refactor_helper(prompt_bufnr)
 end
 
 function M.telescope_refactors()
-  require("telescope.pickers").new({}, {
-    prompt_title = "Telescope refactors",
+  local opts = require("telescope.themes").get_cursor() -- set personal telescope options
+  require("telescope.pickers").new(opts, {
+    prompt_title = "refactors",
     finder = require("telescope.finders").new_table {
       results = require("refactoring").get_refactors(),
     },
-    sorter = require("telescope.config").values.generic_sorter {},
+    sorter = require("telescope.config").values.generic_sorter(opts),
     attach_mappings = function(_, map)
       map("i", "<CR>", telescope_refactor_helper)
       map("n", "<CR>", telescope_refactor_helper)
@@ -45,7 +46,7 @@ function M.setup()
   }
   local function helper(name)
     return {
-      string.format([[<cmd>lua require('refactoring').refactor('%s')<CR><ESC>]], name),
+      string.format([[<esc><cmd>lua require('refactoring').refactor('%s')<CR>]], name),
       name,
     }
   end
@@ -53,16 +54,15 @@ function M.setup()
     e = helper "Extract Function",
     v = helper "Extract Variable",
     i = helper "Inline Variable",
-    -- TODO: use popfix/nui.nvim to get a code_actions style popup
     f = {
-      [[<cmd>lua require('lv-refactoring').telescope_refactors()<CR>]],
+      [[<esc><cmd>lua require('lv-refactoring').telescope_refactors()<CR>]],
       "Refactors",
     },
   }, visu)
 
   wk.register({
     e = {
-      require("lv-utils").operatorfunc_keys("extract_function", "<leader>re"),
+      require("lv-utils").operatorfuncV_keys("extract_function", "<leader>re"),
       "Extract function",
     },
     v = {
