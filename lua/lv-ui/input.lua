@@ -1,9 +1,10 @@
 local M = {}
 M.config = function()
   vim.ui.input = function(opts, on_confirm)
+    opts = opts or {}
     -- opts.completion
     -- opts.highlight
-    M.inline_text_input {
+    require("lv-utils").inline_text_input {
       border = O.lsp.rename_border,
       enter = on_confirm,
       init_cword = opts.default or opts.prompt,

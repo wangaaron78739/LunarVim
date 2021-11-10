@@ -331,5 +331,7 @@ M.rename = function()
     minwidth = true,
   }
 end
+M.rename = vim.lsp.buf.rename
+require("lv-ui.input").config()
 
 return M
