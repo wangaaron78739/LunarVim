@@ -95,6 +95,7 @@ function M.setup()
       min_height = 1,
     },
 
+    -- TODO: better mapping setup for enter, nextitem and close window
     mapping = {
       ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
       ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
@@ -114,7 +115,8 @@ function M.setup()
       ["<M-k>"] = complete_or(cmp.select_prev_item),
       ["<M-l>"] = complete_or(cmp.confirm),
       ["<M-h>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
-      -- ["<esc>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
+      ["<Esc>"] = cmp.mapping(cmp.mapping.close(), { "c" }),
+      -- ["<Esc>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
       -- ["<Left>"] = cmp.mapping.close(confirmopts),
       -- ["<Right>"] = cmp.mapping {
       --   c = cmp.mapping.confirm(cmdline_confirm),
@@ -123,7 +125,7 @@ function M.setup()
         i = cmp.mapping.confirm(confirmopts),
         -- c = cmp.mapping.confirm(cmdline_confirm),
       },
-      ["<tab>"] = cmp.mapping {
+      ["<Tab>"] = cmp.mapping {
         c = cmp.mapping.confirm(cmdline_confirm),
         -- i = cmp.mapping.confirm(confirmopts),
         i = function()
@@ -139,7 +141,7 @@ function M.setup()
           end
         end,
       },
-      ["<S-tab>"] = cmp.mapping {
+      ["<S-TAB>"] = cmp.mapping {
         c = function()
           if cmp.visible() then
             cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }
@@ -149,7 +151,7 @@ function M.setup()
         end,
         i = function()
           if cmp.visible() then
-            -- feedkeys(t "<C-p>", "n", false)
+            -- feedkeys(t "<C-P>", "n", false)
             cmp.select_prev_item()
           elseif luasnip.jumpable(-1) then
             feedkeys(t "<Plug>luasnip-jump-prev", "", false)
@@ -187,6 +189,14 @@ function M.setup()
   })
 
   -- Use cmdline & path source for ':'.
+  cmp.setup.cmdline("=", {
+    sources = cmp.config.sources({
+      { name = "path" },
+      { name = "cmdline" },
+    }, {
+      { name = "cmdline_history" },
+    }),
+  })
   cmp.setup.cmdline(":", {
     sources = cmp.config.sources({
       { name = "path" },
