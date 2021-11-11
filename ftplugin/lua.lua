@@ -30,14 +30,14 @@ vim.opt_local.shiftwidth = 2
 
 -- mappings.buf(0, "x", "is", "?[[<cr>o/]]<cr>", {})
 require("lv-sandwich").add_local_recipe {
-  buns = { "function()", "end" },
+  buns = { "function()\n", "\nend" },
   quoteescape = true,
   expand_range = false,
   nesting = false,
   input = { "F" },
 }
 require("lv-sandwich").add_local_recipe {
-  buns = { "if then", "end" },
+  buns = { "if then\n", "\nend" },
   quoteescape = true,
   expand_range = false,
   nesting = false,
