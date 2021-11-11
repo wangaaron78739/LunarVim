@@ -38,7 +38,7 @@ mappings.localleader {
   g = { "<CMD>Glow<CR>", "Glow" },
 }
 
-require("lv-sandwich").add_local_recipe {
+require("lv-pairs.sandwich").add_local_recipe {
   buns = { "```", "```" },
   quoteescape = true,
   expand_range = false,

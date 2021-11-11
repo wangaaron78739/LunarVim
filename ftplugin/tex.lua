@@ -86,13 +86,13 @@ require("lv-cmp").sources {
   },
 }
 
-require("luasnip").snippets.tex = require("lv-luasnips.tex").snips
-require("luasnip").autosnippets.tex = require("lv-luasnips.tex").auto
+local texconf = require "lv-tex"
+require("luasnip").snippets.tex = texconf.snippets
+require("luasnip").autosnippets.tex = texconf.autosnippets
 
-local sandwichtex = require "lv-sandwich.tex"
-require("lv-sandwich").add_local_recipes(sandwichtex.recipes)
-vim.b.sandwich_tex_marks_recipes = vim.fn.deepcopy(sandwichtex.marks_recipes) -- TODO: idk what this does
-sandwichtex.mark_recipe_fn()
+require("lv-pairs.sandwich").add_local_recipes(texconf.sandwich_recipes)
+vim.b.sandwich_tex_marks_recipes = vim.fn.deepcopy(texconf.sandwich_marks_recipes) -- TODO: idk what this does
+texconf.sandwhich_mark_recipe_fn()
 
 -- Localleader
 local cmd = require("lv-utils").cmd

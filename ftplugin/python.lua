@@ -17,7 +17,7 @@ vim.b.lv_magma_kernel = "python3"
 --   dap_install.config("python_dbg", {})
 -- end
 
-require("lv-sandwich").add_recipe {
+require("lv-pairs.sandwich").add_recipe {
   buns = { [["""]], [["""]] },
   quoteescape = true,
   expand_range = false,

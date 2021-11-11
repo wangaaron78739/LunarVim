@@ -155,7 +155,7 @@ return packer.startup(function(use)
   use {
     "abecodes/tabout.nvim",
     config = function()
-      require("lv-tabout").config()
+      require("lv-pairs").tabout()
     end,
     after = { "nvim-cmp" }, -- if a completion plugin is using tabs load it before
     disable = not O.plugin.cmp,
@@ -187,7 +187,7 @@ return packer.startup(function(use)
   use {
     "windwp/nvim-autopairs",
     config = function()
-      require "lv-autopairs"
+      require "lv-pairs".autopairs()
     end,
     -- after = { "nvim-compe", "telescope.nvim" },
     after = "nvim-cmp",
@@ -773,10 +773,10 @@ return packer.startup(function(use)
   use {
     "machakann/vim-sandwich",
     setup = function()
-      require("lv-sandwich").preconf()
+      require("lv-pairs").sandwich_setup()
     end,
     config = function()
-      require("lv-sandwich").config()
+      require("lv-pairs").sandwich()
     end,
     disable = not O.plugin.surround,
   }

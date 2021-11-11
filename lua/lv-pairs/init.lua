@@ -1,36 +1,115 @@
 local M = {}
+-- TODO: unify tabout, autopairs and sandwiches
 
-local recipes = {}
-local function add_recipes(recipes_)
-  vim.list_extend(recipes, recipes_)
-  vim.g["sandwich#recipes"] = recipes
-end
-M.add_recipes = add_recipes
-function M.add_recipe(recipe)
-  add_recipes { recipe }
-end
-
-local insertlocal = utils.fn.sandwich.util.insertlocal
-local function add_local_recipes(recipes_)
-  local localrecipes = vim.b.sandwich_recipes
-  if localrecipes == nil then
-    localrecipes = vim.deepcopy(recipes)
+function M.tabout()
+  local pairs = { "''", '""', "``", "()", "{}", "[]" }
+  local opts = {
+    tabkey = "<C-l>", -- key to trigger tabout
+    backwards_tabkey = "<C-S-l>", -- key to trigger tabout
+    act_as_tab = true, -- shift content if tab out is not possible
+    completion = true, -- if the tabkey is used in a completion pum
+    tabouts = {},
+    ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
+    exclude = {}, -- tabout will ignore these filetypes
+  }
+  for i, v in ipairs(pairs) do
+    opts.tabouts = vim.list_extend(opts.tabouts, { { open = v:sub(1, 1), close = v:sub(2) } })
   end
-  vim.list_extend(localrecipes, recipes_)
-  vim.b.sandwich_recipes = localrecipes
-end
-M.add_local_recipes = add_local_recipes
-function M.add_local_recipe(recipe)
-  add_local_recipes { recipe }
+  require("tabout").setup(opts)
 end
 
-function M.preconf()
+function M.autopairs()
+  local npairs = require "nvim-autopairs"
+  local R = require "nvim-autopairs.rule"
+
+  -- if package.loaded["compe"] then
+  if O.plugin.cmp then
+    if true then
+      -- If you want insert `(` after select function or method item
+      local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+      local cmp = require "cmp"
+      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
+    else
+      require("nvim-autopairs.completion.cmp").setup {
+        map_cr = true, --  map <CR> on insert mode
+        map_complete = true, -- it will auto insert `(` after select function or method item
+        -- auto_select = true,
+        -- insert = false,
+        map_char = {
+          all = "(",
+          tex = "{",
+        },
+      }
+    end
+  end
+
+  npairs.setup {
+    check_ts = true,
+    ts_config = {
+      lua = { "string" }, -- it will not add pair on that treesitter node
+      javascript = { "template_string" },
+      java = false, -- don't check treesitter on java
+    },
+  }
+
+  require("nvim-treesitter.configs").setup { autopairs = { enable = true } }
+
+  local ts_conds = require "nvim-autopairs.ts-conds"
+
+  npairs.add_rules {
+    -- R("%", "%", "lua"):with_pair(ts_conds.is_ts_node { "string", "comment" }),
+    -- R("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node { "function" }),
+    R("|", "|", "rust"),
+    -- R("if ", " then\nend", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
+    -- R("for ", " in", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
+    -- R("in ", " do", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
+    -- R("do ", " end", "lua"):with_pair(ts_conds.is_not_ts_node { "comment", "string" }),
+  }
+
+  -- press % => %% is only inside comment or string
+  local texmods = {
+    ["\\left"] = "\\right",
+    ["\\big"] = "\\big",
+    ["\\bigg"] = "\\bigg",
+    ["\\Big"] = "\\Big",
+    ["\\Bigg"] = "\\Bigg",
+  }
+  local texpairs = {
+    ["\\("] = "\\)",
+    ["\\["] = "\\]",
+    ["\\{"] = "\\}",
+    ["\\|"] = "\\|",
+    ["\\langle "] = "\\rangle",
+    ["\\lceil "] = "\\rceil",
+    ["\\lfloor "] = "\\rfloor",
+  }
+  local basicpairs = {
+    ["("] = ")",
+    ["["] = "]",
+    ["{"] = "}",
+  }
+  for lm, rm in pairs(texmods) do
+    for lp, rp in pairs(texpairs) do
+      npairs.add_rule(R(lm .. lp, " " .. rm .. rp, "tex"))
+    end
+    for lp, rp in pairs(basicpairs) do
+      npairs.add_rule(R(lm .. lp, " " .. rm .. rp, "tex"))
+    end
+  end
+  for lp, rp in pairs(texpairs) do
+    -- npairs.add_rule(R(lp, " " .. rp, "tex"))
+    npairs.add_rule(R(lp, rp, "tex"))
+  end
+
+  -- lua utils.dump(MPairs.state.rules)
+end
+
+function M.sandwich_setup()
   vim.g.sandwich_no_default_key_mappings = 1
   vim.g.operator_sandwich_no_default_key_mappings = 1
   vim.g.textobj_sandwich_no_default_key_mappings = 1
 end
-
-function M.config()
+function M.sandwich()
   -- vim.cmd "runtime macros/sandwich/keymap/surround.vim"
   vim.cmd [[
   nmap ys <Plug>(operator-sandwich-add)
@@ -54,12 +133,12 @@ function M.config()
   ]]
 
   -- recipes = vim.g["sandwich#recipes"]
-  recipes = {}
 
-  local add_recipe = M.add_recipe
+  local add_recipes = require("lv-pairs.sandwich").add_recipes
+  local add_recipe = require("lv-pairs.sandwich").add_recipe
   -- TODO: use inline_text_input for sandwich function
   --   M.add_recipe {
-  --     buns = { "lua require('lv-sandwich').fname()", '")"' },
+  --     buns = { "lua require('lv-pairs.sandwich').fname()", '")"' },
   --     expr = true,
   --     kind = { "add", "replace" },
   --     action = { "add" },
@@ -293,12 +372,6 @@ function M.config()
   map("o", "iq", "isq")
   map("o", "aq", "asq")
   map("x", "s", "<Plug>(operator-sandwich-add)") --
-end
-
-function M.fname()
-  vim.fn["operator#sandwich#show"]()
-
-  vim.fn["operator#sandwich#quench"]()
 end
 
 return M
