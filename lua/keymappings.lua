@@ -353,9 +353,12 @@ function M.setup()
   end
   dont_clobber_if_meta("n", "d")
   dont_clobber_if_meta("n", "D")
+  dont_clobber_if_meta("x", "r")
   dont_clobber_by_default("n", "c")
-  dont_clobber_by_default("n", "C")
   dont_clobber_by_default("x", "c")
+  dont_clobber_by_default("n", "C")
+  dont_clobber_by_default("n", "x")
+  dont_clobber_by_default("x", "x")
 
   -- Preserve cursor on yank in visual mode
   -- TODO: use register argument
