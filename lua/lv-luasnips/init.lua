@@ -34,6 +34,8 @@ function M.setup()
   map("s", "<C-k>", "<Plug>luasnip-jump-prev", { silent = true })
   map("i", "<C-h>", "<Plug>luasnip-next-choice", { silent = true })
   map("s", "<C-h>", "<Plug>luasnip-next-choice", { silent = true })
+  local operatorfunc_keys = require("lv-utils").operatorfunc_keys
+  map("n", "<M-s>", operatorfunc_keys("luasnip_select", "<TAB>"), { silent = true })
 
   -- some shorthands...
   local ls = require "luasnip"
@@ -59,8 +61,18 @@ function M.setup()
   local tnl = function(line)
     return t { line, "" }
   end
+  --
+  -- Returns a snippet_node wrapped around an insert_node whose initial
+  -- text value is set to the current date in the desired format.
+  local date_input = function(args, state, fmt)
+    local fmt = fmt or "%Y-%m-%d"
+    return sn(nil, i(1, os.date(fmt)))
+  end
 
   ls.snippets = {
+    all = {
+      s("date", { d(1, date_input, {}, "%A, %B %d of %Y") }),
+    },
     -- tex = require("lv-luasnips.tex").snips,
     lua = {
       s("localM", {
@@ -72,7 +84,7 @@ function M.setup()
       s("link_url", {
         t '<a href="',
         f(function(_, snip)
-          return snip.env.TM_SELECTED_TEXT[1] or {}
+          return snip.env.TM_SELECTED_TEXT[1] or ""
         end, {}),
         t '">',
         i(1),
@@ -84,5 +96,34 @@ function M.setup()
 
   require("luasnip/loaders/from_vscode").lazy_load()
   require("lv-luasnips.choice").config()
+end
+
+function M.get_snippet(name, ft)
+  ft = ft or vim.opt.filetype._value
+
+  local snippets = require("luasnip").snippets[ft]
+  for i, snip in ipairs(snippets) do
+    local trig = snip.trigger
+    if trig == name then
+      return snip
+    end
+  end
+  return nil
+end
+function M.expand_snippet(snip)
+  if snip == nil then
+    return
+  end
+  if snip.regTrig then
+    -- if trigger is a pattern, expand "pattern" instead of actual snippet.
+    snip = snip:get_pattern_expand_helper()
+  else
+    snip = snip:copy()
+  end
+  utils.dump(snip)
+  snip:trigger_expand(require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()])
+end
+function M.expand_by_name(name, ft)
+  M.expand_snippet(M.get_snippet(name, ft))
 end
 return M

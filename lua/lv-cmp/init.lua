@@ -111,8 +111,6 @@ function M.setup()
         i = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
         c = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
       },
-      ["<M-j>"] = complete_or(cmp.select_next_item),
-      ["<M-k>"] = complete_or(cmp.select_prev_item),
       ["<M-l>"] = complete_or(cmp.confirm),
       ["<M-h>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
       ["<Esc>"] = cmp.mapping(cmp.mapping.close(), { "c" }),

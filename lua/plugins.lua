@@ -78,7 +78,6 @@ return packer.startup(function(use)
   }
 
   -- Utilities
-  use { "nvim-lua/popup.nvim" }
   use { "nvim-lua/plenary.nvim" }
   use { "tjdevries/astronauta.nvim" }
 

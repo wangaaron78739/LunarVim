@@ -45,3 +45,5 @@ require("lv-sandwich").add_local_recipe {
   nesting = false,
   input = { "c" },
 }
+
+-- TODO: make snippets for math in markdown?
