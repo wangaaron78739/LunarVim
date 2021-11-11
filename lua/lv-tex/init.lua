@@ -796,28 +796,32 @@ list_extend(snips, {
   s("subsubsec", { t "subsubsection{", i(0), t "}" }),
 })
 
-list_extend(snips, {
-  (function()
-    local rec_ls
-    rec_ls = function()
-      return sn(nil, {
-        c(1, {
-          -- important!! Having the sn(...) as the first choice will cause infinite recursion.
-          t { "" },
-          -- The same dynamicNode as in the snippet (also note: self reference).
-          sn(nil, { t { "", "\t\\item " }, i(1), d(2, rec_ls, {}) }),
-        }),
-      })
-    end
-
-    return s("ls", {
-      t { "\\begin{itemize}", "\t\\item " },
-      i(1),
-      d(2, rec_ls, {}),
-      t { "", "\\end{itemize}" },
-      i(0),
+-- TODO: this could be extended more? but adding the new line is kinda janky
+local function infinite_list(item, env, name)
+  local rec_ls
+  rec_ls = function()
+    return sn(nil, {
+      c(1, {
+        -- important!! Having the sn(...) as the first choice will cause infinite recursion.
+        t "",
+        -- The same dynamicNode as in the snippet (also note: self reference).
+        sn(nil, { t { "", "\t" .. item }, i(1), d(2, rec_ls, {}) }),
+      }),
     })
-  end)(),
+  end
+
+  return s(name or env, {
+    t { "\\begin{" .. env .. "}", "\t" .. item },
+    i(1),
+    d(2, rec_ls, {}),
+    t { "", "\\end{" .. env .. "}" },
+    i(0),
+  })
+end
+list_extend(snips, {
+  infinite_list("\\item ", "itemize"),
+  infinite_list("\\item[] ", "description"),
+  infinite_list("\\item ", "enumerate"),
 })
 
 M.snippets = snips
