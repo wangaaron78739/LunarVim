@@ -81,7 +81,7 @@ O = {
       fish = "fish",
       just = "just",
     },
-    literals = {
+    literal = {
       Justfile = "just",
       justfile = "just",
     },
