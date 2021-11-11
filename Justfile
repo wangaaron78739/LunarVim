@@ -30,7 +30,6 @@ ext-install:
     npm install -g markdownlint-cli
     npm install -g write-good
 
-# TODO: install in an isolated virtual environment? (use pipx)
 # Install dependencies # TODO: there are some dependencies not included here
 install:
     sudo apt install libjpeg8-dev zlib1g-dev libxtst-dev 
@@ -38,16 +37,6 @@ install:
     just ext-install
     {{nvim}} # Run once to install packer and stuff
     {{nvim}} +PackerSync # Run again to install the plugins
-
-# Install lsp that I want
-lsps:
-    {{nvim}} +'LspInstall rust'
-    {{nvim}} +'LspInstall lua'
-    {{nvim}} +'LspInstall python'
-    {{nvim}} +'LspInstall cpp'
-    {{nvim}} +'LspInstall cmake'
-    {{nvim}} +'LspInstall latex'
-    {{nvim}} +'LspInstall json'
 
 # Open neovim with main settings files
 settings:
