@@ -323,7 +323,7 @@ end
 
 -- Helper for better renaming interface
 M.rename = function()
-  require("lv-utils").inline_text_input {
+  require("lv-ui/input").inline_text_input {
     border = O.lsp.rename_border,
     enter = lsp.buf.rename,
     init_cword = true,

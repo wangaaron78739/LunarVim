@@ -50,6 +50,7 @@ O = {
     background_colour = "Normal",
   },
   breakpoint_sign = { text = "🛑", texthl = "LspDiagnosticsSignError", linehl = "", numhl = "" },
+  input_border = "rounded",
   lsp = {
     document_highlight = true,
     autoecho_line_diagnostics = false,
