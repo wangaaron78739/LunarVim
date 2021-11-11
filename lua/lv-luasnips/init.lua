@@ -61,6 +61,11 @@ function M.setup()
   local tnl = function(line)
     return t { line, "" }
   end
+  local mi = function(n)
+    f(function(nodes)
+      return nodes[1]
+    end, { n })
+  end
   --
   -- Returns a snippet_node wrapped around an insert_node whose initial
   -- text value is set to the current date in the desired format.
@@ -89,7 +94,23 @@ function M.setup()
         t '">',
         i(1),
         t "</a>",
-        i(0),
+      }),
+      s("function", {
+        t "function ",
+        i(1),
+        t "(",
+        i(2),
+        t { ")", "" },
+        f(function(_, snip)
+          return snip.env.TM_SELECTED_TEXT or ""
+        end, {}),
+        -- t { "", "" },
+        -- i(0),
+        t { "", "end", "" },
+        mi(1),
+        t "(",
+        mi(2),
+        t { ")", "" },
       }),
     },
   }
