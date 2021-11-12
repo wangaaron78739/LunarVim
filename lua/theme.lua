@@ -6,12 +6,14 @@ command! Zenbones colorscheme zenbones
 command! Nordbones colorscheme nordbones
 command! LightMelya colorscheme light_melya
 command! Nebulous lua require'theme'.nebulous()
-command! DarkCatppuccino colorscheme dark_catppuccino
+command! Rdark lua require('colorbuddy').colorscheme('nvim-rdark')
+command! DarkCatppuccino colorscheme catppuccin
 command! Acme colorscheme acme
 command! Pencil colorscheme pencil
 command! Paper colorscheme paper
 command! Parchment colorscheme parchment
 command! ModusOperandi colorscheme modus-operandi
+command! ModusVivendi colorscheme modus-vivendi
 command! Writing lua vim.cmd(O.lighttheme)
 ]]
 
@@ -35,10 +37,10 @@ local M = {
         variables = false,
       },
       custom_colors = { -- FIXME: custom colors not bound
-        Conceal = { ctermfg = "223", ctermbg = "235 ", guifg = "#ebdbb2", guibg = "#282828" },
-        LspReferenceRead = { cterm = "bold", ctermbg = "red", guibg = "#464646" },
-        LspReferenceText = { cterm = "bold", ctermbg = "red", guibg = "#464646" },
-        LspReferenceWrite = { cterm = "bold", ctermbg = "red", guibg = "#464646" },
+        -- Conceal = { ctermfg = "223", ctermbg = "235 ", guifg = "#ebdbb2", guibg = "#282828" },
+        LspReferenceRead = { style = "bold", bg = "#464646" },
+        LspReferenceText = { style = "bold", bg = "#464646" },
+        LspReferenceWrite = { style = "bold", bg = "#464646" },
       },
     }
     -- vim.cmd "colorscheme nebulous"

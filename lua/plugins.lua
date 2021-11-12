@@ -1249,48 +1249,49 @@ return packer.startup(function(use)
   -- Colorschemes -- https://github.com/folke/lsp-colors.nvim
   use { "Yagua/nebulous.nvim" }
   -- use { "christianchiarulli/nvcode-color-schemes.vim", opt = true }
-  use {
-    "Pocco81/Catppuccino.nvim",
-    config = function()
-      local trues = utils.else_true {
-        native_lsp = {
-          enabled = true,
-          virtual_text = {
-            errors = "italic",
-            hints = "italic",
-            warnings = "italic",
-            information = "italic",
-          },
-          underlines = {
-            errors = "underline",
-            hints = "underline",
-            warnings = "underline",
-            information = "underline",
-          },
-        },
-        nvimtree = {
-          enabled = true,
-          show_root = true,
-        },
-        which_key = true,
-        indent_blankline = {
-          enabled = true,
-          colored_indent_levels = true,
-        },
-      }
-      require("catppuccino").setup {
-        colorscheme = "dark_catppuccino", -- neon_latte
-        styles = {
-          comments = "italic",
-          functions = "NONE",
-          keywords = "italic",
-          strings = "NONE",
-          variables = "NONE",
-        },
-        integrations = trues,
-      }
-    end,
-  }
+  -- use {
+  --   "catppuccin/nvim",
+  --   config = function()
+  --     local trues = utils.else_true {
+  --       native_lsp = {
+  --         enabled = true,
+  --         virtual_text = {
+  --           errors = "italic",
+  --           hints = "italic",
+  --           warnings = "italic",
+  --           information = "italic",
+  --         },
+  --         underlines = {
+  --           errors = "underline",
+  --           hints = "underline",
+  --           warnings = "underline",
+  --           information = "underline",
+  --         },
+  --       },
+  --       nvimtree = {
+  --         enabled = true,
+  --         show_root = true,
+  --       },
+  --       which_key = true,
+  --       indent_blankline = {
+  --         enabled = true,
+  --         colored_indent_levels = true,
+  --       },
+  --     }
+  --     require("catppuccin").setup {
+  --       colorscheme = "dark_catppuccino", -- neon_latte
+  --       term_colors = true,
+  --       styles = {
+  --         comments = "italic",
+  --         functions = "NONE",
+  --         keywords = "italic",
+  --         strings = "NONE",
+  --         variables = "NONE",
+  --       },
+  --       integrations = trues,
+  --     }
+  --   end,
+  -- }
   -- use "mcchrish/zenbones.nvim"
   -- use "plan9-for-vimspace/acme-colors"
   -- use "preservim/vim-colors-pencil"
@@ -1299,22 +1300,63 @@ return packer.startup(function(use)
   -- use "pgdouyon/vim-yin-yang"
   -- use {
   --   "sainnhe/sonokai",
-  --   config = function()
+  --   setup = function()
   --     vim.g.sonokai_style = "atlantis" -- andromeda
   --   end,
   -- }
-  -- use "tanvirtin/monokai.nvim"
+  use "tanvirtin/monokai.nvim"
   -- use "RishabhRD/nvim-rdark"
-  -- use "marko-cerovac/material.nvim"
+  use {
+    "marko-cerovac/material.nvim",
+    setup = function()
+      vim.g.material_style = "deep ocean"
+    end,
+    config = function()
+      require("material").setup {
+
+        contrast = true, -- Enable contrast for sidebars, floating windows and popup menus like Nvim-Tree
+        borders = false, -- Enable borders between verticaly split windows
+
+        popup_menu = "dark", -- Popup menu style ( can be: 'dark', 'light', 'colorful' or 'stealth' )
+
+        italics = {
+          comments = false, -- Enable italic comments
+          keywords = false, -- Enable italic keywords
+          functions = false, -- Enable italic functions
+          strings = false, -- Enable italic strings
+          variables = false, -- Enable italic variables
+        },
+
+        contrast_windows = { -- Specify which windows get the contrasted (darker) background
+          "terminal", -- Darker terminal background
+          "packer", -- Darker packer background
+          "qf", -- Darker qf list background
+        },
+
+        text_contrast = {
+          lighter = false, -- Enable higher contrast text for lighter style
+          darker = false, -- Enable higher contrast text for darker style
+        },
+
+        disable = {
+          background = false, -- Prevent the theme from setting the background (NeoVim then uses your teminal background)
+          term_colors = false, -- Prevent the theme from setting terminal colors
+          eob_lines = false, -- Hide the end-of-buffer lines
+        },
+
+        custom_highlights = {}, -- Overwrite highlights with your own
+      }
+    end,
+  }
   -- use "Shatur/neovim-ayu"
   -- use "folke/tokyonight.nvim"
-  -- use "Mofiqul/dracula.nvim"
-  -- use "tomasiser/vim-code-dark"
+  -- use "dracula/vim"
+  use "tomasiser/vim-code-dark"
   -- use "glepnir/zephyr-nvim"
   -- use "Th3Whit3Wolf/onebuddy" -- require('colorbuddy').colorscheme('onebuddy')
-  -- use "ishan9299/modus-theme-vim"
+  use "ishan9299/modus-theme-vim"
   -- use "Th3Whit3Wolf/one-nvim"
-  -- use "ray-x/aurora"
+  use "ray-x/aurora"
   -- use "tanvirtin/nvim-monokai"
   -- -- use "nekonako/xresources-nvim"
   -- use "bluz71/vim-moonfly-colors"
@@ -1327,15 +1369,15 @@ return packer.startup(function(use)
   -- }
   -- use { "navarasu/onedark.nvim", as = "navarasu-onedark-nvim" }
   -- use { "ful1e5/onedark.nvim", as = "ful1e5-onedark-nvim" }
-  -- use {
-  --   "rafamadriz/neon",
-  --   config = function()
-  --     vim.g.neon_style = "dark"
-  --     vim.g.neon_italic_keyword = true
-  --     vim.g.neon_italic_function = true
-  --     vim.g.neon_transparent = false
-  --   end,
-  -- }
+  use {
+    "rafamadriz/neon",
+    setup = function()
+      vim.g.neon_style = "dark"
+      vim.g.neon_italic_keyword = true
+      vim.g.neon_italic_function = true
+      vim.g.neon_transparent = false
+    end,
+  }
   -- use {
   --   "adisen99/codeschool.nvim",
   --   config = function()

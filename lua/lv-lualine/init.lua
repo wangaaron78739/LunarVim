@@ -105,9 +105,10 @@ end
 require("lualine").setup {
   options = {
     icons_enabled = true,
-    theme = "catppuccino",
+    -- theme = O.theme,
+    -- theme = "molokai",
     -- theme = "nebulous",
-    -- theme = "onedark",
+    theme = "onedark",
     -- component_separators = { "", "" },
     -- section_separators = { "", "" },
     disabled_filetypes = {},
