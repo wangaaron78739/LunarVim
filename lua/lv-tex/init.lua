@@ -726,22 +726,24 @@ list_extend(auto, {
   -- ms("|", { t "|", i(0), t "|" }),
 
   -- Subscripting and superscripting
-  ms(
+  s(
     re [[([A-Za-z])([A-Za-z])([A-Za-z])]],
     f(function(_, arg)
       local cap = arg.captures
-      if cap[2] == cap[3] then
-        return string.format("%s_%s", cap[1], cap[2])
-      else
-        return arg.trigger
-      end
-    end, {})
+      return string.format("%s_%s", cap[1], cap[2])
+    end, {}),
+    {
+      condition = function(line_to_cursor, matched_trigger)
+        utils.dump(matched_trigger:sub(2, 2), matched_trigger:sub(3, 3))
+        return (mathmode_() ~= 0) and (matched_trigger:sub(2, 2) == matched_trigger:sub(3, 3))
+      end,
+    }
   ),
   ms(renw "__", { t "_{", i(0), t "}" }),
   ms(renw "%^%^", { t "^{", i(0), t "}" }),
   ms(renw [[(%S) ([%^_])]], { sub(1), sub(2) }), -- Remove extra ws sub/superscript
   ms(renw [[([A-Za-z%}%]%)])(%d)]], { sub(1), t "_", sub(2) }), -- Auto subscript
-  ms(renw [[([A-Za-z%}%]%)])([a-z])]], { sub(1), t "_", sub(2) }), -- Auto subscript
+  -- ms(renw [[([A-Za-z%}%]%)])([a-z])]], { sub(1), t "_", sub(2) }), -- Auto subscript
   ms(renw [[([A-Za-z%}%]%)]) ?_(%d%d)]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
   ms(renw [[([A-Za-z%}%]%)]) ?_(%w[+-])]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
   ms(renw [[([A-Za-z%}%]%)]) ?_([%+%-] ?[%d%w])]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
