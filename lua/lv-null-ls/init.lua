@@ -44,7 +44,7 @@ function M.config()
       -- diagnostics.hadolint,
       -- -- diagnostics.luacheck,
       diagnostics.write_good,
-      -- diagnostics.proselint,
+      diagnostics.proselint,
       -- diagnostics.vale, -- lets install vale-linter
       -- -- diagnostics.misspell,
       diagnostics.markdownlint,
@@ -54,13 +54,15 @@ function M.config()
       -- code_actions.gitsigns, -- TODO: reenable when I can lower the priority
       code_actions.proselint,
       code_actions.refactoring,
+      code_actions.statix,
+
+      compl.spell,
 
       -- Hover Info
-      hover.dictionary,
-      -- hover.dictionary.with {
-      --   generator = {},
-      --   filetypes = { "txt", "markdown", "tex" },
-      -- },
+      hover.dictionary.with {
+        generator = {},
+        filetypes = { "txt", "markdown", "tex" },
+      },
     },
   }
   require("lspconfig")["null-ls"].setup {}

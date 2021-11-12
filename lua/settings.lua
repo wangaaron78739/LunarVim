@@ -134,6 +134,9 @@ end
 -- neovide settings
 -- vim.g.neovide_cursor_vfx_mode = "pixiedust"
 -- vim.g.neovide_refresh_rate=120
+vim.g.neovide_window_floating_opacity = 0
+vim.g.neovide_floating_blur = 0
+vim.g.neovide_window_floating_blur = 0
 require("lv-utils").set_guifont(O.fontsize, "FiraCode Nerd Font")
 
 if vim.g.kitty_scrollback then

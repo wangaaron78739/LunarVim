@@ -187,7 +187,7 @@ return packer.startup(function(use)
   use {
     "windwp/nvim-autopairs",
     config = function()
-      require "lv-pairs".autopairs()
+      require("lv-pairs").autopairs()
     end,
     -- after = { "nvim-compe", "telescope.nvim" },
     after = "nvim-cmp",
@@ -1331,7 +1331,7 @@ return packer.startup(function(use)
   --     vim.g.neon_style = "dark"
   --     vim.g.neon_italic_keyword = true
   --     vim.g.neon_italic_function = true
-  --     vim.g.neon_transparent = true
+  --     vim.g.neon_transparent = false
   --   end,
   -- }
   -- use {
