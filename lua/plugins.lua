@@ -780,6 +780,7 @@ return packer.startup(function(use)
     end,
     disable = not O.plugin.surround,
   }
+  -- TODO: use surround.nvim
 
   -- fzf based search
   use { "junegunn/fzf", disable = not O.plugin.fzf } -- Telescope does most of this?
