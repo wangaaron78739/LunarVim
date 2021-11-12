@@ -1234,6 +1234,8 @@ return packer.startup(function(use)
     },
   }
 
+  use "antoinemadec/FixCursorHold.nvim"
+
   -- Colorschemes/Themes
   -- Lush - Create Color Schemes
   use {
