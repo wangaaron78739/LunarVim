@@ -999,7 +999,14 @@ return packer.startup(function(use)
     ft = { "html", "php", "tsx", "javascript", "typescript" },
     disable = not O.plugin.ts_autotag,
   }
-  use { "romgrk/nvim-treesitter-context", event = "CursorMoved", disable = not O.plugin.ts_context }
+  use {
+    "romgrk/nvim-treesitter-context",
+    config = function()
+      require("treesitter-context").setup()
+    end,
+    event = "WinScrolled",
+    disable = not O.plugin.ts_context,
+  }
   use { "p00f/nvim-ts-rainbow", disable = not O.plugin.ts_rainbow }
   use { "nvim-treesitter/nvim-treesitter-refactor" }
 
