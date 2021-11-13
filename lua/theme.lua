@@ -6,6 +6,7 @@ command! Zenbones colorscheme zenbones
 command! Nordbones colorscheme nordbones
 command! LightMelya colorscheme light_melya
 command! Nebulous lua require'theme'.nebulous()
+command! Material lua require'theme'.material()
 command! Rdark lua require('colorbuddy').colorscheme('nvim-rdark')
 command! DarkCatppuccino colorscheme catppuccin
 command! Acme colorscheme acme
@@ -44,6 +45,39 @@ local M = {
       },
     }
     -- vim.cmd "colorscheme nebulous"
+  end,
+  material = function()
+    vim.g.material_style = "deep ocean"
+    -- vim.g.material_style = "darker"
+    require("material").setup {
+      contrast = true, -- Enable contrast for sidebars, floating windows and popup menus like Nvim-Tree
+      borders = true, -- Enable borders between verticaly split windows
+
+      popup_menu = "dark", -- Popup menu style ( can be: 'dark', 'light', 'colorful' or 'stealth' )
+
+      italics = {
+        comments = true, -- Enable italic comments
+        keywords = true, -- Enable italic keywords
+        functions = false, -- Enable italic functions
+        strings = false, -- Enable italic strings
+        variables = false, -- Enable italic variables
+      },
+
+      contrast_windows = { -- Specify which windows get the contrasted (darker) background
+        "terminal", -- Darker terminal background
+        "packer", -- Darker packer background
+        "qf", -- Darker qf list background
+      },
+
+      text_contrast = {
+        lighter = true, -- Enable higher contrast text for lighter style
+        darker = true, -- Enable higher contrast text for darker style
+      },
+
+      disable = {},
+      custom_highlights = {}, -- Overwrite highlights with your own
+    }
+    vim.cmd "colorscheme material"
   end,
 }
 

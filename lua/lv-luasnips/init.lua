@@ -105,12 +105,12 @@ function M.setup()
           return snip.env.TM_SELECTED_TEXT or ""
         end, {}),
         -- t { "", "" },
-        -- i(0),
+        i(0),
         t { "", "end", "" },
-        mi(1),
-        t "(",
-        mi(2),
-        t { ")", "" },
+        -- mi(1),
+        -- t "(",
+        -- mi(2),
+        -- t { ")", "" },
       }),
     },
   }

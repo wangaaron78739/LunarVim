@@ -12,6 +12,7 @@ O = {
   auto_close_tree = false,
   fold_columns = "0",
   theme = "Nebulous",
+  -- theme = "Material",
   lighttheme = "Paper", -- Paper is good but incompatible with notify.nvim
   -- lighttheme = "Zenbones",
   fontsize = 10,
