@@ -701,6 +701,20 @@ function M.setup()
   map("n", "<leader>m", "<localleader>", {})
   map("x", "<leader>m", "<localleader>", {})
 
+  -- Open new line with a count
+  map(
+    "n",
+    "o",
+    from_fn(function()
+      local count = vim.v.count
+      feedkeys("o", "n")
+      for _ = 1, count do
+        feedkeys "<CR>"
+      end
+    end),
+    nore
+  )
+
   local leaderOpts = {
     mode = "n", -- NORMAL mode
     prefix = "<leader>",
