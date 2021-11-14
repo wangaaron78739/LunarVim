@@ -200,7 +200,7 @@ M.preview_location_at = function(name)
   return lsp.buf_request(0, "textDocument/" .. name, params, preview_location_callback)
 end
 
-function M.goto_definition(split_cmd)
+function M.view_location_split_callback(split_cmd)
   local util = vim.lsp.util
   local log = require "vim.lsp.log"
   local api = vim.api
@@ -230,6 +230,14 @@ function M.goto_definition(split_cmd)
   end
 
   return handler
+end
+
+M.view_location_split = function(name, split_cmd)
+  local cb = M.view_location_split_callback(split_cmd)
+  return function()
+    local params = lsp.util.make_position_params()
+    return lsp.buf_request(0, "textDocument/" .. name, params, cb)
+  end
 end
 
 M.toggle_diagnostics = function()

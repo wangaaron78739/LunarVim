@@ -532,15 +532,19 @@ function M.setup()
   -- lsp keys
   map("n", "gd", luacmd "vim.lsp.buf.definition()", sile)
   map("n", "gD", luacmd "vim.lsp.buf.declaration()", sile)
-  -- map("n", "gr", luacmd "vim.lsp.buf.references()", sile)
-  map("n", "gr", telescope_fn.lsp_references, sile)
   map("n", "gi", luacmd "vim.lsp.buf.implementation()", sile)
+  map("n", "gr", telescope_fn.lsp_references, sile)
   map("n", "gK", luacmd "vim.lsp.codelens.run()", sile)
+  -- map("n", "gr", luacmd "vim.lsp.buf.references()", sile)
   -- Preview variants
-  map("n", "gpd", luacmd [[require("lsp.functions").preview_location_at("definition")]], sile)
-  map("n", "gpD", luacmd [[require("lsp.functions").preview_location_at("declaration")]], sile)
-  map("n", "gpr", luacmd [[require("lsp.functions").preview_location_at("references")]], sile)
-  map("n", "gpi", luacmd [[require("lsp.functions").preview_location_at("implementation")]], sile)
+  -- map("n", "gpd", luacmd [[require("lsp.functions").preview_location_at("definition")]], sile)
+  -- map("n", "gpD", luacmd [[require("lsp.functions").preview_location_at("declaration")]], sile)
+  -- map("n", "gpr", luacmd [[require("lsp.functions").preview_location_at("references")]], sile)
+  -- map("n", "gpi", luacmd [[require("lsp.functions").preview_location_at("implementation")]], sile)
+  map("n", "gpd", from_fn(require("lsp.functions").view_location_split("definition", "FocusSplitNicely")), sile)
+  map("n", "gpD", from_fn(require("lsp.functions").view_location_split("declaration", "FocusSplitNicely")), sile)
+  map("n", "gpr", from_fn(require("lsp.functions").view_location_split("references", "FocusSplitNicely")), sile)
+  map("n", "gpi", from_fn(require("lsp.functions").view_location_split("implementation", "FocusSplitNicely")), sile)
   -- Hover
   -- map("n", "K", luacmd "vim.lsp.buf.hover()", sile)
   map("n", "gh", luacmd "vim.lsp.buf.hover()", sile)
@@ -864,19 +868,35 @@ function M.setup()
     },
     l = {
       name = "LSP",
-      a = { do_code_action, "Code Action (K)" },
-      h = { lspbuf.hover, "Hover (gh)" },
       i = {
         l = { cmd "LspInfo", "LSP" },
         n = { cmd "NullLsInfo", "Null-ls" },
         i = { cmd "LspInstallInfo", "LspInstall" },
         t = { cmd "TSConfigInfo", "Treesitter" },
       },
-      -- TODO: What is the replacement for this?
-      -- f = { cmd"Lspsaga lsp_finder", "LSP Finder" },
-      -- p = { cmd"Lspsaga preview_definition", "Preview Definition" },
+      h = { lspbuf.hover, "Hover (gh)" },
+      a = { do_code_action, "Code Action (K)" },
+      c = { luacmd "vim.lsp.codelens.run()", "Run Code Lens (gK)" },
       t = { lspbuf.type_definition, "Type Definition" },
       f = { lspbuf.formatting, "Format" },
+      s = {
+        d = {
+          from_fn(require("lsp.functions").view_location_split("definition", "FocusSplitNicely")),
+          "Split Definition",
+        },
+        D = {
+          from_fn(require("lsp.functions").view_location_split("declaration", "FocusSplitNicely")),
+          "Split Declaration",
+        },
+        r = {
+          from_fn(require("lsp.functions").view_location_split("references", "FocusSplitNicely")),
+          "Split References",
+        },
+        s = {
+          from_fn(require("lsp.functions").view_location_split("implementation", "FocusSplitNicely")),
+          "Split Implementation",
+        },
+      },
     },
     s = {
       name = "Search",
