@@ -4,7 +4,7 @@ local conf = {
   rmb = false,
 }
 
-M.keymaps = function()
+function M.keymaps()
   if conf then
     local map = vim.api.nvim_set_keymap
     -- Helper functions
@@ -22,7 +22,7 @@ M.keymaps = function()
     end
   end
 end
-M.config = function()
+function M.config()
   local gesture = require "gesture"
   local register = gesture.register
   local up = gesture.up()

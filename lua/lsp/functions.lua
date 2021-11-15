@@ -24,7 +24,7 @@ local short_line_limit = 20
 
 -- Prints the first diagnostic for the current line.
 -- Bind to CursorMoved to update live: cmd [[autocmd CursorMoved * :lua require("lsp.functions").echo_diagnostic()]]
-M.echo_diagnostic = function()
+function M.echo_diagnostic()
   if echo_timer then
     echo_timer:stop()
   end
@@ -90,7 +90,7 @@ M.echo_diagnostic = function()
     api.nvim_echo(chunks, false, {})
   end, echo_timeout)
 end
-M.simple_echo_diagnostic = function()
+function M.simple_echo_diagnostic()
   local line_diagnostics = diags.get_line_diagnostics()
   if vim.tbl_isempty(line_diagnostics) then
     cmd [[echo ""]]
@@ -105,7 +105,7 @@ local getmark = api.nvim_buf_get_mark
 local range_formatting = lsp.buf.range_formatting
 local feedkeys = api.nvim_feedkeys
 -- Format a range using LSP
-M.format_range_operator = function()
+function M.format_range_operator()
   local old_func = vim.go.operatorfunc
   _G.op_func_formatting = function()
     local start = getmark(0, "[")
@@ -121,14 +121,14 @@ end
 -- TODO: Wait for diags.show_diagnostics to be public
 local lsputil = require "vim.lsp.util"
 local if_nil = vim.F.if_nil
-M.range_diagnostics = function(opts, buf_nr, start, finish)
+function M.range_diagnostics(opts, buf_nr, start, finish)
   start = start or getmark(0, "[")
   finish = finish or getmark(0, "]")
 
   opts = opts or {}
   opts.focus_id = "position_diagnostics"
   buf_nr = buf_nr or 0
-  local match_position_predicate = function(diag)
+  local function match_position_predicate(diag)
     -- FIXME: this is wrong sometimes?
     if finish[1] < diag.range["start"].line then
       return false
@@ -195,7 +195,7 @@ local function preview_location_callback(_, result)
   })
 end
 
-M.preview_location_at = function(name)
+function M.preview_location_at(name)
   local params = lsp.util.make_position_params()
   return lsp.buf_request(0, "textDocument/" .. name, params, preview_location_callback)
 end
@@ -232,7 +232,7 @@ function M.view_location_split_callback(split_cmd)
   return handler
 end
 
-M.view_location_split = function(name, split_cmd)
+function M.view_location_split(name, split_cmd)
   local cb = M.view_location_split_callback(split_cmd)
   return function()
     local params = lsp.util.make_position_params()
@@ -240,7 +240,7 @@ M.view_location_split = function(name, split_cmd)
   end
 end
 
-M.toggle_diagnostics = function()
+function M.toggle_diagnostics()
   vim.b.lsp_diagnostics_hide = not vim.b.lsp_diagnostics_hide
   if vim.b.lsp_diagnostics_hide then
     diags.enable()
@@ -250,7 +250,7 @@ M.toggle_diagnostics = function()
 end
 
 -- TODO: Implement codeLens handlers
-M.show_codelens = function()
+function M.show_codelens()
   -- cmd [[ autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh() ]]
   -- cmd(
   --   [[
@@ -276,23 +276,23 @@ local popup_diagnostics_opts = {
   header = false,
   border = O.lsp.border,
 }
-M.diag_line = function()
+function M.diag_line()
   diags.open_float(0, vim.tbl_deep_extend("keep", { scope = "line" }, popup_diagnostics_opts))
 end
-M.diag_cursor = function()
+function M.diag_cursor()
   diags.open_float(0, vim.tbl_deep_extend("keep", { scope = "cursor" }, popup_diagnostics_opts))
 end
-M.diag_buffer = function()
+function M.diag_buffer()
   diags.open_float(0, vim.tbl_deep_extend("keep", { scope = "buffer" }, popup_diagnostics_opts))
 end
-M.diag_next = function()
+function M.diag_next()
   diags.goto_next { enable_popup = true, float = popup_diagnostics_opts }
 end
-M.diag_prev = function()
+function M.diag_prev()
   diags.goto_prev { enable_popup = true, float = popup_diagnostics_opts }
 end
 
-M.common_on_attach = function(client, bufnr)
+function M.common_on_attach(client, bufnr)
   local lsp_status = require "lsp-status"
   lsp_status.on_attach(client)
 
@@ -343,12 +343,12 @@ M.common_on_attach = function(client, bufnr)
 end
 
 -- Helper for better renaming interface
-M.rename = function()
+function M.rename()
   require("lv-ui/input").inline_text_input {
     border = O.lsp.rename_border,
     enter = lsp.buf.rename,
     init_cword = true,
-    at_begin = true,
+    at_begin = true, -- FIXME: what happened to this
     minwidth = true,
   }
 end

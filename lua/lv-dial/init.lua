@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   local dial = require "dial"
 
   table.insert(dial.config.searchlist.normal, "markup#markdown#header")
@@ -45,7 +45,7 @@ M.config = function()
   enum_cyclic_chars "nmpqr"
 
   local map = vim.api.nvim_set_keymap
-  local dialmap = function(from, to)
+  local function dialmap(from, to)
     map("n", from, to, { silent = true })
     map("x", from, to, { silent = true })
   end
@@ -56,6 +56,6 @@ M.config = function()
   dialmap("g<C-x>", "<Plug>(dial-decrement-additional)")
 end
 
-M.keymaps = function() end
+function M.keymaps() end
 
 return M

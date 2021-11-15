@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   require("lightspeed").setup {
     jump_to_first_match = true,
     jump_on_partial_input_safety_timeout = 400,
@@ -17,7 +17,7 @@ M.config = function()
   }
 end
 
-M.au_unconceal = function(level)
+function M.au_unconceal(level)
   vim.opt_local.conceallevel = level
   utils.define_augroups {
     _lightspeed_unconceal = {

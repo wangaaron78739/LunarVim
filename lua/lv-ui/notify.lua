@@ -1,5 +1,5 @@
 local M = {}
-M.config = function()
+function M.config()
   local notify = require "notify"
   notify.setup(O.notify)
   vim.notify = notify

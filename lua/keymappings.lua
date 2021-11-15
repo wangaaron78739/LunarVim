@@ -8,7 +8,7 @@ local custom_n_repeat = nil
 local custom_N_repeat = nil
 local feedkeys_ = vim.api.nvim_feedkeys
 local termcode = vim.api.nvim_replace_termcodes
-local feedkeys = function(keys, o)
+local function feedkeys(keys, o)
   if o == nil then
     o = "m"
   end
@@ -67,7 +67,7 @@ end
 M.make_nN_pair = make_nN_pair
 
 vim.g.libmodalTimeouts = "1"
-M.libmodal_setup = function()
+function M.libmodal_setup()
   local libmodal = require "libmodal"
 
   -- TODO fix this
@@ -201,7 +201,7 @@ function M.setup()
   -- custom_n_repeat
   map("n", "n", luareq("keymappings").n_repeat, nore)
   map("n", "N", luareq("keymappings").N_repeat, nore)
-  local srchrpt = function(k, op)
+  local function srchrpt(k, op)
     return from_fn(function()
       register_nN_repeat { nil, nil }
       feedkeys(k, op or "n")
@@ -1119,13 +1119,13 @@ M.wkopts = {
   noremap = false,
   nowait = false,
 }
-M.whichkey = function(maps, opts)
+function M.whichkey(maps, opts)
   if opts == nil then
     opts = {}
   end
   require("which-key").register(maps, vim.tbl_extend("keep", opts, M.wkopts))
 end
-M.localleader = function(maps, opts)
+function M.localleader(maps, opts)
   if opts == nil then
     opts = {}
   end
@@ -1137,7 +1137,7 @@ M.localleader = function(maps, opts)
     })
   )
 end
-M.ftleader = function(maps, opts)
+function M.ftleader(maps, opts)
   if opts == nil then
     opts = {}
   end
@@ -1149,7 +1149,7 @@ M.ftleader = function(maps, opts)
     })
   )
 end
-M.vlocalleader = function(maps, opts)
+function M.vlocalleader(maps, opts)
   if opts == nil then
     opts = {}
   end

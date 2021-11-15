@@ -233,7 +233,7 @@ M.sandwich_recipes = {
   },
 }
 
-M.sandwhich_mark_recipe_fn = function()
+function M.sandwhich_mark_recipe_fn()
   local map = vim.api.nvim_set_keymap
   map(
     "x",
@@ -368,12 +368,12 @@ local function fmt(fn, ipairs)
     return string.format(unpack(fn(args.captures, args.trigger, args)))
   end, ipairs)
 end
-local sub = function(j)
+local function sub(j)
   return f(function(_, args)
     return string.format("%s", args.captures[j])
   end, {})
 end
-local con = function(fn)
+local function con(fn)
   return { condition = fn }
 end
 local mathmode_ = vim.fn["vimtex#syntax#in_mathzone"]
@@ -387,13 +387,13 @@ local nonmathmode = {
     return mathmode_() == 0
   end,
 }
-local ms = function(lhs, rhs)
+local function ms(lhs, rhs)
   return s(lhs, rhs, mathmode)
 end
-local nms = function(lhs, rhs)
+local function nms(lhs, rhs)
   return s(lhs, rhs, nonmathmode)
 end
-local nw = function(k)
+local function nw(k)
   return { trig = k, wordTrig = false }
 end
 local function re(arg)
@@ -604,7 +604,7 @@ local pairsubs = setmetatable({ -- Autopairs will complete the closing for most 
     return key
   end,
 })
-local pairsub = function(j)
+local function pairsub(j)
   return f(function(_, args)
     return string.format("%s", pairsubs[args.captures[j]])
   end, {})

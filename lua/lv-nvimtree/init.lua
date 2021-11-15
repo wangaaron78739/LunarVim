@@ -3,7 +3,7 @@
 -- end
 local M = {}
 
-M.config = function()
+function M.config()
   local tree_cb = require("nvim-tree.config").nvim_tree_callback
 
   local g = vim.g
@@ -115,7 +115,7 @@ end
 
 local view = require "nvim-tree.view"
 
-M.toggle_tree = function()
+function M.toggle_tree()
   if view.win_open() then
     require("nvim-tree").close()
     if package.loaded["bufferline.state"] then

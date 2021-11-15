@@ -11,7 +11,7 @@ local map_options = {
   noremap = true,
   silent = true,
 }
-local map_tele = function(mode, key, f, options, buffer)
+local function map_tele(mode, key, f, options, buffer)
   local map_key = vim.api.nvim_replace_termcodes(key .. f, true, true, true)
 
   TelescopeMapArgs[map_key] = options or {}

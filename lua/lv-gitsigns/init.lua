@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   require("gitsigns").setup {
     signs = {
       -- TODO add hl to colorscheme

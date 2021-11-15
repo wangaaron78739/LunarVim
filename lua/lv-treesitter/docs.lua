@@ -1,5 +1,5 @@
 local M = {}
-M.config = function()
+function M.config()
   -- require("nvim-treesitter.configs").setup {
   --   tree_docs = {
   --     enable = true,

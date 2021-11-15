@@ -53,7 +53,7 @@ local maps = {
   },
   -- you can put your mapping here it only use normal mode
 }
-M.setup = function()
+function M.setup()
   -- ft = spectre_panel
   -- TODO: register which-key
 

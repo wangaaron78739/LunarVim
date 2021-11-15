@@ -38,15 +38,15 @@ function M.setup()
   local lspkind = require "lspkind"
   local luasnip = require "luasnip"
 
-  local function t (str)
+  local function t(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
   end
   local feedkeys = vim.api.nvim_feedkeys
-  local function check_back_space ()
+  local function check_back_space()
     local col = vim.fn.col "." - 1
     return col == 0 or vim.fn.getline("."):sub(col, col):match "%s" ~= nil
   end
-  M.supertab = function(when_cmp_visible)
+  function M.supertab(when_cmp_visible)
     return function()
       if cmp.visible() then
         when_cmp_visible()

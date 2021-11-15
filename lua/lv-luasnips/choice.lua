@@ -86,9 +86,7 @@ function M.popup_close()
   end
 end
 
-
-
-M.config = function()
+function M.config()
   vim.cmd [[
 augroup popup
 au!

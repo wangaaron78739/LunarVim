@@ -72,13 +72,13 @@ function M.setup()
   local pa = ls.parser.parse_snippet
   local types = require "luasnip.util.types"
   local nl = t { "", "" }
-  local nlt = function(line)
+  local function nlt(line)
     return t { "", line }
   end
-  local tnl = function(line)
+  local function tnl(line)
     return t { line, "" }
   end
-  local mi = function(n)
+  local function mi(n)
     f(function(nodes)
       return nodes[1]
     end, { n })
@@ -86,7 +86,7 @@ function M.setup()
   --
   -- Returns a snippet_node wrapped around an insert_node whose initial
   -- text value is set to the current date in the desired format.
-  local date_input = function(args, state, fmt)
+  local function date_input(args, state, fmt)
     local fmt = fmt or "%Y-%m-%d"
     return sn(nil, i(1, os.date(fmt)))
   end

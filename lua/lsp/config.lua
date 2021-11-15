@@ -4,7 +4,7 @@ local function diags(conf)
   return conf and conf.diagnostics and vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, conf.diagnostics)
 end
 local common_on_attach = require("lsp.functions").common_on_attach
-local inject_conf = function(obj)
+local function inject_conf(obj)
   local custom_on_attach = obj.on_attach
   if custom_on_attach then
     obj.on_attach = function(client, _bufnr)
@@ -34,7 +34,7 @@ M.inject = inject_conf
 if O.plugin.coq then
   M.coq = require "coq"()
   M.coq_lsp = M.coq.lsp_ensure_capabilities
-  M.conf_with = function(config)
+  function M.conf_with(config)
     config = inject_conf(config)
     config.capabilities = M.caps(config.capabilities)
     return M.coq_lsp(config)
@@ -43,7 +43,7 @@ else
   ----------------------------------------------------------------------
   --                       nvim-cmp + luasnips                        --
   ----------------------------------------------------------------------
-  M.conf_with = function(config)
+  function M.conf_with(config)
     config = inject_conf(config)
     -- Set default client capabilities plus window/workDoneProgress
     config.capabilities = M.caps(config.capabilities)
@@ -58,7 +58,7 @@ local function lsp_attach_buffers()
   vim.cmd [[do User LspAttachBuffers]]
 end
 
-M.get_cmd = function(name, extra_cmd_args)
+function M.get_cmd(name, extra_cmd_args)
   if lsp_installer_exists then
     local ok, server = require("nvim-lsp-installer.servers").get_server(name)
     local installopts = server:get_default_options()
@@ -72,7 +72,7 @@ M.get_cmd = function(name, extra_cmd_args)
   end
 end
 
-M.setup = function(lspconfig, name)
+function M.setup(lspconfig, name)
   if lsp_installer_exists then
     local ok, server = require("nvim-lsp-installer.servers").get_server(name)
     local process = require "nvim-lsp-installer.process"
@@ -112,7 +112,7 @@ M.setup = function(lspconfig, name)
   end
 end
 
-M.caps = function(overrides)
+function M.caps(overrides)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   local lsp_status = require "lsp-status"
   overrides = vim.tbl_deep_extend("keep", overrides or {}, lsp_status.capabilities)
@@ -120,7 +120,7 @@ M.caps = function(overrides)
 end
 
 local function nop() end
-M.lspconfig = function(name)
+function M.lspconfig(name)
   -- Check if client is already active/config
   local clients = vim.lsp.get_active_clients()
   for _, client in pairs(clients) do

@@ -51,12 +51,12 @@ end
 -- require'snippets'.use_suggested_mappings()
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- capabilities.textDocument.completion.completionItem.snippetSupport = true;
--- local on_attach_common = function(client)
+-- local function on_attach_common (client)
 -- print("LSP Initialized")
 -- require'completion'.on_attach(client)
 -- require'illuminate'.on_attach(client)
 -- end
-M.setup = function()
+function M.setup()
   require("lsp.config").lspconfig "tsserver" {
     filetypes = {
       "javascript",

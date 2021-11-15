@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   vim.g.dashboard_disable_at_vimenter = 0
 
   -- vim.g.dashboard_custom_header = {
@@ -159,7 +159,7 @@ M.config = function()
   vim.g.dashboard_custom_footer = { "Anshuman Medhi -- IndianBoy42 (amedhi@connect.ust.hk)" }
 end
 
-M.preconf = function()
+function M.preconf()
   vim.g.session_enable = false
 end
 

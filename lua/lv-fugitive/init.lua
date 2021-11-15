@@ -1,8 +1,8 @@
 local M = {}
 
-M.setup = function() end
+function M.setup() end
 
-M.ftplugin = function()
+function M.ftplugin()
   mappings.localleader {
     s = { "s", "Stage" },
     u = { "u", "Unstage" },

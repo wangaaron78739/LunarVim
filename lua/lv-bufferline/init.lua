@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   -- Buffer line setup
   require("bufferline").setup {
     options = {
@@ -70,7 +70,7 @@ M.config = function()
   }
 end
 
-M.keymaps = function(leaderMappings)
+function M.keymaps(leaderMappings)
   leaderMappings["h<TAB>"] = { "<cmd>BufferLinePick<cr>", "Buffers/Tabs" }
 end
 

@@ -200,7 +200,7 @@ local function env_cleanup(venv)
   end
   return venv
 end
-local PythonEnv = function()
+local function PythonEnv()
   if vim.bo.filetype == "python" then
     local venv = os.getenv "CONDA_DEFAULT_ENV"
     if venv ~= nil then
@@ -270,7 +270,7 @@ ins(gls.right, {
   },
 })
 
-local get_lsp_client = function(msg)
+local function get_lsp_client(msg)
   msg = msg or "LSP Inactive"
   local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
   local clients = vim.lsp.get_active_clients()

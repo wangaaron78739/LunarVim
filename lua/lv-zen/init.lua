@@ -1,8 +1,8 @@
 local M = {}
-M.config = function()
+function M.config()
   require("true-zen").setup {}
 end
-M.keymaps = function()
+function M.keymaps()
   if O.plugin.zen then
     local sile = require("keymappings").sile
     -- sile("n", "zz", "<cmd>TZFocus<CR>")

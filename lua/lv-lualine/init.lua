@@ -57,7 +57,7 @@ lsp_status_config._init(nil, {
   select_symbol = nil,
   update_interval = 100,
 })
-local lsp_statusline = function()
+local function lsp_statusline()
   if #vim.lsp.buf_get_clients() > 0 then
     return lsp_status_config.status()
   end
@@ -66,7 +66,7 @@ end
 local gps_statusline = { gps.get_location, cond = gps.is_available }
 local ts_statusline = require("nvim-treesitter").statusline
 
-local get_lsp_clients = function()
+local function get_lsp_clients()
   local msg = "LSP Inactive"
   local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
   local clients = vim.lsp.get_active_clients()
@@ -107,6 +107,7 @@ require("lualine").setup {
     icons_enabled = true,
     -- theme = O.theme,
     -- theme = "molokai",
+    -- theme = "catppuccino",
     -- theme = "nebulous",
     -- theme = "onedark",
     theme = "material-nvim",

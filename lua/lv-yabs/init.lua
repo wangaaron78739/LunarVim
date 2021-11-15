@@ -219,7 +219,7 @@ local opts = {
     },
   },
 }
-M.config = function()
+function M.config()
   require("yabs"):setup {
     languages = tasks,
     tasks = global,
@@ -227,7 +227,7 @@ M.config = function()
   }
   require("telescope").load_extension "yabs"
 end
-M.keymaps = function(leaderMappings)
+function M.keymaps(leaderMappings)
   vim.cmd [[command! -nargs=1 Yabs lua require'yabs':run_task('<args>') ]]
   leaderMappings["p "] = { "<CMD>lua require'yabs':run_task()<CR>", "YABS: Default" }
   leaderMappings.pb = { "<CMD>lua require'yabs':run_task('build')<CR>", "YABS: Build" }

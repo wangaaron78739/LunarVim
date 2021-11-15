@@ -1,5 +1,5 @@
 local M = {}
-M.config = function()
+function M.config()
   local sidebar = require "sidebar-nvim"
   sidebar.setup {
     open = false,

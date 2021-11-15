@@ -1,13 +1,13 @@
 local M = {}
 
-M.config = function()
+function M.config()
   local hop = require "hop"
   hop.setup {
     keys = O.hint_labels,
   }
 end
 
-M.keymaps = function(leaderMappings)
+function M.keymaps(leaderMappings)
   if O.plugin.hop then
     -- TODO: register_nN_repeat here??
     local prefix = "<cmd>lua require('hop-extensions')."

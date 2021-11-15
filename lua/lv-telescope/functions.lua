@@ -28,7 +28,7 @@ M.commands.rg = rg(true, true, false)
 -- M.commands.fd = vim.list_extend(vim.deepcopy(M.commands.rg), { "--files" })
 M.commands.fd = rg(true, true, true)
 
-M.set_prompt_to_entry_value = function(prompt_bufnr)
+function M.set_prompt_to_entry_value(prompt_bufnr)
   local entry = action_state.get_selected_entry()
   if not entry or not type(entry) == "table" then
     return
@@ -99,7 +99,7 @@ function M.edit_fish()
   }
 end
 
-M.git_branches = function()
+function M.git_branches()
   builtins.git_branches {
     attach_mappings = function(_, map)
       map("i", "<c-x>", actions.git_delete_branch)
@@ -327,7 +327,7 @@ function M.file_browser()
     attach_mappings = function(prompt_bufnr, map)
       local current_picker = action_state.get_current_picker(prompt_bufnr)
 
-      local modify_cwd = function(new_cwd)
+      local function modify_cwd(new_cwd)
         current_picker.cwd = new_cwd
         current_picker:refresh(opts.new_finder(new_cwd), { reset_prompt = true })
       end
@@ -340,7 +340,7 @@ function M.file_browser()
         modify_cwd(vim.fn.expand "~")
       end)
 
-      local modify_depth = function(mod)
+      local function modify_depth(mod)
         return function()
           opts.depth = opts.depth + mod
 

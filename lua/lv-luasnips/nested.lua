@@ -1,5 +1,5 @@
 return function(_, snippet)
-  local select = function(snip, no_move)
+  local function select(snip, no_move)
     snip.parent:enter_node(snip.indx)
     -- upon deletion, extmarks of inner nodes should shift to end of
     -- placeholder-text.

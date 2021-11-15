@@ -4,7 +4,7 @@ function M.diff_cWORD()
   local f = vim.fn.expand "<cWORD>"
   require("diffview").open("-- " .. f)
 end
-M.config = function()
+function M.config()
   local cb = require("diffview.config").diffview_callback
 
   require("diffview").setup {

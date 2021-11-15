@@ -1,5 +1,5 @@
 local M = {}
-M.config = function()
+function M.config()
   local actions = require "distant.nav.actions"
   require("distant").setup {
     ["*"] = {

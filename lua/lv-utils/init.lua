@@ -2,7 +2,7 @@ local M = {}
 
 local feedkeys = vim.api.nvim_feedkeys
 local termcodes = vim.api.nvim_replace_termcodes
-local t = function(k)
+local function t(k)
   return termcodes(k, true, true, true)
 end
 
@@ -344,14 +344,14 @@ M.au = au
 local map = vim.api.nvim_set_keymap
 local bufmap = vim.api.nvim_buf_set_keymap
 local mapper_meta = nil
-local mapper_newindex = function(tbl, lhs, rhs)
+local function mapper_newindex(tbl, lhs, rhs)
   if tbl[1].buffer then
     bufmap(tbl[1].buffer, tbl[2], lhs, rhs, tbl[1])
   else
     map(tbl[2], lhs, rhs, tbl[1])
   end
 end
-local mapper_call = function(tbl, mode)
+local function mapper_call(tbl, mode)
   if mode == nil then
     mode = tbl[2]
   end
@@ -362,7 +362,7 @@ local mapper_call = function(tbl, mode)
     return setmetatable({ args, mode }, mapper_meta)
   end
 end
-local mapper_index = function(tbl, flag)
+local function mapper_index(tbl, flag)
   if #flag == 1 then
     return setmetatable({ tbl[1], flag }, mapper_meta)
   else
@@ -388,13 +388,13 @@ local cmds = setmetatable({}, {
 })
 M.cmds = cmds
 
-M.timeout_helper = function(timeout, callback)
+function M.timeout_helper(timeout, callback)
   local timerperiod = 20
   timeout = (timeout or 1000) / timerperiod
   local timer
   local counter = 0
   local latch = false -- Make sure we don't repeatedly call the callback
-  local cb = function()
+  local function cb()
     if not latch then
       counter = 1 + counter
       if counter > timeout then
