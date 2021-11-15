@@ -27,7 +27,7 @@ local maps = {
     desc = "show option",
   },
   ["run_replace"] = {
-    map = prefix .. "r",
+    map = prefix .. prefix,
     cmd = "<cmd>lua require('spectre.actions').run_replace()<CR>",
     desc = "replace all",
   },
