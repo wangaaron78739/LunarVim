@@ -4,6 +4,7 @@ local conf = {
   fontsize = O.bigfontsize,
 }
 vim.opt_local.wrap = true
+require("keymappings").wrapjk()
 vim.opt_local.spell = true
 vim.opt.number = false
 vim.opt.relativenumber = false
@@ -39,7 +40,7 @@ mappings.localleader {
 }
 
 require("lv-pairs.sandwich").add_local_recipe {
-  buns = { "```", "```" },
+  buns = { "```\n", "\n```" },
   quoteescape = true,
   expand_range = false,
   nesting = false,
