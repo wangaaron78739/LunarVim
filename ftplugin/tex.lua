@@ -86,6 +86,20 @@ require("lv-cmp").sources {
   },
 }
 
+local cmp = require "cmp"
+cmp.setup.buffer {
+  mapping = {
+    ["<CR>"] = cmp.mapping {
+      i = function(fallback)
+        return fallback()
+      end,
+    }, -- clear mapping
+    ["<TAB>"] = cmp.mapping {
+      i = require("lv-cmp").supertab(cmp.confirm),
+    },
+  },
+}
+
 local texconf = require "lv-tex"
 require("luasnip").snippets.tex = texconf.snippets
 require("luasnip").autosnippets.tex = texconf.autosnippets

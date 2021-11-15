@@ -38,13 +38,27 @@ function M.setup()
   local lspkind = require "lspkind"
   local luasnip = require "luasnip"
 
-  local t = function(str)
+  local function t (str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
   end
   local feedkeys = vim.api.nvim_feedkeys
-  local check_back_space = function()
+  local function check_back_space ()
     local col = vim.fn.col "." - 1
     return col == 0 or vim.fn.getline("."):sub(col, col):match "%s" ~= nil
+  end
+  M.supertab = function(when_cmp_visible)
+    return function()
+      if cmp.visible() then
+        when_cmp_visible()
+      elseif luasnip.expand_or_jumpable() then
+        feedkeys(t "<Plug>luasnip-expand-or-jump", "", false)
+      elseif check_back_space() then
+        feedkeys(t "<tab>", "n", false)
+      else
+        feedkeys(t "<Plug>(Tabout)", "", false)
+        -- fallback()
+      end
+    end
   end
 
   local confirmopts = {
@@ -126,18 +140,7 @@ function M.setup()
       ["<Tab>"] = cmp.mapping {
         c = cmp.mapping.confirm(cmdline_confirm),
         -- i = cmp.mapping.confirm(confirmopts),
-        i = function()
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.expand_or_jumpable() then
-            feedkeys(t "<Plug>luasnip-expand-or-jump", "", false)
-          elseif check_back_space() then
-            feedkeys(t "<tab>", "n", false)
-          else
-            feedkeys(t "<Plug>(Tabout)", "", false)
-            -- fallback()
-          end
-        end,
+        i = M.supertab(cmp.select_next_item),
       },
       ["<S-TAB>"] = cmp.mapping {
         c = function()
@@ -147,17 +150,7 @@ function M.setup()
             cmp.complete()
           end
         end,
-        i = function()
-          if cmp.visible() then
-            -- feedkeys(t "<C-P>", "n", false)
-            cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
-            feedkeys(t "<Plug>luasnip-jump-prev", "", false)
-          else
-            feedkeys(t "<Plug>(TaboutBack)", "", false)
-            -- fallback()
-          end
-        end,
+        i = M.supertab(cmp.select_prev_item),
       },
     },
 
