@@ -290,6 +290,10 @@ return packer.startup(function(use)
     -- module = "hop",
     disable = not O.plugin.hop,
   }
+  use {
+    "IndianBoy42/hop-extensions",
+    disable = not O.plugin.hop,
+  }
   -- Enhanced increment/decrement
   use {
     "monaqa/dial.nvim",
