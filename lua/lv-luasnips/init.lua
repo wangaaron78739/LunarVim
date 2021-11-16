@@ -28,8 +28,25 @@ function M.setup()
   --  "<Plug>luasnip-expand-or-jump"
   -- map("i", "<C-h>", "<Plug>luasnip-expand-snippet", { silent = true })
   -- map("s", "<C-h>", "<Plug>luasnip-expand-snippet", { silent = true })
-  map("i", "<C-j>", "<Plug>luasnip-jump-next", { silent = true })
-  map("s", "<C-j>", "<Plug>luasnip-jump-next", { silent = true })
+
+  local feedkeys_ = vim.api.nvim_feedkeys
+  local termcode = vim.api.nvim_replace_termcodes
+  local feedkeys = function(keys, o)
+    if o == nil then
+      o = "m"
+    end
+    feedkeys_(termcode(keys, true, true, true), o, false)
+  end
+  local luasnip = require "luasnip"
+  local cj = utils.cmd.from(function()
+    if luasnip.expand_or_jumpable() then
+      feedkeys "<Plug>luasnip-jump-next"
+    else
+      feedkeys "<Plug>(Tabout)"
+    end
+  end)
+  map("i", "<C-j>", cj, { silent = true })
+  map("s", "<C-j>", cj, { silent = true })
   map("i", "<C-k>", "<Plug>luasnip-jump-prev", { silent = true })
   map("s", "<C-k>", "<Plug>luasnip-jump-prev", { silent = true })
   map("i", "<C-h>", "<Plug>luasnip-next-choice", { silent = true })
