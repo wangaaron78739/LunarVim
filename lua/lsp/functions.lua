@@ -127,7 +127,7 @@ M.range_diagnostics = function(opts, buf_nr, start, finish)
 
   opts = opts or {}
   opts.focus_id = "position_diagnostics"
-  buf_nr = buf_nr or api.nvim_get_current_buf()
+  buf_nr = buf_nr or 0
   local match_position_predicate = function(diag)
     -- FIXME: this is wrong sometimes?
     if finish[1] < diag.range["start"].line then
@@ -273,7 +273,7 @@ end
 -- Jump between diagnostics
 -- TODO: clean up and remove the deprecate functions
 local popup_diagnostics_opts = {
-  show_header = false,
+  header = false,
   border = O.lsp.border,
 }
 M.diag_line = function()

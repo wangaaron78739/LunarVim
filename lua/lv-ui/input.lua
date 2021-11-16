@@ -28,6 +28,7 @@ function M.inline_text_input(opts)
   local escape = opts.escape
 
   if opts.at_begin then
+    -- FIXME: this doesn't work (through vim.ui.input)
     vim.cmd [[normal! wb]]
   end
   if opts.init_cword then

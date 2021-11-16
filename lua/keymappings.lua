@@ -301,8 +301,6 @@ function M.setup()
   -- Move current line / block with Alt-j/k ala vscode.
   map("n", "<C-M-j>", "<cmd>move .+1<cr>==", nore)
   map("n", "<C-M-k>", "<cmd>move .-2<cr>==", nore)
-  map("i", "<M-j>", "<Esc>:move .+1<cr>==gi", nore)
-  map("i", "<M-k>", "<Esc>:move .-2<cr>==gi", nore)
   map("x", "<M-j>", ":move '>+1<cr>gv-gv", nore)
   map("x", "<M-k>", ":move '<-2<cr>gv-gv", nore)
 
