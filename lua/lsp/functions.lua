@@ -206,7 +206,7 @@ function M.view_location_split_callback(split_cmd)
   local api = vim.api
 
   -- note, this handler style is for neovim 0.5.1/0.6, if on 0.5, call with function(_, method, result)
-  local handler = function(_, result, ctx)
+  local function handler(_, result, ctx)
     if result == nil or vim.tbl_isempty(result) then
       local _ = log.info() and log.info(ctx.method, "No location found")
       return nil
@@ -343,15 +343,66 @@ function M.common_on_attach(client, bufnr)
 end
 
 -- Helper for better renaming interface
-function M.rename()
-  require("lv-ui/input").inline_text_input {
-    border = O.lsp.rename_border,
-    enter = lsp.buf.rename,
-    init_cword = true,
-    at_begin = true, -- FIXME: what happened to this
-    minwidth = true,
-  }
-end
+M.rename = (function()
+  local function handler(...)
+    local result
+    local method
+    local err = select(1, ...)
+    local is_new = not select(4, ...) or type(select(4, ...)) ~= "number"
+    if is_new then
+      method = select(3, ...).method
+      result = select(2, ...)
+    else
+      method = select(2, ...)
+      result = select(3, ...)
+    end
+
+    if O.lsp.rename_notification then
+      if err then
+        vim.notify(("Error running LSP query '%s': %s"):format(method, err), vim.log.levels.ERROR)
+        return
+      end
+
+      -- echo the resulting changes
+      local new_word = ""
+      if result and result.changes then
+        local msg = {}
+        for f, c in pairs(result.changes) do
+          new_word = c[1].newText
+          table.insert(msg, ("%d changes -> %s"):format(#c, utils.get_relative_path(f)))
+        end
+        local currName = vim.fn.expand "<cword>"
+        vim.notify(msg, vim.log.levels.INFO, { title = ("Rename: %s -> %s"):format(currName, new_word) })
+      end
+    end
+
+    vim.lsp.handlers[method](...)
+  end
+
+  local function do_rename()
+    local new_name = vim.trim(vim.fn.getline("."):sub(5, -1))
+    vim.cmd [[q!]]
+    local params = lsp.util.make_position_params()
+    local curr_name = vim.fn.expand "<cword>"
+    if not (new_name and #new_name > 0) or new_name == curr_name then
+      return
+    end
+    params.newName = new_name
+    lsp.buf_request(0, "textDocument/rename", params, handler)
+  end
+
+  return function()
+    require("lv-ui/input").inline_text_input {
+      border = O.lsp.rename_border,
+      -- enter = do_rename,
+      enter = vim.lsp.buf.rename,
+      init_cword = true,
+      at_begin = true, -- FIXME: What happened to this?
+      minwidth = true,
+    }
+  end
+end)()
+
 -- M.rename = vim.lsp.buf.rename
 require("lv-ui.input").config()
 
