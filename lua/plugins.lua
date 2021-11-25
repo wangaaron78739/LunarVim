@@ -470,6 +470,13 @@ return packer.startup(function(use)
       require("lv-trouble").config()
     end,
   }
+  -- Call tree
+  use {
+    "ldelossa/calltree.nvim",
+    config = function()
+      require("lsp.calltree").config()
+    end,
+  }
   -- Vista viewer (symbols)
   use { "liuchengxu/vista.vim", disable = not O.plugin.vista, cmd = "Vista" }
   -- Generic sidebar plugin
