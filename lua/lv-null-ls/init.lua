@@ -44,7 +44,7 @@ function M.config()
       -- diagnostics.hadolint,
       -- -- diagnostics.luacheck,
       diagnostics.write_good,
-      diagnostics.proselint,
+      -- diagnostics.proselint,
       -- diagnostics.vale, -- lets install vale-linter
       -- -- diagnostics.misspell,
       diagnostics.markdownlint,
