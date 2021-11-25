@@ -51,6 +51,11 @@ plugins:
 update-plugins:
     {{nvim}} lua/plugins.lua +PackerSync
     {{nvim}} 
+
+install-plugins:
+    {{nvim}} lua/plugins.lua +PackerInstall
+    {{nvim}} 
+
 compile-plugins:
     {{nvim}} lua/plugins.lua +PackerCompile
     {{nvim}} 
