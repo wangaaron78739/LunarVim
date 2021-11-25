@@ -81,6 +81,7 @@ function M.inline_text_input(opts)
   local buf = vim.api.nvim_create_buf(false, true)
   local win = vim.api.nvim_open_win(buf, true, winopts)
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, { opts.initial })
+  vim.fn.prompt_setprompt(buf, opts.prompt)
 
   local function close_win()
     feedkeys(t "<esc>", "n", false)
