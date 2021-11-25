@@ -16,7 +16,7 @@ local default_sources = {
     { name = "nvim_lsp" },
   },
   {
-    { name = "buffer" },
+    -- { name = "buffer" },
     { name = "path" },
     -- { name = "latex_symbols" },
     { name = "calc" },
@@ -82,8 +82,11 @@ function M.setup()
       "c",
     })
   end
+  local function autocomplete()
+    cmp.complete { reason = cmp.ContextReason.Auto }
+  end
   local function complete_or(mapping)
-    return double_mapping(cmp.complete, mapping)
+    return double_mapping(autocomplete, mapping)
   end
 
   cmp.setup {
@@ -147,7 +150,7 @@ function M.setup()
           if cmp.visible() then
             cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }
           else
-            cmp.complete()
+            autocomplete()
           end
         end,
         i = M.supertab(cmp.select_prev_item),
