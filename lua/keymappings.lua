@@ -194,7 +194,6 @@ function M.setup()
 
   -- Free keys for reference
   map("n", "<C-q>", "<NOP>", {})
-  map("n", "<C-n>", "<NOP>", {})
   map("n", "<C-p>", "<NOP>", {})
   map("n", "<C-o>", "<NOP>", {})
 
