@@ -783,14 +783,42 @@ local theorems = {
   "fact",
   "corollary",
 }
+local function sel()
+  return f(function(_, snip)
+    return (snip and snip.env and snip.env.TM_SELECTED_TEXT) or ""
+  end, {})
+end
+local function mi(dep)
+  return f(function(nodes)
+    return nodes[1]
+  end, { dep })
+end
 list_extend(snips, {
   ms("partfrac", { t "\\frac{\\partial ", i(1), t "}{\\partial ", i(0), t "}" }),
 })
 for _, v in pairs(theorems) do
   list_extend(snips, {
-    s(v, { t { "\\begin{" .. v .. "}", "" }, i(0), t { "", "\\end{" .. v .. "}" } }),
+    s(v, {
+      t { "\\begin{" .. v .. "}", "" },
+      sel(),
+      i(0),
+      t { "", "\\end{" .. v .. "}" },
+    }),
   })
 end
+list_extend(snips, {
+  s("beg", {
+    t "\\begin{",
+    i(1),
+    t { "}", "" },
+    sel(),
+    i(0),
+    t { "", "\\end{" },
+    mi(1),
+    t { "}", "" },
+  }),
+})
+
 for k, v in pairs(templates.tex) do
   list_extend(snips, { pa(k, v) })
 end
