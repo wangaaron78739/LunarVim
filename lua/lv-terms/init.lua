@@ -228,7 +228,8 @@ function M.keymaps(leaderMappings, vLeaderMappings)
     map("n", "<leader>t<space>", ":Tmem ", {})
     leaderMappings["t<space>"] = "Tmem ..."
     leaderMappings["tt"] = { "<cmd>Tnew<CR>", "T ..." }
-    leaderMappings["t<cr>"] = { cmd "Ttoggle", "Neoterm Toggle" }
+    leaderMappings["t<cr>"] = { "<cmd>T k<CR>", "Neoterm rerun" }
+    leaderMappings["t<tab>"] = { cmd "Ttoggle", "Neoterm Toggle" }
     leaderMappings["tl"] = { cmd "Tls", "Neoterm list" }
 
     leaderMappings["xm"] = { "<Plug>(neoterm-repl-send)", "Neoterm Send" }

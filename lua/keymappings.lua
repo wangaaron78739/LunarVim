@@ -319,6 +319,12 @@ function M.setup()
     map("i", "kj", "<ESC>", sile)
   end
 
+  -- for _, v in pairs { "h", "j", "k", "l" } do
+  --   for _, m in pairs { "x", "n" } do
+  --     map(m, v .. v, "<Nop>", sile)
+  --   end
+  -- end
+
   -- Tab switch buffer
   map("n", "<tab>", cmd "b#", nore)
   map("n", "<leader><tab>", cmd "bnext", nore)
@@ -658,9 +664,10 @@ function M.setup()
   map("o", "H", "^", {})
   map("o", "L", "$", {})
   map("o", "=", "g_", {})
-  -- map("n", "H", "^", {})
-  map("n", "H", "^", sile)
-  map("n", "^", [[col('.') == match(getline('.'),'\S')+1 ? '0' : '^']], norexpr) -- do ^ first then 0
+  map("x", "H", "^", {})
+  map("x", "L", "$", {})
+  map("x", "=", "g_", {})
+  map("n", "H", [[col('.') == match(getline('.'),'\S')+1 ? '0' : '^']], norexpr)
   map("n", "L", "$", {})
   map("n", "=", "g_", {})
 
@@ -873,9 +880,14 @@ function M.setup()
       },
       h = { lspbuf.hover, "Hover (gh)" },
       a = { do_code_action, "Code Action (K)" },
-      c = { luacmd "vim.lsp.codelens.run()", "Run Code Lens (gK)" },
+      k = { luacmd "vim.lsp.codelens.run()", "Run Code Lens (gK)" },
       t = { lspbuf.type_definition, "Type Definition" },
       f = { lspbuf.formatting, "Format" },
+      c = {
+        name = "Calls",
+        i = { lspbuf.incoming_calls, "Incoming" },
+        o = { lspbuf.outgoing_calls, "Outgoing" },
+      },
       s = {
         d = {
           from_fn(require("lsp.functions").view_location_split("definition", "FocusSplitNicely")),
@@ -1106,6 +1118,8 @@ local mincount = 5
 function M.wrapjk()
   map("n", "j", [[v:count ? (v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'j' : 'gj']], norexpr)
   map("n", "k", [[v:count ? (v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'k' : 'gk']], norexpr)
+  map("x", "j", [[v:count ? (v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'j' : 'gj']], norexpr)
+  map("x", "k", [[v:count ? (v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'k' : 'gk']], norexpr)
 end
 function M.countjk()
   map("n", "j", [[(v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'j']], norexpr)
