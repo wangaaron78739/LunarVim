@@ -127,7 +127,11 @@ require("lv-utils").define_augroups {
 if O.format_on_save then
   require("lv-utils").define_augroups {
     autoformat = {
-      { "BufWritePre", "*", "lua vim.lsp.buf.formatting_sync(nil, " .. O.format_on_save_timeout .. ")" },
+      {
+        "BufWritePre",
+        "*",
+        "lua vim.lsp.buf.formatting_sync(nil, " .. O.format_on_save_timeout .. ")",
+      },
     },
   }
 end
