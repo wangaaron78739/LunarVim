@@ -40,6 +40,13 @@ function M.keymaps(leaderMappings)
     --   prefix = "<leader>h",
     --   silent = true,
     -- })
+    local map = vim.api.nvim_set_keymap
+    map(
+      "c",
+      "<M-h>", -- "<M-CR>",
+      "<CR><CMD>lua require'hop'.hint_patterns({}, vim.fn.getreg('/'))<CR>",
+      { silent = true, noremap = true }
+    )
   end
 end
 
