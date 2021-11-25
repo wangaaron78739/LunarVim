@@ -79,11 +79,6 @@ function M.setup()
   local function tnl(line)
     return t { line, "" }
   end
-  local function mi(n)
-    f(function(nodes)
-      return nodes[1]
-    end, { n })
-  end
   --
   -- Returns a snippet_node wrapped around an insert_node whose initial
   -- text value is set to the current date in the desired format.

@@ -403,6 +403,13 @@ local function renw(arg)
   return { trig = arg, regTrig = true, wordTrig = false }
 end
 local line_begin = { condition = conds.line_begin }
+local no_backslash = {
+  condition = function(line_to_cursor, m)
+    local n = -m:len() - 1
+    print(line_to_cursor:sub(n, n))
+    return (mathmode_() ~= 0) and (line_to_cursor:sub(n, n) ~= "\\")
+  end,
+}
 local function lns(lhs, rhs)
   return s(lhs, rhs, line_begin)
 end
@@ -621,18 +628,18 @@ for k, v in pairs(both_maps) do -- FIXME: deal with already existing backslash (
   local lhs = ("number" == type(k)) and v or k
   -- local lhs = "([^%\\])" .. v
   -- local lhs = "([%p])" .. v
-  list_extend(auto, { ms(lhs, t("\\" .. v)) })
+  list_extend(auto, { s(lhs, t("\\" .. v), no_backslash) })
   -- list_extend(auto, { nms(lhs .. " ", t("$\\" .. v .. "$ ")) })
   list_extend(auto, { nms(lhs .. " ", t("\\(\\" .. v .. "\\) ")) })
 end
 
 for k, v in pairs(math_maps) do
   local lhs = ("number" == type(k)) and v or k
-  list_extend(auto, { ms(lhs, t("\\" .. v)) })
+  list_extend(auto, { s(lhs, t("\\" .. v), no_backslash) })
 end
 for k, v in pairs(trig_fns) do
   local lhs = ("number" == type(k)) and v or k
-  list_extend(auto, { ms(re([[ar?c?]] .. lhs), t("\\arc\\" .. v)) })
+  list_extend(auto, { s(re([[ar?c?]] .. lhs), t("\\arc\\" .. v), no_backslash) })
 end
 
 list_extend(auto, {
@@ -676,8 +683,7 @@ list_extend(auto, {
   ms("otherwise ", { t "\\textbf{ otherwise } " }),
   ms("else ", { t "\\textbf{ else } " }),
   -- Math whitespacing
-  ms(nw "\\quad\\quad", t "\\qquad"),
-  ms(nw "\\quad\\,", t "\\qquad "),
+  ms(nw "\\quad\\,,", t "\\qquad "),
   ms(nw "\\,,", t "\\quad"),
   ms(nw ",,", t "\\,"),
   -- TODO: whitespace before and after operators
@@ -686,6 +692,7 @@ list_extend(auto, {
   -- Math overhead stuff
   ms(re [[(%\?[%w%^]+),%.]], { t "\\vec{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)%.,]], { t "\\vec{", sub(1), t "}" }),
+  ms(re [[(%\?[%w%^]+)->]], { t "\\vec{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)%. ]], { t "\\dot{", sub(1), t "} " }),
   ms(re [[(%\?[%w%^]+)%.%.]], { t "\\ddot{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)~]], { t "\\tilde{", sub(1), t "}" }),
@@ -733,26 +740,26 @@ list_extend(auto, {
       return string.format("%s_%s", cap[1], cap[2])
     end, {}),
     {
-      condition = function(line_to_cursor, matched_trigger)
-        utils.dump(matched_trigger:sub(2, 2), matched_trigger:sub(3, 3))
+      condition = function(_, matched_trigger)
         return (mathmode_() ~= 0) and (matched_trigger:sub(2, 2) == matched_trigger:sub(3, 3))
       end,
     }
   ),
   ms(renw "__", { t "_{", i(0), t "}" }),
   ms(renw "%^%^", { t "^{", i(0), t "}" }),
+  nms(renw "%^%^", { t "\\cite{", i(0), t "}" }),
   ms(renw [[(%S) ([%^_])]], { sub(1), sub(2) }), -- Remove extra ws sub/superscript
   ms(renw [[([A-Za-z%}%]%)])(%d)]], { sub(1), t "_", sub(2) }), -- Auto subscript
   -- ms(renw [[([A-Za-z%}%]%)])([a-z])]], { sub(1), t "_", sub(2) }), -- Auto subscript
   ms(renw [[([A-Za-z%}%]%)]) ?_(%d%d)]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
-  ms(renw [[([A-Za-z%}%]%)]) ?_(%w[+-])]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
+  ms(renw [[([A-Za-z%}%]%)]) ?_(%w[+-])]], { sub(1), t "_{", sub(2), i(0), t "}" }), -- Auto escape subscript
   ms(renw [[([A-Za-z%}%]%)]) ?_([%+%-] ?[%d%w])]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
   ms(renw [[([A-Za-z%}%]%)]) ?_([%+%-]? ?%\%w+) ]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
   ms(renw [[([A-Za-z%}%]%)]) ?%^(%d%d)]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape subscript
   ms(renw [[([A-Za-z%}%]%)]) ?%^ ?(%d%d)]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
   ms(renw [[([A-Za-z%}%]%)]) ?%^([%+%-] ?[%d%w])]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
   ms(renw [[([A-Za-z%}%]%)]) ?%^([%+%-]? ?%\%w+) ]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
-  ms(renw [[([A-Za-z%}%]%)]) ?%^(%w[+-])]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape subscript
+  ms(renw [[([A-Za-z%}%]%)]) ?%^(%w[+-])]], { sub(1), t "^{", sub(2), i(0), t "}" }), -- Auto escape subscript
 })
 for k, v in pairs(intlike) do
   local snip = { t(v.operator .. "\\limits") }

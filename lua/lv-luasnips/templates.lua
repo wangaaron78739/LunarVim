@@ -2,7 +2,6 @@ local hwktheorems = [[
   \newtheorem{theorem}{Theorem}
   \newtheorem{definition}{Definition}
   \newtheorem{lemma}{Lemma}
-  \newtheorem{proof}{Proof}
   \newtheorem{claim}{Claim}
   \newtheorem{fact}{Fact}
   \newtheorem{corollary}{Corollary}
@@ -159,7 +158,11 @@ local preamble = [[
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{setspace}
 \usepackage{subfiles}
-
+\usepackage[
+backend=biber,
+style=alphabetic,
+]{biblatex}
+\addbibresource{ref.bib} %Imports bibliography file
 \usepackage{amsthm}
 
 \newcommand{\R}{\mathbb{R}}
