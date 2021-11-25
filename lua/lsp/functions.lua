@@ -319,7 +319,7 @@ function M.common_on_attach(client, bufnr)
         [[
         augroup lsp_codelens_refresh
           autocmd! * <buffer>
-          autocmd BufEnter,InsertLeave,BufWritePost <buffer> lua vim.lsp.codelens.refresh()
+          autocmd InsertLeave,BufWritePost <buffer> lua vim.lsp.codelens.refresh()
           autocmd CursorHold <buffer> lua vim.lsp.codelens.refresh()
         augroup END
         ]],

@@ -8,7 +8,7 @@ _G.LSP_INSTALL_PATH = DATA_PATH .. "/lspinstall"
 -- TODO: Cleanup this config struct
 O = {
   format_on_save = true,
-  format_on_save_timeout = 500,
+  format_on_save_timeout = 1000,
   auto_close_tree = false,
   fold_columns = "0",
   theme = "Nebulous",
