@@ -152,14 +152,15 @@ function M.activate_magma(kernel)
   mappings.localleader {
     x = "Magma",
     ["xx"] = { "<cmd>MagmaEvaluateLine<CR>", "Run Line" },
-    ["x,"] = { "<cmd>MagmaReevaluateCell<CR>", "Run Cell" },
+    ["x<CR>"] = { ",rij", "Run Line" },
+    ["x,"] = { "<cmd>MagmaReevaluateCell<CR>", "Rerun Cell" },
     ["xd"] = { "<cmd>MagmaDelete<CR>", "Magma Delete" },
     t = "Terminal",
     ["to"] = { "<cmd>MagmaShowOutput<cr>", "Magma Output" },
     r = { ":MagmaEvaluateOperator<CR>g@", "Magma Run" },
   }
   mappings.vlocalleader {
-    r = { "<cmd>MagmaEvaluateVisual<CR>", "Magma Run" },
+    r = { "<ESC>,rgv", "Magma Run" },
   }
 end
 

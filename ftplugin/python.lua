@@ -24,3 +24,7 @@ require("lv-pairs.sandwich").add_recipe {
   nesting = false,
   input = { "s" },
 }
+
+mappings.localleader {
+  x = { "<cmd>MagmaInit<cr>", "Magma" },
+}

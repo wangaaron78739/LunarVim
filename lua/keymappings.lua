@@ -513,9 +513,31 @@ function M.setup()
   map("n", "'", "`", nore)
   map("n", "`", "'", nore)
 
-  -- Select Jupyter Cell
+  -- Jupyter Cell
   -- Change to onoremap
-  map("x", "ic", [[/#+\s*%+<cr>oN]], nore)
+  map("x", "aj", [[?#\+\s*%\+<cr>o/#\+\s*%\+/s-1<cr>]], nore)
+  op_from("aj", "aj", sile)
+  local cell_nN = {
+    -- "/#+s*%+/s-1<cr>",
+    [[/#\+\s*%\+<cr>]],
+    -- "?#+s*%+/e+1<cr>",
+    [[?#\+\s*%\+<cr>]],
+  }
+  local cell_nN = {
+    from_fn(function()
+      vim.cmd [[normal! m']]
+      register_nN_repeat(cell_nN)
+      feedkeys(cell_nN[1], "n")
+    end),
+    from_fn(function()
+      vim.cmd [[normal! m']]
+      register_nN_repeat(cell_nN)
+      feedkeys(cell_nN[2], "n")
+    end),
+  }
+  map("n", pre_goto_next .. "j", cell_nN[1], nore)
+  map("n", pre_goto_prev .. "j", cell_nN[2], nore)
+  map("n", pre_goto_next .. "j", [[/#\+\s*%\+<cr>]], nore)
 
   -- Spell checking
   -- map("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", nore)
