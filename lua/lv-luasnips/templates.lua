@@ -175,6 +175,30 @@ style=alphabetic,
 \DeclareMathOperator*{\argmax}{argmax}
 \newcommand{\sspan}{\operatorname{span}}
 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize\singlespacing,
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2
+}
+\lstset{style=mystyle}
+
 \usepackage{parskip}
 % \setlength{\parskip}{\baselineskip}%
 % \setlength{\parindent}{0pt}%
@@ -264,7 +288,7 @@ local essay = preamble .. notestheorems .. docinfo
 
 return {
   tex = {
-    ["\\tab "] = [[
+    ["table"] = [[
 \begin{table}[${1:htpb}]
 	\centering
 	\caption{${2:caption}}
@@ -274,7 +298,7 @@ return {
 	\end{tabular}
 \end{table}
     ]],
-    ["\\fig "] = [[
+    ["figure"] = [[
 \begin{figure}[${1:htpb}]
 	\centering
 	${2:\includegraphics[width=0.8\textwidth]{$3}}
@@ -282,6 +306,12 @@ return {
 	\label{fig:${5:${3/\W+/-/g}}}
 \end{figure}
     ]],
+    ["codeinline"] = [[
+\begin{lstlisting}[language=${1:Python}]
+      $0
+\end{lstlisting}
+    ]],
+    ["codefile"] = [[ \lstinputlisting[language=${1:Python}]{$0} ]],
     ["maintemplate"] = main,
     ["essaytemplate"] = essay,
     ["subtemplate"] = sub,
