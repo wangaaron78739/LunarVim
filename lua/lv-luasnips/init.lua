@@ -52,6 +52,8 @@ function M.setup()
   map("s", "<C-k>", "<Plug>luasnip-jump-prev", { silent = true })
   map("i", "<C-h>", "<Plug>luasnip-next-choice", { silent = true })
   map("s", "<C-h>", "<Plug>luasnip-next-choice", { silent = true })
+  map("i", "<C-y>", "<cmd>lua require'lv-luasnips.choice'.popup_close()<CR>", { silent = true })
+  map("s", "<C-y>", "<cmd>lua require'lv-luasnips.choice'.popup_close()<CR>", { silent = true })
   local operatorfunc_keys = require("lv-utils").operatorfunc_keys
   map("n", "<M-s>", operatorfunc_keys("luasnip_select", "<TAB>"), { silent = true })
 
@@ -79,7 +81,7 @@ function M.setup()
   local function tnl(line)
     return t { line, "" }
   end
-  --
+
   -- Returns a snippet_node wrapped around an insert_node whose initial
   -- text value is set to the current date in the desired format.
   local function date_input(args, state, fmt)

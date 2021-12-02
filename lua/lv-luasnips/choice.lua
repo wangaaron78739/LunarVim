@@ -48,6 +48,7 @@ end
 local M = {}
 
 function M.popup(choiceNode)
+  choiceNode = choiceNode or require("luasnip").session.event_node
   -- build stack for nested choiceNodes.
   if current_win then
     vim.api.nvim_win_close(current_win.win_id, true)
@@ -64,6 +65,7 @@ function M.popup(choiceNode)
 end
 
 function M.update_popup(choiceNode)
+  choiceNode = choiceNode or require("luasnip").session.event_node
   vim.api.nvim_win_close(current_win.win_id, true)
   vim.api.nvim_buf_del_extmark(current_win.buf, current_nsid, current_win.extmark)
   local create_win = window_for_choiceNode(choiceNode)
