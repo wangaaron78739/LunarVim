@@ -2,7 +2,7 @@ local M = {}
 -- TODO: unify tabout, autopairs and sandwiches
 
 function M.tabout()
-  local pairs = { "''", '""', "``", "()", "{}", "[]" }
+  local pairs = { "''", '""', "``", "()", "{}", "[]", "||" }
   local opts = {
     tabkey = "<C-l>", -- key to trigger tabout
     backwards_tabkey = "<C-S-l>", -- key to trigger tabout
