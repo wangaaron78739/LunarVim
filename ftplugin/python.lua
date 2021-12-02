@@ -24,6 +24,13 @@ require("lv-pairs.sandwich").add_recipe {
   nesting = false,
   input = { "s" },
 }
+require("lv-pairs.sandwich").add_recipe {
+  buns = { [[''']], [[''']] },
+  quoteescape = true,
+  expand_range = false,
+  nesting = false,
+  input = { "S" },
+}
 
 mappings.localleader {
   x = { "<cmd>MagmaInit<cr>", "Magma" },
