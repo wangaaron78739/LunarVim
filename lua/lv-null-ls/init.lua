@@ -2,9 +2,9 @@ local M = {}
 
 local null = require "null-ls"
 
--- local gcc_diagnostics = require "lv-null-ls.gcc"
-
 function M.config()
+  local gcc_diagnostics = require "lv-null-ls.gcc"
+
   local diagnostics_format = "[#{c}] #{m} (#{s})"
 
   local formatters = null.builtins.formatting
@@ -14,8 +14,11 @@ function M.config()
   local compl = null.builtins.completion
 
   null.config {
+    -- debug = true,
     diagnostics_format = diagnostics_format,
     sources = {
+      gcc_diagnostics, -- Move to builtin when PR is accepted
+
       -- Formatters
       formatters.stylua,
       formatters.prettierd,
@@ -39,7 +42,7 @@ function M.config()
       -- diagnostics.eslint,
       -- diagnostics.hadolint,
       diagnostics.cppcheck,
-      diagnostics.flake8,
+      -- diagnostics.flake8,
       -- diagnostics.pylint,
       -- diagnostics.hadolint,
       -- -- diagnostics.luacheck,
@@ -52,11 +55,11 @@ function M.config()
 
       -- Code Actions
       -- code_actions.gitsigns, -- TODO: reenable when I can lower the priority
-      code_actions.proselint,
+      -- code_actions.proselint,
       code_actions.refactoring,
       code_actions.statix,
 
-      compl.spell,
+      -- compl.spell,
 
       -- Hover Info
       hover.dictionary.with {
