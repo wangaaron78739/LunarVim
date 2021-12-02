@@ -853,6 +853,12 @@ return packer.startup(function(use)
     disable = not O.plugin.coderunner,
   }
   use {
+    "jubnzv/mdeval.nvim",
+    config = function()
+      require("lv-terms").mdeval()
+    end,
+  }
+  use {
     "pianocomposer321/yabs.nvim",
     config = function()
       require("lv-yabs").config()

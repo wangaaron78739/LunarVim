@@ -217,6 +217,37 @@ function M.activate_kitty(port)
   )
 end
 
+function M.mdeval()
+  require("mdeval").setup {
+    -- Don't ask before executing code blocks
+    require_confirmation = false,
+    -- Change code blocks evaluation options.
+    eval_options = {
+      -- Set custom configuration for C++
+      cpp = {
+        command = { "clang++", "-std=c++20", "-O0" },
+        default_header = [[
+    #include <iostream>
+    #include <vector>
+    using namespace std;
+      ]],
+      },
+    },
+  }
+end
+function M.mdeval_keymaps()
+  mappings.localleader {
+    ["c"] = { "<cmd>lua require 'mdeval'.eval_code_block()<CR>", "Eval Code Block" },
+  }
+end
+function M.jupyter_ascending()
+  vim.api.nvim_buf_set_keymap(0, "n", "<localleader>j", "<Plug>JupyterExecute", {})
+  -- mappings.localleader {
+  --   ["j"] = { "<Plug>JupyterExecute", "Execute Cell" },
+  --   ["J"] = { "<Plug>JupyterExecuteAll", "Execute All" },
+  -- }
+end
+
 function M.keymaps(leaderMappings, vLeaderMappings)
   local cmd = utils.cmd
   local map = vim.api.nvim_set_keymap

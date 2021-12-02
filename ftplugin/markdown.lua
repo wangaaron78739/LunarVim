@@ -48,3 +48,5 @@ require("lv-pairs.sandwich").add_local_recipe {
 }
 
 -- TODO: make snippets for math in markdown?
+
+require("lv-terms").mdeval_keymaps()
