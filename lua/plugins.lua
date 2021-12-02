@@ -474,6 +474,7 @@ return packer.startup(function(use)
       require("lsp.calltree").config()
     end,
   }
+  -- TODO: https://github.com/stevearc/aerial.nvim/
   -- Vista viewer (symbols)
   use { "liuchengxu/vista.vim", disable = not O.plugin.vista, cmd = "Vista" }
   -- Generic sidebar plugin
@@ -634,6 +635,14 @@ return packer.startup(function(use)
   }
 
   -- LANGUAGE SPECIFIC GOES HERE
+
+  use {
+    "p00f/godbolt.nvim",
+    config = function()
+      require("godbolt").setup()
+    end,
+    cmd = { "Godbolt", "GodboltCompiler" },
+  }
 
   -- Latex
   use {
