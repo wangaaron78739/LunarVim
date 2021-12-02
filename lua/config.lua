@@ -77,7 +77,7 @@ O = {
     },
   },
   filetypes = {
-    extensions = {
+    extension = {
       kbd = "kmonad",
       fish = "fish",
       just = "just",
