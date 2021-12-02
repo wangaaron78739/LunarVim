@@ -27,6 +27,7 @@ function M.inline_text_input(opts)
   local enter = opts.enter
   local escape = opts.escape
 
+  local cur_pos = vim.api.nvim_win_get_cursor(0)
   if opts.at_begin then
     -- FIXME: this doesn't work (through vim.ui.input)
     vim.cmd [[normal! wb]]
@@ -87,17 +88,23 @@ function M.inline_text_input(opts)
     -- feedkeys(t "<esc>", "n", false)
     -- vim.api.nvim_win_close(win, true)
     -- vim.api.nvim_buf_delete(buf, { force = true })
-    vim.cmd "q!"
     vim.cmd [[stopinsert]]
+    vim.cmd "q!"
     if escape and not normally then
-      escape()
+      vim.defer_fn(function()
+        vim.api.nvim_win_set_cursor(0, cur_pos)
+        escape(value)
+      end, 1)
     end
   end
   local function finish_cb()
     local value = vim.trim(vim.fn.getline ".")
     close_win(true)
     if enter then
-      enter(value)
+      vim.defer_fn(function()
+        vim.api.nvim_win_set_cursor(0, cur_pos)
+        enter(value)
+      end, 1)
     end
   end
 
@@ -113,9 +120,13 @@ function M.inline_text_input(opts)
   map(buf, "n", "<ESC>", cls, {})
   map(buf, "n", "o", "<nop>", { noremap = true })
   map(buf, "n", "O", "<nop>", { noremap = true })
+  if opts.startup then
+    opts.startup()
+  end
   if opts.insert then
     vim.cmd [[startinsert]]
   end
+
   vim.cmd(
     string.format(
       [[autocmd InsertCharPre,InsertLeave <buffer> lua require("lv-ui.input").mini_window_setwidth(%d)]],
