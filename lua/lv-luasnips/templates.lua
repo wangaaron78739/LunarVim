@@ -145,6 +145,7 @@ local preamble = [[
 \usepackage[dvipsnames,table,xcdraw]{xcolor}
 \usepackage{hhline}
 \usepackage[ruled,vlined]{algorithm2e}
+\usepackage{soul}
 \usepackage{listings}
 \usepackage{pdfpages}
 \usepackage{cancel}

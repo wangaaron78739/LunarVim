@@ -486,6 +486,12 @@ local both_maps = {
   "Chi",
   "Psi",
   "Omega",
+  "varepsilon",
+  "vartheta",
+  "varpi",
+  "varrho",
+  "varsigma",
+  "varphi",
   "nabla",
   "infty",
   "iff",
@@ -516,6 +522,7 @@ local math_maps = {
   ["!!"] = "neg",
   ["--"] = "setminus",
   ["null"] = "emptyset",
+  ["varnull"] = "varnothing",
   "cup",
   "cap",
   ["bcup"] = "bigcup",
@@ -554,16 +561,12 @@ local math_maps = {
   ["to"] = "to",
   ["&&"] = "&",
   ["%%"] = "%",
-  ["!!"] = "neg",
-  ["--"] = "setminus",
-  ["null"] = "emptyset",
+  -- ["!!"] = "neg",
+  -- ["--"] = "setminus",
+  -- ["null"] = "emptyset",
+  -- ["varnull"] = "varnothing",
   ["\\m"] = "setminus",
-  "cup",
-  "cap",
-  "vee",
-  "wedge",
-  "vdash",
-  "models",
+  "surd",
   ["span"] = "sspan",
   "argmin",
   "because",
@@ -707,7 +710,7 @@ list_extend(auto, {
   ms(re [[(%\?[%w%^]+),%.]], { t "\\vec{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)%.,]], { t "\\vec{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)->]], { t "\\vec{", sub(1), t "}" }),
-  ms(re [[(%\?[%w%^]+)^%. ]], { t "\\dot{", sub(1), t "} " }),
+  ms(re [[(%\?[%w%^]+)^%.]], { t "\\dot{", sub(1), t "} " }),
   ms(re [[(%\?[%w%^]+)^:]], { t "\\ddot{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)~]], { t "\\tilde{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)^bar]], { t "\\overline{", sub(1), t "}" }),
@@ -837,6 +840,45 @@ list_extend(snips, {
     t { "", "\\end{" },
     mi(1),
     t { "}", "" },
+  }),
+  s("beg", {
+    t "\\begin{block}{",
+    i(1),
+    t { "}", "" },
+    sel(),
+    i(0),
+    t { "", "\\end{block}" },
+  }),
+  s("beg", {
+    t "\\begin{frame}\frametitle{",
+    i(1),
+    t { "}", "" },
+    sel(),
+    i(0),
+    t { "", "\\end{frame}" },
+  }),
+  s("wraplist", {
+    t { "\\begin{itemize}", "" },
+    f(function(_, snip)
+      local text = snip and snip.env and snip.env.TM_SELECTED_TEXT
+      if text == nil then
+        return ""
+      end
+      local list = {}
+      for _, line in pairs(text) do
+        vim.list_extend(list, { "\\item " .. line })
+      end
+      return list
+    end, {}),
+    i(0),
+    t { "", "\\end{itemize}" },
+  }),
+  s("onslide", {
+    t "onslide*<",
+    i(1),
+    t ">{",
+    i(0),
+    t "}",
   }),
 })
 
@@ -981,13 +1023,12 @@ function M.ftplugin()
     },
   }
 
-  local texconf = require "lv-tex"
-  require("luasnip").snippets.tex = texconf.snippets
-  require("luasnip").autosnippets.tex = texconf.autosnippets
+  require("luasnip").snippets.tex = M.snippets
+  require("luasnip").autosnippets.tex = M.autosnippets
 
-  require("lv-pairs.sandwich").add_local_recipes(texconf.sandwich_recipes)
-  vim.b.sandwich_tex_marks_recipes = vim.fn.deepcopy(texconf.sandwich_marks_recipes) -- TODO: idk what this does
-  texconf.sandwhich_mark_recipe_fn()
+  require("lv-pairs.sandwich").add_local_recipes(M.sandwich_recipes)
+  vim.b.sandwich_tex_marks_recipes = vim.fn.deepcopy(M.sandwich_marks_recipes) -- TODO: idk what this does
+  M.sandwhich_mark_recipe_fn()
 
   -- Localleader
   local cmd = require("lv-utils").cmd
