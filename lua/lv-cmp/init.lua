@@ -129,6 +129,7 @@ function M.setup()
         c = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
       },
       ["<M-l>"] = complete_or(cmp.confirm),
+      -- TODO: overload this with Luasnip close choice node
       ["<M-h>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
       ["<Esc>"] = cmp.mapping(cmp.mapping.close(), { "c" }),
       -- ["<Esc>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),

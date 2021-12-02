@@ -1,6 +1,7 @@
 -- https://github.com/ibhagwan/nvim-lua/blob/main/lua/plugin/telescope.lua
 local sorters = require "telescope.sorters"
 local actions = require "telescope.actions"
+-- local action_layout = require "telescope.actions.layout"
 local functions = require "lv-telescope.functions"
 -- Global remapping
 ------------------------------
@@ -69,6 +70,7 @@ telescope.setup {
     buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
     mappings = {
       i = {
+        -- ["<M-p>"] = action_layout.toggle_preview,
         ["<C-h>"] = telescope.extensions.hop.hop,
         ["<C-x>"] = actions.delete_buffer,
         ["<C-s>"] = actions.select_horizontal,
@@ -84,6 +86,7 @@ telescope.setup {
         ["<C-y>"] = functions.set_prompt_to_entry_value,
       },
       n = {
+        -- ["<M-p>"] = action_layout.toggle_preview,
         ["j"] = actions.move_selection_next,
         ["k"] = actions.move_selection_previous,
         ["<C-x>"] = actions.delete_buffer,

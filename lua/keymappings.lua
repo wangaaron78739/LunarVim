@@ -517,7 +517,7 @@ function M.setup()
   map("n", "'", "`", nore)
   map("n", "`", "'", nore)
 
-  -- Jupyter Cell
+  -- Jupyter Cells
   -- Change to onoremap
   map("x", "aj", [[?#\+\s*%\+<cr>o/#\+\s*%\+/s-1<cr>]], nore)
   op_from("aj", "aj", sile)
@@ -527,21 +527,9 @@ function M.setup()
     -- "?#+s*%+/e+1<cr>",
     [[?#\+\s*%\+<cr>]],
   }
-  local cell_nN = {
-    from_fn(function()
-      vim.cmd [[normal! m']]
-      register_nN_repeat(cell_nN)
-      feedkeys(cell_nN[1], "n")
-    end),
-    from_fn(function()
-      vim.cmd [[normal! m']]
-      register_nN_repeat(cell_nN)
-      feedkeys(cell_nN[2], "n")
-    end),
-  }
   map("n", pre_goto_next .. "j", cell_nN[1], nore)
   map("n", pre_goto_prev .. "j", cell_nN[2], nore)
-  map("n", pre_goto_next .. "j", [[/#\+\s*%\+<cr>]], nore)
+  -- map("n", pre_goto_next .. "j", [[/#\+\s*%\+<cr>]], nore)
 
   -- Spell checking
   -- map("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", nore)
@@ -732,8 +720,8 @@ function M.setup()
   map("n", "<leader>" .. ldr_swap_next, pre_swap_next, {})
   map("n", "<leader>" .. ldr_swap_prev, pre_swap_prev, {})
 
-  map("n", "<leader>m", "<localleader>", {})
-  map("x", "<leader>m", "<localleader>", {})
+  map("n", "<leader><leader>", "<localleader>", {})
+  map("x", "<leader><leader>", "<localleader>", {})
 
   -- Open new line with a count
   map(

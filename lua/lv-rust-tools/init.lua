@@ -11,7 +11,7 @@ function M.ftplugin()
   nore("n", "gh", "<cmd>RustHoverActions<CR>", { buffer = true })
   nore("n", "gj", "<cmd>RustJoinLines<CR>", { buffer = true })
   nore("n", "K", "<cmd>RustCodeAction<CR>", { buffer = true })
-  nore("x", "K", "<cmd>RustCodeAction<CR>", { buffer = true })
+  -- nore("x", "K", "<esc><cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>", { buffer = true })
   mappings.ftleader {
     pR = { "<CMD>RustRunnables<CR>", "Rust Run" },
     pd = { "<CMD>RustDebuggables<CR>", "Rust Debug" },

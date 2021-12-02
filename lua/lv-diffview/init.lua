@@ -33,6 +33,11 @@ function M.config()
         reverse = false, -- List commits in reverse order
       },
     },
+    hooks = {
+      diff_buf_read = function()
+        -- TODO: add which-key entries here
+      end,
+    },
     key_bindings = {
       disable_defaults = false, -- Disable the default key bindings
       -- The `view` bindings are active in the diff buffers, only when the current

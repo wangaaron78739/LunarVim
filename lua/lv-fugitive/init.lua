@@ -3,6 +3,7 @@ local M = {}
 function M.setup() end
 
 function M.ftplugin()
+  mappings.buf(0, "n", "p", "<cmd>Git push<CR>", { noremap = true })
   mappings.localleader {
     s = { "s", "Stage" },
     u = { "u", "Unstage" },
