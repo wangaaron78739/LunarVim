@@ -83,17 +83,19 @@ function M.inline_text_input(opts)
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, { opts.initial })
   vim.fn.prompt_setprompt(buf, opts.prompt)
 
-  local function close_win()
-    feedkeys(t "<esc>", "n", false)
-    vim.api.nvim_win_close(win, true)
-    vim.api.nvim_buf_delete(buf, { force = true })
-    if escape then
+  local function close_win(normally)
+    -- feedkeys(t "<esc>", "n", false)
+    -- vim.api.nvim_win_close(win, true)
+    -- vim.api.nvim_buf_delete(buf, { force = true })
+    vim.cmd "q!"
+    vim.cmd [[stopinsert]]
+    if escape and not normally then
       escape()
     end
   end
   local function finish_cb()
     local value = vim.trim(vim.fn.getline ".")
-    close_win()
+    close_win(true)
     if enter then
       enter(value)
     end
