@@ -20,206 +20,221 @@ end
 local function get_root_dir()
   return vim.lsp.buf.list_workspace_folders()[1] or vim.fn.getcwd()
 end
-local ctasks = {
-  default_task = "build_and_run",
-  tasks = {
-    -- One file
-    build = {
-      -- command = "gcc main.c -o main",
-      command = function()
-        return "gcc % -o " .. curr_file_name() .. ".o"
-      end,
-      output = "quickfix",
-    },
-    build_release = {
-      -- command = "gcc main.c -o main",
-      command = function()
-        return "gcc -O3 % -o " .. curr_file_name() .. ".o"
-      end,
-      output = "quickfix",
-    },
-    run = {
-      command = function()
-        return "./" .. curr_file_name() .. ".o"
-      end,
-      output = "terminal",
-    },
-    build_and_run = {
-      command = function()
-        require("yabs"):run_task("build", {
-          on_exit = function()
-            require("yabs").languages.c:run_task "run"
-          end,
-        })
-      end,
-      type = "lua",
-    },
+function M.config()
+  local conds_exists, conds = pcall(require, "yabs.conditions")
+  local file_exists = (conds_exists and conds.file_exists) or function()
+    return true
+  end
 
-    -- cmake
-    cmake_build = {
-      command = function()
-        local root = get_root_dir()
-        return "cmake --build " .. root .. "/build"
-      end,
-      output = "quickfix",
-    },
-    cmake_gen = {
-      command = function()
-        local root = get_root_dir()
-        return "cmake -S " .. root .. "-B " .. root .. "/build"
-      end,
-      output = "quickfix",
-    },
-    cmake_gen_release = {
-      command = function()
-        local root = get_root_dir()
-        return "cmake -S " .. root .. "-B " .. root .. "/build -DCMAKE_BUILD_TYPE=Release"
-      end,
-      output = "quickfix",
-    },
-
-    -- TODO: meson
-
-    -- make
-    make = {
-      command = function()
-        local root = get_root_dir()
-        return "cd " .. root .. " && make"
-      end,
-    },
-    ninja = {
-      command = function()
-        local root = get_root_dir()
-        return "cd " .. root .. " && ninja"
-      end,
-    },
-  },
-}
-
-local tasks = {
-  lua = {
+  local ctasks = {
+    default_task = "build_and_run",
     tasks = {
-      nvim = {
-        command = "luafile %",
-        type = "vim",
-      },
-    },
-  },
-  c = ctasks,
-  cpp = ctasks,
-  h = ctasks,
-  hpp = ctasks,
-  rust = {
-    default_task = "check",
-    tasks = {
-      check = {
-        command = "cargo check",
-        output = "quickfix",
-      },
+      -- One file
       build = {
-        command = "cargo build",
+        -- command = "gcc main.c -o main",
+        command = function()
+          return "gcc % -o " .. curr_file_name() .. ".o"
+        end,
         output = "quickfix",
       },
       build_release = {
-        command = "cargo build --release",
+        -- command = "gcc main.c -o main",
+        command = function()
+          return "gcc -O3 % -o " .. curr_file_name() .. ".o"
+        end,
         output = "quickfix",
       },
       run = {
-        command = "cargo run --release",
+        command = function()
+          return "./" .. curr_file_name() .. ".o"
+        end,
         output = "terminal",
       },
-      run_debug = {
-        command = "cargo run",
-        output = "terminal",
-      },
-      test = {
-        command = "cargo test",
-        output = "buffer",
-      },
-      bench = {
-        command = "cargo bench",
-        output = "buffer",
-      },
-      test_release = {
-        command = "cargo test --release",
-        output = "buffer",
-      },
-      install = {
-        command = "cargo install --path .",
-        output = "terminal",
-      },
-      update_deps = {
-        command = "cargo update",
-        output = "terminal",
-      },
-      publish = {
-        command = "cargo publish",
-        output = "terminal",
-      },
-    },
-  },
-  bash = runthis,
-  sh = runthis,
-  fish = runthis,
-  python = {
-    default_task = "run",
-    tasks = {
-      run = {
-        command = "python %",
-        output = "terminal",
-      },
-      run_interactive = {
-        command = "python -i %",
-        output = "terminal",
+      build_and_run = {
+        command = function()
+          require("yabs"):run_task("build", {
+            on_exit = function()
+              require("yabs").languages.c:run_task "run"
+            end,
+          })
+        end,
+        type = "lua",
       },
 
-      -- Poetry based projects
-      poetry_install = {
-        command = "poetry install",
-        output = "terminal",
+      -- cmake
+      cmake_build = {
+        command = function()
+          local root = get_root_dir()
+          return "cmake --build " .. root .. "/build"
+        end,
+        condition = file_exists "CMakeLists.txt",
+        output = "quickfix",
       },
-      poetry_build = {
-        command = "poetry build",
-        output = "terminal",
+      cmake_gen = {
+        command = function()
+          local root = get_root_dir()
+          return "cmake -S " .. root .. "-B " .. root .. "/build"
+        end,
+        condition = file_exists "CMakeLists.txt",
+        output = "quickfix",
       },
-      poetry_shell = {
-        command = "poetry shell",
-        output = "terminal",
+      cmake_gen_release = {
+        command = function()
+          local root = get_root_dir()
+          return "cmake -S " .. root .. "-B " .. root .. "/build -DCMAKE_BUILD_TYPE=Release"
+        end,
+        condition = file_exists "CMakeLists.txt",
+        output = "quickfix",
       },
-      poetry_run = {
-        command = "poetry run python %",
-        output = "terminal",
+
+      -- TODO: meson
+
+      -- make
+      make = {
+        command = function()
+          local root = get_root_dir()
+          return "cd " .. root .. " && make"
+        end,
+        condition = file_exists "Makefile",
       },
-      poetry_run_interactive = {
-        command = "poetry run python -i %",
-        output = "terminal",
+      ninja = {
+        command = function()
+          local root = get_root_dir()
+          return "cd " .. root .. " && ninja"
+        end,
+      },
+      condition = file_exists "build.ninja",
+    },
+  }
+
+  local tasks = {
+    lua = {
+      tasks = {
+        nvim = {
+          command = "luafile %",
+          type = "vim",
+        },
       },
     },
-  },
-}
-local global = {
-  run_shell = runme,
-  commit_all = {
-    command = "git commit -a",
-    output = "terminal",
-  },
-  git_push = {
-    command = "git push",
-    output = "terminal",
-  },
-  git_pull = {
-    command = "git pull --no-ff",
-    output = "terminal",
-  },
-}
-local opts = {
-  output_types = {
-    quickfix = {
-      open_on_run = "always",
+    c = ctasks,
+    cpp = ctasks,
+    h = ctasks,
+    hpp = ctasks,
+    rust = {
+      default_task = "check",
+      tasks = {
+        check = {
+          command = "cargo check",
+          output = "quickfix",
+        },
+        build = {
+          command = "cargo build",
+          output = "quickfix",
+        },
+        build_release = {
+          command = "cargo build --release",
+          output = "quickfix",
+        },
+        run = {
+          command = "cargo run --release",
+          output = "terminal",
+        },
+        run_debug = {
+          command = "cargo run",
+          output = "terminal",
+        },
+        test = {
+          command = "cargo test",
+          output = "buffer",
+        },
+        bench = {
+          command = "cargo bench",
+          output = "buffer",
+        },
+        test_release = {
+          command = "cargo test --release",
+          output = "buffer",
+        },
+        install = {
+          command = "cargo install --path .",
+          output = "terminal",
+        },
+        update_deps = {
+          command = "cargo update",
+          output = "terminal",
+        },
+        publish = {
+          command = "cargo publish",
+          output = "terminal",
+        },
+      },
     },
-  },
-}
-function M.config()
+    bash = runthis,
+    sh = runthis,
+    fish = runthis,
+    python = {
+      default_task = "run",
+      tasks = {
+        run = {
+          command = "python %",
+          output = "terminal",
+        },
+        run_interactive = {
+          command = "python -i %",
+          output = "terminal",
+        },
+
+        -- Poetry based projects
+        poetry_install = {
+          command = "poetry install",
+          condition = file_exists "pyproject.toml",
+          output = "terminal",
+        },
+        poetry_build = {
+          command = "poetry build",
+          condition = file_exists "pyproject.toml",
+          output = "terminal",
+        },
+        poetry_shell = {
+          command = "poetry shell",
+          condition = file_exists "pyproject.toml",
+          output = "terminal",
+        },
+        poetry_run = {
+          command = "poetry run python %",
+          condition = file_exists "pyproject.toml",
+          output = "terminal",
+        },
+        poetry_run_interactive = {
+          command = "poetry run python -i %",
+          condition = file_exists "pyproject.toml",
+          output = "terminal",
+        },
+      },
+    },
+  }
+  local global = {
+    run_shell = runme,
+    commit_all = {
+      command = "git commit -a",
+      output = "terminal",
+    },
+    git_push = {
+      command = "git push",
+      output = "terminal",
+    },
+    git_pull = {
+      command = "git pull --no-ff",
+      output = "terminal",
+    },
+  }
+  local opts = {
+    output_types = {
+      quickfix = {
+        open_on_run = "always",
+      },
+    },
+  }
   require("yabs"):setup {
     languages = tasks,
     tasks = global,
