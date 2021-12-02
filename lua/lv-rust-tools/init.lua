@@ -41,6 +41,12 @@ function M.setup()
     ["Cell::new"] = postfix_wrap_call("cell", "Cell::new", "std::cell::Cell"),
     ["Rc::new"] = postfix_wrap_call("rc", "Rc::new", "std::rc::Rc"),
     ["Box::pin"] = postfix_wrap_call("pin", "Box::pin"),
+    ["unsafe"] = {
+      postfix = "unsafe",
+      body = { "unsafe { ${receiver} }" },
+      description = "Wrap in unsafe{}",
+      scope = "expr",
+    },
     ["thread::spawn"] = {
       prefix = "spawn",
       body = {
