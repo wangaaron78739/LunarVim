@@ -28,3 +28,6 @@ require("lv-pairs.sandwich").add_recipe {
 mappings.localleader {
   x = { "<cmd>MagmaInit<cr>", "Magma" },
 }
+vim.api.nvim_buf_set_keymap(0, "i", "<S-CR>", "<ESC>o# %%<CR>", { noremap = true, silent = true })
+
+require("lv-terms").jupyter_ascending()

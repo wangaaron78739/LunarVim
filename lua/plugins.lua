@@ -813,7 +813,6 @@ return packer.startup(function(use)
     -- cmd = "MagmaStart", -- see lv-terms
     disable = not O.plugin.magma,
   }
-  -- use {"jupyter-ascending"}
   -- Better neovim terminal
   use {
     "kassio/neoterm",
@@ -856,6 +855,13 @@ return packer.startup(function(use)
     "jubnzv/mdeval.nvim",
     config = function()
       require("lv-terms").mdeval()
+    end,
+  }
+  use { "goerz/jupytext.vim" }
+  use {
+    "untitled-ai/jupyter_ascending.vim",
+    setup = function()
+      vim.g.jupyter_ascending_default_mappings = false
     end,
   }
   use {

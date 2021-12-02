@@ -26,6 +26,7 @@ ext-install:
     pipx install --force flake8
     pipx install --force neovim-remote
     pipx install --force ueberzug
+    pipx install --force jupytext
     npm install -g tree-sitter-cli
     npm install -g markdownlint-cli
     npm install -g write-good
