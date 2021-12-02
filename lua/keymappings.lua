@@ -303,6 +303,10 @@ function M.setup()
   map("x", "<M-j>", ":move '>+1<cr>gv-gv", nore)
   map("x", "<M-k>", ":move '<-2<cr>gv-gv", nore)
 
+  -- Keep accidentally hitting J instead of j when first going visual mode
+  map("x", "J", "j", nore)
+  map("x", "gJ", "J", nore)
+
   -- better indenting
   utils.au "_better_indent" { -- This need to be a <buffer> map otherwise nowait doesn't work
     { "FileType", "nnoremap <buffer> <nowait> > >>" },
