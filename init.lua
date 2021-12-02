@@ -54,6 +54,7 @@ mappings.setup()
 -- if not vim.g.kitty_scrollback then
 require "lv-treesitter"
 require "lsp"
+require("lv-ui").config()
 -- end
 
 require "packer_compiled"

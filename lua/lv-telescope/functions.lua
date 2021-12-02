@@ -5,6 +5,8 @@ local action_state = require "telescope.actions.state"
 local actions = require "telescope.actions"
 local themes = require "telescope.themes"
 local builtins = require "telescope.builtin"
+local pickers = require "telescope.pickers"
+local finders = require "telescope.finders"
 
 local M = {}
 
@@ -312,6 +314,45 @@ function M.find_all_files()
   builtins.find_files {
     find_command = rg(false, false, true),
   }
+end
+
+function M.uiselect(topts)
+  topts = topts or themes.get_cursor() -- get_dropdown
+  local conf = require("telescope.config").values
+  return function(items, opts, on_choice)
+    opts = opts or {}
+    local prompt = opts.prompt or ""
+    local format_item = opts.format_item or tostring
+
+    pickers.new(topts, {
+      prompt_title = prompt,
+      finder = finders.new_table {
+        results = items, -- TODO:
+        entry_maker = function(entry)
+          local str = format_item(entry)
+          -- local str = function(tbl)
+          --   utils.dump(tbl)
+          --   return format_item(tbl.value)
+          -- end
+
+          return {
+            value = entry,
+            display = str,
+            ordinal = str,
+          }
+        end,
+      },
+      sorter = conf.generic_sorter(topts),
+      attach_mappings = function(prompt_bufnr, map)
+        actions.select_default:replace(function()
+          actions.close(prompt_bufnr)
+          local selection = action_state.get_selected_entry()
+          on_choice(selection.value)
+        end)
+        return true
+      end,
+    }):find()
+  end
 end
 
 function M.file_browser()

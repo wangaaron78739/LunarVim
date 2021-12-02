@@ -57,9 +57,6 @@ return packer.startup(function(use)
   }
   use {
     "hood/popui.nvim",
-    config = function()
-      require("lv-ui.popui").config()
-    end,
     requires = "RishabhRD/popfix",
   }
 
