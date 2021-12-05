@@ -411,6 +411,20 @@ M.rename = (function()
 end)()
 
 M.renamer = (function()
+  local function mk_keymaps(old)
+    local enter = "<cmd>lua require'lsp.functions'.renamer.enter_cb('"
+      .. old
+      .. "', vim.api.nvim_win_get_cursor(0))<cr>"
+    local cancel = "<cmd>lua require'lsp.functions'.renamer.cancel_cb('" .. old .. "')<cr>"
+    vim.api.nvim_buf_set_keymap(0, "i", "<CR>", enter, { silent = true })
+    vim.api.nvim_buf_set_keymap(0, "i", "<M-CR>", enter, { silent = true })
+    vim.api.nvim_buf_set_keymap(0, "i", "<ESC><ESC>", cancel, { silent = true })
+  end
+  local function del_keymaps()
+    vim.api.nvim_buf_del_keymap(0, "i", "<CR>")
+    -- vim.api.nvim_buf_del_keymap(0, "i", "<ESC>")
+    vim.api.nvim_buf_del_keymap(0, "i", "<ESC><ESC>")
+  end
   return {
     enter_cb = function(old, oldpos)
       -- local cword = vim.fn.expand "<cword>"
@@ -422,9 +436,7 @@ M.renamer = (function()
         utils.dump(cword)
         feedkeys(t("ciw" .. old .. "<ESC>"), "n", false)
 
-        vim.api.nvim_buf_del_keymap(0, "i", "<CR>")
-        -- vim.api.nvim_buf_del_keymap(0, "i", "<ESC>")
-        vim.api.nvim_buf_del_keymap(0, "i", "<ESC><ESC>")
+        del_keymaps()
 
         vim.lsp.buf.rename(cword)
       end, 1)
@@ -433,37 +445,15 @@ M.renamer = (function()
       vim.cmd "stopinsert"
       -- feedkeys(t "u", "n", false)
       feedkeys(t("ciw" .. old .. "<ESC>"), "n", false)
-      vim.api.nvim_buf_del_keymap(0, "i", "<CR>")
-      -- vim.api.nvim_buf_del_keymap(0, "i", "<ESC>")
-      vim.api.nvim_buf_del_keymap(0, "i", "<ESC><ESC>")
+      del_keymaps()
     end,
     keymap = function()
       local old = vim.fn.expand "<cword>"
       feedkeys(t "viw<C-G>", "n", false) -- Go select mode
-      vim.api.nvim_buf_set_keymap(
-        0,
-        "i",
-        "<CR>",
-        "<cmd>lua require'lsp.functions'.renamer.enter_cb('" .. old .. "', vim.api.nvim_win_get_cursor(0))<cr>",
-        { silent = true }
-      )
-      -- vim.api.nvim_buf_set_keymap(
-      --   0,
-      --   "i",
-      --   "<ESC>",
-      --   "<cmd>lua require'lsp.functions'.renamer.cancel_cb('" .. old .. "')<cr>",
-      --   { silent = true }
-      -- )
-      vim.api.nvim_buf_set_keymap(
-        0,
-        "i",
-        "<ESC><ESC>",
-        "<cmd>lua require'lsp.functions'.renamer.cancel_cb('" .. old .. "')<cr>",
-        { silent = true }
-      )
+      mk_keymaps(old)
     end,
   }
 end)()
-M.rename = M.renamer.keymap
+-- M.rename = M.renamer.keymap
 
 return M
