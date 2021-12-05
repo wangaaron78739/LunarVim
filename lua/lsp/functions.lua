@@ -456,4 +456,20 @@ M.renamer = (function()
 end)()
 -- M.rename = M.renamer.keymap
 
+M.format_on_save = function(disable)
+  local augroup = {
+    {
+      "BufWritePre",
+      "*",
+      "lua vim.lsp.buf.formatting_seq_sync(nil, " .. O.format_on_save_timeout .. ")",
+    },
+  }
+  if disable then
+    augroup = {}
+  end
+  require("lv-utils").define_augroups {
+    autoformat = augroup,
+  }
+end
+
 return M
