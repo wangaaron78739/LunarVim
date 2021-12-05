@@ -998,7 +998,7 @@ function M.setup()
     },
   }
   M.sile("o", O.plugin.ts_hintobjects.key, [[:<C-U>lua require('tsht').nodes()<CR>]])
-  M.sile("v", O.plugin.ts_hintobjects.key, [[:lua require('tsht').nodes()<CR>]])
+  M.sile("x", O.plugin.ts_hintobjects.key, [[:lua require('tsht').nodes()<CR>]])
 
   local vLeaderMappings = {
     -- ["/"] = { cmd "CommentToggle", "Comment" },
@@ -1109,21 +1109,34 @@ function M.setup()
   -- TODO: register all g prefix keys in whichkey
 
   -- Tab management keybindings
-  wk.register({
+  local tab_mgmt = {
     t = { cmd "tabnext", "Next" },
-    ["<C-t>"] = { cmd "tabnext", "Next" },
-    N = { cmd "tabnew", "New" },
+    -- ["<C-t>"] = { cmd "tabnext", "which_key_ignore" },
+    n = { cmd "tabnew", "New" },
     q = { cmd "tabclose", "Close" },
-    ["<tab>"] = { cmd "tabnext", "Next" },
     p = { cmd "tabprev", "Prev" },
     l = { cmd "tabs", "List tabs" },
-    O = { cmd "tabonly", "Close others" },
+    o = { cmd "tabonly", "Close others" },
     ["1"] = { cmd "tabfirst", "First tab" },
     ["0"] = { cmd "tablast", "Last tab" },
-  }, {
+  }
+  wk.register(tab_mgmt, {
     mode = "n",
     prefix = "<C-t>",
+    noremap = true,
+    silent = true,
   })
+  for key, value in pairs(tab_mgmt) do
+    -- local lhs = "<C-t><C-" .. key .. ">"
+    -- map("n", lhs, value[1], { noremap = true, silent = true })
+    local lhs = "<C-" .. key .. ">"
+    wk.register({ [lhs] = { value[1], "which_key_ignore" } }, {
+      mode = "n",
+      prefix = "<C-t>",
+      noremap = true,
+      silent = true,
+    })
+  end
 
   -- FIXME: duplicate entries for some of the operators
 end
