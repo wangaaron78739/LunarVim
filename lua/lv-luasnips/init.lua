@@ -127,6 +127,23 @@ function M.setup()
         -- mi(2),
         -- t { ")", "" },
       }),
+      s("iife", {
+        t "(function ",
+        i(1),
+        t "(",
+        i(2),
+        t { ")", "return" },
+        f(function(_, snip)
+          return snip.env.TM_SELECTED_TEXT or ""
+        end, {}),
+        -- t { "", "" },
+        i(0),
+        t { "", "end)()" },
+        -- mi(1),
+        -- t "(",
+        -- mi(2),
+        -- t { ")", "" },
+      }),
     },
   }
 
