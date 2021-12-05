@@ -28,7 +28,7 @@ function M.config()
       formatters.isort,
       -- formatters.clang_format,
       -- formatters.uncrustify,
-      -- formatters.cmake_format,
+      formatters.cmake_format,
       formatters.elm_format,
       formatters.fish_indent,
       formatters.fnlfmt,
