@@ -991,11 +991,12 @@ function M.ftplugin()
     },
   }
 
-  -- require("lv-utils").define_augroups {
-  --   _general_lsp = {
-  --     { "CursorHold,CursorHoldI", "*", ":lua vim.lsp.buf.formatting()" },
-  --   },
-  -- }
+  require("lv-utils").define_augroups {
+    _general_lsp = {
+      { "CursorHold,CursorHoldI", "*", "lua vim.lsp.buf.formatting()" },
+      { "CursorMoved,TextChanged,InsertEnter", "*", "lua vim.lsp.buf.cancel_formatting()" },
+    },
+  }
 
   require("lv-cmp").autocomplete(false)
   require("lv-cmp").sources {
