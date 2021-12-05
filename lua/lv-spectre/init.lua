@@ -51,6 +51,11 @@ local maps = {
     cmd = "<cmd>lua require('spectre').change_options('hidden')<CR>",
     desc = "toggle search hidden",
   },
+  ["toggle_live_update"] = {
+    map = prefix .. "u",
+    cmd = "<cmd>lua require('spectre').toggle_live_update()<CR>",
+    desc = "update change when vim write file.",
+  },
   -- you can put your mapping here it only use normal mode
 }
 function M.setup()
@@ -62,6 +67,7 @@ function M.setup()
       -- rg is map with finder_cmd
       ["rg"] = {
         cmd = "rg",
+        live_update = true,
         -- default args
         args = {
           "--color=never",
