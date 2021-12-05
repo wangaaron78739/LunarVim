@@ -6,6 +6,7 @@ function M.ftplugin()
     H = { "<Cmd>RustToggleInlayHints<CR>", "Toggle Inlay Hints" },
     e = { "<Cmd>RustRunnables<CR>", "Runnables" },
     h = { "<Cmd>RustHoverActions<CR>", "Hover Actions" },
+    s = { ":RustSSR ", "Structural S&R" },
   }
   nore("x", "gh", "<cmd>RustHoverRange<CR>", { buffer = true })
   nore("n", "gh", "<cmd>RustHoverActions<CR>", { buffer = true })

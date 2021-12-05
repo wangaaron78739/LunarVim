@@ -101,7 +101,7 @@ function M.setup()
     },
     preselect = cmp.PreselectMode.None,
     -- confirmation = { default_behavior = cmp.ConfirmBehavior.Replace },
-    experimental = { ghost_text = true },
+    -- experimental = { ghost_text = true },
 
     documentation = {
       border = "single",
