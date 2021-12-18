@@ -200,7 +200,7 @@ return packer.startup(function(use)
 
   -- Status Line and Bufferline
   use {
-    "shadmansaleh/lualine.nvim",
+    "nvim-lualine/lualine.nvim",
     config = function()
       require "lv-lualine"
     end,
@@ -552,6 +552,8 @@ return packer.startup(function(use)
   }
   use {
     "saecki/crates.nvim",
+    tag = "v0.1.0",
+    requires = { "nvim-lua/plenary.nvim" },
     config = function()
       require("lv-rust-tools").crates_setup()
     end,
@@ -945,7 +947,7 @@ return packer.startup(function(use)
   use {
     "jose-elias-alvarez/null-ls.nvim",
     config = function()
-      require("lv-null-ls").config()
+      require("lv-null-ls").setup()
     end,
     requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
   }
@@ -1156,7 +1158,8 @@ return packer.startup(function(use)
   }
   use { "christianchiarulli/nvcode-color-schemes.vim", opt = true }
   use {
-    "Pocco81/Catppuccino.nvim",
+    "catppuccin/nvim",
+    as = "catppuccin",
     config = function()
       local trues = setmetatable({
         native_lsp = {
@@ -1178,6 +1181,7 @@ return packer.startup(function(use)
           enabled = true,
           show_root = true,
         },
+        telescope = true,
         which_key = true,
         indent_blankline = {
           enabled = true,
@@ -1188,8 +1192,8 @@ return packer.startup(function(use)
           return true
         end,
       })
-      require("catppuccino").setup {
-        colorscheme = "dark_catppuccino", -- neon_latte
+      require("catppuccin").setup {
+        -- colorscheme = "dark_catppuccino", -- neon_latte
         styles = {
           comments = "italic",
           functions = "NONE",
@@ -1215,13 +1219,13 @@ return packer.startup(function(use)
   -- }
   -- use "tanvirtin/monokai.nvim"
 
---   use {
---     "jbyuki/nabla.nvim",
---     config = function()
---       mappings.sile("n", "<leader>xn", utils.cmd.require("nabla").action)
---     end,
---   }
--- 
+  --   use {
+  --     "jbyuki/nabla.nvim",
+  --     config = function()
+  --       mappings.sile("n", "<leader>xn", utils.cmd.require("nabla").action)
+  --     end,
+  --   }
+  --
 
   -- use "RishabhRD/nvim-rdark"
   -- use "marko-cerovac/material.nvim"

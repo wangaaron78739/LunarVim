@@ -4,14 +4,14 @@ local null = require "null-ls"
 
 local gcc_diagnostics = require "lv-null-ls.gcc"
 
-function M.config()
+function M.setup()
   local diagnostics_format = "[#{c}] #{m} (#{s})"
 
   local formatters = null.builtins.formatting
   local diagnostics = null.builtins.diagnostics
   -- local code_actions = null.builtins.code_actions
 
-  null.config {
+  null.setup {
     diagnostics_format = diagnostics_format,
     sources = {
       -- Formatters
@@ -47,7 +47,6 @@ function M.config()
       -- code_actions.gitsigns, -- TODO: reenable when I can lower the priority
     },
   }
-  require("lspconfig")["null-ls"].setup {}
 end
 
 return M

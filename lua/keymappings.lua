@@ -835,16 +835,16 @@ map("x", "<M-S-B>", "<Esc>BviWo", sile) ]]
     local ops = { mode = "o" }
     wk.register({ ["z"] = "Light speed", ["Z"] = "Light speed bwd" }, ops)
 
-    function repeat_ft(reverse)
-      local ls = require "lightspeed"
-      ls.ft["instant-repeat?"] = true
-      ls.ft:to(reverse, ls.ft["prev-t-like?"])
-    end
+    -- function repeat_ft(reverse)
+    --   local ls = require "lightspeed"
+    --   ls.ft["instant-repeat?"] = true
+    --   ls.ft:to(reverse, ls.ft["prev-t-like?"])
+    -- end
 
-    map("n", ";", "<cmd>lua repeat_ft(false)<cr>", { noremap = true, silent = true })
-    map("x", ";", "<cmd>lua repeat_ft(false)<cr>", { noremap = true, silent = true })
-    map("n", ",", "<cmd>lua repeat_ft(true)<cr>", { noremap = true, silent = true })
-    map("x", ",", "<cmd>lua repeat_ft(true)<cr>", { noremap = true, silent = true })
+    -- map("n", ";", "<cmd>lua repeat_ft(false)<cr>", { noremap = true, silent = true })
+    -- map("x", ";", "<cmd>lua repeat_ft(false)<cr>", { noremap = true, silent = true })
+    -- map("n", ",", "<cmd>lua repeat_ft(true)<cr>", { noremap = true, silent = true })
+    -- map("x", ",", "<cmd>lua repeat_ft(true)<cr>", { noremap = true, silent = true })
   end
 
   local ops = { mode = "n" }

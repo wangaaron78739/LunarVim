@@ -338,7 +338,7 @@ M.cmd = setmetatable({
     return luafn("require'" .. name .. "'")
   end,
   lsp = luafn "vim.lsp.buf",
-  diag = luafn "vim.lsp.diagnostic",
+  diag = luafn "vim.diagnostic",
   -- telescopes = luafn "telescopes",
   telescopes = luafn "require'lv-telescope.functions'",
 }, {

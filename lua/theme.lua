@@ -5,7 +5,7 @@ vim.cmd [[
 command! Zenbones colorscheme zenbones
 command! LightMelya colorscheme light_melya
 command! Nebulous lua require'theme'.nebulous()
-command! DarkCatppuccino colorscheme dark_catppuccino
+command! Catppuccin colorscheme catppuccin
 command! Acme colorscheme acme
 command! Pencil colorscheme pencil
 command! Paper colorscheme paper
