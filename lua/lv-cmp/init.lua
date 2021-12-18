@@ -34,7 +34,7 @@ function M.setup()
       end,
     },
     completion = {
-      completeopt = "menu,menuone,noinsert",
+      completeopt = "menu,menuone,noinsert,noselect",
     },
     documentation = {
       border = "single",

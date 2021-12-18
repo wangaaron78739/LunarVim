@@ -8,8 +8,10 @@ M.config = function()
   vim.g.tex_conceal = "abdmgs"
 
   vim.g.vimtex_compiler_method = "latexmk"
+  vim.g.vimtex_compiler_engine = "lualatex"
   vim.g.vimtex_compiler_latexmk = {
     ["options"] = {
+      "-pdflatex=lualatex",
       "-shell-escape",
       "-verbose",
       "-file-line-error",

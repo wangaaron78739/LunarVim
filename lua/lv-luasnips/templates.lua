@@ -8,6 +8,8 @@ local preamble = [[
 \usepackage{textcomp}
 \usepackage[hyphens,spaces,obeyspaces]{url}
 \usepackage{listings}
+\usepackage[no-math]{fontspec}
+\setmonofont{Source Code Pro}
 \lstset{language=C++,
 	basicstyle=\ttfamily,
 	keywordstyle=\color{blue}\ttfamily,
@@ -19,6 +21,11 @@ local preamble = [[
 \usepackage{bm}
 \usepackage{amsmath,amsthm,amssymb,amsfonts}
 \usepackage{mathtools}
+\usepackage[color=green!10,
+	colorinlistoftodos,
+	linecolor=lightgray,
+	bordercolor=green!10,
+	textsize=footnotesize]{todonotes} % add [disable] to hide notes
 
 \usepackage{booktabs}
 \usepackage{array}
@@ -166,11 +173,11 @@ style=thmbluebox,name=Theorem,numberwithin=section]{theorem}
 
 \newcommand{\vocab}[1]{\textbf{\color{blue} #1}}
 
-\newcommand{\NN}{\mathbb{N}}
-\newcommand{\ZZ}{\mathbb{Z}}
-\newcommand{\RR}{\mathbb{R}}
-\newcommand{\CC}{\mathbb{C}}
-\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
 \newcommand\Ccancel[2][black]{\renewcommand\CancelColor{\color{#1}}\cancel{#2}}
 \newcommand{\x}{\bm{x}}
 \newcommand{\y}{\bm{y}}
@@ -213,26 +220,37 @@ return {
     ]],
     ["hwtemplate"] = [[
 \documentclass[12pt]{article}
+\usepackage[usenames,svgnames,dvipsnames]{xcolor}
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-\usepackage{xcolor}
 \usepackage{textcomp}
 \usepackage[hyphens,spaces,obeyspaces]{url}
 \usepackage{listings}
+\usepackage[no-math]{fontspec}
+\setmonofont{Source Code Pro}
 \lstset{language=C++,
-    basicstyle=\ttfamily,
-    keywordstyle=\color{blue}\ttfamily,
-    stringstyle=\color{red}\ttfamily,
-    commentstyle=\color{green}\ttfamily,
-    morecomment=[l][\color{magenta}]{\#}
+	basicstyle=\ttfamily,
+	keywordstyle=\color{blue}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	commentstyle=\color{green}\ttfamily,
+	morecomment=[l][\color{magenta}]{\#}
+}
+\lstset{language=R,
+    frame = single,
+    commentstyle=\color{ForestGreen}\ttfamily,
 }
 
 \usepackage{bm}
 \usepackage{amsmath,amsthm,amssymb,amsfonts}
 \usepackage{mathtools}
 \usepackage{hyperref}
+\usepackage[color=green!10,
+	colorinlistoftodos,
+	linecolor=lightgray,
+	bordercolor=green!10,
+	textsize=footnotesize]{todonotes} % add [disable] to hide notes
 
 \usepackage{blkarray}
 \usepackage{booktabs}
@@ -258,11 +276,12 @@ return {
 \newtheorem{lemma}{Lemma}
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
+\newtheorem*{answer}{Answer}
 
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\R}{\mathbb{R}}
-\newcommand{\C}{\mathbb{C}}
+\renewcommand{\C}{\mathbb{C}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\E}{\text{\textbf{E}}}
 \newcommand{\Var}{\text{\textbf{Var}}}

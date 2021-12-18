@@ -183,17 +183,20 @@ local math_maps = {
   "min",
   "max",
   "log",
+  "ln",
+  "pm",
   "exp",
+  "neq",
 }
 list_extend(math_maps, trig_fns)
 local intlike = {
   ["dint"] = { operator = "\\int", low = { i(1, "\\infty") }, upp = { i(2, "\\infty") } },
   ["dintr"] = { operator = "\\int", low = { i(1, "0") }, upp = { i(2, "\\infty") } },
-  ["sum"] = { operator = "\\sum", low = { i(1, "n=0") }, upp = { i(3, "\\infty") } },
-  ["sumi"] = { operator = "\\sum", low = { i(1, "i=0") }, upp = { i(3, "n") } },
+  ["sum"] = { operator = "\\sum", low = { i(1, "n=0") }, upp = { i(2, "\\infty") } },
+  ["sumi"] = { operator = "\\sum", low = { i(1, "i=0") }, upp = { i(2, "n") } },
   ["sumin"] = { operator = "\\sum", low = { i(1, "n \\in \\N") }, upp = {} },
-  ["prod"] = { operator = "\\prod", low = { i(1, "n=0") }, upp = { i(3, "\\infty") } },
-  ["prodi"] = { operator = "\\prod", low = { i(1, "i=0") }, upp = { i(3, "n") } },
+  ["prod"] = { operator = "\\prod", low = { i(1, "n=0") }, upp = { i(2, "\\infty") } },
+  ["prodi"] = { operator = "\\prod", low = { i(1, "i=0") }, upp = { i(2, "n") } },
   ["lim"] = { operator = "\\lim", low = { i(1, "n"), t "\\to", i(2, "\\infty") }, upp = {} },
   ["lim0"] = { operator = "\\lim", low = { i(1, "n"), t "\\to", i(2, "0") }, upp = {} },
 }
@@ -227,7 +230,7 @@ for k, v in pairs(both_maps) do -- FIXME: deal with already existing backslash (
   -- local lhs = "([^%\\])" .. v
   -- local lhs = "([%p])" .. v
   list_extend(auto, { ms(lhs, t("\\" .. v)) })
-  list_extend(auto, { nms(lhs .. " ", t("$\\" .. v .. "$ ")) })
+  -- list_extend(auto, { nms(lhs .. " ", t("$\\" .. v .. "$ ")) })
 end
 
 for k, v in pairs(math_maps) do
@@ -261,13 +264,14 @@ list_extend(auto, {
   ms("otherwise ", { t "\\textbf{ otherwise } " }),
   ms("else ", { t "\\textbf{ else } " }),
   ms("cal{", { t "\\mathcal{", i(0) }),
-  ms(renw "__([^%s_])", { t "_{", sub(1), i(0), t "}" }),
-  ms(renw "%^%^([^%s_])", { t "^{", sub(1), i(0), t "}" }),
-  ms(nw "__ ", t "\\,"),
-  ms(nw "____", t "\\quad"),
+  -- ms(renw "__([^%s_])", { t "_{", sub(1), i(0), t "}" }),
+  -- ms(renw "%^%^([^%s_])", { t "^{", sub(1), i(0), t "}" }),
+  -- ms(nw "__ ", t "\\,"),
+  ms(nw "qq", t "\\quad"),
   ms(nw "\\,\\, ", t "\\quad"),
   ms(nw "\\quad\\, ", t "\\qquad"),
   ms(nw "\\quad\\quad ", t "\\qquad"),
+  ms(nw "== ", { t "&= ", i(1), t "\\\\", i(0) }),
   s("--", t "\\item"),
   ms(re [[(%S) ([%^_])]], { sub(1), sub(2) }), -- Remove extra ws sub/superscript
   ms(re [[([A-Za-z%}%]%)])(%d)]], { sub(1), t "_", sub(2) }), -- Auto subscript
@@ -285,9 +289,9 @@ list_extend(auto, {
   ms(re [[([%w%^]+)~]], { t "\\tilde{", sub(1), t "}" }),
   ms(re [[([%w%^]+)%. ]], { t "\\dot{", sub(1), t "} " }),
   ms(re [[([%w%^]+)%.%.]], { t "\\ddot{", sub(1), t "}" }),
-  ms(re [[([%w%^]+)^bar]], { t "\\overline{", sub(1), t "}" }),
+  ms(re [[([%w%^]+)bar]], { t "\\overline{", sub(1), t "}" }),
   ms("bar", { t "\\overline{", i(0), t "}" }),
-  ms(re [[([%w%^]+)^hat]], { t "\\hat{", sub(1), t "}" }),
+  ms(re [[([%w%^]+)hat]], { t "\\hat{", sub(1), t "}" }),
   ms("hat", { t "\\hat{", i(0), t "}" }),
   -- TODO: bmatrix et al
   ms("//", { t "\\frac{", i(1), t "}{", i(0), t "}" }),
@@ -295,19 +299,8 @@ list_extend(auto, {
   ms(re "(%\\?%w+)/", { t "\\frac{", sub(1), t "}{", i(0), t "}" }),
   ms("inn", t "\\in"),
   ms("notin", t "\\not\\in"),
-  ms(re [[([%w^]+)sr]], { sub(1), t "^2", i(0) }),
-  ms(re [[([%w^]+)cb]], { sub(1), t "^3", i(0) }),
-  ms(
-    re [[([A-Za-z])([A-Za-z])([A-Za-z])]],
-    f(function(arg)
-      local cap = arg[1].captures
-      if cap[2] == cap[3] then
-        return string.format("%s_%s", cap[1], cap[2])
-      else
-        return arg[1].trigger
-      end
-    end, {})
-  ),
+  ms(re [[([%S^]+)sr]], { sub(1), t "^2", i(0) }),
+  ms(re [[([%S^]+)cb]], { sub(1), t "^3", i(0) }),
   -- TODO: binomial
   ms(re "big(%S+) ", { t "\\big", sub(1), t " ", i(0), t " \\big", pairsub(1) }),
   ms(re "Big(%S+) ", { t "\\Big", sub(1), t " ", i(0), t " \\Big", pairsub(1) }),
@@ -329,10 +322,24 @@ list_extend(auto, {
   -- ms("|", { t "|", i(0), t "|" }),
 
   ms("norm", { t "\\|", i(1), t "\\|", i(0) }),
+  ms("set ", { t "\\{", i(1), t "\\}", i(0) }),
   nms("mk", { t "$", i(1), t "$", i(0) }),
+  nms("todo ", { t "\\todo[inline]{", i(1), t "}", i(0) }),
   nms("dm", { t { "\\[", "" }, i(1), t { "", "\\]" }, i(0) }),
-  -- ms(re [[([%w%^]+)td]], { sub(1), t "^{", i(1), t "}", i(0) }),
-  -- ms(re [[([%w%^]+)__]], { sub(1), t "_{", i(1), t "}", i(0) }),
+  ms(re [[([%S+]+)__]], { sub(1), t "_{", i(1), t "}", i(0) }),
+  ms(re [[([%S+]+)td]], { sub(1), t "^{", i(1), t "}", i(0) }),
+  ms(re [[([%S+]+)invs]], { sub(1), t "^{-1}", i(0) }),
+  ms(
+    re [[([A-Za-z])([A-Za-z])([A-Za-z])]],
+    f(function(arg)
+      local cap = arg[1].captures
+      if cap[2] == cap[3] then
+        return string.format("%s_%s", cap[1], cap[2])
+      else
+        return arg[1].trigger
+      end
+    end, {})
+  ),
 })
 for k, v in pairs(intlike) do
   local snip = { t(v.operator .. "\\limits_{") }
@@ -348,6 +355,10 @@ end
 ----------------------------------------------------------------------
 local theorems = {
   "theorem",
+  "question",
+  "answer",
+  "enumerate",
+  "itemize",
   "definition",
   "lemma",
   "proof",
