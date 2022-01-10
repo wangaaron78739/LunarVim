@@ -248,7 +248,7 @@ M.sandwich_recipes = {
 }
 
 function M.sandwhich_mark_recipe_fn()
-  local map = vim.api.nvim_set_keymap
+  local map = vim.keymap.set
   map(
     "x",
     "<Plug>(textobj-sandwich-filetype-tex-marks-i)",
@@ -960,14 +960,14 @@ function M.ftplugin()
   vim.opt.number = false
   vim.opt.relativenumber = false
 
-  local map = vim.api.nvim_buf_set_keymap
+  local map = vim.keymap.setl
   require("keymappings").wrapjk()
-  map(0, "v", "<C-b>", "Smb", { silent = true })
-  map(0, "v", "<C-t>", "Smi", { silent = true })
-  map(0, "n", "<C-b>", "ysiwmb", { silent = true })
-  map(0, "n", "<C-t>", "ysiwmi", { silent = true })
-  map(0, "i", "<C-b>", "<cmd>normal ysiwmb<cr>", { silent = true })
-  map(0, "i", "<C-t>", "<cmd>normal ysiwmi<cr>", { silent = true })
+  map("v", "<C-b>", "Smb", { silent = true })
+  map("v", "<C-t>", "Smi", { silent = true })
+  map("n", "<C-b>", "ysiwmb", { silent = true })
+  map("n", "<C-t>", "ysiwmi", { silent = true })
+  map("i", "<C-b>", "<cmd>normal ysiwmb<cr>", { silent = true })
+  map("i", "<C-t>", "<cmd>normal ysiwmi<cr>", { silent = true })
 
   require("lv-lightspeed").au_unconceal(conf.conceal)
   -- vim.opt_local.background = "light"

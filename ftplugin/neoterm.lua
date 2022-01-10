@@ -1,1 +1,1 @@
-vim.api.nvim_buf_set_keymap(0, "n", "<ESC>", "i", { silent = true })
+vim.keymap.setl("n", "<ESC>", "i", { silent = true })

@@ -1,7 +1,7 @@
 -- TODO: replace all keymaps with nest.nvim or something
 local M = {}
-local map = vim.api.nvim_set_keymap
-local bufmap = vim.api.nvim_buf_set_keymap
+local map = vim.keymap.set
+local bufmap = vim.keymap.setl
 
 -- Custom nN repeats
 local custom_n_repeat = nil
@@ -38,7 +38,6 @@ M.register_nN_repeat = register_nN_repeat
 
 -- Helper functions
 local cmd = require("lv-utils").cmd
-local from_fn = cmd.from
 local luacmd = cmd.lua
 local luareq = cmd.require
 local dap_fn = luareq "dap"
@@ -52,16 +51,16 @@ local operatorfunc_keys = require("lv-utils").operatorfunc_keys
 local operatorfuncV_keys = require("lv-utils").operatorfuncV_keys
 local function make_nN_pair(pair)
   return {
-    from_fn(function()
+    function()
       vim.cmd [[normal! m']]
       register_nN_repeat(pair)
       feedkeys(pair[1])
-    end),
-    from_fn(function()
+    end,
+    function()
       vim.cmd [[normal! m']]
       register_nN_repeat(pair)
       feedkeys(pair[2])
-    end),
+    end,
   }
 end
 M.make_nN_pair = make_nN_pair
@@ -79,23 +78,22 @@ function M.libmodal_setup()
       ["<Down>"] = { rhs = cmd "resize +2" },
       ["<Left>"] = { rhs = cmd "vertical resize -2" },
       ["<Right>"] = { rhs = cmd "vertical resize +2" },
-      ["<ESC>"] = { rhs = cmd.from(function()
-        resize_mode:exit()
-      end) },
+      ["<ESC>"] = {
+        rhs = function()
+          resize_mode:exit()
+        end,
+      },
     },
   }
-  map(
-    "n",
-    "<C-w><CR>",
-    cmd.from(function()
-      resize_mode:enter()
-    end),
-    {}
-  )
+  map("n", "<C-w><CR>", function()
+    resize_mode:enter()
+  end)
 end
 
-M.buf = bufmap
-local sile = { silent = true }
+vim.keymap.setl = function(mode, lhs, rhs, opts)
+  vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("keep", opts or {}, { buffer = 0 }))
+end
+local sile = { silent = true, remap = true }
 local nore = { noremap = true, silent = true }
 local norexpr = { noremap = true, silent = true, expr = true }
 local expr = { silent = true, expr = true }
@@ -198,13 +196,13 @@ function M.setup()
   map("n", "<C-o>", "<NOP>", {})
 
   -- custom_n_repeat
-  map("n", "n", luareq("keymappings").n_repeat, nore)
-  map("n", "N", luareq("keymappings").N_repeat, nore)
+  map("n", "n", M.n_repeat, nore)
+  map("n", "N", M.N_repeat, nore)
   local function srchrpt(k, op)
-    return from_fn(function()
+    return function()
       register_nN_repeat { nil, nil }
       feedkeys(k, op or "n")
-    end)
+    end
   end
   map("n", "/", srchrpt "/", nore)
   map("n", "?", srchrpt "?", nore)
@@ -510,7 +508,7 @@ function M.setup()
   -- Toggle comments
   -- map("x", "gt", ":normal gcc<CR>", nore)
   -- map("x", "gt", ":normal :lua require'Comment'.toggle()<C-v><CR><CR>", nore)
-  map("x", "gt", ":g/./lua require'Comment'.toggle()<CR><cmd>nohls<CR>", nore)
+  map("x", "gt", ":g/./lua require('Comment.api').toggle_current_linewise(cfg)<CR><cmd>nohls<CR>", nore)
   map("n", "gt", operatorfunc_keys("toggle_comment", "gt"), sile)
 
   -- Swap the mark jump keys
@@ -558,10 +556,10 @@ function M.setup()
   -- map("n", "gpD", luacmd [[require("lsp.functions").preview_location_at("declaration")]], sile)
   -- map("n", "gpr", luacmd [[require("lsp.functions").preview_location_at("references")]], sile)
   -- map("n", "gpi", luacmd [[require("lsp.functions").preview_location_at("implementation")]], sile)
-  map("n", "gpd", from_fn(require("lsp.functions").view_location_split("definition", "FocusSplitNicely")), sile)
-  map("n", "gpD", from_fn(require("lsp.functions").view_location_split("declaration", "FocusSplitNicely")), sile)
-  map("n", "gpr", from_fn(require("lsp.functions").view_location_split("references", "FocusSplitNicely")), sile)
-  map("n", "gpi", from_fn(require("lsp.functions").view_location_split("implementation", "FocusSplitNicely")), sile)
+  map("n", "gpd", require("lsp.functions").view_location_split("definition", "FocusSplitNicely"), sile)
+  map("n", "gpD", require("lsp.functions").view_location_split("declaration", "FocusSplitNicely"), sile)
+  map("n", "gpr", require("lsp.functions").view_location_split("references", "FocusSplitNicely"), sile)
+  map("n", "gpi", require("lsp.functions").view_location_split("implementation", "FocusSplitNicely"), sile)
   -- Hover
   -- map("n", "K", luacmd "vim.lsp.buf.hover()", sile)
   map("n", "gh", luacmd "vim.lsp.buf.hover()", sile)
@@ -632,11 +630,11 @@ function M.setup()
   map("n", "U", "<C-R>", nore)
 
   -- Go to multi insert from Visual mode
-  map("x", "I", "<M-a>i", {})
-  map("x", "A", "<M-a>a", {})
+  map("x", "I", "<M-a>i", { remap = true })
+  map("x", "A", "<M-a>a", { remap = true })
 
   -- Select all matching regex search
-  -- map("n", "<M-S-/>", "<M-/><M-a>", {})
+  -- map("n", "<M-S-/>", "<M-/><M-a>", {remap=true})
 
   -- Multi select object
   map("n", "<M-v>", operatorfunc_keys("multiselect", "<M-n>"), sile)
@@ -645,14 +643,14 @@ function M.setup()
 
   -- Keymaps for easier access to 'ci' and 'di'
   local function quick_inside(key)
-    map("o", key, "i" .. key, {})
-    map("o", "<M-" .. key .. ">", "a" .. key, {})
-    -- map("n", "<M-" .. key .. ">", "vi" .. key, {})
-    -- map("n", "<C-M-" .. key .. ">", "va" .. key, {})
+    map("o", key, "i" .. key, { remap = true })
+    map("o", "<M-" .. key .. ">", "a" .. key, { remap = true })
+    -- map("n", "<M-" .. key .. ">", "vi" .. key, {remap=true})
+    -- map("n", "<C-M-" .. key .. ">", "va" .. key, {remap=true})
   end
   local function quick_around(key)
-    map("o", key, "a" .. key, {})
-    map("n", "<M-" .. key .. ">", "va" .. key, {})
+    map("o", key, "a" .. key, { remap = true })
+    map("n", "<M-" .. key .. ">", "va" .. key, { remap = true })
   end
   quick_inside "w"
   quick_inside "p"
@@ -675,15 +673,15 @@ function M.setup()
   map("n", "<M-BS>", "x", nore)
 
   -- "better" end and beginning of line
-  map("o", "H", "^", {})
-  map("o", "L", "$", {})
-  map("o", "=", "g_", {})
-  map("x", "H", "^", {})
-  map("x", "L", "$", {})
-  map("x", "=", "g_", {})
+  map("o", "H", "^", { remap = true })
+  map("o", "L", "$", { remap = true })
+  map("o", "=", "g_", { remap = true })
+  map("x", "H", "^", { remap = true })
+  map("x", "L", "$", { remap = true })
+  map("x", "=", "g_", { remap = true })
   map("n", "H", [[col('.') == match(getline('.'),'\S')+1 ? '0' : '^']], norexpr)
-  map("n", "L", "$", {})
-  map("n", "=", "g_", {})
+  map("n", "L", "$", { remap = true })
+  map("n", "=", "g_", { remap = true })
 
   -- map("n", "m-/", "")
 
@@ -715,27 +713,22 @@ function M.setup()
   local ldr_swap_next = "a"
   local ldr_swap_prev = "A"
   -- Leader shortcut for ][ jumping and )( swapping
-  map("n", "<leader>" .. ldr_goto_next, pre_goto_next, {})
-  map("n", "<leader>" .. ldr_goto_prev, pre_goto_prev, {})
-  map("n", "<leader>" .. ldr_swap_next, pre_swap_next, {})
-  map("n", "<leader>" .. ldr_swap_prev, pre_swap_prev, {})
+  map("n", "<leader>" .. ldr_goto_next, pre_goto_next, { remap = true })
+  map("n", "<leader>" .. ldr_goto_prev, pre_goto_prev, { remap = true })
+  map("n", "<leader>" .. ldr_swap_next, pre_swap_next, { remap = true })
+  map("n", "<leader>" .. ldr_swap_prev, pre_swap_prev, { remap = true })
 
-  map("n", "<leader><leader>", "<localleader>", {})
-  map("x", "<leader><leader>", "<localleader>", {})
+  map("n", "<leader><leader>", "<localleader>", { remap = true })
+  map("x", "<leader><leader>", "<localleader>", { remap = true })
 
   -- Open new line with a count
-  map(
-    "n",
-    "o",
-    from_fn(function()
-      local count = vim.v.count
-      feedkeys("o", "n")
-      for _ = 1, count do
-        feedkeys "<CR>"
-      end
-    end),
-    nore
-  )
+  map("n", "o", function()
+    local count = vim.v.count
+    feedkeys("o", "n")
+    for _ = 1, count do
+      feedkeys "<CR>"
+    end
+  end, nore)
 
   local leaderOpts = {
     mode = "n", -- NORMAL mode
@@ -904,19 +897,19 @@ function M.setup()
       },
       s = {
         d = {
-          from_fn(require("lsp.functions").view_location_split("definition", "FocusSplitNicely")),
+          require("lsp.functions").view_location_split("definition", "FocusSplitNicely"),
           "Split Definition",
         },
         D = {
-          from_fn(require("lsp.functions").view_location_split("declaration", "FocusSplitNicely")),
+          require("lsp.functions").view_location_split("declaration", "FocusSplitNicely"),
           "Split Declaration",
         },
         r = {
-          from_fn(require("lsp.functions").view_location_split("references", "FocusSplitNicely")),
+          require("lsp.functions").view_location_split("references", "FocusSplitNicely"),
           "Split References",
         },
         s = {
-          from_fn(require("lsp.functions").view_location_split("implementation", "FocusSplitNicely")),
+          require("lsp.functions").view_location_split("implementation", "FocusSplitNicely"),
           "Split Implementation",
         },
       },
@@ -957,8 +950,8 @@ function M.setup()
       n = { lsputil.rename, "Rename" },
       t = "Rename TS",
       ["*"] = { [["zyiw:%s/<C-R>z//g<Left><Left>]], "Curr word" },
-      ["/"] = { [[:%s/<C-R>+//g<Left><Left>]], "Last search" },
-      ["+"] = { [[:%s/<C-R>///g<Left><Left>]], "Last yank" },
+      ["/"] = { [[:%s/<C-R>///g<Left><Left>]], "Last search" },
+      ["+"] = { [[:%s/<C-R>+//g<Left><Left>]], "Last yank" },
       ["."] = { [[:%s/<C-R>.//g<Left><Left>]], "Last insert" },
       d = { cmd "DogeGenerate", "DogeGen" },
       s = { [[:%s///g<Left><Left><Left>]], "From Search" },

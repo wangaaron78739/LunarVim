@@ -109,17 +109,14 @@ function M.inline_text_input(opts)
   end
 
   vim.opt_local.sidescrolloff = 0
-  local map = vim.api.nvim_buf_set_keymap
-  local to_cmd = require("lv-utils").to_cmd
-  local fin = to_cmd(finish_cb)
-  local cls = to_cmd(close_win)
-  map(buf, "i", "<CR>", fin, {})
-  map(buf, "n", "<CR>", fin, {})
-  map(buf, "i", "<ESC>", "<NOP>", { noremap = true })
-  map(buf, "i", "<ESC><ESC>", "<ESC>", { noremap = true })
-  map(buf, "n", "<ESC>", cls, {})
-  map(buf, "n", "o", "<nop>", { noremap = true })
-  map(buf, "n", "O", "<nop>", { noremap = true })
+  local map = vim.keymap.setl
+  map("i", "<CR>", finish_cb, { buffer = buf })
+  map("n", "<CR>", finish_cb, { buffer = buf })
+  map("i", "<ESC>", "<NOP>", { buffer = buf, noremap = true })
+  map("i", "<ESC><ESC>", "<ESC>", { buffer = buf, noremap = true })
+  map("n", "<ESC>", close_win, { buffer = buf })
+  map("n", "o", "<nop>", { buffer = buf, noremap = true })
+  map("n", "O", "<nop>", { buffer = buf, noremap = true })
   if opts.startup then
     opts.startup()
   end

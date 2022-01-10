@@ -98,6 +98,7 @@ end
 _G.lv_utils_functions = {}
 local to_cmd_counter = 0
 function M.to_cmd(luafunction, args)
+  utils.dump(to_cmd_counter, debug.getinfo(2).source)
   -- TODO: serialize opts if table
   if args == nil then
     args = ""
@@ -173,10 +174,10 @@ function M.operatorfunc_scaffold(name, operatorfunc)
     M.post_operatorfunc(old_func)
   end
 
-  return M.to_cmd(function()
+  return function()
     vim.go.operatorfunc = "v:lua.lv_utils_operatorfuncs." .. name
     feedkeys("g@", "n", false)
-  end)
+  end
 end
 
 -- keys linewise
@@ -342,16 +343,7 @@ M.au = au
 
 -- Meta af keybinding function
 -- TODO: change to keymap.set()
-local map = vim.api.nvim_set_keymap
-local bufmap = vim.api.nvim_buf_set_keymap
 local mapper_meta = nil
-local function mapper_newindex(tbl, lhs, rhs)
-  if tbl[1].buffer then
-    bufmap(tbl[1].buffer, tbl[2], lhs, rhs, tbl[1])
-  else
-    map(tbl[2], lhs, rhs, tbl[1])
-  end
-end
 local function mapper_call(tbl, mode)
   if mode == nil then
     mode = tbl[2]
@@ -375,7 +367,7 @@ local function mapper_index(tbl, flag)
 end
 mapper_meta = {
   __index = mapper_index,
-  __newindex = mapper_newindex,
+  __newindex = vim.keymap.set,
   __call = mapper_call,
 }
 local mapper = setmetatable({ {}, "n" }, mapper_meta)

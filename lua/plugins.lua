@@ -629,7 +629,7 @@ return packer.startup(function(use)
       -- vim.g.copilot_filetypes = { ["*"] = false }
     end,
     config = function()
-      local map = vim.api.nvim_set_keymap
+      local map = vim.keymap.set
       map("i", O.plugin.copilot.key, [[copilot#Accept("")]], { expr = true, silent = true })
     end,
     cmd = "Copilot",

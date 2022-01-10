@@ -6,8 +6,8 @@ local functions = require "lv-telescope.functions"
 -- Global remapping
 ------------------------------
 TelescopeMapArgs = TelescopeMapArgs or {}
-local map_ = vim.api.nvim_set_keymap
-local map_b = vim.api.nvim_buf_set_keymap
+local map_ = vim.keymap.set
+local map_b = vim.keymap.setl
 local map_options = {
   noremap = true,
   silent = true,
@@ -22,7 +22,7 @@ local function map_tele(mode, key, f, options, buffer)
   if not buffer then
     map_(mode, key, rhs, map_options)
   else
-    map_b(0, mode, key, rhs, map_options)
+    map_b(mode, key, rhs, map_options)
   end
 end
 

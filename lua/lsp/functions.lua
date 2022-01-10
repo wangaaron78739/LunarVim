@@ -416,14 +416,13 @@ M.renamer = (function()
       .. old
       .. "', vim.api.nvim_win_get_cursor(0))<cr>"
     local cancel = "<cmd>lua require'lsp.functions'.renamer.cancel_cb('" .. old .. "')<cr>"
-    vim.api.nvim_buf_set_keymap(0, "i", "<CR>", enter, { silent = true })
-    vim.api.nvim_buf_set_keymap(0, "i", "<M-CR>", enter, { silent = true })
-    vim.api.nvim_buf_set_keymap(0, "i", "<ESC><ESC>", cancel, { silent = true })
+    vim.keymap.setl("i", "<CR>", enter, { silent = true })
+    vim.keymap.setl("i", "<M-CR>", enter, { silent = true })
+    vim.keymap.setl("i", "<ESC><ESC>", cancel, { silent = true })
   end
   local function del_keymaps()
-    vim.api.nvim_buf_del_keymap(0, "i", "<CR>")
-    -- vim.api.nvim_buf_del_keymap(0, "i", "<ESC>")
-    vim.api.nvim_buf_del_keymap(0, "i", "<ESC><ESC>")
+    vim.keymap.del("i", "<CR>")
+    vim.keymap.del("i", "<ESC><ESC>")
   end
   return {
     enter_cb = function(old, oldpos)

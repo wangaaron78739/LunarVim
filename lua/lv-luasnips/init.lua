@@ -24,7 +24,7 @@ function M.setup()
     -- parser_nested_assembler = require "lv-luasnips.nested",
   }
 
-  local map = vim.api.nvim_set_keymap
+  local map = vim.keymap.set
   --  "<Plug>luasnip-expand-or-jump"
   -- map("i", "<C-h>", "<Plug>luasnip-expand-snippet", { silent = true })
   -- map("s", "<C-h>", "<Plug>luasnip-expand-snippet", { silent = true })
@@ -38,16 +38,15 @@ function M.setup()
     feedkeys_(termcode(keys, true, true, true), o, false)
   end
   local luasnip = require "luasnip"
-  local cj = utils.cmd.from(function()
+  local cj = function()
     if luasnip.expand_or_jumpable() then
       feedkeys "<Plug>luasnip-jump-next"
     else
       feedkeys "<Plug>(Tabout)"
     end
-  end)
+  end
   map("i", "<C-j>", cj, { silent = true })
   map("s", "<C-j>", cj, { silent = true })
-  map("n", "<C-n>", "i" .. cj, { silent = true })
   map("i", "<C-k>", "<Plug>luasnip-jump-prev", { silent = true })
   map("s", "<C-k>", "<Plug>luasnip-jump-prev", { silent = true })
   map("i", "<C-h>", "<Plug>luasnip-next-choice", { silent = true })

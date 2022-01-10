@@ -4,7 +4,7 @@ local eval_line = "xx"
 local eval_op = "x"
 local eval_cell = "x<cr>"
 
-local bmap = vim.api.nvim_buf_set_keymap
+local bmap = vim.keymap.setl
 
 local feedkeys = vim.api.nvim_feedkeys
 local termcodes = vim.api.nvim_replace_termcodes
@@ -95,8 +95,8 @@ function M.fterm()
     end,
   })
 
-  vim.api.nvim_set_keymap("n", "<M-i>", '<CMD>lua require("FTerm").toggle()<CR>', {})
-  vim.api.nvim_set_keymap("t", "<M-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', {})
+  vim.keymap.set("n", "<M-i>", '<CMD>lua require("FTerm").toggle()<CR>')
+  vim.keymap.set("t", "<M-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
   -- map("t", "<Esc>", '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', nore)
 
   function _G.ftopen(name)
@@ -179,15 +179,15 @@ function M.activate_luadev()
   mappings.vlocalleader {
     r = { "<Plug>(Luadev-Run)", "Luadev Run" },
   }
-  -- bmap(0,"i", "", "<Plug>(Luadev-Complete)", { silent = true })
+  -- bmap("i", "", "<Plug>(Luadev-Complete)", { silent = true })
 end
 
 function M.kitty()
   require("kitty-runner").setup {
     use_keymaps = false, --use keymaps
   }
-  vim.cmd [[ command KittyOpen :lua require("lv-terms").activate_kitty() ]]
-  vim.cmd [[ command KittyOpenLocal :lua require("lv-terms").activate_kitty('<local>') ]]
+  vim.cmd [[ command! KittyOpen :lua require("lv-terms").activate_kitty() ]]
+  vim.cmd [[ command! KittyOpenLocal :lua require("lv-terms").activate_kitty('<local>') ]]
 end
 
 function M.activate_kitty(port)
@@ -207,14 +207,8 @@ function M.activate_kitty(port)
     tt = { "<cmd>KittyRunCommand " .. port .. "<CR>", "Run new" },
     ["t<space>"] = { "<cmd>KittyRunCommandOnce" .. port .. "<CR>", "Run once" },
   }, ops)
-  bmap(0, "x", "<localleader>k", "<cmd>KittySendLines " .. port .. "<CR>", { silent = true, noremap = true })
-  bmap(
-    0,
-    "n",
-    "<localleader>k",
-    utils.operatorfunc_keys("kitty_exec", "<localleader>k"),
-    { silent = true, noremap = true }
-  )
+  bmap("x", "<localleader>k", "<cmd>KittySendLines " .. port .. "<CR>", { silent = true })
+  bmap("n", "<localleader>k", utils.operatorfunc_keys("kitty_exec", "<localleader>k"), { silent = true })
 end
 
 function M.mdeval()
@@ -241,7 +235,7 @@ function M.mdeval_keymaps()
   }
 end
 function M.jupyter_ascending()
-  vim.api.nvim_buf_set_keymap(0, "n", "<localleader>j", "<Plug>JupyterExecute", {})
+  vim.keymap.setl("n", "<localleader>j", "<Plug>JupyterExecute")
   -- mappings.localleader {
   --   ["j"] = { "<Plug>JupyterExecute", "Execute Cell" },
   --   ["J"] = { "<Plug>JupyterExecuteAll", "Execute All" },
@@ -250,14 +244,14 @@ end
 
 function M.keymaps(leaderMappings, vLeaderMappings)
   local cmd = utils.cmd
-  local map = vim.api.nvim_set_keymap
+  local map = vim.keymap.set
   if O.plugin.neoterm then
     vim.cmd [[ command -nargs=+ Tmem :lua require("lv-terms").Tmem("<args>") ]]
 
     vim.g.neoterm_automap_keys = "<leader>x<cr>"
     leaderMappings["x<cr>"] = "Neoterm AutoMap"
 
-    map("n", "<leader>t<space>", ":Tmem ", {})
+    map("n", "<leader>t<space>", ":Tmem ")
     leaderMappings["t<space>"] = "Tmem ..."
     leaderMappings["tt"] = { "<cmd>Tnew<CR>", "T ..." }
     leaderMappings["t<cr>"] = { "<cmd>T k<CR>", "Neoterm rerun" }

@@ -44,7 +44,7 @@ function M.config()
   enum_cyclic_chars "abc"
   enum_cyclic_chars "nmpqr"
 
-  local map = vim.api.nvim_set_keymap
+  local map = vim.keymap.set
   local function dialmap(from, to)
     map("n", from, to, { silent = true })
     map("x", from, to, { silent = true })

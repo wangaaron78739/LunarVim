@@ -40,7 +40,7 @@ function M.keymaps(leaderMappings)
     --   prefix = "<leader>h",
     --   silent = true,
     -- })
-    local map = vim.api.nvim_set_keymap
+    local map = vim.keymap.set
     map(
       "c",
       "<M-h>", -- "<M-CR>",
