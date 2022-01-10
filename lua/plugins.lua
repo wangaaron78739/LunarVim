@@ -76,7 +76,6 @@ return packer.startup(function(use)
 
   -- Utilities
   use { "nvim-lua/plenary.nvim" }
-  use { "tjdevries/astronauta.nvim" }
 
   -- Telescope - search through things
   use {
@@ -139,6 +138,7 @@ return packer.startup(function(use)
   use { "hrsh7th/cmp-calc", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "hrsh7th/cmp-nvim-lua", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "hrsh7th/cmp-cmdline", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
+  use { "hrsh7th/cmp-omni", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "f3fora/cmp-spell", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "petertriho/cmp-git", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
   use { "dmitmel/cmp-cmdline-history", requires = "hrsh7th/nvim-cmp", disable = not O.plugin.cmp }
@@ -468,11 +468,13 @@ return packer.startup(function(use)
     end,
   }
   -- Call tree
+  use { "ldelossa/litee.nvim" }
   use {
-    "ldelossa/calltree.nvim",
+    "ldelossa/litee-calltree.nvim",
     config = function()
       require("lsp.calltree").config()
     end,
+    requires = { "ldelossa/litee.nvim" },
   }
   -- TODO: https://github.com/stevearc/aerial.nvim/
   -- Vista viewer (symbols)
@@ -653,6 +655,15 @@ return packer.startup(function(use)
     end,
     disable = not O.plugin.vimtex,
   }
+  -- use {
+  --   "da-h/AirLatex.vim",
+  --   setup = function()
+  --     vim.g.AirLatexUsername = "cookies"
+  --   end,
+  --   run = ":UpdateRemotePlugins",
+  --   ft = "tex",
+  --   cmd = "AirLatex",
+  -- }
 
   -- Rust tools
   use {
@@ -755,6 +766,15 @@ return packer.startup(function(use)
       }
     end,
     cmd = "CodeActionMenu",
+  }
+
+  -- LSP Virtual Lines
+  use {
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").register_lsp_virtual_lines()
+    end,
+    disable = not O.plugin.lsp_lines,
   }
 
   -- See jumpable characters
@@ -995,8 +1015,8 @@ return packer.startup(function(use)
   use {
     "David-Kunz/treesitter-unit",
     config = function()
-      vim.api.nvim_set_keymap("v", "x", '<cmd>lua require"treesitter-unit".select()<CR>', { noremap = true })
-      vim.api.nvim_set_keymap("o", "x", '<cmd><c-u>lua require"treesitter-unit".select()<CR>', { noremap = true })
+      vim.keymap.set("v", "x", '<cmd>lua require"treesitter-unit".select()<CR>')
+      vim.keymap.set("o", "x", '<cmd><c-u>lua require"treesitter-unit".select()<CR>')
     end,
     disable = not O.plugin.ts_textunits,
   }
@@ -1008,8 +1028,6 @@ return packer.startup(function(use)
         vim.list_extend(labels, { c })
       end)
       require("tsht").config.hint_keys = labels -- Requires https://github.com/mfussenegger/nvim-ts-hint-textobject/pull/2
-
-      -- mappings.sile("o", "m", [[:<C-U>lua require('tsht').nodes()<CR>]])
     end,
     module = "tsht",
     disable = not O.plugin.ts_hintobjects,

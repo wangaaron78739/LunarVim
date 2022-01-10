@@ -1,20 +1,21 @@
 local M = {}
 function M.config()
-  require("calltree").setup {
+  require("litee.lib").setup {}
+  require("litee.calltree").setup {
     layout = "right",
     icons = "nerd",
   }
 
   utils.define_augroups {
     _calltree_callview = {
-      { "FileType", "Calltree", "lua require'lsp.calltree'.keymaps()" },
+      { "FileType", "Calltree", "lua require'lsp.calltree'.ftplugin()" },
     },
   }
 end
 
 local down = "▼"
 local right = "▶"
-function M.keymaps()
+function M.ftplugin()
   local map = vim.api.nvim_buf_set_keymap
   local opts = { silent = true, noremap = true }
   map(0, "n", "<CR>", "<cmd>CTJump<CR>", opts)

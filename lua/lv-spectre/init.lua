@@ -57,6 +57,11 @@ local maps = {
     desc = "update change when vim write file.",
   },
   -- you can put your mapping here it only use normal mode
+  ["refresh"] = {
+    map = prefix .. "R",
+    cmd = "mzggjjA<ESC>'z",
+    desc = "refresh the results",
+  },
 }
 function M.setup()
   -- ft = spectre_panel

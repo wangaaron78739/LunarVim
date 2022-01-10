@@ -66,6 +66,13 @@ function M.setup()
       requires = "std::sync::mpsc",
       scope = "expr",
     },
+    ["from"] = {
+      postfix = "from",
+      body = {
+        "${0:From}::from(${receiver})",
+      },
+      scope = "expr",
+    },
   }
   local opts = {
     tools = { -- rust-tools options

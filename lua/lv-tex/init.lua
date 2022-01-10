@@ -1007,6 +1007,7 @@ function M.ftplugin()
     {
       { name = "buffer" },
       { name = "spell" },
+      { name = "omni" },
     },
   }
 
@@ -1046,6 +1047,7 @@ function M.ftplugin()
     l = { cmd "TexlabBuild", "Texlab Build" },
     n = { cmd.require("nabla").action, "Nabla" },
     m = { cmd "VimtexToggleMain", "Toggle Main File" },
+    a = { cmd "AirLatex", "Air Latex" },
   }
 
   -- require("lv-utils").define_augroups { _vimtex_event = {

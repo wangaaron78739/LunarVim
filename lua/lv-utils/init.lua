@@ -341,6 +341,7 @@ au = setmetatable({}, {
 M.au = au
 
 -- Meta af keybinding function
+-- TODO: change to keymap.set()
 local map = vim.api.nvim_set_keymap
 local bufmap = vim.api.nvim_buf_set_keymap
 local mapper_meta = nil

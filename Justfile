@@ -16,6 +16,7 @@ venv-install:
     python3.9 -m venv ~/.config/nvim/.venv
     ~/.config/nvim/.venv/bin/python3.9 -m pip install pynvim 
     ~/.config/nvim/.venv/bin/python3.9 -m pip install cairosvg pnglatex jupyter_client ipython pillow plotly kaleido
+    ~/.config/nvim/.venv/bin/python3.9 -m pip install keyring tornado requests
 
 ext-install:
     cargo install stylua 

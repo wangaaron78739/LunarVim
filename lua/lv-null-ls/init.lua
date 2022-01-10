@@ -3,8 +3,6 @@ local M = {}
 local null = require "null-ls"
 
 function M.config()
-  local gcc_diagnostics = require "lv-null-ls.gcc"
-
   local diagnostics_format = "[#{c}] #{m} (#{s})"
 
   local formatters = null.builtins.formatting
@@ -13,12 +11,10 @@ function M.config()
   local hover = null.builtins.hover
   local compl = null.builtins.completion
 
-  null.config {
+  null.setup {
     -- debug = true,
     diagnostics_format = diagnostics_format,
     sources = {
-      gcc_diagnostics, -- Move to builtin when PR is accepted
-
       -- Formatters
       formatters.stylua,
       formatters.prettierd,
@@ -52,6 +48,7 @@ function M.config()
       -- -- diagnostics.misspell,
       diagnostics.markdownlint,
       diagnostics.yamllint,
+      -- diagnostics.gccdiag,
 
       -- Code Actions
       -- code_actions.gitsigns, -- TODO: reenable when I can lower the priority
@@ -63,12 +60,11 @@ function M.config()
 
       -- Hover Info
       hover.dictionary.with {
-        generator = {},
         filetypes = { "txt", "markdown", "tex" },
       },
     },
   }
-  require("lspconfig")["null-ls"].setup {}
+  -- require("lspconfig")["null-ls"].setup {}
 end
 
 return M

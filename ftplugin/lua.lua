@@ -10,7 +10,7 @@ require("lsp.config").lspconfig "sumneko_lua" {
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
-        globals = { "vim", "O", "utils", "mappings", "DATA_PATH", "CONFIG_PATH" },
+        globals = { "vim", "O", "utils", "mappings", "DATA_PATH", "CONFIG_PATH", "require" },
       },
       workspace = {
         -- Make the server aware of Neovim runtime files

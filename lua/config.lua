@@ -61,6 +61,7 @@ O = {
     rename_border = "none",
     diagnostics = {
       virtual_text = { spacing = 4, prefix = "", severity_limit = "Warning" },
+      -- virtual_text = false,
       signs = true,
       underline = true,
       severity_sort = true,
