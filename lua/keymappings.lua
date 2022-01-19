@@ -1,7 +1,6 @@
 -- TODO: replace all keymaps with nest.nvim or something
 local M = {}
 local map = vim.keymap.set
-local bufmap = vim.keymap.setl
 
 -- Custom nN repeats
 local custom_n_repeat = nil
@@ -570,11 +569,11 @@ function M.setup()
   map("v", "K", do_code_action, {})
 
   -- Formatting keymaps
-  map("n", "gm", luacmd [[require("lsp.functions").format_range_operator()]], sile)
-  -- map("n", "=", luacmd [[require("lsp.functions").format_range_operator()]], sile)
-  map("x", "gm", luacmd "vim.lsp.buf.range_formatting()", sile)
-  -- map("x", "=", luacmd "vim.lsp.buf.range_formatting()", sile)
+  map("n", "gq", luacmd [[require("lsp.functions").format_range_operator()]], sile)
+  map("x", "gq", luacmd "vim.lsp.buf.range_formatting()", sile)
   map("n", "gf", luacmd "vim.lsp.buf.formatting()", sile)
+  -- map("n", "=", luacmd [[require("lsp.functions").format_range_operator()]], sile)
+  -- map("x", "=", luacmd "vim.lsp.buf.range_formatting()", sile)
   -- map("n", "==", luacmd "vim.lsp.buf.formatting()", sile)
 
   -- TODO: Use more standard regex syntax
@@ -675,13 +674,10 @@ function M.setup()
   -- "better" end and beginning of line
   map("o", "H", "^", { remap = true })
   map("o", "L", "$", { remap = true })
-  map("o", "=", "g_", { remap = true })
   map("x", "H", "^", { remap = true })
-  map("x", "L", "$", { remap = true })
-  map("x", "=", "g_", { remap = true })
+  map("x", "L", "g_", { remap = true })
   map("n", "H", [[col('.') == match(getline('.'),'\S')+1 ? '0' : '^']], norexpr)
   map("n", "L", "$", { remap = true })
-  map("n", "=", "g_", { remap = true })
 
   -- map("n", "m-/", "")
 
@@ -769,6 +765,8 @@ function M.setup()
     x = "Execute/Send",
     w = { cmd "w", "Write" }, -- w = { cmd "up", "Write" },
     W = { cmd "noau w", "Write (noau)" }, -- w = { cmd "noau up", "Write" },
+    q = { "<C-W>q", "Quit" },
+    Q = { "<C-W>q", "Quit" },
     o = {
       name = "Toggle window",
       -- s = { focus_fn.split_nicely, "Nice split" },

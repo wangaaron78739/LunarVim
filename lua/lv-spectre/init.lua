@@ -72,7 +72,6 @@ function M.setup()
       -- rg is map with finder_cmd
       ["rg"] = {
         cmd = "rg",
-        live_update = true,
         -- default args
         args = {
           "--color=never",
@@ -104,6 +103,7 @@ function M.setup()
       },
     },
     mapping = maps,
+    live_update = true,
   }
 end
 return M

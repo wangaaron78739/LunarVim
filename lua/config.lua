@@ -126,7 +126,7 @@ O = {
       ["comment"] = { "/", "?" },
     },
     other_suffixes = {
-      ["scope"] = { "s", "S" },
+      ["scope"] = { "S", "s" },
       ["element"] = { "e", "E" },
       ["subject"] = { "z", "Z" },
     },

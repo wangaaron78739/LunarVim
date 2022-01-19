@@ -88,6 +88,16 @@ function M.setup()
     return sn(nil, i(1, os.date(fmt)))
   end
 
+  local function selected_text(opts)
+    return f(function(_, snip)
+      return snip.env.TM_SELECTED_TEXT or ""
+    end, vim.tbl_extend(
+      "force",
+      {},
+      opts or {}
+    ))
+  end
+
   ls.snippets = {
     all = {
       s("date", { d(1, date_input, {}, "%A, %B %d of %Y") }),
@@ -102,9 +112,7 @@ function M.setup()
       }),
       s("link_url", {
         t '<a href="',
-        f(function(_, snip)
-          return snip.env.TM_SELECTED_TEXT[1] or ""
-        end, {}),
+        selected_text(),
         t '">',
         i(1),
         t "</a>",
@@ -115,9 +123,20 @@ function M.setup()
         t "(",
         i(2),
         t { ")", "" },
-        f(function(_, snip)
-          return snip.env.TM_SELECTED_TEXT or ""
-        end, {}),
+        selected_text(),
+        -- t { "", "" },
+        i(0),
+        t { "", "end" },
+        -- mi(1),
+        -- t "(",
+        -- mi(2),
+        -- t { ")", "" },
+      }),
+      s("function", {
+        t "if ",
+        i(1),
+        t { "then", "" },
+        selected_text(),
         -- t { "", "" },
         i(0),
         t { "", "end" },
@@ -132,9 +151,7 @@ function M.setup()
         t "(",
         i(2),
         t { ")", "return" },
-        f(function(_, snip)
-          return snip.env.TM_SELECTED_TEXT or ""
-        end, {}),
+        selected_text(),
         -- t { "", "" },
         i(0),
         t { "", "end)()" },
