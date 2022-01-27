@@ -8,7 +8,7 @@ command! LightMelya colorscheme light_melya
 command! Nebulous lua require'theme'.nebulous()
 command! Material lua require'theme'.material()
 command! Rdark lua require('colorbuddy').colorscheme('nvim-rdark')
-command! DarkCatppuccino colorscheme catppuccin
+command! Catppuccin colorscheme catppuccin
 command! Acme colorscheme acme
 command! Pencil colorscheme pencil
 command! Paper colorscheme paper

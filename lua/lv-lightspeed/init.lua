@@ -2,9 +2,7 @@ local M = {}
 
 function M.config()
   require("lightspeed").setup {
-    jump_on_partial_input_safety_timeout = 400,
-    highlight_unique_chars = true,
-    grey_out_search_area = true,
+    jump_to_unique_chars = { safety_timeout = 400 },
     match_only_the_start_of_same_char_seqs = true,
     limit_ft_matches = 5,
     -- full_inclusive_prefix_key = "<c-x>", -- TODO: use <Plug>Lightspeed_X
@@ -14,7 +12,7 @@ function M.config()
     cycle_group_fwd_key = nil,
     cycle_group_bwd_key = nil,
   }
-  vim.keymap.del({ "o", "x" }, ",")
+  -- vim.keymap.del({ "o", "x" }, ",")
 end
 
 function M.au_unconceal(level)

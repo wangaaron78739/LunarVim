@@ -1297,49 +1297,50 @@ return packer.startup(function(use)
   -- Colorschemes -- https://github.com/folke/lsp-colors.nvim
   use { "Yagua/nebulous.nvim" }
   -- use { "christianchiarulli/nvcode-color-schemes.vim", opt = true }
-  -- use {
-  --   "catppuccin/nvim",
-  --   config = function()
-  --     local trues = utils.else_true {
-  --       native_lsp = {
-  --         enabled = true,
-  --         virtual_text = {
-  --           errors = "italic",
-  --           hints = "italic",
-  --           warnings = "italic",
-  --           information = "italic",
-  --         },
-  --         underlines = {
-  --           errors = "underline",
-  --           hints = "underline",
-  --           warnings = "underline",
-  --           information = "underline",
-  --         },
-  --       },
-  --       nvimtree = {
-  --         enabled = true,
-  --         show_root = true,
-  --       },
-  --       which_key = true,
-  --       indent_blankline = {
-  --         enabled = true,
-  --         colored_indent_levels = true,
-  --       },
-  --     }
-  --     require("catppuccin").setup {
-  --       colorscheme = "dark_catppuccino", -- neon_latte
-  --       term_colors = true,
-  --       styles = {
-  --         comments = "italic",
-  --         functions = "NONE",
-  --         keywords = "italic",
-  --         strings = "NONE",
-  --         variables = "NONE",
-  --       },
-  --       integrations = trues,
-  --     }
-  --   end,
-  -- }
+  use {
+    "catppuccin/nvim",
+    as = "catppuccin",
+    config = function()
+      local trues = utils.else_true {
+        native_lsp = {
+          enabled = true,
+          virtual_text = {
+            errors = "italic",
+            hints = "italic",
+            warnings = "italic",
+            information = "italic",
+          },
+          underlines = {
+            errors = "underline",
+            hints = "underline",
+            warnings = "underline",
+            information = "underline",
+          },
+        },
+        nvimtree = {
+          enabled = true,
+          show_root = true,
+        },
+        which_key = true,
+        indent_blankline = {
+          enabled = true,
+          colored_indent_levels = true,
+        },
+      }
+      require("catppuccin").setup {
+        -- colorscheme = "dark_catppuccino", -- neon_latte
+        term_colors = true,
+        styles = {
+          comments = "italic",
+          functions = "NONE",
+          keywords = "italic",
+          strings = "NONE",
+          variables = "NONE",
+        },
+        integrations = trues,
+      }
+    end,
+  }
   -- use "mcchrish/zenbones.nvim"
   -- use "plan9-for-vimspace/acme-colors"
   -- use "preservim/vim-colors-pencil"
