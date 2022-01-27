@@ -36,7 +36,7 @@ M.echo_diagnostic = function()
       return
     end
 
-    local ldiags = diags.get_line_diagnostics(bufnr, line, { severity_limit = "Warning" })
+    local ldiags = diags.get(bufnr, line, { severity_limit = "Warning" })
 
     if #ldiags == 0 then
       -- If we previously echo'd a message, clear it out by echoing an empty
@@ -90,7 +90,7 @@ M.echo_diagnostic = function()
   end, echo_timeout)
 end
 M.simple_echo_diagnostic = function()
-  local line_diagnostics = diags.get_line_diagnostics()
+  local line_diagnostics = diags.get()
   if vim.tbl_isempty(line_diagnostics) then
     cmd [[echo ""]]
     return
@@ -238,10 +238,10 @@ local popup_diagnostics_opts = {
   border = O.lsp.border,
 }
 M.diag_line = function()
-  diags.show_line_diagnostics(popup_diagnostics_opts)
+  diags.open_float(popup_diagnostics_opts)
 end
 M.diag_cursor = function()
-  diags.show_cursor_diagnostics(popup_diagnostics_opts)
+  diags.open_float(popup_diagnostics_opts)
 end
 M.diag_next = function()
   diags.goto_next { popup_opts = popup_diagnostics_opts }

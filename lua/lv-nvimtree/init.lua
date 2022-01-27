@@ -18,7 +18,7 @@ M.config = function()
   g.nvim_tree_git_hl = 1
   g.nvim_tree_root_folder_modifier = ":t"
   g.nvim_tree_tab_open = 0
-  g.nvim_tree_allow_resize = 1
+  g.nvim_tree_allow_resize = 0
   g.nvim_tree_lsp_diagnostics = 1
   g.nvim_tree_auto_ignore_ft = { "startify", "dashboard" }
   g.nvim_tree_disable_window_picker = 1
@@ -88,11 +88,7 @@ M.config = function()
   --     ["-"] = tree_cb("dir_up"),
   --     ["q"] = tree_cb("close")
   -- }
-  vim.g.nvim_tree_bindings = {
-    { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
-    { key = "h", cb = tree_cb "close_node" },
-    { key = "v", cb = tree_cb "vsplit" },
-  }
+
   -- require"lv-utils".define_augroups {
   --     _nvimtree_statusline = {
   --         {
