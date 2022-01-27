@@ -1,0 +1,225 @@
+                                                                    packer.nvim - finished in 16.335s
+ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ - Removed /home/amedhi/.local/share/nvim/site/pack/packer/start/wilder.nvim
+ ✓ Installed hrsh7th/cmp-cmdline
+ ✓ Updated liuchengxu/vista.vim: f49ca3d..587b6b2
+  Commits:
+    587b6b2 Option for hiding text kind when icons enabled (#408) (#412) (30 hours ago)
+
+ ✓ Updated mcchrish/zenbones.nvim: cc4abbb..4f8dbb1
+  Commits:
+    4f8dbb1 auto generate docs (6 hours ago)
+    4d1aec1 doc: cleanup config table (7 hours ago)
+    58d0057 auto generate docs (7 hours ago)
+    c523255 convert config doc to table (7 hours ago)
+    e9db8a7 cleanup readme (7 hours ago)
+    0c0e819 auto generate docs (7 hours ago)
+    d54a4fd simplify title (7 hours ago)
+    34b93f9 auto generate docs (7 hours ago)
+    057759a fix doc typo (7 hours ago)
+    6fc50cc auto generate docs (7 hours ago)
+    cc2cf64 improve readme (7 hours ago)
+    681bcff allow dictionary global config (8 hours ago)
+    b51ca3f cleaner global config resolver (30 hours ago)
+    cc76bd2 rebuild (30 hours ago)
+    8754941 auto generate docs (31 hours ago)
+    2bf8d8f higher NonText default constrast (31 hours ago)
+    32a3bec auto generate docs (31 hours ago)
+    c998dcb configurable LineNr contrast (31 hours ago)
+    6c23807 breaking: renamed {zenbones/zenflesh}_{darken/lighten}_line_nr to solid_line_nr (31 hours ago)
+    3fc8d32 configurable NonText contrast (32 hours ago)
+    7b85e53 readme: mention nnn.vim (2 days ago)
+    bb9e2d5 slightly adjust sidebar bg (2 days ago)
+    e89caf1 support nnn.vim (2 days ago)
+    36964cd link StatusLineTerm for vim compat (2 days ago)
+
+ ✓ Updated ellisonleao/glow.nvim: ae61bac..62813b5
+  Commits:
+    62813b5 fix: respect g:glow_binary_path (#45) (2 days ago)
+
+ ✓ Updated lervag/vimtex: 60bec44..c49a93b
+  Commits:
+    c49a93b chore: move compiler check_timer to compiler class (9 hours ago)
+    ea86b7a chore: use more robust job_stop wait timer (9 hours ago)
+    99b60e5 chore: reduce vim.job_stop wait time (9 hours ago)
+    4d82eb1 chore: simplify latexmk requirements (10 hours ago)
+    75b75f4 fix: highlight subsec labels in ToC (20 hours ago)
+    a79c09d fix: avoid check_running timer race condition (23 hours ago)
+    e429bb6 test: adjust fold text test for Vim (2 days ago)
+    7b9743e feat: ignore 'shell' with neovim compiler jobstart (2 days ago)
+    3bc4ee9 fix: minor adjustment to os info (2 days ago)
+    3bbd6ea fix: minor regression (2 days ago)
+
+ ✓ Updated simrat39/rust-tools.nvim: 04e471c..4546152
+  Commits:
+    4546152 fix(code_action_groups): Redraw after setting up the second window (2 days ago)
+
+ ✓ Updated jose-elias-alvarez/nvim-lsp-ts-utils: ab8d54f..9dd9891
+  Commits:
+    9dd9891 doc: clarify import all priorities (22 hours ago)
+
+ ✓ Updated p00f/nvim-ts-rainbow: 3e6597b..2943a62
+  Commits:
+    2943a62 [fennel] Add `let_clause` level (32 hours ago)
+
+ ✓ Updated ray-x/lsp_signature.nvim: 8f6b15d..6469c55
+  Commits:
+    6469c55 bugfix #121 sumneko_lua (2 days ago)
+
+ ✓ Updated saecki/crates.nvim/main: 0ea2b90..43af683
+  Commits:
+    43af683 Revert "don't try to automatically add nvim-cmp source" (2 days ago)
+    805a2c5 fix indentation of config (2 days ago)
+
+ ✓ Updated michaelb/sniprun: a42fa2f..8ec3478
+  Commits:
+    8ec3478 Merge pull request #106 from michaelb/dev (20 hours ago)
+    57bb376 update changelog (20 hours ago)
+    db4b6cc Merge branch 'master' into dev (20 hours ago)
+    fad717e version bump (20 hours ago)
+    65affad fix setup without args (2 days ago)
+    a7abea8 Merge branch 'dev' of github.com:michaelb/sniprun into dev (2 days ago)
+    2fa3802 Merge branch 'master' into dev (2 days ago)
+
+ ✓ Updated tpope/vim-fugitive: 3093340..174fd6a
+  Commits:
+    174fd6a Revert "Use :redrawstatus rather than &ro = &ro" (9 hours ago)
+    6ad1550 Use :redrawstatus rather than &ro = &ro (27 hours ago)
+
+ ✓ Updated jbyuki/instant.nvim: a5c0756..c02d722
+  Commits:
+    c02d722 add contribution section in readme (20 hours ago)
+
+ ✓ Updated rcarriga/nvim-notify: 8b2ef65..f565864
+  Commits:
+    f565864 feat: global on_open (2 days ago)
+
+ ✓ Updated nvim-lua/plenary.nvim: b8c8d23..ef54bc2
+  Commits:
+    ef54bc2 feat: separate highlight option for title of `Border`s (#260) (26 hours ago)
+
+ ✓ Updated nvim-telescope/telescope.nvim: 782d802..5809321
+  Commits:
+    5809321 feat: separate higlight for titles in picker windows (#1362) (26 hours ago)
+
+ ✓ Updated nvim-treesitter/nvim-treesitter: 0bbc6e3..fe4e4aa
+  Commits:
+    fe4e4aa yaml: improve highlights and locals (#946) (13 hours ago)
+
+ ✓ Updated hrsh7th/nvim-cmp: 5f5e844..881ca57
+  Commits:
+    881ca57 Re-support script mapping (51 minutes ago)
+    455817b Update README.md (12 hours ago)
+    a589163 fmt (13 hours ago)
+    cae2e8f RFC: cmdline completion (#362) (13 hours ago)
+    b5899f0 Fix #414 (26 hours ago)
+    32e22e6 fix an error when calling cmp#unregister_source from Vimscript (#413) (29 hours ago)
+    538bfac Update issue templates (29 hours ago)
+    ea6dde8 Add tests for #226 (2 days ago)
+    880137f Fix #226 (2 days ago)
+    f1da3ad Add `cmp.config.disable` for opt-out default setting (2 days ago)
+
+ ✓ Updated onsails/lspkind-nvim: 0f78517..1557ce5
+  Commits:
+    1557ce5 Merge pull request #26 from stevearc/global-config (2 days ago)
+    835e5c4 Store configuration globally after call to init() (3 days ago)
+
+ ✓ Updated hrsh7th/cmp-path: 387b740..97661b0
+  Commits:
+    97661b0 Merge pull request #12 from dmitmel/main (8 hours ago)
+    a77761a Fix #11 (3 days ago)
+
+ ✓ Updated L3MON4D3/LuaSnip: 3dc04d3..383a932
+  Commits:
+    383a932 Format with stylua (3 hours ago)
+    e1a0dc4 fix(snippet): don't generate multiple default-functions. (4 hours ago)
+    b0f49c9 Auto generate docs (4 hours ago)
+    1c5c7fb Merge pull request #211 from jedrzejboczar/show-condition (4 hours ago)
+    f5dc654 feat(snippet): optional show_condition to filter completion candidates (5 hours ago)
+
+ ✓ Updated rafamadriz/friendly-snippets: 59507a9..fcd2ab1
+  Commits:
+    fcd2ab1 update README (3 hours ago)
+    5fcd836 Merge pull request #92 from ranjithshegde/addGlsl (3 hours ago)
+    bdb4065 Merge pull request #90 from LuisxSullivaN/fix/react-ts (3 hours ago)
+    02169ab Add snippets for glsl Snippets collected from Lewis lepton's gist: https://gist.github.com/lewislepton/8b17f56baa7f1790a70284e7520f9623 (6 hours ago)
+    c8e91e8 fix: remove React.FC<{}> (13 days ago)
+
+ ✓ Updated windwp/nvim-autopairs: 3b1b990..dffcd00
+  Commits:
+    dffcd00 spec: document field `only` (35 hours ago)
+    6842738 chore: change name to compare (2 days ago)
+    4f7d7fc fix html rule (2 days ago)
+    fdeb794 fix bug with toggleterm (2 days ago)
+
+ ✓ Updated kyazdani42/nvim-tree.lua: fd3969e..c4ecf44
+  Commits:
+    c4ecf44 docs: fix typo (#746) (2 days ago)
+
+ ✓ Updated nvim-lualine/lualine.nvim: ef063f7..0b0233f
+  Commits:
+    0b0233f feat: add symbols option to fileformat  (#401) (20 hours ago)
+    8d8c538 fixup: fix update_in_insert caching colors in diagnostics (32 hours ago)
+    61cd6e6 feat: add fern extension (#398) (2 days ago)
+
+ ✓ Updated jose-elias-alvarez/null-ls.nvim: 4a7ac16..4af6e98
+  Commits:
+    4af6e98 fix(builtins): fall back to default factory function (2 hours ago)
+    62b2708 Merge pull request #251 from jose-elias-alvarez/deep-copy-builtins (2 hours ago)
+    05c9a78 refactor!: remove deprecated setup method (16 hours ago)
+    c6ec1d0 Merge pull request #275 from aoswalt/less-eager-credo (2 days ago)
+    e8b3877 fix(builtins): Make finding credo cwd smarter (2 days ago)
+    895667f Merge pull request #276 from jvcarli/feat-add-codespell-formatting (2 days ago)
+    b253eb1 Merge pull request #278 from numToStr/main (2 days ago)
+    da3f409 docs: update BUILTINS (4 days ago)
+    4762c67 feat: add `zig fmt` (4 days ago)
+    fc70f5b feat(builtins): add codespell formatting (5 days ago)
+    0ce5b07 feat(builtins): create copies from with() method (2 weeks ago)
+
+ ✓ Updated ggandor/lightspeed.nvim: 0a40c82..e0df8d5
+  Commits:
+    e0df8d5 docs(readme): extended intro essay (2 hours ago)
+    6e66d1a fix(highlight-unique-chars): skipping folds (5 hours ago)
+    ea40b2a refactor: tweak `get-horizontal-bounds` (6 hours ago)
+
+ ✓ Updated https://github.com/williamboman/nvim-lsp-installer: 18ee7fa..361f2d5
+  Commits:
+    361f2d5 add -NoProfile to powershell invocations (#202) (3 hours ago)
+    b3a3b3d fix jdtls config path on windows (#200) (20 hours ago)
+    86516d4 README: add badges and update gif (30 hours ago)
+    5a05267 ui: register autocmds in an augroup (#198) (32 hours ago)
+    c7ef12d add synchronous variants of commands for better headless interop (#189) (33 hours ago)
+    a5063dd mac's not fun (2 days ago)
+    f60d78a add proper emmylua annotations (#196) (2 days ago)
+
+ ✓ Updated weilbith/nvim-code-action-menu: 977abc8..dd91a1d
+  Commits:
+    dd91a1d add configuration to disable parts of the UI (28 hours ago)
+    27ff26e fix typo in README (28 hours ago)
+
+ ✓ Updated lukas-reineke/indent-blankline.nvim: ec24675..252797e
+  Commits:
+    252797e Merge pull request #291 from lukas-reineke/develop (14 hours ago)
+    4949a6a Version 2.9.2 (14 hours ago)
+    7e7e888 bug: stringfy refresh args (14 hours ago)
+    0967506 Merge pull request #288 from lukas-reineke/master (27 hours ago)
+    e5264b1 Merge pull request #287 from lukas-reineke/develop (27 hours ago)
+    320f622 Version 2.9.1 (27 hours ago)
+    1b554c6 bug: fix horizontal scroll update (27 hours ago)
+    5a6b8e5 refactor: make `get_from_list` return a default (3 days ago)
+    5d113dc Merge pull request #280 from lukas-reineke/master (3 days ago)
+
+ ✓ Updated Pocco81/DAPInstall.nvim: e308333..b95e9ad
+  Commits:
+    b95e9ad Merge pull request #44 from 616b2f/patch-1 (5 hours ago)
+    a11bbef Update dnetcs.lua (7 hours ago)
+
+ ✓ Updated tjdevries/colorbuddy.vim: 87c80e3..e231f7e
+  Commits:
+    e231f7e hmm these seem long overdue (2 days ago)
+
+
+ Press 'q' to quit
+ Press '<CR>' to show more info
+ Press 'd' to show the diff
+ Press 'r' to revert an update

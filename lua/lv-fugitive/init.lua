@@ -1,19 +1,20 @@
 local M = {}
 
-M.setup = function() end
+function M.setup() end
 
-M.ftplugin = function()
+function M.ftplugin()
+  mappings.buf(0, "n", "p", "<cmd>Git push<CR>", { noremap = true })
   mappings.localleader {
     s = { "s", "Stage" },
     u = { "u", "Unstage" },
     ["-"] = { "-", "Toggle Stage" },
     U = { "U", "Unstage all" },
     X = { "X", "Discard" },
+    [","] = { "=", "Toggle diff" },
     ["="] = { "=", "Toggle diff" },
     [">"] = { ">", "Show diff" },
     ["<"] = { "<", "Hide diff" },
-    gI = { "1gI", "Add to ignore" },
-    I = { "I", "Add Patch" },
+    -- I = { "I", "Add Patch" },
     d = { name = "Diffs" },
     dd = { "dd", "Gdiffsplit" },
     dv = { "dv", "Gvdiffsplit" },
@@ -23,13 +24,15 @@ M.ftplugin = function()
     o = { "gO", "Open vsplit" },
     gO = { "o", "Open split" },
     O = { "O", "Open tab" },
-    p = { "1p", "Open preview" },
+    P = { "1p", "Open preview" },
+    p = { "<cmd>Git push<cr>", "Push" },
     C = { "C", "Open commit" },
     ["("] = { "(", "Jump prev" },
     [")"] = { ")", "Jump next" },
     i = { "i", "Next file (expand)" },
     ["*"] = { "*", "Find +/-" },
-    gi = { "1gi", "Open .gitignore" },
+    I = { "1gi", "Open .gitignore" },
+    gI = { "1gI", "Add to ignore" },
     c = { name = "Commits" },
     cc = { "cvc", "Create commit" },
     ca = { "cva", "Amend" },
@@ -76,6 +79,7 @@ M.ftplugin = function()
     rm = { "rm", "commit: edit" },
     rd = { "rd", "commit: drop" },
     ["r<Space>"] = { "r<Space>", ":Git rebase ... " },
+    q = { "gq", "Close status" },
   }
   mappings.whichkey({
     ["[g"] = { "[c", "Prev hunk" },
@@ -83,6 +87,7 @@ M.ftplugin = function()
     ["[m"] = { "[m", "Prev file" },
     ["]m"] = { "]m", "Next file" },
     gq = { "gq", "Close status" },
+    ["<ESC>"] = { "gq", "Close status" },
   }, {
     buffer = 0,
   })

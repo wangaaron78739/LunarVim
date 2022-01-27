@@ -27,7 +27,7 @@ local maps = {
     desc = "show option",
   },
   ["run_replace"] = {
-    map = prefix .. "r",
+    map = prefix .. prefix,
     cmd = "<cmd>lua require('spectre.actions').run_replace()<CR>",
     desc = "replace all",
   },
@@ -41,14 +41,29 @@ local maps = {
     cmd = "<cmd>lua require('spectre').change_options('ignore-case')<CR>",
     desc = "toggle ignore case",
   },
+  ["toggle_multiline"] = {
+    map = prefix .. "m",
+    cmd = "<cmd>lua require('spectre').change_options('multiline')<CR>",
+    desc = "toggle search hidden",
+  },
   ["toggle_ignore_hidden"] = {
     map = prefix .. "h",
     cmd = "<cmd>lua require('spectre').change_options('hidden')<CR>",
     desc = "toggle search hidden",
   },
+  ["toggle_live_update"] = {
+    map = prefix .. "u",
+    cmd = "<cmd>lua require('spectre').toggle_live_update()<CR>",
+    desc = "update change when vim write file.",
+  },
   -- you can put your mapping here it only use normal mode
+  ["refresh"] = {
+    map = prefix .. "R",
+    cmd = "mzggjjA<ESC>'z",
+    desc = "refresh the results",
+  },
 }
-M.setup = function()
+function M.setup()
   -- ft = spectre_panel
   -- TODO: register which-key
 
@@ -77,12 +92,18 @@ M.setup = function()
             desc = "hidden file",
             icon = "[H]",
           },
+          ["multiline"] = {
+            value = "--multiline",
+            desc = "multiline search",
+            icon = "[M]",
+          },
           -- you can put any option you want here it can toggle with
           -- show_option function
         },
       },
     },
     mapping = maps,
+    live_update = true,
   }
 end
 return M

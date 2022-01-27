@@ -2,16 +2,17 @@ local M = {}
 
 local null = require "null-ls"
 
-local gcc_diagnostics = require "lv-null-ls.gcc"
-
-function M.setup()
+function M.config()
   local diagnostics_format = "[#{c}] #{m} (#{s})"
 
   local formatters = null.builtins.formatting
   local diagnostics = null.builtins.diagnostics
-  -- local code_actions = null.builtins.code_actions
+  local code_actions = null.builtins.code_actions
+  local hover = null.builtins.hover
+  local compl = null.builtins.completion
 
   null.setup {
+    -- debug = true,
     diagnostics_format = diagnostics_format,
     sources = {
       -- Formatters
@@ -27,26 +28,43 @@ function M.setup()
       formatters.elm_format,
       formatters.fish_indent,
       formatters.fnlfmt,
-      formatters.json_tool,
+      -- formatters.json_tool,
       formatters.nixfmt,
 
       -- -- Diagnostics
       -- -- diagnostics.chktex, -- vimtex?
+      -- diagnostics.selene, -- lua linter
+      -- diagnostics.luacheck, -- lua linter
       -- diagnostics.eslint,
+      -- diagnostics.hadolint,
+      diagnostics.cppcheck,
       -- diagnostics.flake8,
-      -- -- diagnostics.pylint,
+      -- diagnostics.pylint,
       -- diagnostics.hadolint,
       -- -- diagnostics.luacheck,
-      diagnostics.selene, -- lua linter
-      -- diagnostics.write_good,
-      -- diagnostics.vale,
+      diagnostics.write_good,
+      -- diagnostics.proselint,
+      -- diagnostics.vale, -- lets install vale-linter
       -- -- diagnostics.misspell,
-      -- diagnostics.markdownlint,
+      diagnostics.markdownlint,
+      diagnostics.yamllint,
+      -- diagnostics.gccdiag,
 
       -- Code Actions
       -- code_actions.gitsigns, -- TODO: reenable when I can lower the priority
+      -- code_actions.proselint,
+      code_actions.refactoring,
+      code_actions.statix,
+
+      -- compl.spell,
+
+      -- Hover Info
+      hover.dictionary.with {
+        filetypes = { "txt", "markdown", "tex" },
+      },
     },
   }
+  -- require("lspconfig")["null-ls"].setup {}
 end
 
 return M

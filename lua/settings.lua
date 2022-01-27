@@ -32,7 +32,7 @@ opt.fileencoding = "utf-8" -- the encoding written to a file
 opt.hidden = O.hidden_files -- required to keep multiple buffers and open multiple buffers
 opt.hlsearch = O.hl_search -- highlight all matches on previous search pattern
 opt.ignorecase = O.ignore_case -- ignore case in search patterns
-opt.mouse = "nhr" -- allow the mouse to be used in neovim
+opt.mouse = "nvhr" -- allow the mouse to be used in neovim
 opt.pumheight = 10 -- pop up menu height
 opt.showmode = false -- we don't need to see things like -- INSERT -- anymore
 opt.showtabline = 2 -- always show tabs
@@ -45,12 +45,12 @@ opt.termguicolors = true -- set term gui colors (most terminals support this)
 opt.timeoutlen = O.timeoutlen -- time to wait for a mapped sequence to complete (in milliseconds)
 opt.title = true -- set the title of window to the value of the titlestring
 opt.titlestring = "%<%F%=%l/%L - nvim" -- what the title of the window will be set to
-opt.updatetime = 300 -- faster completion
+vim.g.cursorhold_updatetime = 300
+opt.updatetime = vim.g.cursorhold_updatetime
 opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 opt.expandtab = true -- convert tabs to spaces
 opt.shiftwidth = O.shift_width -- the number of spaces inserted for each indentation
-opt.shortmess:append "c"
-opt.shortmess:append "F"
+opt.shortmess = "aocF"
 opt.tabstop = O.tab_stop -- insert 4 spaces for a tab
 opt.cursorline = O.cursorline -- highlight the current line
 opt.number = O.number -- set numbered lines
@@ -99,7 +99,7 @@ require("lv-utils").define_augroups {
   },
   _packer_compile = { { "User", "PackerComplete", "++once PackerCompile" } },
   _buffer_bindings = { { "FileType", "dashboard", "nnoremap <silent> <buffer> q :q<CR>" } },
-  _terminal_insert = { { "BufEnter", "term://*", "startinsert" } },
+  _terminal_insert = { { "BufEnter", "term://*", "startinsert" }, { "BufLeave", "term://*", "stopinsert" } },
   -- will check for external file changes on cursor hold
   _auto_reload = { { "CursorHold", "*", "silent! checktime" } },
   -- will cause split windows to be resized evenly if main window is resized
@@ -121,18 +121,22 @@ require("lv-utils").define_augroups {
     -- { "TabLeave,BufLeave", "*", [[if &buftype == '' | :stopinsert | endif]] }, -- FIXME: This breaks compe
   },
   -- Add position to jump list on cursorhold -- FIXME: slightly buggy
-  -- _hold_jumplist = { { "CursorHold", "*", "normal m'" } },
+  _hold_jumplist = require("lv-utils").hold_jumplist_aucmd,
 }
 
 if O.format_on_save then
-  require("lv-utils").define_augroups {
-    autoformat = {
-      { "BufWritePre", "*", "lua vim.lsp.buf.formatting_sync(nil, " .. O.format_on_save_timeout .. ")" },
-    },
-  }
+  require("lsp.functions").format_on_save()
 end
 
 -- neovide settings
 -- vim.g.neovide_cursor_vfx_mode = "pixiedust"
 -- vim.g.neovide_refresh_rate=120
+vim.g.neovide_window_floating_opacity = 0
+vim.g.neovide_floating_blur = 0
+vim.g.neovide_window_floating_blur = 0
 require("lv-utils").set_guifont(O.fontsize, "FiraCode Nerd Font")
+
+if vim.g.kitty_scrollback then
+  opt.signcolumn = "no"
+  -- opt.virtualedit = "all"
+end

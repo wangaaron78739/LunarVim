@@ -2,8 +2,22 @@ local M = {}
 
 local feedkeys = vim.api.nvim_feedkeys
 local termcodes = vim.api.nvim_replace_termcodes
-local t = function(k)
+local function t(k)
   return termcodes(k, true, true, true)
+end
+
+function M.else_meta(tbl, fallback)
+  return setmetatable(tbl, { -- Return always true
+    __index = function(tbl, key)
+      return fallback
+    end,
+  })
+end
+function M.else_true(tbl)
+  return M.else_meta(tbl, true)
+end
+function M.else_false(tbl)
+  return M.else_meta(tbl, false)
 end
 
 function M.dump(...)
@@ -28,6 +42,7 @@ function M.dump_text(...)
   vim.fn.append(lnum, lines)
   return ...
 end
+vim.cmd [[command! -nargs=+ Lua lua utils.dump(<args>)]]
 
 function M.reload_lv_config()
   -- FIXME: Reloading config breaks things
@@ -47,6 +62,7 @@ function M.check_lsp_client_active(name)
   return false
 end
 
+-- TODO: replace this with new interface
 function M.define_augroups(definitions) -- {{{1
   -- Create autocommand groups based on the passed definitions
   --
@@ -82,6 +98,7 @@ end
 _G.lv_utils_functions = {}
 local to_cmd_counter = 0
 function M.to_cmd(luafunction, args)
+  utils.dump(to_cmd_counter, debug.getinfo(2).source)
   -- TODO: serialize opts if table
   if args == nil then
     args = ""
@@ -157,10 +174,10 @@ function M.operatorfunc_scaffold(name, operatorfunc)
     M.post_operatorfunc(old_func)
   end
 
-  return M.to_cmd(function()
+  return function()
     vim.go.operatorfunc = "v:lua.lv_utils_operatorfuncs." .. name
     feedkeys("g@", "n", false)
-  end)
+  end
 end
 
 -- keys linewise
@@ -212,103 +229,7 @@ vim.cmd [[
   command! FontDown lua require("lv-utils").mod_guifont(-1)
 ]]
 
-function M.mini_window_setwidth(initwidth)
-  local wid = 0
-  local cword = vim.fn.expand "<cword>"
-  if #cword == 0 then
-    local cline = vim.fn.getline "."
-    wid = #cline + 2
-  else
-    wid = #cword + 1 -- + vim.o.sidescrolloff
-  end
-  if wid > 2 then
-    if wid > initwidth then
-      vim.api.nvim_win_set_width(0, wid)
-    end
-  end
-end
--- Use a virtual window for 'inline' text input.
 -- TODO: Could use select mode for this like luasnip?
-function M.inline_text_input(opts)
-  local enter = opts.enter
-  local escape = opts.escape
-
-  if opts.at_begin then
-    vim.cmd [[normal! wb]]
-  end
-  if opts.init_cword then
-    opts.initial = vim.fn.expand "<cword>"
-  end
-  if opts.initial == nil then
-    opts.initial = ""
-  end
-
-  if not opts.border then
-    opts.border = "none"
-  end
-  if opts.rel == nil then
-    if opts.border == "none" then
-      opts.rel = 0
-    else
-      opts.rel = -1
-    end
-  end
-
-  local winopts = {
-    relative = "cursor",
-    row = opts.rel,
-    col = opts.rel,
-    width = #opts.initial + 1,
-    height = 1,
-    style = "minimal",
-    -- border = O.lsp.border,
-    border = opts.border,
-    -- noautocmd = false
-  }
-  local buf = vim.api.nvim_create_buf(false, true)
-  local win = vim.api.nvim_open_win(buf, true, winopts)
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, { opts.initial })
-
-  if opts.minwidth then
-    opts.initwidth = winopts.width
-  else
-    opts.initwidth = 0
-  end
-
-  local function close_win()
-    feedkeys(t "<esc>", "n", false)
-    vim.api.nvim_win_close(win, true)
-    vim.api.nvim_buf_delete(buf, { force = true })
-    if escape then
-      escape()
-    end
-  end
-  local function finish_cb()
-    local value = vim.trim(vim.fn.getline ".")
-    close_win()
-    if enter then
-      enter(value)
-    end
-  end
-
-  vim.opt_local.sidescrolloff = 0
-  local map = vim.api.nvim_buf_set_keymap
-  local fin = M.to_cmd(finish_cb)
-  local cls = M.to_cmd(close_win)
-  map(buf, "i", "<CR>", fin, {})
-  map(buf, "n", "<CR>", fin, {})
-  map(buf, "i", "<ESC>", "<NOP>", { noremap = true })
-  map(buf, "i", "<ESC><ESC>", "<ESC>", { noremap = true })
-  map(buf, "n", "<ESC>", cls, {})
-  map(buf, "n", "o", "<nop>", { noremap = true })
-  map(buf, "n", "O", "<nop>", { noremap = true })
-  vim.cmd(
-    string.format(
-      [[autocmd InsertCharPre,InsertLeave <buffer> lua require("lv-utils").mini_window_setwidth(%d)]],
-      opts.initwidth
-    )
-  )
-end
 
 function M.syn_group()
   local s = vim.fn.synID(vim.fn.line ".", vim.fn.col ".", 1)
@@ -338,6 +259,7 @@ M.cmd = setmetatable({
     return luafn("require'" .. name .. "'")
   end,
   lsp = luafn "vim.lsp.buf",
+  -- diag = luafn "vim.lsp.diagnostic",
   diag = luafn "vim.diagnostic",
   -- telescopes = luafn "telescopes",
   telescopes = luafn "require'lv-telescope.functions'",
@@ -418,5 +340,107 @@ au = setmetatable({}, {
   end,
 })
 M.au = au
+
+-- Meta af keybinding function
+-- TODO: change to keymap.set()
+local mapper_meta = nil
+local function mapper_call(tbl, mode)
+  if mode == nil then
+    mode = tbl[2]
+  end
+  return function(args)
+    if args == nil then
+      args = tbl[1]
+    end
+    return setmetatable({ args, mode }, mapper_meta)
+  end
+end
+local function mapper_index(tbl, flag)
+  if #flag == 1 then
+    return setmetatable({ tbl[1], flag }, mapper_meta)
+  else
+    return setmetatable({
+      vim.tbl_extend("force", { [flag] = true }, tbl[1]),
+      tbl[2],
+    }, mapper_meta)
+  end
+end
+mapper_meta = {
+  __index = mapper_index,
+  __newindex = vim.keymap.set,
+  __call = mapper_call,
+}
+local mapper = setmetatable({ {}, "n" }, mapper_meta)
+M.map = mapper
+
+local cmds = setmetatable({}, {
+  -- TODO: more customization and arguments
+  __newindex = function(tbl, key, val)
+    vim.cmd("command! " .. key .. " " .. val)
+  end,
+})
+M.cmds = cmds
+
+function M.timeout_helper(timeout, callback)
+  local timerperiod = 20
+  timeout = (timeout or 1000) / timerperiod
+  local timer
+  local counter = 0
+  local latch = false -- Make sure we don't repeatedly call the callback
+  local function cb()
+    if not latch then
+      counter = 1 + counter
+      if counter > timeout then
+        latch = true
+        -- CursorHold(timeout) complete
+        callback()
+      end
+    end
+  end
+  --  Call this function from CursorMoved autocmd
+  return {
+    disable = function()
+      counter = 0
+      latch = true -- Disable the counter in Insert Mode
+    end,
+    reenable = function()
+      counter = 0
+      latch = false -- Reenable the counter in Normal Mode
+    end,
+    reset = function()
+      if timer == nil then
+        timer = vim.loop.new_timer()
+        timer:start(0, timerperiod, vim.schedule_wrap(cb))
+      end
+      -- Reset counter on CursorMoved
+      counter = 0
+      latch = false
+    end,
+  }
+end
+M.hold_jumplist = (function()
+  -- local setmark = vim.api.nvim_buf_set_mark
+  -- local getcurpos = vim.api.nvim_win_get_cursor
+  return M.timeout_helper(1000, function()
+    -- local row, col = unpack(getcurpos(0))
+    -- setmark(0, "'", row, col)
+    if vim.api.nvim_get_mode().mode == "n" then
+      vim.cmd "normal! m'"
+    end
+    -- feedkeys("m'", "n", true)
+  end)
+end)()
+M.hold_jumplist_aucmd = {
+  { "InsertEnter,CmdlineEnter", "*", "lua require'lv-utils'.hold_jumplist.disable()" },
+  { "InsertLeave,CmdlineLeave", "*", "lua require'lv-utils'.hold_jumplist.reenable()" },
+  { "CursorMoved", "*", "lua require'lv-utils'.hold_jumplist.reset()" },
+}
+
+M.delete_merge = (function()
+  local repeat_set = M.fn["repeat"].set
+  return M.timeout_helper(1000, function()
+    repeat_set("\\<Plug>RepeatDeletes", vim.v.count)
+  end)
+end)()
 
 return M

@@ -1,5 +1,8 @@
 vim.opt_local.commentstring = "# %s"
 
+-- TODO: julia ipython kernel
+-- vim.b.lv_magma_kernel = "julia"
+
 -- TODO: Check if this really activates correctly
 require("lsp.config").lspconfig "julials" {
   -- on_new_config = function(new_config, new_root_dir)

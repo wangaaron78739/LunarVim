@@ -1,5 +1,5 @@
 local M = {}
-M.setup = function()
+function M.setup()
   utils.define_augroups {
     _package_info_nvim_load = {
       { "BufRead", "package.json", [[lua require"lv-package-info".ftplugin()]] },
@@ -7,7 +7,7 @@ M.setup = function()
   }
   -- require"package-info".setup()
 end
-M.ftplugin = function()
+function M.ftplugin()
   local packinfo = utils.cmd.require "package-info"
   mappings.localleader {
     s = { packinfo.show, "Show" },

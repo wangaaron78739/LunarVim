@@ -21,7 +21,8 @@ sign_define(
 local lsp = vim.lsp
 local handlers = vim.lsp.handlers
 local lspwith = vim.lsp.with
-handlers["textDocument/publishDiagnostics"] = lspwith(vim.lsp.diagnostic.on_publish_diagnostics, O.lsp.diagnostics)
+-- handlers["textDocument/publishDiagnostics"] = lspwith(vim.lsp.diagnostic.on_publish_diagnostics, O.lsp.diagnostics)
+vim.diagnostic.config(O.lsp.diagnostics)
 handlers["textDocument/codeLens"] = lspwith(vim.lsp.codelens.on_codelens, O.lsp.codeLens)
 handlers["textDocument/hover"] = lspwith(handlers.hover, {
   border = O.lsp.border,
@@ -78,3 +79,7 @@ require("lv-utils").define_augroups {
 -- and map buffer local keybindings when the language server attaches
 -- local servers = {"pyright", "tsserver"}
 -- for _, lsp in ipairs(servers) do nvim_lsp[lsp].setup {on_attach = on_attach} end
+
+return {
+  functions = require "lsp.functions",
+}

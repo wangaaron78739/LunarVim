@@ -3,12 +3,13 @@ _G.DATA_PATH = vim.fn.stdpath "data"
 _G.CACHE_PATH = vim.fn.stdpath "cache"
 _G.PLUGIN_PATH = _G.DATA_PATH .. "site/pack/*/start/*"
 _G.TERMINAL = vim.fn.expand "$TERMINAL"
+_G.LSP_INSTALL_PATH = DATA_PATH .. "/lspinstall"
 
 -- TODO: Cleanup this config struct
 O = {
   format_on_save = true,
-  format_on_save_timeout = 500,
-  auto_close_tree = 0,
+  format_on_save_timeout = 1000,
+  auto_close_tree = false,
   fold_columns = "0",
   theme = "Catppuccin",
   lighttheme = "ModusOperandi", -- Paper is good but incompatible with notify.nvim
@@ -44,8 +45,11 @@ O = {
   signcolumn = "number", -- "yes" for always
   notify = {
     timeout = 2000, -- 5000 default
+    stages = "fade_in_slide_out",
+    background_colour = "Normal",
   },
   breakpoint_sign = { text = "🛑", texthl = "LspDiagnosticsSignError", linehl = "", numhl = "" },
+  input_border = "rounded",
   lsp = {
     document_highlight = true,
     autoecho_line_diagnostics = false,
@@ -70,7 +74,18 @@ O = {
       debounce_text_changes = 150,
     },
   },
-  python_interp = "/usr/bin/python3.9", -- TODO: make a venv for this
+  filetypes = {
+    extension = {
+      kbd = "kmonad",
+      fish = "fish",
+      just = "just",
+    },
+    literal = {
+      Justfile = "just",
+      justfile = "just",
+    },
+  },
+  python_interp = CONFIG_PATH .. "/.venv/bin/python3.9", -- TODO: make a venv for this
   treesitter = {
     ensure_installed = "all",
     ignore_install = {},
@@ -108,7 +123,7 @@ O = {
       ["comment"] = { "/", "?" },
     },
     other_suffixes = {
-      ["scope"] = { "s", "S" },
+      ["scope"] = { "S", "s" },
       ["element"] = { "e", "E" },
       ["subject"] = { "z", "Z" },
     },
@@ -118,36 +133,45 @@ O = {
   hint_labels = "fdsahjklvcxznmewuio",
   database = { save_location = "~/.config/nvim/.db", auto_execute = 1 },
   plugin = {
-    fugitive = {},
+    copilot = {
+      key = "<M-n>",
+    },
+    yabs = true,
+    fugitive = true,
+    better_escape = {
+      mapping = { "jk", "kj" },
+      keys = "<Esc>",
+    },
     hop = { teasing = true },
-    twilight = {},
-    notify = {},
-    dial = {},
-    dashboard = {},
-    -- matchup = {},
-    colorizer = {},
+    twilight = true,
+    notify = true,
+    dial = true,
+    dashboard = true,
+    -- matchup = true,
+    colorizer = true,
     numb = {
       show_numbers = true, -- Enable 'number' for the window while peeking
       show_cursorline = true, -- Enable 'cursorline' for the window while peeking
     },
-    zen = {},
-    ts_playground = {},
-    ts_context_commentstring = {},
-    ts_textobjects = {},
-    ts_autotag = {},
-    ts_textsubjects = {},
-    ts_textunits = {},
-    ts_rainbow = {},
-    ts_context = {},
+    zen = true,
+    ts_playground = true,
+    ts_context_commentstring = true,
+    ts_textobjects = true,
+    ts_autotag = true,
+    ts_textsubjects = true,
+    ts_textunits = true,
+    ts_rainbow = true,
+    ts_context = true,
     ts_hintobjects = { key = "m" },
-    ts_matchup = {},
-    indent_line = {},
-    symbol_outline = {},
-    debug = {},
-    bqf = {},
-    trouble = {},
-    floatterm = {},
-    spectre = {},
+    ts_matchup = true,
+    indent_line = true,
+    symbol_outline = true,
+    debug = true,
+    bqf = true,
+    sidebarnvim = true,
+    trouble = true,
+    floatterm = true,
+    spectre = true,
     project_nvim = {
       -- Manual mode doesn't automatically change your root directory, so you have
       -- the option to manually do so using `:ProjectRoot` command.
@@ -165,16 +189,16 @@ O = {
       -- patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
       -- Table of lsp clients to ignore by name
       -- eg: { "efm", ... }
-      -- ignore_lsp = {},
+      -- ignore_lsp = true,
     },
-    markdown_preview = {},
-    codi = {},
-    telescope_fzy = {},
-    telescope_frecency = {},
-    telescope_fzf = {},
-    ranger = {},
-    todo_comments = {},
-    lsp_colors = {},
+    markdown_preview = true,
+    codi = true,
+    telescope_fzy = true,
+    telescope_frecency = true,
+    telescope_fzf = true,
+    ranger = true,
+    todo_comments = true,
+    lsp_colors = true,
     lsp_signature = {
       doc_lines = 2, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
       -- Apply indentation for wrapped lines
@@ -192,7 +216,7 @@ O = {
       zindex = 1,
       check_client_handlers = false,
     },
-    git_blame = {},
+    git_blame = true,
     gitlinker = {
       opts = {
         -- Manual mode doesn't automatically change your root directory, so you have
@@ -211,34 +235,34 @@ O = {
         -- patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
         -- Table of lsp clients to ignore by name
         -- eg: { "efm", ... }
-        -- ignore_lsp = {},
+        -- ignore_lsp = true,
       },
     },
-    lazygit = {},
-    octo = {},
-    lush = {},
-    diffview = {},
-    bracey = {},
-    telescope_project = {},
-    gist = {},
-    dap_install = {},
-    visual_multi = {},
-    lightspeed = {}, -- Uses lightspeed.nvim
+    lazygit = true,
+    octo = true,
+    lush = true,
+    diffview = true,
+    bracey = true,
+    telescope_project = true,
+    gist = true,
+    dap_install = true,
+    visual_multi = true,
+    lightspeed = true, -- Uses lightspeed.nvim
     quickscope = {
       -- event = "BufRead"
       -- on_keys = { "f", "F", "t", "T" }, -- Comment this line to have it always visible
     },
-    surround = {}, -- Uses vim-sandwhich
-    fzf = {},
-    magma = {},
-    neoterm = {},
-    bullets = {},
-    vista = {},
-    startuptime = {},
-    tabnine = {},
-    tmux_navigator = {},
-    flutter_tools = {},
-    editorconfig = {},
+    surround = true, -- Uses vim-sandwhich
+    fzf = true,
+    magma = true,
+    neoterm = true,
+    bullets = true,
+    vista = true,
+    startuptime = true,
+    tabnine = true,
+    tmux_navigator = true,
+    flutter_tools = true,
+    editorconfig = true,
     anywise_reg = {
       operators = { "y", "d" }, -- putting 'c' breaks it (wrong insert mode cursor)
       registers = { "+", "a" },
@@ -250,13 +274,13 @@ O = {
       paste_keys = { p = "p", P = "P" },
       register_print_cmd = false,
     },
-    doge = {},
-    undotree = {},
+    doge = true,
+    undotree = true,
     ts_iswap = { autoswap = true },
-    coq = {},
+    coq = true,
     cmp = {
       lspkind = {
-        with_text = true,
+        with_text = false,
         -- symbol_map = {
         --   Text = "",
         --   Method = "",
@@ -286,10 +310,10 @@ O = {
         -- },
       },
     },
-    luasnip = {},
-    luadev = {},
-    luapad = {},
-    primeagen_refactoring = {},
+    luasnip = true,
+    luadev = true,
+    luapad = true,
+    primeagen_refactoring = true,
     splitfocus = {
       -- width =
       -- treewidth =
@@ -302,8 +326,8 @@ O = {
       number = false,
       -- cursorline = O.cursorline,
     },
-    rust_tools = {},
-    vimtex = {},
+    rust_tools = true,
+    vimtex = true,
     -- neoscroll = {
     --   -- All these keys will be mapped to their corresponding default scrolling animation
     --   mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
@@ -313,16 +337,31 @@ O = {
     --   cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
     --   easing_function = "sine", -- Default easing function
     -- },
-    gesture = {
-      lmb = true,
-      rmb = false,
+    gesture = true,
+    coderunner = true,
+    sniprun = true,
+    kittyrunner = true,
+    lsputils = {
+      handlers = {
+        ["textDocument/codeAction"] = { "codeAction", "code_action_handler" },
+        -- ["textDocument/codeLens"] = { "codeLens", "code_lens_handler" },
+        ["textDocument/references"] = { "locations", "references_handler" },
+        ["textDocument/definition"] = { "locations", "definition_handler" },
+        ["textDocument/declaration"] = { "locations", "declaration_handler" },
+        ["textDocument/typeDefinition"] = { "locations", "typeDefinition_handler" },
+        ["textDocument/implementation"] = { "locations", "implementation_handler" },
+        -- ["textDocument/documentSymbol"] = { "symbols", "document_handler" },
+        -- ["workspace/symbol"] = { "symbols", "workspace_handler" },
+      },
+      aus = {
+        _lsputil_codeaction_list = {
+          { "FileType", "lsputil_codeaction_list", "nmap <buffer> K <CR>" },
+        },
+      },
     },
-    coderunner = {},
-    sniprun = {},
-    kittyrunner = {},
   },
 }
-vim.cmd('let &titleold="' .. TERMINAL .. '"')
+vim.cmd('let &titleold="' .. _G.TERMINAL .. '"')
 -- After changing plugin config it is recommended to run :PackerCompile
 local disable_plugins = {
   "fzf",
@@ -333,7 +372,6 @@ local disable_plugins = {
   "quickscope",
   "bullets",
   "coq",
-  "primeagen_refactoring",
   "ts_textunits",
   "ranger",
 }

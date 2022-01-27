@@ -1,17 +1,18 @@
 -- https://github.com/ibhagwan/nvim-lua/blob/main/lua/plugin/telescope.lua
 local sorters = require "telescope.sorters"
 local actions = require "telescope.actions"
+-- local action_layout = require "telescope.actions.layout"
 local functions = require "lv-telescope.functions"
 -- Global remapping
 ------------------------------
 TelescopeMapArgs = TelescopeMapArgs or {}
-local map_ = vim.api.nvim_set_keymap
-local map_b = vim.api.nvim_buf_set_keymap
+local map_ = vim.keymap.set
+local map_b = vim.keymap.setl
 local map_options = {
   noremap = true,
   silent = true,
 }
-local map_tele = function(mode, key, f, options, buffer)
+local function map_tele(mode, key, f, options, buffer)
   local map_key = vim.api.nvim_replace_termcodes(key .. f, true, true, true)
 
   TelescopeMapArgs[map_key] = options or {}
@@ -21,7 +22,7 @@ local map_tele = function(mode, key, f, options, buffer)
   if not buffer then
     map_(mode, key, rhs, map_options)
   else
-    map_b(0, mode, key, rhs, map_options)
+    map_b(mode, key, rhs, map_options)
   end
 end
 
@@ -36,13 +37,19 @@ telescope.setup {
     initial_mode = "insert",
     selection_strategy = "reset",
     sorting_strategy = "descending",
-    layout_strategy = "horizontal",
+    layout_strategy = "flex",
     layout_config = {
       width = 0.75,
       prompt_position = "bottom",
       preview_cutoff = 120,
       horizontal = { mirror = false },
-      vertical = { mirror = false },
+      vertical = {
+        mirror = false,
+        preview_cutoff = 2,
+      },
+      flex = {
+        flip_columns = 150,
+      },
     },
     -- file_sorter = sorters.get_fzy_sorter,
     -- generic_sorter = sorters.get_fzy_sorter,
@@ -63,6 +70,7 @@ telescope.setup {
     buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
     mappings = {
       i = {
+        -- ["<M-p>"] = action_layout.toggle_preview,
         ["<C-h>"] = telescope.extensions.hop.hop,
         ["<C-x>"] = actions.delete_buffer,
         ["<C-s>"] = actions.select_horizontal,
@@ -71,8 +79,6 @@ telescope.setup {
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
         ["<CR>"] = actions.select_default + actions.center,
-        ["<S-up>"] = actions.preview_scrolling_up,
-        ["<S-down>"] = actions.preview_scrolling_down,
         ["<C-up>"] = actions.preview_scrolling_up,
         ["<C-down>"] = actions.preview_scrolling_down,
         ["<M-q>"] = actions.send_to_qflist + actions.open_qflist,
@@ -80,6 +86,7 @@ telescope.setup {
         ["<C-y>"] = functions.set_prompt_to_entry_value,
       },
       n = {
+        -- ["<M-p>"] = action_layout.toggle_preview,
         ["j"] = actions.move_selection_next,
         ["k"] = actions.move_selection_previous,
         ["<C-x>"] = actions.delete_buffer,

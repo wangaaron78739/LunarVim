@@ -1,4 +1,5 @@
 plugin/
+lua/packer_compiled.lua
 dein
 tags*
 .netrwhist
@@ -20,3 +21,4 @@ nv-settings.lua
 lv-settings.lua
 nvim.log
 .stylua.toml
+.venv

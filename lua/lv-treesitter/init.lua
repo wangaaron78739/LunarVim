@@ -27,12 +27,13 @@ local scope_nN = make_nN_pair {
   '<Cmd>lua require("ts-textobjects/actions").goto_prev_scope()<CR>',
 }
 local outer_scope_nN = make_nN_pair {
-  '<Cmd>lua require("ts-textobjects/actions").goto_outer_scope()<CR>',
+  '<Cmd>lua require("ts-textobjects/actions").incremental_outer_scope()<CR>',
   "<cmd>normal! <C-o><cr>",
 }
 
 -- Custom text objects
 -- TODO: Should move the keymappings to keymappings.lua for cleanliness??
+-- TODO: Optimize this
 local textobj_prefixes = tsconfig.textobj_prefixes
 local textobj_suffixes = tsconfig.textobj_suffixes
 local other_suffixes = tsconfig.other_suffixes

@@ -1,5 +1,5 @@
 local M = {}
-M.preconf = function()
+function M.preconf()
   vim.g.symbols_outline = {
     highlight_hovered_item = true,
     show_guides = true,

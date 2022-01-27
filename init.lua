@@ -1,4 +1,3 @@
--- vim.opt.shadafile = "NONE"
 --------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------
 
@@ -37,6 +36,7 @@ local disabled_built_ins = {
   "spellfile_plugin",
   "matchit",
 }
+vim.g.did_load_filetypes = 1
 for _, plugin in pairs(disabled_built_ins) do
   vim.g["loaded_" .. plugin] = 1
 end
@@ -51,9 +51,12 @@ require "theme"()
 
 -- 'Mandatory' plugin configs
 mappings.setup()
+-- if not vim.g.kitty_scrollback then
 require "lv-treesitter"
 require "lsp"
+require("lv-ui").config()
+-- end
 
+require "packer_compiled"
 --------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------
--- vim.opt.shadafile = ""

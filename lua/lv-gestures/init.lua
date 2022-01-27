@@ -1,24 +1,26 @@
 local M = {}
-local conf = O.plugin.gesture
-M.keymaps = function()
-  if conf then
-    local map = vim.api.nvim_set_keymap
-    -- Helper functions
-    local gesturecmd = require("lv-utils").cmd.require "gesture"
+local conf = {
+  lmb = true,
+  rmb = false,
+}
 
+function M.keymaps()
+  if conf then
+    local map = vim.keymap.set
+    -- Helper functions
     if conf.lmb then
       -- map("n", "<LeftMouse>", gesturecmd.draw, { silent = true })
-      map("n", "<LeftDrag>", gesturecmd.draw, { silent = true })
-      map("n", "<LeftRelease>", gesturecmd.finish, { silent = true })
+      map("n", "<LeftDrag>", require("gesture").draw, { silent = true })
+      map("n", "<LeftRelease>", require("gesture").finish, { silent = true })
     end
     if conf.rmb then
       map("n", "<RightMouse>", "<NOP>", { silent = true })
-      map("n", "<RightDrag>", gesturecmd.draw, { silent = true })
-      map("n", "<RightRelease>", gesturecmd.finish, { silent = true })
+      map("n", "<RightDrag>", require("gesture").draw, { silent = true })
+      map("n", "<RightRelease>", require("gesture").finish, { silent = true })
     end
   end
 end
-M.config = function()
+function M.config()
   local gesture = require "gesture"
   local register = gesture.register
   local up = gesture.up()

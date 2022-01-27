@@ -11,27 +11,34 @@ yadm-save message="update nvim config": fix-head
     cd ~  && yadm add ~/.config/nvim 
     yadm commit -m "{{message}}"
 
-# TODO: install in an isolated virtual environment? (use pipx)
+venv-install: 
+    sudo apt install python3.9 python3.9-dev python3.9-venv
+    python3.9 -m venv ~/.config/nvim/.venv
+    ~/.config/nvim/.venv/bin/python3.9 -m pip install pynvim 
+    ~/.config/nvim/.venv/bin/python3.9 -m pip install cairosvg pnglatex jupyter_client ipython pillow plotly kaleido
+    ~/.config/nvim/.venv/bin/python3.9 -m pip install keyring tornado requests
+
+ext-install:
+    cargo install stylua 
+    pipx install --force black 
+    pipx install --force isort
+    pipx install --force proselint
+    pipx install --force cmakelang
+    pipx install --force flake8
+    pipx install --force neovim-remote
+    pipx install --force ueberzug
+    pipx install --force jupytext
+    npm install -g tree-sitter-cli
+    npm install -g markdownlint-cli
+    npm install -g write-good
+
 # Install dependencies # TODO: there are some dependencies not included here
 install:
     sudo apt install libjpeg8-dev zlib1g-dev libxtst-dev 
-    sudo apt install python3.9
-    cargo install selene stylua 
-    pipx install --force neovim-remote
-    python3.9 -m pip install pynvim ueberzug --user
-    npm install -g tree-sitter-cli
+    just venv-install
+    just ext-install
     {{nvim}} # Run once to install packer and stuff
     {{nvim}} +PackerSync # Run again to install the plugins
-
-# Install lsp that I want
-lsps:
-    {{nvim}} +'LspInstall rust'
-    {{nvim}} +'LspInstall lua'
-    {{nvim}} +'LspInstall python'
-    {{nvim}} +'LspInstall cpp'
-    {{nvim}} +'LspInstall cmake'
-    {{nvim}} +'LspInstall latex'
-    {{nvim}} +'LspInstall json'
 
 # Open neovim with main settings files
 settings:
@@ -47,14 +54,21 @@ update-plugins:
     {{nvim}} lua/plugins.lua +PackerSync
     {{nvim}} 
 
+install-plugins:
+    {{nvim}} lua/plugins.lua +PackerInstall
+    {{nvim}} 
+
+compile-plugins:
+    {{nvim}} lua/plugins.lua +PackerCompile
+    {{nvim}} 
+
 # Profile startup time
 startup:
     {{nvim}} +PackerCompile +'StartupTime -- lua/plugins.lua'
 
 stylua:
-    #!/usr/bin/env bash
-    shopt -s globstar
-    stylua **.lua
+    #!/usr/bin/env fish
+    stylua lua/**.lua
 
 # Fetch new changes 
 fetch:

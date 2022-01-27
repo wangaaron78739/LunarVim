@@ -4,7 +4,7 @@ local eval_line = "xx"
 local eval_op = "x"
 local eval_cell = "x<cr>"
 
-local bmap = vim.api.nvim_buf_set_keymap
+local bmap = vim.keymap.setl
 
 local feedkeys = vim.api.nvim_feedkeys
 local termcodes = vim.api.nvim_replace_termcodes
@@ -48,7 +48,7 @@ function M.sniprun()
     inline_messages = 0, --# inline_message (0/1) is a one-line way to display messages
     --# to workaround sniprun not being able to display anything
 
-    borders = "single", --# display borders around floating windows
+    borders = O.lsp.border, --# display borders around floating windows
     --# possible values are 'none', 'single', 'double', or 'shadow'
   }
 end
@@ -89,12 +89,14 @@ function M.fterm()
     term = popup(nil),
   }, {
     __index = function(tbl, key)
-      return popup(key)
+      local new = popup(key)
+      tbl[key] = new
+      return new
     end,
   })
 
-  vim.api.nvim_set_keymap("n", "<M-i>", '<CMD>lua require("FTerm").toggle()<CR>', {})
-  vim.api.nvim_set_keymap("t", "<M-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', {})
+  vim.keymap.set("n", "<M-i>", '<CMD>lua require("FTerm").toggle()<CR>')
+  vim.keymap.set("t", "<M-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
   -- map("t", "<Esc>", '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', nore)
 
   function _G.ftopen(name)
@@ -102,7 +104,9 @@ function M.fterm()
   end
 
   vim.cmd [[
-    command! -nargs=1 Ftopen lua ftopen('<args>')
+    command! -nargs=1 FtOpen lua ftopen('<args>')
+    command! -nargs=1 FtRun lua require'FTerm'.run('<args>\n')
+    command! -nargs=1 FtScratch lua require'FTerm'.scratch({cmd='<args>'})
   ]]
 
   require("lv-utils").define_augroups {
@@ -132,20 +136,32 @@ function M.neoterm()
 end
 
 function M.magma()
-  vim.cmd [[ command MagmaStart :lua require("lv-terms").activate_magma() ]]
+  vim.g.magma_automatically_open_output = false
+  utils.define_augroups {
+    _magma_start = {
+      -- { "User", "MagmaInitPre", [[lua require("lv-terms").activate_magma("<args>")]] },
+      { "User", "MagmaInitPost", [[lua require("lv-terms").activate_magma("<args>")]] },
+      -- { "User", "MagmaDeinitPre", [[lua require("lv-terms").activate_magma("<args>")]] },
+      -- { "User", "MagmaDeinitPost", [[lua require("lv-terms").activate_magma("<args>")]] },
+    },
+  }
 end
 
-function M.activate_magma()
-  vim.cmd "MagmaInit"
+function M.activate_magma(kernel)
+  -- vim.cmd("MagmaInit " .. (vim.b.lv_magma_kernel or ""))
   mappings.localleader {
-    ["xx"] = { "<cmd>MagmaEvaluateLine<CR>", "Line" },
-    ["x<cr>"] = { "<cmd>MagmaReevaluateCell<CR>", "Cell" },
-    ["xd"] = { "<cmd>MagmaDelete<CR>", "MagmaDel" },
-    ["to"] = { "<cmd>MagmaShowOutput<cr>", "Magma Output" },
     x = "Magma",
+    ["xx"] = { "<cmd>MagmaEvaluateLine<CR>", "Run Line" },
+    ["x<CR>"] = { ",rij", "Run Line" },
+    ["x,"] = { "<cmd>MagmaReevaluateCell<CR>", "Rerun Cell" },
+    ["xd"] = { "<cmd>MagmaDelete<CR>", "Magma Delete" },
+    t = "Terminal",
+    ["to"] = { "<cmd>MagmaShowOutput<cr>", "Magma Output" },
+    r = { ":MagmaEvaluateOperator<CR>g@", "Magma Run" },
   }
-  bmap(0, "n", "<localleader>x", ":MagmaEvaluateOperator<CR>", { expr = true, silent = true })
-  bmap(0, "v", "<localleader>x", "<cmd>MagmaEvaluateVisual<CR>", { silent = true })
+  mappings.vlocalleader {
+    r = { "<ESC>,rgv", "Magma Run" },
+  }
 end
 
 function M.luadev()
@@ -155,27 +171,23 @@ end
 function M.activate_luadev()
   vim.cmd "Luadev"
   mappings.localleader {
-    ["xx"] = { "<Plug>(Luadev-RunLine)", "Line" },
-    ["x"] = { "<Plug>(Luadev-Run)", "Luadev" },
+    x = "Luadev",
+    xx = { "<Plug>(Luadev-RunLine)", "Run Line" },
+    xw = { "<Plug>(Luadev-RunWord)", "Run Word" },
+    r = { "<Plug>(Luadev-Run)", "Luadev Run" },
   }
-  bmap(0, "v", "<localleader>x", "<Plug>(Luadev-Run)", { silent = true })
-  -- bmap(0,"i", "", "<Plug>(Luadev-Complete)", { silent = true })
-  -- bmap(0,"n", "<localleader>xw", "<Plug>(Luadev-RunWord)", { silent = true })
-  bmap(
-    0,
-    "n",
-    "<localleader>x",
-    utils.operatorfunc_cmd("luadev_exec", "<localleader>x"),
-    { silent = true, noremap = true }
-  )
+  mappings.vlocalleader {
+    r = { "<Plug>(Luadev-Run)", "Luadev Run" },
+  }
+  -- bmap("i", "", "<Plug>(Luadev-Complete)", { silent = true })
 end
 
 function M.kitty()
   require("kitty-runner").setup {
     use_keymaps = false, --use keymaps
   }
-  vim.cmd [[ command KittyOpen :lua require("lv-terms").activate_kitty() ]]
-  vim.cmd [[ command KittyOpenLocal :lua require("lv-terms").activate_kitty('<local>') ]]
+  vim.cmd [[ command! KittyOpen :lua require("lv-terms").activate_kitty() ]]
+  vim.cmd [[ command! KittyOpenLocal :lua require("lv-terms").activate_kitty('<local>') ]]
 end
 
 function M.activate_kitty(port)
@@ -195,54 +207,87 @@ function M.activate_kitty(port)
     tt = { "<cmd>KittyRunCommand " .. port .. "<CR>", "Run new" },
     ["t<space>"] = { "<cmd>KittyRunCommandOnce" .. port .. "<CR>", "Run once" },
   }, ops)
-  bmap(0, "x", "<localleader>k", "<cmd>KittySendLines " .. port .. "<CR>", { silent = true, noremap = true })
-  bmap(
-    0,
-    "n",
-    "<localleader>k",
-    utils.operatorfunc_keys("kitty_exec", "<localleader>k"),
-    { silent = true, noremap = true }
-  )
+  bmap("x", "<localleader>k", "<cmd>KittySendLines " .. port .. "<CR>", { silent = true })
+  bmap("n", "<localleader>k", utils.operatorfunc_keys("kitty_exec", "<localleader>k"), { silent = true })
+end
+
+function M.mdeval()
+  require("mdeval").setup {
+    -- Don't ask before executing code blocks
+    require_confirmation = false,
+    -- Change code blocks evaluation options.
+    eval_options = {
+      -- Set custom configuration for C++
+      cpp = {
+        command = { "clang++", "-std=c++20", "-O0" },
+        default_header = [[
+    #include <iostream>
+    #include <vector>
+    using namespace std;
+      ]],
+      },
+    },
+  }
+end
+function M.mdeval_keymaps()
+  mappings.localleader {
+    ["c"] = { "<cmd>lua require 'mdeval'.eval_code_block()<CR>", "Eval Code Block" },
+  }
+end
+function M.jupyter_ascending()
+  vim.keymap.setl("n", "<localleader>j", "<Plug>JupyterExecute")
+  -- mappings.localleader {
+  --   ["j"] = { "<Plug>JupyterExecute", "Execute Cell" },
+  --   ["J"] = { "<Plug>JupyterExecuteAll", "Execute All" },
+  -- }
 end
 
 function M.keymaps(leaderMappings, vLeaderMappings)
   local cmd = utils.cmd
-  local opts = { silent = true, noremap = true }
-  local map = vim.api.nvim_set_keymap
+  local map = vim.keymap.set
   if O.plugin.neoterm then
     vim.cmd [[ command -nargs=+ Tmem :lua require("lv-terms").Tmem("<args>") ]]
 
-    vim.g.neoterm_automap_keys = "<leader>x<space>"
-    -- Use gt to send to terminal
-    map("n", "<leader>t<space>", ":Tmem ", {})
-    map("n", "<leader>tt", ":T ", {})
-    leaderMappings["t<cr>"] = { cmd "Ttoggle", "Neoterm Toggle" }
+    vim.g.neoterm_automap_keys = "<leader>x<cr>"
+    leaderMappings["x<cr>"] = "Neoterm AutoMap"
+
+    map("n", "<leader>t<space>", ":Tmem ")
+    leaderMappings["t<space>"] = "Tmem ..."
+    leaderMappings["tt"] = { "<cmd>Tnew<CR>", "T ..." }
+    leaderMappings["t<cr>"] = { "<cmd>T k<CR>", "Neoterm rerun" }
+    leaderMappings["t<tab>"] = { cmd "Ttoggle", "Neoterm Toggle" }
     leaderMappings["tl"] = { cmd "Tls", "Neoterm list" }
 
-    map("n", "<leader>xm", "<Plug>(neoterm-repl-send)", opts)
-    map("n", "<leader>xn", "<Plug>(neoterm-repl-send-line)", opts)
-    map("x", "<leader>xn", "<Plug>(neoterm-repl-send)", opts)
-    leaderMappings["x<space>"] = "Neoterm AutoMap"
+    leaderMappings["xm"] = { "<Plug>(neoterm-repl-send)", "Neoterm Send" }
+    leaderMappings["xn"] = { "<Plug>(neoterm-repl-send-line)", "Neoterm Line" }
+    vLeaderMappings["xn"] = { "<Plug>(neoterm-repl-send)", "Neoterm Send" }
   end
 
   if O.plugin.kittyrunner then
-    map("n", "<leader>tk", "<cmd>KittyOpen<CR>", opts)
-    map("n", "<leader>tK", "<cmd>KittyOpenLocal<CR>", opts)
-    map("n", "<leader>xk", "<cmd>KittyReRunCommand<CR>", opts)
-    map("n", "<leader>xK", "<cmd>KittyRunCommand<CR>", opts)
-    map("n", "<leader>xl", "<cmd>KittySendLines<CR>", opts)
-    map("x", "<leader>xl", "<cmd>KittySendLines<CR>", opts)
+    leaderMappings["tko"] = { "<cmd>KittyOpen<CR>", "Kitty Open" }
+    leaderMappings["tkl"] = { "<cmd>KittyOpenLocal<CR>", "Kitty Local" }
+    leaderMappings["xk"] = { "<cmd>KittyReRunCommand<CR>", "Kitty Rerun" }
+    leaderMappings["xK"] = { "<cmd>KittyRunCommand<CR>", "Kitty Run" }
+    leaderMappings["xl"] = { "<cmd>KittySendLines<CR>", "Kitty Send" }
+    vLeaderMappings["xl"] = { "<cmd>KittySendLines<CR>", "Kitty Send" }
     -- TODO: add operator mapping
   end
 
-  if O.plugin.sniprun then
-    map("n", "<leader>tp", "<Plug>SnipClose", opts)
-    map("n", "<leader>tP", "<cmd>SnipReset<cr>", opts)
-    map("n", "<leader>tC", "<Plug>SnipReplMemoryClean", opts)
+  if O.plugin.floatterm then
+    map("n", "<leader>tf", ":FtScratch ", {})
+    map("n", "<leader>tF", ":FtRun ", {})
+    leaderMappings["tf"] = "Scratch ..."
+    leaderMappings["tF"] = "(F)Run ..."
+  end
 
-    map("v", "<leader>xs", ":SnipRun<cr>", opts)
-    map("n", "<leader>xs", "<Plug>SnipRun", opts)
-    map("n", "<leader>xc", "<Plug>SnipRunOperator", opts)
+  if O.plugin.sniprun then
+    leaderMappings["tp"] = { "<Plug>SnipClose", "SnipRun Close" }
+    leaderMappings["tP"] = { "<cmd>SnipReset<cr>", "SnipRun Reset" }
+    leaderMappings["tC"] = { "<Plug>SnipReplMemoryClean", "SnipRun Clean" }
+
+    vLeaderMappings["xs"] = { "<cmd>SnipRun<cr>", "SnipRun" }
+    leaderMappings["xs"] = { "<Plug>SnipRun", "SnipRun Line" }
+    leaderMappings["xc"] = { "<Plug>SnipRun", "SnipRun" }
   end
 
   -- Can use: "!", "&", "gt", "gx"

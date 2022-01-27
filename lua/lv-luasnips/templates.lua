@@ -1,64 +1,13 @@
-local preamble = [[
-\documentclass[12pt]{article}
-\usepackage[usenames,svgnames,dvipsnames]{xcolor}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
-\usepackage{textcomp}
-\usepackage[hyphens,spaces,obeyspaces]{url}
-\usepackage{listings}
-\usepackage[no-math]{fontspec}
-\setmonofont{Source Code Pro}
-\lstset{language=C++,
-	basicstyle=\ttfamily,
-	keywordstyle=\color{blue}\ttfamily,
-	stringstyle=\color{red}\ttfamily,
-	commentstyle=\color{green}\ttfamily,
-	morecomment=[l][\color{magenta}]{\#}
-}
+local hwktheorems = [[
+  \newtheorem{theorem}{Theorem}
+  \newtheorem{definition}{Definition}
+  \newtheorem{lemma}{Lemma}
+  \newtheorem{claim}{Claim}
+  \newtheorem{fact}{Fact}
+  \newtheorem{corollary}{Corollary}
 
-\usepackage{bm}
-\usepackage{amsmath,amsthm,amssymb,amsfonts}
-\usepackage{mathtools}
-\usepackage[color=green!10,
-	colorinlistoftodos,
-	linecolor=lightgray,
-	bordercolor=green!10,
-	textsize=footnotesize]{todonotes} % add [disable] to hide notes
-
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{fancyhdr}
-\usepackage[a4paper, margin=1in]{geometry}
-\usepackage{multicol}
-\usepackage{enumerate}
-\usepackage{enumitem}
-\setlist{nolistsep}
-\usepackage{graphicx}
-\usepackage{gensymb}
-\usepackage{subcaption}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-% \usepackage[noend]{algpseudocode}
-\graphicspath{ {../images/} }
-\usepackage[super]{nth}
-\usepackage{subfiles}
-\providecommand{\main}{..}
-
-\usepackage{hyperref}
-\hypersetup{
-	colorlinks=blue,
-	linkbordercolor=blue,
-	citecolor=black,
-	filecolor=black,
-	linkcolor=black,
-	urlcolor=black
-}
-
-\usepackage{makeidx}
-\makeindex
-
+]]
+local notestheorems = [[
 \usepackage{thmtools}
 \usepackage[framemethod=TikZ]{mdframed}
 
@@ -172,35 +121,175 @@ style=thmbluebox,name=Theorem,numberwithin=section]{theorem}
 \newtheorem{fact}[theorem]{Fact}
 
 \newcommand{\vocab}[1]{\textbf{\color{blue} #1}}
+]]
+local preamble = [[
+\documentclass[a4paper, 11pt]{article}
 
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+% \usepackage{fontspec}
+% \setmainfont[
+% BoldFont=calibrib.ttf,
+% ItalicFont=calibrii.ttf,
+% ]{Calibri.ttf}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{bm}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage[dvipsnames,table,xcdraw]{xcolor}
+\usepackage{hhline}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{soul}
+\usepackage{listings}
+\usepackage{pdfpages}
+\usepackage{cancel}
+\usepackage{afterpage}
+\usepackage{todonotes}
+\usepackage{xcolor}
+\usepackage{tikz}
+% \usepackage{tikzit}
+% \input{tikzitstyles.tikzstyles} 
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{setspace}
+\usepackage{subfiles}
+\usepackage[
+backend=biber,
+style=alphabetic,
+]{biblatex}
+\addbibresource{ref.bib} %Imports bibliography file
+\usepackage{amsthm}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
-\newcommand{\R}{\mathbb{R}}
-\renewcommand{\C}{\mathbb{C}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand\Ccancel[2][black]{\renewcommand\CancelColor{\color{#1}}\cancel{#2}}
-\newcommand{\x}{\bm{x}}
-\newcommand{\y}{\bm{y}}
-\newcommand{\mat}[1]{\mathbf{#1}}
-\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\Op}{\mathcal{O}}
+\newcommand{\iprod}[1]{\left\langle {#1} \right\rangle}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
 \newcommand{\sspan}{\operatorname{span}}
-\DeclareMathOperator*{\argmax}{arg\,max}
-\DeclareMathOperator*{\argmin}{arg\,min}
-\DeclareMathOperator*{\arccosh}{arccosh}
-\newcommand{\iprod}[2]{\left\langle{#1},{#2}\right\rangle }
 
-\newcommand{\PreserveBackslash}[1]{\let\temp=\#1\let\=\temp}
-\newcolumntype{C}[1]{>{\PreserveBackslash\centering}p{#1}}
-\newcolumntype{R}[1]{>{\PreserveBackslash\raggedleft}p{#1}}
-\newcolumntype{L}[1]{>{\PreserveBackslash\raggedright}p{#1}}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize\singlespacing,
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2
+}
+\lstset{style=mystyle}
 
-\newcommand{\bful}[1]{\underline{\textbf{#1}}}
+\usepackage{parskip}
+% \setlength{\parskip}{\baselineskip}%
+% \setlength{\parindent}{0pt}%
+
+\newcommand\setrow[1]{\gdef\rowmac{#1}#1\ignorespaces}
+\newcommand\clearrow{\global\let\rowmac\relax}
+
+\newcommand\Ccancel[2][black]{
+    \let\OldcancelColor\CancelColor
+    \renewcommand\CancelColor{\color{#1}}
+    \cancel{#2}
+    \renewcommand\CancelColor{\OldcancelColor}
+}
+\newcommand{\rcancel}[1]{ \Ccancel[red]{#1} }
+\newcommand{\cleft}[2][.]{%
+  \begingroup\colorlet{savedleftcolor}{.}%
+  \color{#1}\left#2\color{savedleftcolor}%
+}
+\newcommand{\cright}[2][.]{ \color{#1}\right#2\endgroup }
+\newcommand{\rleft}[1]{ \cleft[red]{#1} }
+\newcommand{\rright}[1]{ \cright[red]{#1} }
+
+
+% 
+% 
+% Document formatting ends here
+% 
+
+]]
+local docinfo = [[
+% 
+% Document Info starts here
+% 
+% 
+
+\title{${1:Homework}}
+\author{${2:Anshuman Medhi}}
+% \date{}
+
+% Sections
+% \renewcommand{\thesection}{\arabic{section}.}
+% \renewcommand{\thesubsection}{\quad\alph{subsection}.}
+% \renewcommand{\thesubsection}{\thesection\alph{subsection})}
+
+% Header/footer
+\pagestyle{fancy}
+\fancyhf{}
+\makeatletter
+\let\headerauthor\@author
+\let\headertitle\@title
+\makeatother
+\lhead{\headertitle}
+\lfoot{\nouppercase\leftmark}
+\rfoot{Page \thepage}
+
+% \onehalfspacing
+\doublespacing
+\begin{document}
+
+%\thispagestyle{empty}
+\maketitle
+
+%\newpage
+%\begin{abstract}
+%\end{abstract}
+
+%\newpage
+%\tableofcontents
+
+%\listoffigures
+
+$0
+
+\end{document}
 ]]
 
-return {
+local main = preamble .. notestheorems .. docinfo
+local hw = preamble .. hwktheorems .. docinfo
+local sub = [[\documentclass[${1:../main.tex}]{subfiles}
 
+\begin{document}
+\section{$2}
+$0
+\end{document}
+]]
+local essay = preamble .. notestheorems .. docinfo
+
+return {
   tex = {
-    ["\\tab "] = [[
+    ["table"] = [[
 \begin{table}[${1:htpb}]
 	\centering
 	\caption{${2:caption}}
@@ -210,7 +299,7 @@ return {
 	\end{tabular}
 \end{table}
     ]],
-    ["\\fig "] = [[
+    ["figure"] = [[
 \begin{figure}[${1:htpb}]
 	\centering
 	${2:\includegraphics[width=0.8\textwidth]{$3}}
@@ -218,140 +307,16 @@ return {
 	\label{fig:${5:${3/\W+/-/g}}}
 \end{figure}
     ]],
-    ["hwtemplate"] = [[
-\documentclass[12pt]{article}
-\usepackage[usenames,svgnames,dvipsnames]{xcolor}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
-\usepackage{textcomp}
-\usepackage[hyphens,spaces,obeyspaces]{url}
-\usepackage{listings}
-\usepackage[no-math]{fontspec}
-\setmonofont{Source Code Pro}
-\lstset{language=C++,
-	basicstyle=\ttfamily,
-	keywordstyle=\color{blue}\ttfamily,
-	stringstyle=\color{red}\ttfamily,
-	commentstyle=\color{green}\ttfamily,
-	morecomment=[l][\color{magenta}]{\#}
-}
-\lstset{language=R,
-    frame = single,
-    commentstyle=\color{ForestGreen}\ttfamily,
-}
-
-\usepackage{bm}
-\usepackage{amsmath,amsthm,amssymb,amsfonts}
-\usepackage{mathtools}
-\usepackage{hyperref}
-\usepackage[color=green!10,
-	colorinlistoftodos,
-	linecolor=lightgray,
-	bordercolor=green!10,
-	textsize=footnotesize]{todonotes} % add [disable] to hide notes
-
-\usepackage{blkarray}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{fancyhdr}
-\usepackage[a4paper, margin=1in]{geometry}
-\usepackage{multicol}
-\usepackage{enumerate}
-\usepackage{enumitem}
-\setlist{nolistsep}
-\usepackage{graphicx}
-\usepackage{gensymb}
-\usepackage{subcaption}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-% \usepackage[noend]{algpseudocode}
-\graphicspath{ {./images/} }
-\usepackage[super]{nth}
-
-\newtheorem{theorem}{Theorem}
-\newtheorem{corollary}{Corollary}[theorem]
-\newtheorem{definition}{Definition}
-\newtheorem{lemma}{Lemma}
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
-\newtheorem*{answer}{Answer}
-
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\R}{\mathbb{R}}
-\renewcommand{\C}{\mathbb{C}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\E}{\text{\textbf{E}}}
-\newcommand{\Var}{\text{\textbf{Var}}}
-%\newcommand{\Pr}{\text{Pr}}
-
-\newcommand{\x}{\bm{x}}
-\newcommand{\y}{\bm{y}}
-\newcommand{\mat}[1]{\mathbf{#1}}
-\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
-\newcommand{\PreserveBackslash}[1]{\let\temp=\\\\#1\let\\\\=\temp}
-\newcolumntype{C}[1]{>{\PreserveBackslash\centering}p{#1}}
-\newcolumntype{R}[1]{>{\PreserveBackslash\raggedleft}p{#1}}
-\newcolumntype{L}[1]{>{\PreserveBackslash\raggedright}p{#1}}
-
-\algdef{SE}[SUBALG]{Indent}{EndIndent}{}{\algorithmicend\ }%
-\algtext*{Indent}
-\algtext*{EndIndent}
-
-\pagestyle{fancy}
-% \fancyhf{}
-\rhead{SID: 20477053}
-\chead{Name: Aaron Si-yuan Wang}
-\lhead{${1:CourseCode} - ${3:ShortTitle}}
-\cfoot{\thepage}
-\title{
-{\LARGE $1 - ${2:CourseName}} \\\\
-\textbf{\LARGE ${4:LongTitle}} \\\\
-% \textbf{}
-}
-\author{ 
-\begin{tabular}{R{0.3\textwidth}L{0.4\textwidth}}
-\normalsize\textbf{Name:} & \normalsize WANG, Aaron Si-yuan \\\\
-\normalsize\textbf{Student ID:} & \normalsize20477053 \\\\
-\end{tabular}
-}
-
-\date{}
-
-\begin{document}
-\maketitle\thispagestyle{fancy}
-$5
-\end{document}
+    ["codeinline"] = [[
+\begin{lstlisting}[language=${1:Python}]
+      $0
+\end{lstlisting}
     ]],
-    ["mainnotestemplate"] = preamble .. [[
-\pagestyle{fancy}
-\renewcommand{\sectionmark}[1]{\markright{#1}}
-\fancyhf{}
-\rhead{\fancyplain{}{${1:CourseCode} Notes}}
-\lhead{\fancyplain{}{\rightmark }} 
-\cfoot{\fancyplain{}{\thepage}}
-
-\title{
-{\LARGE $1 - ${2:CourseName}} \\\\
-\textbf{\large Taught by ${4:InstructorName}}\\\\
-\textbf{\large Notes by Aaron Wang}
-}
-
-\date{}
-
-\begin{document}
-\maketitle\thispagestyle{fancy}
-\tableofcontents
-\newpage
-$5
-\appendix
-\newpage
-\addcontentsline{toc}{section}{Index}
-\printindex
-\end{document}
-]],
+    ["codefile"] = [[ \lstinputlisting[language=${1:Python}]{$0} ]],
+    ["maintemplate"] = main,
+    ["essaytemplate"] = essay,
+    ["subtemplate"] = sub,
+    ["hwktemplate"] = hw,
     --     ["subnotestemplate"]=[[
     -- \documentclass[../main/main.tex]{subfiles}
     --

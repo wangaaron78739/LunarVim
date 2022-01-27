@@ -1,5 +1,4 @@
 require("lsp.config").lspconfig "gopls" {
-  cmd = { DATA_PATH .. "/lspinstall/go/gopls" },
   root_dir = require("lspconfig").util.root_pattern(".git", "go.mod"),
   settings = {
     gopls = {

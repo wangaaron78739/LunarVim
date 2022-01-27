@@ -4,6 +4,7 @@ local conf = {
   fontsize = O.bigfontsize,
 }
 vim.opt_local.wrap = true
+require("keymappings").wrapjk()
 vim.opt_local.spell = true
 vim.opt.number = false
 vim.opt.relativenumber = false
@@ -29,5 +30,23 @@ require("lv-cmp").sources {
   { name = "buffer" },
   { name = "latex_symbols" },
   { name = "calc" },
+  { name = "spell" },
   -- { name = "cmp_tabnine" },
 }
+
+mappings.localleader {
+  p = { "<Plug>MarkdownPreviewToggle", "Preview Toggle" },
+  g = { "<CMD>Glow<CR>", "Glow" },
+}
+
+require("lv-pairs.sandwich").add_local_recipe {
+  buns = { "```\n", "\n```" },
+  quoteescape = true,
+  expand_range = false,
+  nesting = false,
+  input = { "c" },
+}
+
+-- TODO: make snippets for math in markdown?
+
+require("lv-terms").mdeval_keymaps()

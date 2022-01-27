@@ -51,17 +51,13 @@ end
 -- require'snippets'.use_suggested_mappings()
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- capabilities.textDocument.completion.completionItem.snippetSupport = true;
--- local on_attach_common = function(client)
+-- local function on_attach_common (client)
 -- print("LSP Initialized")
 -- require'completion'.on_attach(client)
 -- require'illuminate'.on_attach(client)
 -- end
-M.setup = function()
+function M.setup()
   require("lsp.config").lspconfig "tsserver" {
-    cmd = {
-      DATA_PATH .. "/lspinstall/typescript/node_modules/.bin/typescript-language-server",
-      "--stdio",
-    },
     filetypes = {
       "javascript",
       "javascriptreact",
@@ -75,6 +71,7 @@ M.setup = function()
     -- This makes sure tsserver is not used for formatting (I prefer prettier)
     settings = { documentFormatting = false },
   }
+  require("lsp.config").lspconfig "eslint" {}
 end
 
 return M

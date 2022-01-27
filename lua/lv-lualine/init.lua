@@ -57,7 +57,7 @@ lsp_status_config._init(nil, {
   select_symbol = nil,
   update_interval = 100,
 })
-local lsp_statusline = function()
+local function lsp_statusline()
   if #vim.lsp.buf_get_clients() > 0 then
     return lsp_status_config.status()
   end
@@ -66,8 +66,8 @@ end
 local gps_statusline = { gps.get_location, cond = gps.is_available }
 local ts_statusline = require("nvim-treesitter").statusline
 
-local get_lsp_clients = function(msg)
-  msg = msg or "LSP Inactive"
+local function get_lsp_clients()
+  local msg = "LSP Inactive"
   local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
   local clients = vim.lsp.get_active_clients()
   if next(clients) == nil then
@@ -95,22 +95,33 @@ local get_lsp_clients = function(msg)
   end
 end
 
+local function Qmacro()
+  -- TODO: get contents of dot register?
+  local Q = vim.fn.getreg "q"
+  local dot = vim.fn.getreg "."
+  return "Q=<" .. Q .. ">, •='" .. dot:sub(1, 10) .. "'"
+end
+
 require("lualine").setup {
   options = {
     icons_enabled = true,
-    theme = "catppuccin",
+    -- theme = O.theme,
+    -- theme = "molokai",
+    -- theme = "catppuccino",
     -- theme = "nebulous",
     -- theme = "onedark",
+    theme = "material-nvim",
     -- component_separators = { "", "" },
     -- section_separators = { "", "" },
     disabled_filetypes = {},
   },
+  tabline = {},
   sections = {
     lualine_a = { "mode" },
-    lualine_b = { filename },
-    lualine_c = { gps_statusline, ts_statusline, lsp_statusline },
+    lualine_b = { filename, gps_statusline },
+    lualine_c = { ts_statusline, lsp_statusline },
     lualine_x = { diff, diagnostics },
-    lualine_y = { filetype, "branch" },
+    lualine_y = { get_lsp_clients, filetype, "branch" },
     lualine_z = { "location" },
   },
   inactive_sections = {

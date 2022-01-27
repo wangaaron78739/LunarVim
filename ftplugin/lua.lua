@@ -1,9 +1,5 @@
 -- https://github.com/sumneko/lua-language-server/wiki/Build-and-Run-(Standalone)
-local sumneko_root_path = DATA_PATH .. "/lspinstall/lua"
-local sumneko_binary = sumneko_root_path .. "/sumneko-lua-language-server"
-
 require("lsp.config").lspconfig "sumneko_lua" {
-  cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
   settings = {
     Lua = {
       runtime = {
@@ -14,7 +10,7 @@ require("lsp.config").lspconfig "sumneko_lua" {
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
-        globals = { "vim", "O" },
+        globals = { "vim", "O", "utils", "mappings", "DATA_PATH", "CONFIG_PATH", "require" },
       },
       workspace = {
         -- Make the server aware of Neovim runtime files
@@ -33,10 +29,26 @@ vim.opt_local.tabstop = 2
 vim.opt_local.shiftwidth = 2
 
 -- mappings.buf(0, "x", "is", "?[[<cr>o/]]<cr>", {})
-require("lv-sandwich").add_recipe {
+require("lv-pairs.sandwich").add_local_recipe {
+  buns = { "function()\n", "\nend" },
+  quoteescape = true,
+  expand_range = false,
+  nesting = false,
+  input = { "F" },
+}
+require("lv-pairs.sandwich").add_local_recipe {
+  buns = { "if then\n", "\nend" },
+  quoteescape = true,
+  expand_range = false,
+  nesting = false,
+  input = { "I" },
+}
+require("lv-pairs.sandwich").add_local_recipe {
   buns = { "[[", "]]" },
   quoteescape = true,
   expand_range = false,
   nesting = false,
   input = { "s" },
 }
+
+require("lv-cmp").add_sources { { name = "nvim_lua" } }
