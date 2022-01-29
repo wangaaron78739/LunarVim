@@ -61,7 +61,16 @@ function M.config()
     auto_close = O.auto_close_tree,
     open_on_tab = false,
     ignore_ft_on_setup = { "startify", "dashboard" },
-    lsp_diagnostics = true,
+    diagnostics = {
+      enable = true,
+      show_on_dirs = false,
+      icons = {
+        hint = "",
+        info = "",
+        warning = "",
+        error = "",
+      },
+    },
     update_focused_file = { enable = true },
     view = {
       side = "left",
