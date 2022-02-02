@@ -278,7 +278,6 @@ return packer.startup(function(use)
 
   -- Better motions
   use {
-    -- "IndianBoy42/hop.nvim",
     "phaazon/hop.nvim",
     config = function()
       require("lv-hop").config()
@@ -665,7 +664,8 @@ return packer.startup(function(use)
 
   -- Rust tools
   use {
-    "simrat39/rust-tools.nvim",
+    "IndianBoy42/rust-tools.nvim",
+    branch = "temp",
     config = function()
       require("lv-rust-tools").setup()
     end,
@@ -868,7 +868,7 @@ return packer.startup(function(use)
   use { "rafcamlet/nvim-luapad", cmd = { "Luapad", "LuaRun" }, disable = not O.plugin.luapad }
   -- TODO: try these code running plugins
   use {
-    "IndianBoy42/code_runner.nvim",
+    "CRAG666/code_runner.nvim",
     config = function()
       require("lv-terms").coderunner()
     end,
@@ -1056,6 +1056,7 @@ return packer.startup(function(use)
   }
   use { "p00f/nvim-ts-rainbow", disable = not O.plugin.ts_rainbow }
   use { "nvim-treesitter/nvim-treesitter-refactor" }
+  use "haringsrob/nvim_context_vt"
 
   -- Startup profiler
   use {
@@ -1081,7 +1082,7 @@ return packer.startup(function(use)
 
   -- 'Smarter' pasting
   use {
-    "IndianBoy42/nvim-anywise-reg.lua",
+    "IndianBoy42/nvim-anywise-reg.lua", -- AckslD
     -- AckslD/nvim-anywise-reg.lua
     event = BufRead,
     config = function()
@@ -1280,7 +1281,28 @@ return packer.startup(function(use)
       "InstantJoinSession",
     },
   }
-
+  use {
+    "gbprod/substitute.nvim",
+    config = function()
+      require("substitute").setup()
+    end,
+    module = "substitute",
+  }
+  use {
+    "booperlv/nvim-gomove",
+    config = function()
+      require("gomove").setup {
+        -- whether or not to map default key bindings, (true/false)
+        map_defaults = false,
+        -- whether or not to reindent lines moved vertically (true/false)
+        reindent = true,
+        -- whether or not to undojoin same direction moves (true/false)
+        undojoin = true,
+        -- whether to not to move past end column when moving blocks horizontally, (true/false)
+        move_past_end_col = true,
+      }
+    end,
+  }
   use "antoinemadec/FixCursorHold.nvim"
 
   -- Colorschemes/Themes
@@ -1291,6 +1313,14 @@ return packer.startup(function(use)
     module = "lush",
     disable = not O.plugin.lush,
   }
+  use {
+    "themercorp/themer.lua",
+    branch = "dev",
+    config = function()
+      require("theme").themer()
+    end,
+  }
+  use { "mangeshrex/uwu.vim" }
   -- Colorbuddy colorscheme helper
   use { "tjdevries/colorbuddy.vim", module = "colorbuddy" }
   -- Colorschemes -- https://github.com/folke/lsp-colors.nvim

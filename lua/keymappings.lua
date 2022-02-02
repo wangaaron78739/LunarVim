@@ -305,10 +305,26 @@ function M.setup()
   map("n", resize_prefix .. "Right>", cmd "vertical resize +2", sile)
 
   -- Move current line / block with Alt-j/k ala vscode.
-  map("n", "<C-M-j>", "<cmd>move .+1<cr>==", nore)
-  map("n", "<C-M-k>", "<cmd>move .-2<cr>==", nore)
-  map("x", "<M-j>", ":move '>+1<cr>gv-gv", nore)
-  map("x", "<M-k>", ":move '<-2<cr>gv-gv", nore)
+  -- map("n", "<C-M-j>", "<cmd>move .+1<cr>==", nore)
+  -- map("n", "<C-M-k>", "<cmd>move .-2<cr>==", nore)
+  -- map("x", "<M-j>", ":move '>+1<cr>gv-gv", nore)
+  -- map("x", "<M-k>", ":move '<-2<cr>gv-gv", nore)
+  map("n", "<C-M-h>", "<Plug>GoNSMLeft", {})
+  map("n", "<C-M-j>", "<Plug>GoNSMDown", {})
+  map("n", "<C-M-k>", "<Plug>GoNSMUp", {})
+  map("n", "<C-M-l>", "<Plug>GoNSMRight", {})
+  map("x", "<M-h>", "<Plug>GoVSMLeft", {})
+  map("x", "<M-j>", "<Plug>GoVSMDown", {})
+  map("x", "<M-k>", "<Plug>GoVSMUp", {})
+  map("x", "<M-l>", "<Plug>GoVSMRight", {})
+  map("n", "<C-M-S-h>", "<Plug>GoNSDLeft", {}) -- Duplicate
+  map("n", "<C-M-S-j>", "<Plug>GoNSDDown", {})
+  map("n", "<C-M-S-k>", "<Plug>GoNSDUp", {})
+  map("n", "<C-M-S-l>", "<Plug>GoNSDRight", {})
+  map("x", "<M-S-h>", "<Plug>GoVSDLeft", {})
+  map("x", "<M-S-j>", "<Plug>GoVSDDown", {})
+  map("x", "<M-S-k>", "<Plug>GoVSDUp", {})
+  map("x", "<M-S-l>", "<Plug>GoVSDRight", {})
 
   -- Keep accidentally hitting J instead of j when first going visual mode
   map("x", "J", "j", nore)
@@ -380,24 +396,35 @@ function M.setup()
   map("x", "Y", "myY`y", nore) -- copy linewise
   map("x", "<M-y>", "y", nore)
 
-  --  TODO: Subline Comments
-  -- map("x", "gC", operatorfunc_keys("subline_comment", "I/* <ESC>`>a */<ESC>"))
-
   -- Paste over textobject
-  -- TODO: use register argument
-  map("n", "r", operatorfunc_keys("paste_over", "p"), sile)
-  -- map("n", "R", "r$", sile)
-  map("n", "R", "r", nore)
-  -- map("n", "rr", "vvr", sile)
+  local substitute = function(fn, opts)
+    return function()
+      local substitute = require "substitute"
+      substitute[fn](opts)
+    end
+  end
+  map("n", "r", substitute "operator")
+  map("n", "rr", substitute "line")
+  map("n", "R", substitute "eol")
+  map("x", "r", substitute "visual")
+  local substitute_range = function(fn, opts)
+    return function()
+      local range = require "substitute.range"
+      range[fn](opts)
+    end
+  end
+  map("n", "<leader>c", substitute_range "operator")
+  map("x", "<leader>c", substitute_range "visual")
+  map("n", "<leader>cc", substitute_range "word")
+  map("n", "<leader>C", substitute_range("operator", { motion2 = "iG" }))
+  -- map("n", "r", operatorfunc_keys("paste_over", "p"), sile)
+  -- -- map("n", "R", "r$", sile)
+  -- map("n", "R", "r", nore)
+  -- -- map("n", "rr", "vvr", sile)
+
   map("n", "<M-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
   -- map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
   -- map("n", "<M-S-p>", [[<cmd>call setreg('p', getreg('+'), 'l')<cr>"pp]], nore) -- linewise paste
-
-  -- Start selecting
-  map("n", "<M-l>", "<c-v>l", sile)
-  map("x", "<M-l>", "l", sile)
-  map("n", "<M-h>", "<c-v>h", sile)
-  map("x", "<M-h>", "h", sile)
 
   -- Charwise visual select line
   map("x", "v", "^og_", nore)
@@ -1086,10 +1113,10 @@ function M.setup()
     },
     -- m = "Multi",
     m = "which_key_ignore",
-    c = {
-      operatorfunc_keys("change_all", "<leader>c"),
-      "Change all",
-    },
+    -- c = {
+    --   operatorfunc_keys("change_all", "<leader>c"),
+    --   "Change all",
+    -- },
   }
 
   M.whichkey {
@@ -1111,10 +1138,10 @@ function M.setup()
     -- ["/"] = { cmd "CommentToggle", "Comment" },
     d = { lsputil.range_diagnostics, "Range Diagnostics" },
     r = { name = "Replace/Refactor" },
-    c = {
-      [["z<M-y>:%s/<C-r>z//g<Left><Left>]],
-      "Change all",
-    },
+    -- c = {
+    --   [["z<M-y>:%s/<C-r>z//g<Left><Left>]],
+    --   "Change all",
+    -- },
     s = { 'ygvc<CR><C-r>"<CR><ESC>', "separate" },
     D = {
       name = "Debug",

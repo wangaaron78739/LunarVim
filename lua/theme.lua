@@ -79,6 +79,36 @@ local M = {
     }
     vim.cmd "colorscheme material"
   end,
+  themer = function(theme)
+    theme = theme or "onedark" or "kurai"
+    bg = {
+      bg = {
+        base = "#03070e",
+      },
+    }
+    require("themer").setup {
+      colorscheme = theme,
+      styles = {
+        comment = { style = "italic" },
+        ["function"] = { style = "italic" },
+        functionbuiltin = { style = "italic" },
+        variable = { style = "italic" },
+        variableBuiltIn = { style = "italic" },
+        parameter = { style = "italic" },
+      },
+      remaps = {
+        palette = {
+          kurai = bg,
+          kanagawa = bg,
+          onedark = bg,
+          dracula = bg,
+          darknight = bg,
+          [theme] = bg,
+        },
+      },
+    }
+    -- require("themer.modules.export.nvim").write_colorscheme(require("themer.modules.themes." .. theme))
+  end,
 }
 
 return setmetatable(M, {

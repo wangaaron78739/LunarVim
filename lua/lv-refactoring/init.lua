@@ -1,29 +1,8 @@
 local M = {}
 
-local function telescope_refactor_helper(prompt_bufnr)
-  local content = require("telescope.actions.state").get_selected_entry(prompt_bufnr)
-  require("telescope.actions").close(prompt_bufnr)
-  require("refactoring").refactor(content.value)
-end
-
-function M.telescope_refactors()
-  local opts = require("telescope.themes").get_cursor() -- set personal telescope options
-  require("telescope.pickers").new(opts, {
-    prompt_title = "refactors",
-    finder = require("telescope.finders").new_table {
-      results = require("refactoring").get_refactors(),
-    },
-    sorter = require("telescope.config").values.generic_sorter(opts),
-    attach_mappings = function(_, map)
-      map("i", "<CR>", telescope_refactor_helper)
-      map("n", "<CR>", telescope_refactor_helper)
-      return true
-    end,
-  }):find()
-end
-
 function M.setup()
   local refactor = require "refactoring"
+  require("telescope").load_extension "refactoring"
   refactor.setup()
   local wk = require "which-key"
 
@@ -48,7 +27,8 @@ function M.setup()
     return {
       -- string.format([[<esc><cmd>lua require('refactoring').refactor('%s')<CR>]], name),
       function()
-        require("refactoring").refactor(name)
+        vim.cmd "stopinsert"
+        refactor.refactor(name)
       end,
       name,
     }
@@ -57,9 +37,16 @@ function M.setup()
     e = helper "Extract Function",
     v = helper "Extract Variable",
     i = helper "Inline Variable",
-    f = {
-      [[<esc><cmd>lua require('lv-refactoring').telescope_refactors()<CR>]],
+    r = {
+      "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
       "Refactors",
+    },
+    pv = {
+      function()
+        refactor.debug.print_var {}
+      end,
+      -- "<cmd>lua require('refactoring').debug.print_var({})<CR>",
+      "Printf Var",
     },
   }, visu)
 
@@ -71,6 +58,14 @@ function M.setup()
     v = {
       require("lv-utils").operatorfunc_keys("extract_variable", "<leader>rv"),
       "Extract variable",
+    },
+    r = {
+      "<cmd>lua require('refactoring').debug.printf({below = false})<CR>",
+      "Refactoring.nvim Debug",
+    },
+    c = {
+      "<cmd>lua require('refactoring').debug.cleanup({})<CR>",
+      "Refactoring.nvim Cleanup",
     },
   }, norm)
 end

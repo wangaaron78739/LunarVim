@@ -295,13 +295,20 @@ function M.keymaps(leaderMappings, vLeaderMappings)
     leaderMappings["xc"] = { "<Plug>SnipRun", "SnipRun" }
   end
 
+  if O.plugin.code_runner then
+    leaderMappings["<leader>xc"] = { "<cmd>RunCode<CR>", "RunCode" }
+    leaderMappings["<leader>xf"] = { "<cmd>RunFile<CR>", "RunFile" }
+    leaderMappings["<leader>xP"] = { "<cmd>RunProject<CR>", "RunProject" }
+    -- vim.api.nvim_set_keymap("n", "<leader>crf", ":CRFiletype<CR>", { noremap = true, silent = false })
+    -- vim.api.nvim_set_keymap("n", "<leader>crp", ":CRProjects<CR>", { noremap = true, silent = false })
+  end
   -- Can use: "!", "&", "gt", "gx"
 end
 
 function M.coderunner()
   require("code_runner").setup {
-    filetype = { map = "<leader>xf" },
-    project_context = { map = "<leader>xP" },
+    filetype_path = vim.fn.expand "~/.config/nvim/code_runner.json",
+    project_path = vim.fn.expand "~/.config/nvim/projects.json",
   }
 end
 
