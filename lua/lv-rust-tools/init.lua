@@ -1,5 +1,4 @@
 local M = {}
-local nore = require("keymappings").nore
 function M.ftplugin()
   mappings.localleader {
     m = { "<Cmd>RustExpandMacro<CR>", "Expand Macro" },
@@ -8,11 +7,12 @@ function M.ftplugin()
     h = { "<Cmd>RustHoverActions<CR>", "Hover Actions" },
     s = { ":RustSSR  ==>> <Left><Left><Left><Left><Left><Left>", "Structural S&R" },
   }
-  nore("x", "gh", "<cmd>RustHoverRange<CR>", { buffer = true })
-  nore("n", "gh", "<cmd>RustHoverActions<CR>", { buffer = true })
-  nore("n", "gj", "<cmd>RustJoinLines<CR>", { buffer = true })
-  nore("n", "K", "<cmd>RustCodeAction<CR>", { buffer = true })
-  -- nore("x", "K", "<esc><cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>", { buffer = true })
+  local map = vim.keymap.setl
+  map("x", "gh", "<cmd>RustHoverRange<CR>")
+  map("n", "gh", "<cmd>RustHoverActions<CR>")
+  map("n", "gj", "<cmd>RustJoinLines<CR>")
+  map("n", "K", "<cmd>RustCodeAction<CR>")
+  map("x", "K", ":lua vim.lsp.buf.range_code_action()<cr>")
   mappings.ftleader {
     pR = { "<CMD>RustRunnables<CR>", "Rust Run" },
     pd = { "<CMD>RustDebuggables<CR>", "Rust Debug" },
@@ -128,6 +128,7 @@ function M.setup()
     -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
     server = require("lsp.config").conf_with {
       cmd = require("lsp.config").get_cmd "rust_analyzer",
+      cmd_env = require("lsp.config").get_cmd_env "rust_analyzer",
       settings = {
         ["rust-analyzer"] = {
           checkOnSave = {
@@ -147,15 +148,15 @@ end
 
 function M.crates_ftplugin()
   require("lv-cmp").add_sources { { name = "crates" } }
-  local prefix = "<cmd>lua require'crates'."
+  local crates = require "crates"
   mappings.localleader {
-    t = { prefix .. "toggle()<cr>", "Toggle" },
-    r = { prefix .. "reload()<cr>", "Reload" },
-    u = { prefix .. "update_crate()<cr>", "Update Crate" },
-    a = { prefix .. "update_all_crates()<cr>", "Update All" },
-    U = { prefix .. "upgrade_crate()<cr>", "Upgrade Crate" },
-    A = { prefix .. "upgrade_all_crates()<cr>", "Upgrade All" },
-    ["<localleader>"] = { prefix .. "show_versions_popup()<cr>", "Versions" },
+    t = { crates.toggle, "Toggle" },
+    r = { crates.reload, "Reload" },
+    u = { crates.update_crate, "Update Crate" },
+    a = { crates.update_all_crates, "Update All" },
+    U = { crates.upgrade_crate, "Upgrade Crate" },
+    A = { crates.upgrade_all_crates, "Upgrade All" },
+    ["<localleader>"] = { crates.show_versions_popup, "Versions" },
   }
   mappings.vlocalleader {
     u = { ":lua require('crates').update_crates()<cr>", "Update" },

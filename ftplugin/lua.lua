@@ -28,7 +28,7 @@ require("lsp.config").lspconfig "sumneko_lua" {
 vim.opt_local.tabstop = 2
 vim.opt_local.shiftwidth = 2
 
--- mappings.buf(0, "x", "is", "?[[<cr>o/]]<cr>", {})
+-- vim.keymap.setl("x", "is", "?[[<cr>o/]]<cr>")
 require("lv-pairs.sandwich").add_local_recipe {
   buns = { "function()\n", "\nend" },
   quoteescape = true,

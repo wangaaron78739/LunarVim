@@ -13,11 +13,12 @@ local map_options = {
   silent = true,
 }
 local function map_tele(mode, key, f, options, buffer)
-  local map_key = vim.api.nvim_replace_termcodes(key .. f, true, true, true)
-
-  TelescopeMapArgs[map_key] = options or {}
-
-  local rhs = string.format("<cmd>lua require('telescope')['%s'](TelescopeMapArgs['%s'])<CR>", f, map_key)
+  -- local map_key = vim.api.nvim_replace_termcodes(key .. f, true, true, true)
+  -- TelescopeMapArgs[map_key] = options or {}
+  -- local rhs = string.format("<cmd>lua require('telescope')['%s'](TelescopeMapArgs['%s'])<CR>", f, map_key)
+  local rhs = function()
+    require("telescope")[f](options or {})
+  end
 
   if not buffer then
     map_(mode, key, rhs, map_options)
@@ -29,8 +30,8 @@ end
 local telescope = require "telescope"
 telescope.setup {
   defaults = {
-    find_command = functions.commands.fd,
-    vimgrep_arguments = functions.commands.rg,
+    find_command = functions.shell_cmd.fd,
+    vimgrep_arguments = functions.shell_cmd.rg,
     prompt_prefix = " ",
     selection_caret = " ",
     entry_prefix = "  ",

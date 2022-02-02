@@ -46,7 +46,10 @@ function M.setup()
   }
   local function helper(name)
     return {
-      string.format([[<esc><cmd>lua require('refactoring').refactor('%s')<CR>]], name),
+      -- string.format([[<esc><cmd>lua require('refactoring').refactor('%s')<CR>]], name),
+      function()
+        require("refactoring").refactor(name)
+      end,
       name,
     }
   end

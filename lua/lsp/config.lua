@@ -28,6 +28,8 @@ local function inject_conf(obj)
 end
 M.inject = inject_conf
 
+local lsp_installer_exists, lsp_installer = pcall(require, "nvim-lsp-installer")
+
 ----------------------------------------------------------------------
 --              coq_nvim for completions and snippets               --
 ----------------------------------------------------------------------
@@ -52,8 +54,6 @@ else
   end
 end
 
-local lsp_installer_exists, lsp_installer = pcall(require, "nvim-lsp-installer")
-
 local function lsp_attach_buffers()
   vim.cmd [[do User LspAttachBuffers]]
 end
@@ -67,8 +67,13 @@ function M.get_cmd(name, extra_cmd_args)
       vim.list_extend(cmd, extra_cmd_args)
     end
     return cmd
-  else
-    return name -- FIXME: this is basically wrong af
+  end
+end
+function M.get_cmd_env(name, extra_cmd_args)
+  if lsp_installer_exists then
+    local ok, server = require("nvim-lsp-installer.servers").get_server(name)
+    local installopts = server:get_default_options()
+    return installopts.cmd_env
   end
 end
 

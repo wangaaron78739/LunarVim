@@ -53,56 +53,55 @@ function M.sniprun()
   }
 end
 
-function M.fterm()
-  local term = require "FTerm.terminal"
+local function right(cmd)
+  return require("FTerm.terminal"):new():setup {
+    cmd = cmd,
+    dimensions = { height = 0.95, width = 0.4, x = 1.0, y = 0.5 },
+  }
+end
 
+local function under(cmd)
+  return require("FTerm.terminal"):new():setup {
+    cmd = cmd,
+    dimensions = { height = 0.4, width = 0.6 },
+  }
+end
+
+local function popup(cmd)
+  return require("FTerm.terminal"):new():setup {
+    cmd = cmd,
+    dimensions = { height = 0.9, width = 0.9 },
+  }
+end
+
+-- FIXME: broot unable to open files correctly
+local fterms = setmetatable({
+  down = under(nil),
+  right = right(nil),
+  term = popup(nil),
+}, {
+  __index = function(tbl, key)
+    local new = popup(key)
+    tbl[key] = new
+    return new
+  end,
+})
+
+function M.ftopen(name)
+  return function()
+    fterms[name]:open()
+  end
+end
+
+function M.fterm()
   require("FTerm").setup {
     dimensions = { height = 0.8, width = 0.8, x = 0.5, y = 0.5 },
     border = "single", -- or 'double'
   }
 
-  local function right(cmd)
-    return term:new():setup {
-      cmd = cmd,
-      dimensions = { height = 0.95, width = 0.4, x = 1.0, y = 0.5 },
-    }
-  end
-
-  local function under(cmd)
-    return term:new():setup {
-      cmd = cmd,
-      dimensions = { height = 0.4, width = 0.6 },
-    }
-  end
-
-  local function popup(cmd)
-    return term:new():setup {
-      cmd = cmd,
-      dimensions = { height = 0.9, width = 0.9 },
-    }
-  end
-
-  -- FIXME: broot unable to open files correctly
-  local fterms = setmetatable({
-    down = under(nil),
-    right = right(nil),
-    term = popup(nil),
-  }, {
-    __index = function(tbl, key)
-      local new = popup(key)
-      tbl[key] = new
-      return new
-    end,
-  })
-
-  vim.keymap.set("n", "<M-i>", '<CMD>lua require("FTerm").toggle()<CR>')
-  vim.keymap.set("t", "<M-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+  vim.keymap.set("n", "<M-i>", require("FTerm").toggle)
+  vim.keymap.set("t", "<M-i>", require("FTerm").toggle)
   -- map("t", "<Esc>", '<C-\\><C-n><CMD>lua require("FTerm").close()<CR>', nore)
-
-  function _G.ftopen(name)
-    fterms[name]:open()
-  end
-
   vim.cmd [[
     command! -nargs=1 FtOpen lua ftopen('<args>')
     command! -nargs=1 FtRun lua require'FTerm'.run('<args>\n')
@@ -231,7 +230,13 @@ function M.mdeval()
 end
 function M.mdeval_keymaps()
   mappings.localleader {
-    ["c"] = { "<cmd>lua require 'mdeval'.eval_code_block()<CR>", "Eval Code Block" },
+    -- ["c"] = { "<cmd>lua require 'mdeval'.eval_code_block()<CR>", "Eval Code Block" },
+    ["c"] = {
+      function()
+        require("mdeval").eval_code_block()
+      end,
+      "Eval Code Block",
+    },
   }
 end
 function M.jupyter_ascending()

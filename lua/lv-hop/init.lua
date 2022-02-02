@@ -10,29 +10,47 @@ end
 function M.keymaps(leaderMappings)
   if O.plugin.hop then
     -- TODO: register_nN_repeat here??
-    local prefix = "<cmd>lua require('hop-extensions')."
+    local exts = require "hop-extensions"
     local hops = {
       name = "Hop",
-      w = { prefix .. "hint_words()<cr>", "Words" },
-      L = { prefix .. "hint_lines_skip_whitespace()<cr>", "Lines" },
-      l = { prefix .. "hint_vertical()<cr>", "Lines Column" },
-      ["*"] = { prefix .. "hint_cword()<cr>", "cword" },
-      ["/"] = { prefix .. "hint_patterns({}, vim.fn.getreg('/'))<cr>", "Last Search" },
-      W = { prefix .. "hint_cWORD()<cr>", "cWORD" },
-      h = { prefix .. "hint_locals()<cr>", "Locals" },
-      d = { prefix .. "hint_definitions()<cr>", "Definitions" },
-      -- g = { prefix .. "hint_locals()<cr>gd", "Go to Definition of" },
-      r = { prefix .. "hint_references()<cr>", "References" },
-      u = { prefix .. "hint_references('<cword>')<cr>", "Usages" },
-      s = { prefix .. "hint_scopes()<cr>", "Scopes" },
-      t = { prefix .. "hint_textobjects()<cr>", "Textobjects" },
-      b = { "<cmd>lua require'lv-hop.lsp'.hint_symbols()<cr>", "LSP Symbols" },
-      g = { "<cmd>lua require'lv-hop.lsp'.hint_diagnostics()<cr>", "LSP Diagnostics" },
+      -- ["/"] = { prefix .. "hint_patterns({}, vim.fn.getreg('/'))<cr>", "Last Search" },
+      ["/"] = {
+        function()
+          exts.hint_patterns({}, vim.fn.getreg "/")
+        end,
+        "Last Search",
+      },
+      w = { exts.hint_words, "Words" },
+      L = { exts.hint_lines_skip_whitespace, "Lines" },
+      l = { exts.hint_vertical, "Lines Column" },
+      ["*"] = { exts.hint_cword, "cword" },
+      W = { exts.hint_cWORD, "cWORD" },
+      h = { exts.hint_locals, "Locals" },
+      d = { exts.hint_definitions, "Definitions" },
+      -- g = { exts.hint_localsgd, "Go to Definition of" },
+      r = { exts.hint_references, "References" },
+      u = {
+        function()
+          exts.hint_references "<cword>"
+        end,
+        "Usages",
+      },
+      s = { exts.hint_scopes, "Scopes" },
+      t = { exts.hint_textobjects, "Textobjects" },
+      b = { require("hop-extensions.lsp").hint_symbols, "LSP Symbols" },
+      g = { require("hop-extensions.lsp").hint_diagnostics, "LSP Diagnostics" },
       -- f = { prefix .. "hint_textobjects{query='function'}<cr>", "Functions" },
       -- a = { prefix .. "hint_textobjects{query='parameter'}<cr>", "parameter" },
     }
     for k, v in pairs(O.treesitter.textobj_suffixes) do
-      hops[v[1]] = hops[v[1]] or { prefix .. "hint_textobjects{query='" .. k .. "'}<cr>", "@" .. k }
+      -- hops[v[1]] = hops[v[1]] or { prefix .. "hint_textobjects{query='" .. k .. "'}<cr>", "@" .. k }
+      hops[v[1]] = hops[v[1]]
+        or {
+          function()
+            exts.hint_textobjects { query = k }
+          end,
+          "@" .. k,
+        }
     end
     leaderMappings.h = hops
     -- require("which-key").register(hops, {

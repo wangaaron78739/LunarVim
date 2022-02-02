@@ -19,15 +19,15 @@ parser_config.just = {
 
 local make_nN_pair = mappings.make_nN_pair
 local element_nN = make_nN_pair {
-  '<Cmd>lua require("ts-textobjects/actions").goto_next_element()<CR>',
-  '<Cmd>lua require("ts-textobjects/actions").goto_prev_element()<CR>',
+  require("ts-textobjects/actions").goto_next_element,
+  require("ts-textobjects/actions").goto_prev_element,
 }
 local scope_nN = make_nN_pair {
-  '<Cmd>lua require("ts-textobjects/actions").goto_next_scope()<CR>',
-  '<Cmd>lua require("ts-textobjects/actions").goto_prev_scope()<CR>',
+  require("ts-textobjects/actions").goto_next_scope,
+  require("ts-textobjects/actions").goto_prev_scope,
 }
 local outer_scope_nN = make_nN_pair {
-  '<Cmd>lua require("ts-textobjects/actions").incremental_outer_scope()<CR>',
+  require("ts-textobjects/actions").incremental_outer_scope,
   "<cmd>normal! <C-o><cr>",
 }
 
@@ -59,13 +59,23 @@ local textobj_move_keymaps = {
 }
 local textobj_move_wrap = true
 for obj, suffix in pairs(textobj_suffixes) do
+  local inner = "@" .. obj .. ".inner"
+  local outer = "@" .. obj .. ".outer"
   local inners = make_nN_pair {
-    [[<cmd>lua require("nvim-treesitter.textobjects.move").goto_next_start("@]] .. obj .. [[.inner")<cr>]],
-    [[<cmd>lua require("nvim-treesitter.textobjects.move").goto_previous_start("]] .. obj .. [[.inner")<cr>]],
+    function()
+      require("nvim-treesitter.textobjects.move").goto_next_start(inner)
+    end,
+    function()
+      require("nvim-treesitter.textobjects.move").goto_previous_start(inner)
+    end,
   }
   local outers = make_nN_pair {
-    [[<cmd>lua require("nvim-treesitter.textobjects.move").goto_next_start("@]] .. obj .. [[.outer")<cr>]],
-    [[<cmd>lua require("nvim-treesitter.textobjects.move").goto_previous_start("]] .. obj .. [[.outer")<cr>]],
+    function()
+      require("nvim-treesitter.textobjects.move").goto_next_start(outer)
+    end,
+    function()
+      require("nvim-treesitter.textobjects.move").goto_previous_start(outer)
+    end,
   }
   local inner_next = { inners[1], "@" .. obj .. ".inner" }
   local inner_prev = { inners[2], "@" .. obj .. ".inner" }

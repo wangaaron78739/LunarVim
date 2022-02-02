@@ -1,0 +1,327 @@
+                                                                    packer.nvim - finished in 3.127s
+ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ ✓ Updated akinsho/flutter-tools.nvim: 6acf7d2..9c76482
+  URL: https://github.com/akinsho/flutter-tools.nvim
+  Commits:
+    9c76482 fix(daprunner): Check for nil in dap events (#110) (3 days ago)
+
+ ✓ Updated lervag/vimtex: 3e079a1..178e58a
+  URL: https://github.com/lervag/vimtex
+  Commits:
+    178e58a merge: add g:vimtex_callback_progpath (3 days ago)
+    ccbaacf chore: minor adjustments (3 days ago)
+    41d94b1 fix: add an option for manually specifying the path to the vim binary (3 days ago)
+
+ ✓ Updated gennaro-tedesco/nvim-jqx: 433040c..03b678e
+  URL: https://github.com/gennaro-tedesco/nvim-jqx
+  Commits:
+    03b678e improved readme (34 hours ago)
+
+ ✓ Updated ray-x/lsp_signature.nvim: c7b2b2e..a4ea841
+  URL: https://github.com/ray-x/lsp_signature.nvim
+  Commits:
+    a4ea841 update folder structure (#132) (23 hours ago)
+    31e798f bugfix #119 check the mode and debounce insertleave (25 hours ago)
+    82c463e bug fix for 130 doc_lines truncate (2 days ago)
+    496ea23 add nvim 0.6.0 in workflow (3 days ago)
+
+ ✓ Updated ggandor/lightspeed.nvim: 153e6cb..02c3138
+  URL: https://github.com/ggandor/lightspeed.nvim
+  Commits:
+    02c3138 improv(opts): no default timeout for s/x mode (2 days ago)
+    49d75a6 docs(readme): tweaks (2 days ago)
+    62b0d5c Revert "refactor(get-input)!: use `vim.fn.getcharstr`" (2 days ago)
+    6f3f20a feat: unified repeat interface (s/x/f/t) (3 days ago)
+    d901bec improv(ft)!: simplified repeat interface for f/t (4 days ago)
+    ac3cd93 feat(ft): cold-repeat enters instant-repeat (6 days ago)
+    2b69b3b refactor: retrieve cold-repeat state inside the functions (7 days ago)
+    c1b5d23 refactor(ft:go): pass instant-repeat state as argument (7 days ago)
+    1969cf2 refactor(ft:go): inline values (8 days ago)
+    ab8993c refactor(get-input)!: use `vim.fn.getcharstr` (9 days ago)
+    b172444 refactor(set-beacon): extract virtual text chunks (10 days ago)
+
+ ✓ Updated rcarriga/nvim-notify: 3601270..ef027e3
+  URL: https://github.com/rcarriga/nvim-notify
+  Commits:
+    ef027e3 feat: global on_close (13 hours ago)
+    3f7af58 fix(config): catch 'bg' value for background (3 days ago)
+
+ ✓ Updated neovim/nvim-lspconfig: 5b8624c..9f63725
+  URL: https://github.com/neovim/nvim-lspconfig
+  Commits:
+    9f63725 docs: update server_configurations.md skip-checks: true (8 hours ago)
+    367f490 docs(lua): simplify cmd documentation (#1539) (8 hours ago)
+    7686b18 docs: update server_configurations.md skip-checks: true (9 hours ago)
+    c3b735b docs(lua): clarify sumneko `cmd` setting (9 hours ago)
+    fe9f2a5 docs: update server_configurations.md skip-checks: true (9 hours ago)
+    272f3be feat: add quick-lint-js (#1533) (9 hours ago)
+    3926f9c docs: update server_configurations.md skip-checks: true (11 hours ago)
+    4681bd1 docs: update lua-language-server instructions (#1537) (11 hours ago)
+    4cc2a08 docs: add selene to the list of required linters (#1536) (11 hours ago)
+    382712c docs: replace mention of deprecated APIs (#1532) (25 hours ago)
+    80e101e docs: update server_configurations.md skip-checks: true (2 days ago)
+    4edd1a7 chore!: remove compat shims for pre-0.5.1 handlers (#1530) (2 days ago)
+    f2c2d5e fix(eslint): openDoc function on Linux (#1529) (2 days ago)
+
+ ✓ Updated https://github.com/williamboman/nvim-lsp-installer: a4016db..8fab72f
+  URL: https://github.com/williamboman/nvim-lsp-installer
+  Commits:
+    8fab72f scripts/autogen_metadata: directly import server config from lspconfig (7 minutes ago)
+    824c694 docs: clarify how servers are installed and the recommended setup (#306) (6 hours ago)
+    4df84d7 fix(angularls): also use new_root_dir for probe locations (#302) (34 hours ago)
+    1e2acb0 server: always delete the tmp install dir if installation fails (2 days ago)
+    9229220 fix(clangd): check non-nil before trying to format (3 days ago)
+
+ ✓ Updated nvim-telescope/telescope.nvim: ef24554..27294d7
+  URL: https://github.com/nvim-telescope/telescope.nvim
+  Commits:
+    27294d7 fix: regression with grep builtins (#1548) (32 hours ago)
+    582dbd4 defaults: change `center` layout default size (#1546) (32 hours ago)
+    4016ebe fix: actions.delete_buffer shouldnt force delete (33 hours ago)
+    b50b364 fix: check for Windows drive letter when parsing vimgrep (#1494) (34 hours ago)
+    9d7d322 feat: allow initial results in async_oneshot_finder (#1461) (34 hours ago)
+    0c819d6 docs: layout strategy usage (#1493) (35 hours ago)
+    60a4ce0 fix: dont change highlights when using current_buffer_fuzzy_find (#1524) (35 hours ago)
+    4e075bf feat: highlight group for counter: TelescopePromptCounter (35 hours ago)
+    4b3efd2 fix: lsp_workspace_symbols (#1535) (2 days ago)
+    7462999 fix: make lsp_* async (#1506) (3 days ago)
+    aa41912 fix: Remove symbol_msg substitution (#1525) (3 days ago)
+
+ ✓ Updated nvim-treesitter/nvim-treesitter: 8d1547f..d6a0a26
+  URL: https://github.com/nvim-treesitter/nvim-treesitter
+  Commits:
+    d6a0a26 OCaml string format specifiers (2 days ago)
+    acf0c0f OCaml use @constant.builtin for built in constants (3 days ago)
+
+ ✓ Updated hrsh7th/nvim-cmp: d17d41b..d12ba90
+  URL: https://github.com/hrsh7th/nvim-cmp
+  Commits:
+    d12ba90 feat: add issue template (#604) (20 hours ago)
+    10f5883 Fix docs (3 days ago)
+    7960dad fmt (3 days ago)
+    c2652f0 Implement #349 (3 days ago)
+
+ ✓ Updated hrsh7th/cmp-path: e30d3fd..d83839a
+  URL: https://github.com/hrsh7th/cmp-path
+  Commits:
+    d83839a Remove trigger chars (3 days ago)
+
+ ✓ Updated L3MON4D3/LuaSnip: 7fc3cc2..0528072
+  URL: https://github.com/L3MON4D3/LuaSnip
+  Commits:
+    0528072 Auto generate docs (2 hours ago)
+    1e6f1f8 doc: use simple ordered list instead of indexing an unordered one. (2 hours ago)
+    f743693 doc: clarify expected position-format. (2 hours ago)
+    7ff647d Auto generate docs (2 hours ago)
+    0480cf3 docs: update lsp_expand-doc. (2 hours ago)
+    8d9652c Auto generate docs (2 hours ago)
+    e0c8c3a Format with stylua (2 hours ago)
+    43d39c5 fix: default captures to empty table. (2 hours ago)
+    1deeda8 feat: allow expanding at any position. (2 hours ago)
+    cfadfe9 Merge pull request #236 from L3MON4D3/refactor_expand (12 hours ago)
+    608dd85 Auto generate docs (15 hours ago)
+    90f6505 Format with stylua (15 hours ago)
+    ee82b7c fix: lsp-expand should use the new expand-function. (15 hours ago)
+    bee69f3 docs: document new expansion-function. (15 hours ago)
+    4191d3e docs: also update link to snippets-table in readme. (16 hours ago)
+    2ee64df docs: recommend skipping auxiliary functions. (16 hours ago)
+    d7b28de refactor(expansion): decouple removing trigger-text and expanding snippet. (27 hours ago)
+    a4dedb0 fix: fix+improve update-behaviour of restore/dynamic/snippetNode. (2 days ago)
+    a134203 Auto generate docs (2 days ago)
+    082365c perf: don't copy restoreNode-snippet in put_initial. Closes #234. (2 days ago)
+    3b2c08a Auto generate docs (3 days ago)
+    786569e feat(choice): Allow passing a table of nodes as choice. (3 days ago)
+    62e9547 Auto generate docs (3 days ago)
+    70fc1fe docs: misc fixes, rewords, corrections. (3 days ago)
+    a354965 Merge pull request #233 from L3MON4D3/restore_position (3 days ago)
+    9c6a85c Auto generate docs (3 days ago)
+    e9cf82e whoops v2. (3 days ago)
+    fd048fc Auto generate docs (3 days ago)
+    45da508 Merge branch 'restore_position' of github.com:L3MON4D3/LuaSnip into restore_position (3 days ago)
+    5dddf65 Add short example for overriding default globally to docs. (3 days ago)
+    6a7f2da Auto generate docs (3 days ago)
+    68d569e Add docs. (3 days ago)
+    6525053 Disable restore_cursor by default. (3 days ago)
+    48d03d8 fix(dyn): prevent querying cleared extmarks. (3 days ago)
+    90e29b0 Format with stylua (4 days ago)
+    7199c9b Allow disabling cursor-restoration per-choiceNode. (4 days ago)
+    0be29b5 Format with stylua (4 days ago)
+    312ac80 Completely restore cursor position when editing in INSERT. (4 days ago)
+    649f6ed Auto generate docs (4 days ago)
+    859149d Format with stylua (4 days ago)
+    95ac689 Jump to restored position. (4 days ago)
+    58c6bf0 Implement find_node-method. (4 days ago)
+
+ ✓ Updated saadparwaiz1/cmp_luasnip: 16832bb..75bf643
+  URL: https://github.com/saadparwaiz1/cmp_luasnip
+  Commits:
+    75bf643 Merge pull request #29 from L3MON4D3/master (12 hours ago)
+    3af7eea Use new luasnip-functions to expand. (27 hours ago)
+
+ ✓ Updated windwp/nvim-autopairs: fba2503..18fe311
+  URL: https://github.com/windwp/nvim-autopairs
+  Commits:
+    18fe311 chore: generated vimdoc (3 days ago)
+    5da0994 feat: disable insert pairs after visual block mode (3 days ago)
+
+ ✓ Updated numToStr/Comment.nvim: a6e1c12..ed8f488
+  URL: https://github.com/numToStr/Comment.nvim
+  Commits:
+    ed8f488 fix: incorrect arguments for extended mappings (9 hours ago)
+    b33fbf3 chore: it can be better (9 hours ago)
+
+ ✓ Updated pianocomposer321/yabs.nvim: 7c2aa38..e392b7b
+  URL: https://github.com/pianocomposer321/yabs.nvim
+  Commits:
+    e392b7b Rename util module into utils (2 hours ago)
+    fe75de8 Use util.notify instead of error (3 hours ago)
+    92c9d46 Improve README (10 hours ago)
+    106c1c5 Use title in notify for nicer notifications (12 hours ago)
+    55963e5 Merge pull request #31 from pianocomposer321/ftdetect (2 days ago)
+    d322846 Use ftdetect to set .yabs filetype (2 days ago)
+    16b411d Remove unused variable (2 days ago)
+    c50d218 Add luacheck (2 days ago)
+    4c098d4 Add StyLua checks and apply formatting (2 days ago)
+    deaa807 Merge pull request #28 from pianocomposer321/feature (3 days ago)
+    a107960 Apply suggestions (3 days ago)
+    6ac9eb1 Add usage example (3 days ago)
+    db0faa7 refactor: replace vim.fn call with vim.loop call for cwd (5 days ago)
+    c18a6f5 feat: add yabs.first_available function (6 weeks ago)
+    b7900e4 fix: have a less confusing error message when task is nil (6 weeks ago)
+    96aca9d feat: allow default_task to be a function (6 weeks ago)
+    5ff5150 fix: return after running global default task (6 weeks ago)
+    22eb341 fix: run default task even if it's global (6 weeks ago)
+    b293b93 Merge branch 'disable' into feature (6 weeks ago)
+    f2c2a08 feat!: rename disable to condition and invert effect (6 weeks ago)
+    dc80f6a feat: add conditions (6 weeks ago)
+    3cd8eb0 refactor: move `file_exists` function to util module (6 weeks ago)
+    8bd8026 Merge branch 'disable' into feature (6 weeks ago)
+    0caa76f Merge branch 'main' into feature (6 weeks ago)
+    b3bd7ef fix(telescope): make telescope results not show disabled tasks (6 weeks ago)
+    0f4b60b feat: add disable option for tasks (6 weeks ago)
+    ee2d28b feat: if .yabs file returns anything, use that as the config (6 weeks ago)
+
+ ✗ Failed to update phaazon/hop.nvim
+ ✓ Updated dstein64/vim-startuptime: 5e4c41a..89c81d1
+  URL: https://github.com/dstein64/vim-startuptime
+  Commits:
+    89c81d1 Move prefix and suffix out of loop. (8 hours ago)
+    95b4070 An additional backslash is needed on Windows. (8 hours ago)
+    e49fc5d Prepend '[' with '\' to avoid its special meaning. (9 hours ago)
+
+ ✓ Updated saecki/crates.nvim/main: cdfb2df..4800f99
+  URL: https://github.com/saecki/crates.nvim
+  Commits:
+    4800f99 fix typo in config (8 hours ago)
+    bf6a476 add plain text example config to vimdoc (9 hours ago)
+    613c467 format tags in function documentation for vimdoc (10 hours ago)
+    c28cbe4 generate functions section of readme (10 hours ago)
+    cd1ceb6 update plain text config section of readme (11 hours ago)
+    a7c9bc0 generate default config section of readme (11 hours ago)
+    a4ffd5a add missing commas to generated default config (11 hours ago)
+    26c3d0b improve documentation (11 hours ago)
+    64c10b3 ignore deprecated fields in default config (12 hours ago)
+    dfac9e3 Generate vim doc (#9) (27 hours ago)
+    d15567a add missing condition check to set_version_smart (2 days ago)
+
+ ✓ Updated marko-cerovac/material.nvim: 94cd8f4..3649549
+  URL: https://github.com/marko-cerovac/material.nvim
+  Commits:
+    3649549 added documentation on custom_highlights (3 days ago)
+
+ ✓ Updated wbthomason/packer.nvim: db3c3e3..851c62c
+  URL: https://github.com/wbthomason/packer.nvim
+  Commits:
+    851c62c Add workaround for symlinking on Windows (#712) (2 days ago)
+    ff566d9 Fix #714: Add sequencing constraints for simply-loaded predecessors (#715) (3 days ago)
+
+ ✓ Updated folke/trouble.nvim: ce335ab..4d0a711
+  URL: https://github.com/folke/trouble.nvim
+  Commits:
+    4d0a711 fix: use new DiagnosticChanged event (#127) (2 days ago)
+
+ ✓ Updated ldelossa/calltree.nvim: a454589..233bd3e
+  URL: https://github.com/ldelossa/calltree.nvim
+  Commits:
+    233bd3e refactor: rename marshal maps and various comment rewordings (28 hours ago)
+    b49c5a1 tooling: add CTDumpNode command (29 hours ago)
+    b25e763 refactor: use ui_req_ctx (2 days ago)
+    c556dbe fix,source-tracking: fix autocommand crash (2 days ago)
+    514877c ui: range source tracking (2 days ago)
+    164b1fa fix,smart_close: get ui_state in _smart_close function (2 days ago)
+    fe55e4d ui,fix: check calltree window nils correctly (2 days ago)
+    59d039b ui,symboltree: source code tracking (3 days ago)
+    9456f6c fix: add missing icons (3 days ago)
+
+ ✓ Updated IndianBoy42/hop-extensions: bb492b1..86892e9
+  URL: https://github.com/IndianBoy42/hop-extensions
+  Commits:
+    86892e9 Merge pull request #1 from prncss-xyz/main (2 days ago)
+    503d021 remove utils.dump (2 days ago)
+
+ ✓ Updated mfussenegger/nvim-dap: 4e8bb7c..ce4e56f
+  URL: https://github.com/mfussenegger/nvim-dap
+  Commits:
+    ce4e56f Ensure `${relativeFileDirname}` is relative (2 days ago)
+    9e3dd8c Fix `Set variable` action (2 days ago)
+    16c2274 Change widget mappings (`a` is menu, `<CR>` is expand/collapse) (3 days ago)
+    3482567 Add set variable action to variables/scope widget (3 days ago)
+    d14d3de Add set expression action to variables/scopes widget (3 days ago)
+    66842e0 Make widget buffers unmodifiable by default (3 days ago)
+    dc22115 GHA: Use slim super-linter image (3 days ago)
+    61840b0 Remove deprecated ui.variables module (3 days ago)
+
+ ✓ Updated rcarriga/nvim-dap-ui: a518353..96813c9
+  URL: https://github.com/rcarriga/nvim-dap-ui
+  Commits:
+    96813c9 fix(util): get uri of absolute filepath (10 hours ago)
+
+ ✓ Updated tjdevries/colorbuddy.vim: e231f7e..c678edd
+  URL: https://github.com/tjdevries/colorbuddy.vim
+  Commits:
+    c678edd fix: Try and source a vim colorscheme if fails to require the colorscheme name (3 days ago)
+
+ ✓ Updated lewis6991/gitsigns.nvim: 9678750..edbc935
+  URL: https://github.com/lewis6991/gitsigns.nvim
+  Commits:
+    edbc935 feat(setqflist): Add 'open' option (6 hours ago)
+    f362e54 feat(actions): true partial hunk staging (6 hours ago)
+    0ffa5a0 Change mappings to use Gitsigns command (6 hours ago)
+    119ebde feat(current_line_blame): add caching of blame (2 days ago)
+
+ ✓ Updated kevinhwang91/nvim-bqf: b9f99dc..3c39608
+  URL: https://github.com/kevinhwang91/nvim-bqf
+  Commits:
+    3c39608 fix(qfwin): keep jumplist for jump with drop (34 hours ago)
+    8577586 feat: add new jump commands (#45) (35 hours ago)
+    0e9d4d6 fix(previewer): switch tabpage can't fire cursor move (35 hours ago)
+
+ ✓ Updated tpope/vim-fugitive: 5a24c25..2064312
+  URL: https://github.com/tpope/vim-fugitive
+  Commits:
+    2064312 Don't reject invalid Git dir when detecting common dir (3 days ago)
+    c666c86 Fix blame from stage buffer (3 days ago)
+    a099a26 Disable diff.suppressBlankEmpty for summary window diff (3 days ago)
+    82f2841 Fix gf error in commit message outside of repository (6 days ago)
+
+ ✓ Updated folke/todo-comments.nvim: 9983edc..6570fd2
+  URL: https://github.com/folke/todo-comments.nvim
+  Commits:
+    6570fd2 fix: updated default colors to use 0.6 diagnostic highlights (12 hours ago)
+
+ ✓ Updated pwntester/octo.nvim: 44df9c0..98e449d
+  URL: https://github.com/pwntester/octo.nvim
+  Commits:
+    98e449d Merge pull request #220 from waltermaldonado/feature/corporate_proxy (4 hours ago)
+    958ef19 Pass in proxy variables to plenary job (8 hours ago)
+
+ ✓ Updated sindrets/diffview.nvim: 2c0f5af..542bd0a
+  URL: https://github.com/sindrets/diffview.nvim
+  Commits:
+    542bd0a Async updates in diff views (#100) (35 minutes ago)
+
+
+ Press 'q' to quit
+ Press '<CR>' to show more info
+ Press 'd' to show the diff
+ Press 'r' to revert an update

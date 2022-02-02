@@ -52,11 +52,16 @@ function M.setup()
         when_cmp_visible()
       elseif luasnip.expand_or_jumpable() then
         feedkeys(t "<Plug>luasnip-expand-or-jump", "", false)
-      elseif check_back_space() then
-        feedkeys(t "<tab>", "n", false)
       else
-        feedkeys(t "<Plug>(Tabout)", "", false)
-        -- fallback()
+        local ok, neogen = pcall(require, "neogen")
+        if ok and neogen.jumpable() then
+          feedkeys(t "<cmd>lua require'neogen'.jump_next()<cr>", "", false)
+        elseif check_back_space() then
+          feedkeys(t "<tab>", "n", false)
+        else
+          feedkeys(t "<Plug>(Tabout)", "", false)
+          -- fallback()
+        end
       end
     end
   end

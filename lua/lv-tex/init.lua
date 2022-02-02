@@ -1045,7 +1045,7 @@ function M.ftplugin()
     o = { cmd "VimtexCompileOutput", "Compile Output" },
     e = { cmd "VimtexErrors", "Errors" },
     l = { cmd "TexlabBuild", "Texlab Build" },
-    n = { cmd.require("nabla").action, "Nabla" },
+    n = { require("nabla").action, "Nabla" },
     m = { cmd "VimtexToggleMain", "Toggle Main File" },
     a = { cmd "AirLatex", "Air Latex" },
   }

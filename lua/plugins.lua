@@ -341,27 +341,25 @@ return packer.startup(function(use)
   use { "theHamsta/nvim-treesitter-pairs", event = BufRead, disable = not O.plugin.ts_matchup }
 
   -- Vim Doge Documentation Generator
-  use {
-    "kkoomen/vim-doge",
-    run = ":call doge#install()",
-    cmd = "DogeGenerate",
-    disable = not O.plugin.doge,
-  }
-  use {
-    "nvim-treesitter/nvim-tree-docs",
-    config = function()
-      require("lv-treesitter.docs").config()
-    end,
-  }
   -- use {
-  --   "danymat/neogen",
-  --   config = function()
-  --     require("neogen").setup {
-  --       enabled = true,
-  --     }
-  --   end,
-  --   requires = "nvim-treesitter/nvim-treesitter",
+  --   "kkoomen/vim-doge",
+  --   run = ":call doge#install()",
+  --   cmd = "DogeGenerate",
+  --   disable = not O.plugin.doge,
   -- }
+  -- use {
+  --   "nvim-treesitter/nvim-tree-docs",
+  --   config = function()
+  --     require("lv-treesitter.docs").config()
+  --   end,
+  -- }
+  use {
+    "danymat/neogen",
+    config = function()
+      require("lv-neogen").config()
+    end,
+    requires = "nvim-treesitter/nvim-treesitter",
+  }
 
   -- Colorizer?
   use {
@@ -1015,8 +1013,9 @@ return packer.startup(function(use)
   use {
     "David-Kunz/treesitter-unit",
     config = function()
-      vim.keymap.set("v", "x", '<cmd>lua require"treesitter-unit".select()<CR>')
-      vim.keymap.set("o", "x", '<cmd><c-u>lua require"treesitter-unit".select()<CR>')
+      vim.keymap.set("v", "x", require("treesitter-unit").select)
+      -- vim.keymap.set("o", "x", '<cmd><c-u>lua require"treesitter-unit".select()<CR>')
+      vim.keymap.set("o", "x", require("treesitter-unit").select)
     end,
     disable = not O.plugin.ts_textunits,
   }
