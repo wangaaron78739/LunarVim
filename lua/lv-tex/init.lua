@@ -533,6 +533,8 @@ local math_maps = {
   "models",
   [">="] = "geq",
   ["=="] = "equiv",
+  ["=~"] = "cong",
+  "cong",
   ["t=="] = "triangleq",
   ["<="] = "leq",
   ["!="] = "neq",
@@ -991,12 +993,12 @@ function M.ftplugin()
     },
   }
 
-  require("lv-utils").define_augroups {
-    _general_lsp = {
-      { "CursorHold,CursorHoldI", "*", "lua vim.lsp.buf.formatting()" },
-      { "CursorMoved,TextChanged,InsertEnter", "*", "lua vim.lsp.buf.cancel_formatting()" },
-    },
-  }
+  -- require("lv-utils").define_augroups {
+  --   _general_lsp = {
+  --     { "CursorHold,CursorHoldI", "<buffer>", "lua vim.lsp.buf.formatting()" },
+  --     { "CursorMoved,TextChanged,InsertEnter", "<buffer>", "lua vim.lsp.buf.cancel_formatting()" },
+  --   },
+  -- }
 
   require("lv-cmp").autocomplete(false)
   require("lv-cmp").sources {
@@ -1040,12 +1042,17 @@ function M.ftplugin()
     s = { cmd "VimtexStop", "Stop Project Compilation" },
     t = { cmd "VimtexTocToggle", "Toggle Table Of Content" },
     v = { cmd "VimtexView", "View PDF" },
-    c = { "<leader>Tc", "Toggle Conceal" },
+    c = { utils.conceal_toggle, "Toggle Conceal" },
     b = { cmd "VimtexCompile", "Compile" },
     o = { cmd "VimtexCompileOutput", "Compile Output" },
     e = { cmd "VimtexErrors", "Errors" },
     l = { cmd "TexlabBuild", "Texlab Build" },
-    n = { require("nabla").action, "Nabla" },
+    n = {
+      function()
+        require("nabla").action()
+      end,
+      "Nabla",
+    },
     m = { cmd "VimtexToggleMain", "Toggle Main File" },
     a = { cmd "AirLatex", "Air Latex" },
   }

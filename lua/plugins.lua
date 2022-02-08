@@ -36,9 +36,9 @@ return packer.startup(function(use)
   use "lewis6991/impatient.nvim" -- Will be merged in https://github.com/neovim/neovim/pull/15436
   use {
     "nathom/filetype.nvim",
-    setup = function()
-      vim.g.did_load_filetypes = 1
-    end,
+    -- setup = function()
+    --   vim.g.did_load_filetypes = 1
+    -- end,
     config = function()
       require("filetype").setup {
         overrides = O.filetypes,
