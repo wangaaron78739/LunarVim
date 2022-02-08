@@ -401,9 +401,8 @@ function M.setup()
 
   -- Paste over textobject
   -- TODO: use register argument
-  map("n", "r", operatorfunc_keys("paste_over", "p"), sile)
+  map("n", "R", operatorfunc_keys("paste_over", "p"), sile)
   -- map("n", "R", "r$", sile)
-  map("n", "R", "r", nore)
   -- map("n", "rr", "vvr", sile)
   map("n", "<M-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
   -- map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
@@ -561,8 +560,8 @@ function M.setup()
   map("i", "<M-i>", cmd "normal! I", nore)
 
   -- Slightly easier commands
-  map("n", ";", ":", {})
-  map("x", ";", ":", {})
+  -- map("n", ";", ":", {})
+  -- map("x", ";", ":", {})
   -- map('c', ';', "<cr>", sile)
 
   -- Add semicolon
@@ -677,20 +676,20 @@ function M.setup()
     map("o", key, "a" .. key, { remap = true })
     map("n", "<M-" .. key .. ">", "va" .. key, { remap = true })
   end
-  quick_inside "w"
-  quick_inside "p"
-  quick_inside "W"
-  quick_inside "b"
-  quick_inside "B"
-  quick_inside "["
-  quick_around "]"
-  quick_inside "("
-  quick_around ")"
-  quick_inside "{"
-  quick_around "}"
-  quick_inside '"'
-  quick_inside "'"
-  quick_inside "q"
+  -- quick_inside "w"
+  -- quick_inside "p"
+  -- quick_inside "W"
+  -- quick_inside "b"
+  -- quick_inside "B"
+  -- quick_inside "["
+  -- quick_around "]"
+  -- quick_inside "("
+  -- quick_around ")"
+  -- quick_inside "{"
+  -- quick_around "}"
+  -- quick_inside '"'
+  -- quick_inside "'"
+  -- quick_inside "q"
   -- map("n", "r", '"_ci', {})
   -- map("n", "x", '"_d', {})
   -- map("n", "X", "x", nore)
@@ -724,7 +723,10 @@ function M.setup()
   -- Plugin keymaps
   require("lv-zen").keymaps()
   require("lv-dial").keymaps()
-  require("lv-gestures").keymaps()
+  if O.plugin.gesture then
+    require("lv-gestures").keymaps()
+  end
+
 
   -- Terminal pass through escape key
   map("t", "<ESC>", "<ESC>", nore)
@@ -1059,8 +1061,8 @@ function M.setup()
   if O.plugin.trouble then
     -- TODO: make sure this is symmetric with <leader>s (telescope search)
     leaderMappings["d<space>"] = { cmd "TroubleToggle", "Trouble Toggle" }
-    leaderMappings["dd"] = { cmd "TroubleToggle lsp_document_diagnostics", "Document" }
-    leaderMappings["dD"] = { cmd "TroubleToggle lsp_workspace_diagnostics", "Workspace" }
+    leaderMappings["dd"] = { cmd "TroubleToggle document_diagnostics", "Document" }
+    leaderMappings["dD"] = { cmd "TroubleToggle workspace_diagnostics", "Workspace" }
     leaderMappings["dr"] = { cmd "TroubleToggle lsp_references", "References" }
     leaderMappings["ds"] = { cmd "TroubleToggle lsp_definitions", "Definitions" }
     leaderMappings["dq"] = { cmd "TroubleToggle quickfix", "Quick Fixes" }

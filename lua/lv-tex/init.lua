@@ -532,7 +532,7 @@ local math_maps = {
   "vdash",
   "models",
   [">="] = "geq",
-  ["=="] = "equiv",
+  -- ["=="] = "equiv",
   ["t=="] = "triangleq",
   ["<="] = "leq",
   ["!="] = "neq",
@@ -565,19 +565,20 @@ local math_maps = {
   -- ["--"] = "setminus",
   -- ["null"] = "emptyset",
   -- ["varnull"] = "varnothing",
-  ["\\m"] = "setminus",
+  -- ["\\m"] = "setminus",
   "surd",
   ["span"] = "sspan",
   "argmin",
   "because",
   "therefore",
   "argmax",
-  ["part"] = "partial",
+  -- ["part"] = "partial",
   ["inf"] = "infty", -- FIXME: why below here doesn't trigger? WHY DOES IT TRIGGER NOW!?
   "min",
   "max",
   "log",
   "exp",
+  "neq",
   "perp",
   "because",
   "therefore",
@@ -716,13 +717,14 @@ list_extend(auto, {
   ms(re [[(%\?[%w%^]+)^bar]], { t "\\overline{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)^_]], { t "\\overline{", sub(1), t "}" }),
   ms(re [[(%\?[%w%^]+)^hat]], { t "\\hat{", sub(1), t "}" }),
-  ms("bar", { t "\\overline{", i(0), t "}" }),
-  ms("hat", { t "\\hat{", i(0), t "}" }),
-  ms("iprod", { t "\\iprod{", i(0), t "}" }),
-  ms(re "(%b{})/", { t "\\frac", sub(1), t "{", i(0), t "}" }),
-  ms(re "(%\\?%w+)/", { t "\\frac{", sub(1), t "}{", i(0), t "}" }),
+  ms("bar", { t "\\overline{", i(1), t "}", i(0) }),
+  ms("hat", { t "\\hat{", i(1), t "}", i(0) }),
+  ms("dot", { t "\\dot{", i(1), t "}", i(0) }),
+  ms("iprod", { t "\\iprod{", i(1), t "}", i(0) }),
+  ms(re "(%b{})/", { t "\\frac", sub(1), t "{", i(1), t "}", i(0) }),
+  ms(re "(%\\?%w+)/", { t "\\frac{", sub(1), t "}{", i(1), t "}", i(0) }),
   ms(re "(%b{})c/", { t "\\binom", sub(1), t "{", i(0), t "}" }),
-  ms("//", { t "\\frac{", i(1), t "}{", i(0), t "}" }),
+  ms("//", { t "\\frac{", i(1), t "}{", i(2), t "}", i(0) }),
   -- TODO: binomial
   ms(re [[([%w^]+)sr]], { sub(1), t "^2", i(0) }),
   ms(re [[([%w^]+)cb]], { sub(1), t "^3", i(0) }),
@@ -745,9 +747,16 @@ list_extend(auto, {
   ms("rcl", { t "\\rceil" }),
   ms("rfl", { t "\\rfloor" }),
   -- ms("&", { t "&", i(0), t " \\\\" }), -- TODO: detect align environment?
-  ms("&=", { t "&=", i(0), t " \\\\" }), -- TODO: detect align environment?
+  ms("==", { t "&=", i(0), t " \\\\" }), -- TODO: detect align environment?
   ms(re "&(\\%w+) ", { t "&", sub(1), t " ", i(0), t " \\\\" }), -- TODO: detect align environment?
   -- ms("|", { t "|", i(0), t "|" }),
+
+  ms("norm", { t "\\|", i(1), t "\\|", i(0) }),
+  ms("set ", { t "\\{", i(1), t "\\}", i(0) }),
+  ms("part ", { t "\\frac{\\partial ", i(1), t "}{\\partial ", i(2), t "}", i(0) }),
+  nms("mk", { t "$", i(1), t "$", i(0) }),
+  nms("todo ", { t "\\todo[inline]{", i(1), t "}", i(0) }),
+  nms("dm", { t { "\\[", "" }, i(1), t { "", "\\]" }, i(0) }),
 
   -- Subscripting and superscripting
   s(
@@ -763,7 +772,9 @@ list_extend(auto, {
     }
   ),
   ms(renw "__", { t "_{", i(0), t "}" }),
+  ms(renw "td", { t "^{", i(0), t "}" }),
   ms(renw "%^%^", { t "^{", i(0), t "}" }),
+  ms(renw "invs", { t "^{-1}", i(0) }),
   nms(renw "%^%^", { t "\\cite{", i(0), t "}" }),
   ms(renw [[(%S) ([%^_])]], { sub(1), sub(2) }), -- Remove extra ws sub/superscript
   ms(renw [[([A-Za-z%}%]%)])(%d)]], { sub(1), t "_", sub(2) }), -- Auto subscript
@@ -817,9 +828,6 @@ local function mi(dep)
     return nodes[1]
   end, { dep })
 end
-list_extend(snips, {
-  ms("partfrac", { t "\\frac{\\partial ", i(1), t "}{\\partial ", i(0), t "}" }),
-})
 for _, v in pairs(theorems) do
   list_extend(snips, {
     s(v, {

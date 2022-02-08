@@ -673,6 +673,7 @@ return packer.startup(function(use)
     end,
     ft = "rust",
     disable = not O.plugin.rust_tools,
+    commit = "876089969aa8ccf8784039f7d6e6b4cab6d4a2b1",
   }
   use {
     "saecki/crates.nvim",
@@ -757,7 +758,7 @@ return packer.startup(function(use)
 
   -- Code action Menu
   use {
-    "weilbith/nvim-code-action-menu",
+    "weilbith/nvim-code-action-menu", --TODO: Breaking change https://github.com/weilbith/nvim-code-action-menu/issues/39
     config = function()
       utils.define_augroups {
         _lsputil_codeaction_list = {

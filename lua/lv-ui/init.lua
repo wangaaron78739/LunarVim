@@ -1,7 +1,6 @@
 local M = {}
 function M.config()
-  -- require'lv-ui.popui'.config()
-  vim.ui.select = require("lv-telescope.functions").uiselect()
+  require'lv-ui.popui'.config()
   vim.ui.input = function(opts, on_confirm)
     opts = opts or {}
     -- opts.completion
