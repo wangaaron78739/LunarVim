@@ -771,8 +771,8 @@ list_extend(auto, {
       end,
     }
   ),
-  ms(renw "__", { t "_{", i(0), t "}" }),
-  ms(renw "td", { t "^{", i(0), t "}" }),
+  ms(renw "__", { t "_{", i(1), t "}", i(0) }),
+  ms(renw "td", { t "^{", i(1), t "}", i(0) }),
   ms(renw "%^%^", { t "^{", i(0), t "}" }),
   ms(renw "invs", { t "^{-1}", i(0) }),
   nms(renw "%^%^", { t "\\cite{", i(0), t "}" }),

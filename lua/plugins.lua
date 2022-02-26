@@ -73,6 +73,7 @@ return packer.startup(function(use)
     cmd = { "LspInstall", "LspInstallInfo", "LspUninstall", "LspUninstallAll", "LspInstallLog", "LspPrintInstalled" },
     module = "nvim-lsp-installer",
   }
+  use { "scalameta/nvim-metals", requires = { "nvim-lua/plenary.nvim" } }
 
   -- Utilities
   use { "nvim-lua/plenary.nvim" }

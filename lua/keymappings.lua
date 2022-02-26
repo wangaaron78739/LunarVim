@@ -727,7 +727,6 @@ function M.setup()
     require("lv-gestures").keymaps()
   end
 
-
   -- Terminal pass through escape key
   map("t", "<ESC>", "<ESC>", nore)
   map("t", "<ESC><ESC>", [[<C-\><C-n>]], nore)
@@ -804,7 +803,8 @@ function M.setup()
       u = { cmd "UndotreeToggle", "Undo tree" },
       r = { cmd "Ranger", "Ranger" },
       q = { luacmd "utils.quickfix_toggle()", "Quick fixes" },
-      E = { cmd "!open '%:p:h'", "Open File Explorer" },
+      E = { cmd "!xdg-open '%:p:h'", "Open File Explorer" },
+      -- E = { cmd "!open '%:p:h'", "Open File Explorer" },
       F = { telescope_fn.file_browser, "Telescope browser" },
       v = { cmd "Vista nvim_lsp", "Vista" },
       -- ["v"] = {cmd "Vista", "Vista"},
