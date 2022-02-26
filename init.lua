@@ -1,68 +1,62 @@
-require('lv-globals')
-vim.cmd('luafile '..CONFIG_PATH..'/lv-settings.lua')
-require('settings')
-require('plugins')
-require('lv-utils')
-require('lv-autocommands')
-require('keymappings')
-require('lv-nvimtree') -- This plugin must be required somewhere before colorscheme.  Placing it after will break navigation keymappings
-require('colorscheme') -- This plugin must be required somewhere after nvimtree. Placing it before will break navigation keymappings
-require('lv-galaxyline')
-require('lv-comment')
-require('lv-gitblame')
-require('lv-compe')
-require('lv-barbar')
-require('lv-dashboard')
-require('lv-telescope')
-require('lv-gitsigns')
-require('lv-treesitter')
-require('lv-matchup')
-require('lv-autopairs')
-require('lv-rnvimr')
-require('lv-which-key')
-require('lv-lsp-rooter')
-require('lv-zen')
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
--- extras
-if O.extras then
-    require('lv-numb')
-    require('lv-hop')
-    require('lv-colorizer')
-    require('lv-fterm')
+-- Install packer first
+local fn = vim.fn
+local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+if fn.empty(fn.glob(install_path)) > 0 then
+  vim.cmd("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
+  vim.cmd "packadd packer.nvim"
+  vim.cmd ":qa"
 end
 
+local impatient_ok, impatient = pcall(require, "impatient")
+-- if impatient_ok then
+--   impatient.enable_profile()
+-- end
 
+-- Disable builtin plugins
+local disabled_built_ins = {
+  "netrw",
+  "netrwPlugin",
+  "netrwSettings",
+  "netrwFileHandlers",
+  "gzip",
+  "zip",
+  "zipPlugin",
+  "tar",
+  "tarPlugin",
+  "getscript",
+  "getscriptPlugin",
+  "vimball",
+  "vimballPlugin",
+  "2html_plugin",
+  "logipat",
+  "rrhelper",
+  "spellfile_plugin",
+  "matchit",
+}
+-- vim.g.did_load_filetypes = 1 -- for versions < 0.6.0
+for _, plugin in pairs(disabled_built_ins) do
+  vim.g["loaded_" .. plugin] = 1
+end
 
--- TODO is there a way to do this without vimscript
-vim.cmd('source '..CONFIG_PATH..'/vimscript/functions.vim')
+-- Source the config files
+require "config"
+utils = require "lv-utils"
+mappings = require "keymappings"
+require "settings"
+require "plugins"
+require "theme"()
 
--- LSP
-require('lsp')
--- require('lsp.angular-ls')
--- require('lsp.bash-ls')
-require('lsp.clangd')
-require('lsp.css-ls')
--- require('lsp.dart-ls')
--- require('lsp.docker-ls')
-require('lsp.efm-general-ls')
--- require('lsp.elm-ls')
-require('lsp.emmet-ls')
-require('lsp.graphql-ls')
--- require('lsp.go-ls')
-require('lsp.html-ls')
-require('lsp.json-ls')
-require('lsp.js-ts-ls')
-require('lsp.kotlin-ls')
-require('lsp.latex-ls')
-require('lsp.lua-ls')
--- require('lsp.php-ls')
-require('lsp.python-ls')
--- require('lsp.ruby-ls')
-require('lsp.rust-ls')
--- require('lsp.svelte-ls')
--- require('lsp.terraform-ls')
--- require('lsp.tailwindcss-ls')
-require('lsp.vim-ls')
--- require('lsp.vue-ls')
--- require('lsp.yaml-ls')
--- require('lsp.elixir-ls')
+-- 'Mandatory' plugin configs
+mappings.setup()
+-- if not vim.g.kitty_scrollback then
+require "lv-treesitter"
+require "lsp"
+require("lv-ui").config()
+-- end
+
+require "packer_compiled"
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------

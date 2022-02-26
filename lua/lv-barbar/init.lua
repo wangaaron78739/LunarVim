@@ -1,3 +1,10 @@
-vim.api.nvim_set_keymap('n', '<TAB>', ':BufferNext<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<S-TAB>', ':BufferPrevious<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<S-x>', ':BufferClose<CR>', { noremap = true, silent = true })
+local M = {}
+
+function M.config()
+  local nore = require("keymappings").nore
+  nore("n", "<TAB>", ":BufferNext<CR>")
+  nore("n", "<S-TAB>", ":BufferPrevious<CR>")
+  nore("n", "<S-x>", ":BufferClose<CR>")
+end
+
+return M

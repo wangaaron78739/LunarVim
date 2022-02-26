@@ -1,0 +1,35 @@
+local M = {}
+
+function M.config()
+  vim.g.tex_flavor = "latex"
+  vim.g.vimtex_view_method = "zathura"
+  vim.g.vimtex_view_automatic = 1
+  vim.g.vimtex_quickfix_mode = 0
+  vim.g.tex_conceal = "abdmgs"
+  vim.g.vimtex_subfile_start_local = 1
+
+  vim.g.vimtex_compiler_method = "latexmk"
+  vim.g.vimtex_compiler_engine = "lualatex"
+  vim.g.vimtex_compiler_latexmk = {
+    ["options"] = {
+      "-pdflatex=lualatex",
+      "-shell-escape",
+      "-verbose",
+      "-file-line-error",
+      "-synctex=1",
+      "-interaction=nonstopmode",
+    },
+  }
+
+  -- local augroups = {
+  --   -- {'User', 'VimtexEventQuit', 'call vimtex#compiler#clean(0)'},
+  --   -- {'FileType', 'tex', 'call vimtex#compiler#compile()'}, -- FIXME: This doesn't work for some reason (not continuous)
+  -- }
+  -- if vim.g.vimtex_compiler_method == "tectonic" then
+  --   table.insert(augroups, { "BufWritePost", "*.tex", "VimtexCompile" })
+  --   -- table.insert(augroups, {"CursorHold", '*.tex', 'VimtexCompile'})
+  -- end
+  -- require("lv-utils").define_augroups { _vimtex_event = augroups }
+end
+
+return M

@@ -1,45 +1,142 @@
-vim.cmd('set iskeyword+=-') -- treat dash separated words as a word text object"
-vim.cmd('set shortmess+=c') -- Don't pass messages to |ins-completion-menu|.
-vim.cmd('set inccommand=split') -- Make substitution work in realtime
-vim.o.hidden = O.hidden_files -- Required to keep multiple buffers open multiple buffers
-vim.o.title = true
-TERMINAL = vim.fn.expand('$TERMINAL')
-vim.cmd('let &titleold="'..TERMINAL..'"')
-vim.o.titlestring="%<%F%=%l/%L - nvim"
-vim.wo.wrap = O.wrap_lines -- Display long lines as just one line
-vim.cmd('set whichwrap+=<,>,[,],h,l') -- move to next line with theses keys
-vim.cmd('syntax on') -- syntax highlighting
-vim.o.pumheight = 10 -- Makes popup menu smaller
-vim.o.fileencoding = "utf-8" -- The encoding written to file
-vim.o.cmdheight = 2 -- More space for displaying messages
-vim.cmd('set colorcolumn=99999') -- fix indentline for now
-vim.o.mouse = "a" -- Enable your mouse
-vim.o.splitbelow = true -- Horizontal splits will automatically be below
-vim.o.termguicolors = true -- set term gui colors most terminals support this
-vim.o.splitright = true -- Vertical splits will automatically be to the right
--- vim.o.t_Co = "256" -- Support 256 colors
-vim.o.conceallevel = 0 -- So that I can see `` in markdown files
-vim.cmd('set ts=4') -- Insert 2 spaces for a tab
-vim.cmd('set sw=4') -- Change the number of space characters inserted for indentation
-vim.cmd('set expandtab') -- Converts tabs to spaces
-vim.bo.smartindent = true -- Makes indenting smart
-vim.wo.number = O.number -- set numbered lines
-vim.wo.relativenumber = O.relative_number -- set relative number
-vim.wo.cursorline = true -- Enable highlighting of the current line
-vim.o.showtabline = 2 -- Always show tabs
-vim.o.showmode = false -- We don't need to see things like -- INSERT -- anymore
-vim.o.backup = false -- This is recommended by coc
-vim.o.writebackup = false -- This is recommended by coc
-vim.wo.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
-vim.o.updatetime = 300 -- Faster completion
-vim.o.timeoutlen = O.timeoutlen -- By default timeoutlen is 1000 ms
-vim.o.clipboard = "unnamedplus" -- Copy paste between vim and everything else
-vim.g.nvim_tree_disable_netrw = O.nvim_tree_disable_netrw -- enable netrw for remote gx gf support (must be set before plugin's packadd)
-vim.g.loaded_netrwPlugin = 1 -- needed for netrw gx command to open remote links in browser
-vim.cmd('filetype plugin on') -- filetype detection
--- vim.o.guifont = "JetBrainsMono\\ Nerd\\ Font\\ Mono:h18"
--- vim.o.guifont = "Hack\\ Nerd\\ Font\\ Mono"
--- vim.o.guifont = "SauceCodePro Nerd Font:h17"
-vim.o.guifont = "FiraCode Nerd Font:h17"
+---  HELPERS  ---
+local cmd = vim.cmd
+local opt = vim.opt
 
--- vim.o.guifont = "JetBrains\\ Mono\\ Regular\\ Nerd\\ Font\\ Complete"
+---  VIM ONLY COMMANDS  ---
+
+cmd "filetype plugin on"
+cmd "set iskeyword+=-"
+cmd "set sessionoptions+=globals"
+cmd "set whichwrap+=<,>,[,],h,l"
+if vim.g.nvui then
+  cmd "NvuiFrameless v:false"
+end
+if O.transparent_window then
+  cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
+  cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
+end
+
+---  SETTINGS  ---
+-- https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim
+opt.shell = O.shell
+-- opt.shell = O.termshell
+opt.inccommand = O.inc_subs -- Incremental substitution style
+opt.backspace = "indent,eol,start"
+opt.backup = false -- creates a backup file
+opt.clipboard = O.clipboard -- allows neovim to access the system clipboard
+opt.cmdheight = O.cmdheight -- more space in the neovim command line for displaying messages
+opt.colorcolumn = O.colorcolumn
+opt.completeopt = { "menuone", "noselect" }
+opt.conceallevel = 0 -- so that `` is visible in markdown files
+opt.fileencoding = "utf-8" -- the encoding written to a file
+opt.hidden = O.hidden_files -- required to keep multiple buffers and open multiple buffers
+opt.hlsearch = O.hl_search -- highlight all matches on previous search pattern
+opt.ignorecase = O.ignore_case -- ignore case in search patterns
+opt.mouse = "nvhr" -- allow the mouse to be used in neovim
+opt.pumheight = 10 -- pop up menu height
+opt.showmode = false -- we don't need to see things like -- INSERT -- anymore
+opt.showtabline = 2 -- always show tabs
+opt.smartcase = O.smart_case -- smart case
+opt.smartindent = true -- make indenting smarter again
+opt.splitbelow = true -- force all horizontal splits to go below current window
+opt.splitright = true -- force all vertical splits to go to the right of current window
+opt.swapfile = false -- creates a swapfile
+opt.termguicolors = true -- set term gui colors (most terminals support this)
+opt.timeoutlen = O.timeoutlen -- time to wait for a mapped sequence to complete (in milliseconds)
+opt.title = true -- set the title of window to the value of the titlestring
+opt.titlestring = "%<%F%=%l/%L - nvim" -- what the title of the window will be set to
+vim.g.cursorhold_updatetime = 300
+opt.updatetime = vim.g.cursorhold_updatetime
+opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
+opt.expandtab = true -- convert tabs to spaces
+opt.shiftwidth = O.shift_width -- the number of spaces inserted for each indentation
+opt.shortmess = "aocF"
+opt.tabstop = O.tab_stop -- insert 4 spaces for a tab
+opt.cursorline = O.cursorline -- highlight the current line
+opt.number = O.number -- set numbered lines
+opt.relativenumber = O.relative_number -- set relative numbered lines
+opt.numberwidth = O.number_width -- set number column width to 2 {default 4}
+opt.signcolumn = (O.signcolumn == "number" and not (O.number or O.relative_number)) and "yes" or O.signcolumn --
+opt.wrap = O.wrap_lines -- display lines as one long line
+opt.linebreak = true -- dont linebreak in the middle of words
+opt.spell = O.spell
+opt.spelllang = O.spelllang
+opt.scrolloff = O.scrolloff -- Scrolloffset to block the cursor from reaching the top/bottom
+opt.breakindent = true -- Apply indentation for wrapped lines
+opt.breakindentopt = "sbr" -- Apply indentation for wrapped lines
+opt.pastetoggle = "<F3>" -- Enter Paste Mode with
+opt.foldlevelstart = 99 -- Don't fold on startup
+opt.foldcolumn = O.fold_columns -- Add fold indicators to number column
+opt.foldmethod = "indent" -- Set default fold method as indent, although will be overriden by treesitter soon anyway
+opt.lazyredraw = true -- When running macros and regexes on a large file, lazy redraw tells neovim/vim not to draw the screen, which greatly speeds it up, upto 6-7x faster
+opt.autowriteall = true -- auto write on focus lost
+opt.sidescroll = 1
+opt.sidescrolloff = 10
+opt.listchars = { extends = ">", precedes = "<", trail = "_" }
+opt.background = "dark"
+vim.g.python3_host_prog = O.python_interp
+
+-- opt.undodir = CACHE_PATH .. "/undo" -- set an undo directory
+local undodir = "/tmp/.undodir_" .. vim.env.USER
+if not vim.fn.isdirectory(undodir) then
+  vim.fn.mkdir(undodir, "", 0700)
+end
+opt.undodir = undodir
+opt.undofile = true -- enable persistent undo
+
+-- Default autocommands
+require("lv-utils").define_augroups {
+  _general_settings = {
+    { "TextYankPost", "*", "lua require('vim.highlight').on_yank({higroup = 'Search', timeout = 200})" },
+    { "BufWinEnter", "*", "setlocal formatoptions-=c formatoptions-=r formatoptions-=o" },
+    { "BufRead", "*", "setlocal formatoptions-=c formatoptions-=r formatoptions-=o" },
+    { "BufRead", "*", "set hlsearch" },
+    -- { "CursorMoved,InsertEnter", "*", "nohlsearch" },
+    { "BufNewFile", "*", "setlocal formatoptions-=c formatoptions-=r formatoptions-=o" },
+    { "FileType", "qf", "set nobuflisted" },
+    -- TODO: Test This -- { "BufWritePost", "lv-config.lua", "lua require('lv-utils').reload_lv_config()" },
+    -- { "VimLeavePre", "*", "set title set titleold=" },
+  },
+  _packer_compile = { { "User", "PackerComplete", "++once PackerCompile" } },
+  _buffer_bindings = { { "FileType", "dashboard", "nnoremap <silent> <buffer> q :q<CR>" } },
+  _terminal_insert = { { "BufEnter", "term://*", "startinsert" }, { "BufLeave", "term://*", "stopinsert" } },
+  -- will check for external file changes on cursor hold
+  _auto_reload = { { "CursorHold", "*", "silent! checktime" } },
+  -- will cause split windows to be resized evenly if main window is resized
+  _auto_resize = { { "VimResized", "*", "wincmd =" } },
+  _mode_switching = {
+    -- will switch between absolute and relative line numbers depending on mode
+    {
+      "InsertEnter",
+      "*",
+      "if &relativenumber | let g:ms_relativenumberoff = 1 | setlocal number norelativenumber | endif",
+    },
+    { "InsertLeave", "*", 'if exists("g:ms_relativenumberoff") | setlocal relativenumber | endif' },
+    --[[ { "InsertEnter", "*", "if &cursorline | let g:ms_cursorlineoff = 1 | setlocal nocursorline | endif" },
+    { "InsertLeave", "*", 'if exists("g:ms_cursorlineoff") | setlocal cursorline | endif' }, ]]
+  },
+  _focus_lost = {
+    -- { "FocusLost,TabLeave,BufLeave", "*", [[if &buftype == '' | :update | endif]] },
+    -- { "FocusLost", "*", [[silent! call feedkeys("\<C-\>\<C-n>")]] },
+    -- { "TabLeave,BufLeave", "*", [[if &buftype == '' | :stopinsert | endif]] }, -- FIXME: This breaks compe
+  },
+  -- Add position to jump list on cursorhold -- FIXME: slightly buggy
+  _hold_jumplist = require("lv-utils").hold_jumplist_aucmd,
+}
+
+if O.format_on_save then
+  require("lsp.functions").format_on_save()
+end
+
+-- neovide settings
+-- vim.g.neovide_cursor_vfx_mode = "pixiedust"
+-- vim.g.neovide_refresh_rate=120
+vim.g.neovide_window_floating_opacity = 0
+vim.g.neovide_floating_blur = 0
+vim.g.neovide_window_floating_blur = 0
+require("lv-utils").set_guifont(O.fontsize, "FiraCode Nerd Font")
+
+if vim.g.kitty_scrollback then
+  opt.signcolumn = "no"
+  -- opt.virtualedit = "all"
+end

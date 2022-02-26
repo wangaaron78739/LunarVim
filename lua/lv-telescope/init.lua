@@ -1,73 +1,134 @@
-local actions = require('telescope.actions')
-local trouble = require("trouble.providers.telescope")
+-- https://github.com/ibhagwan/nvim-lua/blob/main/lua/plugin/telescope.lua
+local sorters = require "telescope.sorters"
+local actions = require "telescope.actions"
+-- local action_layout = require "telescope.actions.layout"
+local functions = require "lv-telescope.functions"
 -- Global remapping
 ------------------------------
--- '--color=never',
-require('telescope').setup {
-    defaults = {
-        find_command = {'rg', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case'},
-        prompt_position = "bottom",
-        -- prompt_prefix = " ",
-        prompt_prefix = " ",
-        selection_caret = " ",
-        entry_prefix = "  ",
-        initial_mode = "insert",
-        -- initial_mode = "insert",
-        selection_strategy = "reset",
-        sorting_strategy = "descending",
-        layout_strategy = "horizontal",
-        layout_defaults = {horizontal = {mirror = false}, vertical = {mirror = false}},
-        file_sorter = require'telescope.sorters'.get_fzy_sorter,
-        file_ignore_patterns = {},
-        generic_sorter = require'telescope.sorters'.get_generic_fuzzy_sorter,
-        shorten_path = true,
-        winblend = 0,
-        width = 0.75,
-        preview_cutoff = 120,
-        results_height = 1,
-        results_width = 0.8,
-        border = {},
-        borderchars = {'─', '│', '─', '│', '╭', '╮', '╯', '╰'},
-        color_devicons = true,
-        use_less = true,
-        set_env = {['COLORTERM'] = 'truecolor'}, -- default = nil,
-        file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
-        grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
-        qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
+TelescopeMapArgs = TelescopeMapArgs or {}
+local map_ = vim.keymap.set
+local map_b = vim.keymap.setl
+local map_options = {
+  noremap = true,
+  silent = true,
+}
+local function map_tele(mode, key, f, options, buffer)
+  local map_key = vim.api.nvim_replace_termcodes(key .. f, true, true, true)
 
-        -- Developer configurations: Not meant for general override
-        buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker,
-        mappings = {
-            i = {
-                ["<C-c>"] = actions.close,
-                ["<C-j>"] = actions.move_selection_next,
-                ["<C-k>"] = actions.move_selection_previous,
-                ["<c-t>"] = trouble.open_with_trouble,
-                ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-                -- To disable a keymap, put [map] = false
-                -- So, to not map "<C-n>", just put
-                -- ["<c-x>"] = false,
-                -- ["<esc>"] = actions.close,
+  TelescopeMapArgs[map_key] = options or {}
 
-                -- Otherwise, just set the mapping to the function that you want it to be.
-                -- ["<C-i>"] = actions.select_horizontal,
+  local rhs = string.format("<cmd>lua require('telescope')['%s'](TelescopeMapArgs['%s'])<CR>", f, map_key)
 
-                -- Add up multiple actions
-                ["<CR>"] = actions.select_default + actions.center
+  if not buffer then
+    map_(mode, key, rhs, map_options)
+  else
+    map_b(mode, key, rhs, map_options)
+  end
+end
 
-                -- You can perform as many actions in a row as you like
-                -- ["<CR>"] = actions.select_default + actions.center + my_cool_custom_action,
-            },
-            n = {
-                ["<C-j>"] = actions.move_selection_next,
-                ["<C-k>"] = actions.move_selection_previous,
-                ["<c-t>"] = trouble.open_with_trouble,
-                ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist
-                -- ["<C-i>"] = my_cool_custom_action,
-            }
-        }
+local telescope = require "telescope"
+telescope.setup {
+  defaults = {
+    find_command = functions.commands.fd,
+    vimgrep_arguments = functions.commands.rg,
+    prompt_prefix = " ",
+    selection_caret = " ",
+    entry_prefix = "  ",
+    initial_mode = "insert",
+    selection_strategy = "reset",
+    sorting_strategy = "descending",
+    layout_strategy = "flex",
+    layout_config = {
+      width = 0.75,
+      prompt_position = "bottom",
+      preview_cutoff = 120,
+      horizontal = { mirror = false },
+      vertical = {
+        mirror = false,
+        preview_cutoff = 2,
+      },
+      flex = {
+        flip_columns = 150,
+      },
     },
-    extensions = {fzy_native = {override_generic_sorter = false, override_file_sorter = true}}
+    -- file_sorter = sorters.get_fzy_sorter,
+    -- generic_sorter = sorters.get_fzy_sorter,
+    -- generic_sorter = sorters.get_generic_fuzzy_sorter,
+    file_ignore_patterns = {},
+    path_display = { "shorten_path" },
+    winblend = 0,
+    border = {},
+    borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+    color_devicons = true,
+    use_less = true,
+    set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+    file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+    grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+    qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+
+    -- Developer configurations: Not meant for general override
+    buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
+    mappings = {
+      i = {
+        -- ["<M-p>"] = action_layout.toggle_preview,
+        ["<C-h>"] = telescope.extensions.hop.hop,
+        ["<C-x>"] = actions.delete_buffer,
+        ["<C-s>"] = actions.select_horizontal,
+        ["<C-v>"] = actions.select_vertical,
+        -- ["<C-t>"] = actions.select_tab,
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<CR>"] = actions.select_default + actions.center,
+        ["<C-up>"] = actions.preview_scrolling_up,
+        ["<C-down>"] = actions.preview_scrolling_down,
+        ["<M-q>"] = actions.send_to_qflist + actions.open_qflist,
+        ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+        ["<C-y>"] = functions.set_prompt_to_entry_value,
+      },
+      n = {
+        -- ["<M-p>"] = action_layout.toggle_preview,
+        ["j"] = actions.move_selection_next,
+        ["k"] = actions.move_selection_previous,
+        ["<C-x>"] = actions.delete_buffer,
+        ["<C-s>"] = actions.select_horizontal,
+        ["<C-v>"] = actions.select_vertical,
+        -- ["<C-t>"] = actions.select_tab,
+        ["<S-up>"] = actions.preview_scrolling_up,
+        ["<S-down>"] = actions.preview_scrolling_down,
+        ["<C-up>"] = actions.preview_scrolling_up,
+        ["<C-down>"] = actions.preview_scrolling_down,
+        ["<C-q>"] = actions.send_to_qflist,
+        ["<M-q>"] = actions.send_to_qflist + actions.open_qflist,
+        ["<C-c>"] = actions.close,
+      },
+    },
+  },
+  extensions = {
+    fzy_native = {
+      override_generic_sorter = false,
+      override_file_sorter = true,
+    },
+    fzf = {
+      fuzzy = true, -- false will only do exact matching
+      override_generic_sorter = false, -- override the generic sorter
+      override_file_sorter = true, -- override the file sorter
+      case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+      -- the default case_mode is "smart_case"
+    },
+    "cmake",
+    extensions = {
+      hop = {
+        keys = { "a", "s", "d", "f", "h", "j", "k", "l" },
+      },
+    },
+  },
 }
 
-require'telescope'.load_extension('project')
+-- telescope.setup {}
+
+_G.telescopes = functions
+-- telescope.load_extension('fzy_native')
+telescope.load_extension "fzf"
+telescope.load_extension "hop"
+-- telescope.load_extension "frecency"
+-- telescope.load_extension('project')

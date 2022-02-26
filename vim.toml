@@ -1,0 +1,11 @@
+[vim]
+any = true
+
+[O]
+any = true
+
+[utils]
+any = true
+
+[mappings]
+any = true
