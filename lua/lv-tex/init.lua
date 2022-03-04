@@ -373,6 +373,16 @@ local nl = t { "", "" }
 local list_extend = vim.list_extend
 local tbl_extend = vim.tbl_extend
 local conds = require "luasnip.extras.expand_conditions"
+local function sel()
+  return f(function(_, snip)
+    return (snip and snip.env and snip.env.TM_SELECTED_TEXT) or ""
+  end, {})
+end
+local function mi(dep)
+  return f(function(nodes)
+    return nodes[1]
+  end, { dep })
+end
 
 local function fmt(fn, ipairs)
   if ipairs == nil then
@@ -531,6 +541,7 @@ local math_maps = {
   "wedge",
   "vdash",
   "models",
+  "prec",
   [">="] = "geq",
   ["=="] = "equiv",
   ["=~"] = "cong",
@@ -540,6 +551,8 @@ local math_maps = {
   ["!="] = "neq",
   ["~="] = "approx",
   ["~~"] = "sim",
+  ["\\sim="] = "simeq",
+  ["\\prec="] = "preceq",
   [">>"] = "gg",
   ["<<"] = "ll",
   -- TODO: Above these can have &=\\ mappings
@@ -567,7 +580,6 @@ local math_maps = {
   -- ["--"] = "setminus",
   -- ["null"] = "emptyset",
   -- ["varnull"] = "varnothing",
-  ["\\m"] = "setminus",
   "surd",
   ["span"] = "sspan",
   "argmin",
@@ -664,36 +676,41 @@ end
 list_extend(auto, {
   s("---- ", { t { "\\hline", "" } }),
   lns("--", t "\\item"),
-  lns("s{", { t "\\section{", i(0) }),
-  lns("ss{", { t "\\subsection{", i(0) }),
-  lns("sss{", { t "\\subsubsection{", i(0) }),
-  lns("desc ", { t { "\\begin{description}", "\t\\item[" }, i(1), t { "]" }, i(0), t { "", "\\end{description}" } }),
-  lns("ali ", { t { "\\begin{align*}", "" }, i(0), t { "", "\\end{align*}" } }),
-  lns("alin ", { t { "\\begin{align}", "" }, i(0), t { "", "\\end{align}" } }),
-  lns("eq ", { t { "\\begin{equation*}", "" }, i(0), t { "", "\\end{equation*}" } }),
-  lns("eqn ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
+  -- TODO: all of these can use TM_SELECTED_TEXT
+  lns("s{", { t "\\section{", sel(), i(0) }),
+  lns("ss{", { t "\\subsection{", sel(), i(0) }),
+  lns("sss{", { t "\\subsubsection{", sel(), i(0) }),
+  lns(
+    "desc ",
+    { t { "\\begin{description}", "\t\\item[" }, i(1), t { "]" }, sel(), i(0), t { "", "\\end{description}" } }
+  ),
+  lns("ali ", { t { "\\begin{align*}", "" }, sel(), i(0), t { "", "\\end{align*}" } }),
+  lns("alin ", { t { "\\begin{align}", "" }, sel(), i(0), t { "", "\\end{align}" } }),
+  lns("eq ", { t { "\\begin{equation*}", "" }, sel(), i(0), t { "", "\\end{equation*}" } }),
+  lns("eqn ", { t { "\\begin{equation}", "" }, sel(), i(0), t { "", "\\end{equation}" } }),
+  lns("md ", { t { "\\begin{markdown}", "" }, sel(), i(0), t { "", "\\end{markdown}" } }),
   pa("$", "\\($0\\)"),
-  ms("cases ", { t { "\\begin{cases}", "" }, i(0), t { "", "\\end{cases}" } }),
-  ms("matt ", { t { "\\begin{matrix}", "" }, i(0), t { "", "\\end{matrix}" } }),
-  ms("bmat ", { t { "\\begin{bmatrix}", "" }, i(0), t { "", "\\end{bmatrix}" } }),
-  ms("pmat ", { t { "\\begin{pmatrix}", "" }, i(0), t { "", "\\end{pmatrix}" } }),
-  ms("vmat ", { t { "\\begin{vmatrix}", "" }, i(0), t { "", "\\end{vmatrix}" } }),
-  s("matt ", { t { "\\[\\begin{matrix}", "" }, i(0), t { "", "\\end{matrix}\\]" } }),
-  s("bmat ", { t { "\\[\\begin{bmatrix}", "" }, i(0), t { "", "\\end{bmatrix}\\]" } }),
-  s("pmat ", { t { "\\[\\begin{pmatrix}", "" }, i(0), t { "", "\\end{pmatrix}\\]" } }),
-  s("vmat ", { t { "\\[\\begin{vmatrix}", "" }, i(0), t { "", "\\end{vmatrix}\\]" } }),
+  ms("cases ", { t { "\\begin{cases}", "" }, sel(), i(0), t { "", "\\end{cases}" } }),
+  ms("matt ", { t { "\\begin{matrix}", "" }, sel(), i(0), t { "", "\\end{matrix}" } }),
+  ms("bmat ", { t { "\\begin{bmatrix}", "" }, sel(), i(0), t { "", "\\end{bmatrix}" } }),
+  ms("pmat ", { t { "\\begin{pmatrix}", "" }, sel(), i(0), t { "", "\\end{pmatrix}" } }),
+  ms("vmat ", { t { "\\begin{vmatrix}", "" }, sel(), i(0), t { "", "\\end{vmatrix}" } }),
+  s("matt ", { t { "\\[\\begin{matrix}", "" }, sel(), i(0), t { "", "\\end{matrix}\\]" } }),
+  s("bmat ", { t { "\\[\\begin{bmatrix}", "" }, sel(), i(0), t { "", "\\end{bmatrix}\\]" } }),
+  s("pmat ", { t { "\\[\\begin{pmatrix}", "" }, sel(), i(0), t { "", "\\end{pmatrix}\\]" } }),
+  s("vmat ", { t { "\\[\\begin{vmatrix}", "" }, sel(), i(0), t { "", "\\end{vmatrix}\\]" } }),
   -- Simple text modifier commands
   -- TODO: extract this
-  s("bf{", { t "\\textbf{", i(0) }),
-  s("it{", { t "\\textit{", i(0) }),
-  s("em{", { t "\\emph{", i(0) }),
-  s("ul{", { t "\\underline{", i(0) }),
-  ms("bm{", { t "\\bm{", i(0) }),
-  ms("bb{", { t "\\mathbb{", i(0) }),
-  ms("op{", { t "\\mathop{", i(0) }),
-  ms("tt{", { t "\\text{", i(0) }),
-  ms("rt{", { t "\\sqrt{", i(0) }),
-  ms("cal{", { t "\\mathcal{", i(0) }),
+  s("bf{", { t "\\textbf{", sel(), i(0) }),
+  s("it{", { t "\\textit{", sel(), i(0) }),
+  s("em{", { t "\\emph{", sel(), i(0) }),
+  s("ul{", { t "\\underline{", sel(), i(0) }),
+  ms("bm{", { t "\\bm{", sel(), i(0) }),
+  ms("bb{", { t "\\mathbb{", sel(), i(0) }),
+  ms("op{", { t "\\mathop{", sel(), i(0) }),
+  ms("tt{", { t "\\text{", sel(), i(0) }),
+  ms("rt{", { t "\\sqrt{", sel(), i(0) }),
+  ms("cal{", { t "\\mathcal{", sel(), i(0) }),
   -- Math inline text
   ms("st ", { t "\\text{ s.t. } " }), -- TODO: deduplicate
   ms("let ", { t "\\textbf{let } " }),
@@ -809,22 +826,13 @@ local theorems = {
   "fact",
   "corollary",
 }
-local function sel()
-  return f(function(_, snip)
-    return (snip and snip.env and snip.env.TM_SELECTED_TEXT) or ""
-  end, {})
-end
-local function mi(dep)
-  return f(function(nodes)
-    return nodes[1]
-  end, { dep })
-end
 list_extend(snips, {
   ms("partfrac", { t "\\frac{\\partial ", i(1), t "}{\\partial ", i(0), t "}" }),
 })
-for _, v in pairs(theorems) do
+for k, v in pairs(theorems) do
+  local lhs = ("number" == type(k)) and v or k
   list_extend(snips, {
-    s(v, {
+    s(lhs, {
       t { "\\begin{" .. v .. "}", "" },
       sel(),
       i(0),

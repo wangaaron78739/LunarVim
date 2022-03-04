@@ -54,24 +54,30 @@ function M.sniprun()
 end
 
 local function right(cmd)
-  return require("FTerm.terminal"):new():setup {
-    cmd = cmd,
-    dimensions = { height = 0.95, width = 0.4, x = 1.0, y = 0.5 },
-  }
+  return function()
+    require("FTerm.terminal"):new():setup {
+      cmd = cmd,
+      dimensions = { height = 0.95, width = 0.4, x = 1.0, y = 0.5 },
+    }
+  end
 end
 
 local function under(cmd)
-  return require("FTerm.terminal"):new():setup {
-    cmd = cmd,
-    dimensions = { height = 0.4, width = 0.6 },
-  }
+  return function()
+    require("FTerm.terminal"):new():setup {
+      cmd = cmd,
+      dimensions = { height = 0.4, width = 0.6 },
+    }
+  end
 end
 
 local function popup(cmd)
-  return require("FTerm.terminal"):new():setup {
-    cmd = cmd,
-    dimensions = { height = 0.9, width = 0.9 },
-  }
+  return function()
+    require("FTerm.terminal"):new():setup {
+      cmd = cmd,
+      dimensions = { height = 0.9, width = 0.9 },
+    }
+  end
 end
 
 -- FIXME: broot unable to open files correctly
@@ -89,7 +95,7 @@ local fterms = setmetatable({
 
 function M.ftopen(name)
   return function()
-    fterms[name]:open()
+    fterms[name]():open()
   end
 end
 

@@ -91,11 +91,7 @@ function M.setup()
   local function selected_text(opts)
     return f(function(_, snip)
       return snip.env.TM_SELECTED_TEXT or ""
-    end, vim.tbl_extend(
-      "force",
-      {},
-      opts or {}
-    ))
+    end, vim.tbl_extend("force", {}, opts or {}))
   end
 
   ls.snippets = {
@@ -146,11 +142,7 @@ function M.setup()
         -- t { ")", "" },
       }),
       s("iife", {
-        t "(function ",
-        i(1),
-        t "(",
-        i(2),
-        t { ")", "return" },
+        t { "(function ()", "return" },
         selected_text(),
         -- t { "", "" },
         i(0),

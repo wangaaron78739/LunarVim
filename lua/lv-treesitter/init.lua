@@ -18,18 +18,18 @@ parser_config.just = {
 }
 
 local make_nN_pair = mappings.make_nN_pair
-local element_nN = make_nN_pair {
-  require("ts-textobjects/actions").goto_next_element,
-  require("ts-textobjects/actions").goto_prev_element,
-}
-local scope_nN = make_nN_pair {
-  require("ts-textobjects/actions").goto_next_scope,
-  require("ts-textobjects/actions").goto_prev_scope,
-}
-local outer_scope_nN = make_nN_pair {
-  require("ts-textobjects/actions").incremental_outer_scope,
-  "<cmd>normal! <C-o><cr>",
-}
+-- local element_nN = make_nN_pair {
+--   require("ts-textobjects/actions").goto_next_element,
+--   require("ts-textobjects/actions").goto_prev_element,
+-- }
+-- local scope_nN = make_nN_pair {
+--   require("ts-textobjects/actions").goto_next_scope,
+--   require("ts-textobjects/actions").goto_prev_scope,
+-- }
+-- local outer_scope_nN = make_nN_pair {
+--   require("ts-textobjects/actions").incremental_outer_scope,
+--   "<cmd>normal! <C-o><cr>",
+-- }
 
 -- Custom text objects
 -- TODO: Should move the keymappings to keymappings.lua for cleanliness??
@@ -46,14 +46,14 @@ local textobj_move_keymaps = {
   enable = not not plugconf.ts_textobjects,
   set_jumps = true, -- whether to set jumps in the jumplist
   goto_next_start = {
-    [textobj_prefixes.goto_next .. other_suffixes.scope[2]] = { outer_scope_nN[1], "Outer Scope" },
-    [textobj_prefixes.goto_next .. other_suffixes.scope[1]] = { scope_nN[1], "Scope" },
-    [textobj_prefixes.goto_next .. other_suffixes.element[1]] = { element_nN[1], "TS Element" },
+    -- [textobj_prefixes.goto_next .. other_suffixes.scope[2]] = { outer_scope_nN[1], "Outer Scope" },
+    -- [textobj_prefixes.goto_next .. other_suffixes.scope[1]] = { scope_nN[1], "Scope" },
+    -- [textobj_prefixes.goto_next .. other_suffixes.element[1]] = { element_nN[1], "TS Element" },
   },
   goto_next_end = {},
   goto_previous_start = {
-    [textobj_prefixes.goto_next .. other_suffixes.scope[1]] = { scope_nN[2], "Scope" },
-    [textobj_prefixes.goto_next .. other_suffixes.element[1]] = { element_nN[2], "TS Element" },
+    -- [textobj_prefixes.goto_next .. other_suffixes.scope[1]] = { scope_nN[2], "Scope" },
+    -- [textobj_prefixes.goto_next .. other_suffixes.element[1]] = { element_nN[2], "TS Element" },
   },
   goto_previous_end = {},
 }

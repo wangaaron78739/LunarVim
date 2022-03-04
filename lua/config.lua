@@ -76,6 +76,12 @@ O = {
     flags = {
       debounce_text_changes = 150,
     },
+    parameter_hints_prefix = "« ",
+    -- default: "<-"
+    -- parameter_hints_prefix = "❰❰ ",
+    other_hints_prefix = "∈ ",
+    -- default: "=>"
+    -- other_hints_prefix = ":: ",
   },
   filetypes = {
     extension = {
@@ -125,7 +131,7 @@ O = {
       ["statement"] = { "l", "L" },
       ["comment"] = { "/", "?" },
     },
-    other_suffixes = {
+    other_suffixes = { -- FIXME: Unused
       ["scope"] = { "S", "s" },
       ["element"] = { "e", "E" },
       ["subject"] = { "z", "Z" },
@@ -283,7 +289,7 @@ O = {
     coq = true,
     cmp = {
       lspkind = {
-        with_text = false,
+        mode = "symbol_text",
         -- symbol_map = {
         --   Text = "",
         --   Method = "",

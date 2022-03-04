@@ -39,7 +39,7 @@ M.register_nN_repeat = register_nN_repeat
 -- Helper functions
 local cmd = require("lv-utils").cmd
 local luareq = cmd.require
-local gitsigns_fn = require "gitsigns"
+local gitsigns_fn = luareq "gitsigns"
 local telescope_fn = require "lv-telescope.functions"
 local focus_fn = luareq "focus"
 local lspbuf = cmd.lsp

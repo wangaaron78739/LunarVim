@@ -6,6 +6,8 @@ command! Zenbones colorscheme zenbones
 command! Nordbones colorscheme nordbones
 command! LightMelya colorscheme light_melya
 command! Nebulous lua require'theme'.nebulous()
+command! Onedark lua require'theme'.theme('onedark')
+command! Kurai lua require'theme'.theme('kurai')
 command! Material lua require'theme'.material()
 command! Rdark lua require('colorbuddy').colorscheme('nvim-rdark')
 command! DarkCatppuccino colorscheme catppuccin
@@ -81,7 +83,7 @@ local M = {
   end,
   themer = function(theme)
     theme = theme or "onedark" or "kurai"
-    bg = {
+    local bg = {
       bg = {
         base = "#03070e",
       },

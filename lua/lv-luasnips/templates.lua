@@ -140,6 +140,7 @@ local preamble = [[
 %% Useful packages
 \usepackage{bm}
 \usepackage{amsmath,amssymb,amsfonts}
+\usepackage[hybrid]{markdown}
 \usepackage{graphicx}
 \usepackage{longtable}
 \usepackage[dvipsnames,table,xcdraw]{xcolor}
@@ -159,11 +160,11 @@ local preamble = [[
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{setspace}
 \usepackage{subfiles}
-\usepackage[
-backend=biber,
-style=alphabetic,
-]{biblatex}
-\addbibresource{ref.bib} %Imports bibliography file
+% \usepackage[
+% backend=biber,
+% style=alphabetic,
+% ]{biblatex}
+% \addbibresource{ref.bib} %Imports bibliography file
 \usepackage{amsthm}
 
 \newcommand{\R}{\mathbb{R}}

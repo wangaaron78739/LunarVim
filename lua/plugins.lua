@@ -8,6 +8,7 @@ packer.init {
   -- compile_path = require("packer.util").join_paths(vim.fn.stdpath "config", "plugin", "packer_compiled.vim"),
   -- compile_path = require("packer.util").join_paths(vim.fn.stdpath "config", "plugin", "packer_compiled.lua"),
   compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
+  snapshot_path = vim.fn.stdpath "config" .. "/packer_snapshots",
   git = { clone_timeout = 300 },
   display = {
     open_fn = function()
@@ -103,7 +104,12 @@ return packer.startup(function(use)
   use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
 
   -- whichkey
-  use { "folke/which-key.nvim" }
+  use {
+    "folke/which-key.nvim",
+    -- config = function()
+    --   vim.cmd [[au VimEnter * ++once lua require("which-key").load()]]
+    -- end,
+  }
 
   -- Coq_nvim based Autocomplete and snippets
   use {
@@ -204,6 +210,7 @@ return packer.startup(function(use)
     config = function()
       require("lv-gitsigns").config()
     end,
+    event = "VimEnter",
   }
 
   -- Comments
@@ -392,7 +399,7 @@ return packer.startup(function(use)
   use {
     "lukas-reineke/indent-blankline.nvim",
     event = BufRead,
-    setup = function()
+    config = function()
       vim.cmd [[highlight IndentBlanklineIndent6 guifg=#000000 gui=nocombine]]
       vim.cmd [[highlight IndentBlanklineIndent5 guifg=#000000 gui=nocombine]]
       vim.cmd [[highlight IndentBlanklineIndent4 guifg=#000000 gui=nocombine]]
@@ -664,19 +671,29 @@ return packer.startup(function(use)
 
   -- Rust tools
   use {
-    "IndianBoy42/rust-tools.nvim",
-    branch = "temp",
+    "simrat39/rust-tools.nvim",
     config = function()
-      require("lv-rust-tools").setup()
+      require("lsp.rust").setup()
     end,
     ft = "rust",
     disable = not O.plugin.rust_tools,
   }
   use {
+    "scalameta/nvim-metals",
+    ft = "scala",
+  }
+  use {
+    "p00f/clangd_extensions.nvim",
+    config = function()
+      require("lsp.clangd").setup()
+    end,
+    ft = { "c", "cpp" },
+  }
+  use {
     "saecki/crates.nvim",
     branch = "main",
     config = function()
-      require("lv-rust-tools").crates_setup()
+      require("lsp.rust").crates_setup()
     end,
     event = "BufRead Cargo.toml",
   }
@@ -896,6 +913,10 @@ return packer.startup(function(use)
     module = { "yabs", "telescope._extensions.yabs" },
     disable = not O.plugin.yabs,
   }
+  -- use { -- TODO: configure vs-tasks
+  --   "EthanJWright/vs-tasks.nvim",
+  --   config = function() end,
+  -- }
   use {
     "michaelb/sniprun",
     run = "bash install.sh",
@@ -1004,11 +1025,11 @@ return packer.startup(function(use)
   -- https://github.com/tpope/vim-obsession
 
   -- treesitter extensions
-  use { -- "nvim-treesitter/nvim-treesitter-textobjects",
-    "jacfger/nvim-treesitter-textobjects",
+  use { -- "jacfger/nvim-treesitter-textobjects",
+    "nvim-treesitter/nvim-treesitter-textobjects",
     disable = not O.plugin.ts_textobjects,
   }
-  use { "Jason-M-Chan/ts-textobjects", disable = not O.plugin.ts_textobjects }
+  -- use { "indianboy42/ts-textobjects", disable = not O.plugin.ts_textobjects }
   use { "RRethy/nvim-treesitter-textsubjects", disable = not O.plugin.ts_textsubjects }
   use {
     "David-Kunz/treesitter-unit",
@@ -1056,7 +1077,7 @@ return packer.startup(function(use)
   }
   use { "p00f/nvim-ts-rainbow", disable = not O.plugin.ts_rainbow }
   use { "nvim-treesitter/nvim-treesitter-refactor" }
-  use "haringsrob/nvim_context_vt"
+  use { "haringsrob/nvim_context_vt" }
 
   -- Startup profiler
   use {
@@ -1316,9 +1337,6 @@ return packer.startup(function(use)
   use {
     "themercorp/themer.lua",
     branch = "dev",
-    config = function()
-      require("theme").themer()
-    end,
   }
   use { "mangeshrex/uwu.vim" }
   -- Colorbuddy colorscheme helper
