@@ -8,6 +8,8 @@ packer.init {
   -- compile_path = require("packer.util").join_paths(vim.fn.stdpath "config", "plugin", "packer_compiled.vim"),
   -- compile_path = require("packer.util").join_paths(vim.fn.stdpath "config", "plugin", "packer_compiled.lua"),
   compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
+  snapshot_path = vim.fn.stdpath "config" .. "/snapshots",
+  -- snapshot = "feb-26",
   git = { clone_timeout = 300 },
   display = {
     open_fn = function()
@@ -32,7 +34,7 @@ return packer.startup(function(use)
   -- Format: :%g/^\s*use {\s*$/normal J
 
   -- Packer can manage itself as an optional plugin
-  use "wbthomason/packer.nvim"
+  use { "wbthomason/packer.nvim", commit = "c576ab3f1488ee86d60fd340d01ade08dcabd256" }
   use "lewis6991/impatient.nvim" -- Will be merged in https://github.com/neovim/neovim/pull/15436
   use {
     "nathom/filetype.nvim",
@@ -759,7 +761,7 @@ return packer.startup(function(use)
 
   -- Code action Menu
   use {
-    "weilbith/nvim-code-action-menu", --TODO: Breaking change https://github.com/weilbith/nvim-code-action-menu/issues/39
+    "weilbith/nvim-code-action-menu",
     config = function()
       utils.define_augroups {
         _lsputil_codeaction_list = {
@@ -768,6 +770,7 @@ return packer.startup(function(use)
       }
     end,
     cmd = "CodeActionMenu",
+    commit = "b3671ef",
   }
 
   -- LSP Virtual Lines
@@ -945,6 +948,7 @@ return packer.startup(function(use)
   -- mkdir
   use {
     "jghauser/mkdir.nvim",
+    commit = "2158c8b",
     config = function()
       require "mkdir"
     end,

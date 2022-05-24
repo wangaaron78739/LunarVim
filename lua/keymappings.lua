@@ -576,14 +576,14 @@ function M.setup()
   map("n", "gK", luacmd "vim.lsp.codelens.run()", sile)
   -- map("n", "gr", luacmd "vim.lsp.buf.references()", sile)
   -- Preview variants
-  -- map("n", "gpd", luacmd [[require("lsp.functions").preview_location_at("definition")]], sile)
-  -- map("n", "gpD", luacmd [[require("lsp.functions").preview_location_at("declaration")]], sile)
-  -- map("n", "gpr", luacmd [[require("lsp.functions").preview_location_at("references")]], sile)
-  -- map("n", "gpi", luacmd [[require("lsp.functions").preview_location_at("implementation")]], sile)
-  map("n", "gpd", require("lsp.functions").view_location_split("definition", "FocusSplitNicely"), sile)
-  map("n", "gpD", require("lsp.functions").view_location_split("declaration", "FocusSplitNicely"), sile)
-  map("n", "gpr", require("lsp.functions").view_location_split("references", "FocusSplitNicely"), sile)
-  map("n", "gpi", require("lsp.functions").view_location_split("implementation", "FocusSplitNicely"), sile)
+  map("n", "gpd", luacmd [[require("lsp.functions").preview_location_at("definition")]], sile)
+  map("n", "gpD", luacmd [[require("lsp.functions").preview_location_at("declaration")]], sile)
+  map("n", "gpr", luacmd [[require("lsp.functions").preview_location_at("references")]], sile)
+  map("n", "gpi", luacmd [[require("lsp.functions").preview_location_at("implementation")]], sile)
+  -- map("n", "gpd", require("lsp.functions").view_location_split("definition", "FocusSplitNicely"), sile)
+  -- map("n", "gpD", require("lsp.functions").view_location_split("declaration", "FocusSplitNicely"), sile)
+  -- map("n", "gpr", require("lsp.functions").view_location_split("references", "FocusSplitNicely"), sile)
+  -- map("n", "gpi", require("lsp.functions").view_location_split("implementation", "FocusSplitNicely"), sile)
   -- Hover
   -- map("n", "K", luacmd "vim.lsp.buf.hover()", sile)
   map("n", "gh", luacmd "vim.lsp.buf.hover()", sile)
@@ -812,7 +812,7 @@ function M.setup()
       b = { luacmd "ftopen('broot')", "Broot" },
       p = { luacmd "ftopen('ipython')", "Python" },
       t = { luacmd "ftopen('btm')", "System Monitor" },
-      S = { luacmd "ftopen('spt')", "Spotify" },
+      s = { luacmd "ftopen('spt')", "Spotify" },
       l = { luacmd "ftopen('right')", "Terminal" },
     },
     t = { name = "Terminals" },

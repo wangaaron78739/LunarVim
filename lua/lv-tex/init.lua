@@ -671,7 +671,7 @@ list_extend(auto, {
   lns("alin ", { t { "\\begin{align}", "" }, i(0), t { "", "\\end{align}" } }),
   lns("eq ", { t { "\\begin{equation*}", "" }, i(0), t { "", "\\end{equation*}" } }),
   lns("eqn ", { t { "\\begin{equation}", "" }, i(0), t { "", "\\end{equation}" } }),
-  pa("$", "\\($0\\)"),
+  -- pa("$", "\\($0\\)"),
   ms("cases ", { t { "\\begin{cases}", "" }, i(0), t { "", "\\end{cases}" } }),
   ms("matt ", { t { "\\begin{matrix}", "" }, i(0), t { "", "\\end{matrix}" } }),
   ms("bmat ", { t { "\\begin{bmatrix}", "" }, i(0), t { "", "\\end{bmatrix}" } }),

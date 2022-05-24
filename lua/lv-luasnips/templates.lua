@@ -288,7 +288,7 @@ return {
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\E}{\text{\textbf{E}}}
 \newcommand{\Var}{\text{\textbf{Var}}}
-\newcommand{\Pr}{\text{Pr}}
+\renewcommand{\Pr}{\text{Pr}}
 
 \newcommand{\x}{\bm{x}}
 \newcommand{\y}{\bm{y}}
