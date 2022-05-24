@@ -244,10 +244,27 @@ function M.config()
 end
 function M.keymaps(leaderMappings)
   vim.cmd [[command! -nargs=1 Yabs lua require'yabs':run_task('<args>') ]]
-  leaderMappings["p "] = { "<CMD>lua require'yabs':run_task()<CR>", "YABS: Default" }
-  leaderMappings.pb = { "<CMD>lua require'yabs':run_task('build')<CR>", "YABS: Build" }
-  leaderMappings.pr = { "<CMD>lua require'yabs':run_task('run')<CR>", "YABS: Run" }
-  leaderMappings.pt = { "<CMD>lua require'yabs':run_task('test')<CR>", "YABS: Test" }
+  local function run_task(n)
+    return function()
+      require("yabs"):run_task(n)
+    end
+  end
+  leaderMappings["p "] = {
+    run_task(),
+    "YABS: Default",
+  }
+  leaderMappings.pb = {
+    run_task "build",
+    "YABS: Build",
+  }
+  leaderMappings.pr = {
+    run_task "run",
+    "YABS: Run",
+  }
+  leaderMappings.pt = {
+    run_task "test",
+    "YABS: Test",
+  }
   leaderMappings.pp = { "<CMD>Telescope yabs tasks<CR>", "YABS: tasks" }
 end
 return M

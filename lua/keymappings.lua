@@ -1,4 +1,5 @@
--- TODO: replace all keymaps with nest.nvim or something
+-- TODO: replace all keymaps with functions or something
+-- TODO: <[cC][mM][dD]>lua
 local M = {}
 local map = vim.keymap.set
 
@@ -37,14 +38,12 @@ M.register_nN_repeat = register_nN_repeat
 
 -- Helper functions
 local cmd = require("lv-utils").cmd
-local luacmd = cmd.lua
 local luareq = cmd.require
-local dap_fn = luareq "dap"
 local gitsigns_fn = luareq "gitsigns"
-local telescope_fn = luareq "lv-telescope.functions"
+local telescope_fn = require "lv-telescope.functions"
 local focus_fn = luareq "focus"
 local lspbuf = cmd.lsp
-local lsputil = luareq "lsp.functions"
+local lsputil = require "lsp.functions"
 local operatorfunc_scaffold = require("lv-utils").operatorfunc_scaffold
 local operatorfunc_keys = require("lv-utils").operatorfunc_keys
 local operatorfuncV_keys = require("lv-utils").operatorfuncV_keys
@@ -53,12 +52,20 @@ local function make_nN_pair(pair)
     function()
       vim.cmd [[normal! m']]
       register_nN_repeat(pair)
-      feedkeys(pair[1])
+      if type(pair[1]) == "string" then
+        feedkeys(pair[1])
+      else
+        pair[1]()
+      end
     end,
     function()
       vim.cmd [[normal! m']]
       register_nN_repeat(pair)
-      feedkeys(pair[2])
+      if type(pair[2]) == "string" then
+        feedkeys(pair[2])
+      else
+        pair[2]()
+      end
     end,
   }
 end
@@ -144,7 +151,9 @@ function M.init()
   else
     map("n", O.local_leader_key, "<NOP>", nore)
     vim.g.maplocalleader = O.local_leader_key
-    map("n", O.local_leader_key, "<cmd>lua require'which-key'.show(',', {mode='n'})<cr>", nore)
+    map("n", O.local_leader_key, function()
+      require("which-key").show(",", { mode = "n" })
+    end, nore)
   end
 
   local wk = require "which-key"
@@ -209,6 +218,7 @@ function M.setup()
   map("n", "#", srchrpt("viw#", "m"), nore)
   map("n", "g*", srchrpt "*", nore)
   map("n", "g#", srchrpt "#", nore)
+  map("n", "g.", [[/\V<C-r>"<CR>]] .. "cgn<C-a><ESC>") -- Repeat the recent edit with cgn
 
   -- Command mode typos of wq
   --   vim.cmd [[
@@ -230,7 +240,7 @@ function M.setup()
   --     cnoreabbrev Qa qa
   --     cnoreabbrev Qall qall
   -- ]]
-  vim.cmd [[cnoremap <C-v> '<,'>]]
+  map("c", "<C-v>", "'<,'>")
 
   vim.o.mousetime = 0
   -- map("n", "<2-ScrollWheelUp>", "<nop>", sile)
@@ -318,10 +328,26 @@ function M.setup()
   map("n", resize_prefix .. "Right>", cmd "vertical resize +2", sile)
 
   -- Move current line / block with Alt-j/k ala vscode.
-  map("n", "<C-M-j>", "<cmd>move .+1<cr>==", nore)
-  map("n", "<C-M-k>", "<cmd>move .-2<cr>==", nore)
-  map("x", "<M-j>", ":move '>+1<cr>gv-gv", nore)
-  map("x", "<M-k>", ":move '<-2<cr>gv-gv", nore)
+  -- map("n", "<C-M-j>", "<cmd>move .+1<cr>==", nore)
+  -- map("n", "<C-M-k>", "<cmd>move .-2<cr>==", nore)
+  -- map("x", "<M-j>", ":move '>+1<cr>gv-gv", nore)
+  -- map("x", "<M-k>", ":move '<-2<cr>gv-gv", nore)
+  map("n", "<C-M-h>", "<Plug>GoNSMLeft", {})
+  map("n", "<C-M-j>", "<Plug>GoNSMDown", {})
+  map("n", "<C-M-k>", "<Plug>GoNSMUp", {})
+  map("n", "<C-M-l>", "<Plug>GoNSMRight", {})
+  map("x", "<M-h>", "<Plug>GoVSMLeft", {})
+  map("x", "<M-j>", "<Plug>GoVSMDown", {})
+  map("x", "<M-k>", "<Plug>GoVSMUp", {})
+  map("x", "<M-l>", "<Plug>GoVSMRight", {})
+  map("n", "<C-M-S-h>", "<Plug>GoNSDLeft", {}) -- Duplicate
+  map("n", "<C-M-S-j>", "<Plug>GoNSDDown", {})
+  map("n", "<C-M-S-k>", "<Plug>GoNSDUp", {})
+  map("n", "<C-M-S-l>", "<Plug>GoNSDRight", {})
+  map("x", "<M-S-h>", "<Plug>GoVSDLeft", {})
+  map("x", "<M-S-j>", "<Plug>GoVSDDown", {})
+  map("x", "<M-S-k>", "<Plug>GoVSDUp", {})
+  map("x", "<M-S-l>", "<Plug>GoVSDRight", {})
 
   -- Keep accidentally hitting J instead of j when first going visual mode
   map("x", "J", "j", nore)
@@ -393,26 +419,35 @@ function M.setup()
   map("x", "Y", "myY`y", nore) -- copy linewise
   map("x", "<M-y>", "y", nore)
 
-  --  TODO: Subline Comments
-  -- map("x", "gC", operatorfunc_keys("subline_comment", "I/* <ESC>`>a */<ESC>"))
-
-  --  TODO: Subline Comments
-  -- map("x", "gC", operatorfunc_keys("subline_comment", "I/* <ESC>`>a */<ESC>"))
-
   -- Paste over textobject
-  -- TODO: use register argument
-  map("n", "R", operatorfunc_keys("paste_over", "p"), sile)
-  -- map("n", "R", "r$", sile)
-  -- map("n", "rr", "vvr", sile)
+  local substitute = function(fn, opts)
+    return function()
+      local substitute = require "substitute"
+      substitute[fn](opts)
+    end
+  end
+  map("n", "r", substitute "operator")
+  map("n", "rr", substitute "line")
+  map("n", "R", substitute "eol")
+  map("x", "r", substitute "visual")
+  local substitute_range = function(fn, opts)
+    return function()
+      local range = require "substitute.range"
+      range[fn](opts)
+    end
+  end
+  map("n", "<leader>c", substitute_range "operator")
+  map("x", "<leader>c", substitute_range "visual")
+  map("n", "<leader>cc", substitute_range "word")
+  map("n", "<leader>C", substitute_range("operator", { motion2 = "iG" }))
+  -- map("n", "r", operatorfunc_keys("paste_over", "p"), sile)
+  -- -- map("n", "R", "r$", sile)
+  -- map("n", "R", "r", nore)
+  -- -- map("n", "rr", "vvr", sile)
+
   map("n", "<M-p>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pp]], nore) -- charwise paste
   -- map("n", "<M-S-C-P>", [[<cmd>call setreg('p', getreg('+'), 'c')<cr>"pP]], nore) -- charwise paste
   -- map("n", "<M-S-p>", [[<cmd>call setreg('p', getreg('+'), 'l')<cr>"pp]], nore) -- linewise paste
-
-  -- Start selecting
-  map("n", "<M-l>", "<c-v>l", sile)
-  map("x", "<M-l>", "l", sile)
-  map("n", "<M-h>", "<c-v>h", sile)
-  map("x", "<M-h>", "h", sile)
 
   -- Charwise visual select line
   map("x", "v", "^og_", nore)
@@ -439,14 +474,17 @@ function M.setup()
   local diag_nN = make_nN_pair { lsputil.diag_next, lsputil.diag_prev }
   map("n", pre_goto_next .. "d", diag_nN[1], nore)
   map("n", pre_goto_prev .. "d", diag_nN[2], nore)
+  local error_nN = make_nN_pair { lsputil.error_next, lsputil.error_prev }
+  map("n", pre_goto_next .. "D", error_nN[1], nore)
+  map("n", pre_goto_prev .. "D", error_nN[2], nore)
 
   local hunk_nN = make_nN_pair { gitsigns_fn.next_hunk, gitsigns_fn.prev_hunk }
   map("n", pre_goto_next .. "g", hunk_nN[1], nore)
   map("n", pre_goto_prev .. "g", hunk_nN[2], nore)
 
   local usage_nN = make_nN_pair {
-    luareq("nvim-treesitter-refactor.navigation").goto_next_usage,
-    luareq("nvim-treesitter-refactor.navigation").goto_previous_usage,
+    require("nvim-treesitter-refactor.navigation").goto_next_usage,
+    require("nvim-treesitter-refactor.navigation").goto_previous_usage,
   }
   map("n", pre_goto_next .. "u", usage_nN[1], nore)
   map("n", pre_goto_prev .. "u", usage_nN[2], nore)
@@ -473,9 +511,15 @@ function M.setup()
   map("x", "#", srchrpt '"zy?<C-R>z<cr>', nore) -- Backwards
   map("n", "<leader>#", operatorfunc_keys("search_for", "#"), {})
 
-  -- Select last changed/yanked text
-  map("n", "+", [[/<C-R>+<cr>]], {}) -- Search for the current yank register
+  -- Search for the current yank register
+  map("n", "+", [[/<C-R>+<cr>]], {})
   sel_map("+", "`[o`]")
+
+  -- Search for last edited text
+  map("n", 'g"', [[/\V<C-r>"<CR>]])
+  -- map("x", 'g"', [[:keepjumps normal! /\V<C-r>"<CR>gn]])
+  map("x", 'g"', '<ESC>g"gn', { remap = true })
+  map("o", 'g"', '<cmd>normal vg"<cr>', { remap = true })
 
   -- Start search and replace from search
   map("c", "<M-r>", [[<cr>:%s/<C-R>///g<Left><Left>]], {})
@@ -569,37 +613,27 @@ function M.setup()
   map("i", ";;", "<esc>A;", nore)
 
   -- lsp keys
-  map("n", "gd", luacmd "vim.lsp.buf.definition()", sile)
-  map("n", "gD", luacmd "vim.lsp.buf.declaration()", sile)
-  map("n", "gi", luacmd "vim.lsp.buf.implementation()", sile)
+  map("n", "gd", vim.lsp.buf.definition, sile)
+  map("n", "gD", vim.lsp.buf.declaration, sile)
+  map("n", "gi", vim.lsp.buf.implementation, sile)
   map("n", "gr", telescope_fn.lsp_references, sile)
-  map("n", "gK", luacmd "vim.lsp.codelens.run()", sile)
-  -- map("n", "gr", luacmd "vim.lsp.buf.references()", sile)
+  map("n", "gK", vim.lsp.codelens.run, sile)
+  -- map("n", "gr", vim.lsp.buf.references, sile)
   -- Preview variants
-  map("n", "gpd", luacmd [[require("lsp.functions").preview_location_at("definition")]], sile)
-  map("n", "gpD", luacmd [[require("lsp.functions").preview_location_at("declaration")]], sile)
-  map("n", "gpr", luacmd [[require("lsp.functions").preview_location_at("references")]], sile)
-  map("n", "gpi", luacmd [[require("lsp.functions").preview_location_at("implementation")]], sile)
-  -- map("n", "gpd", require("lsp.functions").view_location_split("definition", "FocusSplitNicely"), sile)
-  -- map("n", "gpD", require("lsp.functions").view_location_split("declaration", "FocusSplitNicely"), sile)
-  -- map("n", "gpr", require("lsp.functions").view_location_split("references", "FocusSplitNicely"), sile)
-  -- map("n", "gpi", require("lsp.functions").view_location_split("implementation", "FocusSplitNicely"), sile)
+  map("n", "gpd", require("lsp.functions").view_location_split("definition", "FocusSplitNicely"), sile)
+  map("n", "gpD", require("lsp.functions").view_location_split("declaration", "FocusSplitNicely"), sile)
+  map("n", "gpr", require("lsp.functions").view_location_split("references", "FocusSplitNicely"), sile)
+  map("n", "gpi", require("lsp.functions").view_location_split("implementation", "FocusSplitNicely"), sile)
   -- Hover
-  -- map("n", "K", luacmd "vim.lsp.buf.hover()", sile)
-  map("n", "gh", luacmd "vim.lsp.buf.hover()", sile)
-  local do_code_action = cmd "CodeActionMenu"
-  -- local do_code_action = lspbuf.code_action
-  map("n", "K", do_code_action, {})
-  -- map("v", "K", "<esc><cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>", {})
-  map("v", "K", do_code_action, {})
+  -- map("n", "K", vim.lsp.buf.hover, sile)
+  map("n", "gh", vim.lsp.buf.hover, sile)
+  map("n", "K", cmd "CodeActionMenu", {})
+  map("x", "K", ":lua vim.lsp.buf.range_code_action()<cr>", {})
 
   -- Formatting keymaps
-  map("n", "gq", luacmd [[require("lsp.functions").format_range_operator()]], sile)
-  map("x", "gq", luacmd "vim.lsp.buf.range_formatting()", sile)
-  map("n", "gf", luacmd "vim.lsp.buf.formatting()", sile)
-  -- map("n", "=", luacmd [[require("lsp.functions").format_range_operator()]], sile)
-  -- map("x", "=", luacmd "vim.lsp.buf.range_formatting()", sile)
-  -- map("n", "==", luacmd "vim.lsp.buf.formatting()", sile)
+  map("n", "gq", require("lsp.functions").format_range_operator, sile)
+  map("x", "gq", vim.lsp.buf.range_formatting, sile)
+  map("n", "gf", vim.lsp.buf.formatting, sile)
 
   -- TODO: Use more standard regex syntax
   -- map("n", "/", "/\v", nore)
@@ -802,18 +836,42 @@ function M.setup()
       f = { cmd "NvimTreeToggle", "File Sidebar" },
       u = { cmd "UndotreeToggle", "Undo tree" },
       r = { cmd "Ranger", "Ranger" },
-      q = { luacmd "utils.quickfix_toggle()", "Quick fixes" },
-      E = { cmd "!xdg-open '%:p:h'", "Open File Explorer" },
-      -- E = { cmd "!open '%:p:h'", "Open File Explorer" },
+      q = { utils.quickfix_toggle, "Quick fixes" },
+      E = { cmd "!open '%:p:h'", "Open File Explorer" },
       F = { telescope_fn.file_browser, "Telescope browser" },
       v = { cmd "Vista nvim_lsp", "Vista" },
       -- ["v"] = {cmd "Vista", "Vista"},
       M = { vim.g.goneovim and cmd "GonvimMiniMap" or cmd "MinimapToggle", "Minimap" },
-      b = { luacmd "ftopen('broot')", "Broot" },
-      p = { luacmd "ftopen('ipython')", "Python" },
-      t = { luacmd "ftopen('btm')", "System Monitor" },
-      s = { luacmd "ftopen('spt')", "Spotify" },
-      l = { luacmd "ftopen('right')", "Terminal" },
+      b = {
+        function()
+          require("lv-terms").ftopen "broot"
+        end,
+        "Broot",
+      },
+      p = {
+        function()
+          require("lv-terms").ftopen "ipython"
+        end,
+        "Python",
+      },
+      t = {
+        function()
+          require("lv-terms").ftopen "btm"
+        end,
+        "System Monitor",
+      },
+      S = {
+        function()
+          require("lv-terms").ftopen "spt"
+        end,
+        "Spotify",
+      },
+      l = {
+        function()
+          require("lv-terms").ftopen "right"
+        end,
+        "Terminal",
+      },
     },
     t = { name = "Terminals" },
     p = { name = "Project (Tasks)" },
@@ -826,7 +884,7 @@ function M.setup()
       g = { cmd "setlocal signcolumn!", "Cursor column" },
       l = { cmd "setlocal cursorline!", "Cursor line" },
       h = { cmd "setlocal hlsearch", "hlsearch" },
-      c = { luacmd "utils.conceal_toggle()", "Conceal" },
+      c = { utils.conceal_toggle, "Conceal" },
       f = { focus_fn.focus_toggle, "Focus.nvim" },
       -- TODO: Toggle comment visibility
     },
@@ -861,26 +919,101 @@ function M.setup()
       -- "   https://microsoft.github.io/debug-adapter-protocol/
       -- TODO: can use localleader for this??
       name = "Debug",
-      U = { luareq("dapui").toggle, "Toggle DAP-UI" },
-      v = { luareq("dapui").eval, "Eval" },
-      t = { dap_fn.toggle_breakpoint, "Toggle Breakpoint" },
-      b = { dap_fn.step_back, "Step Back" },
-      c = { dap_fn.continue, "Continue" },
-      C = { dap_fn.run_to_cursor, "Run To Cursor" },
-      d = { dap_fn.disconnect, "Disconnect" },
-      g = { dap_fn.session, "Get Session" },
-      i = { dap_fn.step_into, "Step Into" },
-      o = { dap_fn.step_over, "Step Over" },
-      u = { dap_fn.step_out, "Step Out" },
-      p = { dap_fn.pause.toggle, "Pause" },
-      r = { dap_fn.repl.toggle, "Toggle Repl" },
-      s = { dap_fn.continue, "Start" },
-      q = { dap_fn.stop, "Quit" },
+      U = {
+        function()
+          require("dapui").toggle()
+        end,
+        "Toggle DAP-UI",
+      },
+      v = {
+        function()
+          require("dapui").eval()
+        end,
+        "Eval",
+      },
+      t = {
+        function()
+          require("dap").toggle_breakpoint()
+        end,
+        "Toggle Breakpoint",
+      },
+      b = {
+        function()
+          require("dap").step_back()
+        end,
+        "Step Back",
+      },
+      c = {
+        function()
+          require("dap").continue()
+        end,
+        "Continue",
+      },
+      C = {
+        function()
+          require("dap").run_to_cursor()
+        end,
+        "Run To Cursor",
+      },
+      d = {
+        function()
+          require("dap").disconnect()
+        end,
+        "Disconnect",
+      },
+      g = {
+        function()
+          require("dap").session()
+        end,
+        "Get Session",
+      },
+      i = {
+        function()
+          require("dap").step_into()
+        end,
+        "Step Into",
+      },
+      o = {
+        function()
+          require("dap").step_over()
+        end,
+        "Step Over",
+      },
+      u = {
+        function()
+          require("dap").step_out()
+        end,
+        "Step Out",
+      },
+      p = {
+        function()
+          require("dap").pause.toggle()
+        end,
+        "Pause",
+      },
+      r = {
+        function()
+          require("dap").repl.toggle()
+        end,
+        "Toggle Repl",
+      },
+      s = {
+        function()
+          require("dap").continue()
+        end,
+        "Start",
+      },
+      q = {
+        function()
+          require("dap").stop()
+        end,
+        "Quit",
+      },
     },
     g = {
       name = "Git",
-      g = { luacmd "ftopen('gitui')", "Gitui" },
-      v = { luacmd "ftopen('verco')", "Verco" },
+      g = { require("lv-terms").ftopen "gitui", "Gitui" },
+      v = { require("lv-terms").ftopen "verco", "Verco" },
       m = { cmd "!smerge '%:p:h'", "Sublime Merge" },
       L = { cmd "GitBlameToggle", "Blame Toggle" },
       l = { gitsigns_fn.blame_line, "Blame" },
@@ -913,7 +1046,7 @@ function M.setup()
       },
       h = { lspbuf.hover, "Hover (gh)" },
       a = { do_code_action, "Code Action (K)" },
-      k = { luacmd "vim.lsp.codelens.run()", "Run Code Lens (gK)" },
+      k = { vim.lsp.codelens.run, "Run Code Lens (gK)" },
       t = { lspbuf.type_definition, "Type Definition" },
       f = { lspbuf.formatting, "Format" },
       c = {
@@ -943,13 +1076,13 @@ function M.setup()
     s = {
       name = "Search",
       [" "] = { telescope_fn.resume, "Redo last" },
-      n = { telescope_fn "notify.notify()", "Notifications" },
+      -- n = { telescope_fn.notify.notify, "Notifications" },
       c = { telescope_fn.colorscheme, "Colorscheme" },
       a = { telescope_fn.lsp_code_actions, "Code Actions" },
       s = { telescope_fn.lsp_document_symbols, "Document Symbols" },
       S = { telescope_fn.lsp_dynamic_workspace_symbols, "Workspace Symbols" },
-      d = { telescope_fn.lsp_document_diagnostics, "Document Diagnostics" },
-      D = { telescope_fn.lsp_workspace_diagnostics, "Workspace Diagnostics" },
+      d = { telescope_fn.diagnostics, "Document Diagnostics" },
+      D = { telescope_fn.diagnostics, "Workspace Diagnostics" },
       r = { telescope_fn.lsp_references, "References" },
       I = { telescope_fn.lsp_implementations, "Implementations" },
       h = { telescope_fn.help_tags, "Find Help" },
@@ -979,8 +1112,15 @@ function M.setup()
       ["/"] = { [[:%s/<C-R>///g<Left><Left>]], "Last search" },
       ["+"] = { [[:%s/<C-R>+//g<Left><Left>]], "Last yank" },
       ["."] = { [[:%s/<C-R>.//g<Left><Left>]], "Last insert" },
-      d = { cmd "DogeGenerate", "DogeGen" },
       s = { [[:%s///g<Left><Left><Left>]], "From Search" },
+    },
+    n = {
+      name = "Generate",
+      n = { cmd "Neogen", "Gen Doc" },
+      f = { cmd "Neogen func", "Func Doc" },
+      F = { cmd "Neogen file", "File Doc" },
+      t = { cmd "Neogen type", "type Doc" },
+      c = { cmd "Neogen class", "Class Doc" },
     },
     d = {
       name = "Diagnostics",
@@ -998,10 +1138,10 @@ function M.setup()
     },
     -- m = "Multi",
     m = "which_key_ignore",
-    c = {
-      operatorfunc_keys("change_all", "<leader>c"),
-      "Change all",
-    },
+    -- c = {
+    --   operatorfunc_keys("change_all", "<leader>c"),
+    --   "Change all",
+    -- },
   }
   map("n", "<M-S-s>", operatorfunc_keys("separate", "<leader>s"), sile)
   map("x", "<M-S-s>", "<leader>s", sile)
@@ -1040,14 +1180,19 @@ function M.setup()
     -- ["/"] = { cmd "CommentToggle", "Comment" },
     d = { lsputil.range_diagnostics, "Range Diagnostics" },
     r = { name = "Replace/Refactor" },
-    c = {
-      [["z<M-y>:%s/<C-r>z//g<Left><Left>]],
-      "Change all",
-    },
+    -- c = {
+    --   [["z<M-y>:%s/<C-r>z//g<Left><Left>]],
+    --   "Change all",
+    -- },
     s = { 'ygvc<CR><C-r>"<CR><ESC>', "separate" },
     D = {
       name = "Debug",
-      v = { luareq("dapui").eval, "Eval" },
+      v = {
+        function()
+          require("dapui").eval()
+        end,
+        "Eval",
+      },
     },
   }
 
@@ -1087,13 +1232,34 @@ function M.setup()
     leaderMappings["PR"] = { cmd "ProjectRoot", "Rooter" }
   end
   if O.plugin.spectre then
-    local spectre = luareq "spectre"
-    leaderMappings["rf"] = { spectre.open_file_search, "Current File" }
-    leaderMappings["/"][1] = spectre.open
-    -- leaderMappings["?"][1] = spectre.open_no_ignore
-    leaderMappings["rp"] = { spectre.open, "Project" }
-    vLeaderMappings["rf"] = { spectre "open_visual({path = vim.fn.expand('%')})", "Current File" }
-    vLeaderMappings["rp"] = { spectre.open_visual, "Project" }
+    leaderMappings["rf"] = {
+      function()
+        require("spectre").open_file_search()
+      end,
+      "Current File",
+    }
+    leaderMappings["/"][1] = function()
+      require("spectre").open()
+    end
+    -- leaderMappings["?"][1] = function () require'spectre'.open_no_ignore() end
+    leaderMappings["rp"] = {
+      function()
+        require("spectre").open()
+      end,
+      "Project",
+    }
+    vLeaderMappings["rf"] = {
+      function()
+        require("spectre").open_visual { path = vim.fn.expand "%" }
+      end,
+      "Current File",
+    }
+    vLeaderMappings["rp"] = {
+      function()
+        require("spectre").open_visual()
+      end,
+      "Project",
+    }
     -- TODO: other spectre maps like '<leader>r'
   end
   if O.plugin.lazygit then
@@ -1104,7 +1270,12 @@ function M.setup()
   require("lv-bufferline").keymaps(leaderMappings, vLeaderMappings)
   require("lv-yabs").keymaps(leaderMappings, vLeaderMappings)
   if O.plugin.nabla then
-    leaderMappings["xn"] = { luareq("nabla").action, "Nabla" }
+    leaderMappings["xn"] = {
+      function()
+        require("nabla").action()
+      end,
+      "Nabla",
+    }
   end
   -- if O.plugin.neoterm then
   --   leaderMappings[O.plugin.neoterm.automap_keys] = "Neoterm AutoMap"
@@ -1113,7 +1284,12 @@ function M.setup()
     leaderMappings["L"] = {
       name = "+Lush",
       l = { cmd "Lushify", "Lushify" },
-      x = { luacmd "require('lush').export_to_buffer(require('lush_theme.cool_name'))", "Lush Export" },
+      x = {
+        function()
+          require("lush").export_to_buffer(require "lush_theme.cool_name")
+        end,
+        "Lush Export",
+      },
       t = { cmd "LushRunTutorial", "Lush Tutorial" },
       q = { cmd "LushRunQuickstart", "Lush Quickstart" },
     }

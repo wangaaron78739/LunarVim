@@ -289,11 +289,17 @@ end
 function M.diag_buffer()
   diags.open_float(0, vim.tbl_deep_extend("keep", { scope = "buffer" }, popup_diagnostics_opts))
 end
-function M.diag_next()
-  diags.goto_next { enable_popup = true, float = popup_diagnostics_opts }
+function M.diag_next(opts)
+  diags.goto_next(vim.tbl_extend("keep", opts or {}, { enable_popup = true, float = popup_diagnostics_opts }))
 end
-function M.diag_prev()
-  diags.goto_prev { enable_popup = true, float = popup_diagnostics_opts }
+function M.diag_prev(opts)
+  diags.goto_prev(vim.tbl_extend("keep", opts or {}, { enable_popup = true, float = popup_diagnostics_opts }))
+end
+function M.error_next()
+  M.diag_next { severity = vim.diagnostic.severity.ERROR }
+end
+function M.error_prev()
+  M.diag_prev { severity = vim.diagnostic.severity.ERROR }
 end
 
 function M.common_on_attach(client, bufnr)
@@ -410,48 +416,49 @@ M.rename = (function()
   end
 end)()
 
+-- Use select mode for renaming
 M.renamer = (function()
-  local function mk_keymaps(old)
-    local enter = "<cmd>lua require'lsp.functions'.renamer.enter_cb('"
-      .. old
-      .. "', vim.api.nvim_win_get_cursor(0))<cr>"
-    local cancel = "<cmd>lua require'lsp.functions'.renamer.cancel_cb('" .. old .. "')<cr>"
-    vim.keymap.setl("i", "<CR>", enter, { silent = true })
-    vim.keymap.setl("i", "<M-CR>", enter, { silent = true })
-    vim.keymap.setl("i", "<ESC><ESC>", cancel, { silent = true })
-  end
   local function del_keymaps()
     vim.keymap.del("i", "<CR>")
     vim.keymap.del("i", "<ESC><ESC>")
   end
-  return {
-    enter_cb = function(old, oldpos)
-      -- local cword = vim.fn.expand "<cword>"
-      -- utils.dump(cword)
-      vim.cmd "stopinsert"
-      vim.defer_fn(function()
-        -- vim.api.nvim_win_set_cursor(0, oldpos)
-        local cword = vim.fn.expand "<cword>"
-        utils.dump(cword)
-        feedkeys(t("ciw" .. old .. "<ESC>"), "n", false)
-
-        del_keymaps()
-
-        vim.lsp.buf.rename(cword)
-      end, 1)
-    end,
-    cancel_cb = function(old)
-      vim.cmd "stopinsert"
-      -- feedkeys(t "u", "n", false)
+  local function enter_cb(old, oldpos)
+    -- local cword = vim.fn.expand "<cword>"
+    -- utils.dump(cword)
+    vim.cmd "stopinsert"
+    vim.defer_fn(function()
+      -- vim.api.nvim_win_set_cursor(0, oldpos)
+      local cword = vim.fn.expand "<cword>"
+      utils.dump(cword)
       feedkeys(t("ciw" .. old .. "<ESC>"), "n", false)
+
       del_keymaps()
-    end,
-    keymap = function()
-      local old = vim.fn.expand "<cword>"
-      feedkeys(t "viw<C-G>", "n", false) -- Go select mode
-      mk_keymaps(old)
-    end,
-  }
+
+      vim.lsp.buf.rename(cword)
+    end, 1)
+  end
+  local function cancel_cb(old)
+    vim.cmd "stopinsert"
+    -- feedkeys(t "u", "n", false)
+    feedkeys(t("ciw" .. old .. "<ESC>"), "n", false)
+    del_keymaps()
+  end
+  local function mk_keymaps(old)
+    local enter = function()
+      enter_cb(old, vim.api.nvim_win_get_cursor(0))
+    end
+    local cancel = function()
+      cancel_cb(old)
+    end
+    vim.keymap.setl("i", "<CR>", enter, { silent = true })
+    vim.keymap.setl("i", "<M-CR>", enter, { silent = true })
+    vim.keymap.setl("i", "<ESC><ESC>", cancel, { silent = true })
+  end
+  return function()
+    local old = vim.fn.expand "<cword>"
+    feedkeys(t "viw<C-G>", "n", false) -- Go select mode
+    mk_keymaps(old)
+  end
 end)()
 -- M.rename = M.renamer.keymap
 

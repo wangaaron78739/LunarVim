@@ -8,8 +8,7 @@ packer.init {
   -- compile_path = require("packer.util").join_paths(vim.fn.stdpath "config", "plugin", "packer_compiled.vim"),
   -- compile_path = require("packer.util").join_paths(vim.fn.stdpath "config", "plugin", "packer_compiled.lua"),
   compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
-  snapshot_path = vim.fn.stdpath "config" .. "/snapshots",
-  -- snapshot = "feb-26",
+  snapshot_path = vim.fn.stdpath "config" .. "/packer_snapshots",
   git = { clone_timeout = 300 },
   display = {
     open_fn = function()
@@ -38,9 +37,9 @@ return packer.startup(function(use)
   use "lewis6991/impatient.nvim" -- Will be merged in https://github.com/neovim/neovim/pull/15436
   use {
     "nathom/filetype.nvim",
-    setup = function()
-      vim.g.did_load_filetypes = 1
-    end,
+    -- setup = function()
+    --   vim.g.did_load_filetypes = 1
+    -- end,
     config = function()
       require("filetype").setup {
         overrides = O.filetypes,
@@ -106,7 +105,12 @@ return packer.startup(function(use)
   use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
 
   -- whichkey
-  use { "folke/which-key.nvim" }
+  use {
+    "folke/which-key.nvim",
+    -- config = function()
+    --   vim.cmd [[au VimEnter * ++once lua require("which-key").load()]]
+    -- end,
+  }
 
   -- Coq_nvim based Autocomplete and snippets
   use {
@@ -207,6 +211,7 @@ return packer.startup(function(use)
     config = function()
       require("lv-gitsigns").config()
     end,
+    event = "VimEnter",
   }
 
   -- Comments
@@ -281,7 +286,6 @@ return packer.startup(function(use)
 
   -- Better motions
   use {
-    -- "IndianBoy42/hop.nvim",
     "phaazon/hop.nvim",
     config = function()
       require("lv-hop").config()
@@ -344,27 +348,25 @@ return packer.startup(function(use)
   use { "theHamsta/nvim-treesitter-pairs", event = BufRead, disable = not O.plugin.ts_matchup }
 
   -- Vim Doge Documentation Generator
-  use {
-    "kkoomen/vim-doge",
-    run = ":call doge#install()",
-    cmd = "DogeGenerate",
-    disable = not O.plugin.doge,
-  }
-  use {
-    "nvim-treesitter/nvim-tree-docs",
-    config = function()
-      require("lv-treesitter.docs").config()
-    end,
-  }
   -- use {
-  --   "danymat/neogen",
-  --   config = function()
-  --     require("neogen").setup {
-  --       enabled = true,
-  --     }
-  --   end,
-  --   requires = "nvim-treesitter/nvim-treesitter",
+  --   "kkoomen/vim-doge",
+  --   run = ":call doge#install()",
+  --   cmd = "DogeGenerate",
+  --   disable = not O.plugin.doge,
   -- }
+  -- use {
+  --   "nvim-treesitter/nvim-tree-docs",
+  --   config = function()
+  --     require("lv-treesitter.docs").config()
+  --   end,
+  -- }
+  use {
+    "danymat/neogen",
+    config = function()
+      require("lv-neogen").config()
+    end,
+    requires = "nvim-treesitter/nvim-treesitter",
+  }
 
   -- Colorizer?
   use {
@@ -398,7 +400,7 @@ return packer.startup(function(use)
   use {
     "lukas-reineke/indent-blankline.nvim",
     event = BufRead,
-    setup = function()
+    config = function()
       vim.cmd [[highlight IndentBlanklineIndent6 guifg=#000000 gui=nocombine]]
       vim.cmd [[highlight IndentBlanklineIndent5 guifg=#000000 gui=nocombine]]
       vim.cmd [[highlight IndentBlanklineIndent4 guifg=#000000 gui=nocombine]]
@@ -672,17 +674,28 @@ return packer.startup(function(use)
   use {
     "simrat39/rust-tools.nvim",
     config = function()
-      require("lv-rust-tools").setup()
+      require("lsp.rust").setup()
     end,
     ft = "rust",
     disable = not O.plugin.rust_tools,
     commit = "876089969aa8ccf8784039f7d6e6b4cab6d4a2b1",
   }
   use {
+    "scalameta/nvim-metals",
+    ft = "scala",
+  }
+  use {
+    "p00f/clangd_extensions.nvim",
+    config = function()
+      require("lsp.clangd").setup()
+    end,
+    ft = { "c", "cpp" },
+  }
+  use {
     "saecki/crates.nvim",
     branch = "main",
     config = function()
-      require("lv-rust-tools").crates_setup()
+      require("lsp.rust").crates_setup()
     end,
     event = "BufRead Cargo.toml",
   }
@@ -875,7 +888,7 @@ return packer.startup(function(use)
   use { "rafcamlet/nvim-luapad", cmd = { "Luapad", "LuaRun" }, disable = not O.plugin.luapad }
   -- TODO: try these code running plugins
   use {
-    "IndianBoy42/code_runner.nvim",
+    "CRAG666/code_runner.nvim",
     config = function()
       require("lv-terms").coderunner()
     end,
@@ -903,6 +916,10 @@ return packer.startup(function(use)
     module = { "yabs", "telescope._extensions.yabs" },
     disable = not O.plugin.yabs,
   }
+  -- use { -- TODO: configure vs-tasks
+  --   "EthanJWright/vs-tasks.nvim",
+  --   config = function() end,
+  -- }
   use {
     "michaelb/sniprun",
     run = "bash install.sh",
@@ -1012,17 +1029,18 @@ return packer.startup(function(use)
   -- https://github.com/tpope/vim-obsession
 
   -- treesitter extensions
-  use { -- "nvim-treesitter/nvim-treesitter-textobjects",
-    "jacfger/nvim-treesitter-textobjects",
+  use { -- "jacfger/nvim-treesitter-textobjects",
+    "nvim-treesitter/nvim-treesitter-textobjects",
     disable = not O.plugin.ts_textobjects,
   }
-  use { "Jason-M-Chan/ts-textobjects", disable = not O.plugin.ts_textobjects }
+  -- use { "indianboy42/ts-textobjects", disable = not O.plugin.ts_textobjects }
   use { "RRethy/nvim-treesitter-textsubjects", disable = not O.plugin.ts_textsubjects }
   use {
     "David-Kunz/treesitter-unit",
     config = function()
-      vim.keymap.set("v", "x", '<cmd>lua require"treesitter-unit".select()<CR>')
-      vim.keymap.set("o", "x", '<cmd><c-u>lua require"treesitter-unit".select()<CR>')
+      vim.keymap.set("v", "x", require("treesitter-unit").select)
+      -- vim.keymap.set("o", "x", '<cmd><c-u>lua require"treesitter-unit".select()<CR>')
+      vim.keymap.set("o", "x", require("treesitter-unit").select)
     end,
     disable = not O.plugin.ts_textunits,
   }
@@ -1063,6 +1081,7 @@ return packer.startup(function(use)
   }
   use { "p00f/nvim-ts-rainbow", disable = not O.plugin.ts_rainbow }
   use { "nvim-treesitter/nvim-treesitter-refactor" }
+  use { "haringsrob/nvim_context_vt" }
 
   -- Startup profiler
   use {
@@ -1088,7 +1107,7 @@ return packer.startup(function(use)
 
   -- 'Smarter' pasting
   use {
-    "IndianBoy42/nvim-anywise-reg.lua",
+    "IndianBoy42/nvim-anywise-reg.lua", -- AckslD
     -- AckslD/nvim-anywise-reg.lua
     event = BufRead,
     config = function()
@@ -1287,7 +1306,28 @@ return packer.startup(function(use)
       "InstantJoinSession",
     },
   }
-
+  use {
+    "gbprod/substitute.nvim",
+    config = function()
+      require("substitute").setup()
+    end,
+    module = "substitute",
+  }
+  use {
+    "booperlv/nvim-gomove",
+    config = function()
+      require("gomove").setup {
+        -- whether or not to map default key bindings, (true/false)
+        map_defaults = false,
+        -- whether or not to reindent lines moved vertically (true/false)
+        reindent = true,
+        -- whether or not to undojoin same direction moves (true/false)
+        undojoin = true,
+        -- whether to not to move past end column when moving blocks horizontally, (true/false)
+        move_past_end_col = true,
+      }
+    end,
+  }
   use "antoinemadec/FixCursorHold.nvim"
 
   -- Colorschemes/Themes
@@ -1298,6 +1338,11 @@ return packer.startup(function(use)
     module = "lush",
     disable = not O.plugin.lush,
   }
+  use {
+    "themercorp/themer.lua",
+    branch = "dev",
+  }
+  use { "mangeshrex/uwu.vim" }
   -- Colorbuddy colorscheme helper
   use { "tjdevries/colorbuddy.vim", module = "colorbuddy" }
   -- Colorschemes -- https://github.com/folke/lsp-colors.nvim

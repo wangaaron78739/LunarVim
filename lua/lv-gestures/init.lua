@@ -8,15 +8,20 @@ function M.keymaps()
   if conf then
     local map = vim.keymap.set
     -- Helper functions
+    local gesture = function(k)
+      return function()
+        require("gesture")[k]()
+      end
+    end
     if conf.lmb then
       -- map("n", "<LeftMouse>", gesturecmd.draw, { silent = true })
-      map("n", "<LeftDrag>", require("gesture").draw, { silent = true })
-      map("n", "<LeftRelease>", require("gesture").finish, { silent = true })
+      map("n", "<LeftDrag>", gesture "draw", { silent = true })
+      map("n", "<LeftRelease>", gesture "finish", { silent = true })
     end
     if conf.rmb then
       map("n", "<RightMouse>", "<NOP>", { silent = true })
-      map("n", "<RightDrag>", require("gesture").draw, { silent = true })
-      map("n", "<RightRelease>", require("gesture").finish, { silent = true })
+      map("n", "<RightDrag>", gesture "draw", { silent = true })
+      map("n", "<RightRelease>", gesture "finish", { silent = true })
     end
   end
 end

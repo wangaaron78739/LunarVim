@@ -10,7 +10,7 @@ local finders = require "telescope.finders"
 
 local M = {}
 
-M.commands = {}
+M.shell_cmd = {}
 function rg(ignore, hidden, files)
   return {
     "rg",
@@ -26,9 +26,9 @@ function rg(ignore, hidden, files)
     files and "--files" or nil,
   }
 end
-M.commands.rg = rg(true, true, false)
--- M.commands.fd = vim.list_extend(vim.deepcopy(M.commands.rg), { "--files" })
-M.commands.fd = rg(true, true, true)
+M.shell_cmd.rg = rg(true, true, false)
+-- M.shell_cmd.fd = vim.list_extend(vim.deepcopy(M.shell_cmd.rg), { "--files" })
+M.shell_cmd.fd = rg(true, true, true)
 
 function M.set_prompt_to_entry_value(prompt_bufnr)
   local entry = action_state.get_selected_entry()
@@ -39,10 +39,6 @@ function M.set_prompt_to_entry_value(prompt_bufnr)
   action_state.get_current_picker(prompt_bufnr):reset_prompt(entry.ordinal)
 end
 
---[[
-lua require('plenary.reload').reload_module("plugin.telescope")
-nnoremap <leader>en <cmd>lua require('plugin.telescope').edit_neovim()<CR>
---]]
 function M.edit_neovim()
   builtins.find_files {
     prompt_title = "< VimRC >",
@@ -401,6 +397,12 @@ end
 
 function M.yabs()
   extensions.yabs.tasks {}
+end
+
+function M.diagnostics(opts)
+  builtins.diagnostics(vim.tbl_extend("keep", opts or {}, {
+    bufnr = 0,
+  }))
 end
 
 return setmetatable(M, {

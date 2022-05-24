@@ -99,16 +99,7 @@ _G.lv_utils_functions = {}
 local to_cmd_counter = 0
 function M.to_cmd(luafunction, args)
   utils.dump(to_cmd_counter, debug.getinfo(2).source)
-  -- TODO: serialize opts if table
-  if args == nil then
-    args = ""
-  end
-  -- TODO: deduplicate functions?
-  -- local name = "fn" .. to_cmd_counter
-  to_cmd_counter = to_cmd_counter + 1
-  local name = to_cmd_counter
-  _G.lv_utils_functions[name] = luafunction
-  return "<cmd>lua lv_utils_functions[" .. name .. "](" .. args .. ")<cr>"
+  vim.notify "to_cmd is deprecated"
 end
 
 function M.quickfix_toggle()
@@ -239,9 +230,13 @@ end
 local function luafn(prefix)
   return setmetatable({}, {
     __index = function(tbl, key)
-      return "<cmd>lua " .. prefix .. "." .. key .. "()<cr>"
+      return function()
+        prefix[key]()
+      end
+      -- return "<cmd>lua " .. prefix .. "." .. key .. "()<cr>"
     end,
     __call = function(tbl, key)
+      -- utils.dump(debug.getinfo(2).source, prefix, key)
       return "<cmd>lua " .. prefix .. "." .. key .. "<cr>"
     end,
   })

@@ -1,5 +1,5 @@
 if O.plugin.rust_tools then
-  require("lv-rust-tools").ftplugin()
+  require("lsp.rust").ftplugin()
 end
 
 require("lv-pairs.sandwich").add_local_recipes {

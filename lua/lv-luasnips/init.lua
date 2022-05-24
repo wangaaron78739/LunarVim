@@ -51,8 +51,8 @@ function M.setup()
   map("s", "<C-k>", "<Plug>luasnip-jump-prev", { silent = true })
   map("i", "<C-h>", "<Plug>luasnip-next-choice", { silent = true })
   map("s", "<C-h>", "<Plug>luasnip-next-choice", { silent = true })
-  map("i", "<C-y>", "<cmd>lua require'lv-luasnips.choice'.popup_close()<CR>", { silent = true })
-  map("s", "<C-y>", "<cmd>lua require'lv-luasnips.choice'.popup_close()<CR>", { silent = true })
+  map("i", "<C-y>", require("lv-luasnips.choice").popup_close, { silent = true })
+  map("s", "<C-y>", require("lv-luasnips.choice").popup_close, { silent = true })
   local operatorfunc_keys = require("lv-utils").operatorfunc_keys
   map("n", "<M-s>", operatorfunc_keys("luasnip_select", "<TAB>"), { silent = true })
 
@@ -91,11 +91,7 @@ function M.setup()
   local function selected_text(opts)
     return f(function(_, snip)
       return snip.env.TM_SELECTED_TEXT or ""
-    end, vim.tbl_extend(
-      "force",
-      {},
-      opts or {}
-    ))
+    end, vim.tbl_extend("force", {}, opts or {}))
   end
 
   ls.snippets = {
@@ -146,11 +142,7 @@ function M.setup()
         -- t { ")", "" },
       }),
       s("iife", {
-        t "(function ",
-        i(1),
-        t "(",
-        i(2),
-        t { ")", "return" },
+        t { "(function ()", "return" },
         selected_text(),
         -- t { "", "" },
         i(0),

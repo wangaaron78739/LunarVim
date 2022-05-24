@@ -6,6 +6,8 @@ command! Zenbones colorscheme zenbones
 command! Nordbones colorscheme nordbones
 command! LightMelya colorscheme light_melya
 command! Nebulous lua require'theme'.nebulous()
+command! Onedark lua require'theme'.theme('onedark')
+command! Kurai lua require'theme'.theme('kurai')
 command! Material lua require'theme'.material()
 command! Rdark lua require('colorbuddy').colorscheme('nvim-rdark')
 command! Catppuccin colorscheme catppuccin
@@ -78,6 +80,36 @@ local M = {
       custom_highlights = {}, -- Overwrite highlights with your own
     }
     vim.cmd "colorscheme material"
+  end,
+  themer = function(theme)
+    theme = theme or "onedark" or "kurai"
+    local bg = {
+      bg = {
+        base = "#03070e",
+      },
+    }
+    require("themer").setup {
+      colorscheme = theme,
+      styles = {
+        comment = { style = "italic" },
+        ["function"] = { style = "italic" },
+        functionbuiltin = { style = "italic" },
+        variable = { style = "italic" },
+        variableBuiltIn = { style = "italic" },
+        parameter = { style = "italic" },
+      },
+      remaps = {
+        palette = {
+          kurai = bg,
+          kanagawa = bg,
+          onedark = bg,
+          dracula = bg,
+          darknight = bg,
+          [theme] = bg,
+        },
+      },
+    }
+    -- require("themer.modules.export.nvim").write_colorscheme(require("themer.modules.themes." .. theme))
   end,
 }
 
