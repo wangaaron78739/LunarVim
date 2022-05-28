@@ -1,33 +1,31 @@
 --- COLORSCHEME ---
 
 -- My fav/common themes
-vim.cmd [[
-command! Zenbones colorscheme zenbones
-command! Nordbones colorscheme nordbones
-command! LightMelya colorscheme light_melya
-command! Nebulous lua require'theme'.nebulous()
-command! Onedark lua require'theme'.theme('onedark')
-command! Kurai lua require'theme'.theme('kurai')
-command! Material lua require'theme'.material()
-command! Rdark lua require('colorbuddy').colorscheme('nvim-rdark')
-command! DarkCatppuccino colorscheme catppuccin
-command! Acme colorscheme acme
-command! Pencil colorscheme pencil
-command! Paper colorscheme paper
-command! Parchment colorscheme parchment
-command! ModusOperandi colorscheme modus-operandi
-command! ModusVivendi colorscheme modus-vivendi
-command! Writing lua vim.cmd(O.lighttheme)
-]]
+utils.new_command.Zenbones = "colorscheme zenbones"
+utils.new_command.Nordbones = "colorscheme nordbones"
+utils.new_command.LightMelya = "colorscheme light_melya"
+utils.new_command.Nebulous = "lua require'theme'.nebulous()"
+utils.new_command.Onedark = "lua require'theme'.theme('onedark')"
+utils.new_command.Kurai = "lua require'theme'.theme('kurai')"
+utils.new_command.Material = "lua require'theme'.material()"
+utils.new_command.Rdark = "lua require('colorbuddy').colorscheme('nvim-rdark')"
+utils.new_command.DarkCatppuccino = "colorscheme catppuccin"
+utils.new_command.Acme = "colorscheme acme"
+utils.new_command.Pencil = "colorscheme pencil"
+utils.new_command.Paper = "colorscheme paper"
+utils.new_command.Parchment = "colorscheme parchment"
+utils.new_command.ModusOperandi = "colorscheme modus-operandi"
+utils.new_command.ModusVivendi = "colorscheme modus-vivendi"
+utils.new_command.Writing = "lua vim.cmd(O.lighttheme)"
 
-require("lv-utils").define_augroups {
-  _nebulous_patches = {
-    { "Colorscheme", "nebulous", "hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828" },
-    { "Colorscheme", "nebulous", "hi LspReferenceRead cterm=bold ctermbg=red guibg=#464646" },
-    { "Colorscheme", "nebulous", "hi LspReferenceText cterm=bold ctermbg=red guibg=#464646" },
-    { "Colorscheme", "nebulous", "hi LspReferenceWrite cterm=bold ctermbg=red guibg=#464646" },
-  },
-}
+utils.augroup._nebulous_patches.Colorscheme.nebulous = function()
+  vim.cmd [[
+    hi Conceal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#282828
+    hi LspReferenceRead cterm=bold ctermbg=red guibg=#464646
+    hi LspReferenceText cterm=bold ctermbg=red guibg=#464646
+    hi LspReferenceWrite cterm=bold ctermbg=red guibg=#464646
+]]
+end
 
 local M = {
   nebulous = function()

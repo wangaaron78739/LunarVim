@@ -360,6 +360,12 @@ return packer.startup(function(use)
   --   end,
   -- }
   use {
+    "ziontee113/syntax-tree-surfer",
+    config = function()
+      require("lv-treesitter.surfer").config()
+    end,
+  }
+  use {
     "danymat/neogen",
     config = function()
       require("lv-neogen").config()
@@ -626,19 +632,32 @@ return packer.startup(function(use)
   use { "christoomey/vim-tmux-navigator", disable = not O.plugin.tmux_navigator }
 
   use {
-    "github/copilot.vim",
-    setup = function()
-      vim.g.copilot_no_tab_map = true
-      vim.g.copilot_enabled = true
-      -- vim.g.copilot_filetypes = { ["*"] = false }
-    end,
+    "zbirenbaum/copilot.lua",
+    event = "InsertEnter",
     config = function()
-      local map = vim.keymap.set
-      map("i", O.plugin.copilot.key, [[copilot#Accept("")]], { expr = true, silent = true })
+      vim.schedule(function()
+        require "copilot"
+      end)
     end,
-    cmd = "Copilot",
-    disable = not O.plugin.copilot,
   }
+  use {
+    "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua", "nvim-cmp" },
+  }
+  -- use {
+  --   "github/copilot.vim",
+  --   setup = function()
+  --     vim.g.copilot_no_tab_map = true
+  --     vim.g.copilot_enabled = true
+  --     -- vim.g.copilot_filetypes = { ["*"] = false }
+  --   end,
+  --   config = function()
+  --     local map = vim.keymap.set
+  --     map("i", O.plugin.copilot.key, [[copilot#Accept("")]], { expr = true, silent = true })
+  --   end,
+  --   cmd = "Copilot",
+  --   disable = not O.plugin.copilot,
+  -- }
 
   -- LANGUAGE SPECIFIC GOES HERE
 
@@ -774,11 +793,7 @@ return packer.startup(function(use)
   use {
     "weilbith/nvim-code-action-menu",
     config = function()
-      utils.define_augroups {
-        _lsputil_codeaction_list = {
-          { "FileType", "code-action-menu-menu", "nmap <buffer> K <CR>" },
-        },
-      }
+      utils.augroup._lsputil_codeaction_list.Filetype["code-action-menu-menu"] = "nmap <buffer> K <CR>"
     end,
     cmd = "CodeActionMenu",
   }

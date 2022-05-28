@@ -166,6 +166,7 @@ local preamble = [[
 % ]{biblatex}
 % \addbibresource{ref.bib} %Imports bibliography file
 \usepackage{amsthm}
+\usepackage{xfrac}
 
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\CC}{\mathbb{C}}

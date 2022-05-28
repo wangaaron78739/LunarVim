@@ -14,26 +14,34 @@ local function feedkeys(keys, o)
   end
   feedkeys_(termcode(keys, true, true, true), o, false)
 end
+
 function M.n_repeat()
   -- vim.cmd [[normal! m']]
   if custom_n_repeat == nil then
     feedkeys("n", "n")
-  else
+  elseif type(custom_n_repeat) == "string" then
     feedkeys(custom_n_repeat)
+  else
+    custom_n_repeat()
   end
 end
+
 function M.N_repeat()
   -- vim.cmd [[normal! m']]
   if custom_N_repeat == nil then
     feedkeys("N", "n")
-  else
+  elseif type(custom_N_repeat) == "string" then
     feedkeys(custom_N_repeat)
+  else
+    custom_N_repeat()
   end
 end
+
 local function register_nN_repeat(nN)
   custom_n_repeat = nN[1]
   custom_N_repeat = nN[2]
 end
+
 M.register_nN_repeat = register_nN_repeat
 
 -- Helper functions
@@ -42,7 +50,7 @@ local luareq = cmd.require
 local gitsigns_fn = luareq "gitsigns"
 local telescope_fn = require "lv-telescope.functions"
 local focus_fn = luareq "focus"
-local lspbuf = cmd.lsp
+local lspbuf = vim.lsp.buf
 local lsputil = require "lsp.functions"
 local operatorfunc_scaffold = require("lv-utils").operatorfunc_scaffold
 local operatorfunc_keys = require("lv-utils").operatorfunc_keys
@@ -69,6 +77,7 @@ local function make_nN_pair(pair)
     end,
   }
 end
+
 M.make_nN_pair = make_nN_pair
 
 vim.g.libmodalTimeouts = "1"
@@ -99,6 +108,7 @@ end
 vim.keymap.setl = function(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("keep", opts or {}, { buffer = 0 }))
 end
+local mapl = vim.keymap.setl
 local sile = { silent = true, remap = true }
 local nore = { noremap = true, silent = true }
 local norexpr = { noremap = true, silent = true, expr = true }
@@ -113,6 +123,7 @@ local function op_from(lhs, rhs, opts)
 
   map("o", lhs, "<cmd>normal v" .. rhs .. "<cr>", opts)
 end
+
 M.op_from = op_from
 local function sel_map(lhs, rhs, opts)
   if opts == nil then
@@ -121,17 +132,21 @@ local function sel_map(lhs, rhs, opts)
   map("x", lhs, rhs, opts)
   op_from(lhs, rhs, opts)
 end
+
 M.sel_map = sel_map
 
 function M.sile(mode, from, to)
   map(mode, from, to, sile)
 end
+
 function M.nore(mode, from, to)
   map(mode, from, to, nore)
 end
+
 function M.expr(mode, from, to)
   map(mode, from, to, expr)
 end
+
 function M.norexpr(mode, from, to)
   map(mode, from, to, norexpr)
 end
@@ -198,10 +213,16 @@ function M.setup()
   M.init()
   local wk = require "which-key"
 
+  -- Make CTRL-i work separate to <TAB>
+  if vim.env.TERM == "xterm-kitty" then
+    vim.cmd [[autocmd UIEnter * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>1u") | endif]]
+    vim.cmd [[autocmd UILeave * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[<1u") | endif]]
+  end
+
   -- Free keys for reference
   map("n", "<C-q>", "<NOP>", {})
   map("n", "<C-p>", "<NOP>", {})
-  map("n", "<C-o>", "<NOP>", {})
+  -- map("n", "<C-o>", "<NOP>", {})
 
   -- custom_n_repeat
   map("n", "n", M.n_repeat, nore)
@@ -212,6 +233,7 @@ function M.setup()
       feedkeys(k, op or "n")
     end
   end
+
   map("n", "/", srchrpt "/", nore)
   map("n", "?", srchrpt "?", nore)
   map("n", "*", srchrpt("viw*", "m"), nore) -- Swap g* and *
@@ -331,10 +353,10 @@ function M.setup()
   map("x", "gJ", "J", nore)
 
   -- better indenting
-  utils.au "_better_indent" { -- This need to be a <buffer> map otherwise nowait doesn't work
-    { "FileType", "nnoremap <buffer> <nowait> > >>" },
-    { "FileType", "nnoremap <buffer> <nowait> < <<" },
-  }
+  utils.augroup("_better_indent").FileType = function()
+    mapl("n", ">", ">>", { nowait = true })
+    mapl("n", "<", "<<", { nowait = true })
+  end
   map("n", "g<", "<", nore)
   map("n", "g>", ">", nore)
   map("x", "<", "<gv", nore)
@@ -372,6 +394,7 @@ function M.setup()
       map(m, "<M-" .. c .. ">", '"_' .. c, nore)
     end
   end
+
   -- Make the default not touch the clipboard, and add a meta version that does
   local function dont_clobber_by_default(m, c)
     if string.upper(c) == c then
@@ -381,6 +404,7 @@ function M.setup()
     end
     map(m, c, '"_' .. c, nore)
   end
+
   dont_clobber_if_meta("n", "d")
   dont_clobber_if_meta("n", "D")
   dont_clobber_if_meta("x", "r")
@@ -527,6 +551,8 @@ function M.setup()
   -- Go Back
   map("n", "gb", "<c-o>", nore)
   map("n", "GB", "<c-i>", nore)
+  map("n", "<c-o>", "<c-o>", nore)
+  map("n", "<c-i>", "<c-i>", nore)
 
   -- -- Commenting helpers
   -- map("n", "gcO", "O-<esc>gccA<BS>", sile)
@@ -604,7 +630,8 @@ function M.setup()
   -- Hover
   -- map("n", "K", vim.lsp.buf.hover, sile)
   map("n", "gh", vim.lsp.buf.hover, sile)
-  map("n", "K", cmd "CodeActionMenu", {})
+  local do_code_action = cmd "CodeActionMenu"
+  map("n", "K", do_code_action, {})
   map("x", "K", ":lua vim.lsp.buf.range_code_action()<cr>", {})
 
   -- Formatting keymaps
@@ -645,6 +672,7 @@ function M.setup()
     -- map("i", key, key .. "<c-g>u", nore)
     map("i", key, "<c-g>u" .. key, nore)
   end
+
   local undo_brkpts = {
     "<cr>",
     ",",
@@ -683,10 +711,12 @@ function M.setup()
     -- map("n", "<M-" .. key .. ">", "vi" .. key, {remap=true})
     -- map("n", "<C-M-" .. key .. ">", "va" .. key, {remap=true})
   end
+
   local function quick_around(key)
     map("o", key, "a" .. key, { remap = true })
     map("n", "<M-" .. key .. ">", "va" .. key, { remap = true })
   end
+
   quick_inside "w"
   quick_inside "p"
   quick_inside "W"
@@ -870,7 +900,7 @@ function M.setup()
       a = { cmd "wa", "Write All" },
       c = { cmd "Bdelete!", "Close" },
       d = { cmd "bdelete!", "Close+Win" },
-      f = { lspbuf.formatting, "Format" },
+      f = { vim.lsp.buf.formatting, "Format" },
       -- n = { cmd "tabnew", "New" },
       n = { cmd "enew", "New" },
       -- W = {cmd "BufferWipeout", "wipeout buffer"},
@@ -1088,6 +1118,7 @@ function M.setup()
       ["+"] = { [[:%s/<C-R>+//g<Left><Left>]], "Last yank" },
       ["."] = { [[:%s/<C-R>.//g<Left><Left>]], "Last insert" },
       s = { [[:%s///g<Left><Left><Left>]], "From Search" },
+      S = { [[:s///g<Left><Left><Left>]], "From Search" },
     },
     n = {
       name = "Generate",
@@ -1318,6 +1349,7 @@ function M.wrapjk()
   map("x", "j", [[v:count ? (v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'j' : 'gj']], norexpr)
   map("x", "k", [[v:count ? (v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'k' : 'gk']], norexpr)
 end
+
 function M.countjk()
   map("n", "j", [[(v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'j']], norexpr)
   map("n", "k", [[(v:count > ]] .. mincount .. [[ ? "m'" . v:count : '') . 'k']], norexpr)
@@ -1335,6 +1367,7 @@ function M.whichkey(maps, opts)
   end
   require("which-key").register(maps, vim.tbl_extend("keep", opts, M.wkopts))
 end
+
 function M.localleader(maps, opts)
   if opts == nil then
     opts = {}
@@ -1347,6 +1380,7 @@ function M.localleader(maps, opts)
     })
   )
 end
+
 function M.ftleader(maps, opts)
   if opts == nil then
     opts = {}
@@ -1359,6 +1393,7 @@ function M.ftleader(maps, opts)
     })
   )
 end
+
 function M.vlocalleader(maps, opts)
   if opts == nil then
     opts = {}

@@ -1,225 +1,1574 @@
-                                                                    packer.nvim - finished in 16.335s
- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- - Removed /home/amedhi/.local/share/nvim/site/pack/packer/start/wilder.nvim
- ✓ Installed hrsh7th/cmp-cmdline
- ✓ Updated liuchengxu/vista.vim: f49ca3d..587b6b2
+                                       packer.nvim - finished in 72.421s
+ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ ✓ Updated danymat/neogen: cd10ee6..f249a70
+  URL: https://github.com/danymat/neogen
   Commits:
-    587b6b2 Option for hiding text kind when icons enabled (#408) (#412) (30 hours ago)
+    f249a70 C# improvements (#86) (4 days ago)
+    c539ccc Update README.md (12 days ago)
+    778a853 [docgen] Update doc/neogen.txt skip-checks: true (3 weeks ago)
+    19c7045 chore: update docs (3 weeks ago)
+    dc354d3 [docgen] Update doc/neogen.txt skip-checks: true (3 weeks ago)
+    c9ac5a6 Placeholder support for snippet engines (#76) (3 weeks ago)
+    4e3dca6 fix(doc): language (#81) (3 weeks ago)
+    fd86bde chore: Delete old code (4 weeks ago)
+    046fdb3 feat(ts) Add support for `@template` (#79) (4 weeks ago)
+    2674428 ref(c) Use type name instead of jump (#80) (4 weeks ago)
+    1da0dd9 feat(c) Add `@typedef` for doxygen (#80) (4 weeks ago)
+    f2aeb07 fix(js/ts) Do not duplicate `@return` (#79) (4 weeks ago)
+    26d9289 [docgen] Update doc/neogen.txt skip-checks: true (4 weeks ago)
+    8c16efa doc: Add doc to support new snippet engines (4 weeks ago)
+    670494d feat(kotlin) Support Generics (#78) (4 weeks ago)
+    db5fd70 feat(kotlin) Automatically add return annotation for functions (4 weeks ago)
+    92827d0 fix(javadoc) Improper placement (#78) (4 weeks ago)
+    423360a fix: csharp parameters (#77) (4 weeks ago)
+    85add3f Update README.md (4 weeks ago)
+    82b4fc9 Update README.md (4 weeks ago)
+    c8141b9 [docgen] Update doc/neogen.txt skip-checks: true (4 weeks ago)
+    d449431 feat(rb) Add support for tomdoc (4 weeks ago)
+    e7043e3 ref(generator) Dedent unecessary else statement (4 weeks ago)
+    a0d37d5 [docgen] Update doc/neogen.txt skip-checks: true (5 weeks ago)
+    7e97b9a Improve Godoc support (#75) (5 weeks ago)
+    b7d2ce8 feat(ts) Add support for `TSdoc` annotation convention (closes #47) (5 weeks ago)
+    02f4437 [docgen] Update doc/neogen.txt skip-checks: true (5 weeks ago)
+    ea98114 chore: delete old text (5 weeks ago)
+    3bb2938 [docgen] Update doc/neogen.txt skip-checks: true (5 weeks ago)
+    0b81573 chore: Bump neogen version to `2.3.0` (5 weeks ago)
+    d5f447e Snippet support (#72) (5 weeks ago)
 
- ✓ Updated mcchrish/zenbones.nvim: cc4abbb..4f8dbb1
+ ✓ Updated machakann/vim-sandwich: 48acdad..7bdd7fc
+  URL: https://github.com/machakann/vim-sandwich
   Commits:
-    4f8dbb1 auto generate docs (6 hours ago)
-    4d1aec1 doc: cleanup config table (7 hours ago)
-    58d0057 auto generate docs (7 hours ago)
-    c523255 convert config doc to table (7 hours ago)
-    e9db8a7 cleanup readme (7 hours ago)
-    0c0e819 auto generate docs (7 hours ago)
-    d54a4fd simplify title (7 hours ago)
-    34b93f9 auto generate docs (7 hours ago)
-    057759a fix doc typo (7 hours ago)
-    6fc50cc auto generate docs (7 hours ago)
-    cc2cf64 improve readme (7 hours ago)
-    681bcff allow dictionary global config (8 hours ago)
-    b51ca3f cleaner global config resolver (30 hours ago)
-    cc76bd2 rebuild (30 hours ago)
-    8754941 auto generate docs (31 hours ago)
-    2bf8d8f higher NonText default constrast (31 hours ago)
-    32a3bec auto generate docs (31 hours ago)
-    c998dcb configurable LineNr contrast (31 hours ago)
-    6c23807 breaking: renamed {zenbones/zenflesh}_{darken/lighten}_line_nr to solid_line_nr (31 hours ago)
-    3fc8d32 configurable NonText contrast (32 hours ago)
-    7b85e53 readme: mention nnn.vim (2 days ago)
-    bb9e2d5 slightly adjust sidebar bg (2 days ago)
-    e89caf1 support nnn.vim (2 days ago)
-    36964cd link StatusLineTerm for vim compat (2 days ago)
+    7bdd7fc Make magicchar-t more context-cognitive (3 weeks ago)
+    f3f7542 Fix a bug of textobj-query with inprintable input (8 weeks ago)
+    70022d9 Implement g:sandwich#input_fallback option (8 weeks ago)
+    55cb454 Do not touch unused registers (9 weeks ago)
+    1d67705 Merge branch 'master' into develop (9 weeks ago)
+    ad7723c Implement module-like inter-file communication (4 months ago)
+    d020729 Do not load lib module in a/o/sandwich.vim (4 months ago)
 
- ✓ Updated ellisonleao/glow.nvim: ae61bac..62813b5
+ ✓ Updated mg979/vim-visual-multi: e209089..4fcd379
+  URL: https://github.com/mg979/vim-visual-multi
   Commits:
-    62813b5 fix: respect g:glow_binary_path (#45) (2 days ago)
+    4fcd379 fix: vim-smartinput compatibility (2) (11 days ago)
+    4ce9754 fix #185: vim-smartinput compatibility (12 days ago)
+    f891438 fix: VMSearch add patterns when VM started (2 weeks ago)
+    916f4eb fix: tests vimrc (2 weeks ago)
+    672f7df fix: make g:VM_highlight_matches more secure (2 weeks ago)
+    96e01e3 docs: update (2 weeks ago)
 
- ✓ Updated lervag/vimtex: 60bec44..c49a93b
+ ✓ Updated ggandor/lightspeed.nvim: ee7ffff..cfde2b2
+  URL: https://github.com/ggandor/lightspeed.nvim
   Commits:
-    c49a93b chore: move compiler check_timer to compiler class (9 hours ago)
-    ea86b7a chore: use more robust job_stop wait timer (9 hours ago)
-    99b60e5 chore: reduce vim.job_stop wait time (9 hours ago)
-    4d82eb1 chore: simplify latexmk requirements (10 hours ago)
-    75b75f4 fix: highlight subsec labels in ToC (20 hours ago)
-    a79c09d fix: avoid check_running timer race condition (23 hours ago)
-    e429bb6 test: adjust fold text test for Vim (2 days ago)
-    7b9743e feat: ignore 'shell' with neovim compiler jobstart (2 days ago)
-    3bc4ee9 fix: minor adjustment to os info (2 days ago)
-    3bbd6ea fix: minor regression (2 days ago)
+    cfde2b2 docs(readme): fix typo (#141) (29 hours ago)
+    ecb8bbc refactor: use metatable magic on `opts.special_keys` (5 days ago)
+    58c9e32 fix(sx): Enter events should not be triggered for instant-repeat (4 weeks ago)
+    c539032 fix(get-unique-chars): wrong arg for `string.lower` (4 weeks ago)
+    c9cd920 fix(init-highlight): use `:hi!` only when forcing the defaults (5 weeks ago)
+    c4a203d refactor: decouple 1-char and 2-char search logic (5 weeks ago)
+    d5c57b0 refactor(sx): explode `highlight-unique-chars` (SRP) (5 weeks ago)
+    253799b refactor(ignore-input-until-timeout): make `timeout` a parameter (5 weeks ago)
+    f478ee0 refactor: do not pass redundant args for `vim.highlight.range` (5 weeks ago)
+    23565bc fix(grey-out-search-area): bad syntax for `highlight-range-compat` args (5 weeks ago)
+    3a8759e improv(sx/linewise): remove the ghost labels feature (5 weeks ago)
+    95c6467 improv(defaults): no underline for shortcuts (5 weeks ago)
+    132e579 docs(code): tweak docstrings & comments (5 weeks ago)
+    f2075e0 refactor(sx): improve logic for setting sublist & target attributes (5 weeks ago)
+    8e8b700 improv(defaults): tweak highlight groups (5 weeks ago)
+    794b081 refactor(init-highlight): use maps instead of lists of pairs (5 weeks ago)
 
- ✓ Updated simrat39/rust-tools.nvim: 04e471c..4546152
+ ✓ Updated is0n/fm-nvim: f75cdf4..2e3b368
+  URL: https://github.com/is0n/fm-nvim
   Commits:
-    4546152 fix(code_action_groups): Redraw after setting up the second window (2 days ago)
+    2e3b368 Fix #22 (12 days ago)
+    ed9cfd6 Update README.md (5 weeks ago)
+    8817bba Merge pull request #19 from lvim-tech/feat/neomutt_support (5 weeks ago)
+    038db2e Neomutt support (5 weeks ago)
 
- ✓ Updated jose-elias-alvarez/nvim-lsp-ts-utils: ab8d54f..9dd9891
+ ✓ Updated weilbith/nvim-code-action-menu: b3671ef..a864a79
+  URL: https://github.com/weilbith/nvim-code-action-menu
   Commits:
-    9dd9891 doc: clarify import all priorities (22 hours ago)
+    a864a79 add configuration to alternate window borders (3 weeks ago)
+    1441634 apply formatting for latest stylua version (3 weeks ago)
+    a360ce9 update CI base image (3 weeks ago)
+    15163b2 fix typo in path of CI documentation (3 weeks ago)
+    1210205 readme:  mention coc-code-action-menu.nvim (3 weeks ago)
+    3f7fc82 set local instead of global ones in code actions window (5 weeks ago)
 
- ✓ Updated p00f/nvim-ts-rainbow: 3e6597b..2943a62
+ ✓ Updated monaqa/dial.nvim: f1f68d3..7bd25d0
+  URL: https://github.com/monaqa/dial.nvim
   Commits:
-    2943a62 [fennel] Add `let_clause` level (32 hours ago)
+    7bd25d0 fix: solve problem about counter in VISUAL mode (8 days ago)
+    ca8d9e0 update demo movie in README_ja (8 days ago)
+    452dd1d update demo movie in README (8 days ago)
+    4bd554b fix: nil error in semver (8 days ago)
+    fdecfb1 Merge pull request #21 from monaqa/augend-misc-markdown_header (11 days ago)
+    ca0eac8 update TROUBLESHOOTING.md (11 days ago)
+    9b0e34f add: docs for `markdown_header` (11 days ago)
+    d08a63d add: test of in `markdown_header`; fix bug (11 days ago)
+    4b541f2 add: augend 'misc.alias.markdown_header' (11 days ago)
+    450e850 fix: help modelines (2 weeks ago)
+    943a6c1 Merge pull request #19 from monaqa/fix-integer_period_delim (3 weeks ago)
+    bd967d8 fix: integer with delimiter '.' (3 weeks ago)
+    359194d Merge pull request #16 from monaqa/augend-integer-sep (4 weeks ago)
+    507e19f Merge pull request #15 from monaqa/augend-paren (4 weeks ago)
+    fa06257 add: document for augend 'number' (4 weeks ago)
+    9821344 add: tests in paren_spec (4 weeks ago)
+    bbad18f add tests for augend 'integer' (4 weeks ago)
+    53979bc add: support delimiter in augend 'integer' (4 weeks ago)
+    7b5079e add docs (4 weeks ago)
+    deafa77 fix: augend paren, add paren_spec (4 weeks ago)
+    d3c3c23 add: some alias in augend 'paren' (4 weeks ago)
+    388e5a3 fix: improve logic to choose paren (4 weeks ago)
+    0013c9d add augend paren (4 weeks ago)
 
- ✓ Updated ray-x/lsp_signature.nvim: 8f6b15d..6469c55
+ ✗ Failed to update phaazon/hop.nvim
+ ✓ Updated famiu/bufdelete.nvim: 1c59b78..05f9b28
+  URL: https://github.com/famiu/bufdelete.nvim
   Commits:
-    6469c55 bugfix #121 sumneko_lua (2 days ago)
+    05f9b28 docs: add support link in README (12 days ago)
 
- ✓ Updated saecki/crates.nvim/main: 0ea2b90..43af683
+ ✓ Updated akinsho/nvim-bufferline.lua: 871495d..004cd57
+  URL: https://github.com/akinsho/nvim-bufferline.lua
   Commits:
-    43af683 Revert "don't try to automatically add nvim-cmp source" (2 days ago)
-    805a2c5 fix indentation of config (2 days ago)
+    004cd57 fix: missing visibility method on TabPage (#354) (4 days ago)
+    98bc649 refactor(highlights): make requires lazy (5 days ago)
+    71d4457 refactor: add buffer visibility method (5 days ago)
+    650afcd feat: add option to disable ft icon highlights (5 days ago)
+    cf651b8 refactor: use vim.notify for all notifications (#350) (6 days ago)
+    af158e4 docs(README): change test badge position (7 days ago)
+    94d691e docs: add test badge (7 days ago)
+    ce915af Merge pull request #343 from akinsho/dev (7 days ago)
+    ab35233 Merge branch 'master' into dev (7 days ago)
+    8c79861 refactor: use sorting to insert new buffers after current (#346) (7 days ago)
+    cb9bd12 fix(sorters.lua): reference the correct sort func (7 days ago)
+    5c72485 feat: insert new buffers after current (#342) (7 days ago)
+    b2a0691 feat: add FUNDING.yaml (9 days ago)
+    e1202c6 fix(sorters.lua): reference the correct sort func (2 weeks ago)
+    e684c8e chore: simplify custom_filter conditional (3 weeks ago)
+    5e101b1 chore: remove unused luacheckrc (3 weeks ago)
+    61da3cf fix(groups): re-enable clicking groups (3 weeks ago)
+    f63be9a fix: move early return when not showing tabline (3 weeks ago)
+    78d083f docs: fix typo and increase image size (3 weeks ago)
+    56607ef Merge pull request #334 from akinsho/dev (3 weeks ago)
+    bca1206 Merge branch 'master' into dev (4 weeks ago)
+    d5904e8 fix(offsets): only use nvim eval statusline in nightly (4 weeks ago)
+    722f0de chore(offsets): remove unused variables (4 weeks ago)
+    4269835 fix(offsets): use nvim_eval_statusline to calculate the size (#333) (4 weeks ago)
+    a945022 refactor: use lazy require(ment) mechanism (4 weeks ago)
+    f6a264b feature/tabpages (#331) (4 weeks ago)
 
- ✓ Updated michaelb/sniprun: a42fa2f..8ec3478
+ ✓ Updated SmiteshP/nvim-gps: 6afd8f7..9f2adbc
+  URL: https://github.com/SmiteshP/nvim-gps
   Commits:
-    8ec3478 Merge pull request #106 from michaelb/dev (20 hours ago)
-    57bb376 update changelog (20 hours ago)
-    db4b6cc Merge branch 'master' into dev (20 hours ago)
-    fad717e version bump (20 hours ago)
-    65affad fix setup without args (2 days ago)
-    a7abea8 Merge branch 'dev' of github.com:michaelb/sniprun into dev (2 days ago)
-    2fa3802 Merge branch 'master' into dev (2 days ago)
+    9f2adbc docs: update readme setup example (7 days ago)
+    93da76b feat: return cache value for call from same position (7 days ago)
+    94d30b5 Merge pull request #84 from mathjiajia/master (8 days ago)
+    4d5f971 Merge branch 'master' into master (8 days ago)
+    b92a799 feat: add support for norg (8 days ago)
+    07e13bf feat: add basic support for latex (8 days ago)
+    9cec879 cpp: Add support for qualified class/struct (9 days ago)
+    004a839 Merge pull request #83 from ivan-cukic/master (9 days ago)
+    c152951 cpp: seperate out function and method queries (9 days ago)
+    a50bc6a Add support for qualified names and non-value returning member functions (9 days ago)
+    b28a142 C++: Add support for qualified function names and functions returning refs (9 days ago)
+    1ad35ea docs: Add zig to readme (10 days ago)
+    f51207d Merge pull request #66 from kristoff-it/master (10 days ago)
+    d79a64e Merge pull request #81 from rikuma-t/master (10 days ago)
+    a528d43 feat: add support for C# (10 days ago)
+    00dce9b docs: Add yang info (2 weeks ago)
+    bed311f refactor: make the add_node_data function local (2 weeks ago)
+    e2a0ceb Merge pull request #24 from Hubro/master (2 weeks ago)
+    575a3ce Allow transform functions to return nil (2 weeks ago)
+    956a2db Move default icon location, add some queries (2 weeks ago)
+    f98cfca Add YANG support (2 weeks ago)
+    0813457 refactor: switch to vim.api from vim.fn (4 weeks ago)
+    3eb7402 refactor: Use vim.split instead of my implementation (4 weeks ago)
+    c72a000 refactor: clean depth limit code (5 weeks ago)
+    0c91d63 Merge pull request #76 from SmiteshP/refactor (5 weeks ago)
+    6cde13c refactor: improve depth limit code (5 weeks ago)
+    653febd docs: fix formating (5 weeks ago)
+    f9f6e3b Merge pull request #75 from SmiteshP/feat (5 weeks ago)
+    bbda57d docs: add info about optional argument for get_location (5 weeks ago)
+    685d6a8 feat: add optional argument to get_location (5 weeks ago)
+    eaf73a8 Merge pull request #74 from SmiteshP/feat (5 weeks ago)
+    3b47c79 refactor: move disable_icons code to get_location (5 weeks ago)
+    81c2eaa docs: Add info about get_data function (5 weeks ago)
+    13b06e0 feat: seperate out get_data and get_location functions (5 weeks ago)
+    7431d71 add zig support (9 weeks ago)
 
- ✓ Updated tpope/vim-fugitive: 3093340..174fd6a
+ ✓ Updated nvim-lualine/lualine.nvim: 016a207..c8e5a69
+  URL: https://github.com/nvim-lualine/lualine.nvim
   Commits:
-    174fd6a Revert "Use :redrawstatus rather than &ro = &ro" (9 hours ago)
-    6ad1550 Use :redrawstatus rather than &ro = &ro (27 hours ago)
+    c8e5a69 fix: theme colors not applied as default when color option is incomplete (4 days ago)
+    7345986 fix: use appropriate default color for transitional separators. (5 days ago)
+    f14175e fix: typo (#626) (9 days ago)
+    e9b935c feat: add windows component (#595) (10 days ago)
+    4480d91 fix: transparent background throwing errors without termguicolors (10 days ago)
+    428da5a chore: add support link (10 days ago)
+    4ebbb7a chore: lint correct test directory (10 days ago)
+    5a91d81 chore(tests): move tests out of lua directory (#621) (11 days ago)
+    181b143 fix(filename): use columns for shortening if using global statusline (#617) (3 weeks ago)
+    7db1db3 fix: icons from different filetype component shareing same highlight group (3 weeks ago)
+    399aaa5 fix: test errors in lualine_spec (3 weeks ago)
+    60b1d5d feat: add support for global statusline (#613) (3 weeks ago)
+    88a44ad fix: tabline causing neovims splash screen to disappear (4 weeks ago)
+    1e3cfc6 fix: persistent notices getting wrongly triggered (4 weeks ago)
+    531b2f8 fix: transitional hl throwing errors for nil fg/bg in colors (4 weeks ago)
+    d2e0ac5 chore: autogen (vimdocs+formating) (4 weeks ago)
+    9114298 feat(diagnostics): add padding when using different background colors (#594) (4 weeks ago)
+    a1304ea chore: autogen (vimdocs+formating) (4 weeks ago)
+    747ef49 tests: add statusline test module & update lualine_spec accordingly(#588) (4 weeks ago)
+    21fdf7b don't max xyz->cba in create_component_highlight it's done while generating default hl values (4 weeks ago)
+    09f749c handle cases where filetype icon highlight is not set (#589) (5 weeks ago)
+    32c85cd feat: add custom color support for icons (5 weeks ago)
+    37a314b feat: add support for dynamic color with functions in color options (#566) (5 weeks ago)
 
- ✓ Updated jbyuki/instant.nvim: a5c0756..c02d722
+ ✓ Updated kyazdani42/nvim-web-devicons: 4415d1a..09e6231
+  URL: https://github.com/kyazdani42/nvim-web-devicons
   Commits:
-    c02d722 add contribution section in readme (20 hours ago)
+    09e6231 feat: add solidity icon (#118) (2 weeks ago)
 
- ✓ Updated rcarriga/nvim-notify: 8b2ef65..f565864
+ ✓ Updated numToStr/Comment.nvim: 18a8dc0..0aaea32
+  URL: https://github.com/numToStr/Comment.nvim
   Commits:
-    f565864 feat: global on_open (2 days ago)
+    0aaea32 feat: support nested (injected) code blocks (#138) (2 days ago)
+    546c487 change: use starting column when using `*_current_*` apis (#136) (5 days ago)
+    03b2a8f chore: some random stuff (11 days ago)
+    85119fe fix(insert_eol): don't add space in front of comment on empty lines (#131) (12 days ago)
+    8a2b2f3 chore: refactor `config.lua` (2 weeks ago)
+    a841f73 feat: allow `padding` as a function (3 weeks ago)
+    92da1bd feat: add `kotlin` support (#130) (3 weeks ago)
+    399f92d chore: replace `U.get_pattern()` with `U.is_fn()` (3 weeks ago)
+    026ec95 feat: dot-repeat support for `[count]gcc` and `[count]gbc` 🎉 (#127) (4 weeks ago)
+    00ed8f6 feat: add `gleam` support (#126) (4 weeks ago)
+    9732d2f chore: inline error helper function (5 weeks ago)
 
- ✓ Updated nvim-lua/plenary.nvim: b8c8d23..ef54bc2
+ ✓ Updated lewis6991/gitsigns.nvim: 1d1f043..83ab3ca
+  URL: https://github.com/lewis6991/gitsigns.nvim
   Commits:
-    ef54bc2 feat: separate highlight option for title of `Border`s (#260) (26 hours ago)
+    83ab3ca fix(compat): fix missing support for PUC Lua (3 days ago)
+    9c0fb1a chore: fix issue template (5 days ago)
+    d03b727 doc: update keymaps section in README (take 2) (7 days ago)
+    709455d doc: update keymaps section in README (7 days ago)
+    8ce80d1 chore: update doc template (7 days ago)
+    243ac53 feat(config): refresh compare_text less often (7 days ago)
+    8fce869 doc(mappings): update (8 days ago)
+    9bd449c fix(blame): don't enable in insert mode (8 days ago)
+    2a10723 refactor: vendor in async lib (11 days ago)
+    7ff03e1 feat(nav): add option to auto preview (11 days ago)
+    3791dfa fix(dos): don't insert extra carriage returns (2 weeks ago)
+    2df360d fix(setup): don't defer setting up signs (3 weeks ago)
+    7de9533 refactor: process hunks on the fly (4 weeks ago)
+    5c487a8 fix(compat): support PUC Lua (4 weeks ago)
+    779f4eb fix(attach): properly parse index fugitive buffers (5 weeks ago)
+    c47de5d refactor: make VimEnter deferring generic (5 weeks ago)
+    162842d refactor: move require to a function local (5 weeks ago)
+    6d66300 fix: issue #482 (5 weeks ago)
+    8653754 refactor: use autocmd API (5 weeks ago)
+    06aefb1 refactor: cleanup (5 weeks ago)
 
- ✓ Updated nvim-telescope/telescope.nvim: 782d802..5809321
+ ✓ Updated kyazdani42/nvim-tree.lua: 48e76bc..924aa29
+  URL: https://github.com/kyazdani42/nvim-tree.lua
   Commits:
-    5809321 feat: separate higlight for titles in picker windows (#1362) (26 hours ago)
+    924aa29 feat: add hl_group for file icons (#1131) (33 hours ago)
+    6368880 add open_on_setup_file option (#1133) (2 days ago)
+    8340753 Preserve cursor position across redraws (#1132) (2 days ago)
+    00fd8ae feat: filters.custom can specify regex (#1112) (3 days ago)
+    4d8ab7d fix: close and reopen file as edit when tree is overriden (3 days ago)
+    62906f0 fix: collapse exit early if nvim-tree not loaded (#1128) (3 days ago)
+    51d1af4 stylua indent (4 days ago)
+    5958fd5 refacto: use view.resize in view.reposition_window (7 days ago)
+    5eef618 fix missing " and "toggle without focus" example (#1116) (8 days ago)
+    057f9f7 add nvim-tree.lua neovim version note (9 days ago)
+    524758a chore: remove auto close (9 days ago)
+    ba121f0 document performance issues and add to bug report template (#1111) (9 days ago)
+    bd23c88 profile uses uv.hrtime (#1110) (9 days ago)
+    591b648 update doc g:nvim_tree_icons to match defaults (10 days ago)
+    cc387e8 Merge pull request #1107 from kyazdani42/#1099-search-obey-ignored (10 days ago)
+    1831417 refacto: add get_nodes_starting_line core util (10 days ago)
+    20433ce chore: add not about nosplitright in the readme (10 days ago)
+    54c78db #791 add profiling for some operations (#1108) (10 days ago)
+    015234e #837 find file symlinks fixes (#1093) (10 days ago)
+    54c7cdb #1099 search obeys active ignore filters (11 days ago)
+    1352cb3 naming fix for luacheck 0.26.0 (11 days ago)
+    7b0ebf8 feat: Use vim.ui.input for rename and create (#1097) (2 weeks ago)
+    6492d43 Rename child buffers when renaming directory (#1095) (2 weeks ago)
+    57d6f70 fix: window picker bug on global statusline (#1098) (2 weeks ago)
+    e87ee0e chore: license open-file as MIT (2 weeks ago)
+    fc70954 #837 search subdirs (#1092) (2 weeks ago)
+    5c20f5a markdown comments displayed in text block; replace with lua comments (#1090) (2 weeks ago)
+    9eea0ca #504 determine whether symlinked directories are empty when building (#1089) (2 weeks ago)
+    3cf67c5 fix: remove diagnostics in help view (2 weeks ago)
+    a2fc297 fix: legacy options needs a table (3 weeks ago)
+    20797a8 #1050 #1068 various default options tweaks (#1074) (3 weeks ago)
+    ecbe3ad fix: folder icon highlight (#1086) (3 weeks ago)
+    e307ad9 feat: open node when using search-node action (#1082) (3 weeks ago)
+    d60773e Set target window whenever we open "open" a visible tree (#1080) (3 weeks ago)
+    a50fd77 #857 add filter_custom action, filter_ignored->filter_git_ignored (#1077) (3 weeks ago)
+    b136c7b #1064 add copy_paste logging and more error copy-paste error handling (#1076) (3 weeks ago)
+    d93a93c fix: staged typechange in git (3 weeks ago)
+    a65078e #1060 use one log file with the option to truncate (#1075) (3 weeks ago)
+    2457e14 fix: do not crash file-popup when node is root dir (4 weeks ago)
+    5af3cfa fix: split if nvim-tree is the only window (4 weeks ago)
+    471afc1 refacto: abstract TreeExplorer in core.lua (4 weeks ago)
+    d2b12d6 chore: format (4 weeks ago)
+    144bce7 refacto: move renderer git into file (4 weeks ago)
+    60a9c86 feat: make it possible to collapse the tree but keep the directories open which are in used in buffers (#1057) (4 weeks ago)
+    d5a12ac fix: correct index in movement actions (#1058) (4 weeks ago)
+    08c5766 fix: switch order of modification time sorter (4 weeks ago)
+    19075f4 File logging (#1053) (4 weeks ago)
+    0816064 chore: add stylua to format the codebase, and run on CI (#1055) (4 weeks ago)
+    76d181d refacto: move filters and sorters in their own modules (4 weeks ago)
+    5cfe768 fix: resize if size is nil (4 weeks ago)
+    c25be06 feat: close file info popup if on same node (#1054) (4 weeks ago)
+    b493e23 fix: wipe buffer before initializing (4 weeks ago)
+    7878e92 New Bug Report Template (#1051) (4 weeks ago)
+    7cb6897 feature: add feature to increase/decrease size (#1048) (4 weeks ago)
+    ceadf83 feat: add file size in popup (#1049) (4 weeks ago)
+    5015e72 remove tabs (#1047) (4 weeks ago)
+    ac858a2 fix(run-command): handle current directory node (#1046) (5 weeks ago)
+    a3f256d fix(find-file): match folders with prefix, not containing the node (5 weeks ago)
+    f6aba66 Close help on q/close instead of ignore keypress (#1043) (5 weeks ago)
+    690c7e9 feat: add sort_by option to sort files by modification time (#1040) (5 weeks ago)
+    50a927f feat: add popup information (#1042) (5 weeks ago)
+    4fedb93 feat: add new keybinding "b" to run a command in the focused node (#1024) (5 weeks ago)
+    866442f feat: focus current buffer when opening in current buffer (5 weeks ago)
+    9b03ab4 remove table_tostring (#1036) (5 weeks ago)
+    38cc630 fix: forgot resize_window option in open-file setup (5 weeks ago)
+    0e7856f BREAKING_CHANGE: nvim-tree buffer was renamed (5 weeks ago)
+    f37c3ff chore: move old option into setup from entrypoint to legacy.lua (5 weeks ago)
+    5624bf1 chore: add feature request template (5 weeks ago)
+    6af2d5a chore: move auto_resize to actions.open_file.resize_window (5 weeks ago)
+    9ec710e remove semicolons (#1035) (5 weeks ago)
+    1b8757e fix: changed search_node action to determine correct index (#1022) (5 weeks ago)
+    61a59ff feat: new config to be able to always open the tree on setup (#1023) (5 weeks ago)
+    97717d8 G migration mechanism (#1030) (5 weeks ago)
+    3d8912c add more sensible defaults for window_picker.excludes (#1027) (5 weeks ago)
+    7034d26 doc: remove unused g: (#1028) (5 weeks ago)
+    ce3604d #972 bug: prev_git_item with hijack_cursor selects icon instead of previous file (#1025) (5 weeks ago)
 
- ✓ Updated nvim-treesitter/nvim-treesitter: 0bbc6e3..fe4e4aa
+ ✓ Updated windwp/nvim-autopairs: 784398a..06535b1
+  URL: https://github.com/windwp/nvim-autopairs
   Commits:
-    fe4e4aa yaml: improve highlights and locals (#946) (13 hours ago)
+    06535b1 improves fastwrap on space (3 days ago)
+    f3ebca3 chore: generated vimdoc (12 days ago)
+    687c9e6 update README (12 days ago)
+    96a0dde update FUNDING (12 days ago)
+    c842fea chore: generated vimdoc (12 days ago)
+    d6169b2 fix: allow add bracket inside quote (12 days ago)
+    6617498 Enable triple quote in kotlin (3 weeks ago)
+    d2cde7c fix: completion text not allow character $ (4 weeks ago)
+    94d42cd Revert "Don't attempt to auto pair on completion, if the completion is a" (4 weeks ago)
+    7bc6188 chore: generated vimdoc (5 weeks ago)
+    411a18d Merge pull request #217 from fmoda3/fix-insert-text-snippet (5 weeks ago)
+    4fc3c19 Don't attempt to auto pair on completion, if the completion is a snippet (5 weeks ago)
+    771fda8 fix #208 (5 weeks ago)
+    994b78f fix #215 (5 weeks ago)
 
- ✓ Updated hrsh7th/nvim-cmp: 5f5e844..881ca57
+ ✓ Updated hrsh7th/nvim-cmp: 13d6446..7dbe34e
+  URL: https://github.com/hrsh7th/nvim-cmp
   Commits:
-    881ca57 Re-support script mapping (51 minutes ago)
-    455817b Update README.md (12 hours ago)
-    a589163 fmt (13 hours ago)
-    cae2e8f RFC: cmdline completion (#362) (13 hours ago)
-    b5899f0 Fix #414 (26 hours ago)
-    32e22e6 fix an error when calling cmp#unregister_source from Vimscript (#413) (29 hours ago)
-    538bfac Update issue templates (29 hours ago)
-    ea6dde8 Add tests for #226 (2 days ago)
-    880137f Fix #226 (2 days ago)
-    f1da3ad Add `cmp.config.disable` for opt-out default setting (2 days ago)
+    7dbe34e Fix snr notation (4 days ago)
+    b3ca3fd Fix recursive mapping problem. Thank you tpope! Fix #858 Fix #871 (4 days ago)
+    15f08a8 Avoid misleading suggested configuration (6 days ago)
+    c158983 Prefer above identifier for locality sort (6 days ago)
+    3a16492 Improve scopes sorter (6 days ago)
+    a97d2f4 Use `get_word` instead to sort. (6 days ago)
+    c1d0cd0 Use cache for locality sort (6 days ago)
+    a5024f9 Add locality sort (easy version) (6 days ago)
+    2de24d3 Rename locals to scopes (6 days ago)
+    dc3113a Add  sort (required nvim-treesitter) (6 days ago)
+    5e794cd Improve timing (6 days ago)
+    dd6e4d9 use only the first filetype when formatting (#857) (8 days ago)
+    2dff6a8 fix(misc): kill redundant redraw during incsearch (#485) (#859) (8 days ago)
+    272cbdc Update readme: add a link to a list of cmp sources (#853) (2 weeks ago)
+    71d7f46 Try to fix col adjustment (#843) (3 weeks ago)
+    c60cb7a Make sure config is not nil (#836) (3 weeks ago)
+    e23de1f Add `cmp.get_entries`. Fixes #831 (3 weeks ago)
+    1001683 Add doc (5 weeks ago)
+    45e93cd Redundent kind of lsp.MarkupKind (#819) (5 weeks ago)
 
- ✓ Updated onsails/lspkind-nvim: 0f78517..1557ce5
+ ✓ Updated rafamadriz/friendly-snippets: 2e57554..e302658
+  URL: https://github.com/rafamadriz/friendly-snippets
   Commits:
-    1557ce5 Merge pull request #26 from stevearc/global-config (2 days ago)
-    835e5c4 Store configuration globally after call to init() (3 days ago)
+    e302658 Merge pull request #140 from OkelleyDevelopment/main (9 days ago)
+    4c29fa5 Merge pull request #137 from Zweisamkeiten/main (9 days ago)
+    4e19ace Merge pull request #135 from TMTBO/main (9 days ago)
+    c3a0de6 Merge pull request #139 from Kedap/enum-dart (9 days ago)
+    f077632 chore: Finally got the snippet fixed (10 days ago)
+    beb170f chore: Working to fix startuml snippet (10 days ago)
+    1777320 feat: Finalized a few snippet formats (10 days ago)
+    3eae963 Experimental (#3) (10 days ago)
+    97d0cab Experimental (#2) (10 days ago)
+    5199d5a add enum to snippets (12 days ago)
+    58b76ad Update shell.json (2 weeks ago)
+    9d8a2e8 Fix luasnip error "ipairs" (2 weeks ago)
+    8617606 modify: change some prefix (3 weeks ago)
+    4e2a47b feat: add more Objective-C support (4 weeks ago)
+    09b9b7b feat: add objc.json (4 weeks ago)
+    ad07b28 Fix luasnip error, ref: #134 (4 weeks ago)
+    1047dde Merge pull request #133 from haoxianhan/main (4 weeks ago)
+    66e68d4 Merge pull request #134 from Kedap/dart-snippets (4 weeks ago)
+    8211afe Merge pull request #129 from raymondboswel/typescript-interface (4 weeks ago)
+    74b040c Merge pull request #132 from wrvsrx/main (4 weeks ago)
+    fa1e9da adding dart snippets (5 weeks ago)
+    3fb409e add erlang snippets (5 weeks ago)
+    df7c79f fix(latex): fix `@{` snippet (5 weeks ago)
+    1dad064 Update README (5 weeks ago)
+    f960332 Merge pull request #125 from Alessandrostr95/julia-snippets (5 weeks ago)
+    09fbe31 Merge pull request #127 from cinuor/main (5 weeks ago)
+    42ccf5f Merge pull request #130 from aspeddro/fix-rescript (5 weeks ago)
+    4d88e2b feat(rescript): fix snippets (6 weeks ago)
+    cce6c0a Added typescript interface snippet (6 weeks ago)
+    411ed31 feature: enhance go.json (7 weeks ago)
+    754cf56 feature: add make.json (7 weeks ago)
+    7c58f44 Add Julia snippets. (8 weeks ago)
 
- ✓ Updated hrsh7th/cmp-path: 387b740..97661b0
+ ✓ Updated L3MON4D3/LuaSnip: b001800..69cb81c
+  URL: https://github.com/L3MON4D3/LuaSnip
   Commits:
-    97661b0 Merge pull request #12 from dmitmel/main (8 hours ago)
-    a77761a Fix #11 (3 days ago)
+    69cb81c Auto generate docs (4 hours ago)
+    48196f3 Merge pull request #373 from yangxing844/master (4 hours ago)
+    73e4455 Update DOC.md (7 hours ago)
+    49fdb0d Format with stylua (2 days ago)
+    7026bb6 Merge pull request #371 from Mike325/cleanup (2 days ago)
+    3cbc085 fix: Skip "order" key in snippets cleanup (2 days ago)
+    ae203dc set dummy MYVIMRC for tests. (2 days ago)
+    a6f1179 Auto generate docs (2 days ago)
+    bf26aeb Merge pull request #370 from Mike325/reload (2 days ago)
+    2458a21 fix: invalid variable access (2 days ago)
+    eb5b77e Merge pull request #368 from TornaxO7/additional_doc_text (4 days ago)
+    5a07eab adjusting doc to `from_<type>` (4 days ago)
+    9ecb715 Merge pull request #366 from TornaxO7/readme_example_link_fix (4 days ago)
+    ed45343 fixing link (4 days ago)
+    c7ba156 Format with stylua (4 days ago)
+    e12df40 Auto generate docs (4 days ago)
+    b33aeba explicitly pass optional param `offset` to fs_read (close #365). (4 days ago)
+    065d52d restore clean_invalidated to init.lua (closes #359). (8 days ago)
 
- ✓ Updated L3MON4D3/LuaSnip: 3dc04d3..383a932
+ ✓ Updated saadparwaiz1/cmp_luasnip: adf4a52..b108297
+  URL: https://github.com/saadparwaiz1/cmp_luasnip
   Commits:
-    383a932 Format with stylua (3 hours ago)
-    e1a0dc4 fix(snippet): don't generate multiple default-functions. (4 hours ago)
-    b0f49c9 Auto generate docs (4 hours ago)
-    1c5c7fb Merge pull request #211 from jedrzejboczar/show-condition (4 hours ago)
-    f5dc654 feat(snippet): optional show_condition to filter completion candidates (5 hours ago)
+    b108297 Create LICENSE (4 days ago)
 
- ✓ Updated rafamadriz/friendly-snippets: 59507a9..fcd2ab1
+ ✓ Updated abecodes/tabout.nvim: 6ff556b..868bdee
+  URL: https://github.com/abecodes/tabout.nvim
   Commits:
-    fcd2ab1 update README (3 hours ago)
-    5fcd836 Merge pull request #92 from ranjithshegde/addGlsl (3 hours ago)
-    bdb4065 Merge pull request #90 from LuisxSullivaN/fix/react-ts (3 hours ago)
-    02169ab Add snippets for glsl Snippets collected from Lewis lepton's gist: https://gist.github.com/lewislepton/8b17f56baa7f1790a70284e7520f9623 (6 hours ago)
-    c8e91e8 fix: remove React.FC<{}> (13 days ago)
+    868bdee refactor: simplify an if-statement (#27) (2 days ago)
+    ac552c8 refactor: delete spurious return statements (#26) (2 days ago)
+    f3fc758 added nil check to utils and guarding binding (#25) (2 weeks ago)
 
- ✓ Updated windwp/nvim-autopairs: 3b1b990..dffcd00
+ ✓ Updated dmitmel/cmp-cmdline-history: 62e8e2e..26ce839
+  URL: https://github.com/dmitmel/cmp-cmdline-history
   Commits:
-    dffcd00 spec: document field `only` (35 hours ago)
-    6842738 chore: change name to compare (2 days ago)
-    4f7d7fc fix html rule (2 days ago)
-    fdeb794 fix bug with toggleterm (2 days ago)
+    26ce839 fix #2 (3 weeks ago)
 
- ✓ Updated kyazdani42/nvim-tree.lua: fd3969e..c4ecf44
+ ✓ Updated petertriho/cmp-git: 4b2e57b..e1b5f0f
+  URL: https://github.com/petertriho/cmp-git
   Commits:
-    c4ecf44 docs: fix typo (#746) (2 days ago)
+    e1b5f0f Merge pull request #34 from ner0-m/feat/curl-as-fallback (11 days ago)
+    e2b4e6f fix: restore support for dot separated filetypes in config (11 days ago)
+    d155e75 Merge pull request #41 from nihilistkitten/dot-separated-filetypes (11 days ago)
+    998a91b Parse dot-separated filetypes separately (11 days ago)
+    1961ee4 fix: fallback to cwd nvim is opened in if buffer's cwd is not in a git repo (11 days ago)
+    6898983 Merge pull request #37 from b0o/git-remote-url (3 weeks ago)
+    c8a9fc4 Optionally use git-remote to determine remote URL (3 weeks ago)
+    3fc1ff5 Add some logging to check how many items are added to completion (4 months ago)
+    8a6bfa6 fix: duplication of GitHub PRs, when triggering multiple times (4 months ago)
+    f06a278 feat: use curl as fallback (4 months ago)
+    87397b8 Setup simple log using plenary.log (5 months ago)
 
- ✓ Updated nvim-lualine/lualine.nvim: ef063f7..0b0233f
+ ✓ Updated tami5/sqlite.lua: 3855b4a..9ccd2a6
+  URL: https://github.com/tami5/sqlite.lua
   Commits:
-    0b0233f feat: add symbols option to fileformat  (#401) (20 hours ago)
-    8d8c538 fixup: fix update_in_insert caching colors in diagnostics (32 hours ago)
-    61cd6e6 feat: add fern extension (#398) (2 days ago)
+    9ccd2a6 :white_check_mark: field types are always uppercase (5 weeks ago)
+    41c4440 :construction_worker: remove changelog generator (5 weeks ago)
 
- ✓ Updated jose-elias-alvarez/null-ls.nvim: 4a7ac16..4af6e98
+ ✓ Updated https://github.com/williamboman/nvim-lsp-installer: 08b764c..9add810
+  URL: https://github.com/williamboman/nvim-lsp-installer
   Commits:
-    4af6e98 fix(builtins): fall back to default factory function (2 hours ago)
-    62b2708 Merge pull request #251 from jose-elias-alvarez/deep-copy-builtins (2 hours ago)
-    05c9a78 refactor!: remove deprecated setup method (16 hours ago)
-    c6ec1d0 Merge pull request #275 from aoswalt/less-eager-credo (2 days ago)
-    e8b3877 fix(builtins): Make finding credo cwd smarter (2 days ago)
-    895667f Merge pull request #276 from jvcarli/feat-add-codespell-formatting (2 days ago)
-    b253eb1 Merge pull request #278 from numToStr/main (2 days ago)
-    da3f409 docs: update BUILTINS (4 days ago)
-    4762c67 feat: add `zig fmt` (4 days ago)
-    fc70f5b feat(builtins): add codespell formatting (5 days ago)
-    0ce5b07 feat(builtins): create copies from with() method (2 weeks ago)
+    9add810 run autogen_metadata.lua (3 hours ago)
+    4653462 add mm0_ls (#572) (2 days ago)
+    f132251 add sourcery (#571) (2 days ago)
+    c7f1437 run autogen_metadata.lua (2 days ago)
+    ab8f2de run autogen_metadata.lua (3 days ago)
+    1c5b858 fix(health): report error on version mismatch (3 days ago)
+    b9e86ab add prosemd_lsp (#566) (4 days ago)
+    e50752d run autogen_metadata.lua (5 days ago)
+    eadf42a run autogen_metadata.lua (6 days ago)
+    e79f0a5 fix(go): correct template string (10 days ago)
+    5bfae3a fix(go): specify correct executable when checking version (10 days ago)
+    d000db4 fix(ui): typo (10 days ago)
+    212d17a add async managers (#536) (10 days ago)
+    bc241f1 run autogen_metadata.lua (10 days ago)
+    55eb07f fix(lemminx): default to working version (11 days ago)
+    e265bb6 run autogen_metadata.lua (11 days ago)
+    9dc2cd1 feat(async): allow for a.promisify to reject (#557) (13 days ago)
+    42a01c3 run autogen_metadata.lua (13 days ago)
+    56b7cf4 run autogen_metadata.lua (2 weeks ago)
+    e363122 run autogen_metadata.lua (2 weeks ago)
+    dc78308 run autogen_metadata.lua (3 weeks ago)
+    a0e6aa4 fix(solang): add llvm archive for linux arm64 (#550) (3 weeks ago)
+    cf76875 fix(solang): update archive names on Linux (#549) (3 weeks ago)
+    cf061b0 fix(ansiblels): use correct command on Windows (#547) (3 weeks ago)
+    88059b8 run autogen_metadata.lua (3 weeks ago)
+    01c1285 docs: add missing footnote to Usage section (3 weeks ago)
+    e244ac1 chore(volar): update volar package name (#534) (3 weeks ago)
+    c3ac57f docs(eslint): update yarn2 pnp example (3 weeks ago)
+    19aa854 run autogen_metadata.lua (3 weeks ago)
+    a049c20 feat(reason_ls): add reason_ls for ReasonML (#528) (4 weeks ago)
+    10d7fbc Add Dhall LSP (#512) (4 weeks ago)
+    a70be14 fix(display): only set window borders once (4 weeks ago)
+    1135fde tests/minimal_debug_init.lua: set omnifunc and customize completeopt (4 weeks ago)
+    c612912 run autogen_metadata.lua (4 weeks ago)
+    b67dba0 run autogen_metadata.lua (4 weeks ago)
+    a065247 run autogen_metadata.lua (4 weeks ago)
+    6e6d75b add perlnavigator (#522) (4 weeks ago)
+    88aa527 Support libc detection (#527) (4 weeks ago)
+    dc39ce9 run server installation in async execution context (#525) (4 weeks ago)
+    a282974 fix(fetch): shift args to put callback arg last (4 weeks ago)
+    cb8ae0a fix(solang): use llvm13 (4 weeks ago)
+    4f52f12 fix(async): set error() level to 2 (4 weeks ago)
+    f9299bb feat(ui): display installed server version (#520) (4 weeks ago)
+    20e5dc0 async: raise errors instead of returning pcall-style (#521) (4 weeks ago)
+    b5df92e remove npm install --production from ansiblels (#518) (5 weeks ago)
+    d353074 issue_template: update title for general issues (5 weeks ago)
+    541f3c1 run autogen_metadata.lua (5 weeks ago)
+    ac04f50 fix(async): pcall callback-style functions to catch errors (#515) (5 weeks ago)
+    29154c2 run autogen_metadata.lua (5 weeks ago)
+    79e1bdd feat(jdtls): use the resolved workspace directory name as the -data directory (#504) (5 weeks ago)
+    6734439 run autogen_metadata.lua (5 weeks ago)
 
- ✓ Updated ggandor/lightspeed.nvim: 0a40c82..e0df8d5
+ ✓ Updated rcarriga/nvim-notify: 57093e9..da10302
+  URL: https://github.com/rcarriga/nvim-notify
   Commits:
-    e0df8d5 docs(readme): extended intro essay (2 hours ago)
-    6e66d1a fix(highlight-unique-chars): skipping folds (5 hours ago)
-    ea40b2a refactor: tweak `get-horizontal-bounds` (6 hours ago)
+    da10302 fix(buffer): clear namespace on render (2 weeks ago)
+    2c93e29 feat: use width of extmarks for window width (2 weeks ago)
+    8e0ccb0 fix(config): show opacity warning once (2 weeks ago)
+    f81b48d feat: silently dismiss pending notifications (#64) (5 weeks ago)
 
- ✓ Updated https://github.com/williamboman/nvim-lsp-installer: 18ee7fa..361f2d5
+ ✓ Updated lewis6991/impatient.nvim: 7abfc92..2337df7
+  URL: https://github.com/lewis6991/impatient.nvim
   Commits:
-    361f2d5 add -NoProfile to powershell invocations (#202) (3 hours ago)
-    b3a3b3d fix jdtls config path on windows (#200) (20 hours ago)
-    86516d4 README: add badges and update gif (30 hours ago)
-    5a05267 ui: register autocmds in an augroup (#198) (32 hours ago)
-    c7ef12d add synchronous variants of commands for better headless interop (#189) (33 hours ago)
-    a5063dd mac's not fun (2 days ago)
-    f60d78a add proper emmylua annotations (#196) (2 days ago)
+    2337df7 feat(profile): add details on cache files (5 days ago)
+    989eefc chore: tweak the hash to also use file size (2 weeks ago)
 
- ✓ Updated weilbith/nvim-code-action-menu: 977abc8..dd91a1d
+ ✓ Updated wbthomason/packer.nvim: c576ab3..4dedd3b
+  URL: https://github.com/wbthomason/packer.nvim
   Commits:
-    dd91a1d add configuration to disable parts of the UI (28 hours ago)
-    27ff26e fix typo in README (28 hours ago)
+    4dedd3b Expose functionality to get plugin short name (#861) (13 days ago)
+    2d08167 Document autoremove key in vimdocs (2 weeks ago)
+    54cc339 chore: format with stylua (2 weeks ago)
+    327568c feat: add autoremove option (#855) (2 weeks ago)
+    063f1c6 fix(luarocks): use lower string as package name (#857) (2 weeks ago)
+    c8bc6cf Add "jit" to valid variables that selene understands. (#860) (2 weeks ago)
 
- ✓ Updated lukas-reineke/indent-blankline.nvim: ec24675..252797e
+ ✓ Updated themercorp/themer.lua/dev: 5081c48..e6d28f2
+  URL: https://github.com/themercorp/themer.lua
   Commits:
-    252797e Merge pull request #291 from lukas-reineke/develop (14 hours ago)
-    4949a6a Version 2.9.2 (14 hours ago)
-    7e7e888 bug: stringfy refresh args (14 hours ago)
-    0967506 Merge pull request #288 from lukas-reineke/master (27 hours ago)
-    e5264b1 Merge pull request #287 from lukas-reineke/develop (27 hours ago)
-    320f622 Version 2.9.1 (27 hours ago)
-    1b554c6 bug: fix horizontal scroll update (27 hours ago)
-    5a6b8e5 refactor: make `get_from_list` return a default (3 days ago)
-    5d113dc Merge pull request #280 from lukas-reineke/master (3 days ago)
+    e6d28f2 chore: format with stylua (2 weeks ago)
+    73dbfff feat(theme): untitled (2 weeks ago)
+    11f8e44 fix: typo (2 weeks ago)
+    ba67ed1 Create themer_gruvchad.lua (#71) (4 weeks ago)
+    8a25fa5 chore: format with stylua (5 weeks ago)
+    f002043 fix #66 (5 weeks ago)
+    a57b265 chore: format with stylua (5 weeks ago)
+    bc14d83 fix #68 (5 weeks ago)
 
- ✓ Updated Pocco81/DAPInstall.nvim: e308333..b95e9ad
+ ✓ Updated saecki/crates.nvim/main: afa44bb..6f0837b
+  URL: https://github.com/saecki/crates.nvim
   Commits:
-    b95e9ad Merge pull request #44 from 616b2f/patch-1 (5 hours ago)
-    a11bbef Update dnetcs.lua (7 hours ago)
+    6f0837b docs: update readme and vimdoc (5 weeks ago)
 
- ✓ Updated tjdevries/colorbuddy.vim: 87c80e3..e231f7e
+ ✓ Updated marko-cerovac/material.nvim: a7c9069..fc3e3d0
+  URL: https://github.com/marko-cerovac/material.nvim
   Commits:
-    e231f7e hmm these seem long overdue (2 days ago)
+    fc3e3d0 Merge pull request #86 from Tmeister/Tmeister-patch-1 (4 days ago)
+    177af74 Update README.md (5 days ago)
+    82f74e8 added background to DiffText (11 days ago)
+    2857159 fixed non-current signs bg and removed some highlight groups (2 weeks ago)
+    596270a changed terminal color 8 and prepared lua augroups (4 weeks ago)
+    06ecf79 minor changes to highlights (5 weeks ago)
+
+ ✓ Updated tjdevries/colorbuddy.vim: e0f5faf..cdb5b06
+  URL: https://github.com/tjdevries/colorbuddy.vim
+  Commits:
+    cdb5b06 Just remove pictures, not needed really (5 weeks ago)
+
+ ✓ Updated mangeshrex/uwu.vim: 297f58a..756b3ec
+  URL: https://github.com/mangeshrex/uwu.vim
+  Commits:
+    756b3ec addin  contrib image (9 days ago)
+    bc97b6a fix readme (9 days ago)
+    e57809a redesign readme (9 days ago)
+    3d0d218 Merge pull request #22 from samuelnihbos/main (3 weeks ago)
+    d79bf99 Wrong path sorry (3 weeks ago)
+    5274168 Update Path (3 weeks ago)
+    f6b00f6 Update Image Preview Url Path (3 weeks ago)
+    0924c88 Fix installation instruction on readme (3 weeks ago)
+    c56e30f Merge pull request #20 from AlphaTechnolog/lualine (4 weeks ago)
+    98c0e5e using local palette in lualine theme instead of an inexistent file (4 weeks ago)
+    a7832a5 Merge pull request #19 from AlphaTechnolog/lualine (4 weeks ago)
+    64072df added lualine theme (4 weeks ago)
+
+ ✓ Updated rktjmp/lush.nvim: 2189230..fa7694f
+  URL: https://github.com/rktjmp/lush.nvim
+  Commits:
+    fa7694f Fix words (12 days ago)
+    6984849 Interative -> Interactive (3 weeks ago)
+
+ ✓ Updated booperlv/nvim-gomove: 45da1f8..7fed8ed
+  URL: https://github.com/booperlv/nvim-gomove
+  Commits:
+    7fed8ed feat!: default smart up and down behavior for visual mode to block instead of line move (4 days ago)
+    e969cc2 fix: block horizontal move_past_end_col behavior cleanup (2 weeks ago)
+    fa7e94a fix: block horizontal move_past_end_col not working, errors with move_past_end_col set to false (2 weeks ago)
+    18254b4 fix: block horizontal move inability to handle double-cell width characters (2 weeks ago)
+    d88fc5b chore: simplify block horizontal code, more plans (3 weeks ago)
+
+ ✓ Updated gbprod/substitute.nvim: 3ffc5cf..2ee790e
+  URL: https://github.com/gbprod/substitute.nvim
+  Commits:
+    2ee790e chore: auto generate docs (2 weeks ago)
+    71d982c docs: new emoji (2 weeks ago)
+    0397392 chore: auto generate docs (2 weeks ago)
+    60686a1 fix(substitute): use vim.v.count for substitute operator (#15) (2 weeks ago)
+    56ad8eb chore: auto generate docs (3 weeks ago)
+    2416d54 docs: improve readme (#14) (3 weeks ago)
+
+ ✓ Updated max397574/better-escape.nvim: b227dd1..d5ee0ce
+  URL: https://github.com/max397574/better-escape.nvim
+  Commits:
+    d5ee0ce Merge pull request #36 from xiyaowong/patch-1 (8 days ago)
+    6f3584a chore: add augroup (8 days ago)
+    d2efbf0 Merge pull request #35 from xiyaowong/optimize (3 weeks ago)
+    42db1eb style: update stylua.toml (3 weeks ago)
+    c91ca23 fix(clear_empty_line): avoid textlock (3 weeks ago)
+    3dd296c readme: update intro (3 weeks ago)
+    4d6ca36 BREAKING CHANGE: remove option keys_before_delete (3 weeks ago)
+    cbcccd7 feat: remove coc space contition (3 weeks ago)
+    88cd2fb improve: iunmap before mappings if exist (4 weeks ago)
+    8e29e9a readme: update example keys and marked it's recommended (4 weeks ago)
+    ba496e3 fix: ignore invalid InsertCharPre v:char (4 weeks ago)
+    a6764c1 chore: move statement of reseting flag to check_timeout region (4 weeks ago)
+    e7b54e8 fix(flag): set to false if matched (4 weeks ago)
+    7063dce REFACTOR: timeout must be greater than 100 (4 weeks ago)
+    e22a3cd readme: introduce api (4 weeks ago)
+    2c4abc5 feat: handle the previous modification (4 weeks ago)
+    9943e7e export flag (4 weeks ago)
+    33915f7 tweaks (4 weeks ago)
+    0485db2 simplify error msg (4 weeks ago)
+    9de1fc5 remove unused code (4 weeks ago)
+    1b5e95c format with stylua (4 weeks ago)
+
+ ✓ Updated tpope/vim-fugitive: c29ef11..cba8634
+  URL: https://github.com/tpope/vim-fugitive
+  Commits:
+    cba8634 Move unpushed sections above unpulled, again (35 minutes ago)
+    d725ef5 Turn remaining deprecated commands into error stubs (4 days ago)
+    8f169a8 Allow simultaneous blames in diffed buffers (4 days ago)
+    d9a914b Replace 'cursorbind' in blame with manual line syncing (4 days ago)
+    c0701f7 Fix expansion of SSH host aliases (6 days ago)
+    321328c Avoid I/O from ":p" when handling temp files (10 days ago)
+    8157eff Provide g:fugitive_defer_to_existing_maps (11 days ago)
+    b6405d8 Provide literally named <Plug> maps (11 days ago)
+    5716e11 Fix line wrap in README (12 days ago)
+    46652a3 Add :GUnlink, like in eunuch.vim (4 weeks ago)
+    afd6c13 Fix infinite loop when summary window contains no sections (5 weeks ago)
+    485ce07 Match FugitiveRemote() interface to window.location in JS (8 weeks ago)
+
+ ✓ Updated notomo/gesture.nvim: 0c1f862..199175e
+  URL: https://github.com/notomo/gesture.nvim
+  Commits:
+    199175e Small refactor (9 days ago)
+
+ ✓ Updated nvim-lua/plenary.nvim: 2a278c8..f9c65cd
+  URL: https://github.com/nvim-lua/plenary.nvim
+  Commits:
+    f9c65cd fix: filetype modeline detection after the recent changes (2 days ago)
+    1cdbea8 chore: reformat with stylua 0.13 (2 days ago)
+    8425138 fix(filetype.lua): add missing argument (#341) (2 days ago)
+    cbaeb9f fix: filetype detection freeze with binary files (#339) (6 days ago)
+    0d66015 fix: curl args parsing (#334) (2 weeks ago)
+    14dfb40 feat(filetype): add rescript (#318) (5 weeks ago)
+    e55ae43 fix(job): shutdown raises error (#296) (5 weeks ago)
+    d742fd9 chore: add class annotation for Path (#292) (5 weeks ago)
+
+ ✓ Updated tpope/vim-eunuch: e2c9e01..c70b0ed
+  URL: https://github.com/tpope/vim-eunuch
+  Commits:
+    c70b0ed Re-detect 'filetype' after typing a shebang line (5 days ago)
+    f741663 Also chmod existing files that gain a shebang (6 days ago)
+    6f275a1 Bump minimum Vim version to 7.4 (10 days ago)
+    01aa41b Loosen check for shebang (13 days ago)
+    5b42886 Bump minimum Vim version to 7.3 (2 weeks ago)
+    a4a3217 Add omitted "abort" function argument (2 weeks ago)
+    40a2697 Fix line wrap in README (2 weeks ago)
+
+ ✓ Updated beauwilliams/focus.nvim: b5fbfb2..86d0366
+  URL: https://github.com/beauwilliams/focus.nvim
+  Commits:
+    86d0366 Merge pull request #80 from tomaskallup/master (4 weeks ago)
+    8b9d156 Fix: Fixed NvimTree integration (4 weeks ago)
+    14902d6 Add forced filetypes readme (5 weeks ago)
+    ad27e17 Merge pull request #77 from ianbattersby/allow-ft-override (5 weeks ago)
+    5061e1d Feat: Add 'forced_filetypes' as override to 'excluded_buftypes'. (8 weeks ago)
+
+ ✓ Updated ThePrimeagen/refactoring.nvim: 85e3474..9396711
+  URL: https://github.com/ThePrimeagen/refactoring.nvim
+  Commits:
+    9396711 Merge pull request #282 from teddylear/remove-extra-line (13 days ago)
+    d8accd0 feat: Remove extra line after func call during extract func operation (2 weeks ago)
+    8d1e148 Merge pull request #281 from teddylear/typescript-func-indenting (2 weeks ago)
+    02cee06 feat: Add parameter types for typescript when extracting func if already present (2 weeks ago)
+    3d3e232 feat: add function header and ending paratheses indenting typescript (2 weeks ago)
+    642caf3 Merge pull request #280 from teddylear/python-arg-types (2 weeks ago)
+    2371962 feat: Add python param types if present during extract func (2 weeks ago)
+    3ea98bb Merge pull request #278 from teddylear/issue-templates (2 weeks ago)
+    476e356 Merge pull request #277 from teddylear/remove-versions (2 weeks ago)
+    33c2047 feat: Adding template for bug reports (2 weeks ago)
+    e0db367 chore: Remove version and move to validate functions (2 weeks ago)
+    dc7c2ce feat: Make new function to validate settings on treesitter (2 weeks ago)
+    79c0bc1 Merge pull request #273 from pranavrao145/fix/select-nil-error (3 weeks ago)
+    5fe99c5 Merge pull request #268 from MarkTuddenham/python (3 weeks ago)
+    30386dc fix(select-nil-error): fix an error when selecting no refactor for built in nvim refactor selection (3 weeks ago)
+    b18c1cd feat: python typed and default parameter support for 106 (3 weeks ago)
+    14041a3 Merge pull request #267 from pranavrao145/feat/select-action-2 (3 weeks ago)
+    eac14a1 docs(select-action): added docs for built in action selection functionality (3 weeks ago)
+    f5c4434 feat(select-action): added option to select refactor using nvim built in selection API (3 weeks ago)
+    e84d64a Merge pull request #265 from pranavrao145/docs/fix-readme-3 (3 weeks ago)
+    a8afed0 docs(README): fixed README (yet again) to make more sense (3 weeks ago)
+    d1103dc Merge pull request #254 from pranavrao145/feat/custom-printf-stringification (3 weeks ago)
+    e832007 Merge branch 'master' into feat/custom-printf-stringification (3 weeks ago)
+    5eb2b8b Merge pull request #264 from pranavrao145/feat/python-multi-declaration-inline (3 weeks ago)
+    335903b Merge pull request #263 from A-Daneel/php-refactor (3 weeks ago)
+    773d6e7 fix(python-multi-declaration-inline): fix python multi declaration support for inline var (3 weeks ago)
+    a132ffd feat: php 119 (3 weeks ago)
+    d9f32e0 test(custom-printf-stringification): added custom print_var stringification for all langs (4 weeks ago)
+    5805364 Merge pull request #262 from pranavrao145/docs/fix-readme-2 (4 weeks ago)
+    a3ba4b5 docs(README): fixed some inconsistency in the README (4 weeks ago)
+    01cd5c3 chore(stylua): added stylua ignore (4 weeks ago)
+    4bcbf82 test(custom-printf-stringification): added custom printf stringification tests for all langs (4 weeks ago)
+    ddd3c10 test(custom-printf-stringification): added test setup for custom printf stringification (4 weeks ago)
+    404495f docs(custom-printf-stringification): added docs for custom stringification (4 weeks ago)
+    8965c17 feat(custom-printf-stringification): added custom stringification to print_var for all langs (4 weeks ago)
+    ba6fdcd feat(custom-printf-stringification): added default print var codegen for all langs (4 weeks ago)
+    1885175 feat(custom-printf-stringification): added custom printf stringification for all langs (4 weeks ago)
+    9611712 feat(custom-printf-stringification): added capabilities for printf and print_var to accept complex opts (4 weeks ago)
+    7b0c135 Merge pull request #261 from teddylear/fix-inline-var-for-scope (4 weeks ago)
+    489f04b fix: Make inline var only apply to things inside refactor scope (4 weeks ago)
+    1d879dc Revert "fix: Make inline var only apply to things inside refactor scope" (4 weeks ago)
+    a28ce3b Revert "cleanup" (4 weeks ago)
+    f98fff3 cleanup (4 weeks ago)
+    8a93067 fix: Make inline var only apply to things inside refactor scope (4 weeks ago)
+    087b13c Merge pull request #259 from pranavrao145/chore/remove-auto-formatting (4 weeks ago)
+    67d432d chore(remove-auto-formatting): rebased and updated tests again (4 weeks ago)
+    911f8b0 test(remove-auto-formatting): fixed debug tests for removed auto formatting (4 weeks ago)
+    4ea9dca test(remove-auto-formatting): fixed refactor tests for removed auto formatting (4 weeks ago)
+    d8ea1ae chore(remove-auto-formatting): removed auto formatting (4 weeks ago)
+    0e8c316 feat: oops (4 weeks ago)
+    5701c25 feat: removing auto formating.  It is too destructive. (4 weeks ago)
+    717b9b2 Merge pull request #253 from ThePrimeagen/class_extract (4 weeks ago)
+    04fcfe3 feat: method extract is "finished" for typescript (4 weeks ago)
+    6d07f71 Merge pull request #251 from teddylear/indenting-all-the-things (5 weeks ago)
+    d2ba43f Merge pull request #252 from ThePrimeagen/print-in-console (5 weeks ago)
+    d9a38b3 feat: make it return string instead of printing (5 weeks ago)
+    9d96801 feat: abstract classes were not printed (5 weeks ago)
+    670739c feat: prevent reformatting files (5 weeks ago)
+    44c6cbf feat: small change to make it so that there doesn't have to be any opts (5 weeks ago)
+    0736ea1 feat: print in console (5 weeks ago)
+    a6b1b4a chore: moving indent code gen functions to one file (5 weeks ago)
+    c6ccd39 feat: remove allow_indenting_task flag from treesitter, update treesitter class docs (5 weeks ago)
+    8145999 feat: code gen validation for indentation in 119, indentation for all supported languages (5 weeks ago)
+    4884368 Merge pull request #247 from teddylear/check-class-code-gen (5 weeks ago)
+    5165f32 feat: Add validating code gen functions if there is class support for language for 106 (5 weeks ago)
+
+ ✓ Updated kmonad/kmonad-vim: e09bea6..3797844
+  URL: https://github.com/kmonad/kmonad-vim
+  Commits:
+    3797844 Merge pull request #1 from sarmong/master (2 weeks ago)
+    994e2a1 docs: add installation section to readme (3 months ago)
+
+ ✓ Updated AndrewRadev/splitjoin.vim: 452d135..dbcd306
+  URL: https://github.com/AndrewRadev/splitjoin.vim
+  Commits:
+    dbcd306 Version bump (2 days ago)
+    bbc9fe6 Create JSON parser that doesn't consider regex syntax (9 days ago)
+    c32b187 Respect curly brace padding setting in YAML (2 weeks ago)
+    6f07135 Clojure documentation (3 weeks ago)
+    a9d55ff Basic clojure support (3 weeks ago)
+
+ ✓ Updated michaelb/sniprun: 6825eac..3c02069
+  URL: https://github.com/michaelb/sniprun
+  Commits:
+    3c02069 Merge pull request #150 from lars-vc/patch-1 (3 weeks ago)
+    0580968 anotherother one (3 weeks ago)
+    60df5c7 and another one (3 weeks ago)
+    05560a7 found another one (3 weeks ago)
+    e42c4fc Fixed typo (3 weeks ago)
+
+ ✓ Updated neovim/nvim-lspconfig: e124258..3d1baa8
+  URL: https://github.com/neovim/nvim-lspconfig
+  Commits:
+    3d1baa8 docs: update server_configurations.md skip-checks: true (8 days ago)
+    83f3e5d Merge pull request #1779 from angusjf/patch-1 (8 days ago)
+    b5051b2 docs(eslint): update `autocmd` example (8 days ago)
+    3c53bf1 ci: fix new luacheck v0.26.0 errors  (#1816) (8 days ago)
+    99a374b ci: fix new luacheck v0.26.0 errors (8 days ago)
+    7d5a6dc docs: update server_configurations.md skip-checks: true (13 days ago)
+    9cd563f fix(hoon-language-server): update cmd and docs (#1809) (13 days ago)
+    63efd6e docs: update server_configurations.md skip-checks: true (2 weeks ago)
+    af16ec5 fix(hoon-language-server): remove example (#1804) (2 weeks ago)
+    48e59a4 docs: update server_configurations.md skip-checks: true (2 weeks ago)
+    b3564c9 feat: add hoon-language-server support (#1802) (2 weeks ago)
+    733fe92 docs: update server_configurations.md skip-checks: true (2 weeks ago)
+    9dc0249 docs: remove use of debug module for automatically extracting root pattern (#1799) (2 weeks ago)
+    67a2928 docs: update server_configurations.md skip-checks: true (2 weeks ago)
+    9a63d9a docs: restore commands (#1798) (2 weeks ago)
+    7631bfa docs: update server_configurations.md skip-checks: true (2 weeks ago)
+    b603fa6 docs: clean up styling in documentation (#1797) (2 weeks ago)
+    a60aabe docs: update server_configurations.md skip-checks: true (2 weeks ago)
+    0e47d84 feat: add prosemd-lsp for markdown (#1795) (2 weeks ago)
+    3598f77 docs: update server_configurations.md skip-checks: true (3 weeks ago)
+    dc3e1b2 feat: add mm0 language support (#1787) (3 weeks ago)
+    55418c0 docs: update server_configurations.md skip-checks: true (3 weeks ago)
+    6472ce0 fix(beancount-langserver): add stdio flag to cmd (#1791) (3 weeks ago)
+    710deb0 docs: update server_configurations.md skip-checks: true (3 weeks ago)
+    016f597 docs: fix volar.setup parameters in description (#1780) (3 weeks ago)
+    7ea1afc docs: update server_configurations.md skip-checks: true (3 weeks ago)
+    e25df57 docs: update Volar package name in docs (#1776) (3 weeks ago)
+    686a00f docs: update server_configurations.md skip-checks: true (3 weeks ago)
+    8ed845d chore(volar): @volar/server -> @volar/vue-language-server (#1770) (3 weeks ago)
+    096398a fix(lspstop): make LspStop behave as described in the docs (#1764) (4 weeks ago)
+    858fc0e docs: update server_configurations.md skip-checks: true (4 weeks ago)
+    23de2b4 docs: add bashls install instructions (#1760) (4 weeks ago)
+    c53f5b0 feat: add please support (#1734) (4 weeks ago)
+    04e4d00 Merge pull request #1761 from neovim/teal-fix-format (4 weeks ago)
+    7377390 style(teal_ls): fix indentation and single quotes (4 weeks ago)
+    f15db68 docs: update server_configurations.md skip-checks: true (4 weeks ago)
+    837e273 feat: add support for sourcery (#1495) (4 weeks ago)
+    cf2fc1d docs: update server_configurations.md skip-checks: true (4 weeks ago)
+    b30e04e feat: add teal-language-server support (#1732) (4 weeks ago)
+    4c2cc01 docs: update server_configurations.md skip-checks: true (4 weeks ago)
+    2536106 feat: add openscad-language-server (#1757) (4 weeks ago)
+    3aab6a7 Merge pull request #1758 from neovim/hhvm-format (4 weeks ago)
+    a60fee0 style(hhvm): add space inside table (4 weeks ago)
+    b01782a docs: update server_configurations.md skip-checks: true (4 weeks ago)
+    e67f23e feat: add reason-language-server (#1721) (4 weeks ago)
+    0110797 docs: update server_configurations.md skip-checks: true (4 weeks ago)
+    b0e9a54 feat: add perlnavigator support (#1756) (4 weeks ago)
+    54181dd docs: update server_configurations.md skip-checks: true (5 weeks ago)
+    80a048e feat: add clarity-lsp support (#1755) (5 weeks ago)
+    cdc2ec5 docs: update server_configurations.md skip-checks: true (5 weeks ago)
+    e629759 feat: add odin language server support (#1747) (5 weeks ago)
+    103bbcc docs: update server_configurations.md skip-checks: true (5 weeks ago)
+    82ae696 fix(perlpls): turn on syntax checking by default (#1749) (5 weeks ago)
+    508b688 docs: update server_configurations.md skip-checks: true (5 weeks ago)
+    f0bcd36 docs: update GraphQL instructions (#1744) (5 weeks ago)
+    c276536 docs: update server_configurations.md skip-checks: true (6 weeks ago)
+    4e94b7f feat(gradle): add support for gradle-language-server (#1740) (6 weeks ago)
+
+ ✓ Updated jose-elias-alvarez/null-ls.nvim: 4dd4df1..f3107c3
+  URL: https://github.com/jose-elias-alvarez/null-ls.nvim
+  Commits:
+    f3107c3 Do not set diagnostics for nonexisting buffer (#797) (15 hours ago)
+    74b7b28 chore: autogen metadata and docs (2 days ago)
+    80acae0 feat: add fish --no-execute diagnostics (#796) (2 days ago)
+    899785c fix: actually commit timeout change (4 days ago)
+    76b057a feat: allow completely disabling command timeout (4 days ago)
+    984d724 chore: autogen metadata and docs (4 days ago)
+    115a0c5 add verible_verilog_format.lua (#793) (4 days ago)
+    155e2c0 chore: autogen metadata and docs (4 days ago)
+    531fa77 feat: add erblint diagnostics and formatter (#787) (4 days ago)
+    0292b22 chore: autogen metadata and docs (7 days ago)
+    ffee94f feat: Add sqlfluff as sql format and diag source (#784) (7 days ago)
+    41f72ab chore: autogen metadata and docs (8 days ago)
+    e90dc2f fix(builtins): correctly send stdin to hadolint (8 days ago)
+    7253974 feat: add buf linter and formater (#777) (11 days ago)
+    de2327a Merge branch 'main' of github.com:jose-elias-alvarez/null-ls.nvim (13 days ago)
+    3513bae fix(tsc): use cwd instead of root as filename base (13 days ago)
+    71bb21d fix(code_actions): search for first non-command line for disable pragma (#775) (2 weeks ago)
+    8ff2a6e chore: autogen metadata and docs (2 weeks ago)
+    f2a2f8c feat: adding solhint diagnostic support for solidity files (#774) (2 weeks ago)
+    4eb2fa8 chore: autogen metadata and docs (2 weeks ago)
+    159abdc fix(diagnostics): Compatibility with older versions of PHPMD work (#772) (2 weeks ago)
+    bb9ec28 fix: log stderr before ignoring (2 weeks ago)
+    33d8d1c  feat(diagnostics): add support for mlint  (#773) (2 weeks ago)
+    041601c chore: autogen metadata and docs (3 weeks ago)
+    274a351  diagnostics: add semgrep (#758) (3 weeks ago)
+    85a2426 chore: autogen metadata and docs (3 weeks ago)
+    d83d811 feat(diagnostics): add support for Twigcs (#767) (3 weeks ago)
+    08441c9 Merge pull request #766 from otahontas/main (3 weeks ago)
+    0d9c3db Fix doc link (3 weeks ago)
+    1033dcc Merge pull request #756 from nkcfan/fixalex (3 weeks ago)
+    84f7dee fix(builtins): alex adds required factory entry (3 weeks ago)
+    b0c99fc Merge pull request #755 from andrewferrier/main (3 weeks ago)
+    2afb2f6 chore: autogen metadata and docs (3 weeks ago)
+    275bc40 fix(builtins): Add `-xml` parameter for XML files (3 weeks ago)
+    4cbdc9f ci: only run autogen on push to main (3 weeks ago)
+    2fa4854 Merge pull request #753 from ObserverOfTime/tidy (3 weeks ago)
+    183f122 Merge pull request #752 from ObserverOfTime/djlint (3 weeks ago)
+    63c0fe1 Merge pull request #751 from ObserverOfTime/puglint (3 weeks ago)
+    7102a65 Merge pull request #750 from ObserverOfTime/stylint (3 weeks ago)
+    fe1660c chore: autogen metadata and docs (3 weeks ago)
+    0b6e3f5 formatting: add tidy (html, xml) (3 weeks ago)
+    7f80596 diagnostics: add tidy (html, xml) (3 weeks ago)
+    f64f445 chore: autogen metadata and docs (3 weeks ago)
+    dbffeb7 diagnostics: add djlint (django, jinja) (3 weeks ago)
+    ac4bb86 chore: autogen metadata and docs (3 weeks ago)
+    939619d diagnostics: add puglint (pug) (3 weeks ago)
+    01a5173 chore: autogen metadata and docs (3 weeks ago)
+    e1344f9 diagnostics: add stylint (stylus) (3 weeks ago)
+    abaff6e doc: update neovim stable version (3 weeks ago)
+    86dc3d2 chore: autogen metadata and docs (3 weeks ago)
+    90b9386 Merge pull request #730 from shoebox/patch-1 (3 weeks ago)
+    3f065b8 chore: autogen metadata and docs (3 weeks ago)
+    19d7276 chore: remove duplicate meta key (3 weeks ago)
+    b287e9d Merge pull request #740 from jose-elias-alvarez/metadata-docgen (3 weeks ago)
+    a4ccbfc chore: autogen metadata and docs (3 weeks ago)
+    3921b16 ci: fix documentation spacing between methods (3 weeks ago)
+    ebd5e6a chore: autogen metadata and docs (3 weeks ago)
+    a68d175 doc: transfer documentation to metadata and regenerate (3 weeks ago)
+    5ca52cc ci: finalize autogen script (3 weeks ago)
+    1ee1da4 chore: format (4 weeks ago)
+    76d3066 Merge pull request #746 from smarquez1/haml-lint (4 weeks ago)
+    7f74fa0 chore: update metadata (4 weeks ago)
+    b56ae65 feat(builtins) add haml-lint diagnostics (4 weeks ago)
+    2d98a1d chore: update metadata (4 weeks ago)
+    2115a4c Merge pull request #742 from ObserverOfTime/rstcheck (4 weeks ago)
+    2255a4a diagnostics: add rstcheck (rst) (4 weeks ago)
+    c2a1c4e chore: update metadata (4 weeks ago)
+    2808880 Merge pull request #741 from ObserverOfTime/ktlint (4 weeks ago)
+    9cafa44 formatting: add ktlint (kotlin) (4 weeks ago)
+    c92655d diagnostics: add ktlint (kotlin) (4 weeks ago)
+    39badce doc: transfer metadata (4 weeks ago)
+    6bb4007 ci(autogen): handle methods (4 weeks ago)
+    b015443 refactor(methods): make name conversion independent (4 weeks ago)
+    35f4b66 ci: automatically generate built-in documentation (4 weeks ago)
+    15d3aab chore: update metadata (4 weeks ago)
+    9168d10 Merge pull request #735 from kgreenek/main (4 weeks ago)
+    e5847b9 Use vim.trim instead of custom rtrim (4 weeks ago)
+    dc2a21b Merge pull request #739 from jose-elias-alvarez/range-formatting-factory-improvements (4 weeks ago)
+    b7310c7 feat(helpers): generalize range_formatting_args_factory (4 weeks ago)
+    6145514 chore: update metadata (4 weeks ago)
+    c8e5f96 Merge pull request #737 from chsanch/feature/add-handlebars-support (4 weeks ago)
+    2ce2068 Add handlebars prettier support (4 weeks ago)
+    db7ed69 Add buildifier linter diagnostics (4 weeks ago)
+    2f30556 chore: update metadata (5 weeks ago)
+    2fdc035 feat(builtins): add 'pyproject_flake8' (#728) (5 weeks ago)
+    1c57a60 fix: prevent errors from killing PHPMD Language Server (#729) (5 weeks ago)
+    f49a2b5 feat(diagnostics): adding asciidoctor support to vale (5 weeks ago)
+    a1804de chore: update metadata (5 weeks ago)
+    aaefc60 feat: add support for PHPMD (#725) (5 weeks ago)
+    099d914 Merge pull request #712 from JoseConseco/main (5 weeks ago)
+    a24575d Merge pull request #719 from shihanng/golangci-source (5 weeks ago)
+    6e4f556 added info abotu ranged formatting support in autopep8 (5 weeks ago)
+    5eeb098 Include FromLinter in golangci-lint's source (5 weeks ago)
+    c7aca6a Merge pull request #715 from stephank/fix/ci-cache (5 weeks ago)
+    9b79f7f Merge pull request #714 from mvllow/patch-1 (5 weeks ago)
+    7970ff1 Merge pull request #713 from mvllow/format-docs (5 weeks ago)
+    8974665 chore: update metadata (5 weeks ago)
+    bed5f29 Merge pull request #707 from mvllow/add-xo-diagnostics (5 weeks ago)
+    6bb5ed5 fix: run CI checks on main branch (5 weeks ago)
+    a496f41 if formatting (6 weeks ago)
+    c817e10 chore: remove outdated todo comment (6 weeks ago)
+    0d81d76 docs(builtins): format xo heading (6 weeks ago)
+    b3b140e format heading (6 weeks ago)
+    860a5e1 fix: write-good command (6 weeks ago)
+    8c6b21c docs(builtins): add xo code actions and diagnostics (6 weeks ago)
+    3e2c266 added support for range format in autopep8 (6 weeks ago)
+    b0c2747 add filetypes (6 weeks ago)
+    09bc0e2 extend eslint (6 weeks ago)
+    6e52a2e Revert "wip: add xo formatting" (6 weeks ago)
+    f1618ba wip: add xo formatting (6 weeks ago)
+    f8b9356 add xo code actions (6 weeks ago)
+    f10be5c add reporter and format (6 weeks ago)
+    387e182 format (6 weeks ago)
+    445ba25 wip: add xo diagnostics (6 weeks ago)
+
+ ✓ Updated nvim-treesitter/nvim-treesitter: 18c558f..f083b7b
+  URL: https://github.com/nvim-treesitter/nvim-treesitter
+  Commits:
+    f083b7b Update lockfile.json (9 hours ago)
+    ce6c1d3 Update lockfile.json (24 hours ago)
+    fa6031d highlights(bash): add more builtins (24 hours ago)
+    56baf18 Update lockfile.json (33 hours ago)
+    bda4b35 indents(ecma): use auto indent on (ERROR) (34 hours ago)
+    f84a634 Changed quotes to appease stylua (2 days ago)
+    e1f8a8a Fixed incorrect Java indentation for method chaining (2 days ago)
+    2472e47 Add highlighting query for Scss `@for` loops (2 days ago)
+    666bbed Update lockfile.json (2 days ago)
+    1c53f9a Fixed the stylua (2 days ago)
+    7ae5d4f Added true/false to the highlights (2 days ago)
+    8dbe97a Added injections (2 days ago)
+    0019739 Added the initial version for the support of rego language (2 days ago)
+    0741d22 Update lockfile.json (2 days ago)
+    2109369 Update lockfile.json (3 days ago)
+    acdec99 chore: update formatting for stylua update (3 days ago)
+    d8c4733 Update lockfile.json (3 days ago)
+    aadad47 Update lockfile.json (4 days ago)
+    b8d1c24 highlights(python): "from" in yield should be `@keyword.return` (4 days ago)
+    4b9aec6 highlights(fennel): fix "collect" "icollect" "accumulate" (4 days ago)
+    8a5e5ca Update README (4 days ago)
+    095c7cd Update lockfile.json (4 days ago)
+    6dab031 fix: remove ftdetect/ftplugin files for elvish (4 days ago)
+    570ad70 refactor(queries): simplify highlight queries for elvish (4 days ago)
+    e06b54b Add elvish (4 days ago)
+    a98fa0e Update lockfile.json (4 days ago)
+    b474ad1 github: Fix typo in template (5 days ago)
+    969f7ae Update lockfile.json (5 days ago)
+    e2b2d23 Add capture groups for remaining builtin highlight groups (6 days ago)
+    d0e4b41 Update lockfile.json (6 days ago)
+    9c2def8 Zulip link was missing protocol portion? (6 days ago)
+    783a54e Update lockfile.json (6 days ago)
+    7bb97d2 Update lockfile.json (7 days ago)
+    69308ad Update README (7 days ago)
+    7e9c46b feat: add vimdoc parser and highlight queries (7 days ago)
+    8258435 Update lockfile.json (7 days ago)
+    6390eff Update lockfile.json (7 days ago)
+    cf9faaa r(indents): fix brace_list alignment (7 days ago)
+    3b974b7 r(highlights): fix default_parameter (8 days ago)
+    e9d6c5d Update lockfile.json (8 days ago)
+    249cd3a r(highlights): add default parameter/argument (#2688) (8 days ago)
+    76cb7cf Update lockfile.json (8 days ago)
+    50b5317 Update lockfile.json (8 days ago)
+    94bac72 Update lockfile.json (8 days ago)
+    9769194 doc: mention `vim.filetype.add()` in README (9 days ago)
+    b995eeb Update lockfile.json (9 days ago)
+    31155af fixup: lock nix, not norg (#2682) (9 days ago)
+    cd4d802 highlights: conceal `"` in JSON (10 days ago)
+    739fefa ci: lock nix parser (10 days ago)
+    a838a35 chore: placate luacheck (10 days ago)
+    25bd021 Update lockfile.json (10 days ago)
+    2f704e5 fix(prisma): highlight "type" keyword (12 days ago)
+    0110a8e Update lockfile.json (12 days ago)
+    3e2ac54 Update lockfile.json (2 weeks ago)
+    9e8749f Update lockfile.json (2 weeks ago)
+    e775d03 injections(r): add comment (2 weeks ago)
+    b7ae886 Combined closing.css and block.css test files into single open_block.css (2 weeks ago)
+    b138056 Added fix for incorrect CSS indent after closing bracket Added a failing test for possible broken CSS syntax tree (2 weeks ago)
+    831be7f edit(readme): note about the configuration filetypes (2 weeks ago)
+    fd92e70 highlights(php): argument name as parameter (3 weeks ago)
+    68f016d Update README (3 weeks ago)
+    2dfe7a5 Add Cooklang (3 weeks ago)
+    c993f27 Update lockfile.json (3 weeks ago)
+    4fa30b5 highlights(bash): add operators ">>", "<<" (3 weeks ago)
+    f18234e Update lockfile.json (3 weeks ago)
+    44bf2b7 highlight(fish): dollar command substitution (3 weeks ago)
+    968b2d3 Update lockfile.json (3 weeks ago)
+    de89019 Update lockfile.json (3 weeks ago)
+    08b9f66 Update lockfile.json (3 weeks ago)
+    c99e39c Update lockfile.json (3 weeks ago)
+    16e3bad Update lockfile.json (3 weeks ago)
+    01150f5 Highlight markdown `uri_autolink` as `@text.uri` (3 weeks ago)
+    c6d4650 Update lockfile.json (3 weeks ago)
+    2d76916 Update lockfile.json (3 weeks ago)
+    e8799d6 Update lockfile.json (3 weeks ago)
+    a0c0269 properly bind function names to the parent scope (3 weeks ago)
+    6ece0ca fix(lua): restore precedence for @variable.builtin and @constant.builtin (3 weeks ago)
+    ccb55be fix(solidity): follow install_info.branch on parser update (3 weeks ago)
+    69a02b8 Update lockfile.json (3 weeks ago)
+    cd42189 Add more indentations (3 weeks ago)
+    6a56be0 Dedent on end in ruby files (3 weeks ago)
+    8d92fa8 Update README (4 weeks ago)
+    f301caf highlights(rust): highlight as in <Struct as Trait>::Type (4 weeks ago)
+    fc0b881 Refactor solidity highlights.scm further (4 weeks ago)
+    8f39910 Refactor solidity highlights.scm (4 weeks ago)
+    a180859 Add highlights query for Solidity (4 weeks ago)
+    90785a2 Update lockfile.json (4 weeks ago)
+    f448a78 Update lockfile.json (4 weeks ago)
+    90485c8 Update lockfile.json (4 weeks ago)
+    3aac7f9 fix: prefer gmake over make (4 weeks ago)
+    b8129fa Revert "2612: Use gmake when available" (4 weeks ago)
+    b6002db Update lockfile.json (4 weeks ago)
+    d3d1637 2612: Use gmake when available (4 weeks ago)
+    2ff68da Update README (4 weeks ago)
+    33ec22a Update lockfile.json (4 weeks ago)
+    aa1edbf Update lockfile.json (4 weeks ago)
+    cc4f373 Add slint parser configuration and queries (#2598) (4 weeks ago)
+    444525d Update lockfile.json (4 weeks ago)
+    cbfa53d highlights(vala): Reflect upstream refactor (4 weeks ago)
+    cada76c Update lockfile.json (4 weeks ago)
+    8e51f78 Update lockfile.json (4 weeks ago)
+    8769230 Update lockfile.json (5 weeks ago)
+    5b6f6ae Update lockfile.json (5 weeks ago)
+    0982e3c ci: ignore gleam for lockfile update (5 weeks ago)
+    68c36cc highlights(cpp): Add operator cast highlight (5 weeks ago)
+    82389e5 Added test for known indent failure when tree is in broken state (5 weeks ago)
+    3d6f263 Made block comment indent @auto so that new lines line up nicely with existing comment block     Previous indentation:     /**     *     */ (5 weeks ago)
+    9f78c9f Added test case for broken trees, plus partial test coverage (5 weeks ago)
+    d71da4f Added catchall (ERROR) @auto rule for Java to at least attempt something reasonable when the tree is in a broken state (5 weeks ago)
+    e23f5d4 Modified Java indent rules to stop ignoring block comments because javadoc blocks were defaulting to indent 0 (5 weeks ago)
+    bf2493f Added fix for Java interfaces not being indented properly (5 weeks ago)
+    dcfd6c0 Update README (5 weeks ago)
+    202cbc1 parsers: Add todotxt parser (5 weeks ago)
+    4d75800 fix(gleam): update parser and queries (5 weeks ago)
+    b6ebdae fix(latex): update parser and queries (5 weeks ago)
+    689a078 highlights(php): add namespace aliasing name as type (5 weeks ago)
+    d05bd10 Update lockfile.json (5 weeks ago)
+    3ef2c77 fix(indent): ecma - parenthesized expression indentation (5 weeks ago)
+    20168d8 fix(indent): ecma - class method indentation (5 weeks ago)
+    1eaf015 Update lockfile.json (5 weeks ago)
+    84e4e02 highlights(vala): Re-update highlights and lockfile (5 weeks ago)
+
+ ✓ Updated dstein64/vim-startuptime: d6098f5..61f122e
+  URL: https://github.com/dstein64/vim-startuptime
+  Commits:
+    61f122e Refactor text property code. (3 weeks ago)
+    28a5122 Specify bufnr in prop_type_get. (3 weeks ago)
+    63967c6 Specify permissions, and make minor changes. (5 weeks ago)
+
+ ✓ Updated nvim-telescope/telescope.nvim: 567ec85..6e7ee38
+  URL: https://github.com/nvim-telescope/telescope.nvim
+  Commits:
+    6e7ee38 chore: reformat with stylua 0.13 (2 days ago)
+    d38ad43 fix: action replace/enhance if the replaced/enhanced action as combined (#1814) (5 days ago)
+    b83d6d4 fix (treesitter): kind column (6 days ago)
+    5a93a6f fix: typo for notify log level (#1813) (6 days ago)
+    4eedf15 fix: add `%s` to notify message of git checkout action (#1812) (6 days ago)
+    cf2d6d3 fix (tags|btags): escape all special characters (#1806) (10 days ago)
+    40c1e88 chore: fix lint errors from latest ci run (10 days ago)
+    503db70 fix: typo in a LSP error message (#1805) (12 days ago)
+    1a72a92 feat: enable individual options for mappings (#890) (2 weeks ago)
+    6a43634 doc: help for select_{default,tab,vertical,horizontal} (#1801) (2 weeks ago)
+    8c7ac1d docs: fix typo in defaults.history section (#1797) (2 weeks ago)
+    70b3e38 docs: fix typo in builtin.pickers section (#1792) (2 weeks ago)
+    f8a6776 fix: default `layout_config` to `{}` on `cycle_layout` actions (#1796) (2 weeks ago)
+    a36a813 docs: fix path in developers file (#1789) (3 weeks ago)
+    df303e1 hotfix: scrolling should work correctly again (3 weeks ago)
+    2532b98 fix: selection strategy madness if its not set to `reset` (#1559) (3 weeks ago)
+    9f0dd2e fix: action mt again (#1487) (3 weeks ago)
+    ef7b6ad feat: improve UX with vim.notify (#1763) (3 weeks ago)
+    75b5730 chore: delete unused functions (#1788) (3 weeks ago)
+    1e4d5e5 feat(diagnostics): additional filter options (#1610) (3 weeks ago)
+    6b37288 fix(find_files): follow with unix `find` command (#1787) (3 weeks ago)
+    2d0b4a3 fix: disable signcolumn in telescope windows (#1781) (4 weeks ago)
+    ddb9e56 feat(lsp): ignore_symbols option (#1745) (4 weeks ago)
+    c5bf83d fix: allow Number type should be allowed for option keys (#1782) (4 weeks ago)
+    1c4cd6c feat(lsp_references): expose include_declaration option (default still true) (#1449) (4 weeks ago)
+    d331433 fix(grep): make filename parser non-greedy (#1785) (4 weeks ago)
+    6d5634b fix: error on toggling selection with empty picker (#1786) (4 weeks ago)
+    a7517b4 refactor: remove redundant state in preview (#1761) (4 weeks ago)
+    2032f43 fix(*grep): escape dot when not using regex (#1784) (4 weeks ago)
+    234066f fix: man_pages previewer, respecting MANPATH and apropos output parsing (#1764) (4 weeks ago)
+    1daf091 fix: treesitter picker with lua (defintions) (#1779) (4 weeks ago)
+    b501d9e fix: skip path escaping when adding items to quickfix list (#1712) (4 weeks ago)
+    1ebf53d docs: fix typo 'seperator' in documentation (#1767) (5 weeks ago)
+    d2beb22 docs: link plenary.nvim dependency in README (#1768) (5 weeks ago)
+    7612028 Change center layout strategy to allow vertical anchoring (#1719) (5 weeks ago)
+
+ ✓ Updated haringsrob/nvim_context_vt: bcc89ca..3fa6223
+  URL: https://github.com/haringsrob/nvim_context_vt
+  Commits:
+    3fa6223 feat: default enabled state via option (#58) (5 weeks ago)
+
+ ✓ Updated elixir-editors/vim-elixir: ff7a122..edf880c
+  URL: https://github.com/elixir-editors/vim-elixir
+  Commits:
+    edf880c Merge pull request #561 from duff/master (8 days ago)
+    c2fd02b Add defn syntax highlighting (8 days ago)
+    5aea793 Merge pull request #560 from mhanberg/mh/remove-ft-detection (9 days ago)
+    8f35c74 Remove ftdetect (9 days ago)
+
+ ✓ Updated JoosepAlviste/nvim-ts-context-commentstring: 097df33..7810f1f
+  URL: https://github.com/JoosepAlviste/nvim-ts-context-commentstring
+  Commits:
+    7810f1f Merge pull request #39 from dwoznicki/jsx-spread-element (3 weeks ago)
+    9889d17 Added spread_element rule to tsx section as well (3 weeks ago)
+    f8402cc Merge pull request #37 from dwoznicki/scss-commentstring (3 weeks ago)
+    cd0098b Fixed comment string inside JSX spread element (3 weeks ago)
+    aa44252 Modified scss commentstring style to support both inline and block comments (3 weeks ago)
+
+ ✓ Updated rmagatti/auto-session: da8a37d..ba16062
+  URL: https://github.com/rmagatti/auto-session
+  Commits:
+    ba16062 Merge pull request #120 from WhoIsSethDaniel/completion_for_restore (3 weeks ago)
+    735d82a * Add new command :RestoreSessionFromFile. Pass to it a path that is the   name of a saved session. Command-completion is provided. (3 weeks ago)
+
+ ✓ Updated scalameta/nvim-metals: e955336..6da18b2
+  URL: https://github.com/scalameta/nvim-metals
+  Commits:
+    6da18b2 Merge pull request #359 from ckipp01/styluaUpdate013 (2 days ago)
+    0b64b79 dep: bump stylua to 0.13.0 (2 days ago)
+    64db051 Merge pull request #358 from scalameta/dependabot/github_actions/actions/cache-3.0.1 (3 days ago)
+    da66072 chore(deps): bump actions/cache from 2 to 3.0.1 (4 days ago)
+    3312490 Merge pull request #356 from ckipp01/dapMessage (2 weeks ago)
+    9cde6fe refactor: make message about missing dap clearer (2 weeks ago)
+    cda68eb Merge pull request #355 from ckipp01/wait (2 weeks ago)
+    e4962d9 refactor(test): utilize vim.wait for clone test (2 weeks ago)
+    a55b618 Merge pull request #354 from ckipp01/snapshotAgain (2 weeks ago)
+    8b6f65e feat: introduce a latest.snapshot value for serverVersion. (2 weeks ago)
+    a3b4349 Merge pull request #353 from ckipp01/logRefactor (3 weeks ago)
+    5ed1802 refactor(log): utilize vim.notify for showing to the user (3 weeks ago)
+    74eee25 Merge pull request #352 from ckipp01/pcall (3 weeks ago)
+    d0cee49 refactor: clean up pcall usage (3 weeks ago)
+    bd2a3e8 Merge pull request #348 from ckipp01/status (3 weeks ago)
+    f215664 refactor: break status out into its own module (3 weeks ago)
+    6fadf3c feat: take into account tooltip and command in meatls/status (3 weeks ago)
+    84621c9 Merge pull request #351 from ckipp01/formatUpdate (3 weeks ago)
+    f24f81f chore(format): update stylua to 0.12.5 (3 weeks ago)
+    62219f0 Merge pull request #350 from ckipp01/selene (3 weeks ago)
+    8de5d88 chore(lint): replace usage of luacheck with selene (3 weeks ago)
+    42f2d6e Merge pull request #349 from ckipp01/compilationStatus (3 weeks ago)
+    54a40db feat: add in compilationStatus to doctor (3 weeks ago)
+    32a37ce Merge pull request #346 from ckipp01/213Baby (4 weeks ago)
+    249318a feat: support new 2.13 artifacts (4 weeks ago)
+    06c9e0c Merge pull request #345 from scalameta/dependabot/github_actions/actions/checkout-3 (5 weeks ago)
+    09c7641 chore(deps): bump actions/checkout from 2 to 3 (5 weeks ago)
+
+ ✓ Updated windwp/nvim-ts-autotag: 178e40a..57035b5
+  URL: https://github.com/windwp/nvim-ts-autotag
+  Commits:
+    57035b5 Fix JSX autotag inside nested elements (5 weeks ago)
+    887fcd9 Add htmldjango filetype (5 weeks ago)
+
+ ✓ Updated simrat39/rust-tools.nvim: a671506..9f89fe6
+  URL: https://github.com/simrat39/rust-tools.nvim
+  Commits:
+    9f89fe6 docs: Update License (11 days ago)
+    cd09ad2 feat: stylua (11 days ago)
+    0190496 fix(utils): Support more snippet text edits (11 days ago)
+    b3ded87 Merge pull request #164 from spaarmann/fix-sticky-chars (11 days ago)
+    c0d41d6 fix(inlay_hints): Stop nvim from rendering wrong characters (11 days ago)
+
+ ✓ Updated mizlan/iswap.nvim: ad8046d..f8ce882
+  URL: https://github.com/mizlan/iswap.nvim
+  Commits:
+    f8ce882 docs: update option descriptions (2 weeks ago)
+    4bfe229 feat(zig): Add basic zig support (2 weeks ago)
+
+ ✓ Updated lervag/vimtex: c8c9ac5..3c14f69
+  URL: https://github.com/lervag/vimtex
+  Commits:
+    3c14f69 merge: add docs on how to add closing brace for f7 (4 days ago)
+    735a856 doc: minor adjustment (4 days ago)
+    2bd6870 Document how to add closing brace for imap <F7> (4 days ago)
+    3b4a5a1 fix: adjust latexmk nvim callback checker (4 days ago)
+    bba97af feat(fold): enable multiline section titles (5 days ago)
+    532eb8a fix(toc): bug with parser continuation (5 days ago)
+    007080d feat(syntax): add conceal \eqref{x} → (x) (8 days ago)
+    c2cb0ce fix: relax env name regex (9 days ago)
+    4eccec4 feat(format): promote private vars to options (12 days ago)
+    7d7f21d fix(indent): minor issue with item indent (12 days ago)
+    332ce00 feat(syntax): add a couple of new conceals (2 weeks ago)
+    8020e33 doc: improve vimtex-grammar, mention angryreviewer (3 weeks ago)
+    dad71b9 test: minor fix (5 weeks ago)
+    c6e9275 fix(indent): minor issue with delims (5 weeks ago)
+    a338ca9 fix: minor regression (5 weeks ago)
+    d0b47bc fix(view): consistent zathura start vs forward (5 weeks ago)
+    8890e94 Small typo in documentation (5 weeks ago)
+
+ ✓ Updated p00f/nvim-ts-rainbow: 5513a9c..dee11b8
+  URL: https://github.com/p00f/nvim-ts-rainbow
+  Commits:
+    dee11b8 cpp - add levels js - fix template literals (fixes #102) (3 days ago)
+    c0b9d20 add commonlisp levels fixes #101 (9 days ago)
+    af1a18d rescript: remove angle (2 weeks ago)
+    ee98f4e Add scheme (3 weeks ago)
+    0594067 Add support for Zig (5 weeks ago)
+
+ ✓ Updated RRethy/nvim-treesitter-textsubjects: c960b0d..20d2bd5
+  URL: https://github.com/RRethy/nvim-treesitter-textsubjects
+  Commits:
+    20d2bd5 Add html and yaml support (16 hours ago)
+    b2a82b3 Add R queries (#18) (4 days ago)
+    b18ab0e Add singleton_class to Ruby (4 weeks ago)
+
+ ✓ Updated nvim-treesitter/nvim-treesitter-textobjects: e23fc8a..c4b41e4
+  URL: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+  Commits:
+    c4b41e4 Update README (#192) (8 days ago)
+    2885b60 textobjects for supercollider - Initial commit (11 days ago)
+    7c6b5fe Update README (5 weeks ago)
+    02248b7 fix(latex): update queries (5 weeks ago)
+    4a3363d style(java): delete useless brackets (5 weeks ago)
+    f2af190 fix(java): fix the scope of first parameter of @parameter.outer (5 weeks ago)
+    8d5047a feat(java): add argument support (5 weeks ago)
+
+ ✓ Updated p00f/godbolt.nvim: eeceef9..937d553
+  URL: https://github.com/p00f/godbolt.nvim
+  Commits:
+    937d553 Fix call to `"godbolt.fuzzy".fuzzy()` (3 days ago)
+    53d8821 Merge pull request #16 from liubang/patch-2 (3 days ago)
+    16a9166 Misspelled words (3 days ago)
+    0367ea8 Fix config usages (2 weeks ago)
+    ebf01bc Merge pull request #14 from JafarAbdi/pr-fix_url_bug (2 weeks ago)
+    99faa21 Fix bug in request using the default godbolt url (2 weeks ago)
+    0514e1a bump rustc (1.59.0) (2 weeks ago)
+    d758eb6 format (2 weeks ago)
+    fdfb4f5 document godbolt url (2 weeks ago)
+    c48814b breaking change: allow custom url, add languages field to config (2 weeks ago)
+    2df1cc4 don't require setup call (5 weeks ago)
+    31f3341 format config (5 weeks ago)
+    5c329fa Remove `return M` (5 weeks ago)
+    0b7c2c2 bump license year (5 weeks ago)
+
+ ✓ Updated rmagatti/session-lens: 4c1754b..b88c264
+  URL: https://github.com/rmagatti/session-lens
+  Commits:
+    b88c264 Fix telescope timing problems (folding) (#20) (5 weeks ago)
+
+ ✓ Updated lukas-reineke/indent-blankline.nvim: 2e35f7d..9920ceb
+  URL: https://github.com/lukas-reineke/indent-blankline.nvim
+  Commits:
+    9920ceb Merge pull request #385 from lukas-reineke/develop (9 days ago)
+    9dad966 Version 2.15.0 (9 days ago)
+    5ac5392 Update docs to include context blankline char option (9 days ago)
+    1bd28d3 Add context blankline char option (9 days ago)
+    949ca33 Merge pull request #384 from lukas-reineke/master (9 days ago)
+    ebedbed Merge pull request #379 from lukas-reineke/develop (11 days ago)
+    35b59cc Version 2.14.0 (11 days ago)
+    39634ce Add blankline char option (11 days ago)
+    9915d46 Merge pull request #371 from lukas-reineke/develop (4 weeks ago)
+    c8817aa Version 2.13.0 (4 weeks ago)
+    1d24089 feat: support dotted filetypes for exclusions (4 weeks ago)
+    3f58778 tooling: add luacheck (5 weeks ago)
+
+ ✓ Updated jghauser/mkdir.nvim: 541fcf1..0126165
+  URL: https://github.com/jghauser/mkdir.nvim
+  Commits:
+    0126165 Fix needing to call setup function explicitly (3 weeks ago)
+    ed2da69 Merge pull request #6 from IndianBoy42/main (5 weeks ago)
+
+ ✓ Updated akinsho/flutter-tools.nvim: b1f971a..53912f2
+  URL: https://github.com/akinsho/flutter-tools.nvim
+  Commits:
+    53912f2 docs: remove mention of dart code's debugger (9 days ago)
+    0718bbf docs: remove direct mentions of additional plugins (9 days ago)
+    e8df3e7 refactor(dap-runner): rename to debugger runner (2 weeks ago)
+    20f90d2 feat(notify): key notification by source (2 weeks ago)
+    a7e327c refactor(dap): use native flutter/dart debugger (2 weeks ago)
+    4c5f798 docs: update comment in README.md (#138) (3 weeks ago)
+    ffe36b4 feat(commands): add widget inspector and construction lines (#136) (5 weeks ago)
+    c0909a0 fix(colors): check the return value of vim.fn.has (5 weeks ago)
+    e44adc4 refactor(colours): update vim.highlight.range (5 weeks ago)
+
+ ✓ Updated mattn/webapi-vim: b09cbd3..e9fdce2
+  URL: https://github.com/mattn/webapi-vim
+  Commits:
+    e9fdce2 Merge pull request #35 from reinhardt/encode-tilde (4 weeks ago)
+    5db58b4 webapi#http#encodeURIComponent: also encode tilde ('~') (3 years, 8 months ago)
+    2522503 Merge pull request #34 from Jagua/fix-built-in-function-check (4 years, 1 month ago)
+    dfe8823 fix method for detecting whether exists built-in function. has() -> exists() (4 years, 1 month ago)
+    6459fbd use core APIs (4 years, 2 months ago)
+    c24ee94 add id for JSON-RPC (4 years, 2 months ago)
+    03f9ce7 fix errors (4 years, 2 months ago)
+    fa79250 fix example/twitter.vim (4 years, 2 months ago)
+    ba874b1 return error (4 years, 2 months ago)
+    367a594 remove needless codes (4 years, 2 months ago)
+    040aaa9 use core APIs (4 years, 2 months ago)
+    dc319aa use core APIs (4 years, 2 months ago)
+    dd9556c ditto (4 years, 3 months ago)
+    5eac3ac backport from https://github.com/vim-jp/vital.vim/pull/571 (4 years, 3 months ago)
+    e76f2da read mode (4 years, 11 months ago)
+    d6c1e7d funcref should be capital (4 years, 11 months ago)
+    f5e3fc2 add webapi#http#stream (4 years, 11 months ago)
+    1c28606 add webapi#http#send (4 years, 11 months ago)
+    0b25f05 better to be single quote (4 years, 11 months ago)
+    1f92823 ditto (4 years, 11 months ago)
+    cd78c4d fix HTTP/2 check (4 years, 11 months ago)
+    54b0c16 Merge pull request #30 from haya14busa/fix-syntax-error (5 years ago)
+    e704af7 fix syntax error (5 years ago)
+    e3fa93f Merge pull request #27 from itchyny/http2 (6 years ago)
+    e012cd1 Support HTTP/2 response (6 years ago)
+    ca89bd5 curl contains some storange \r in response (6 years ago)
+    50f1b7d workaround for curl (6 years ago)
+    48e40fb fix bug (6 years ago)
+    bfa776c drop duplicated HTTP line (6 years ago)
+    10fef09 workaround for curl on proxy (6 years ago)
+    07b727d workaround for curl redirect message (6 years ago)
+    5726e82 add abort function-attribute (6 years ago)
+    dfc6063 fix xml parse. close #25 (7 years ago)
+    575859a improve performance of XML parser. (7 years ago)
+    6d577e4 Merge pull request #23 from lcd047/curlrc_fix (7 years ago)
+    7942d8f Make curl ignore .curlrc files. (7 years ago)
+    a7789ab Merge pull request #21 from kevinburke/readme (7 years ago)
+
+ ✓ Updated sindrets/diffview.nvim: cf32c3f..71e972e
+  URL: https://github.com/sindrets/diffview.nvim
+  Commits:
+    71e972e feat: Select the file from the last used buffer if present. (83 minutes ago)
+    6d25771 fix: Disable 'modeline' in panels. (closes #123) (3 days ago)
+    5871b5c feat: Allow file restoration of untracked files as well. (3 days ago)
+    0b999d7 fix: Explicitly set foldenable for the diff view (#126) (3 days ago)
+
+ ✓ Updated pwntester/octo.nvim: 3a393b4..50d58b1
+  URL: https://github.com/pwntester/octo.nvim
+  Commits:
+    50d58b1 Merge pull request #277 from ldelossa/ldelossa/fix-pr-edit (2 days ago)
+    edeed10 fix: fix pr open (2 days ago)
+    a83219f Fixes #274 (4 days ago)
+    d62d6c8 Fixes #275 (4 days ago)
+    3eda723 Update colors.lua (7 days ago)
+    ee008bd Merge pull request #271 from jarviliam/fix/allow-submitwin-keymap (7 days ago)
+    c02bc53 Allow users to change the submit_win mappings (7 days ago)
+    5e461b9 Enable to create/add/remove labels by specifying the label name (5 weeks ago)
+    be3b936 a (5 weeks ago)
+    3be4a10 Fixes #267 (5 weeks ago)
+
+ ✓ Updated jose-elias-alvarez/nvim-lsp-ts-utils: f769dc9..1826275
+  URL: https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils
+  Commits:
+    1826275 doc: add maintenance mode notice (2 days ago)
+    821fd95 Merge pull request #116 from jose-elias-alvarez/source-actions (2 days ago)
+    1d2c585 Merge pull request #115 from jose-elias-alvarez/fix-import-all-patterns (3 weeks ago)
+    4b7f8c4 feat: support source actions (3 weeks ago)
+    3138890 fix(import all): match additional patterns (3 weeks ago)
+    c68bf8e Merge pull request #111 from agriffis/fix/organize-imports-timeout (4 weeks ago)
+    484a24f feat(organize imports): configurable timeout, and return status (4 weeks ago)
+    d035c3f ci: update sponsors workflow to run manually (4 weeks ago)
+
+ ✓ Updated f-person/git-blame.nvim: fdd38cf..e60bfbc
+  URL: https://github.com/f-person/git-blame.nvim
+  Commits:
+    e60bfbc fix: formatting (5 weeks ago)
+    8e36408 feat: normalize remote url (5 weeks ago)
+
+ ✓ Updated metakirby5/codi.vim: cf62681..7d2604c
+  URL: https://github.com/metakirby5/codi.vim
+  Commits:
+    7d2604c Fix codi syncbind issues (solves #144) (#145) (2 weeks ago)
+
+ ✓ Updated ellisonleao/glow.nvim: c668538..64052ad
+  URL: https://github.com/ellisonleao/glow.nvim
+  Commits:
+    64052ad new project structure (4 weeks ago)
+    2bda614 Adding rmd as allowed files. Close #66 (4 weeks ago)
+
+ ✓ Updated CRAG666/code_runner.nvim: 25bcaa8..357e7bf
+  URL: https://github.com/CRAG666/code_runner.nvim
+  Commits:
+    357e7bf Merge pull request #22 from SonglinLife/toggleTerm (19 hours ago)
+    fc59713 feat: add support for toggleTerm (28 hours ago)
+    fe1cbb6 fix README (2 weeks ago)
+
+ ✓ Updated windwp/nvim-spectre: 208d983..fbb0399
+  URL: https://github.com/windwp/nvim-spectre
+  Commits:
+    fbb0399 fix #60 (8 days ago)
+    798b8d6 fix toggle on visual mode (2 weeks ago)
+    3bbf9cb fix #59 (2 weeks ago)
+
+ ✓ Updated numToStr/FTerm.nvim: eabb65f..233633a
+  URL: https://github.com/numToStr/FTerm.nvim
+  Commits:
+    233633a docs: update readme (3 weeks ago)
+    194e6fe chore: cleanup and refactoring (3 weeks ago)
+
+ ✓ Updated kevinhwang91/nvim-bqf: 2558ee1..d67a9b5
+  URL: https://github.com/kevinhwang91/nvim-bqf
+  Commits:
+    d67a9b5 fix: compatible with PUC Lua 5.1 (2 days ago)
+    1605c89 refactor: use Camel case instead (5 days ago)
+    7d3630f fix(preview): allow qwinid to pass some functions (2 weeks ago)
+    4275288 fix(preview): add qwinid param to should_preview_cb (#60) (2 weeks ago)
+    88aac07 fix(fzf): check FZF_DEFAULT_OPTS env (2 weeks ago)
+    2d178c9 feat(fzf): adapt fzf's actions for preview (2 weeks ago)
+    eb9b47b fix(fzf): restore local stl option for qf window (3 weeks ago)
+    ccaddc9 fix(log): correct sysname for Windows (3 weeks ago)
+    6e78671 feat(preview): support extmarks for all non-anonymous namespaces (3 weeks ago)
+    dcb8a87 fix(magicwin): call layout_cb even if magic_window = false (#58) (4 weeks ago)
+    bbe21d0 Revert "docs: add coc.nvim as optional for semantic highlight" (5 weeks ago)
+    f651605 docs: add coc.nvim as optional for semantic highlight (5 weeks ago)
+    30a5c9c fix(preview): clear semantic token before highlighting (5 weeks ago)
+    842b396 feat(preview): add coc-semantictoken highlight for loaded buffer (5 weeks ago)
+    8c9b371 docs: update CHANGELOG (5 weeks ago)
+    641790c fix(fzf): add w:quickfix_title (5 weeks ago)
+    28ad1cb fix(emmylua): format and correct annotations (5 weeks ago)
+
+ ✓ Updated ray-x/lsp_signature.nvim: f7c308e..e4f7dad
+  URL: https://github.com/ray-x/lsp_signature.nvim
+  Commits:
+    e4f7dad bumpup test metric neovim version (4 weeks ago)
+    f9f8e31 fix multi-filetype not splitting properly (#166) (5 weeks ago)
+
+ ✓ Updated rcarriga/nvim-dap-ui: 22e94f2..33f33df
+  URL: https://github.com/rcarriga/nvim-dap-ui
+  Commits:
+    33f33df feat(threads): toggle subtle frames (7 days ago)
+    45805d6 feat: backwards visual selection (#90) (2 weeks ago)
+    00485eb feat: render without stopped thread/frame (3 weeks ago)
+    b4a596f chore: styling (4 weeks ago)
+    e007ef4 feat(breakpoints): toggle breakpoints (4 weeks ago)
+
+ ✓ Updated mfussenegger/nvim-dap: 9fcff6e..c20c78d
+  URL: https://github.com/mfussenegger/nvim-dap
+  Commits:
+    c20c78d Re-print threads in REPL on pause/resume (3 days ago)
+    20a909e Add `o` keymap to trigger actions in REPL (3 days ago)
+    dc60d8d Re-use threads widget for .threads repl command (3 days ago)
+    7a8f587 Set completion trigger for repl to `.` if adapter announces empty triggers (3 days ago)
+    4c30fb4 Allow to jump to frames from threads widget (3 days ago)
+    dd61276 Include line number when displaying frames (3 days ago)
+    0c43431 Swap thread running/stopped indicator (3 days ago)
+    80612f0 Short-circuit in get_top_frame (3 days ago)
+    0ca408b Add pause/resume actions to threads and auto pause/resume to expand frames (3 days ago)
+    4446d77 Don't request threads if they're up2date and track stopped state per thread (3 days ago)
+    1de5f63 Add a threads widget (3 days ago)
+    d567cce Infer source filetype from source.path if available (4 days ago)
+    0a35d15 Allow to set a default source filetype per adapter (4 days ago)
+    3c5df5a Document adapter timeout options (4 days ago)
+    e6d7ba5 Add buffer names to hover, scopes and frames widgets (11 days ago)
+    8336f99 Fix new lua lint error in progress status (11 days ago)
+    3dc92e0 Run disconnect timeout callback in main loop (11 days ago)
+    c367b72 Add more tests around cleaning up the session (13 days ago)
+    3d0575a Remove implicit filetypes inference from load_launchjs (3 weeks ago)
+    7b757e6 Remove DAPInstall reference from readme (3 weeks ago)
+    9a501e4 Close session on disconnect response (3 weeks ago)
+    bc7f18a Handle duplicate session close calls (3 weeks ago)
+    bc7ac48 Use nvim_buf_set_lines instead of appendbufline in repl.append (4 weeks ago)
+    edb22a8 Fix missing capability for breakpoints notifications (4 weeks ago)
+    68f5bf4 added sourceModified flag to payload (4 weeks ago)
+    d186c53 Wait for disconnect response before closing session (4 weeks ago)
+    421c50f Terminate session on run before evaluating adapter (5 weeks ago)
+    981f4d8 Ensure session is terminated before starting a new one (5 weeks ago)
+
+ ✓ Updated GustavoKatel/sidebar.nvim: abffb43..90123bf
+  URL: https://github.com/GustavoKatel/sidebar.nvim
+  Commits:
+    90123bf Merge pull request #53 from sidebar-nvim/docs/auto-update (3 weeks ago)
+    cb9112a docs: autogenerate (3 weeks ago)
+    02b737f feat(buffers): optionally hide buffer numbers (3 weeks ago)
+    0f029cb Merge pull request #49 from sidebar-nvim/docs/auto-update (6 weeks ago)
+    dc8510f docs: autogenerate (6 weeks ago)
+
+ ✓ Updated ldelossa/litee.nvim: 7745d71..c9fd775
+  URL: https://github.com/ldelossa/litee.nvim
+  Commits:
+    c9fd775 strip_path_prefix function in lib_path (5 weeks ago)
+
+ ✓ Updated ldelossa/litee-calltree.nvim: 65bf5c0..3f3c25e
+  URL: https://github.com/ldelossa/litee-calltree.nvim
+  Commits:
+    3f3c25e useability: jump to last used window (2 weeks ago)
+    86fa687 fix: make switch work again (5 weeks ago)
+
+ ✓ Updated folke/trouble.nvim: 20469be..691d490
+  URL: https://github.com/folke/trouble.nvim
+  Commits:
+    691d490 Create LICENSE (3 weeks ago)
+
+ ✓ Updated simrat39/symbols-outline.nvim: 758944e..1361738
+  URL: https://github.com/simrat39/symbols-outline.nvim
+  Commits:
+    1361738 Merge pull request #112 from FollieHiyuki/stylua-format (5 weeks ago)
+    d980dbf Format with stylua (6 weeks ago)
+    142963e Add stylua config (6 weeks ago)
+
+ ✓ Updated nvim-treesitter/playground: 9df82a2..7dbcd4d
+  URL: https://github.com/nvim-treesitter/playground
+  Commits:
+    7dbcd4d fix(playground): show highlight groups (#71) (6 days ago)
+    0198ef4 Pass the query_bufnr explicitly to get_node_text (#73) (7 days ago)
+
+ ✓ Updated nacro90/numb.nvim: c8b1282..453c50a
+  URL: https://github.com/nacro90/numb.nvim
+  Commits:
+    453c50a Add centered_peeking feature (2 weeks ago)
 
 
  Press 'q' to quit
  Press '<CR>' to show more info
  Press 'd' to show the diff
  Press 'r' to revert an update
+ Press 'R' to retry failed operations

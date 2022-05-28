@@ -1,59 +1,37 @@
 local M = {}
 
 function M.config()
-  local dial = require "dial"
+  -- local dial = require "dial"
+  local dial_config = require "dial.config"
+  local augend = require "dial.augend"
 
-  table.insert(dial.config.searchlist.normal, "markup#markdown#header")
+  -- table.insert(dial.config.searchlist.normal, "markup#markdown#header")
 
-  local function enum_cyclic(name, list)
-    dial.augends["custom#" .. name] = dial.common.enum_cyclic {
-      name = name,
-      strlist = list,
-    }
-    table.insert(dial.config.searchlist.normal, "custom#" .. name)
-  end
-  local function string_to_list(charstr)
-    local charlist = {}
-    charstr:gsub(".", function(c)
-      vim.list_extend(charlist, { c })
-      return c
-    end)
-    return charlist
-  end
-  local function enum_cyclic_chars(charstr)
-    local charlist = string_to_list(charstr)
-    enum_cyclic(charstr, charlist)
-  end
+  dial_config.augends:register_group {
+    default = {
+      augend.integer.alias.decimal_int,
+      augend.integer.alias.hex,
+      augend.integer.alias.octal,
+      augend.integer.alias.binary,
+      augend.constant.alias.bool,
+      augend.constant.alias.alpha,
+      augend.constant.alias.Alpha,
+      augend.semver.alias.semver,
+      augend.date.alias["%Y/%m/%d"],
+      augend.date.alias["%d/%m/%Y"],
+      augend.date.alias["%Y-%m-%d"],
+      augend.date.alias["%d-%m-%Y"],
+    },
+  }
 
-  enum_cyclic("boolean", { "true", "false" })
-  enum_cyclic("Boolean", { "True", "False" })
-  local function cycle(v, pre)
-    return {
-      pre .. v,
-      pre .. "{" .. v .. "+1}",
-      pre .. "{" .. v .. "-1}",
-    }
-  end
-  -- for _, v in ipairs(string_to_list "ijkxyzmn") do
-  --   enum_cyclic("_" .. v, cycle(v, "_"))
-  --   enum_cyclic("^" .. v, cycle(v, "^"))
-  -- end
-  enum_cyclic_chars "ijk"
-  enum_cyclic_chars "xyz"
-  enum_cyclic_chars "uvw"
-  enum_cyclic_chars "abc"
-  enum_cyclic_chars "nmpqr"
-
+  local dialmap = require "dial.map"
   local map = vim.keymap.set
-  local function dialmap(from, to)
-    map("n", from, to, { silent = true })
-    map("x", from, to, { silent = true })
-  end
-  -- 5
-  dialmap("<C-a>", "<Plug>(dial-increment)")
-  dialmap("g<C-a>", "<Plug>(dial-increment-additional)")
-  dialmap("<C-x>", "<Plug>(dial-decrement)")
-  dialmap("g<C-x>", "<Plug>(dial-decrement-additional)")
+  map("n", "<C-a>", dialmap.inc_normal(), {})
+  map("n", "<C-x>", dialmap.dec_normal(), {})
+  map("v", "<C-a>", dialmap.inc_visual(), {})
+  map("v", "<C-x>", dialmap.dec_visual(), {})
+  map("v", "g<C-a>", dialmap.inc_gvisual(), {})
+  map("v", "g<C-x>", dialmap.dec_gvisual(), {})
 end
 
 function M.keymaps() end

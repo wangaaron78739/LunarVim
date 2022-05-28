@@ -13,6 +13,7 @@ function M.config()
     cycle_group_bwd_key = nil,
   }
   vim.keymap.del({ "o", "x" }, ",")
+  vim.keymap.set("n", "s", "<Plug>Lightspeed_omni_s")
 end
 
 function M.au_unconceal(level)

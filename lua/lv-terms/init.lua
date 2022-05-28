@@ -170,7 +170,8 @@ function M.activate_magma(kernel)
 end
 
 function M.luadev()
-  vim.cmd [[ command LuadevStart :lua require("lv-terms").activate_luadev() ]]
+  utils.new_command.LuadevStart = M.activate_luadev
+  -- vim.cmd [[ command LuadevStart :lua require("lv-terms").activate_luadev() ]]
 end
 
 function M.activate_luadev()
@@ -191,8 +192,14 @@ function M.kitty()
   require("kitty-runner").setup {
     use_keymaps = false, --use keymaps
   }
-  vim.cmd [[ command! KittyOpen :lua require("lv-terms").activate_kitty() ]]
-  vim.cmd [[ command! KittyOpenLocal :lua require("lv-terms").activate_kitty('<local>') ]]
+  utils.new_command.KittyOpen = function()
+    M.activate_kitty()
+  end
+  utils.new_command.KittyOpenLocal = function()
+    M.activate_kitty "<local>"
+  end
+  -- vim.cmd [[ command! KittyOpen :lua require("lv-terms").activate_kitty() ]]
+  -- vim.cmd [[ command! KittyOpenLocal :lua require("lv-terms").activate_kitty('<local>') ]]
 end
 
 function M.activate_kitty(port)
@@ -257,7 +264,13 @@ function M.keymaps(leaderMappings, vLeaderMappings)
   local cmd = utils.cmd
   local map = vim.keymap.set
   if O.plugin.neoterm then
-    vim.cmd [[ command -nargs=+ Tmem :lua require("lv-terms").Tmem("<args>") ]]
+    utils.new_command.Tmem = {
+      rhs = function(opts)
+        M.Tmem(opts.args)
+      end,
+      nargs = "+",
+    }
+    -- vim.cmd [[ command -nargs=+ Tmem :lua require("lv-terms").Tmem("<args>") ]]
 
     vim.g.neoterm_automap_keys = "<leader>x<cr>"
     leaderMappings["x<cr>"] = "Neoterm AutoMap"

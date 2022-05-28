@@ -14,6 +14,7 @@ local default_sources = {
   {
     { name = "luasnip" },
     { name = "nvim_lsp" },
+    { name = "copilot" },
   },
   {
     -- { name = "buffer" },

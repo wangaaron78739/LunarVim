@@ -243,7 +243,12 @@ function M.config()
   require("telescope").load_extension "yabs"
 end
 function M.keymaps(leaderMappings)
-  vim.cmd [[command! -nargs=1 Yabs lua require'yabs':run_task('<args>') ]]
+  utils.new_command.Yabs {
+    rhs = function(opts)
+      require("yabs").run_task(opts.args)
+    end,
+    nargs = 1,
+  }
   local function run_task(n)
     return function()
       require("yabs"):run_task(n)

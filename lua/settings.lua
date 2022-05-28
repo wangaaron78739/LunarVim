@@ -84,20 +84,21 @@ end
 opt.undodir = undodir
 opt.undofile = true -- enable persistent undo
 
+local _general_settings = require("lv-utils").augroup "_general_settings"
+_general_settings.TextYankPost(function()
+  vim.highlight.on_yank { higroup = "Search", timeout = 200 }
+end)
+_general_settings.BufWinEnter "setlocal formatoptions-=c formatoptions-=r formatoptions-=o"
+_general_settings.BufNewFile "setlocal formatoptions-=c formatoptions-=r formatoptions-=o"
+_general_settings.BufRead = function()
+  vim.cmd "setlocal formatoptions-=c formatoptions-=r formatoptions-=o"
+  vim.cmd "set hlsearch"
+end
+_general_settings.Filetype.qf = "set nobuflisted"
+
 -- Default autocommands
 require("lv-utils").define_augroups {
-  _general_settings = {
-    { "TextYankPost", "*", "lua require('vim.highlight').on_yank({higroup = 'Search', timeout = 200})" },
-    { "BufWinEnter", "*", "setlocal formatoptions-=c formatoptions-=r formatoptions-=o" },
-    { "BufRead", "*", "setlocal formatoptions-=c formatoptions-=r formatoptions-=o" },
-    { "BufRead", "*", "set hlsearch" },
-    -- { "CursorMoved,InsertEnter", "*", "nohlsearch" },
-    { "BufNewFile", "*", "setlocal formatoptions-=c formatoptions-=r formatoptions-=o" },
-    { "FileType", "qf", "set nobuflisted" },
-    -- TODO: Test This -- { "BufWritePost", "lv-config.lua", "lua require('lv-utils').reload_lv_config()" },
-    -- { "VimLeavePre", "*", "set title set titleold=" },
-  },
-  _packer_compile = { { "User", "PackerComplete", "++once PackerCompile" } },
+  _packer_compile = { { "User", "PackerComplete", "PackerCompile" } },
   _buffer_bindings = { { "FileType", "dashboard", "nnoremap <silent> <buffer> q :q<CR>" } },
   _terminal_insert = { { "BufEnter", "term://*", "startinsert" }, { "BufLeave", "term://*", "stopinsert" } },
   -- will check for external file changes on cursor hold

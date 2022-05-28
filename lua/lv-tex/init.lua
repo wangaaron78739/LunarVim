@@ -137,6 +137,13 @@ M.sandwich_recipes = {
   },
   {
     __filetype__ = "tex",
+    buns = { "\\frac{", "}{}" },
+    nesting = 1,
+    input = { "fr" },
+    action = { "add" },
+  },
+  {
+    __filetype__ = "tex",
     buns = { "\\textit{", "}" },
     nesting = 1,
     input = { "it" },
@@ -528,6 +535,7 @@ local math_maps = {
   ["c>"] = "supset",
   ["c>="] = "supseteq",
   ["inn"] = "in",
+  ["nii"] = "ni",
   ["!in"] = "notin",
   ["!!"] = "neg",
   ["--"] = "setminus",
@@ -583,9 +591,11 @@ local math_maps = {
   "surd",
   ["span"] = "sspan",
   "argmin",
+  "argmax",
+  "rank",
+  "dag",
   "because",
   "therefore",
-  "argmax",
   ["part"] = "partial",
   ["inf"] = "infty", -- FIXME: why below here doesn't trigger? WHY DOES IT TRIGGER NOW!?
   "min",
@@ -670,7 +680,7 @@ for k, v in pairs(math_maps) do
 end
 for k, v in pairs(trig_fns) do
   local lhs = ("number" == type(k)) and v or k
-  list_extend(auto, { s(re([[ar?c?]] .. lhs), t("\\arc\\" .. v), no_backslash) })
+  list_extend(auto, { s(re([[ar?c?]] .. lhs), t("\\arc" .. v), no_backslash) })
 end
 
 list_extend(auto, {
@@ -689,7 +699,7 @@ list_extend(auto, {
   lns("eq ", { t { "\\begin{equation*}", "" }, sel(), i(0), t { "", "\\end{equation*}" } }),
   lns("eqn ", { t { "\\begin{equation}", "" }, sel(), i(0), t { "", "\\end{equation}" } }),
   lns("md ", { t { "\\begin{markdown}", "" }, sel(), i(0), t { "", "\\end{markdown}" } }),
-  pa("$", "\\($0\\)"),
+  pa("$", "\\($0\\)"), -- TODO: not in math mode
   ms("cases ", { t { "\\begin{cases}", "" }, sel(), i(0), t { "", "\\end{cases}" } }),
   ms("matt ", { t { "\\begin{matrix}", "" }, sel(), i(0), t { "", "\\end{matrix}" } }),
   ms("bmat ", { t { "\\begin{bmatrix}", "" }, sel(), i(0), t { "", "\\end{bmatrix}" } }),
@@ -788,14 +798,14 @@ list_extend(auto, {
   ms(renw [[([A-Za-z%}%]%)])(%d)]], { sub(1), t "_", sub(2) }), -- Auto subscript
   -- ms(renw [[([A-Za-z%}%]%)])([a-z])]], { sub(1), t "_", sub(2) }), -- Auto subscript
   ms(renw [[([A-Za-z%}%]%)]) ?_(%d%d)]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
-  ms(renw [[([A-Za-z%}%]%)]) ?_(%w[+-])]], { sub(1), t "_{", sub(2), i(0), t "}" }), -- Auto escape subscript
+  ms(renw [[([A-Za-z%}%]%)]) ?_(%w[+,-])]], { sub(1), t "_{", sub(2), i(0), t "}" }), -- Auto escape subscript
   ms(renw [[([A-Za-z%}%]%)]) ?_([%+%-] ?[%d%w])]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
   ms(renw [[([A-Za-z%}%]%)]) ?_([%+%-]? ?%\%w+) ]], { sub(1), t "_{", sub(2), t "}" }), -- Auto escape subscript
   ms(renw [[([A-Za-z%}%]%)]) ?%^(%d%d)]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape subscript
   ms(renw [[([A-Za-z%}%]%)]) ?%^ ?(%d%d)]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
   ms(renw [[([A-Za-z%}%]%)]) ?%^([%+%-] ?[%d%w])]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
   ms(renw [[([A-Za-z%}%]%)]) ?%^([%+%-]? ?%\%w+) ]], { sub(1), t "^{", sub(2), t "}" }), -- Auto escape superscript
-  ms(renw [[([A-Za-z%}%]%)]) ?%^(%w[+-])]], { sub(1), t "^{", sub(2), i(0), t "}" }), -- Auto escape subscript
+  ms(renw [[([A-Za-z%}%]%)]) ?%^(%w[+,-])]], { sub(1), t "^{", sub(2), i(0), t "}" }), -- Auto escape subscript
 })
 for k, v in pairs(intlike) do
   local snip = { t(v.operator .. "\\limits") }
@@ -934,7 +944,7 @@ function M.ftplugin()
   -- TODO: inline these variables
   local conf = {
     conceal = 2,
-    theme = O.lighttheme,
+    -- theme = O.lighttheme,
     fontsize = O.bigfontsize,
     filetypes = { "tex", "bib" },
     texlab = {
@@ -1035,8 +1045,8 @@ function M.ftplugin()
     },
   }
 
-  require("luasnip").snippets.tex = M.snippets
-  require("luasnip").autosnippets.tex = M.autosnippets
+  require("luasnip").add_snippets("tex", M.snippets)
+  require("luasnip").add_snippets("tex", M.autosnippets, { type = "autosnippets" })
 
   require("lv-pairs.sandwich").add_local_recipes(M.sandwich_recipes)
   vim.b.sandwich_tex_marks_recipes = vim.fn.deepcopy(M.sandwich_marks_recipes) -- TODO: idk what this does

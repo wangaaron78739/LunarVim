@@ -30,14 +30,14 @@ local function mi(dep)
   end, { dep })
 end
 
-require("luasnip").autosnippets.fish = {
+require("luasnip").add_snippets("fish", {
   s("elif", {
     t "else if ",
     i(0),
     t { "", "" },
   }),
-}
-require("luasnip").snippets.fish = {
+})
+require("luasnip").add_snippets("fish", {
   s("if", {
     t "if ",
     i(0),
@@ -66,4 +66,4 @@ require("luasnip").snippets.fish = {
     i(2),
     t { "", "end" },
   }),
-}
+})
