@@ -7,6 +7,6 @@ function M.config()
     -- auto_start = true,
   }
 
-  require("lv-utils").define_aucmd("_coq_start", { "VimEnter", "*", "COQnow --shut-up" })
+  utils.augroup("_coq_start").VimEnter = "COQnow --shut-up"
 end
 return M

@@ -49,8 +49,10 @@ function M.setup()
   map("s", "<C-j>", cj, { silent = true })
   map("i", "<C-k>", "<Plug>luasnip-jump-prev", { silent = true })
   map("s", "<C-k>", "<Plug>luasnip-jump-prev", { silent = true })
-  map("i", "<C-h>", "<Plug>luasnip-next-choice", { silent = true })
-  map("s", "<C-h>", "<Plug>luasnip-next-choice", { silent = true })
+  map("i", "<M-j>", "<Plug>luasnip-next-choice", { silent = true })
+  map("s", "<M-j>", "<Plug>luasnip-next-choice", { silent = true })
+  map("i", "<M-k>", "<Plug>luasnip-prev-choice", { silent = true })
+  map("s", "<M-k>", "<Plug>luasnip-prev-choice", { silent = true })
   map("i", "<C-y>", require("lv-luasnips.choice").popup_close, { silent = true })
   map("s", "<C-y>", require("lv-luasnips.choice").popup_close, { silent = true })
   local operatorfunc_keys = require("lv-utils").operatorfunc_keys
@@ -94,66 +96,63 @@ function M.setup()
     end, vim.tbl_extend("force", {}, opts or {}))
   end
 
-  ls.snippets = {
-    all = {
-      s("date", { d(1, date_input, {}, "%A, %B %d of %Y") }),
-    },
-    -- tex = require("lv-luasnips.tex").snips,
-    lua = {
-      s("localM", {
-        tnl [[local M = {}]],
-        t "M.",
-        i(0),
-        nlt [[return M]],
-      }),
-      s("link_url", {
-        t '<a href="',
-        selected_text(),
-        t '">',
-        i(1),
-        t "</a>",
-      }),
-      s("function", {
-        t "function ",
-        i(1),
-        t "(",
-        i(2),
-        t { ")", "" },
-        selected_text(),
-        -- t { "", "" },
-        i(0),
-        t { "", "end" },
-        -- mi(1),
-        -- t "(",
-        -- mi(2),
-        -- t { ")", "" },
-      }),
-      s("function", {
-        t "if ",
-        i(1),
-        t { "then", "" },
-        selected_text(),
-        -- t { "", "" },
-        i(0),
-        t { "", "end" },
-        -- mi(1),
-        -- t "(",
-        -- mi(2),
-        -- t { ")", "" },
-      }),
-      s("iife", {
-        t { "(function ()", "return" },
-        selected_text(),
-        -- t { "", "" },
-        i(0),
-        t { "", "end)()" },
-        -- mi(1),
-        -- t "(",
-        -- mi(2),
-        -- t { ")", "" },
-      }),
-    },
-  }
+  ls.add_snippets("all", {
+    s("date", { d(1, date_input, {}, "%A, %B %d of %Y") }),
+  })
+  ls.add_snippets("lua", {
+    s("localM", {
+      tnl [[local M = {}]],
+      t "M.",
+      i(0),
+      nlt [[return M]],
+    }),
+    s("link_url", {
+      t '<a href="',
+      selected_text(),
+      t '">',
+      i(1),
+      t "</a>",
+    }),
+    s("function", {
+      t "function ",
+      i(1),
+      t "(",
+      i(2),
+      t { ")", "" },
+      selected_text(),
+      -- t { "", "" },
+      i(0),
+      t { "", "end" },
+      -- mi(1),
+      -- t "(",
+      -- mi(2),
+      -- t { ")", "" },
+    }),
+    s("function", {
+      t "if ",
+      i(1),
+      t { "then", "" },
+      selected_text(),
+      -- t { "", "" },
+      i(0),
+      t { "", "end" },
+      -- mi(1),
+      -- t "(",
+      -- mi(2),
+      -- t { ")", "" },
+    }),
+    s("iife", {
+      t { "(function ()", "return" },
+      selected_text(),
+      -- t { "", "" },
+      i(0),
+      t { "", "end)()" },
+      -- mi(1),
+      -- t "(",
+      -- mi(2),
+      -- t { ")", "" },
+    }),
+  })
 
   require("luasnip/loaders/from_vscode").lazy_load()
   require("lv-luasnips.choice").config()
@@ -162,29 +161,19 @@ end
 function M.get_snippet(name, ft)
   ft = ft or vim.opt.filetype._value
 
-  local snippets = require("luasnip").snippets[ft]
+  -- FIXME this doesn't work anymore
+  local snippets = require("luasnip").get_snippets(ft)
   for i, snip in ipairs(snippets) do
     local trig = snip.trigger
-    if trig == name then
+    local sname = snip.name
+    if trig == name or sname == name then
       return snip
     end
   end
   return nil
 end
-function M.expand_snippet(snip)
-  if snip == nil then
-    return
-  end
-  if snip.regTrig then
-    -- if trigger is a pattern, expand "pattern" instead of actual snippet.
-    snip = snip:get_pattern_expand_helper()
-  else
-    snip = snip:copy()
-  end
-  utils.dump(snip)
-  snip:trigger_expand(require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()])
-end
 function M.expand_by_name(name, ft)
-  M.expand_snippet(M.get_snippet(name, ft))
+  require("luasnip").snip_expand(M.get_snippet(name, ft))
 end
+
 return M

@@ -42,15 +42,9 @@ function M.dump_text(...)
   vim.fn.append(lnum, lines)
   return ...
 end
-vim.cmd [[command! -nargs=+ Lua lua utils.dump(<args>)]]
-
-function M.reload_lv_config()
-  -- FIXME: Reloading config breaks things
-  vim.cmd "source ~/.config/nvim/lv-config.lua"
-  vim.cmd "source ~/.config/nvim/lua/plugins.lua"
-  vim.cmd ":PackerCompile"
-  vim.cmd ":PackerInstall"
-end
+vim.api.nvim_create_user_command("Lua", function(opts)
+  utils.dump(opts.args)
+end, { nargs = "+" })
 
 function M.check_lsp_client_active(name)
   local clients = vim.lsp.get_active_clients()
@@ -64,6 +58,7 @@ end
 
 -- TODO: replace this with new interface
 function M.define_augroups(definitions) -- {{{1
+  -- utils.dump("DEPRECATED", debug.getinfo(2))
   -- Create autocommand groups based on the passed definitions
   --
   -- The key will be the name of the group, and each definition
@@ -73,32 +68,27 @@ function M.define_augroups(definitions) -- {{{1
   --    3. Text
   -- just like how they would normally be defined from Vim itself
   for group_name, definition in pairs(definitions) do
-    vim.cmd("augroup " .. group_name)
-    vim.cmd "autocmd!"
+    local augrp = vim.api.nvim_create_augroup("name", {})
+    -- vim.cmd("augroup " .. group_name)
+    -- vim.cmd "autocmd!"
 
     for _, def in pairs(definition) do
-      local command = table.concat(vim.tbl_flatten { "autocmd", def }, " ")
-      vim.cmd(command)
+      vim.api.nvim_create_autocmd(def[1], {
+        pattern = def[2],
+        command = def[3],
+      })
+      -- local command = table.concat(vim.tbl_flatten { "autocmd", def }, " ")
+      -- vim.cmd(command)
     end
 
-    vim.cmd "augroup END"
+    -- vim.cmd "augroup END"
   end
 end
-function M.define_aucmd(name, aucmd)
-  M.define_augroups { [name] = { aucmd } }
-end
 
-function M.new_command(name, fn)
-  vim.cmd("command! " .. name .. " " .. fn)
-end
-function M.command_from_fn(name, fn)
-  vim.cmd([[command -nargs=+ ]] .. name .. [[ :]] .. fn .. [[("<args>")]])
-end
-
-_G.lv_utils_functions = {}
+-- Enable nosplit search in vim
 local to_cmd_counter = 0
 function M.to_cmd(luafunction, args)
-  utils.dump(to_cmd_counter, debug.getinfo(2).source)
+  utils.dump(to_cmd_counter, "DEPRECATED", debug.getinfo(2).source)
   vim.notify "to_cmd is deprecated"
 end
 
@@ -230,13 +220,10 @@ end
 local function luafn(prefix)
   return setmetatable({}, {
     __index = function(tbl, key)
-      return function()
-        prefix[key]()
-      end
-      -- return "<cmd>lua " .. prefix .. "." .. key .. "()<cr>"
+      return "<cmd>lua " .. prefix .. "." .. key .. "()<cr>"
     end,
     __call = function(tbl, key)
-      -- utils.dump(debug.getinfo(2).source, prefix, key)
+      -- utils.dump("DEPRECATED", debug.getinfo(2).source, prefix, key)
       return "<cmd>lua " .. prefix .. "." .. key .. "<cr>"
     end,
   })
@@ -315,6 +302,7 @@ local augroup_meta = {
 local au
 au = setmetatable({}, {
   __call = function(_, arg)
+    utils.dump("DEPRECATED", debug.getinfo(2))
     if type(arg) == "string" then
       return setmetatable({ arg }, augroup_meta)
     else
@@ -324,9 +312,11 @@ au = setmetatable({}, {
     end
   end,
   __newindex = function(_, trigger, action)
+    utils.dump("DEPRECATED", debug.getinfo(2))
     make_aucmd(trigger, "*", action)
   end,
   __index = function(_, trigger)
+    utils.dump("DEPRECATED", debug.getinfo(2))
     return setmetatable({}, {
       __newindex = function(_, trigargs, action)
         make_aucmd(trigger, trigargs, action)
@@ -367,14 +357,6 @@ mapper_meta = {
 }
 local mapper = setmetatable({ {}, "n" }, mapper_meta)
 M.map = mapper
-
-local cmds = setmetatable({}, {
-  -- TODO: more customization and arguments
-  __newindex = function(tbl, key, val)
-    vim.cmd("command! " .. key .. " " .. val)
-  end,
-})
-M.cmds = cmds
 
 function M.timeout_helper(timeout, callback)
   local timerperiod = 20
@@ -431,11 +413,79 @@ M.hold_jumplist_aucmd = {
   { "CursorMoved", "*", "lua require'lv-utils'.hold_jumplist.reset()" },
 }
 
+local function augroup_helper(tbl, name, clear)
+  local grp = {
+    id = vim.api.nvim_create_augroup(name, { clear = clear }),
+  }
+  local wrapper
+  wrapper = function(event, opts, pattern)
+    if "function" == type(opts) then
+      vim.api.nvim_create_autocmd(event, { group = name, pattern = pattern, callback = opts })
+    elseif "string" == type(opts) then
+      vim.api.nvim_create_autocmd(event, { group = name, pattern = pattern, command = opts })
+    else
+      vim.api.nvim_create_autocmd(event, vim.tbl_extend("keep", { group = name, pattern = pattern }, opts))
+    end
+  end
+  -- return function(opts)
+  --   vim.api.nvim_create_autocmd(opts.event, opts)
+  -- end
+  return setmetatable(grp, {
+    __index = function(tbl, event)
+      return setmetatable({}, {
+        __index = function(tbl, pat)
+          return function(opts)
+            wrapper(event, opts)
+            return tbl
+          end
+        end,
+        __newindex = function(tbl, pat, opts)
+          wrapper(event, opts)
+          return tbl
+        end,
+        __call = function(tbl, opts)
+          wrapper(event, opts)
+          return tbl
+        end,
+      })
+    end,
+    __newindex = function(tbl, event, opts)
+      wrapper(event, opts)
+      return tbl
+    end,
+  })
+end
+M.augroup = setmetatable({}, {
+  __index = augroup_helper,
+  __call = augroup_helper,
+})
+
+-- TODO: merge repeated 'x'
 M.delete_merge = (function()
   local repeat_set = M.fn["repeat"].set
   return M.timeout_helper(1000, function()
     repeat_set("\\<Plug>RepeatDeletes", vim.v.count)
   end)
 end)()
+
+local new_command_helper = function(idx, val, opts)
+  if "string" == type(val) then
+    vim.api.nvim_create_user_command(idx, val, opts or {})
+  else
+    local rhs = val.rhs
+    val.rhs = nil
+    vim.api.nvim_create_user_command(idx, rhs, val)
+  end
+end
+M.new_command = setmetatable({}, {
+  __newindex = function(tbl, idx, val)
+    new_command_helper(idx, val)
+  end,
+  __index = function(tbl, idx)
+    return function(val, opts)
+      new_command_helper(idx, val, opts)
+    end
+  end,
+})
 
 return M

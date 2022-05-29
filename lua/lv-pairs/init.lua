@@ -67,6 +67,7 @@ function M.autopairs()
   }
 
   -- press % => %% is only inside comment or string
+  -- TODO:move all of this to luasnip autosnippets cos why not?
   local texmods = {
     ["\\left"] = "\\right",
     ["\\big"] = "\\big",
