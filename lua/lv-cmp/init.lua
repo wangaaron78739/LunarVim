@@ -108,13 +108,16 @@ function M.setup()
     -- confirmation = { default_behavior = cmp.ConfirmBehavior.Replace },
     -- experimental = { ghost_text = true },
 
-    documentation = {
-      border = "single",
-      winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-      max_width = 120,
-      min_width = 60,
-      max_height = math.floor(vim.o.lines * 0.3),
-      min_height = 1,
+    -- documentation = {
+    --   border = "single",
+    --   winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
+    --   max_width = 120,
+    --   min_width = 60,
+    --   max_height = math.floor(vim.o.lines * 0.3),
+    --   min_height = 1,
+    -- },
+    window = {
+        documentation = cmp.config.window.bordered(),
     },
 
     -- TODO: better mapping setup for enter, nextitem and close window

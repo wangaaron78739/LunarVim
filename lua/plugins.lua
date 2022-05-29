@@ -9,6 +9,8 @@ packer.init {
   -- compile_path = require("packer.util").join_paths(vim.fn.stdpath "config", "plugin", "packer_compiled.lua"),
   compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
   snapshot_path = vim.fn.stdpath "config" .. "/packer_snapshots",
+  -- snapshop = "may-26",
+  snapshot = "default",
   git = { clone_timeout = 300 },
   display = {
     open_fn = function()
@@ -33,7 +35,8 @@ return packer.startup(function(use)
   -- Format: :%g/^\s*use {\s*$/normal J
 
   -- Packer can manage itself as an optional plugin
-  use { "wbthomason/packer.nvim", commit = "c576ab3f1488ee86d60fd340d01ade08dcabd256" }
+  use { "wbthomason/packer.nvim" }
+  -- use { "wbthomason/packer.nvim", commit = "c576ab3f1488ee86d60fd340d01ade08dcabd256" }
   use "lewis6991/impatient.nvim" -- Will be merged in https://github.com/neovim/neovim/pull/15436
   use {
     "nathom/filetype.nvim",
@@ -45,6 +48,7 @@ return packer.startup(function(use)
         overrides = O.filetypes,
       }
     end,
+    disable = true,
   }
 
   use_rock { "f-strings", "penlight" }
@@ -62,18 +66,27 @@ return packer.startup(function(use)
   }
 
   -- Lsp Configs
-  use { "neovim/nvim-lspconfig" }
-  -- use "williamboman/nvim-lsp-installer"
   use {
-    -- "kabouzeid/nvim-lspinstall",
-    "https://github.com/williamboman/nvim-lsp-installer", -- Use this
-    -- https://github.com/alexaandru/nvim-lspupdate.git
-    config = function()
-      require "lv-lspinstall"
-    end,
-    cmd = { "LspInstall", "LspInstallInfo", "LspUninstall", "LspUninstallAll", "LspInstallLog", "LspPrintInstalled" },
-    module = "nvim-lsp-installer",
+    "williamboman/nvim-lsp-installer",
+    {
+      "neovim/nvim-lspconfig",
+      config = function()
+        require "lv-lspinstall"
+      end,
+    },
   }
+  -- use { "neovim/nvim-lspconfig" }
+  -- -- use "williamboman/nvim-lsp-installer"
+  -- use {
+  --   -- "kabouzeid/nvim-lspinstall",
+  --   "https://github.com/williamboman/nvim-lsp-installer", -- Use this
+  --   -- https://github.com/alexaandru/nvim-lspupdate.git
+  --   config = function()
+  --     require "lv-lspinstall"
+  --   end,
+  --   cmd = { "LspInstall", "LspInstallInfo", "LspUninstall", "LspUninstallAll", "LspInstallLog", "LspPrintInstalled" },
+  --   module = "nvim-lsp-installer",
+  -- }
   use { "scalameta/nvim-metals", requires = { "nvim-lua/plenary.nvim" } }
 
   -- Utilities
@@ -681,10 +694,6 @@ return packer.startup(function(use)
     commit = "876089969aa8ccf8784039f7d6e6b4cab6d4a2b1",
   }
   use {
-    "scalameta/nvim-metals",
-    ft = "scala",
-  }
-  use {
     "p00f/clangd_extensions.nvim",
     config = function()
       require("lsp.clangd").setup()
@@ -1020,7 +1029,7 @@ return packer.startup(function(use)
     "rmagatti/session-lens",
     requires = { "rmagatti/auto-session", "nvim-telescope/telescope.nvim" },
     config = function()
-      require("session-lens").setup {--[[your custom config--]]
+      require("session-lens").setup { --[[your custom config--]]
       }
       require("telescope").load_extension "session-lens"
     end,

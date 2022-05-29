@@ -80,7 +80,7 @@ end
 function M.setup(lspconfig, name)
   if lsp_installer_exists then
     local ok, server = require("nvim-lsp-installer.servers").get_server(name)
-    local process = require "nvim-lsp-installer.process"
+    -- local process = require "nvim-lsp-installer.process"
     local function setup(obj)
       local installopts = server:get_default_options()
       local opts = M.conf_with(obj)
@@ -99,7 +99,7 @@ function M.setup(lspconfig, name)
         return function(obj)
           server:install_attached({
             -- You can choose which one you prefer. You can also provide your own "sink" implementation (see impl. for reference)
-            stdio_sink = process.simple_sink(), -- will print stdout and stderr to message-history
+            -- stdio_sink = process.simple_sink(), -- will print stdout and stderr to message-history
             requested_server_version = "nightly", -- optional, but you may also provide a version you want to install
           }, function(success)
             if success then

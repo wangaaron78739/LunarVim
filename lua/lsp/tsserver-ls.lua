@@ -5,7 +5,7 @@ local formatter = "prettier"
 
 local function on_attach(client, bufnr)
   -- lsp_config.common_on_attach(client, bufnr)
-  client.resolved_capabilities.document_formatting = false
+  client.server_capabilities.document_formatting = false
 
   local ts_utils = require "nvim-lsp-ts-utils"
 

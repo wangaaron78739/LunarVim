@@ -78,7 +78,7 @@ function M.libmodal_setup()
   -- TODO fix this
   -- resize with arrows
   local resize_mode
-  resize_mode = libmodal.Layer.new {
+  resize_mode = libmodal.layer.new {
     n = {
       ["<Up>"] = { rhs = cmd "resize -2" },
       ["<Down>"] = { rhs = cmd "resize +2" },

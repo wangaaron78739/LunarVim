@@ -21,7 +21,7 @@ local function nore(rhs)
 end
 
 -- create a new layer.
-M.mode = libmodal.Layer.new {
+M.mode = libmodal.layer.new {
   n = { -- normal mode mappings
     ["w"] = nore "eviwo",
     ["e"] = nore "eviw",
@@ -51,7 +51,7 @@ M.mode = libmodal.Layer.new {
   },
 }
 
--- M.visual = libmodal.Layer.new {
+-- M.visual = libmodal.layer.new {
 -- map("v", "<M-w>", "eowo", sile)
 -- -- map("v", "<M-w>", "<Esc>wviw", sile)
 -- map("v", "<M-b>", "oboge", sile)
