@@ -54,30 +54,24 @@ function M.sniprun()
 end
 
 local function right(cmd)
-  return function()
-    require("FTerm.terminal"):new():setup {
-      cmd = cmd,
-      dimensions = { height = 0.95, width = 0.4, x = 1.0, y = 0.5 },
-    }
-  end
+  return require("FTerm"):new {
+    cmd = cmd,
+    dimensions = { height = 0.95, width = 0.4, x = 1.0, y = 0.5 },
+  }
 end
 
 local function under(cmd)
-  return function()
-    require("FTerm.terminal"):new():setup {
-      cmd = cmd,
-      dimensions = { height = 0.4, width = 0.6 },
-    }
-  end
+  return require("FTerm"):new {
+    cmd = cmd,
+    dimensions = { height = 0.4, width = 0.6 },
+  }
 end
 
 local function popup(cmd)
-  return function()
-    require("FTerm.terminal"):new():setup {
-      cmd = cmd,
-      dimensions = { height = 0.9, width = 0.9 },
-    }
-  end
+  return require("FTerm"):new {
+    cmd = cmd,
+    dimensions = { height = 0.9, width = 0.9 },
+  }
 end
 
 -- FIXME: broot unable to open files correctly
@@ -95,7 +89,7 @@ local fterms = setmetatable({
 
 function M.ftopen(name)
   return function()
-    fterms[name]():open()
+    fterms[name]:open()
   end
 end
 
@@ -236,11 +230,12 @@ function M.mdeval()
     #include <iostream>
     #include <vector>
     using namespace std;
-      ]],
+      ]] ,
       },
     },
   }
 end
+
 function M.mdeval_keymaps()
   mappings.localleader {
     -- ["c"] = { "<cmd>lua require 'mdeval'.eval_code_block()<CR>", "Eval Code Block" },
@@ -252,6 +247,7 @@ function M.mdeval_keymaps()
     },
   }
 end
+
 function M.jupyter_ascending()
   vim.keymap.setl("n", "<localleader>j", "<Plug>JupyterExecute")
   -- mappings.localleader {

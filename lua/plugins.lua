@@ -4,13 +4,10 @@ if not packer_ok then
 end
 
 packer.init {
-  -- compile_path = vim.fn.stdpath('data')..'/site/pack/loader/start/packer.nvim/plugin/packer_compiled.vim',
-  -- compile_path = require("packer.util").join_paths(vim.fn.stdpath "config", "plugin", "packer_compiled.vim"),
-  -- compile_path = require("packer.util").join_paths(vim.fn.stdpath "config", "plugin", "packer_compiled.lua"),
   compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
   snapshot_path = vim.fn.stdpath "config" .. "/packer_snapshots",
   -- snapshop = "may-26",
-  snapshot = "default",
+  -- snapshot = "default",
   git = { clone_timeout = 300 },
   display = {
     open_fn = function()
@@ -71,22 +68,12 @@ return packer.startup(function(use)
     {
       "neovim/nvim-lspconfig",
       config = function()
+        require("nvim-lsp-installer").setup {}
         require "lv-lspinstall"
       end,
     },
   }
-  -- use { "neovim/nvim-lspconfig" }
-  -- -- use "williamboman/nvim-lsp-installer"
-  -- use {
-  --   -- "kabouzeid/nvim-lspinstall",
-  --   "https://github.com/williamboman/nvim-lsp-installer", -- Use this
-  --   -- https://github.com/alexaandru/nvim-lspupdate.git
-  --   config = function()
-  --     require "lv-lspinstall"
-  --   end,
-  --   cmd = { "LspInstall", "LspInstallInfo", "LspUninstall", "LspUninstallAll", "LspInstallLog", "LspPrintInstalled" },
-  --   module = "nvim-lsp-installer",
-  -- }
+
   use { "scalameta/nvim-metals", requires = { "nvim-lua/plenary.nvim" } }
 
   -- Utilities
@@ -658,20 +645,20 @@ return packer.startup(function(use)
     "zbirenbaum/copilot-cmp",
     after = { "copilot.lua", "nvim-cmp" },
   }
-  -- use {
-  --   "github/copilot.vim",
-  --   setup = function()
-  --     vim.g.copilot_no_tab_map = true
-  --     vim.g.copilot_enabled = true
-  --     -- vim.g.copilot_filetypes = { ["*"] = false }
-  --   end,
-  --   config = function()
-  --     local map = vim.keymap.set
-  --     map("i", O.plugin.copilot.key, [[copilot#Accept("")]], { expr = true, silent = true })
-  --   end,
-  --   cmd = "Copilot",
-  --   disable = not O.plugin.copilot,
-  -- }
+  use {
+    "github/copilot.vim",
+    setup = function()
+      vim.g.copilot_no_tab_map = true
+      vim.g.copilot_enabled = true
+      -- vim.g.copilot_filetypes = { ["*"] = false }
+    end,
+    config = function()
+      local map = vim.keymap.set
+      map("i", O.plugin.copilot.key, [[copilot#Accept("")]], { expr = true, silent = true })
+    end,
+    cmd = "Copilot",
+    disable = not O.plugin.copilot,
+  }
 
   -- LANGUAGE SPECIFIC GOES HERE
 
